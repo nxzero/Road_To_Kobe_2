@@ -1,0 +1,225 @@
+\ProvidesPackage{Styles/bibstyle}[Bibliography URL package]
+
+\renewcommand{\finalnamedelim}{%
+    \iffieldundef{doi}{
+        \iffieldundef{url}{
+            \&
+        }{%
+            % \ifnumgreater{\value{liststop}}{2}{\href{\thefield{url}}%
+            % {,}}{\href{\thefield{url}}{\&}}%
+            % }}
+          \href{\thefield{url}}{\&}%
+        }
+    }
+        {
+        \href{http://dx.doi.org/\thefield{doi}}{\&}%
+        }
+}
+
+%\AtEveryBibitem{\clearfield{issn}} %removed issn optional!
+
+%Author and Titles  
+\renewcommand{\mkbibnamegiven}[1]{\iffieldundef{doi}{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+
+\renewcommand{\mkbibnamefamily}[1]{\iffieldundef{doi}{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+
+\renewcommand{\mkbibnameprefix}[1]{\iffieldundef{doi}{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+
+\renewcommand{\mkbibnamesuffix}[1]{\iffieldundef{doi}{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+
+\renewcommand{\mkbibparens}[1]{\iffieldundef{doi}{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+
+
+\renewbibmacro{name:andothers}{% Based on name:andothers from biblatex.def
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }
+    {\ifnumgreater{\value{liststop}}{1}
+      {\finalandcomma}
+      {}
+      \iffieldundef{doi}{\iffieldundef{url}{%
+      \andothersdelim\bibstring[\emph]{andothers}}{\href{\thefield{url}}{%url
+      \andothersdelim\bibstring[\emph]{andothers}}}}{\href{http://dx.doi.org/\thefield{doi}}{%doi
+      \andothersdelim\bibstring[\emph]{andothers}}}%no link
+    }
+    {}%
+    }
+
+
+%\andothersdelim\bibstring[\emph]{andothers}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEveryBibitem{%
+  \iffieldundef{doi}{
+      
+    \iffieldundef{url}{}{
+    
+    %%URL%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    %Other fields - im sure this does stuff
+    \renewbibmacro*{publisher+location+date}{%
+      \printlist{location}%
+      \iflistundef{publisher}
+        {\setunit*{\href{\thefield{url}}{, }}}
+        {\setunit*{\href{\thefield{url}}{, }}}%
+      \printlist{publisher}%
+      \setunit*{\href{\thefield{url}}{, }}%
+      \usebibmacro{date}%
+      \newunit}
+    
+    %\renewcommand{\finentrypunct}{\href{\thefield{doi}}{.}}
+    %\renewcommand{\entrysetpunct}{\href{\thefield{url}}{.}}
+    
+    % \renewcommand{\supercitedelim}{\href{\thefield{url}}{, }}
+    \renewcommand{\newunitpunct}{\href{\thefield{url}}{, }}
+    \renewcommand{\authortypedelim}{\href{\thefield{url}}{, }}
+    \renewcommand{\labelnamepunct}{\href{\thefield{url}}{, }}
+    \renewcommand{\revsdnamepunct}{\href{\thefield{url}}{, }}
+    
+    \renewcommand{\revsdnamedelim}{\href{\thefield{url}}{, }}
+    \renewcommand{\bibpagespunct}{\href{\thefield{url}}{, }}
+    \renewcommand{\bibpagerefpunct}{\href{\thefield{url}}{, }}
+    \renewcommand{\nametitledelim}{\href{\thefield{url}}{, }}
+    \renewcommand{\subtitlepunct}{\href{\thefield{url}}{, }}
+    
+    
+    
+    \renewcommand{\postnotedelim}{here}
+    \renewbibmacro{in:}{}
+    \renewcommand{\newunitpunct}{\href{\thefield{url}}{. }}
+    \renewcommand{\finentrypunct}{\href{\thefield{url}}{.}}
+    
+    
+    % \renewcommand{\finalnamedelim}[1]{\href{\thefield{url}}{&}}
+    % \renewcommand{\bibopenparen}{\addcomma\addspace}
+    % \renewcommand{\bibcloseparen}{\addcomma\addspace}
+    
+    
+    \DeclareFieldFormat{title}{\usebibmacro{string+doiurlisbn}{\mkbibemph{#1}}}
+    \DeclareFieldFormat[article,incollection]{title}%
+        {\usebibmacro{string+doiurlisbn}{\mkbibquote{#1}}}%
+    \newbibmacro{string+url}[1]{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}%
+    }}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    
+    
+    %Delimiters - commas
+    
+    \renewcommand{\bibopenparen}{\href{\thefield{url}}{(}}
+    \renewcommand{\bibcloseparen}{\href{\thefield{url}}{)}}
+    \renewcommand{\multinamedelim}{\href{\thefield{url}}{, }}
+    \renewcommand{\newunitpunct}{\href{\thefield{url}}{. }}
+    \renewcommand{\nameyeardelim}{\href{\thefield{url}}{, }}
+         
+    \DeclareFieldFormat{title}{\usebibmacro{string+url}{\mkbibemph{#1}}}
+    \DeclareFieldFormat[article]{title}{\usebibmacro{string+url}{\mkbibquote{#1}}}
+    \DeclareFieldFormat[incollection]{title}{\usebibmacro{string+url}{\mkbibquote{#1}}}
+    \DeclareFieldFormat{pages}{\href{\thefield{url}}{#1}}
+    \DeclareFieldFormat{PUBLISHER}{\href{\thefield{url}}{#1}}
+    \DeclareFieldFormat{edition}{\href{\thefield{url}}{#1}}
+    \DeclareFieldFormat{language}{\href{\thefield{url}}{#1}}
+    \DeclareFieldFormat{booktitle}{\href{\thefield{url}}{#1}}
+    \DeclareFieldFormat{publisher}{\href{\thefield{url}}{#1}}
+    \DeclareListFormat{publisher}{\href{\thefield{url}}{#1}}
+    \DeclareListFormat{address}{\href{\thefield{url}}{#1}}
+    \DeclareFieldFormat{issn}{\href{\thefield{url}}{ISSN: #1}} %new for susie
+    
+    \DeclareFieldFormat{volume}{\href{\thefield{url}}{#1}}
+    \DeclareFieldFormat{date}{\href{\thefield{url}}{#1}}
+    \DeclareFieldFormat{journaltitle}{\mkbibemph{\href{\thefield{url}}{#1}}}
+    \DeclareFieldFormat{institution}{\mkbibemph{\href{\thefield{url}}{#1}}}
+    
+    \DeclareNameAlias{sortname}{family-given/given-family}
+    \DeclareNameAlias{author}{sortname}
+    
+    \DeclareFieldFormat{editortype}{\href{\thefield{url}}{#1}}
+
+  }%
+      
+  }{
+  
+    %DOI%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %Other fields - im sure this does stuff m
+    \renewbibmacro*{publisher+location+date}{%
+      \printlist{location}%
+      \iflistundef{publisher}
+        {\setunit*{\href{http://dx.doi.org/\thefield{doi}}{, }}}
+        {\setunit*{\href{http://dx.doi.org/\thefield{doi}}{, }}}%
+      \printlist{publisher}%
+      \setunit*{\href{http://dx.doi.org/\thefield{doi}}{, }}%
+      \usebibmacro{date}%
+      \newunit}
+    
+    %\renewcommand{\finentrypunct}{\href{\thefield{doi}}{.}}
+    %\renewcommand{\entrysetpunct}{\href{http://dx.doi.org/\thefield{doi}}{.}}
+    
+    % \renewcommand{\supercitedelim}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    \renewcommand{\newunitpunct}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    \renewcommand{\authortypedelim}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    \renewcommand{\labelnamepunct}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    \renewcommand{\revsdnamepunct}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    
+    \renewcommand{\revsdnamedelim}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    \renewcommand{\bibpagespunct}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    \renewcommand{\bibpagerefpunct}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    \renewcommand{\nametitledelim}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    \renewcommand{\subtitlepunct}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    
+    
+    
+    \renewcommand{\postnotedelim}{here}
+    \renewbibmacro{in:}{}
+    \renewcommand{\newunitpunct}{\href{http://dx.doi.org/\thefield{doi}}{. }}
+    \renewcommand{\finentrypunct}{\href{http://dx.doi.org/\thefield{doi}}{.}}
+    
+    
+    % \renewcommand{\finalnamedelim}[1]{\href{http://dx.doi.org/\thefield{doi}}{&}}
+    %\renewcommand{\bibopenparen}{}
+    %\renewcommand{\bibcloseparen}{}
+    
+    
+    \DeclareFieldFormat{title}{\usebibmacro{string+doiurlisbn}{\mkbibemph{#1}}}%
+    \DeclareFieldFormat[article,incollection]{title}%
+        {\usebibmacro{string+doiurlisbn}{\mkbibquote{#1}}}%
+    \newbibmacro{string+doi}[1]{\iffieldundef{doi}{#1}{\href{https://dx.doi.org/\thefield{doi}}{#1}%
+    }}%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    
+    
+    %Delimiters - commas
+    
+    \renewcommand{\bibopenparen}{\href{http://dx.doi.org/\thefield{doi}}{(}}
+    \renewcommand{\bibcloseparen}{\href{http://dx.doi.org/\thefield{doi}}{)}}
+    \renewcommand{\multinamedelim}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+    \renewcommand{\newunitpunct}{\href{http://dx.doi.org/\thefield{doi}}{. }}
+    \renewcommand{\nameyeardelim}{\href{http://dx.doi.org/\thefield{doi}}{, }}
+         
+    \DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+    \DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
+    \DeclareFieldFormat[incollection]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
+    \DeclareFieldFormat{pages}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareFieldFormat{PUBLISHER}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareFieldFormat{edition}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareFieldFormat{language}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareFieldFormat{booktitle}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareFieldFormat{publisher}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareListFormat{publisher}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareListFormat{address}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareFieldFormat{issn}{\href{http://dx.doi.org/\thefield{doi}}{ISSN: #1}}
+    
+    
+    \DeclareFieldFormat{volume}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareFieldFormat{date}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+    \DeclareFieldFormat{journaltitle}{\mkbibemph{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+    \DeclareFieldFormat{institution}{\mkbibemph{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+    
+    \DeclareNameAlias{sortname}{family-given/given-family}
+    \DeclareNameAlias{author}{sortname}
+    
+    \DeclareFieldFormat{editortype}{\href{http://dx.doi.org/\thefield{doi}}{#1}}
+
+  }%
+}

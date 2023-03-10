@@ -1,0 +1,234 @@
+\section{Derivation of the hybrid model for poly-disperse multiphase flows made fluid particles}
+\label{sec:hybrid_model}
+
+
+In the field of dispersed two phase flow it is usual to use a set of continuous averaged equations to describe the continuous phase. 
+Which in our case correspond to continuous averaged mass and momentum conservation, respectively, \ref{eq:avg_k_mass} and \ref{eq:avg_k_momentum} seen in \ref{sec:introavg}.
+However, for the dispersed phase it is more practical to use particular averaged equations, i.e. \ref{eq:avg_p_m_mass} and \ref{eq:avg_p_momentum} for reason discussed previously.
+So we have a set of two mass balance equation and two momentum balance equations, where both phases' equations are derived under different averaging operators, one use the continuous average and the other the particular average.
+This set of equations is therefore known as the hybrid model. 
+Based on the framework build in the past few sections, we present in this section the usual way to build a consistent hybrid model containing solely the mass and momentum balance, following the classic method of \citet{jackson1997locally}. 
+
+On another hand, The dispersed phase model assume point of mass particles regardless of the framework considered, resulting in an error of order of $\mathcal{O}(D^2 /R^2)$ where $R$ is the macroscopic length scale of the problem.    
+Even though this error is more likely to be insignificant due to the separation of scale hypothesis, we investigate in this section a brand new hybrid model derived without the point of mass assumption. 
+Indeed, by using the continuous formulation of the dispersed phase's equations we re derive a set of particular averaged equations. 
+Which yield a similar but different form than the original one. 
+We call this model the \textit{no-assuption} hybrid model as it uses both, particular averaged and continuous averaged equations, but without any assumption on the dispersed phase resulting a null error. 
+As we said, this new model has few practical uses yet, as the error in the original model were negligible.
+However, it has great theoretical interest as it allows us to identify explicitly the contribution of each property of the arbitrary dispersed phase and proves the equivalence between continuous and particular average. 
+For compactness, in all our derivation we present solely the mass and momentum balance, but the derivation holds for any conservation laws.
+Similarly, we drop all the terms related to change in topology in this section as it is not relevant for the understanding of this equivalence principle. 
+
+\subsection{Presentation of the classic hybrid model}
+
+It is evident that both method of averaging seen in the previous parts lead to different terms in the equations. 
+This part aim to point out the compatibility of both set of equations as they are solved together, namely, the equations produced by the continuous averaged operator defined by \ref{eq:avg_k_global}, and the one defined by the particular averaged formulation \ref{eq:q_avg_p_global}. 
+As derivation operators are linear, the latter comparison is equivalent to evaluate the differences between the continuous averaged terms, $\kavg{f_k}$ and $\Iavg{f_k}$, against the particular averaged terms, namely $\pnavg{q_\alpha}$.
+
+To start with, it is well known that the weighting function $g(\textbf{x},\textbf{y})$ in the volume average method can be expressed as a Taylor series expansion around any particles center of mass $\textbf{y}_\alpha$ \citep{jackson1997locally},
+\begin{equation}
+    g(\textbf{x},\textbf{y})
+    = g(\textbf{x},\textbf{y}_\alpha)
+    - \textbf{r} \cdot \nablab g(\textbf{x},\textbf{y}_\alpha)
+    + \frac{1}{2} \textbf{r}\textbf{r} : \nablab\nablab g(\textbf{x},\textbf{y}_\alpha)
+    + \ldots
+    \label{eq:g_exp}
+\end{equation} 
+where, we used the relation $\nablabh g_\alpha = - \nablab g_\alpha$, to make appear the global gradient operators. 
+This relation is the starting point to carry out the comparison between both averaging methods. 
+Indeed, from this Taylor expansion it can be shown that any phase and interface averaged quantities can be expressed as a Taylor expansion series of particular averaged quantities. 
+We can show that any continuous averaged volumetric and surface quantities follows these relations
+\begin{align*}
+    \phi_k \kavg{f_k} 
+    &=  \pavg{q_\alpha}
+        - \nablab \cdot  
+        \left(\pavg{\textbf{Q}_\alpha}\right)        
+        + \frac{1}{2} \nablab\nablab : \left(\pavg{\textbf{Q}_\alpha^2}\right)
+        + \ldots  \\
+    a_I \Iavg{f_k} 
+    &=  \pavg{q_\alpha^I}        
+        - \nablab \cdot  \left(\pavg{\textbf{Q}_\alpha^I}\right)        
+        + \frac{1}{2} \nablab\nablab : \left(\pavg{\textbf{Q}_\alpha^{I2}}\right)
+        + \ldots  
+\end{align*}      
+where, we have used the definition of the particular, volume and interface average, together with the \ref{eq:g_exp}. 
+We recall that $q_\alpha = \int_{V_\alpha} f_k dV$, $\textbf{Q}_\alpha = \int_{V_\alpha} \textbf{r} f_k dV$, $q_\alpha^I = \int_{S_\alpha} f_k dS$  and $\textbf{Q}_\alpha^I = \int_{S_\alpha} \textbf{r} f_k dS$ and so on for the higher moments. 
+As a matter of fact this expression clearly exhibit the link between particular and continuous average.
+Since these expansions have a cumbersome notation, we propose the following formulation, 
+\begin{align}
+    \phi_k \kavg{f_k} 
+    &= \pavg{q_\alpha} - \nablab \cdot \Exp{\textbf{Q}_\alpha},\\
+    a_I \Iavg{f_k} 
+    &= \pavg{q_\alpha^I} - \nablab \cdot \Exp{\textbf{Q}^I_\alpha}, 
+    \label{eq:q_alpha_exp}
+\end{align}   
+where $\Exp{\ldots}$ is the operators that return the first and above order terms of the expansion series of the arguments.
+
+By making use of the previous expansion series, we can now present the classic dispersed two phase flow hybrid model. 
+As stated in the introduction of this section, this model contains, in the most simplified form, one equation of mass and second equation of momentum for each phase. 
+Nonetheless, each equation of the continuous average phase must be consistent with the particular averaged equations, therefore the interfacial terms sheared by both phase must be consistent. 
+Therefore, in the following we make use of \ref{eq:q_alpha_exp} to clearly demonstrate the consistency of these equations. 
+Indeed, regarding the mass conservation equations we have,
+\begin{equation}
+    \pddt (\pavg{m_\alpha})
+    + \nablab \cdot \left(\pavg{m_\alpha\textbf{u}_\alpha}\right) 
+    = 
+    - \pavg{\int_{S_\alpha} M_c dS},
+    \label{eq:classic_hybrid_mass_p}
+\end{equation}
+for the dispersed phase and from \ref{eq:avg_k_mass} and \ref{eq:q_alpha_exp}, we get
+\begin{equation}
+    \pddt \phi_c 
+    + \nablab \cdot \left(
+        \cavg{\textbf{u}}\phi_c 
+    \right) 
+    =  \pavg{\int_{S_\alpha} M_c dS} - \nablab \cdot \Exp{\int \textbf{r} M_c dS},
+    \label{eq:classic_hybrid_mass_c}
+\end{equation}
+for the continuous phase. 
+Also, notice that from now on $c$ will be the label which refer to the continuous phase.
+Under this form we clearly see that the former equation's mass transfer term is exactly the opposite as the one appearing in the latter equations. 
+Therefore, both formulation are explicitly consistent since both source terms are equivalent. 
+As a consequence, we remark that the higher terms expansion is present in the continuous phase equation. 
+
+Similarly, the continuous momentum balance interfacial term in \ref{eq:avg_k_momentum}, to be consistent with the particular averaged momentum balance \ref{eq:avg_p_momentum}, need to be expressed as an expansion series according to \ref{eq:q_alpha_exp}.  
+We recall that the particular averaged dispersed phase momentum equation reads as,
+\begin{multline}
+    \pddt   \left(\pavg{\textbf{p}_\alpha}\right)
+    + \nablab \cdot (\pavg{\textbf{p}_\alpha \textbf{u}_\alpha})
+    = \pavg{\int_{V_\alpha} \textbf{b}_d dV}\\
+    - \pavg{\int_{S_\alpha} \left(\textbf{T}_c  \cdot \textbf{n}_c  + \textbf{u}_c M_c \right) d S}.
+    \label{eq:classic_hybrid_momentum_p}
+\end{multline}
+On the other hand, after expanding the interfacial term the continuous averaged momentum equation of the continuous phase reads as, 
+\begin{multline}
+    \pddt (\phi_c\cavg{\rho\textbf{u}}) 
+    + \nablab \cdot ( \phi_c \cavg{\rho\textbf{uu}})
+    = \pavg{\int_{S_\alpha} (\textbf{T}_c  \cdot \textbf{n}_c + \textbf{u}_c M_c) d S}\\
+    +\phi_c\cavg{\textbf{b}}
+    + \nablab\cdot\left[
+    \phi_c \cavg{\textbf{T}}
+    - \Exp{\int_{S_\alpha} \textbf{r} (\textbf{T}_c  \cdot \textbf{n}_c + \textbf{u}_c M_c)dS}
+    \right]
+    \label{eq:classic_hybrid_momentum_c}
+\end{multline}
+where we included the higher moments of the interfacial source term inside the divergence operator. 
+Thus, in addition to the averaged stress term $\cavg{\textbf{T}}$, the expansion of the interfacial term adds a contribution to the overall stress.
+We clarify to the reader that $\Exp{\int \textbf{r}\textbf{T}_c  \cdot \textbf{n}_c}$, represent the higher moment of the interfacial forces, thus it represents at the lowest order, the particular averaged first moment of the hydrodynamic loads.
+This tensor can be decomposed into a symmetric and an antisymmetric part, respectively $\int \textbf{r} \times (\textbf{T}_c\cdot\textbf{n}) dS$ and $\int \left[\textbf{r} (\textbf{T}_c\cdot\textbf{n}) +(\textbf{T}_c\cdot\textbf{n}) \textbf{r} \right]  dS$. 
+Under this form we recognize the former tensors as being respectively, the averaged torque  and the averaged stresslet applied on each particle due to hydrodynamic loads \citep{kim2013microhydrodynamics}. 
+Similar transformation holds for the interfacial term of the energy equation and for the other conservation equations. 
+
+The four previous equations constitute the so-called \textit{classic hybrid model}. 
+By doing such transformations to the equations we introduced terms of higher order under the divergence operator, i.e. the divergence of the higher moments of the interfacial terms. 
+This permitted us to maintain consistency between the equations' interfacial terms of each phase. 
+However, is it relevant to reach a better accuracy by including the higher order terms appearing in the continuous phase equations, 
+while on the other sides the particular averaged equations themselves assume point of mass particles, and therefore generate an error. 
+% while we might have neglect first order terms in the particular phase equation since they are derived considering the particles as being point of mass ? 
+Indeed, the particular average operator assume by definition point of mass particles, since we applied the volume average on Dirac delta functions fields representing the dispersed phase  (see \ref{sec:Lagrange_to_Euler}).  
+To address this issue we derive in the next section the particular averaged equation without the point of mass assumption. 
+
+\subsection{The equivalence between continuous and particular averaged equations.}
+
+
+\citet{nott2011suspension} demonstrated that the continuous averaged momentum equation, for mono disperse suspension of solid spheres, were strictly equivalent to the particular averaged momentum equation.
+While they didn't provide many details on the derivation of this equivalence, they limited their study to mono disperse suspension of solid spherical particles. 
+Originally, this work pointed out that no term expressed as the divergence of a stress appear in the particular averaged momentum balance (\ref{eq:avg_p_momentum}).
+However, from their arguments, the dispersed phase momentum equation must possess a non-convective terms.
+Indeed, since we observe particle migration in suspensions of solid particles \citep{guazzelli2011}, a term express as the divergence of a stress must appear inside the momentum equation even at low inertia. 
+That is the main argument for the proof of the existence of the so called, \textit{particle-fluid-particle} stress.
+Anyhow, our motivation is to extend this equivalence to the whole system of equation of the dispersed two-phase flows model.  
+
+Based on the derivation of \citet{nott2011suspension}, in \ref{ap:exp}, we extended their theory to any kind of conservation laws and particles nature and demonstrated, as they did for mono disperse solid particles suspensions, the equivalence between both formalism. 
+To be brief, in \ref{ap:exp} we demonstrate that the continuous phase averaged non-convective term of \ref{eq:avg_k_global}, i.e.  $\kavg{\bm{\Phi}}$, can  be expressed as a multipole expansion following \ref{eq:g_exp}.
+Likewise, the other terms of \ref{eq:avg_k_global} can also be expanded in such a way. 
+It turns out that terms of the former expansion cancel out the terms of the latter expansion except for the zeroth order moments of these expansions.
+Therefore, the phase average balance, \ref{eq:avg_k_global}, is \textbf{rigorously equivalent} to the corresponding particular averaged laws, i.e. \ref{eq:q_alpha_dt_avg}.
+Nevertheless, this property is true if and only if, there is indeed a non-convective term present in the equation, i.e. if $\bm{\Phi} \neq \textbf{0}$. Because as stated above it is the expansion of the convective term that cancels out the others terms' expansion.
+Therefore, as an example the phase averaged mass conservation law, \ref{eq:avg_k_mass}, and the particular averaged mass balance \ref{eq:avg_p_m_mass} are not equivalent. 
+The same holds for the surface conservation laws, i.e. \ref{eq:A_avg_p} and \ref{eq:interface_transport}, as pointed out by \citet{lhuillier2000bilan}.
+
+From \ref{ap:exp} we can be certain that the momentum and total energy averaged equations are equivalent in the continuous and particular formulation.
+Indeed, in both cases the microscale balance of energy and momentum equation possess a non-convective term, respectively $\textbf{T}$ and $\textbf{T}\cdot\textbf{u}-\textbf{q}$.
+What about the dipole equations, i.e. the first moment of momentum and mass equation ?
+With similar developments as in \ref{eq:dt_Q_alpha}, it is possible to derive a local transport law for any arbitrary quantity $\textbf{r}f_k$.
+It reads as,
+\begin{equation*}
+    \pddt (f_k \textbf{r})
+    + \nablabh \cdot \left(
+        f_k \textbf{r} \textbf{u}_k
+    \right)
+    = \textbf{r} \textbf{S}_k 
+    - \bm{\Phi}_k
+    + f_k \textbf{w}_k
+    + \nablabh \cdot \left(
+        \textbf{r}\bm{\Phi}_k
+    \right),
+\end{equation*}
+where it is evident that the term $\textbf{r} \bm{\Phi}_k$, is the non-convective term in the transport equation of the moment $\textbf{r}f_k$.
+As a consequence of the equivalence principle demonstrated in \ref{ap:exp}, the above equation averaged using particular or continuous average method will ultimately lead to the exact same equation as long as $\bm{\Phi}\neq 0$. 
+Besides, as shown in \ref{ap:cinematic} the higher order moments' conservation equations have similar structure, in particular they all posses a non-convective term of the form $\textbf{rr}\ldots\textbf{r}\mathbf{\Phi}$.
+Therefore, we can also state that these higher order equations are equivalent whether in the continuous or particular averaged formulation.
+In short, we can state that the averaged kinematic conservation laws, as the mass or surface conservation, particularly or continuously averaged, are not equivalent. 
+While, the others balance equations studied in this work are rigorously equivalent whether we use the particular or continuous averaging method.   
+
+Now that we properly exposed the equivalence or the non-equivalence for the different type of conservation equations with both averaging technics, let's present the hybrid model for the dispersed two-phase flows. 
+We recall that the idea is to expand each term of \ref{eq:avg_k_mass} and \ref{eq:avg_k_momentum} while taking into account the equivalence property defined above.
+In such a way that we obtain the mass and momentum balance for the particular phase with additional higher order moments. 
+Regarding the averaged equations for the continuous phase, they remain the same as in the \textit{classic hybrid} model presented previously (\ref{eq:classic_hybrid_mass_c} and \ref{eq:classic_hybrid_momentum_c}) therefore they will not be display here.
+Anyhow, the dispersed phase mass and momentum averaged equations in the hybrid model reads respectively as, 
+\begin{equation}
+    \pddt   \left(\pavg{m_\alpha}\right)
+    + \nablab \cdot \left(\pavg{m_\alpha \textbf{u}_\alpha} 
+    + \frac{1}{2}\nablab\nablab : \Exp{ \mathcal{G}_\alpha\textbf{u}_\alpha}\right) 
+    = -\pavg{\int_{S_\alpha} M_c d S},
+        \label{eq:hybrid_mass_p}
+\end{equation}
+\begin{multline}
+    \pddt   \left(\pavg{\textbf{p}_\alpha}\right)
+    + \nablab \cdot (\pavg{\textbf{p}_\alpha \textbf{u}_\alpha})
+    = \pavg{\int_{V_\alpha} \textbf{b} dV}\\
+    + \pavg{\int_{S_\alpha} \left(\textbf{T}_c  \cdot \textbf{n}_c  + \textbf{u}_c M_c \right) dS},
+    \label{eq:hybrid_momentum_p}
+\end{multline}
+First, we emphasize that these equations are just another form of the continuous average formulation \ref{eq:avg_k_mass} and \ref{eq:avg_k_momentum}, applied on the dispersed phase. 
+We notice that, as stated by the equivalence principle, the phase averaged momentum balance (\ref{eq:avg_k_momentum}), reduce to the particular averaged momentum balance (\ref{eq:avg_p_momentum}), so the momentum equation in this model is found to be exactly the same as in the \textit{classic} hybrid model presented above. 
+Regarding the mass balance equation, we can notice that as expected higher order terms stay and do not cancel out.
+This equation is obtained after simplification of the higher order moments of each terms in the original mass balance equation. 
+Indeed, the derivation isn't trivial, it makes use of the use of \ref{eq:velocity_definition}, \ref{eq:G_alpha_dt} and \ref{eq:dt_G_alpha_l}.
+As a result, we see appear in the LHS of this equation the advection of the higher moments of mass; i.e. $\nablab \nablab : \Exp{ \mathcal{G}_\alpha\textbf{u}_\alpha}$. 
+Interestingly enough, the higher moments of the mass transfer terms and the time derivative of the moments of mass vanish. 
+Also, notice that the particular averaged equation of mass (\ref{eq:avg_p_m_mass}) remain valid, therefore subtracting the no-assumption mass balance with the former equation results in the following condition, $\nablab\nablab\nablab \vdots \left(\pavg{ \mathcal{G}_\alpha\textbf{u}_\alpha}\right) = 0$, where we keep solely the first term of the expansion. 
+From the view of this condition we can state that the flux of the shape of each particle through a control volume must remain null. 
+This term can might have a certain importance in inhomogeneous medium. 
+
+In the context of poly-disperse dispersed flows it is essential to derive an equation for surface transport. 
+As shown in the previous section the continuous averaged model leads to \ref{eq:avg_I_a}, and the particular transport model leads to \ref{eq:A_avg_p}. 
+The equivalence between both equations has been partially studied by \citep{lhuillier2000bilan}, indeed, they considered solely spherical particles. 
+In \ref{ap:exp} we derive the surface transport equation by carrying out the expansion of each term of \ref{eq:avg_I_a}, resulting in the particular averaged transport equation of the area transport, namely, 
+\begin{equation}
+    \pddt (\pavg{A_\alpha})
+    + \nablab \cdot (\pavg{\textbf{u}_\alpha A_\alpha})
+    = -\pavg{\int_{S_\alpha} \kappa\textbf{u}_I\cdot \textbf{n} dS }\\
+    - \nablab \cdot \Exp{\int_{S_\alpha} \textbf{u}^I \cdot\textbf{nn} dS}^S,
+    % + \Exp{\Psi A_\alpha}
+    \label{eq:hybrid_area}
+\end{equation}
+where we recall that the $^S$ refer to the symmetric part of the argument. 
+On the RHS we can notice two source terms due to the deformation of the surface. 
+The first term is already present in the classic Lagrangian derivation, \ref{eq:A_avg_p} and is due to the deformation of the interfaces. 
+The second  terms are the higher moments of the normal velocity distribution over the interface. 
+\tb{
+It is interesting to notice that the first and second terms on the RHS vanish if we consider spherical particles. 
+Which is consistent with the PBE since they consider instantaneous coalesce of spherical particle and therefore do not consider this source terms. 
+However, the second term remains present even for spherical particles, indicating that it could be significant in contrast with \ref{eq:PBEarea} which doesn't consider any divergent terms. 
+Indeed, if we consider rigid spherical particles $\int_{S_\alpha}\textbf{u}^I\cdot\textbf{nn} dS = \frac{A_\alpha}{3} \textbf{u}_\alpha$.
+}
+
+We derived the hybrid model based on the continuous averaged equations. 
+Which differ from the classical approaches that have been presented earlier. 
+This leads to additional terms in the mass and surface transport equations. 
+From these observations we deduce that to solve the hybrid model we need to know a priory the particular quantity $\mathcal{G}_\alpha$ and $\int_{S_\alpha} (\textbf{u}_I \cdot \textbf{nn})^S dS$ at the order considered. 
+The inertia tensor can be considered as a part of the closure terms or can be solved through \ref{eq:avg_p_G_alpha} and \ref{eq:avg_p_P_alpha}. 
+Similarly, the closure terms for the surface area transport, can be obtained through the averaged transport equation \citep{lhuillier2000bilan}.  
+We would like to emphasize that those additional terms are more likely to be negligible, nevertheless we provided a proof of the equivalence between the continuous and particular averaged equations.

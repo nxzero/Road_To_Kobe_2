@@ -1,0 +1,98 @@
+\section{Current state of dispersed two phase flow  modeling}
+
+Up to now a lot of investigation have been made on the modelling of bubbly flows.
+Indeed, bubbly flows are of a large interest since they appear in plenty application (especially the nuclear industry).
+Consequently, researcher have been trying to find closure terms on the specific case of bubbly flows. 
+For these reason most of the study cited below investigate bubbles hydrodynamics (and not droplets). 
+Also, in the perspective of modeling the reactor scale authors have developed software carrying out Euler-Euler simulations. 
+The most famous ones are NEPTUNE-CFD belonging to EDF, and OpenFoam with its collection of multiphase solvers. 
+Again, most of the authors carried the computation of the averaged equations of bubbly flows and not emulsion.
+Even through in this thesis we solely focus on the closure terms calculation, it is of interest to say a few worlds on the modeling of the upper scale.
+i.e. the industrial scale, where we solve the averaged equations derived in \ref{chap:avg}. 
+
+\subsection{Macro scale modeling with CFD-PBM}
+Here is a brief review of the authors who attempted to carry out CFD-PBE simulation.
+\citet{wang1995simultaneous} study numerically the PBM equations for buoyancy driven setting of spherical drops suspension.
+They consider a one dimensional PBE for the axis along the column. 
+And solve for the continuous size distribution function $f$.
+The source terms $B(n)$ is modeled using the theoretical formulas depicted in the previous chapter, and the probability of coalescence is assumed to be 1 since there is no bouncing in the absence of inertia (therefore a contact results always in coalescence). 
+In this context they could  solve the equations, and they show how the coalescence influence the phase separation inside a vessel.
+In \cite{KAMP20011363} they solve numerically the averaged PEB considering one dimensional and spherical bubbly flow.
+They solve the first and second order equations of the PBE (see \ref{eq:PBM_QBMM3} in \ref{chap:avg}).
+They also considered the velocity of the bubbles as independent of the bubble size. 
+The coalescence kernel is derived for unequal bubble size interaction in turbulent flows. 
+The results are validated with experimental data on pipe flows under microgravity conditions. 
+They could show that the coalescence rate diminishes between the inlet and outlet due to the decrease of the rate of collision because the velocities of collision are  higher. 
+Next,  \citet{morel2010comparison} performed simulation of Euler-Euler models coupled with PBE for bubbly flow columns. 
+They considered 4 different situations with different hypothesis, namely, the single size approach, the moment approach based on the log-normal distribution, the moment approach based on the quadratic law and the multi-fields approach.
+The latter method is also called the class method mentioned in the previous chapter (it consists in solving N equation for the mass and momentum for the N class of particles).
+They conclude on that from the first to the last method the accuracy increased together with the numerical cost.
+Apart from the last method which is completely different from the others and turn out to over predict coalescence. 
+Now, in \citet{gemello2018modelling} a full CFD-PBM is modeled for bubbly column on the code \texttt{OpenFoam}. 
+The CFD part is modeled with the averaged Navier Stokes equation.
+They use classic turbulence model (i.e. $k-\varepsilon$ model, RNG $k-\varepsilon$ and $k-\omega$ model) to account for the velocity fluctuation term, $\left<\bm{u}'\bm{u}'\right>^f$. 
+They conclude that $k-\omega$ was the most practical model in terms of accuracy and stability.
+\citet{alam2022cfd} conducted CFD-PBM and experimental study on a nano-bubble generator. 
+They also compared different turbulence model and found out that the $k-\omega$ model predicted a better prediction for high flows rate.
+Note that this modeling of the pseudo turbulent tensor is not physical as pseudo turbulence is different from classic turbulence.
+A sightly different work is done by \citet{salehi2017population}, they coupled Large Eddy simulation to PDF-PBM to predict the distribution shape and size of droplets in atomization turbulent flows. 
+The dispersed phase is here modeled with a Lagrangian approach, the drag force term use the mean velocity difference between the averaged continuous phase and the dispersed phase.
+The additional feature in this work is that they take in account the size and the shape as a variable in the droplet distribution.
+The strategy of stokes binding is used here, this method consisting in representing one notional particle for a particle size.
+
+Though, all the processes modeled by these author involve poly disperse two phase flow, none or few of them, considered accurate closure for the velocity fluctuation (they often consider turbulence-like models) and the other the first order closures terms are neglected. 
+The reason, is that no accurate closure terms exist yet in the literature. 
+Only the drag forces seem to be predicted from robust semi-empirical correlations, for bubbly flow at least.
+Besides, of all these authors few of them tried to model gravity induced motion of droplets. 
+
+\subsection{DNS modeling of suspended particles or droplets}
+
+Now, let's focus on the numerical studies providing empirical expression for the closures terms. 
+Numerous authors worked on the topic, most of them are already mentioned in \ref{chap:avg} for their theoretical work. 
+Note that all the following articles are rather recent since DNS of bubbly flow is quite expensive and is achievable since only a few years. 
+\citet{esmaeeli2005direct}carry out  DNS of representative periodic volume of bubbly flow. 
+They measure the rising velocity, velocity fluctuation as well as the relative orientation of the pair of bubbles.
+Furthermore, they could predict the averaged rising velocity reasonably well, as it is the simplest quantity to predict among all the closure terms.
+Indeed, the rising  velocity is the quantity that converge faster than the other thus less sample is needed to predict it.
+At the time they were limited by computer performances, thus, the maximum Reynolds number archived is $Re  = 77$, indeed more grid points is needed for higher $Re$. 
+They simulated deformable and non-deformable bubbles.
+The main difference is that the spherical bubbles form \textit{raft} where the arrangement of the deformable bubbles is pretty random. 
+They also found a Gaussian distribution for the velocity fluctuation.
+In a more recent work \citet{willen2019resolved} carry out simulation of settling equal spheres in an upward flow.
+They also compute the velocity and velocity fluctuation and show that the suspension were anisotropic in the direction of the gravity force.
+Besides, they also measure the architecture of the flow and recover the column arrangement and horizontal arrangement, to analyze the structure they used tetrads which allows them to see the evolution of the relative positions.
+\citet{du2022analysis} perform DNS calculation of mono disperse bubbly flow and focus on the calculation of pseudo turbulent tensor. 
+They separate the pseudo turbulence tensor into two contribution.
+The wake induced turbulence and the potential flow and averaged wake fluctuation.
+The former is the main focus of the study and a model is proposed.
+All these study used DNS and analyze the closure by computing it directly.
+But other authors considered wave analysis to get the closure terms. 
+We won't go into details, but it is possible to compute several closures by the analysis of the wave speed.
+For more information we point the reader to the following articles,  \cite{duru2002constitutive}, \citet{willen2017continuity} and\citet{derksen2007direct}.
+On another hands \citet{wang2021numerical} performed DNS of a random array of fixed spherical particle.
+About 3000 spheres were modeled to get a representative sample. 
+They computed the PFP stress based on the nearest particle statistic reviewed \ref{chap:avg}.
+They show that this particle stress can predict the skewing effect along the flow direction and repealing effect on the normal directions of the particular phase. 
+This is the only study reporting the calculation of the PFP stress therefore a need is clearly needed on this matter.
+\citet{manga1995collective} studied experimentally as well as numerically, with boundary integral methods, the rate of coalescence of interacting pairs of drops.
+They investigated the influence of deformation on the rate of coalescence and conclude that greater the drops or bubble deform (for high $Bo$ and  $Ga$) the higher the probability of coalesce will be (might go up to one order of magnitude above than for non-deformable drops).
+It also results in a wider distribution of the particles size.
+\citet{innocenti2020direct} simulated 3D column of rising bubbles and evaluated velocity fluctuation and energy dissipation for turbulence. 
+Interestingly their simulations'  setup is really close to what we wish to accomplish. 
+
+
+From all those studies presented above it seems that getting the closure terms through DNS seems well achievable.
+The most suited set up in our case seems to be the simulation of array of droplets similarly ti \citet{innocenti2020direct}.
+Indeed, they could measure the velocity fluctuations properly and other closures like the drag forces (through the averaged velocity) and also terms related to turbulence modeling. 
+However, to avoid the modeling of a large domain we will make use of periodic boundary conditions.
+This way we will be able to provide closure terms for buoyant driven emulsion.
+Besides, all the closure will be calculated simultaneously in one simulation (averaged rise velocity, fluctuation velocity of the fluid and particulate phase\ldots). 
+Therefore, in the next section we present the methodology to carry out massive DNS of tri-periodic random array of rising drops.
+
+
+% \subsubsection{Direct Numerical simulation}
+% In order to model film drainage in simulation one has to model all the different length scale from one diameter to $10^{-5}$ diameter. 
+% This is technically impossible in a suspension of drops.
+% Thus, several technics are available. 
+% \citet{thomas2010multiscale} implement theoretically the expression of the flow between the interface of the drop and a wall to avoid refining and solving the layer with DNS.
+% This method enable us to the thinning of the film thinner than the length of a cell. 

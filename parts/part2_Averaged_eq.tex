@@ -1,0 +1,363 @@
+
+\section{Averaged equations for two-phase flows.}
+\label{sec:introavg}
+
+As stated in the introduction of this chapter we now present the continuous averaged equations for multiphase flow. 
+It is important to keep in mind that up to now and all along this section we do not assume anything on the topology of the phase.
+
+
+\subsection{The averaging concepts}
+
+We start this section by presenting the most common technics of averages and their operators. 
+Therefore, we note $\left<f\right>(\textbf{x})$ the average of an arbitrary quantity $f(\textbf{y})$, 
+where $\textbf{y}$ is the spacial coordinate in the laboratory reference frame, 
+and $\textbf{x}$ macro scale coordinate at which we evaluate the average.
+Therefore, we define the \textbf{volume average} operator such as,
+\begin{equation}
+    \left<f\right>(\textbf{x},t) = \int g(\textbf{x},\textbf{y}) f(\textbf{y},t)dV,
+    \label{eq:avg}
+\end{equation}
+where $g(\textbf{x},\textbf{y})$ is the smoothing (or weighting) function introduced by 
+\citet{jackson1997locally,marle1982macroscopic}.
+The first argument, $\textbf{x}$, is location at which we take the average, and \textbf{y} is the variable of integration or the local coordinate vector.
+The smoothing function $g(\textbf{x},\textbf{y})$ must follow two properties, the first one is normalization to unity 
+$\int g(\textbf{x},\textbf{y}) dV = 1 \;\forall g$.
+The second one is that $g$ vanish for all $\textbf{y}$ far form $\textbf{x}$, thus $\lim\limits_{|\textbf{r}| \to \infty} g(\textbf{x},\textbf{y}) = 0$ with $\textbf{r} = \textbf{x} - \textbf{y}$.
+Also, the radius $R$, of the weighting function $g$, it is defined as $1/2 = \int_{|\textbf{r}|<R} g(\textbf{x},\textbf{y})dV$.
+Those characteristics ensure that the integral of \ref{eq:avg} is convergent and well normalized. 
+
+All Eulerian quantities are function of time also. 
+Thus, we can average a quantity $f$ on a period of time $T$. 
+Therefore, the \textbf{time average} operator is defined such as (see \citet{morel2015mathematical,drew1983mathematical,ishii2010thermo}), 
+\begin{equation*}
+    \left<f\right>(\textbf{x},t) = \frac{1}{T}\int_{t-T}^t f(\textbf{x},t')dt',
+\end{equation*}
+with $t$ the time and $t'$ the variable of integration.
+Notice that the location vector \textbf{x} is the same after and before averaged $f$ since we average over the time dependency of $f$ therefore we use a unique position vector.  
+
+Next, we introduce the ensemble average. 
+This averaging technics has been introduced in the context of averaged dispersed 
+two-phase flows by \citet{batchelor1972sedimentation,hinch1977averaged} and latter by \citet{zhang1994averaged}.
+It is based on statistical approach and defined as follows. 
+Let $\mathscr{C}_N$ be a set of parameters describing a configuration of a dispersed two phase flow. 
+We then define $P(\mathscr{C}_N,t)$ as the probability density function of being in the configuration $\mathscr{C}_N$ at the time $t$. 
+Then for any quantity $f(\mathscr{C}_N,\textbf{x},t)$ of the flow, we can define the \textbf{ensemble average} operator as
+\begin{equation}
+    \label{eq:enselblea}
+    \avg{f}(\textbf{x},t) 
+    = \int f(\mathscr{C}_N,\textbf{x},t) P(\mathscr{C}_N)d\mathscr{C}_N,
+\end{equation}
+where the integration is on all the realization $\mathscr{C}_N$. 
+This method is somewhat more general because it allows averaging over an entire 
+phase-space of parameters, unlike the two previous methods. 
+This averaging technics is widely used in kinetic theory or in turbulence while deriving the Maxwell equation  for example, see \citet[Chapter 7]{rao2008introduction}.  
+
+In short, the first method focus on averaging over the timescale, the second over a volume and the third method over all or a set of configuration of the flow.
+While, the latter method and the Volume averaged method seem different in a lot of ways it has been shown that there are strictly equivalent \citet{jackson1997locally,zhang1994ensemble}.
+In what follow we apply the volume average method to derive the averaged equation of motion, as we think it is more instinctive.
+It is important to notice that in any averaging process we must respect the separation of 
+scale. 
+Consequently, we must respect the mathematical constraints, $D\ll R\ll \mathcal{L}$ with $\mathcal{L}$ the size of the domain, i.e. the scale of the vessel in the industrial context of the process. 
+Moreover, it is interesting to mention some mathematical properties shared by all the averaging operators. 
+For two arbitrary Eulerian fields $f$ and $h$ we have,
+\begin{align}
+    &\avg{f+h} = \avg{f}+\avg{h}, 
+    &\avg{\avg{f}h} = \avg{f}\avg{h}, \nonumber \\
+    &\avg{\frac{\partial f}{\partial t}} 
+    = \pddt\avg{f}, 
+    &\avg{\frac{\partial f}{\partial x_i}}
+    = \frac{\partial}{\partial x_i}\avg{f}. 
+    \label{eq:avg_properties}
+\end{align}
+The two first relations are called the Reynolds' rules, the $3^{th}$ one is the Leibniz' 
+rule and the last one, the Gauss' rule \citep{drew1983mathematical}.
+Besides, it is important to notice that the derivative operator of the last equation change of differentiation variable, from \textbf{y} to \textbf{x}, in the context of volume average.
+In the following, we use the notation $\nablab$ to represent the global gradient operator, $\frac{\partial}{\partial \textbf{x}}$.
+Thus, this last property can be re-written as, $\avg{\nablabh f}= \nablab \avg{f}$ in the volume average context \citep{jackson1997locally}.
+
+Now we introduce the subclass operators, or conditional average operators.
+The average of the quantity $f$ considering only the volume of the $k^{th}$ phase, will be defined, such that, 
+\begin{equation}
+    \phi_k \kavg{f} 
+    = \avg{\chi_k f_k},
+    \label{eq:avg_k_phase}
+\end{equation}
+where $\phi_k$ is the volume fraction of the phase $k$ at \textbf{x} and $\kavg{\ldots}$ is the conditional average operator on the phase $k$.
+It can be obtained by substituting $f$ by $1$ in \ref{eq:avg_k_phase}, it reads,
+\begin{equation*}
+    \phi_k  
+    = \avg{\chi_k}
+\end{equation*}
+\tb{We recall here that as all the global average operators are all equivalent, thus we adopt here the general notation $\avg{\ldots}$ to refer to a kind of global average.  }
+Additionally, from the previous averaging operators, we can define the mass-weighted average operator by
+\begin{equation}
+    \avg{\rho} \mavg{f} 
+    = \avg{\rho f}
+    = \sum_k \phi_k \rho_k\kavg{f}.
+\end{equation}
+
+Having established averages operators over the volume of both phases independently, we now define one last conditional averaging operator.
+Namely, the surface phase average operator,  
+\begin{equation}
+    a_I\Iavg{f} 
+    = \avg{\delta_I f},
+    \label{eq:avg_I_phase}
+\end{equation}
+where $a_I$ is the interfacial area concentration.  
+$a_I$ can be thought of the ratio between the surface of the interfaces over the volume where the interface are included. 
+It is defined by, 
+\begin{equation}
+    a_I
+    = \avg{\delta_I}.
+\end{equation}
+
+Now, we would like to emphasize that the quantities inside phase average, are implicitly defined inside the $k^{th}$ phase so that it avoid redundancies. 
+Therefore, $\kavg{f} = \kavg{f_k}= \avg{f_k\chi_k}$.
+At the interface however it is not the case, indeed by definition, at the interface the quantities are defined in both phases.
+Thus, we adopt the following convention, when averaging an equation on the volume of phase $k$, $\Iavg{f_k}$ will be the interfacial average of $f_k$, with $f_k$ being the quantity $f$ defined on the phase $k$. 
+However, $\Iavg{f}$ without the subscript $_k$, will refer to the interface average of the quantity $f$ defined on the neighboring phase of $k$. 
+
+From the \textit{single-fluid} and \textit{two-fluid} equations exposed previously, one can  notice that to obtain an averaged equation on the volume of the $k$ phase two choices are available. 
+The first one and more logical choice is to apply the global average on the \textit{two-fluid} formulation equations.
+Indeed, half the work is already done since our quantities are already product of $\chi_k$ and the average operators commute with the derivatives.
+The other way is to take the conditional average on the volume of the $k$ phase on the \textit{single-fluid} formulation. 
+Which implies re-doing some algebra which were already done to get this form of the 
+equation.
+Anyhow, those two methods are of course strictly equivalent.
+In the next few sections we follow the same routine as the previous one and expose the conservation equations in both form but under the averaged form. 
+
+
+\subsection{The averaged topological equations}
+
+We start by averaging the PIF transport equation, or \ref{eq:phaseindicator_transport}. 
+Using the phase average operator \ref{eq:avg_k_phase}, we can easily show that
+\begin{equation}
+    \pddt \phi_k 
+    + \nablab \cdot \left(
+        \kavg{\textbf{u}}\phi_k 
+    \right) 
+    = a_I\Iavg{(\textbf{u}_k-\textbf{u}_I) \cdot \textbf{n}_k}, 
+\end{equation}
+which correspond to the transport equation of the volume fraction $\phi_k$ advected by the mean velocity fields $\kavg{\textbf{u}}$.
+The term on the RHS is the interface average of the volume exchange term. 
+We will see in the next subsection that this equation is strictly equivalent to the averaged mass balance divided by the density.
+
+Regarding the averaged interfacial transport equation, we can obtain it by averaging \ref{eq:interface_transport}, yielding
+\begin{equation}
+    \pddt a_I
+    + \nablab \cdot \left(
+        a_I
+        \Iavg{\textbf{u}}
+    \right)
+    = - a_I \Iavg{\kappa \textbf{u}_I \cdot \textbf{n}}
+    \label{eq:avg_I_a}
+\end{equation}
+where this equation correspond to the transport equation of the interfacial concentration $a_I$, along the interfacial averaged velocity field $\Iavg{\textbf{u}}$.
+
+\subsection{Average of an arbitrary conservation equation}
+
+From the \ref{eq:two-fluid_global} and the phase average operator definition (\ref{eq:avg_k_phase}) we can show that the phase averaged conservation equation of an arbitrary quantity $f_k$ reads as, 
+\begin{equation}
+    \pddt (\phi_k\kavg{f})
+    = \nablab \cdot \left(
+        \phi_k \kavg{\bm{\Phi} - f \textbf{u}}
+    \right)
+    + \phi_k \kavg{\textbf{S}}
+    + a_I \Iavg{
+        \bm{\Phi}_k \cdot \textbf{n}_k
+        + f_k 
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) \cdot \textbf{n}_k
+    },
+    \label{eq:avg_k_global}
+\end{equation}
+where we have used the average operator properties \ref{eq:avg_properties}.
+Likewise, the jump condition can be averaged too, using \ref{eq:avg}, yielding,
+\begin{equation}
+    \sum_k 
+    \Iavg{
+        \bm{\Phi}_k 
+        \cdot \textbf{n}_k
+        + f_k 
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) 
+        \cdot \textbf{n}_k
+    }
+    = \Iavg{\textbf{J}_I}.
+    \label{eq:avg_general_jump}
+\end{equation}
+So as the microscopic jump condition this equation maintains the consistency between the different averaged quantity in presence. 
+Similarly, the bulk or global averaged conservation equation can be obtained averaging \ref{eq:single-fluid_global} yielding,
+\begin{equation*}
+    \pddt \avg{f}
+    = \nablab \cdot \avg{\bm{\Phi} - f \textbf{u}}
+    + \avg{\textbf{S}}
+    + a_I\avg{\textbf{J}_I}.
+    \label{eq:avg_global}
+\end{equation*}
+
+
+\subsection{The averaged mass balance equations}
+
+We first consider the mass conservation. 
+By applying the phase average operator (\ref{eq:avg}) to the mass conservation (\ref{eq:two-fluid_mass}) one obtain the mass balance of the $k^{th}$ phases, 
+\begin{equation}
+    \pddt \phi_k 
+    + \nablab \cdot \left(
+        \kavg{\textbf{u}}\phi_k 
+    \right) 
+    = \frac{a_I}{\rho_k}\Iavg{M_k},
+    \label{eq:avg_k_mass}
+\end{equation}
+Notice that it correspond to the transport equation of the mass fraction of the 
+$k^{th}$ phase $\rho_k \phi_k$. 
+The source term due to mass transfer can also be expressed though the jump condition, 
+\ref{eq:mass_jump} as, $a_I\Iavg{M_k} = - a_I\Iavg{M}$, where we recall that $M$ is the mass transfer term of the neighboring phase such as defined by our notation convention adopted in the previous section. 
+We can notice that taking the sum of \ref{eq:avg_k_mass} for every phase $k^{th}$ and using the jump condition \ref{eq:mass_jump}, gives us and equation for the bulk density,
+\begin{equation}
+    \pddt \avg{\rho}
+    + \nablab \cdot 
+        \avg{\rho\textbf{u}} 
+    = 0,
+    \label{eq:avg_mass}
+\end{equation}
+which is also the global averaged equation of the \textit{single-fluid} formulation of the mass balance. 
+Notice that it is possible to uncorrelated $\rho$ and $\textbf{u}$ under the global average operator by using the mass weighted average operator, indeed $\avg{\rho\textbf{u}} = \avg{\rho}\mavg{\textbf{u}}$.
+Therefore, the mean density is transported by the mass weighted average velocity. 
+
+\subsection{The averaged momentum balance equations}
+
+The averaged momentum conservation equation on the $k$ phase is obtain by applying 
+\ref{eq:avg} on \ref{eq:one-fuild_momentum}. 
+It directly gives, 
+\begin{equation}
+    \pddt (\phi_k\kavg{\rho\textbf{u}}) 
+    % + \nablab\cdot(\phi_k\kavg{\textbf{uu}})
+    = \nablab\cdot\left(
+        \phi_k \kavg{\textbf{T}
+        - \rho\textbf{uu}}
+    \right)
+    +\phi_k\kavg{\textbf{b}}
+    + a_I\Iavg{M_k \textbf{u}_k +\textbf{n}_k\cdot\textbf{T}_k},
+\end{equation}
+Notice that the term including the density, are both average on the volume of the phase $k$.
+Thus, the density can be taken out the average such as, $\kavg{\rho \textbf{u}} = \rho_k\kavg{\textbf{u}}$ since $\rho$ is constant in each phase. 
+Also, the stress and mass transfer terms inside the interfacial term at the RHS of the equation, are both expressed in their own phase as a consequence of the subscript $_k$.
+Usually the drag force term is expressed as the force applied on the interface due to the stress from the neighboring phase. 
+Similar thinking goes for the mass transfer term. 
+Then to introduce such quantities we make use of the jump condition \ref{eq:stressjump}. 
+Applying the preceding remarks on the previous equation yields,
+\begin{equation}
+    \pddt \left(
+        \phi_k\kavg{\rho\textbf{u}}
+    \right)
+    = \nablab\cdot\left(
+        \phi_k \kavg{
+            \textbf{T}
+            -\rho \textbf{uu}}
+    \right)
+    +\phi_k\kavg{\textbf{b}}
+    + a_I\Iavg{
+        \textbf{f}_I 
+        - M \textbf{u} 
+        - \textbf{n}\cdot\textbf{T}
+    }.
+    \label{eq:avg_k_momentum}
+\end{equation}
+We recall that by dropping the indices on the interfacial terms $M$, $\textbf{n}$ and $\textbf{T}$ refer to the mass transfer stress tensor defined in the neighboring phase. 
+Also, the advantage of \ref{eq:avg_k_momentum} is that we clearly see the action of the surface tension force $\textbf{f}_I$ explicitly.
+
+Applying \ref{eq:avg} on \ref{eq:two-fuild_momentum} gives the bulk average of the momentum equation, namely,
+\begin{equation}
+    \pddt 
+        \avg{\rho\textbf{u}}
+    % +  \nablabh \cdot \left(
+    %     \avg{\rho \textbf{u} \textbf{u}}
+    % \right)
+    = \nablab \cdot \avg{
+        \textbf{T}
+        -  \rho \textbf{u} \textbf{u}} 
+    + \avg{\textbf{b}}
+    + \Iavg{\textbf{f}_I}.
+    \label{eq:avg_momentum}
+\end{equation}
+In this equation it is interesting to notice that the surface jump force appear as a source term. 
+On closed surfaces, i.e. droplets or bubbles surface, the resultant of the force $\textbf{f}_I$ cancel out as a result of the divergence theorem \citep{tryggvason2011direct}. 
+Nonetheless, the averaged quantity $\Iavg{\textbf{f}_I}$ is not null, despite the fact that we consider solely closed surfaces.
+Indeed, it can be shown that this force has the form 
+\begin{equation*}
+    \avg{\textbf{f}_I}
+    = \nabla \cdot \textbf{M}_I + \mathcal{O}(D^2/R^2),
+\end{equation*} 
+with $\textbf{M}_I$ being a second order tensor that has the form of a stress. 
+This point will be discussed in \ref{sec:hybrid_model} were we demonstrate that any averaged quantity can be express as a Taylor expansion series of higher order moments. 
+
+\subsection{The averaged energy balance equations}
+
+Likewise, we apply \ref{eq:avg} to \ref{eq:two-fuild_totenergy} to derive the phase averaged total energy equation.
+Also, by making use of the jump condition (\ref{eq:total_energy_jump}), it is trivial to show, 
+\begin{multline}
+    \pddt \left(
+        \phi_k\kavg{\rho E}
+    \right)
+    % + \rho_k \nablab \cdot \left(
+    %     \phi_k\kavg{\textbf{u} E} 
+    % \right)
+    % \\
+    = \nablab \cdot \left(
+        \phi_k\kavg{\textbf{T}\cdot\textbf{u}
+        - \textbf{q}
+        - \rho E \textbf{u} }
+    \right)
+    + \phi_k\kavg{\textbf{b}\cdot\textbf{u}} \\
+    +a_I \Iavg{
+        \textbf{f}_I\cdot\textbf{u}_I
+        + \left(
+        \textbf{q}
+        - \textbf{T}\cdot\textbf{u}
+        \right) 
+        \cdot\textbf{n}
+        -M E}.
+    \label{eq:avg_k_total_energy}
+\end{multline}
+The interfacial on the RHS represent, the heat flux directed inside the phase,
+the work of the interfacial force from the external phase, the energy transfer due 
+to mass transfer, and the work of the interfacial forces.
+The other terms have been described in the previous section. 
+Again we can derive an equation for the total energy conservation averaged on the whole bulk. 
+From \ref{eq:one-fuild_totenergy}, it yields
+\begin{equation}
+    \pddt \avg{\rho E}
+    = \nablab \cdot 
+        \avg{\textbf{T}\cdot\textbf{u}
+        - \textbf{q}
+        - \rho E \textbf{u}}
+    + \avg{\textbf{b}\cdot\textbf{u}}
+    + \Iavg{\textbf{f}_I\cdot\textbf{u}_I}.
+    \label{eq:avg_totenergy}
+\end{equation}
+Again, as previously it is possible to separate, mechanical and internal energy from this general equation. 
+The mechanical energy equation is obtained by averaging \ref{eq:one-fuild_meca}, namely,
+\begin{equation}
+    \frac{1}{2}\frac{\partial }{\partial t}
+            \avg{\rho u^2}
+    + \frac{1}{2}\nablab \cdot 
+            \avg{\rho u^2 \textbf{u}}
+    = \nablab\cdot\avg{\textbf{u}\cdot \textbf{T}}
+    +\avg{\textbf{u}\cdot\textbf{b} - \textbf{T}: \nablabh\textbf{u}}
+    +\Iavg{\textbf{u}\cdot\textbf{f}_I}
+\end{equation}
+Since we considered the \textit{energy jump} as being solely due to the work of the \textit{force jump}, it must appear entirely in this equation. 
+Likewise, the internal averaged energy equation is obtained averaging \ref{eq:one-fuild_internal_energy},
+\begin{equation}
+    \pddt \avg{\rho e}
+    + \nablab \cdot \avg{\rho  e\textbf{u}}
+    = \avg{\textbf{T}:\nablabh\textbf{u}}
+    + \avg{\nablabh\cdot\textbf{q}}.
+\end{equation}
+Again, since the \textit{energy jump} is purely mechanical the surface source term do nor appear in this equation. 
+Additional, work on the averaged equations of energy is presented in \ref{ap:average}.

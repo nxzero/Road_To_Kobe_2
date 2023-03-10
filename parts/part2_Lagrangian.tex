@@ -1,0 +1,425 @@
+\section{Lagrangian description of a single fluid particle}
+\label{sec:Lagrangian_desc}
+
+In the previous sections we derived equations of conservation for Newtonian multiphase flows. 
+Then we averaged them in a continuous manner, leading us to a set of averaged conservation equations regardless of the topology of the dispersed phase. 
+However, as stated in introduction, the industrial context of this work focuses on dispersed multiphase flows. 
+Thus, it is important to take advantage of the dispersed nature of the flow. 
+Before, introducing the different averaged models considering dispersed phases, it is important to accurately define the conservation laws acting on a single particle. 
+It may seem trivial at first, nevertheless for a whole fluid particle immersed in a Newtonian fluid the Lagrangian balance equations turns out be quite complicated. 
+
+Therefore, in this section we present a complete set of Lagrangian equations describing the evolution of the Lagrangian particle's properties within time. 
+We first give a rigorous definition of what is a Lagrangian property for a whole fluid particle. 
+Then, we derive general balance equations similar to \ref{eq:general_conservation}, but for a Lagrangian particle. 
+Afterward we expose the mass, linear momentum and energy conservation laws.
+Additionally, we present a method to describe the evolution of the shape, angular and strain of momentum, and more generally any higher order properties related to a whole fluid particle. 
+
+\subsection{Definition of the Lagrangian properties}
+
+Let us define a particle indexed, $\alpha$, occupying the volume $V_\alpha(t)$ having a Lagrangian property $q_\alpha(t)$.
+Then $q_\alpha(t)$ is defined as the mean of the arbitrary Eulerian quantity $f_k(\textbf{y},t)$ over the domain $V_\alpha(t)$, or a subdomain included in $V_\alpha(t)$.
+In this section the phase $k$ represent the phase of the dispersed phase as it is arbitrary. 
+Therefore, we define $q_\alpha(t)$ such as 
+\begin{equation}
+    q_\alpha(t)
+    = \int_{\Omega_\alpha(t)} f_k(\textbf{y},t) d\Omega,
+    \label{eq:q_alpha}
+\end{equation}
+where $\Omega_\alpha(t)$ is the domain defined such that $\Omega_\alpha \subseteq  V_\alpha$.
+Usually, we transport volume quantities, therefore in most of the cases $\Omega_\alpha = V_\alpha$, but it can also be surface quantities, in which case $\Omega_\alpha = S_\alpha$, where $V_\alpha$ and $S_\alpha$ are respectively the volume and surface of the particle $\alpha$.
+As an example, $q_\alpha$ is the mass of the particle $\alpha$ when $f_k = \rho_k$ in \ref{eq:q_alpha}.
+Also, if $f_k$ has the form of an arbitrary quantity times the surface identification function, i.e. $f_k = f_k \delta_I$, then it is possible to write, 
+\begin{equation}
+    q_\alpha(t)
+    = \int_{V_\alpha} f_k(\textbf{y}) \delta_I dV,
+    = \int_{S_\alpha} f_k(\textbf{y}) dS,
+    \label{eq:q_surf_alpha}
+\end{equation}
+in which case $\Omega_\alpha$ turns out to be $S_\alpha$. 
+So both expressions remain equivalent. 
+
+All along this section we refer to the Lagrangian quantities labelled by $_\alpha$ solely for quantities that are owned by the particle indexed $\alpha$.
+Since, all Lagrangian quantities depend solely on time we discard the argument $t$ in all variables indexed $\alpha$.
+
+\subsection{Generalized balance equations}
+
+For any arbitrary Lagrangian quantity $q_\alpha$ we wish to define its evolution within time. 
+To do so, we carry out the total derivative of $q_\alpha$, namely $\ddt q_\alpha$, thanks to Reynolds transport theorem.
+So let's introduce the general Reynolds transport equation for any quantity $q_\alpha$, namely, 
+\begin{equation*}
+    \ddt  q_\alpha 
+    = \ddt \int_{V_\alpha} f_k dV 
+    = \int_{V_\alpha} \pddt f_kdV 
+    + \int_{S_\alpha} f_k \textbf{u}_I \cdot \textbf{n}_k d S,
+\end{equation*}
+where $\textbf{u}_I$ is the velocity of the interface and $\textbf{n}_k$ the unit outward normal vector to $S_\alpha$. 
+By adding and subtracting, $\int_{S_\alpha} f_k \textbf{u}_k\cdot \textbf{n}_k dS$ on the RHS,  this integral can be reformulated as,
+\begin{equation}
+    \ddt  q_\alpha 
+    = \int_{V_\alpha}\left[ \pddt f_k + \nablabh \cdot\left(f_k\textbf{u}_k\right) \right]dV 
+    + \int_{S_\alpha} f_k (\textbf{u}_I-\textbf{u}_k)\cdot \textbf{n}_k d S,
+    \label{eq:q_alpha_dt}
+\end{equation}
+where we clearly distinguish, the volume integral of the local material derivative (first term), and the surface integral of the flux of $f_k$ across the phases (second term).
+By substituting the first term with the general conservation law from \ref{eq:general_conservation}, it is straightforward to show that 
+\begin{equation}
+    \ddt  q_\alpha 
+    = \int_{V_\alpha} \textbf{S}_k dV 
+    + \int_{S_\alpha} \left[\bm{\Phi}_k + f_k (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S,
+\end{equation}
+where we used the divergence theorem to transform the non-conservative flux $\bm{\Phi}$ to a surface integral. 
+The jump condition \ref{eq:general_jump} can be used to rewrite the previous equation into
+\begin{equation}
+    \ddt  q_\alpha 
+    = \int_{V_\alpha} \textbf{S}_k dV 
+    + \int_{S_\alpha} \left[\bm{\Phi} + f (\textbf{u}_I-\textbf{u}) \right] \cdot \textbf{n}_k d S
+    + \int_{S_\alpha} \textbf{J}_I dS,
+    \label{eq:q_alpha_balance}
+\end{equation}
+where we recall that \textbf{u} and $\bm{\Phi}$ refer to the velocity and the non-conservative flux of the neighboring phase since we dropped the indices (based on the convention that we adopted in \ref{sec:conservation_laws}). 
+Besides, notice that we kept the index $k$ on $\textbf{n}_k$ so that it still refer to the normal outward of the particle $\alpha$. 
+Now it is clear that the derivative of any integral quantities over the volume of a particle is the sum of the volumetric source term $\textbf{S}_k$ integrated over the volume, the integral of the jump quantity $\textbf{J}_I$ and integral of the non-convective flux and the flux of $f$ across the surface of the particle. 
+
+Next, let's transport the arbitrary surface quantity $f_k \delta_I$.
+In this specific case we must use the general Reynolds transport theorem known as the Leibniz integral rule. 
+Indeed, it reads as \citep[Appendix B]{morel2015mathematical}, 
+\begin{equation}
+    \ddt  q^I_\alpha
+    = \int_{S_\alpha} f_k dS 
+    = \int_{S_\alpha} \left[
+        \pddt f_k 
+        +   \nablabh_I \cdot (\textbf{u}_If_k)
+    \right]dS,
+    \label{eq:q_alpha_I_dt}
+\end{equation}
+where this relation is valid for any surface topology. 
+Notice that fixing $f=1$ in the above equation gives us an equation of transport for the interfacial area of a particle, which can lead us back to the topological balance \ref{eq:interface_transport}. 
+This matter will be discussed in the next few sections. 
+Additionally, here is another interesting relation that can be applied to the second term on the RHS of \ref{eq:q_alpha_I_dt} \citep[Appendix B]{tryggvason2011direct}, 
+\begin{equation}
+    \int_{S_\alpha}  \nablabh_I  \cdot F dS
+    = \int_{C_\alpha} F \cdot \textbf{p} dC
+    - \int_{S_\alpha} \kappa F \cdot \textbf{n} dS. 
+    \label{eq:surf_div_theorem}
+\end{equation}
+where $F$ is a tensor of any rank, $C_\alpha$ the boundary of $S_\alpha$, $dC$ is an infinitesimal piece of $C_\alpha$, and \textbf{p} is the vector normal to the line $C_\alpha$ and tangent to the surface $S_\alpha$.
+Remark that the first term on the RHS is null for closed surface. 
+Notice that in this definition, the direction of \textbf{n} doesn't matter as it appear twice in the expression, indeed a second normal vector \textbf{n} appear inside the definition of the curvature $\kappa$. 
+
+\subsection{Area and surface energy equations}
+
+Let's begin by describing the evolution of the particle surface area within time.
+It can be obtained simply by setting $f_k = 1$ in \ref{eq:q_alpha_I_dt}.  
+In agreement with \citet{morel2007surface} we obtain,  
+\begin{equation*}
+    \ddt A_\alpha
+    = \ddt \int_{S_\alpha} dS
+    = \int_{S_\alpha} \nablabh_I \cdot \textbf{u}_I dS,
+\end{equation*}
+where $A_\alpha$ is the surface of the particle $\alpha$. 
+Using $F = \textbf{u}_I$ in \ref{eq:surf_div_theorem}, and considering a closed surface, yields the following relation, 
+\begin{equation}
+    \ddt A_\alpha
+    = - \int_{S_\alpha} \kappa \textbf{u}_I \cdot \textbf{n} dS,
+    \label{eq:A_dt}
+\end{equation}
+We can notice on the RHS of \ref{eq:A_dt} that only the normal velocity of the interface appears.
+Consequently, the area of a particle surface evolve proportionally to local normal velocity times the local curvature of the interface. 
+
+Likewise, let's consider the derivative of the surface energy of a particle, by substituting $f_k$ by $\sigma$ in \ref{eq:q_alpha_dt} (we recall that $\sigma$ is the surface tension coefficient), resulting in 
+\begin{equation*}
+    \ddt  E^\sigma_\alpha
+    = \int_{S_\alpha} \sigma dS 
+    = \int_{S_\alpha} \left[
+    \pddt \sigma
+    - \kappa \sigma (\textbf{u}_I \cdot \textbf{n})
+    \right]dS,
+\end{equation*}
+where we used the divergence theorem on the last term of the RHS. 
+If we consider the expression of the surface force \ref{eq:f_I} with a constant surface tension coefficient $\sigma$ we obtain the following simplified expression,
+\begin{equation}
+    \ddt  E^\sigma_\alpha
+    = \int_{S_\alpha} 
+    \textbf{f}_I \cdot \textbf{u}_I
+    dS.
+    \label{eq:E_sigma_dt}
+\end{equation}
+\ref{eq:E_sigma_dt} shows that the rate of change of the surface energy is strictly equivalent to the work done by the local surface tension force $\textbf{f}_I$. 
+This expression will be useful to clarify the contribution of the surface force in the total energy balance equation. 
+
+\subsection{Mass, momentum and total energy balance equations}
+
+The first set of conservation laws that we can derive rather easily, is  the mass, momentum and total energy balance equations. 
+Indeed, substituting $f_k$ with $\rho_k$, $\rho_k \textbf{u}_k$ and $\rho_k E_k$  in \ref{eq:q_alpha_balance}, and making use of the previously defined microscopic balance \ref{eq:two-fluid_mass}, \ref{eq:two-fuild_momentum} and \ref{eq:two-fuild_totenergy}, together with the jump condition of each transport equations, i.e. \ref{eq:mass_jump},\ref{eq:stressjump} and \ref{eq:total_energy_jump} lead us to respectively the mass, momentum and total energy balance equations for a whole fluid particle.
+These equations read as,
+\begin{align}
+    \label{eq:dt_m_alpha}
+    \ddt m_\alpha 
+    % = \ddt \int_{V_\alpha} \rho_k  dV
+    &= \int_{S_\alpha} M_k dS
+    = - \int_{S_\alpha} M dS, \\
+    \label{eq:dt_p_alpha}
+    \ddt \textbf{p}_\alpha 
+    % = \ddt \int_{V_\alpha} \rho_k \textbf{u}_k dV
+    &= \int_{V_\alpha} \textbf{b}_k dV
+    + \int_{S_\alpha} \left(
+    \textbf{T}\cdot\textbf{n}_k
+    + \textbf{f}_I 
+    + M_k \textbf{u}_k
+    \right)dS, \\
+    \label{eq:dt_e_alpha}
+    \ddt E_\alpha 
+    % = \ddt \int_{V_\alpha} \rho_k E_k dV
+    &= \int_{V_\alpha} \textbf{b}_k \cdot \textbf{u}_k dV 
+    + \int_{S_\alpha} \left[
+        (\textbf{T}\cdot \textbf{u} 
+    - \textbf{q})\cdot\textbf{n}_k 
+    + M_k E_k 
+    + \textbf{f}_I \cdot \textbf{u}_I 
+    \right]dS, 
+\end{align}
+where $m_\alpha =  \int_{V_\alpha} \rho_k dV$, $\textbf{p}_\alpha= \int_{V_\alpha} \rho_k \textbf{u}_k dV$ and $E_\alpha= \int_{V_\alpha} \rho_kE_k dV$ are respectively the mass, momentum and total energy of the particle $\alpha$. 
+We recall that $M_k$ is the mass transfer term, $E_k$ the local total energy, \textbf{T} the stress tensor of the neighboring phase, $\textbf{b}_k$ the body forces of the phase $k$, $\textbf{f}_I$ the surface tension force. 
+Notice that thanks to the jump condition of the energy and the momentum equation, we made appear the stress and heat flux of the neighboring phase together with the surface tension force. 
+Which is more appropriate when dealing with solid particles as the internal stress $\textbf{T}_k$ and heat flux $\textbf{q}_k$ is not always defined. 
+It is possible to reformulate these equations in several ways. 
+First, if we consider \ref{eq:f_I}, it can be shown that the integral of $\textbf{f}_I$ over a closed surface is null \citep[Appendix B]{tryggvason2011direct}, therefore this term vanishes.
+Additionally, by substituting the term $\textbf{f}_I \cdot \textbf{u}_I$ by \ref{eq:E_sigma_dt} in the energy equation we can make appear the surface tension energy.  
+
+Before diving in further details it is crucial to define some fundamental quantities of the particles $\alpha$. 
+First, the position of the center of mass of the particle, $\textbf{y}_\alpha$, is defined as, 
+\begin{equation*}
+    m_\alpha \textbf{y}_\alpha
+    = \int_{V_\alpha} \rho_k \textbf{y}_k dV,
+\end{equation*}
+Additionally, we define the distance between any points inside $V_\alpha$ and $\textbf{y}_\alpha$ by the vector \textbf{r}, such that, $\textbf{r}(\textbf{y},t) = \textbf{y} - \textbf{y}_\alpha(t)$.
+Again, we can notice here, and it will be of major importance in the next derivations, that $\textbf{r}$ is function of space and time. 
+Now that the position of the center of mass is stated, we can define the point velocity of a whole fluid particle.
+The unique and non-arbitrary definition of the particle's center of mass velocity, is that it is the derivative within time of its position vector $\textbf{y}_\alpha$.
+Therefore, by making use of the Reynolds transport theorem (\ref{eq:q_alpha_dt}), and classical rules of derivation, it can be shown that (see \ref{ap:average}),  
+\begin{equation}
+    \textbf{u}_\alpha
+    = \frac{1}{m_\alpha} \left(
+        \textbf{p}_\alpha
+        +  \int_{S_\alpha} \textbf{r} M_k dS
+    \right)
+    \label{eq:dt_y_alpha}
+\end{equation}
+where we introduced the notation of the particle's center of mass velocity, 
+\begin{equation*}
+    \textbf{u}_\alpha = \ddt \textbf{y}_\alpha,
+\end{equation*}
+and we made use of the momentum definition \ref{eq:dt_p_alpha}.
+Notice that the first component of the RHS of the velocity is the linear momentum divided by the mass of the particle.
+The second term is less intuitive, it results from the contribution of the anisotropic mass transfer over the surface of the particle. 
+We emphasize that this term is different from the momentum exchange term $\int \textbf{u}_kM_k dS$ (in \ref{eq:dt_p_alpha}) as it does not involve momentum exchange, but rather mass exchanges. 
+In \citet{zaepffel2011modelisation}, \citet{paisant2014modelisation} and \citet{morel2015mathematical}, they state that the particle's center of mass velocity is $\textbf{u}_\alpha = \textbf{p}_\alpha / m_\alpha$ even though they are considering mass transfer. 
+It is indeed what we would expect in most of the cases, nevertheless this definition turns out to be not adapted in the presence of anisotropic mass transfer as denoted by \ref{eq:dt_y_alpha}. 
+To give a better understanding on the physical implication of this contribution we propose the following example :
+Let consider the particle of volume $V_\alpha$ be represented by a rocket of volume $V_\alpha$.
+Then while the rocket is taking off, a considerable amount of kerosene leaves the volume $V_\alpha$ causing mass transfer from the inside to the outside of the rocket's volume.
+Then the center of mass of the rocket, $\textbf{y}_\alpha$, rise up because of two distinct contribution.
+The first one is because of newton 3$^{th}$ law which stipulate that any transfer of momentum results in a source of momentum in the opposite direction.
+This contribution corresponds to the last term of \ref{eq:dt_p_alpha}, namely, $\int \textbf{u}_kM_k dS$.
+The second contribution is due to the loss of kerosene in the rocket, which makes the center of mass slightly move upward in the rocket frame of reference, since the mass balance within the rocket changes.
+The rate of change of the center of mass is the second contribution to the total velocity, i.e. the second term of \ref{eq:dt_y_alpha}, namely $\int_{S_\alpha} \textbf{r}M_kdS$.  
+Knowing that, it is hard to imagine how such contribution could have any importance in the context of dispersed two-phase flows. 
+Besides, it is interesting to notice that regardless of the particle's internal motions, the relevant velocity is $\textbf{u}_\alpha = \textbf{p}_\alpha /m_\alpha,$ if we neglect mass transfer.
+Also, we define the \textit{inner velocity} $\textbf{w}_k(\textbf{y},t)$, such that $\textbf{w}_k(\textbf{y},t) = \textbf{u}_k(\textbf{y}) - \textbf{u}_\alpha(t)$. 
+Using this definition, and after manipulating \ref{eq:dt_y_alpha} we obtain the following relation for the momentum, 
+\begin{equation}
+    \textbf{p}_\alpha
+    =  m_\alpha \textbf{u}_\alpha
+    - \int_{S_\alpha} \textbf{r} M_k dS
+    = m_\alpha \textbf{u}_\alpha
+    + \int_{V_\alpha} \rho_k \textbf{w}_k dV,
+    \label{eq:velocity_definition}
+\end{equation}
+where the step from the second to the third equality is made possible thanks to a relation derived in the next section, see \ref{eq:M_alpha_dt}. 
+Anyhow, as we stated above the integral of the innner velocity is \textbf{rigorously null}, regardless of the internal motions, as long as there is no mass transfer across the  particle's surface.  
+
+At this point it is interesting to reformulate the LHS of the momentum equation by making use of the previous remarks. 
+By using the momentum decomposition and the derivative of the mass equation, respectively \ref{eq:velocity_definition} and \ref{eq:dt_m_alpha}, we can demonstrate that
+\begin{equation*}
+    \ddt \textbf{p}_\alpha 
+    = m_\alpha  \ddt \textbf{u}_\alpha
+    + \textbf{u}_\alpha \int_{S_\alpha} M_k dS  
+    - \ddt \int_{S_\alpha} \textbf{r}M_k dS.
+\end{equation*}
+Above all of those considerations, we can re-write the momentum and energy balance equations under a more simplified form, namely, 
+\begin{align}
+    \label{eq:u_alpha_dt}
+    m_\alpha \ddt \textbf{u}_\alpha 
+    &= \int_{V_\alpha} \textbf{b}_k dV
+    + \int_{S_\alpha} \left(
+    \textbf{T}\cdot\textbf{n}_k
+    +\textbf{w}_k M_k
+    \right)dS
+    + \ddt \int_{S_\alpha} \textbf{r}M_k dS,\\
+    \label{eq:dt_e_esig_alpha}
+    \ddt (E_\alpha + E^\sigma_\alpha) 
+    &= \int_{V_\alpha} \textbf{b}_k \cdot \textbf{u}_k dV
+    + \int_{S_\alpha} \left[
+        (\textbf{T}\cdot \textbf{u} 
+    - \textbf{q})\cdot\textbf{n}_k 
+    - M_k E_k 
+    \right]dS.
+\end{align}
+Under this form we clearly distinguish the contribution of phenomenons to the momentum balance. 
+Indeed, the first term on the RHS is the contribution of the body force, the second term is the stress applied on the surface of the particle from the neighboring fluid, the third one is the contribution of the momentum exchange, and finally the last term correspond to the contribution due to the rate of anisotropic mass transfer. 
+Regarding the total energy equation we demonstrate in \ref{ap:average} how to decompose the total energy into an equation of internal energy and kinetic energy. 
+Besides, The kinetic energy equation can itself be decomposed into the kinetic energy of the center of mass motions and the kinetic internal motion.
+Resulting into 3 independent equations for the energy.  
+
+\subsection{Higher order description of the particles}
+
+Now that we have defined these fundamental quantities, we can introduce the definition of the moments of a particle.
+Indeed, we define the first moment or dipole of any property $q_\alpha$ as,
+\begin{equation*}
+    \textbf{Q}_\alpha 
+    = \int_{V_\alpha} \textbf{r} f_k dV
+\end{equation*}
+As, before we use the Reynolds transport theorem to describe the evolution of any $\ddt \textbf{Q}_\alpha$ within time. 
+Considering \ref{eq:general_conservation}, the Reynolds theorem, and the relation,
+$  \pddt \textbf{r}
++ \textbf{u}_k \cdot \nablabh \textbf{r}
+= - \frac{d}{dt} \textbf{y}_\alpha  + \textbf{u}_k \cdot \textbf{I}
+= \textbf{w}_k$,
+where $\textbf{I}$ is the identity tensor, it can be shown that, 
+\begin{align}
+    \ddt \textbf{Q}_\alpha
+    = \int_{V_\alpha} \left( 
+        \textbf{r} \textbf{S}_k 
+        - \bm{\Phi}_k
+        + f_k  \textbf{w}_k 
+    \right) dV
+    + \int_{S_\alpha} \textbf{r} \left[
+        \bm{\Phi}_k
+        + f_k (\textbf{u}_I-\textbf{u}_k)
+    \right]\cdot \textbf{n}_k  dS.
+    \label{eq:dt_Q_alpha}
+\end{align}
+As the derivation is rather complicated we provide the full derivation in \ref{ap:cinematic}. 
+This equation is equivalent to the \ref{eq:q_alpha_balance}, in the sense that we recover all the terms, but multiplied by the vector \textbf{r}.
+Yielding the moment of the source term $\textbf{rS}_k$, the moment of the non-convective term $\textbf{r}\mathbf{\Phi}_k\cdot\textbf{n}_k$ and the moment of phase exchange term,$\textbf{r} f_k (\textbf{u}_I-\textbf{u}_k)\cdot\textbf{n}_k$. 
+Additionally, two supplementary terms appear in this equation, the integral of the non-convective flux $- \int \bm{\Phi}_k dV$ and the integral of the fluctuation of the internal velocity times the property of interest $f_k$, i.e. $\int \textbf{w}_k f_k dV$. 
+ 
+Furthermore, it can be shown that the transport of an arbitrary order moments,
+\begin{equation*}
+    \textbf{Q}_\alpha^n
+    = \int_{V_\alpha} \underbrace{
+        \textbf{r}\textbf{r}\ldots\textbf{r}
+    }_{
+        \text{n times}
+    }
+    f_k dV
+\end{equation*} 
+do not involve additional terms in its own balance, but just higher order moments of the already present quantities, (see \ref{eq:dt_P_order_l}).
+In short, these higher order equilibrium equations will be able to describe the moment of the distributions of $f_k$ inside the particle.
+As an example, the zeroth order moments are the mean quantities, the first order moments measure the symmetry of the distribution, the second order moments represent the standard deviations of the distribution and so on.
+
+
+\subsection{Dipole of mass and momentum equations.}
+
+Thanks to the derivation carried out in the previous subsection we can derive the balance equations for the moment or dipole of mass and moment of momentum equations.
+To do so, we substitute $f_k$ in \ref{eq:dt_Q_alpha} by $\rho_k \textbf{r}$ and $\rho_k \textbf{u}_k \textbf{r}$, yielding, 
+\begin{align}
+    \label{eq:M_alpha_dt}
+    \ddt \int_{V_\alpha} \textbf{r} \rho_k dV
+    = \int_{V_\alpha} \rho_k  \textbf{w}_k  dV
+    &+ \int_{S_\alpha} \textbf{r} M_k  dS = 0,\\
+    \label{eq:P_alpha_dt}
+    \ddt \mathcal{P}_\alpha
+    % = \ddt \int_{V_\alpha} \rho_k  \textbf{r} \textbf{u}_k dV
+    = \int_{V_\alpha} \left( 
+        \textbf{r} \textbf{b}_k 
+        - \textbf{T}_k
+        + \rho_k \textbf{u}_k  \textbf{w}_k 
+    \right) dV
+    &+ \int_{S_\alpha} \textbf{r} \left(
+        \textbf{f}_I
+        + \textbf{T} \cdot \textbf{n}_k
+        + \textbf{u}_k M_k
+    \right) dS,
+    % \\
+    % \label{eq:dt_E_alpha}
+    % \ddt \mathcal{E}_\alpha
+    % = \ddt \int_{V_\alpha} \rho_k  \textbf{r} E_k dV
+    % &= \int_{V_\alpha} \left( 
+    %     \textbf{r} \textbf{b}_k \cdot \textbf{u}_k
+    %     + \textbf{q}_k
+    %       - \textbf{T}_k\cdot\textbf{u}_k
+    %     + \rho_k E_k  \textbf{w}_k 
+    % \right) dV \nonumber \\
+    % &+ \int_{S_\alpha} \textbf{r} \left[
+    %     \textbf{f}_I \cdot \textbf{u}_I
+    %     + (\textbf{T} \cdot \textbf{u} - \textbf{q}) \cdot \textbf{n}_k
+    %     - E M
+    % \right]  dS,
+\end{align}
+with $\int_{V_\alpha} \rho_k \textbf{r} dV$ and  $\mathcal{P}_\alpha$, being respectively, the first moment of mass and the first moment of momentum. 
+Note that the first equation is null by essence of the definition of \textbf{r}. 
+The moment of momentum can be re rewritten as $\int_{V_\alpha} \rho_k \textbf{rw} dV$ since $\int_{V_\alpha} \textbf{r} dV = 0$. 
+Besides, the third term of this equation can be simplified using the inner velocity definition, i.e.  $\textbf{w}_k = \textbf{u}_k - \textbf{u}_\alpha$, and \ref{eq:M_alpha_dt} yielding, 
+\begin{equation*}
+    \int_{V_\alpha} \rho_k \textbf{u}_k \textbf{w}_k dV 
+    + \int_{S_\alpha} \textbf{r} \textbf{u}_k M_k dS
+    = 
+    \int_{V_\alpha} \rho_k \textbf{w}_k \textbf{w}_k dV 
+    + \int_{S_\alpha} \textbf{r} \textbf{w}_k M_k dS. 
+\end{equation*}
+
+Additionally, we must include to this already complex system, the second moment of mass's equation of conservation. 
+Following the previous definitions the second moment of mass reads as, $\mathcal{G}_\alpha = \int_{V_\alpha} \rho_k \textbf{rr}dV$.
+This tensor is similar to the classic inertia tensor defined for solid particle.  
+Indeed, if we note $\mathcal{I}_\alpha$ the \textit{classic} inertia tensor used in solid mechanics then, $\mathcal{I}_\alpha = \frac{1}{3}(\mathcal{G}_\alpha : \textbf{I})\mathbf{I} - \mathcal{G}_\alpha$. 
+Meaning that $\mathcal{I}_\alpha$ is in fact the deviatoric part of the more general tensor $\mathcal{G}_\alpha$. 
+Then the tensor $\mathcal{G}_\alpha$ gives  us information on the shape of the particle as it correspond to the standard deviation of the position vectors inside a particle. 
+The time derivative of this tensor reads as,  
+\begin{equation}
+    \ddt \mathcal{G}_\alpha
+    = \ddt \int_{V_\alpha} \rho_k \textbf{rr} dV 
+    = 2 \mathcal{S}_\alpha
+    + \int_{S_\alpha} \textbf{rr} M_k dS,
+    \label{eq:G_alpha_dt}
+\end{equation}
+where we introduced $\mathcal{S}_\alpha$ the strain of momentum tensor which is defined as the symmetric part of $\mathcal{P}_\alpha$.
+Likewise, if we take the antisymmetric part of the moment of momentum tensor we obtain the angular momentum tensor $\mathcal{A}_\alpha$. 
+Therefore, taking the symmetric and antisymmetric part of the moment of momentum balance (\ref{eq:dt_p_alpha}) yields the strain and angular momentum balance. 
+Considering the previous few facts and carrying out the decomposition of the moment of momentum equation,  gives
+\begin{align}
+    \label{eq:dt2_G_alpha_dt}
+    \frac{d^2}{dt^2} \mathcal{G}_\alpha
+    &=2 \int_{V_\alpha}\left[
+        (\textbf{r} \textbf{b}_k)^S 
+        - \textbf{T}_k
+        + \rho_k \textbf{w}_k  \textbf{w}_k 
+    \right] dV  
+    - \ddt \int_{S_\alpha} \textbf{rr} M_k dS, \nonumber \\
+    &+ \frac{1}{2}\int_{S_\alpha} \left(
+            \textbf{r}\textbf{f}_I
+            + \textbf{r}\textbf{T} \cdot \textbf{n}_k
+            + \textbf{r}\textbf{w}_k M_k
+    \right)^SdS, \\
+    \label{eq:dt_2A_alpha}
+    \ddt \mathcal{A}_\alpha
+    &= \int_{V_\alpha} \left( 
+        \textbf{r} \textbf{b}_k 
+    \right)^A dV
+    + \int_{S_\alpha} 
+            (\textbf{r}\textbf{f}_I
+            + \textbf{r}\textbf{T} \cdot \textbf{n}_k
+            + \textbf{r}\textbf{w}_k M_k)^A 
+    dS,
+\end{align}
+where $(\ldots)^S$ and $(\ldots)^A$ are functions that return respectively the symmetric and antisymmetric part of the argument.  
+
+
+With \ref{eq:dt2_G_alpha_dt} we clearly identify all the contributions to the shape evolution of the particle. 
+Indeed, the second derivative of the inertia tensor of a particle is proportional to the symmetric part of the moment of body forces, the internal fluctuations, the surface tension forces and the external hydrodynamic forces. 
+Besides, the inertia tensor is inversely proportional to the internal stress, and the derivative of the second moment of mass transfer term. 
+Then, when the former contributions generate deformation inside the particle, the latter contributions increase and act again the deformation of the particle.  
+Regarding the angular momentum balance it is interesting to remark that neither the internal stress nor the internal fluctuations contribute to the angular momentum balance. 
+Therefore, no internal forces from the particle dump the angular momentum as it is the case for the strain of momentum. 
+Otherwise, it is clear that the antisymmetric part of the moment of force generate angular momentum.  
+

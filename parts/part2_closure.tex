@@ -1,0 +1,202 @@
+\section{The closure problem for the hybrid model}
+
+As it is widely known the system of equations derived above (\ref{eq:classic_hybrid_mass_c}, \ref{eq:classic_hybrid_momentum_c}, \ref{eq:hybrid_mass_p} and \ref{eq:hybrid_momentum_p}), needs to be feed with closure terms in order to be solved. 
+Indeed, as previously observed the equations contain in the most general case an averaged source, diffusive and interfacial terms. 
+Those terms are the macroscopic representation of the microscopic phenomenons.
+In this section we give a brief idea of the form of the different closure terms, solely focusing on the previous stated equations, in order to stay succinct.
+We will start by reformulating the equations into a more explicit form, meaning that we must isolate the averaged velocities, volume fraction, mass, surface and number density variable for which we solve the equation, respectively $\pnavg{\textbf{u}}$, $\cavg{\textbf{u}}$,$\phi_c$, $\pnavg{m_\alpha}$,$\pnavg{A_\alpha}$, and $n$. 
+Depending on the method used to solve the system, we could find others variables considered as unknown, such as the averaged temperature, but it will not be discussed here.
+Nevertheless, for succinctness we only apply this simple logic, i.e. we consider those variables as unknown and the others terms as closure terms. 
+Afterwards, we pinpoint each closure terms and provide a brief discussion of each. 
+Notice that the closure terms are specific to the nature of the flows, thus each closure will be clarified in more details in the following chapters where we consider specific cases of dispersed two phase flow. 
+So there's no confusion in this section we expose the terms of zeroth and first order, but as soon as a first order moment is presented it implies that higher order moments exist in the equation.
+
+We can now re-write the equations of the hybrid model for the dispersed phase, making explicitly appear the variables and closure terms.
+Following the procedure described in the next few subsection we obtain, 
+\begin{multline*}
+    \pddt   \left(\pavg{m_\alpha}\right)
+    + \nablab \cdot \left[\pavg{m_\alpha} \pnavg{\textbf{u}_\alpha} 
+    + \frac{1}{2}\nablab\nablab : (\pavg{ \mathcal{G}_\alpha\textbf{u}_\alpha})\right] \\
+    = -\pavg{\int_{S_\alpha} M_c d S}
+    - \nablab \cdot \left(\pavg{m_\alpha' \textbf{u}_\alpha'} \right) ,
+\end{multline*}
+\begin{multline*}
+    \pddt \left(\pavg{A_\alpha}\right)
+    + \nablab \cdot \left(\pavg{\textbf{u}_\alpha} \pnavg{A_\alpha}\right)\\
+    = -\pavg{\int_{S_\alpha} \kappa\textbf{u}_I\cdot \textbf{n} dS }
+    - \nablab \cdot \left[
+        \pavg{A_\alpha' \textbf{u}_\alpha'}
+        +\Exp{ \int_{S_\alpha} \textbf{u}^I \cdot\textbf{nn} dS}^S
+    \right],
+    % + \Exp{\Psi A_\alpha}
+\end{multline*}
+for the mass and surface balance equations. 
+Finally, the momentum transport equation yields,
+\begin{multline}
+    \pddt   \left(\pavg{\textbf{u}_\alpha}\right)
+    + \nablab \cdot \left(\pavg{\textbf{u}_\alpha}\pnavg{\textbf{u}_\alpha}\right)
+    = \pavg{\frac{1}{m_\alpha}\int_{V_\alpha} \textbf{b} dV}
+    + \pavg{\frac{1}{m_\alpha}\ddt \int_{S_\alpha} \textbf{r}M_c dS}\\
+    - \pavg{\frac{1}{m_\alpha}\int_{S_\alpha} \left(\textbf{T}_c  \cdot \textbf{n}_c  + \textbf{w}_c M_c \right) dS}
+    - \nablab \cdot \left(\pavg{\textbf{u}_\alpha' \textbf{u}_\alpha'}\right). 
+\end{multline}
+In this system of equation we clearly distinguish the source of each contribution or closure terms at the RHS, while on the LHS we solely have the unknown mean variable $\pavg{A_\alpha}$, $\pavg{m_\alpha}$ and $\pavg{\textbf{u}_\alpha}$. 
+On the other hands the continuous equations can also be re-written in a more convenient form namely,
+\begin{equation*}
+    \pddt \phi_c 
+    + \nablab \cdot \left(
+        \cavg{\textbf{u}}\phi_c 
+    \right) 
+    =  \pavg{\int_{S_\alpha} M_c dS} 
+    - \nablab \cdot \left(
+        \pavg{\int \textbf{r} M_c dS}
+    \right),
+\end{equation*}
+\begin{multline*}
+    \rho_c \pddt (\phi_c\cavg{\textbf{u}}) 
+    +\rho_c \nablab \cdot ( \phi_c \cavg{\textbf{u}}\cavg{\textbf{u}})
+    = \pavg{\int_{S_\alpha} (\textbf{T}_c  \cdot \textbf{n}_c + \textbf{u}_c M_c) d S}\\
+    +\phi_c\cavg{\textbf{b}}
+    + \nablab\cdot\left[
+    \phi_c (\cavg{\textbf{T}}
+    - \cavg{\textbf{u'u'}})
+    - \pavg{\int_{S_\alpha} \textbf{r} (\textbf{T}_c  \cdot \textbf{n}_c + \textbf{u}_c M_c)dS}
+    \right].
+\end{multline*}
+
+
+\subsection{Mass transfer closure terms}
+
+Let's start by a simple consideration. 
+Each mass and momentum balance equation of the hybrid model posses respectively, a mass transfer term and a momentum transfer term. 
+Indeed, in the particular phase balance, \ref{eq:hybrid_mass_p} and \ref{eq:hybrid_momentum_p}, we can notice the presence of the terms,
+\begin{equation*}
+    \pavg{\int_{S_\alpha} M_c dS},  \;\;\;
+    \pavg{\int_{S_\alpha} M_c \textbf{u}_c dS}.  \;\;\;
+\end{equation*}
+Both of these terms are closures terms that need theoretical or empirical expression as they do not depend explicitly on the averaged velocity nor the averaged pressure. 
+These terms are also found in the continuous phase balance equations together with the higher moments of these terms, $\pavg{\int_{S_\alpha} \textbf{r} M_c dS}$ and $\pavg{\int_{S_\alpha} \textbf{r}  \textbf{u}_c M_c dS}$ which are also part of the closure problem. 
+
+Another, but less obvious mass transfer closure term can be found in the averaged particular momentum balance (\ref{eq:hybrid_momentum_p}). 
+Indeed, if we make use of the decomposition from \ref{eq:velocity_definition}, on \ref{eq:dt_p_alpha},  it  can be shown with ease that the LHS of \ref{eq:hybrid_momentum_p} can be reformulated as  
+\begin{multline}
+    \pddt   (\pavg{\textbf{p}_\alpha})
+    + \nablab \cdot (\pavg{\textbf{p}_\alpha \textbf{u}_\alpha}) 
+    = \pddt (\pavg{m_\alpha\textbf{u}_\alpha}) \\
+    + \nablab \cdot (\pavg{m_\alpha \textbf{u}_\alpha \textbf{u}_\alpha})
+    - \pavg{\ddt \int_{S_\alpha} \textbf{r} M_c dS}.
+    \label{eq:advection_term_eq}
+\end{multline}
+In addition to the explicit appearance of the mass transfer term, this manipulation allow us to isolate to velocity vector, $\textbf{u}_\alpha$, from the total momentum $\textbf{p}_\alpha$. 
+The physical meaning of these mass transfer terms have been outlined in \ref{sec:Lagrangian_desc}.
+Besides, up to this point no additional details will be  given regarding the mass transfer terms as it is not the subject  of this manuscript to give a closure for these terms. 
+
+\subsection{The stress, body force and interfacial force closure terms}
+
+The averaged stress tensor term $\cavg{\textbf{T}}$ appearing in \ref{eq:classic_hybrid_momentum_c}, is a closure term, as it is the average value of the microscopic stress. 
+Nevertheless, simple expression can be derived for Newtonian flows. 
+Indeed, if we make use of the relation, $\textbf{T}_c = -p_c\textbf{I} + \mu_c \left(\nablabh \textbf{u}_c+ (\nablabh \textbf{u}_c)^T\right)$, 
+we can show that \citep{jackson2000dynamics}, 
+\begin{equation*}
+    \cavg{\textbf{T}} \approx - \cavg{p}\textbf{I} 
+    + \frac{\mu_c}{\phi_c} \left[\nablab \avg{\textbf{u}} + \left(\nablab \avg{\textbf{u}}\right)^T\right].
+\end{equation*}
+This relation is true for solid particles since there is no internal strain in the dispersed phase, therefore it is an approximation in the case of fluid particles.  
+Where the reader can notice that the velocity average is taken solely though the continuous phase, unlike in most dispersed two phase flow model where they consider solid particle with no internal rate of strain \citep{jackson1997locally}. 
+Regarding the integral of the body force term, i.e. $\pavg{\int_{V_\alpha} \textbf{b} dV}$ and $\phi_c\cavg{\textbf{b}}$ in respectively \ref{eq:classic_hybrid_momentum_c} and \ref{eq:classic_hybrid_momentum_p}, they represent in our context only gravitational acceleration forces. 
+According to \citet{nott2011suspension} these terms also contains forces such as the \textit{action at a distance}, inter-particle forces.
+Nevertheless, the latter won't be treated here, and we will consider the field $\textbf{b}$ as being solely due to the gravity acceleration $\textbf{g}$. 
+Therefore, at the microscopic scale the body force fields can be expressed as, $\textbf{b} = \sum_{k} \rho_k \textbf{g}$. 
+Consequently, it follows the simple relations, $\phi_c\cavg{\textbf{b}} = \phi_c \rho_c \textbf{g}$ and $\pavg{\int_{V_\alpha} \textbf{b} dV} = \pavg{m_\alpha}\textbf{g}$.  
+
+
+On the RHS of the hybrid model momentum equations, the only remaining closure terms is now, the \textit{Drag force} terms and higher order moments of the drag force terms. 
+The drag force term, common to both equations, reads as $\int \textbf{T}_c \cdot \textbf{n} dS$ and the first moment as $ \int \textbf{T}_c \cdot \textbf{nr} dS$. 
+Both terms are source of extensive studies that will be further discussed in \ref{chap:mono-disperse}.
+
+\subsection{Closure terms related to the Poly-dispersion}
+
+In this section we present all the closure terms related to the poly dispersion of the flow. 
+Indeed, in \ref{eq:hybrid_mass_p} and \ref{eq:hybrid_area} the advection terms are respectively, $\pavg{m_\alpha \textbf{u}_\alpha}$ and $\pavg{m_\alpha \textbf{u}_\alpha\textbf{u}_\alpha}$  (where we made use of \ref{eq:advection_term_eq} to transform the second term).  
+In mono disperse suspension $\pnavg{m_\alpha \textbf{u}_\alpha} = \pnavg{m_\alpha}\pnavg{\textbf{u}_\alpha}$, however for poly disperse suspensions, we must use the following decomposition to isolate the velocity vector.
+We define $\avg{f'}$ as being the fluctuation of any quantity around the arbitrary average of $q$.
+To be more specific we define in the general case for an Eulerian fields, 
+\begin{equation*}
+    f' = f - \avg{f}. 
+\end{equation*}
+From this definition, it follows that, $\pavg{m_\alpha \textbf{u}_\alpha} = \pavg{m_\alpha}\pnavg{\textbf{u}_\alpha} + \pavg{m_\alpha' \textbf{u}_\alpha'}$.
+Therefore, in the mass balance, the term, $-\nablab\cdot(\pavg{m_\alpha' \textbf{u}_\alpha'})$ appear in the RHS of the equation. 
+Similarly, for the surface area transport balance, \ref{eq:A_avg_p}, we see appear the term $-\nablab \cdot \pavg{\textbf{u}_\alpha' A_\alpha'}$ on the LHS of the equation. 
+
+The same procedure can be applied to the terms on the LHS of \ref{eq:hybrid_momentum_p}, nevertheless it is more convenient to use the momentum formulation of \ref{eq:u_alpha_dt} to perform this task. 
+Indeed, under this form the only term involving the mass is the average of the LHS term, namely $\pnavg{m_\alpha \textbf{a}_\alpha}$ where we recall that $\textbf{a} = \ddt \textbf{u}_\alpha$. 
+As a consequence the closure for the momentum equation reads as, $\pnavg{m_\alpha' \textbf{a}_\alpha'}$.
+It is also possible to divide the momentum balance of an isolated particle by $m_\alpha$ so that we avoid the apparition of this term.
+The latter option is therefore used here.
+
+Consequently, the effect of poly dispersion on the surface, mass and momentum balance is the appearance of one additional term for each equation.
+In the mass and surface balance, we observe respectively, the mean fluctuation of the velocity with the particles' mass and surface. 
+While for the momentum balance, it is the correlation of the acceleration with the mass of each particle that appear as a source term. 
+In the PBE equation we had to find closure for the weighted velocities fields which appear in each moment equations \citet{zaepffel2011modelisation}.
+In those equations the problem is turned into the finding of the fluctuating quantities mentioned above which is somewhat equivalent.  
+The understanding of those terms, is a complex issue, therefore it is not trivial to guess phenomenological closure on these terms, consequently a numerical analysis will be carried out to estimate the values of those terms in \ref{chap:mono-disperse}.
+
+
+\subsection{Reynolds stress or pseudo turbulence tensor}
+
+Last but not least, the \textit{Reynolds stress} or \textit{Pseudo turbulent} tensor is the closure related to the velocity fluctuation. 
+Indeed, let's consider the advection terms in \ref{eq:classic_hybrid_momentum_c} and \ref{eq:hybrid_momentum_p}, in which we can notice the average of product of velocities or momentum. 
+However, as said previously, in our basic reasoning, we solve the system solely for averaged velocities.
+Therefore, we must transform the average of a product into product of averaged quantities. 
+Thus, if we start by the continuous averaged phase momentum equation, the manipulation to perform is to decompose the averaged product $\kavg{\textbf{u} \textbf{u}}$, to, $\kavg{\textbf{u} \textbf{u}} = \kavg{\textbf{u}} \kavg{\textbf{u}} + \kavg{\textbf{u}' \textbf{u}'}$. 
+Here we just obtained the \textit{Reynolds stress} tensor, $\kavg{\textbf{u}' \textbf{u}'}$, for the continuous phase. 
+Notice that this term appears under the divergence operator in \ref{eq:classic_hybrid_momentum_c}, that is why it is referred as a stress. 
+Similarly, for the particular phase, if we use the average of \ref{eq:u_alpha_dt}, the closure term is nearly the same, namely, $\pnavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$.
+This closure, is a topic that have been deeply studied in turbulence flows and dispersed two phases flow since decades. 
+Again a more detailed discussion of these terms will be given in the following chapters where we treat specific cases. 
+
+Notice, that instead of providing closure for the \textit{Reynolds} stress tensor, it is also possible to solve the equation of transport of $\avg{\textbf{uu}}$. 
+Indeed, by carrying out mathematical manipulation we can derive the equation of transport of the \textit{granular temperature} of the flow which is the trace of the \textit{Reynolds stress}, this has been done for solid particle in \citet{jackson2000dynamics} and \citet{nott2011suspension}, and for liquid dispersion in \citet{morel2015mathematical}.
+Besides, in \ref{ap:average}, we derive the equation for the granular temperature for the continuous and arbitrary dispersed phase. 
+Even though it is in some case practical to solve these equations instead of providing directly closure for the \textit{Reynolds stress}, it must be said that these equations of transport will also need closures which are not necessarily simpler. 
+
+\subsection{Higher order terms of the hybrid model}
+
+As stated before, the tensor $\mathcal{G}_\alpha$ is part of the particular mass balance \ref{eq:hybrid_mass_p}, it thus needs closure. 
+Before discussing the ways to close the equation, it is important to notice that the tensor appear in the equation under the operator $\nablab \nablab$. 
+Therefore, by a simple scale argument we can guess that this term is of order $\mathcal{O}(D^5 / R^3)$ which is more likely to be negligible. 
+As for the \textit{Reynolds} stress tensor there are two ways to close this term. 
+Either we directly solve is averaged transport equation with the use of \ref{eq:avg_p_P_alpha} and \ref{eq:avg_p_G_alpha}.
+In which case we would need others closure terms appear. 
+Besides, this solution is rather costly, since it require solving two tonsorial equations. 
+The second option is to search for phenomenological closures for $\mathcal{G}_\alpha$. 
+Indeed, in some specific case it is possible to determine the form of those tensors based on physical arguments. 
+This matter will be discussed in more depth, in \ref{chap:mono-disperse}.
+
+
+
+\section{Discussion and conclusion}
+
+In the course of this chapter, we have examined the averaging theories applied to the main conservation equations of the dispersed multiphase flows. 
+Namely, the surface, mass, momentum and energy equations. 
+We derived the average of these equations with the classic methods (the one of \citet{drew1983mathematical} and \citet{kataoka1986local}), for the continuous  and dispersed phase. 
+Afterwards, we described the dispersed phase through a Lagrangian balance model for whole fluid particles, strongly motivated by the study of \cite{morel2015mathematical} and \citet{zaepffel2011modelisation}. 
+Then, we either average these Lagrangian equations with the volume average method, or with the statistical approaches so that we obtained macroscopic equations for the dispersed phase. 
+We would like to highlight that up to this stage, we made no assumption regarding the nature of both phases, thus we derived a complete system of equations for the dispersed and continuous phase, using both, particular, kinetic and volume average theory.
+
+The derivation of the particular equations, leaded us to some new findings compared to the classical particular models that we could find in the literature. 
+Indeed, we found out that in the momentum equation the particles' internal fluctuation motions, play a role solely when mass transfer is present.
+Otherwise, the momentum of an arbitrary particle can be described solely by the center of mass velocity and the whole mass of the particles. 
+This may seem trivial, but for fluid particles where the internal flow isn't necessarily a linear function of the position, it was thought to be of a certain importance.   
+
+Regarding the averaged equations we introduced a brand-new model, namely the \textit{no-assumption} hybrid model. 
+The inquiry raised at the opening of this chapter was the following :
+Is the classical model from the kinetic theory, PBE or the point of mass Lagrangian formalism, consistent with the continuous averaged equation from the continuous phase ? 
+In order to provide a rigorous answer, we derived the Lagrangian phase equations from the continuous phases' equations without any assumption on the dispersed phase to preserve consistency. 
+This derivation demonstrated that any continuous averaged equation is rigorously equivalent to any particular averaged equations for all conservation laws, except when the non-convective term of these conservation laws is null.
+We demonstrated that the particular and continuous averaged momentum equations were therefore, rigorously the same equation. 
+As a consequence of this demonstration, We expose the additional terms which appears in the non-dissipative equilibrium equations, such as the mass and surface balance equations, which differs from usual hybrid models.
+
+We concluded this chapter by exposing the \textit{no-assumption} hybrid model's closure terms. 
+The following chapters will be devoted to the finding of those closure terms. 
+Our approach will be to merge theoretical results together with the support of numerical simulation.  

@@ -1,0 +1,241 @@
+\section{Particular averaged equaitons.}
+\label{sec:Lagrange_to_Euler}
+In this section, we introduce an average method suited to the dispersed nature of the flow, namely the particular averaged. 
+This type of average has been used massively during the past few years, and has been introduced in this context, by \citet{jackson1997locally,zhang1994ensemble}. 
+Most of the studies focus on solid point of mass particles\footnote{\textit{point of mass} refer to the assumption made when the particles' length scale is small enough, relatively to the length scale of the problem, to be considered as infinitely small spheres.}. 
+% However, another type of dispersed phase change considerably the physic of the bulk. 
+% As an example, non-Newtonian behavior arise from anisotropic particle suspensions \citep{guazzelli2011}.
+In \citet[Chapter 3]{morel2015mathematical} they consider whole fluid dispersed phase, and they point out the differences with the classic point of mass dispersed models resulting from the arbitrary nature of the dispersed phase. 
+In this section we revisit this model and point out the compatibility of this method with the volume average method. 
+
+\subsection{From a Lagrangian to Eulerian description of the dispersed phase}
+
+
+Up to now we described the particles within a Lagrangian framework, meaning that the particles' properties were solely function of time (see \ref{sec:Lagrangian_desc}). 
+Indeed, any quantity related to a particle $\alpha$, namely $q_\alpha(t)$, isn't defined though space. 
+In continuous mechanics we wish to transport fields defined at any point \textbf{y} in space, so that we are able to average a quantity over several particles contained in a given volume of space.
+Therefore, we define the field quantity related  to $q_\alpha$ by, $\delta_\alpha q_\alpha$, where we introduced the Dirac delta function, $\delta_\alpha$ \citep{morel2015mathematical}, defined such as
+\begin{equation}
+    \delta_\alpha(\textbf{y},t) = \delta(\textbf{y}-\textbf{y}_\alpha(t)).
+\end{equation}
+This way, any the field $q_\alpha \delta_\alpha$ is defined everywhere in space and time, with a value of $q_\alpha$ at $\textbf{y}_\alpha$ and a null value everywhere else. 
+At the microscopic level we know that the $\delta_\alpha$ function is transported along the velocity of the particle $\alpha$ since it is defined with its position $\textbf{y}_\alpha$. 
+Therefore, $\delta_\alpha$ follows the transport equation 
+\begin{equation}
+    \pddt \delta_\alpha 
+    + \nablabh \cdot (\textbf{u}_\alpha  \delta_\alpha) 
+    = \psi_\alpha \delta_\alpha,
+    \label{eq:delta_alpha_dt}
+\end{equation}
+where we included $\textbf{u}_\alpha$ in the divergence operator since we recall that it is solely function of time. 
+The source term is due to change of topology, i.e. coalescence and break-up of particles.
+The function $\psi_\alpha(t)$ is defined so that it is equal to 0 for all time were the particle $\alpha$ is present, 1 when a particle $\alpha$ appear and -1 when it disappears.
+Note that $\psi$ is a Dirac function such that $\psi = \delta(t - t_0)$ where $t_0$ is either the birth or death time of a particle. 
+As an example, if the particle indexed $1$ were to merge with particle $2$ at time $t_1$ giving birth to a $3^{th}$ particle indexed $3$, then $\psi_1(t_1) = \psi_2(t_1) = -1$, and $\psi_3(t_1) = 1$. 
+Similarly, for any derivative of Lagrangian quantity, i.e. $\ddt q_\alpha$, we define its related field quantity, i.e. $\delta_\alpha \ddt q_\alpha$, and we show that, 
+\begin{equation}
+    \delta_\alpha \ddt q_\alpha
+    = \pddt (\delta_\alpha q_\alpha)
+    + \nablabh (\delta_\alpha q_\alpha \textbf{u}_\alpha)
+    - q_\alpha \psi_\alpha \delta_\alpha
+    \label{eq:delta_q_alpha_dt}
+\end{equation}
+where we use the fact that $q_\alpha(t)$ and $\textbf{u}_\alpha(t)$ are solely function of time, and the \ref{eq:delta_alpha_dt}.
+We can observe that the source term due to change in topology is now proportional to $q_\alpha$. 
+Now let's consider a volume containing $N$ particles, we define the \textit{particular} field of a given quantity, $q_\alpha$, as the sum of all independent field, i.e. $\sum_\alpha \delta_\alpha q_\alpha$.
+Notice that \ref{eq:delta_q_alpha_dt} remains valid for a sum of fields since derivative operators are linear.  
+Now that we defined properly the Eulerian equivalent quantities, i.e. $\sum_\alpha q_\alpha \delta_\alpha$, we can introduce the averaging procedure. 
+For consistency, we use the volume average operator from \ref{eq:avg}.
+So form this step it is similar to the last section. 
+Indeed, the volume average of $\sum_\alpha \delta_\alpha q_\alpha$ yields, 
+\begin{equation*}
+    \pavg{q_\alpha}(\textbf{x},t)
+    = \avg{\sum_\alpha\delta_\alpha q_\alpha} (\textbf{x},t)
+    = \int_V 
+    \sum_\alpha \delta_\alpha(\textbf{y}- \textbf{y}_\alpha) q_\alpha(t)  
+    g(\textbf{x},\textbf{y}) 
+    dV
+    \label{eq:avg_p}
+    % =  \sum_\alpha g(\textbf{x},\textbf{y}_\alpha) q_\alpha(t) 
+\end{equation*}
+where we introduced the number density of particles, $n(\textbf{x})$, defined by $n = \avg{\delta_\alpha}$, and the \textbf{particular average} operator, $\pavg{\ldots}$.  
+The Reynolds’s, Leibniz's and Gauss's rules from \ref{eq:avg_properties} still hold while averaging the fields, $\sum_\alpha q_\alpha \delta_\alpha$.
+Thus, if we consider the previous properties we can show that any mean of Lagrangian derivative reads as, 
+\begin{equation}
+    \pavg{\ddt q_\alpha}
+    = \pddt \left(\pavg{q_\alpha}\right)
+    + \nablab \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right)
+    - \pavg{\psi_\alpha q_\alpha}
+    ,\label{eq:q_alpha_dt_avg}
+\end{equation}
+in agreement with \citep{anderson1967fluid}.
+
+It is now straight forward to average any Lagrangian balance equation, indeed one has to multiply the aforesaid equation by $\delta_\alpha$, sum over all particles contained in a given domain and apply the volume average operator (\ref{eq:avg}) on each term. 
+Applying this process on the general balance equation for an arbitrary quantity $q_\alpha$ (\ref{eq:q_alpha_balance}), yields the general particular averaged equilibrium equation,
+\begin{multline}
+    \pddt   \left(\pavg{q_\alpha}\right)
+    + \nablab \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right) 
+    = \pavg{\int_{V_\alpha} \textbf{S}_k dV}\\
+    + \pavg{\int_{S_\alpha} \left[\bm{\Phi} + f (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S}
+    + \pavg{\psi_\alpha q_\alpha}
+    .\label{eq:q_avg_p_global}
+\end{multline}
+Similarly, if we consider the balance equation for an arbitrary fist moment tensor, $\textbf{Q}_\alpha$ (\ref{eq:dt_Q_alpha}), its particular average yield,  
+\begin{multline}
+    \pddt   \left(\pavg{\textbf{Q}_\alpha}\right)
+    + \nablab \cdot \left(\pavg{\textbf{Q}_\alpha \textbf{u}_\alpha}\right) 
+    = \pavg{\int_{V_\alpha} \left( 
+        \textbf{r} \textbf{S}_k 
+        - \bm{\Phi}_k
+        + f_k  \textbf{w}_k 
+    \right) dV}\\
+    + \pavg{\int_{S_\alpha} \textbf{r} \left[
+        \bm{\Phi}_k
+        + f_k (\textbf{u}_I-\textbf{u}_k)
+    \right]\cdot \textbf{n}_k  dS}
+    + \pavg{\psi_\alpha \textbf{Q}_\alpha}
+    .\label{eq:dt_avg_Q_alpha}
+\end{multline}
+Notice that these equations include the source term due to change in topology as $\psi_\alpha q_\alpha$, nevertheless it is important to understand that this term is somewhat less general than the one appearing in Kinetic theories or PBE. 
+As a matter of fact $\psi$ include solely change in topology while the source term of Kinetic theory include also the pair interactions phenomenon between particles such as collisions. 
+Also, from those equations one can choose an averaged set of equations such that it describe the desired properties of the dispersed phase at any desired level of accuracy.
+Indeed, in \ref{sec:Lagrangian_desc} and \ref{ap:cinematic} we demonstrate how to describe the evolution of the moments of shape, inertia and momentum at any order.
+Therefore, if one wish to describe completely the dispersed phase, he would need to include an infinite number of higher moments, in addition to the already displayed ones. 
+Despite the technical complications it is theoretically possible but shows little interest as the first order moments are usually already enough to describe the dispersed phase.  
+
+\subsection{Topological equations}
+We start by the simplest equation, namely, the transport equation of the number density of particles $n$. 
+It is in fact the average of \ref{eq:delta_alpha_dt}, it can be obtained by setting $q_\alpha = 1$ in \ref{eq:q_avg_p_global}, which directly gives, 
+\begin{equation}
+    \pddt n 
+    + \nablab \cdot \left(
+        \pavg{\textbf{u}_\alpha}
+    \right) 
+    = \pavg{\psi_\alpha}.
+    \label{eq:avg_p_n}
+\end{equation}
+This equation keep track of the mean number of particle per unit of volume.
+
+The second topological equation, is the surface conservation equation. 
+Which is obtained from \ref{eq:A_dt} by applying the average process, namely, 
+\begin{equation}
+    \pddt (\pavg{A_\alpha})
+    + \nablab\cdot(\pavg{A_\alpha \textbf{u}_\alpha})
+    = - \pavg{\int_{S_\alpha} \kappa \textbf{u}_I \cdot \textbf{n} dS},
+    % + \tb{\pavg{\psi_\alpha A_\alpha}},
+    \label{eq:A_avg_p}
+\end{equation}
+in agreement with \citet{lhuillier2000bilan,lhuillier2003dynamics}.
+Note that the source term is due to the averaged deformation of the surface of the particles.
+\footnote{Depending on the consideration either this or to coalesce source term must be taken into account, this matter will be discussed in a future work} 
+The change of topology source term $\avg{A_\alpha \psi_\alpha} = 0$ in the continuous approach. 
+Indeed, if we consider two droplets that merge at the time $t_0$, then the average area $\pavg{A_\alpha}$, would be the same just before and after coalesce.
+However, at the exact instant of Coalescence the curvature of the merged droplet becomes infinite at the point of contact.
+As a consequence the surface decrease since curvature is one of the source terms of the equation. 
+Therefore, coalescence and break up doesn't act directly on the mean surface of the flow but act through the curvature source term. 
+\tb{
+    This is one of the differences with the PBE seen in \ref{sec:PBE} which consider instantaneous coalescence with spherical particles at all times.   
+    Therefore, the kernel of coalescence acts directly on the surface equation.
+}
+
+\subsection{Mass, momentum and energy equations}
+
+As stated above the volume or mass conservation equations are equivalent in the case of constant densities and read as, 
+\begin{equation}
+    \pddt   \left(\pavg{m_\alpha}\right)
+    + \nablab \cdot \left(\pavg{m_\alpha \textbf{u}_\alpha}\right) 
+    = 
+    \pavg{\int_{S_\alpha} M_k d S}. 
+    \label{eq:avg_p_m_mass}
+\end{equation}
+We would like to highlight that this equation is strictly equivalent to \ref{eq:avg_p_n} in the case of mono dispersed flows. 
+Indeed, the average $\pavg{m_\alpha}$ simplify to $m_\alpha n$, then by dividing by the mass we get the transport of the number density equation. 
+Thus instead of considering one equation for the transport of the number density and the mass as it is usually done in mono-disperse multiphase flow, here we must take into account both equations due to the poly-disperse nature of the flow. 
+Also, as the mass is conserved through topology changes the source term $\pavg{\psi m_\alpha} = 0$ in accordance with kinetic theory.
+
+The particular averaged momentum and total energy equations are obtained by averaging respectively, \ref{eq:dt_p_alpha} and \ref{eq:dt_e_alpha}, yielding, 
+\begin{multline}
+    \pddt   \left(\pavg{\textbf{p}_\alpha}\right)
+    + \nablab \cdot (\pavg{\textbf{p}_\alpha \textbf{u}_\alpha})
+    = \pavg{\int_{V_\alpha} \textbf{b}_k dV}\\
+    + \pavg{\int_{S_\alpha} \left[\textbf{T}_k  \cdot \textbf{n}_k  + \textbf{u}_k M_k \right]d S}
+    \label{eq:avg_p_momentum}
+\end{multline}
+\begin{multline}
+    \pddt (\pavg{E_\alpha})
+    + \nablab \cdot ( \pavg{E_\alpha \textbf{u}_\alpha})
+    = \pavg{\int_{V_\alpha} \textbf{b}_k \cdot \textbf{u}_k dV}\\
+    + \pavg{\int_{S_\alpha} \left[
+        (\textbf{T}_k\cdot \textbf{u}_k 
+    - \textbf{q}_k)\cdot\textbf{n}_k 
+    - M_k E_k 
+    \right]dS}.
+    \label{eq:avg_p_energy}
+\end{multline}
+Notice that the source term due to changes in topology vanish for these equations as coalesce and breakup do not impact the averaged momentum nor the total energy.  
+\tb{In the  momentum equation it is interesting to notice that we cannot introduce the collision flux term that appear in kinetic theory \citep{rao2008introduction}. 
+Indeed, as mentioned earlier the kernel from kinetic theory included pair interaction of particles where in this framework we cannot account for these.   
+}
+\subsection{Multipole or first moment equations}
+
+It is also straight forward to obtain the moment of momentum and the dipole of mass equations, by averaging respectively, \ref{eq:G_alpha_dt} and \ref{eq:P_alpha_dt}, which gives, 
+\begin{equation}
+    \pddt   \left(\pavg{\mathcal{G}_\alpha}\right)
+    + \nablab \cdot \left(\pavg{\mathcal{G}_\alpha \textbf{u}_\alpha}\right) 
+    = 2 \pavg{\mathcal{S}_\alpha}
+    + \pavg{\int_{S_\alpha} \textbf{rr} M_k dS}
+    +\pavg{\psi \mathcal{G}_\alpha},
+    \label{eq:avg_p_G_alpha}
+\end{equation}
+\begin{multline}
+    \pddt   \left(\pavg{\mathcal{P}_\alpha}\right)
+    + \nablab \cdot \left(\pavg{\mathcal{P}_\alpha \textbf{u}_\alpha}\right) 
+    = \pavg{\int_{V_\alpha} \left( 
+        \textbf{r} \textbf{b}_k 
+        - \textbf{T}_k
+        + \rho_k \textbf{w}_k  \textbf{w}_k 
+    \right) dV}\\
+    + \pavg{
+    \int_{S_\alpha} \textbf{r} \left[
+        \textbf{T}_k \cdot \textbf{n}_k
+        + \textbf{w}_k M_k
+    \right] dS},
+    \label{eq:avg_p_P_alpha}
+\end{multline}
+where, we recall that $2\mathcal{S}^\alpha_{ij} = \mathcal{P}^\alpha_{ij} + \mathcal{P}^\alpha_{ji}$, is the strain of momentum. 
+As well as the momentum and energy equations we already discussed these in the previous section.
+Also, the change in topology kernel do not cancel for the inertia tensor equation. Indeed, the instantaneous coalescence of two droplets does change the shape of the resulting particle.  
+Let's consider two spherical droplets coalescing at time $t_0$ for example.
+Then, at time $t_0^-$ just before coalescence, the mean shape tensor is isotropic as both sphere are spherical.
+At time $t_0^+$ just after the coalescence, the third droplet becomes axisysmmetric and therefore $\pavg{\mathcal{G}_\alpha}$ isn't isotropic anymore. 
+Therefore, the kernel of coalescence must remain.  
+Which is not the case for the moment of momentum quantity as it is conserved through coalescence. 
+
+This set of 7 equations is the minimal set of equation to describe an arbitrary dispersed two phase flow at the first order of accuracy (by including the first moment equations).
+Great simplifications can be made depending on the nature of the dispersed phase.
+As stated before mono disperse flows, the equations for the number density, the area conservation and mass balance would be equivalent.
+Also, for solid particles all the symmetric part of the moment of momentum, the strain of momentum $\mathcal{S}_\alpha$, equation cancel, which greatly simply the equation. 
+Therefore, when dealing with mono-disperse spherical particles suspensions we usually solve solely the number of density equation and the momentum equation without mass transfer together with the continuous phase averaged equations presented in the last section. 
+Considering arbitrary particular phase seems therefore a lot more involving. 
+
+\tb{
+In the previous sections we derived the zeroth, second and first order PBE (\ref{eq:PBEarea},\ref{eq:PBEmass},\ref{eq:PBEsize}) which are equivalent to respectively the number density, surface and volume averaged transport equations of this system (\ref{eq:avg_p_momentum} \ref{eq:avg_p_m_mass} and \ref{eq:A_avg_p}). 
+Both systems are therefore approximately equivalent.
+Indeed, the number density, mean surface and volume of the droplets can lead us the knowledge of the size distribution.  
+Regarding the number density equations, both system lead to the same equation since in this case the source term is solely due to change in topology. 
+On the other hands, the surface transport equation (\ref{eq:A_avg_p}) include a source term due to the curvature,  which is neglected in the PBE formulation (\ref{eq:PBEarea}).  
+This difference is due to the different consideration made while deriving both formalism. 
+Indeed, in PBE we consider spherical particle coalescing instantaneously leading to an instantaneous change in the area in the system. 
+In this model we did not made any assumption and therefore considered a continuous coalesce model, meaning that the discontinuity at the coalescence time yields inside the curvature term. 
+Lastly, the mass transport equation yields consistent between both formalism.  
+
+Also, remark that the equations derived in this section are all consistent by the use of the same advection velocity fields $\pavg{\textbf{u}_\alpha}$, and therefore avoid the complications linked to the weighted velocity appearing in the PBE \citep{zaepffel2011modelisation}.
+However, It must be said that one equation lake in this system to accurately model the poly disperse nature of the flows.
+Indeed, in \citet{zaepffel2011modelisation} they demonstrate that for the use of more sophisticated size's distribution functions, one needs also the first moments of the size distribution. 
+But, our present system possesses no such equivalent equation since it would be the equivalent of the diameter transport equation. 
+On another hand, in the global case, the source term in this model account solely for the appearing and despairing of particles in the system, while in PBE and Kinetic theory we saw that in addition to take in account these changes in topology, it also accounts for pair interaction such as the collision flux.
+These two point are the two major drawback of this model.  
+
+We would like to emphasize that kinetic theory is fundamentally the same as this volume averaged system of equation if we consider the same hypothesis but displayed under a different form. 
+Anyhow, we provided a consistent Lagrangian model for whole fluid particles taking in account topology changes and the poly disperse nature of the flow. 
+}

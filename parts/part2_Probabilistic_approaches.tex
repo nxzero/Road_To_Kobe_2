@@ -1,0 +1,247 @@
+\section{Poly dispersed multiphase flows' models}
+\label{sec:PBE}
+
+In \ref{sec:introavg} we exposed a set of averaged equations without any consideration on the topology of the present phases. 
+However, the source terms involved in \ref{eq:avg_k_mass} \ref{eq:avg_k_momentum} and \ref{eq:avg_k_total_energy} depend highly on the topology of the flow. 
+The continuous averaged equations derived in \ref{sec:introavg} provide only one piece of information about the dispersed phase's topology, which is the volume fraction $\phi_k$.
+As the only knowledge of $\phi_k$ is not enough to describe multiphase interactions, we must find a better way to obtain more information about the size distribution of the particle present in the flow.
+The entire challenge in determining the size distribution of particles in a dispersed multiphase flow is in part due to change in topology, because of coalesce and breakup phenomenons. 
+
+Consequently, This section presents other average theories that are based on the Lagrangian representation of the dispersed phase. 
+We first expose the classic strategy to model momentum, mass and energy balance averaged equations but within this Lagrangian framework, these are called the kinetic theory equations. 
+Then we introduce Population Balance Equations (PBE), which is the usual way to model poly-disperse multiphase flows. 
+Changes in topology, i.e. particles coalesce and break up, are then introduced as source term in these PBE. 
+
+
+\subsection{Introduction to kinetic theory}
+
+Originally created for the modeling of granular gas, the kinetic theory is an averaging theory based on probabilistic approaches \citep{rao2008introduction,marchisio2013computational}. 
+We therefore start this section by defining the basis of this framework.
+Let, $P(\mathscr{C}_N,t)$ be the probability density function that describe the probability of finding the flow in the configuration $\mathscr{C}_N$ at time $t$, were $\mathscr{C}_N = (\textbf{x}_1,\textbf{u}_1,q_1\ldots\textbf{x}_N,\textbf{u}_N,q_N)$ is the set of all the Lagrangian parameters describing the dispersed phase (such as the particles' velocity and position).  
+In other words, we define $P(\mathscr{C}_N,t)d\mathscr{C}_N$ as the probable number of particles in the incremental region of the particles' phase space $d\mathscr{C}_N$ around $\mathscr{C}_N$ at time $t$. 
+It follows the definition of the ensemble average of a Lagrangian property $q_\alpha$ \citep{zhang1994ensemble},
+\begin{equation}
+    \avg{q_\alpha}
+    =\int q_\alpha P(\mathscr{C}_N,t)d\mathscr{C}^N
+    \label{eq:ensemble_avg}
+\end{equation}  
+In kinetic theory and PBE we rather focus on the reduced probability density function, $P(\mathscr{C}_1)$ defined such as
+\begin{equation}
+    P(\mathscr{C}_1)
+    = \int  P(\mathscr{C}_N,t) d\mathscr{C}^{N-1}
+\end{equation} 
+where we integrated $P$ on all the particles' configurations except one, denoted by $\mathscr{C}^{N-1}$.
+On the LHS, $\mathscr{C}_1 =(\textbf{x}_1,\textbf{u}_1,q_1 \ldots) $ corresponds to the vector containing the internal coordinates of one particle \citep{rao2008introduction,zaepffel2011modelisation,fede2015monte,fox2012large}. 
+It is also possible to define the pair probably distribution function as, 
+\begin{equation*}
+    P(\mathscr{C}_1,\mathscr{C}_2)
+    = \int  P(\mathscr{C}_N,t) d\mathscr{C}^{N-2},
+\end{equation*} 
+and so on.
+From these reduced PDF we can define the conditional PDF of the $N-1$ particles' configurations, knowing one particle's configuration \citep{batchelor1972sedimentation}, it reads as,
+\begin{equation}
+    P(\mathscr{C}_{N-1}|\mathscr{C}_{1}) 
+    = P(\mathscr{C}_N)/ P(\mathscr{C}_1). 
+    \label{eq:P_conditional}
+\end{equation}
+From \ref{eq:ensemble_avg} and \ref{eq:P_conditional} we introduce the definition of the conditional average of $q_\alpha$ as, 
+\begin{equation*}
+    \condavg{q_\alpha}
+    =\int q_\alpha P(\mathscr{C}_N,t)d\mathscr{C}^{N-1}
+\end{equation*}  
+where the subscript $_{\mathscr{C}_1}$ denotes the condition on the particle one.
+By making use of these fundamental properties we can redefine the ensemble average of a Lagrangian property such that 
+\begin{equation*}
+    \avg{q_\alpha}
+    =\int \condavg{q_\alpha} P(\mathscr{C}_1,t)d\mathscr{C}^{1}
+    \approx\frac{1}{n}\int q_\alpha P(\mathscr{C}_1,t)d\mathscr{C}^{1} /d\textbf{x}_1
+\end{equation*}  
+where $n$ is the number density of particle in the domain defined by,
+\begin{equation*}
+    n(\textbf{x},t) = \int P(\mathscr{C},t) d\mathscr{C} /d\textbf{x}_1,
+\end{equation*}
+where we integrated $q_\alpha P(\mathscr{C}_1)$ on all the internal coordinates, except the spacial coordinates $\textbf{x}_1$. 
+The step from the second to third equation may seem trivial, but it involves some mathematical complications.
+Therefore, we refer the interested reader to the following work, \citet[Chpater 2]{zaepffel2011modelisation} for a detailed derivation of this equivalence.  
+Anyhow, this last definitions enables us to describe the ensemble average of $q_\alpha$ on the distribution of one particle, i.e. $P(\mathscr{C}_1)d\mathscr{C}^1$,  instead of the whole PDF of the dispersed phase.  
+For consistency in the following we drop the subscript $_1$ of $\mathscr{C}_1$. 
+Additionally, we also drop the time argument $t$ for all functions. 
+
+Consider that the rate of change of $P(\mathscr{C})$ is equal to the income and outcome of particles in the volume phase space \citep{sporleder2012population}.
+Then it is evident that
+\begin{equation}
+    \ddt\int P(\mathscr{C}) d\mathscr{C} 
+    = \int \Psi(\mathscr{C}) d\mathscr{C},
+    \label{eq:PBMraw}
+\end{equation}
+where, $\Psi(\mathscr{C})d\mathscr{C}$ is the net rate of production or vanishing of particles with coordinate $\mathscr{C}$ inside the range $[\mathscr{C};\mathscr{C}+d\mathscr{C}]$. 
+As we will see in the following paragraphs, $\Psi(\mathscr{C})$ can account for coalescence and breakage as well as pair's interactions of particles.
+Using the extended Reynolds transport theorem for a fixed arbitrary volume one can derive the Liouville-Boltzmann equation from \ref{eq:PBMraw}\citep{zaepffel2011modelisation,rao2008introduction,zhang1994ensemble},
+\begin{equation}
+    \pddt P(\mathscr{C})
+    + \nablab_{\mathscr{C}} \cdot
+    \left(
+        \frac{d\mathscr{C}}{dt}  
+        P(\mathscr{C})
+    \right)
+    = \Psi(\mathscr{C})
+    \label{eq:dt_P}
+\end{equation}
+where $\nablab_{\mathscr{C}} = \frac{\partial}{\partial \mathscr{C}}$ is the divergence operator with respect to the phase space coordinates. 
+This equation is the starting point of all kinetic and PBE theories.
+It is important to keep in mind that the distribution must remain physical, thus it must respect $\lim_{\mathscr{C} \rightarrow \partial\mathscr{C}} P(\mathscr{C})= 0$, where $\partial \mathscr{C}$ correspond to the boundary of the domain of definition of each component of $\mathscr{C}$. 
+
+It is now possible to average this equation on all realizations $\mathscr{C}$. 
+But first we must specify the phase space definition as it remained general until now. 
+Indeed, here we consider solely $\mathscr{C}_1 = (\textbf{x}_1,\textbf{u}_1,q_1)$. 
+Then, by multiplying \ref{eq:dt_P} by an arbitrary quantity $q_\alpha$ and integrating over $\textbf{u}_1$ and $q_1$, we obtain the following equation of transport,
+\begin{equation}
+    \label{eq:maxwell}
+    \pddt \left( \pavg{q_\alpha}\right)
+    + \bm{\nabla} \cdot \left(\pavg{\textbf{u}_\alpha q_\alpha}\right)
+    = \pavg{\Psi q_\alpha}
+    + \pavg{\frac{dq_\alpha}{dt}}.
+\end{equation}
+Again since the derivation of this equation isn't trivial we encourage the reader to look at \ref{ap:equivalence} or \citet{rao2008introduction,zaepffel2011modelisation} for a more detailed derivation. 
+This equation is the general form of an averaged transport equation for the averaged Lagrangian quantity $\avg{q_\alpha}$ along the averaged Lagrangian velocity $\avg{\textbf{u}_\alpha}$.
+
+\ref{eq:maxwell} is the general form of the Lagrangian averaged conservation equation (\ref{eq:avg_k_global}). 
+It is proved to be equivalent to the Lagrangian approach exposed in \ref{sec:hybrid_model}. 
+However, it offers a significant advantage by allowing the introduction of the source term $\Psi$ in a more general manner than with the Lagrangian approach.
+Indeed, this term is the key point of coalesce and breakup modeling, and more generally for the modeling of particular interactions. 
+From this equation we can obtain the averaged balance equations for all the particles properties studied in \ref{sec:Lagrangian_desc}.
+In \ref{ap:equivalence} we demonstrate how to obtain the number density, mass and momentum conservation equations which read as respectively,
+\begin{align*}
+    \pddt n
+    + \nablab \cdot \left(n \avg{\textbf{u}_\alpha}\right)
+    &= n\avg{\Psi},\\
+    \pddt \left(n\avg{m_\alpha}\right)
+    + \nablab \cdot \left(n \avg{m_\alpha \textbf{u}_\alpha}\right)
+    &= n\avg{\int_{S_\alpha} M_k dS},\\
+    \pddt \left( n \avg{\textbf{p}_\alpha}\right)
+    + \nablab \cdot \left(n \avg{\textbf{u}_\alpha \textbf{p}_\alpha}\right)
+    &=  \nabla \cdot \Theta
+    + n\avg{\int_{V_\alpha} \textbf{b}_k dV},\\
+    &+ \avg{\int_{S_\alpha} \left(
+    \textbf{T}_k\cdot\textbf{n}_k
+    + M_k \textbf{u}_k
+    \right)dS},
+\end{align*}
+where the source terms on the RHS of the umber density transport equation is a source term solely due to change in topology.
+Regarding the momentum transport equation, apart from the terms already defined in \ref{sec:Lagrangian_desc} (drag, body forces and mass transfer term), we notice the additional term $\nablab\cdot\Theta$, which is the collisions flux source term \citep{curtiss1956kinetic}. 
+Notice that coalescence and breakup phenomenons do not impact the momentum that is why $\pavg{\textbf{p}_\alpha \Psi} = \nabla\cdot\Theta$ (see \ref{ap:equivalence}, \citep{KAMP20011363}). 
+For the mass balance equation neither change in topology nor collisions influence the mass conservation therefore the source term cancels out. 
+In short, note that any Lagrangian equation derived in \ref{sec:Lagrangian_desc} can be averaged using this process, in each of this equation the source term $\Psi$ will take a different form depending on the nature of the quantity transported. 
+Again we refer the reader to \ref{ap:equivalence} for more detail on the derivation of these equations. 
+
+
+
+\subsection{The moments method}
+
+Following the same pattern as the previous subsection we employ an averaging method to solve \ref{eq:dt_P}.
+However, the method of averaging used this time involves averaging on the moments of the distribution of $P(\mathscr{C})$, i.e. the mean of $P(\mathscr{C})$, standard deviation of $P(\mathscr{C})$, and so on. 
+We define the moments of the distribution with, 
+\begin{equation}
+    \theta_{\gamma} = \int_{\partial \mathscr{C}} \mathscr{C}^\gamma P(\mathscr{C})  d\mathscr{C}
+    \label{eq:g}
+\end{equation}
+where $\theta_{\gamma}$ is the $\gamma^{th}$ moment of the distribution $P$.
+This way we are able to solve the moment averaged equations for the moments of the distribution $P(\mathscr{C})$. 
+Then by assuming the shape of $P(\mathscr{C})$ it is possible to recover the exact PDF from its moments.
+Note that here we gave the definition of the moments for an arbitrary set of internal coordinates $\mathscr{C}$, but in the practical cases, we consider the moments of the size distribution, hence $\mathscr{C} = D^\alpha$.
+We are then able to recover the particles' size distribution inside the averaged domain by setting the particle's size as being the only internal coordinate and.
+That is the global logic of the so called, \textit{Moments method}.  
+Note that it is also possible to solve directly the PBM equations without internal-average \citep{salehi2017population}.
+Indeed, they only discretized the function $P(\mathscr{C})$ into several bins instead of solving the moments equations. 
+Even though this method provide a good accuracy to recover $P(\mathscr{C})$, this is computationally expensive.
+
+For any physical quantity $q_\alpha$, we define the $\gamma^{th}$ weighted average of $q_\alpha$ by,
+\begin{equation}
+    \theta_{\gamma}\gavg{q_\alpha}(\textbf{x})  = \int_{\partial \mathscr{C}} q_\alpha P(\mathscr{C})\mathscr{C}^\gamma d\mathscr{C}
+    \label{eq:g_avg}
+\end{equation}
+Notice that the $0^{th}$ moment of the distribution $\theta_0$, is the number of particles concentration per unit of volume, which is $n$.
+$\theta_1/n$ is then, the mean of the distribution $P(\mathscr{C})$, $\theta_2$ corresponds to the standard deviation of the distribution, and so on for the higher moments. 
+Such as in 
+Applying \ref{eq:g_avg} and \ref{eq:g} to \ref{eq:dt_P} yields,
+\begin{equation}
+    \label{eq:PBM_QBMM}
+    \pddt \theta_{\gamma}  
+    + \bm{\nabla} \cdot \left(\theta_\gamma \gavg{\textbf{u}_\alpha}\right)  
+    = \theta_{\gamma} \gavg{\Psi} 
+    +\gamma \theta_{\gamma-1} \gavg[\gamma-1]{\frac{d \mathscr{C}}{dt}}. 
+\end{equation}
+\ref{eq:PBM_QBMM} is the most general form of the PBE equations. 
+It is valid for any set of internal coordinate $\mathscr{C}$.
+Nevertheless, in practical case we use PBE in the context of finding the diameter distribution of the dispersed phase, therefore we use  $\mathscr{C} = D_\alpha$.
+In this context, each moment of the distribution $P(D_\alpha)$ have a specific meaning related to the geometry of the flow. 
+To start with, the first $3$ moments are related through \citep{morel2010comparison,KAMP20011363,zaepffel2011modelisation},
+\begin{align}
+    &\theta_0 = n&
+    &\theta_1 = n D&
+    &\theta_2 =  \pavg{k^a_\alpha A_\alpha}& 
+    &\theta_3 =  \pavg{k^v_\alpha V_\alpha}&
+    \label{eq:relation}
+\end{align}
+were $n$, $D$, $\pnavg{A_\alpha}$ and $\pnavg{V_\alpha}$ are respectively the number density function, the mean diameter of the drops and the mean volume. 
+$k_v$ and $k_a$ are geometrical coefficient relating the size of the particle to the area or the volume. 
+For spherical particles, $k_v = \frac{\pi}{6}$ and $k_a = \pi$.
+
+By considering the size of the particles in \ref{eq:PBM_QBMM}, the second term on the RHS becomes $\frac{\partial D}{\partial t}$, and is thus the rate of variation of the size of the particles.
+In this context it is solely caused by mass transfer or pressure variation. 
+Besides, we assumed that the number density function $P$ vanish at $D=0$ and $D\rightarrow\infty$, which is true for any physical distribution of droplets size.
+Note that this is not necessarily true with others particles.
+As an example if we consider nucleation in crystallization system this assumption isn't valid anymore \citep{randolph2012theory}. 
+The last source term corresponds to the coalescence and breakup phenomenons. 
+Anyhow, \ref{eq:PBM_QBMM} provide $\gamma$ equations to solve, one for each moment, $\theta_\gamma$.
+In some cases, only the equations of the first and second moment are needed \citet{KAMP20011363}.
+Indeed, a distribution $P$ solely function of two parameters, such as normal or log-normal distribution, is representative of bubbly flows \citep*{KAMP20011363,zaepffel2011modelisation} and needs only two moments to be recovered. 
+Generally speaking, only $\gamma$ equations are needed to recover a distribution with $\gamma$ parameters. 
+However, in most of the case we do not know the distribution a priori, therefore we make use of the famous \textit{Quadrature-Based Moments Methods} (QBMM).
+This topic has been widely investigated by Rodney Fox.
+He developed several algorithms which are all derivate from QBMM. 
+We can cite, the Quadrature  methods of moment (\citet{marchisio2013computational} \citet{morel2015mathematical}\citet{marchisio2003quadrature}), the Direct Quadrature methods of moment (\citet{marchisio2005solution}), And the Conditional Quadrature methods of moment (\citet{yuan2011conditional}), all of which has their own specificities.  
+Although the study of these methods is of a great interest, we won't focus on this topic in this work.
+
+If we make use of the preceding remarks, we can derive the 3 first moments' equation. 
+Using \ref{eq:relation} with $\gamma = 0,1,2,3$ yields respectively the following system of equations,
+\begin{align}
+    \label{eq:PBM_QBMM3}
+    \pddt n  
+    + \nablab \cdot \left(n\gavg[0]{\textbf{u}_\alpha}\right) 
+    &= n\gavg[0]{\Psi}\\
+    \label{eq:PBEsize}
+    \pddt \left(nD\right)
+    + \nablab \cdot \left(nD\gavg[1]{\textbf{u}_\alpha}\right) 
+    &= n\bar{L}\gavg[1]{\Psi}+ \gavg[0]{\dot{m_\alpha}} \\
+    \label{eq:PBEarea} 
+    \pddt ( \pavg{k_\alpha^A A_\alpha} ) 
+    + \nablab \cdot \left( \pavg{k_\alpha^A A_\alpha} \gavg[2]{\textbf{u}_\alpha}\right) 
+    &= \varrho\gavg[2]{\Psi} + \gavg[1]{\dot{m_\alpha}}\\
+    \label{eq:PBEmass}
+    \pddt (\pavg{ k_\alpha^V  V_\alpha} )
+    + \nablab \cdot \left( \pavg{k_\alpha^V V_\alpha}  \gavg[3]{\textbf{u}_\alpha}\right) 
+    &=  \gavg[2]{\dot{m_\alpha}}
+\end{align}
+We obtained 4 transport equations, one for each geometrical parameters of the droplets' diameter distribution, namely, the number density, the mean diameters, the mean area concentration and mean volume of the particles.
+The first weighted source term on the RHS of the equations represent respectively, the rate of generation of the number density, the diameter distribution, the interfacial area fraction and in the volume fraction. 
+Note that coalescence nor break-up change the latter property, therefore the source term is null. 
+The second source term is related to the mass transfer phenomenons, the exact expression of this source term can be found in \citep{zaepffel2011modelisation}. 
+In order to solve \ref{eq:PBM_QBMM} for the moments of the distribution, one has to know $\gavg{\textbf{u}_\alpha}$, the mass transfer source terms and $\gavg{\Psi}$.
+If we discard the mass transfer terms the most critical points in the use of \ref{eq:PBM_QBMM} is the modeling of the source term $\Psi$.
+It is a challenging problem because the rate of coalescence or break up of droplets involves physical and chemical microscale interactions.
+This will be discussed in more details in \ref{chap:mono-disperse}.
+Regarding the $\gavg{\textbf{u}_\alpha}$, they could be provided by the use of four equations of momentum each one of a moment of the velocity fields.  
+It is theoretically possible to derive these equations (see \ref{ap:equivalence}) however as solving four momentum equations would be extremely expensive it is not done in the practical cases. 
+In practice, we obtain the dispersed mean velocity field $\kavg{\textbf{u}}$ from \ref{eq:avg_k_momentum} and consider that $\gavg{\textbf{u}_\alpha} \approx \kavg{\textbf{u}}$ for any $\gamma$ \citep{morel2010comparison,KAMP20011363}. 
+Nevertheless, the error of this approximation is yet unknown and from the best of our knowledge, it isn't discussed in the literature. 
+In \citet{zaepffel2011modelisation} they introduce a way to close these terms by setting $\gavg{\textbf{u}} = \kavg{\textbf{u}} + \gavg{\Delta \textbf{u}}$, where $\gavg{\Delta \textbf{u}}$ is a fluctuation term depending on the moment considered.
+However, this method involves a lot of complications in the theoretical derivation. 
+Another issue related to this system is the compatibility of these equations with the continuous phase equations derived \ref{sec:introavg}.
+Indeed, the average method used here is fundamentally different from the continuous phase average therefore the link between both set of equations is unclear. 
+
+To address this issue we expose in the next section a general Lagrangian framework which account for polydispertion, changes in topology and arbitrary particle nature. 
+This framework will be equivalent to the kinetic theory, nevertheless it is derived by the use of volume averaging methods which is therefore consistent with the continuous averaged equations. 
+By using one singular framework the inconsistency related to the weighted velocity fields is also fixed. 
+
+

@@ -1,0 +1,208 @@
+\chapter{Equivalence between volume average and weighted average for Lagrangian poly-disperse particles}
+\label{ap:equivalence}
+As mentioned in \ref{chap:avg} the velocity fields $\left<\bm{u}\right>^L_\gamma$ is needed in \ref{eq:PBM_QBMM}.
+While, with the particular-average, \ref{eq:classic_hybrid_momentum_c}, we solve for $\left<\bm{u}\right>^p$.
+Also, in \ref{eq:classic_hybrid_momentum_c} we have assumed an even distribution of particles size where this is clearly not the case. 
+In the following we show the equivalence between the two averaged quantities and the correctness of the uniformity assumption. 
+This appendix aim to prove rigorously the link between the population balance model and the particular-average equation.
+The strategy is to derive \ref{eq:classic_hybrid_momentum_p} from Liouville equation following the method of \citet{curtiss1956kinetic} and \citet[chapter~7]{rao2008introduction}.
+This way we show an equivalence by identification between the quantities mentioned above.
+
+Let's consider the Boltzmann equation for a distribution $P(\textbf{x},\mathscr{C})$.
+The distribution must remain physical, thus it must respect $\lim_{\mathscr{C} \rightarrow \partial\mathscr{C}} = 0$, where $\partial \mathscr{C}$ correspond to the boundary of the domain of definition of each component of $\mathscr{C}$. 
+It yields, 
+\begin{equation}
+    \label{eq:Liouville}
+    \pddt P(\textbf{x},\mathscr{C})
+    + \bm{\nabla} \cdot \left(\textbf{u} P(\textbf{x},\mathscr{C})\right)
+    + \nablab_\mathscr{C} \cdot \left(\frac{d\mathscr{C}}{dt} P(\textbf{x},\mathscr{C})\right) 
+    = \Psi
+\end{equation}
+Now let's consider a function $f(\mathscr{C},t)$ which represent any physical quantity function of the internal coordinate and the time. 
+Multiplying \ref{eq:Liouville} by the function, $q_\alpha$, and integrating over all the internal coordinates yields Maxwell equation,
+\begin{equation}
+    \int q_\alpha \pddt P d\mathscr{C}
+    + \int q_\alpha \nablab \cdot \left(\textbf{u} P\right)d\mathscr{C}
+    + \int q_\alpha \nablab_\mathscr{C} \cdot \left(\frac{d\mathscr{C}}{dt} P\right) d\mathscr{C} = \int q_\alpha \Psi d\mathscr{C}.
+\end{equation}
+The first two terms derivative can be swapped with the integral since they are not function of $\mathscr{C}$.
+Then, we make use of the divergence theorem on the third term, 
+yielding,
+\begin{multline}
+    \pddt \int q_\alpha  P d\mathscr{C}
+    + \nablab \cdot\int q_\alpha \left(\textbf{u} P\right)d\mathscr{C} 
+    % + \int_{\partial \lambda} \nablab_\mathscr{C} \cdot \left(f \textbf{u}_\lambda P\right) d\partial\mathscr{C} 
+    = \int q_\alpha \Psi d\mathscr{C},
+    +\int \left(\frac{d\mathscr{C}}{dt} P\right) \cdot \nablab_\mathscr{C} f  d\mathscr{C} 
+    \label{eq:inttt}
+\end{multline}
+The second integral on RHS has been derived using the divergence theorem and considering that the distributions $P$ vanish near its boundaries. 
+After applying the average operator \ref{eq:inttt} reads as,
+\begin{equation}
+    \pddt \left( n \avg{q_\alpha}\right)
+    + \bm{\nabla} \cdot \left(n \avg{\textbf{u} q_\alpha}\right)
+    = n \avg{\Psi q_\alpha}
+    + n  \avg{\frac{d\mathscr{C}}{dt} \cdot \nablab_\mathscr{C} q_\alpha}
+    \label{ap:eq:maxwell}
+\end{equation}
+Note that up to now we have made no assumption on the shape of $P$ and on the nature of the internal coordinates $\mathscr{C}$. 
+Nevertheless, only the number of particles  $n$, appear in \ref{ap:eq:maxwell}.
+At this point of the development we must specify the nature of the internal coordinates.
+Thus, in the next section we investigate different situation. 
+In this context the scalar $\Psi$ represent the source term due to 3 things. 
+The coalescence and break-up phenomena, and the inter particular collision. 
+The source term can be thus expressed under this form \citep{rao2008introduction,curtiss1956kinetic},  
+\begin{equation*}
+    \Psi(\mathscr{C}) = B(\mathscr{C}) + D(\mathscr{C}) + \Pi(\mathscr{C}) + \nabla \cdot \Theta(\mathscr{C})
+\end{equation*}
+where $B$ is the birth term, $D$ the death term, $\Pi$ the collision source term, and $\Theta$ the collision flux. 
+
+\section{Point mass particles}
+We start by considering only point of mass particles. 
+Therefore, we consider only the momentum of the particles $\textbf{p}_\alpha$ and the volume $V_\alpha$ as an internal coordinate.
+Thus, \ref{ap:eq:maxwell} yields,
+\begin{equation}
+    \pddt \left( n \avg{q_\alpha}\right)
+    + \bm{\nabla} \cdot \left(n \avg{q_\alpha \textbf{u}_\alpha}\right)
+    - n  \avg{\frac{\partial V_\alpha}{\partial t} \cdot \frac{\partial q_\alpha}{\partial V_\alpha}}
+    - n  \avg{\frac{\partial \textbf{p}_\alpha}{\partial t} \cdot \frac{\partial q_\alpha}{\partial \textbf{p}_\alpha}}
+    = n \avg{\Psi q_\alpha},
+\end{equation}
+From this equation we can recover the conservation equations of the particular phase by replacing $q_\alpha$ by the right quantity. 
+Consider, $f = 1$, for example, we get, 
+\begin{equation}
+    \pddt n
+    + \nablab \cdot \left(n \avg{\textbf{u}_\alpha}\right)
+    = n\avg{\Psi}
+\end{equation}
+which is the conservation of the number density of the particles. 
+Where the right-hand side is to coalesce and break up kernel.
+Similarly, the mass balance equation can be obtained with $f = V_\alpha \rho_d$, yielding,
+\begin{equation}
+    \pddt (n\avg{m_\alpha})
+    + \bm{\nabla} \cdot \left(n \avg{\textbf{u}_\alpha m_\alpha}\right)
+    =
+    n  \avg{\int_{S_\alpha} M_d dS},
+\end{equation}
+where we have use \ref{eq:dt_m_alpha} to make appear the mass transfer term. 
+Notice that the source term is null since coalescence and break-up conserve the mass. 
+Again, for the momentum conservation equation we set $f = \textbf{p}_\alpha$.
+\begin{equation}
+    \pddt \left( n \avg{\textbf{p}_\alpha}\right)
+    + \nablab \cdot \left(n \avg{\textbf{u}_\alpha \textbf{p}_\alpha}\right)
+    =  \nabla \cdot \Theta
+    + n  \avg{\frac{\partial \textbf{p}_\alpha}{\partial t}}
+\end{equation}
+where $B$, $D$ and $\Pi$ cancel out since they doesn't change the momentum of the phase. 
+Nevertheless, notice that the collision flux term stay \citep{rao2008introduction}.
+Using, the momentum balance for a single particle \ref{eq:dt_p_alpha}, we can simplify the last term yielding, 
+\begin{multline*}
+    \pddt \left( n \avg{\textbf{p}_\alpha}\right)
+    + \bm{\nabla} \cdot \left(n \avg{\textbf{u}_\alpha \textbf{p}_\alpha }\right)\\
+    = 
+    \nabla \cdot \Theta
+    + n\avg{\int_{V_\alpha} \textbf{b}_k dV}
+    + \avg{\int_{S_\alpha} \left(
+    \textbf{T}_k\cdot\textbf{n}_k
+    - M_k \textbf{u}_k
+    \right)dS},
+\end{multline*}
+The system of equation obtained here is equivalent to \ref{eq:avg_p_momentum}, but with an additional source $\Theta$ terms representing the particle stress.
+
+We can also set $f = \textbf{u}_\alpha$ instead of $\textbf{p}_\alpha$ and consider only $\textbf{u}_\alpha$ as an internal coordinate.
+Then by using \ref{eq:u_alpha_dt} we directly have, 
+\begin{multline*}
+    \pddt \left( n \avg{\textbf{u}_\alpha}\right)
+    + \bm{\nabla} \cdot \left(n \avg{\textbf{u}_\alpha \textbf{u}_\alpha }\right)
+    = 
+    \nabla \cdot \Theta
+    + n\avg{\frac{1}{m_\alpha}\int_{V_\alpha} \textbf{b}_k dV} \\
+    + \avg{\frac{1}{m_\alpha}\int_{S_\alpha} \left(
+    \textbf{T}_k\cdot\textbf{n}_k
+    - M_k \textbf{w}_k
+    \right)dS}
+    + \avg{\frac{1}{m_\alpha} \ddt \int_{S_\alpha} 
+        \textbf{r} M_k dS},
+\end{multline*}
+
+% \section{Higher order description of the particles}
+% In the previous section we only considered the center of mass velocity.
+% Here we consider also the first order moment of inertia and momentum.
+% Therefore, we consider the following quantities as internal coordinate,
+% the momentum $\textbf{p}_\alpha$, the moment of momentum $\mathcal{P}_\alpha$ and the moment of inertia $\mathcal{G}$.
+% In the following we will adopt indices notation to be more rigorous. 
+% Besides, we will neglect all terms related to the mass transfer.
+% \ref{ap:eq:maxwell} now reads as, 
+% \begin{multline*}
+%     \pddt \left( n \avg{q_\alpha}\right)
+%     + \frac{\partial}{\partial x_i} \left(n \avg{\textbf{u}_\alpha q_\alpha}\right) 
+%     = n \left<Jf\right>^\lambda.\\
+%     + n  \left<\frac{d p^\alpha_i}{dt} \frac{\partial q_\alpha}{\partial p_i} \right>^{\lambda} 
+%     + n  \left<\frac{d\mathcal{G}^\alpha_{ij}}{dt} \frac{\partial q_\alpha}{\partial\mathcal{G}_{ij}}\right>^{\lambda} 
+%     + n  \left<\frac{d\mathcal{P}^\alpha_{ij}}{dt} \frac{\partial q_\alpha}{\partial\mathcal{P}_{ij}}\right>^{\lambda} 
+% \end{multline*}
+% Now, we can apply the same process as earlier to get the conservation equations.
+% For $f = \mathcal{G}_{ij}^\alpha$ we get,
+% \begin{equation*}
+%     \pddt \left( n \left<\mathcal{G}_{ij}\right>^\lambda\right)
+%     + \frac{\partial}{\partial x_k} \cdot \left(n \left<\mathcal{G}_{ij} u_k^\alpha \right>^\lambda\right)
+%     = n \left<J \mathcal{G}_{ij}\right>^\lambda.
+%     + n  \left<\mathcal{S}_\alpha\right>^{\lambda} 
+% \end{equation*}
+% where we have use \ref{eq:Gorderl}, with $\mathcal{S} = \mathcal{P} + \mathcal{P}^T$ ($^T$ being the transpose operator). 
+% As one can notice we recover the particular averaged equation for the transport of $\mathcal{G}$.
+% Besides, we assumed that $J$ does not cancel since it might not conserve the shape of particle. 
+% Now, setting $f = \mathcal{P}_{ij}$ and using \ref{eq:momentMumdeq_\alpha} yields the moment of momentum equation,
+% \begin{multline*}
+%     \pddt \left( n \left<\mathcal{P}\right>^\lambda\right)
+%     + \frac{\partial}{\partial x_i} \left(n \left<\mathcal{P} u_i^\alpha\right>^\lambda\right) 
+%     = n \left<J\mathcal{P}\right>^\lambda \\
+%     + \lavg{M_{ij}^\alpha}
+%     - \lavg{\int_{V_\alpha} \sigma_{ij}dV}
+%     + \lavg{\int_{V_\alpha} \rho_d u_i w_j dV}.
+% \end{multline*}
+% Again we kept the source term $J$, as we have no information on its nature while considering the moment of momentum and shape tensor. 
+% As proven in \ref{ap:cinematic} we could derive additional equations for the higher order of inertia and momentum. 
+
+% \section{Alternative derivation of the momentum equation}
+
+% In this section we consider the following internal coordinate, the center of mass velocity $\bm{u}^\alpha$, the moment of inertia $\mathcal{G}$ and the volume $V_\alpha$.
+% We would like to empathize that the center of mass velocity isn't rigorously equivalent to the moment $\textbf{p}_\alpha$ (see \ref{ap:cinematic}). 
+% Indeed, the latter can be expressed as a Taylor expansion at the center of the particle. 
+% Therefore, it is interesting to consider the derivation of the momentum equation using those internal coordinates.
+% The global conservation equation now reads as,
+% \begin{equation*}
+%     \pddt \left( n \avg{q_\alpha}\right)
+%     + \frac{\partial}{\partial x_i} \left(n \avg{\textbf{u}_\alpha q_\alpha}\right) 
+%     - n  \left<\frac{d u^\alpha_i}{dt} \frac{\partial q_\alpha}{\partial u_i} \right>^{\lambda} 
+%     - n  \left<\frac{d V_\alpha}{dt} \frac{\partial q_\alpha}{\partial V}\right>^{\lambda} 
+%     - n  \left<\frac{d \mathcal{G}^\alpha_{ij}}{dt} \frac{\partial q_\alpha}{\partial \mathcal{G}_{ij}} \right>^{\lambda} 
+%     = n \left<Jf\right>^\lambda.
+% \end{equation*}
+% According to \ref{ap:cinematic} we can express the linear momentum as $p^\alpha_j = V_\alpha u_j^\alpha + \frac{1}{2} \mathcal{G}_{kl}  K^\alpha_{jkl}+\ldots$, with $K^\alpha_{jkl} = \frac{\partial u_j^\alpha}{\partial y_k\partial y_l}|_\alpha$, where we neglected the third or above order terms. 
+% Then, setting $f = p^\alpha_i$ gives, 
+% \begin{multline*}
+%     \pddt \left( n \left<V_\alpha u_j^\alpha + \frac{1}{2} \mathcal{G}_{kl}  K^\alpha_{jkl}\right>^\lambda\right)
+%     + \frac{\partial}{\partial x_i} \left(n \left<
+%         \left(V_\alpha u_j^\alpha 
+%         + \frac{1}{2} \mathcal{G}_{kl}  K^\alpha_{jkl}\right) u_i^\alpha
+%     \right>^\lambda\right) \\
+%     + \frac{1}{2} n  \left<\frac{d\mathcal{G}_{kl}  K^\alpha_{jkl}}{dt}\right>^{\lambda} 
+%     - \frac{1}{2} n  \left<\frac{d \mathcal{G}^\alpha_{kl}}{dt} K^\alpha_{jkl} \right>^{\lambda} 
+%     = n \left<Jf\right>^\lambda
+%     + \lavg{\bm{q_\alpha}_\alpha}
+%     +\lavg{\bm{b}_{ext}}.
+% \end{multline*}
+% Since the averaging operator is linear, we can group the derivative yielding, 
+% \begin{multline*}
+%     \pddt \left( n \left<V_\alpha u_j^\alpha + \frac{1}{2} \mathcal{G}_{kl}  K^\alpha_{jkl}\right>^\lambda\right)
+%     + \frac{\partial}{\partial x_i} \left(n \left<
+%         \left(V_\alpha u_j^\alpha 
+%         + \frac{1}{2} \mathcal{G}_{kl}  K^\alpha_{jkl}\right) u_i^\alpha
+%     \right>^\lambda\right) \\
+%     + \frac{1}{2} n  \left<\frac{d K^\alpha_{jkl}}{dt}\mathcal{G}_{kl}\right>^{\lambda} 
+%     = n \left<Jf\right>^\lambda
+%     + \lavg{\bm{q_\alpha}_\alpha}
+%     +\lavg{\bm{b}_{ext}}.
+% \end{multline*}
+

@@ -1,0 +1,542 @@
+\chapter{A detailed derivation of the \textit{one-fluid}, \textit{two-fluid} and volume averaged formulation of a generalized balance equations.}
+\label{ap:average}
+
+
+In this appendix we derive the \textit{two-fluid} and \textit{one-fluid} formulation of a generalized conservation equation, namely,
+\begin{equation}
+    \frac{\partial}{\partial t} f_k
+    = \nablabh \cdot (\bm{\Phi}_k - f_k\textbf{u}_k)
+    + \textbf{S}_k.
+    \label{ap:eq:global_balance}
+\end{equation}
+Then we derive the phase averaged and global averaged equation of this general equation of conservation. 
+First, we recall the relations related to the phase indicator function, 
+\begin{equation}
+    \frac{\partial}{\partial t} \chi_k
+    + \textbf{u}_I  \nablabh \chi_k 
+    = 0, \;\;\;\;\text{and}\;\;\;\; 
+    \nablabh \chi_k 
+    = - \delta_I \textbf{n}_k.
+    \label{ap:eq:phase_properties}
+\end{equation}
+Now we can derive the \textit{two-fluid} formulation by multiplying \ref{ap:eq:global_balance} by the phase indicator function \ref{eq:phase_indicator}. 
+It yields, 
+\begin{equation*}
+    \frac{\partial}{\partial t} (\chi_k f_k)
+    = \nablabh \cdot (\chi_k \bm{\Phi}_k - \chi_k f_k \textbf{u}_k)
+    + \chi_k \textbf{S}_k.
+    + f_k \frac{\partial}{\partial t} \chi_k
+    + \left(
+        f_k \textbf{u}_k 
+        - \bm{\Phi}_k
+    \right) \cdot \nablabh \chi_k
+    % \label{ap:eq:global_balance}
+\end{equation*}
+where we have included the phase function $\chi_k$ into the derivative operators. 
+Now, using the \ref{ap:eq:phase_properties} we get, 
+\begin{equation}
+    \frac{\partial}{\partial t} (\chi_k f_k)
+    = \nablabh \cdot (\chi_k \bm{\Phi}_k - \chi_k f_k \textbf{u}_k)
+    + \chi_k \textbf{S}_k
+    + \left[
+        \bm{\Phi}_k 
+        + f_k 
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) 
+    \right]
+    \cdot \textbf{n}_k \delta_I 
+    \label{ap:eq:two-fluid_global}
+\end{equation}
+where the last term is the interfacial source term, such as the drag force if $f_k$ is the momentum or the mass transfer if $f_k$ is the density. 
+In this equation notice that all quantities are factor of the phase indicator function $\chi_k$. 
+So we transport $\chi_k f_k$ which is field quantity defined over the whole domain. 
+Thus, \ref{ap:eq:two-fluid_global} is valid over the entire domain.   
+Nevertheless, notice that the last term contain term factor of $\delta_I$. 
+The jump condition across the interface will be defined as the sum of the interfacial term on each phase $k$. 
+It will or will not be null depending on the nature of $f_k$, therefor we note,
+\begin{equation}
+    \sum_k 
+    \left[
+        \bm{\Phi}_k 
+        + f_k 
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) 
+    \right]
+    \cdot \textbf{n}_k
+    = \textbf{J}_I
+    \label{ap:eq:general_jump}
+\end{equation}
+were $\textbf{J}_I$ i the \textit{jump quantity} related to $f_k$.
+This \textit{jump quantity} is the surface tension force in the case where $f_k$ is the momentum.
+
+Now, let's derive the \textit{one-fluid} formulation of \ref{ap:eq:global_balance}.
+To do so we sum on add phases \ref{ap:eq:two-fluid_global}, and we make use of the jump condition \ref{ap:eq:general_jump} for the interfacial term. 
+Besides, we define any quantities $q$ being the sum of $q_k\chi_k$ on all phases, i.e. $q = \sum_k \chi_k q_k$.
+Then it is trivial to show that, 
+\begin{equation}
+    \frac{\partial}{\partial t} f
+    = \nablabh \cdot (\bm{\Phi} - f \textbf{u})
+    + \textbf{S}
+    + \textbf{J}_I \delta_I,
+    \label{ap:eq:one-fluid_global}
+\end{equation}
+which is the \textit{one-fluid} formulation. 
+
+The volume average of \ref{ap:eq:two-fluid_global} is then straight forward, by using the definition of the averaged operator, we get, 
+\begin{equation*}
+    \frac{\partial}{\partial t} (\phi_k\kavg{f})
+    = \nablabh \cdot \left(
+        \phi_k \kavg{\bm{\Phi} - f \textbf{u}}
+    \right)
+    + \phi_k \kavg{\textbf{S}}
+    + a_I \Iavg{
+        \bm{\Phi}_k \cdot \textbf{n}_k
+        + f_k 
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) \cdot \textbf{n}_k
+    } 
+    \label{ap:eq:avg_k_global}
+\end{equation*}
+Similarly, the bulk average can be obtained by averaging \ref{ap:eq:one-fluid_global} yielding, 
+\begin{equation*}
+    \frac{\partial}{\partial t} \avg{f}
+    = \nablabh \cdot \avg{\bm{\Phi} - f \textbf{u}}
+    + \avg{\textbf{S}}
+    + a_I\avg{\textbf{J}_I},
+    \label{ap:eq:avg_global}
+\end{equation*}
+\section{A rigorous derivation of the point velocity}
+Consider a particle of center of mass $\textbf{y}_\alpha$ defined such as
+\begin{equation*}
+    m_\alpha \textbf{y}_\alpha
+    = \int_{V_\alpha} \rho_k \textbf{y}_k dV,
+\end{equation*}
+its velocity can be solely the derivation of $\textbf{y}_\alpha$ whitin time.
+Yielding, 
+\begin{align*}
+    \ddt \textbf{y}_\alpha (t)
+    &=
+    \ddt \left(
+        \frac{1}{m_\alpha} \int_{V_\alpha} \rho_k \textbf{y}_k dV
+    \right)\\
+    &= \frac{1}{m_\alpha}
+    \ddt 
+    \left(
+        \int_{V_\alpha} \rho_k \textbf{y} dV
+    \right)
+    - \frac{1}{m_\alpha^2} \ddt \int_{V_\alpha} \rho_k dV \int_{V_\alpha} \rho_k \textbf{y}_k dV
+    \\
+    &= \frac{1}{m_\alpha}\int_{V_\alpha} \left[
+        \pddt (\rho_k \textbf{y}) + \nablabh \cdot\left(\rho_k \textbf{y}\textbf{u}_k\right) dV 
+    \right]\\
+    &+ \frac{1}{m_\alpha}\int_{S_\alpha} \textbf{y} M_k d S
+    -  \frac{1}{m_\alpha^2} \int_{S_\alpha} M_k dS  \int_{V_\alpha} \rho_k \textbf{y}_k dV
+    \\
+    &= \frac{1}{m_\alpha}\int_{V_\alpha} \textbf{y} \left[
+    \pddt (\rho_k) + \nablabh \cdot\left(\rho_k \textbf{u}_k\right) dV 
+    \right]dV
+    + \frac{1}{m_\alpha}\int_{V_\alpha} \rho_k  \textbf{u}_k  \cdot \nablabh \textbf{y} dV \\
+    &+ \frac{1}{m_\alpha}\int_{S_\alpha} \textbf{y}_k M_k d S
+    - \frac{1}{m_\alpha}  \textbf{y}_\alpha \int_{S_\alpha} M_k dS
+\end{align*}
+By considering the mass conservation \ref{eq:single-fluid_mass} for the first term,  noticing that $\nablabh \textbf{y} = \textbf{I}$ where $\textbf{I}$ is the identity tensor for the second term and introducing \textbf{r} in the third term gives, we get the following relation,
+\begin{equation*}
+    \textbf{u}_\alpha
+    = \frac{1}{m_\alpha} \left(
+        \textbf{p}_\alpha
+        +  \int_{S_\alpha} \textbf{r} M_k dS
+    \right)
+    % = \frac{1}{m_\alpha}  \left(
+    %     \textbf{p}_\alpha
+    % - \int_{V_\alpha} \rho_k \textbf{w} dV
+    % \right)
+\end{equation*}
+
+\section{Decomposition of the particular energy balance.}
+This section is a detailed derivation of the energy equation for a whole fluid particle, namely,
+\begin{equation*}
+    \label{ap:eq:E_alpha_dt}
+    \ddt E_\alpha 
+    % = \ddt \int_{V_\alpha} \rho_k E_k dV
+    = \int_{V_\alpha} \textbf{b}_k \cdot \textbf{u}_k dV
+    + \int_{S_\alpha} \left[
+        (\textbf{T}\cdot \textbf{u} 
+    - \textbf{q})\cdot\textbf{n}_k 
+    + M_k E_k 
+    + \textbf{f}_I \cdot \textbf{u}_I 
+    \right]dS, 
+\end{equation*}
+Since we can decompose the velocity fields of a particle following $\textbf{u}_k = \textbf{u}_\alpha + \textbf{w}$ it is then possible to rewrite the total energy, 
+Yielding, 
+\begin{multline*}
+    \int_{V_\alpha} \rho_k E_k dV
+    = \int_{V_\alpha} \rho_k e_k dV
+    + \frac{1}{2} \int_{V_\alpha} \rho_k \textbf{u}_\alpha\cdot\textbf{u}_\alpha dV\\
+    + \int_{V_\alpha} \rho_k \textbf{u}_\alpha\cdot\textbf{w} dV
+    + \frac{1}{2} \int_{V_\alpha} \rho_k \textbf{w}\cdot\textbf{w} dV
+\end{multline*}
+by applying the relation \ref{eq:M_alpha_dt} on the second term, it is possible to show that,
+\begin{equation*}
+    E_\alpha
+    = \int_{V_\alpha} \rho_k e_k dV
+    + \frac{1}{2} \textbf{u}_\alpha\cdot\textbf{u}_\alpha  m_\alpha
+    + \textbf{u}_\alpha\cdot \int_{V_\alpha} \rho_k \textbf{w} dV
+    + \frac{1}{2} \int_{V_\alpha} \rho_k \textbf{w}\cdot\textbf{w} dV.
+\end{equation*}
+We clearly see that the energy can be decomposed into internal and kinetic energy. 
+We define the integrated internal energy of the particle by $e_\alpha = \int_{V_\alpha} = \rho_k e_k dV$.
+It is the straight forward (using \ref{eq:one-fuild_internal_energy}) to show that, 
+\begin{equation*}
+    \ddt e_\alpha
+    = \int_{V_\alpha} \textbf{T}:\nablabh\textbf{u}_k dV
+    + \int_{S_\alpha} \left(
+        e_k M_k
+        - \textbf{q}_k \cdot \textbf{n}_k
+    \right) dS.
+\end{equation*}
+Similarly, the kinetic energy equation for a whole fluid particle can be obtained deriving the local kinetic energy ,namely,
+\begin{equation*}
+    \ddt \int_{V_\alpha} \rho_k \frac{u_k^2}{2} dV
+    = \int_{V_\alpha}\textbf{u}_k \cdot  \left(
+        \textbf{b}_k
+        + \nablabh \cdot \textbf{T}_k
+    \right)dV
+    + \int_{S_\alpha} \frac{u_k^2}{2} M_k dS.
+\end{equation*}
+Using the velocity decomposition one can deduce, 
+\begin{multline}
+    \frac{1}{2} \ddt \left(
+        m_\alpha \textbf{u}_\alpha \cdot \textbf{u}_\alpha
+        + 2\textbf{u}_\alpha \cdot \int_{V_\alpha}  \rho_k \textbf{w}_k dV
+        + \int_{V_\alpha} \rho_k \textbf{w}_k \cdot \textbf{w}_k dV
+    \right)\\
+    =  \textbf{u}_\alpha \left[
+        \cdot\int_{V_\alpha} \textbf{b}_k dV
+        +  \int_{S_\alpha} \left(
+            \textbf{T}_k \cdot \textbf{n}_k
+            + \frac{1}{2} \textbf{u}_\alpha M_k 
+            + \textbf{w}_k M_k 
+        \right)dS
+    \right]\\
+    + \int_{V_\alpha} \left(
+        \textbf{w}_k\cdot\textbf{b}_k
+        -\textbf{T}_k : \nablabh \textbf{w}_k
+    \right)dV
+    + \int_{S_\alpha} 
+        \textbf{w}_k\cdot(\textbf{T}_k\cdot \textbf{n}_k)
+    dS\\
+    + \int_{S_\alpha} \frac{1}{2} \textbf{w}_k \cdot \textbf{w}_k M_k dS.
+    \label{ap:eq:u_2_dt}
+\end{multline}
+Besides, taking the dot product of the centered velocity $\textbf{u}_\alpha$, with the momentum equation \ref{eq:dt_p_alpha}, gives, 
+\begin{multline*}
+    \frac{1}{2}\ddt (m_\alpha \textbf{u}_\alpha \cdot \textbf{u}_\alpha)
+    + \textbf{u}_\alpha \cdot \ddt \int_{V_\alpha} \rho_k \textbf{w}_k dV \\
+    = \textbf{u}_\alpha \cdot \int_{V_\alpha} \textbf{b}_k dV
+    + \textbf{u}_\alpha \cdot \int_{S_\alpha} \left(
+    \textbf{T}_k \cdot\textbf{n}_k
+    +\frac{\textbf{u}_\alpha}{2} M_k
+    +\textbf{w}_k M_k
+    \right)dS,
+\end{multline*}
+We can notice that the RHS of this equation correspond rigorously to the second line of \ref{ap:eq:u_2_dt}.
+Therefore, taking the difference between those equations, yields the internal motion equation of an arbitrary particle, namely, 
+\begin{multline*}
+    \frac{1}{2}\ddt \int_{V_\alpha} \frac{\rho_k}{2} \textbf{w}_k \cdot \textbf{w}_k dV
+    = \int_{V_\alpha} \left(
+        \textbf{w}_k\cdot\textbf{b}_k
+        -\textbf{T}_k : \nablabh \textbf{w}_k
+    \right)dV\\
+    + \int_{S_\alpha} 
+        \textbf{w}_k\cdot(\textbf{T}_k\cdot \textbf{n}_k)
+    dS
+    + \int_{S_\alpha} \frac{1}{2} \textbf{w}_k \cdot \textbf{w}_k M_k dS.
+\end{multline*}
+
+\section{Derivation of kinetic Turbulence Evolution Equations}
+
+The aim of this section is to derive the transport equation for the granular temperature scalar. 
+Let's define the grain temperature, $T$ as such, $T =\frac{1}{2} \textbf{u}'\cdot\textbf{u}'$, where $\textbf{u}'$ is the fluctuation velocity of a given average procedure. 
+
+\subsection{For a continuous phase}
+We start this derivation for the continuous phase $k$, so that $\textbf{u}'_k = \textbf{u}_k - \kavg{\textbf{u}}$.
+We start from the averaged kinetic energy equation over the $k$ phase, namely : 
+\begin{multline*}
+    \frac{\rho_k}{2}\frac{\partial }{\partial t}\left(
+        \phi_k
+        \kavg{u^2}
+    \right)
+    +\frac{\rho_k}{2}\nablab\cdot \left(
+        \phi_k
+        \kavg{u^2\textbf{u}}
+    \right)
+    =
+    \nablab\cdot\left(
+        \phi_k
+        \kavg{\textbf{u}\cdot \textbf{T}}
+    \right)
+    +\phi_k\kavg{\textbf{u}\cdot\textbf{b} - \textbf{T}: \nablabh\textbf{u}}\\
+    +a_I \Iavg{
+        (\textbf{T}_k\cdot\textbf{u}_k)\cdot\textbf{n}_k
+        + \frac{u^2_k}{2} M_k}.
+\end{multline*}
+Breaking down the LHS of this equation times $\frac{2}{\rho_k}$, yields,
+\begin{align*}
+    &\frac{\partial }{\partial t}\left(
+        \phi_k
+        \kavg{u^2}
+    \right)
+    +
+    \nablab\cdot \left(
+        \phi_k
+        \kavg{u^2\textbf{u}}
+    \right)\\
+    &=
+    \phi_k\frac{\partial }{\partial t}\kavg{u^2}
+    +\kavg{u^2}\frac{\partial }{\partial t}\phi_k
+    +\nablab\cdot \left(
+        \phi_k
+        \kavg{u^2}\kavg{\textbf{u}}
+        +\phi_k
+        \kavg{u^2\textbf{u}'}
+    \right)\\
+    &=
+    \phi_k
+    \left[
+        \frac{\partial }{\partial t}\kavg{u^2}
+        + 
+        \kavg{\textbf{u}}
+        \cdot\nablab 
+        \kavg{u^2}
+    \right]
+    +\kavg{u^2} \left[
+        \frac{\partial }{\partial t}\phi_k
+        + \nablab\cdot \left(
+            \phi_k
+            \kavg{\textbf{u}}
+        \right)
+    \right]\\
+    &+ \nablab\cdot \left(
+        2\phi_k
+        \kavg{\textbf{u}}\cdot\kavg{\textbf{u'}\textbf{u'}} + \phi_k \kavg{T \textbf{u'}}
+    \right)
+\end{align*}
+where we used $\kavg{u^2} = \kavg{u}^2 + T$. 
+By using the averaged mass conservation \ref{eq:avg_k_mass} times $\frac{1}{2}\kavg{u^2}$, namely, 
+\begin{equation*}
+    \frac{\rho_k}{2} \kavg{u^2} \pddt \phi_k 
+    + \frac{\rho_k}{2} \kavg{u^2} \nablab \cdot\left(\phi_k\kavg{\textbf{u}}\right)
+    = \frac{a_I}{2}\kavg{u^2}\Iavg{M_k},
+\end{equation*}
+we can rewrite the energy balance in conservative form. 
+It reads as, 
+\begin{multline}
+    \phi_k\frac{\rho_k}{2}  \left[
+        \frac{\partial }{\partial t}
+        \kavg{u^2}
+        +\kavg{\textbf{u}}\cdot\nablab 
+        \kavg{u^2}
+    \right]
+    =
+    \nablab\cdot\left(
+        \phi_k
+        \kavg{\textbf{u}\cdot \textbf{T}
+        - \rho_k\kavg{\textbf{u}}\cdot\textbf{u'u'}
+        - \frac{\rho_k}{2}T\textbf{u'}}
+    \right)\\
+    +\phi_k\kavg{\textbf{u}\cdot\textbf{b} - \textbf{T}: \nablabh\textbf{u}}
+    +a_I \Iavg{
+        (\textbf{T}_k\cdot\textbf{u}_k)\cdot\textbf{n}_k
+        + \frac{u^2_k - \kavg{u^2}}{2} M_k}.
+    \label{ap:eq:avg_k_u_2}
+\end{multline}
+On the other hand the momentum equation reads as, 
+\begin{multline*}
+    \rho_k\pddt (\phi_k\kavg{\textbf{u}}) 
+    + \rho_k\nablab\cdot(\phi_k\kavg{\textbf{u}}\kavg{\textbf{u}})\\
+    = \nablab\cdot\left[
+        \phi_k \kavg{\textbf{T}
+        - \rho_k \textbf{u'u'}}
+    \right]
+    +\phi_k\kavg{\textbf{b}}
+    + a_I\Iavg{M_k \textbf{u}_k +\textbf{n}_k\cdot\textbf{T}_k},
+\end{multline*}
+using the mass balance times $\kavg{\textbf{u}}$, we can write the momentum equation as, 
+\begin{multline*}
+    \rho_k \phi_k \left[
+        \pddt \kavg{\textbf{u}}
+        + \kavg{\textbf{u}}\cdot\nablab\kavg{\textbf{u}}
+    \right]\\
+    = \nablab\cdot\left[
+        \phi_k \kavg{\textbf{T}
+        - \rho_k \textbf{u'u'}}
+    \right]
+    +\phi_k\kavg{\textbf{b}}
+    + a_I\Iavg{M_k \left(\textbf{u}_k - \kavg{\textbf{u}}\right) +\textbf{n}_k\cdot\textbf{T}_k}.
+\end{multline*}
+Then taking the dot product of this equation with $\kavg{\textbf{u}}$ gives, 
+\begin{multline}
+    \phi_k\frac{\rho_k}{2}  \left[
+        \pddt \kavg{u}^2
+        + \kavg{\textbf{u}}\cdot\nablab\kavg{u}^2
+    \right]\\
+    = \nablab\cdot\left[
+        \phi_k \kavg{\textbf{u}}\cdot\kavg{\textbf{T}
+        - \rho_k  \textbf{u'u'}}
+    \right]
+    +\phi_k\kavg{\rho_k \textbf{u'u'} - \textbf{T}}:\nablab
+         \kavg{\textbf{u}}\\
+    +\phi_k\kavg{\textbf{u}}\cdot\kavg{\textbf{b}}
+    + a_I\Iavg{M_k \left(\textbf{u}_k\cdot\kavg{\textbf{u}} 
+    - \kavg{u}^2\right) +\textbf{n}_k\cdot(\kavg{\textbf{u}}\cdot\textbf{T}_k)}.
+    \label{ap:eq:avg_k_u_u}
+\end{multline}
+Finally, we can obtain the transport equation of $T$ by subtracting \ref{ap:eq:avg_k_u_2} with \ref{ap:eq:avg_k_u_u}. 
+Yielding the following equation, 
+\begin{multline}
+    \phi_k\rho_k  \left[
+        \frac{\partial }{\partial t}
+        \kavg{T}
+        +\kavg{\textbf{u}}\cdot\nablab 
+        \kavg{T}
+    \right]\\
+    =
+    \nablab\cdot\left(
+        \phi_k
+        \kavg{\textbf{u'}\cdot \textbf{T'}
+        - \rho_k T\textbf{u'}}
+    \right)
+    +\phi_k\kavg{\rho_k \textbf{u'u'}}:\nablab
+         \kavg{\textbf{u}}\\
+    +\phi_k\kavg{\textbf{u'}\cdot\textbf{b'} + \textbf{T'}: (\nablabh\textbf{u})'}
+    +a_I \Iavg{
+        (\textbf{T}_k'\cdot\textbf{u}'_k)\cdot\textbf{n}_k
+        + T M_k}.
+    \label{ap:eq:avg_k_T}
+\end{multline}
+
+
+\subsection*{Dispersed phase}
+
+In the same spirit as the previous section we carry out the derivation for the transport of the kinetic turbulence evolution $T$. 
+The only difference is that $T$ is now defined relative to the mean velocity of the particular phase $\pavg{u}$.  
+From the previous section we know that we can write the energy equation under the following form, 
+\begin{multline*}
+    \frac{1}{2}\ddt (m_\alpha u^2_\alpha)
+    + \textbf{u}_\alpha \cdot \ddt \int_{V_\alpha} \rho_k \textbf{w}_k dV 
+    = \textbf{u}_\alpha \cdot \int_{V_\alpha} \textbf{b}_k dV\\
+    + \textbf{u}_\alpha \cdot \int_{S_\alpha} \left[
+    \textbf{T}_k \cdot\textbf{n}_k
+    +\frac{\textbf{u}_\alpha}{2} M_k
+    +\textbf{w}_k M_k
+    \right]dS.
+\end{multline*}
+Applying the particular average operator yields the averaged point of mass kinetic energy equation, 
+\begin{multline*}
+    \frac{1}{2}\pddt   \left(\pavg{m_\alpha} \pnavg{u^2_\alpha}\right)
+    + \frac{1}{2}\nablab \cdot \left(\pavg{m_\alpha} \pnavg{u^2_\alpha \textbf{u}_\alpha}\right) 
+    = \pavg{\textbf{u}_\alpha \cdot \int_{V_\alpha} \textbf{b}_k dV}\\
+    - \frac{1}{2}\pddt \left(\pavg{m_\alpha'(u_\alpha^2)'}\right)
+    - \frac{1}{2}\nablab\cdot\left(\pavg{m_\alpha' (u_\alpha^2 \textbf{u}_\alpha)'}\right)\\
+    - \pavg{\textbf{u}_\alpha \cdot \ddt \int_{V_\alpha} \rho_k \textbf{w}_k dV} 
+    + \pavg{\textbf{u}_\alpha \cdot \int_{S_\alpha} \left[
+    \textbf{T}_k \cdot\textbf{n}_k
+    +\frac{\textbf{u}_\alpha}{2} M_k
+    +\textbf{w}_k M_k
+    \right]dS}.
+\end{multline*}
+From this step, we can carry out the same decomposition as the previous section for the RHS/2. 
+Namely, 
+\begin{multline*}
+    \frac{\partial }{\partial t}\left(
+        \pavg{m_\alpha}
+        \pnavg{u^2_\alpha}
+    \right)+
+    \nablab\cdot \left(
+        \pavg{m_\alpha}
+        \pnavg{u^2_\alpha\textbf{u}_\alpha}
+    \right) \\
+    =
+    \pavg{m_\alpha}
+    \left[
+        \frac{\partial }{\partial t}\pnavg{u^2_\alpha}
+        + 
+        \pnavg{\textbf{u}_\alpha}
+        \cdot\nablab 
+        \pnavg{u^2_\alpha}
+    \right]
+    +\pnavg{u^2_\alpha} \left[
+        \frac{\partial }{\partial t}\pavg{m_\alpha}
+        + \nablab\cdot \left(
+            \pavg{m_\alpha}
+            \pnavg{\textbf{u}_\alpha}
+        \right)
+    \right]\\
+    + \nablab\cdot \left(
+        2\pavg{m_\alpha}
+        \pnavg{\textbf{u}_\alpha}\cdot\pnavg{\textbf{u'}\textbf{u'}} 
+        + \pavg{m_\alpha} \pnavg{T \textbf{u'}}
+    \right)
+\end{multline*}
+As we can observe the possible polydispersity of the flow, add supplementary terms linked to the fluctuation of the mass, $m_\alpha'$.
+The energy equations in the conservative form then reads as, 
+\begin{multline*}
+    \frac{\pavg{m_\alpha}}{2}
+    \left[
+        \frac{\partial }{\partial t}\pnavg{u^2_\alpha}
+        + 
+        \pnavg{\textbf{u}_\alpha}
+        \cdot\nablab 
+        \pnavg{u^2_\alpha}
+    \right]
+    = \pavg{\textbf{u}_\alpha \cdot \int_{V_\alpha} \textbf{b}_k dV} + \nablab \cdot \textbf{L}\\
+    - \pavg{\textbf{u}_\alpha \cdot \ddt \int_{V_\alpha} \rho_k \textbf{w}_k dV} 
+    - \pavg{u_\alpha^2}\pnavg{\int_{S_\alpha} M_k d S}\\
+    + \pavg{\textbf{u}_\alpha \cdot \int_{S_\alpha} \left[
+    \textbf{T}_k \cdot\textbf{n}_k
+    +\frac{\textbf{u}_\alpha}{2} M_k
+    +\textbf{w}_k M_k
+    \right]dS},
+\end{multline*}
+where \textbf{L} represent all the fluctuation terms derived in the two previous equations. 
+
+Now let's look at the particular averaged momentum equation. 
+Using similar decomposition as in the previous part,
+and by using the decomposition of the momentum, $\textbf{p}_\alpha = m_\alpha \textbf{u}_\alpha + \int_{V_\alpha} \textbf{w}_k dV$, the equation aforesaid reads as, 
+\begin{multline*}
+    \pavg{m_\alpha} \left[
+        \pddt \pnavg{\textbf{u}_\alpha}
+        + \pnavg{\textbf{u}_\alpha}\cdot\nablab\pnavg{\textbf{u}_\alpha}
+    \right]
+    = \pavg{\int_{V_\alpha} \textbf{b}_k dV}
+    + \nablab \cdot \textbf{R}\\
+    - \pavg{\ddt \int_{V_\alpha} \rho_k \textbf{w}_k dV} 
+    + \pavg{\int_{S_\alpha} \left[\textbf{T}_k + \rho_k \textbf{u}_k (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S}
+\end{multline*}
+where \textbf{R} is the term that gather all the fluctuation terms. 
+Multiplying, this equation by $\pnavg{\textbf{u}_\alpha}$ and taking the difference with the energy equation yielding, 
+\begin{multline*}
+    \frac{\pavg{m_\alpha}}{2}
+    \left[
+        \frac{\partial }{\partial t}\pnavg{T_\alpha}
+        + 
+        \pnavg{\textbf{u}_\alpha}
+        \cdot\nablab 
+        \pnavg{T_\alpha}
+    \right]
+    = \pavg{\textbf{u}_\alpha' \cdot \left(\int_{V_\alpha} \textbf{b}_k dV\right)'} 
+    + \nablab \cdot \left(\textbf{L}-\textbf{R}\right)\\
+    - \pavg{\textbf{u}_\alpha' \cdot \left(\ddt \int_{V_\alpha} \rho_k \textbf{w}_k dV\right)'} \\
+    - \pavg{T_\alpha}\pnavg{\int_{S_\alpha} M_k d S}
+    + \pavg{\textbf{u}_\alpha \cdot \int_{S_\alpha} \left[
+    \textbf{T}_k \cdot\textbf{n}_k
+    +\frac{\textbf{u}_\alpha}{2} M_k
+    +\textbf{w}_k M_k
+    \right]dS},
+\end{multline*}
