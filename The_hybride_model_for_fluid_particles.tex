@@ -1,0 +1,889 @@
+\documentclass[twocolumn]{My_article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\size}{0.22\textwidth}
+\newcommand{\avg}[1]{\left<#1\right>}
+\newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
+\newcommand{\Exp}[1]{\overline{\overline{#1}}}
+\newcommand{\davg}[1]{\left<#1\right>_d}
+\newcommand{\cavg}[1]{\left<#1\right>_c}
+\newcommand{\kavg}[1]{\left<#1\right>_k}
+\newcommand{\Iavg}[1]{\left<#1\right>_I}
+\newcommand{\pavg}[1]{n \left<#1\right>}
+\newcommand{\pnavg}[1]{\left<#1\right>}
+\newcommand{\nstavg}[1]{\overline{#1}_{nst}}
+\newcommand{\nstrelavg}[1]{\overline{#1}_{nst}^{rel}}
+\newcommand{\mavg}[1]{\left<#1\right>_m}
+\newcommand{\gavg}[2][\gamma]{\left<#2\right>_{#1}}
+\newcommand{\partials}[1]{\partial_{i_1}\partial_{i_2}\ldots\partial{i_{#1}}}
+\newcommand{\partialp}[2]{ \prod_{m=#1}^{#2} \partial_{i_m}}
+\newcommand{\hatpartialp}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{j_m}}
+\newcommand{\hatpartialpi}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{i_m}}
+\newcommand{\pri}[2]{ \prod_{m=#1}^{#2} r_{i_m}}
+\newcommand{\prj}[2]{ \prod_{m=#1}^{#2} r_{j_m}}
+\newcommand{\nablab}{\bm{\nabla}}
+\newcommand{\nablabh}{\hat{\bm{\nabla}}}
+\newcommand{\ddt}{\frac{d}{d t}}
+\newcommand{\pddt}{\frac{\partial}{\partial t}}
+% \newcommand{\pddt}{\partial t \;}
+\newcommand{\tb}[1]{\color{blue}#1\color{black}}
+% \renewcommand{\tb}[1]{}
+
+% \renewcommand{\ref}[1]{\autoref{#1}}
+\renewcommand{\size}[1]{0.3\textwidth}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\title{The hybrid model for fluid particles}
+\author{FINTZI Nicolas}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    While deriving averaged equations for dispersed multiphase flows it is common to use the Lagrangian approach to describe the dispersed phase.
+    Nevertheless, it is also possible to use the classic continuous average method on the dispersed phase.
+    Therefore, in this work we provide a proof of the equivalence between particular and continuous averaged equations for the dispersed phase.
+    Additionally, we provide the most conservation laws for dispersed multiphase flows.
+\end{abstract}
+\section{Introduction}
+\section{Microscopic scale governing equations for two-phase flow}
+\label{sec:conservation_laws}
+
+In this section we define the local scale governing equations of multiphase flow using the formulation of \citet{kataoka1986local} and \citet{drew1983mathematical}.
+Before diving into the derivation we would like to emphasize that the local position vector at the local scale is noted $\textbf{y}$.
+This clarification will have its usage in the next section where we will use another variable for the global location, namely the vector $\textbf{x}$.
+Also, in this manuscript we write in bold symbols the vectors and tensors, while the scalar variables are written with the usual font.
+
+Any conservation equation for an arbitrary quantity $f_k(\textbf{y})$, where $f_k$ represent the quantity $f$ but defined in the arbitrary phase $k$, will takes the form,
+\begin{equation}
+    \pddt f_k
+    = \nablabh \cdot \left(
+        \bm{\Phi}_k
+        - f_k\textbf{u}_k
+        \right)
+    + \textbf{S}_k
+    \label{eq:general_conservation}
+\end{equation}
+where $\nablabh\cdot()$ is the local divergence operator defined as, $\frac{\partial}{\partial \textbf{y}}\cdot()$, $\textbf{u}_k$ is the phase velocity defined in the phase $k$.
+$\bm{\Phi}_k$ is the non-conservative flux corresponding to the quantity $f_k$,
+The non-conservative flux is often expressed through a constitutive equation depending on the nature of the flow such as the stress tensor for the momentum.
+And $\textbf{S}_k$ is the volumetric source of $f_k$, such as the body forces still for the momentum equation.
+It is important to notice that \ref{eq:general_conservation} is solely defined in the volume occupied by the phase $k$.
+To generalize the conservation equation over the whole domain, i.e. in each phase and also at the interfaces, we will need supplementary equations.
+To carry out the derivation of these equations we first introduce the Phase Indicator Function (PIF),
+\begin{equation}
+    \chi_k(\textbf{y}) =  \left\{
+      \begin{tabular}{cc}
+        $1 \;\text{if} \;\textbf{y} \in V_k$\\
+        $0 \;\text{if} \;\textbf{y} \notin V_k$
+      \end{tabular}
+      \right.,
+      \label{eq:phase_indicator}
+\end{equation}
+with $V_k$ the volume occupied by the $k^{th}$ phase.
+As an example, $V_c$ is the volume occupied by the continuous phase and $V_d$ by the dispersed phase.
+With the use of this function we will be able to generalize the phase quantities to general fields, and to derive two kinds of conservation equations, namely, the single-fluid formulation and the two-fluid formulation.
+
+\subsection{Topological equations}
+
+Before introducing the physical balance equations such as the mass and momentum conservation equations, we study the transport of the volume occupied by a phase $k$ and the interface between the phases considered.
+Therefore, the topological balance equations correspond to the transport equations of $\chi_k$, and the transport of its \textit{roots} along the velocity of its interfaces.
+First, the transport equation of $\chi_k$ reads as \citep{drew1983mathematical,kataoka1986local,morel2015mathematical},
+\begin{equation}
+    \pddt \chi_k
+    + \textbf{u}_I \cdot \nablabh \chi_k
+    = 0,
+    \label{eq:phaseindicator_transport}
+\end{equation}
+where $\textbf{u}_I$ is the velocity of the interface.
+It is important here to make the distinction between the velocity \textbf{of the interface} which is different from the velocity of the phase $k$ \textbf{at the interface} location which is noted $\textbf{u}_k$.
+Besides, it can be shown \citep{tryggvason2011direct} that,
+\begin{equation}
+    \nablabh \chi_k
+    = - \delta_I \textbf{n}_k
+\end{equation}
+where we have introduced the interface indicator function $\delta_I$, defined as $\delta(\textbf{y}-\textbf{y}_I)$, where $\delta$ is the Dirac-delta function and $\textbf{y}_I$ the position vector of the interfaces.
+We also define $\textbf{n}_k$ as the outward normal vector of the phase $k$.
+
+\subsection{Generalized balance equations}
+
+As stipulated above, \ref{eq:general_conservation} is solely defined on phase $k$.
+We thus need to generalize this equation over the whole domain constituted by all phases.
+There are two possible formulations to carry out this task.
+In the following, we give a brief overview of both formulations in the case of a general conservation equation such as \ref{eq:general_conservation}.
+The first formulation is the so-called \textit{Two-fluid formulation}.
+In this formulation we transport the quantity $f_k\chi_k$, so that $f_k\chi_k$ is defined over the whole domain, since $\chi_k f_k = f_k$ where $\textbf{y} \in V_k$ and $\chi_k f_k = 0$ else where.
+So we derive the so called \textit{two-fluid} formulation by multiplying \ref{eq:general_conservation} by the PIF, $\chi_k$ and rearranging each term.
+By making use of the \ref{eq:phaseindicator_transport}, it yields
+\begin{multline}
+    \pddt (\chi_k f_k)
+    = \nablabh \cdot (\chi_k \bm{\Phi}_k - \chi_k f_k \textbf{u}_k)
+    + \chi_k \textbf{S}_k\\
+    + \left[
+        \bm{\Phi}_k
+        + f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right)
+    \right]
+    \cdot \textbf{n}_k \delta_I,
+    \label{eq:two-fluid_global}
+\end{multline}
+where the last term is the interfacial source term representing the interactions across the phases.
+As an example, if $f_k$ turns out to be the momentum, then the interfacial source term would be the drag forces between the phases (see next section).
+As desired, in this equation all quantities $f_k$ are factor of $\chi_k$.
+So we transport the field $\chi_k f_k$, which is a field quantity defined over the whole domain.
+Notice that the interfacial term is factor of $\delta_I$ instead of $\chi_k$ as it is defined on the interface.
+Anyhow, \ref{eq:two-fluid_global} is defined over the entire domain and is therefore considered as a valid transport equation.
+
+The consistency across several phase's conservation equations, is made through the interfacial source term.
+And more precisely it is done with the use of the \textbf{jump condition} at the interface.
+It is defined as the sum of the interfacial terms of each phase $k$ over the domain of the interfaces $\textbf{y}_I$.
+It will or will not be null depending on the nature of $f_k$.
+Therefore we define this jump condition as
+\begin{equation}
+    \sum_k
+    \left[
+        \bm{\Phi}_k
+        + f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right)
+    \right]
+    \cdot \textbf{n}_k\delta_I
+    = \textbf{J}_I\delta_I
+    \label{eq:general_jump}
+\end{equation}
+where $\textbf{J}_I$ is the \textit{jump quantity} related to $f_k$, such as the surface tension force if $f_k$ were the momentum.
+
+Now that we properly defined any conservation laws inside and across each phase, let's derive the \textit{single-fluid} formulation for \ref{eq:general_conservation}.
+To do so we sum on all phases \ref{eq:two-fluid_global}, and make use of the jump condition \ref{eq:general_jump} to simplify the interfacial terms.
+Besides, we define the arbitrary quantity $f$ being the sum of the $f_k\chi_k$'s on all phases, i.e. $f = \sum_k \chi_k f_k$.
+By taking into account these remarks it is trivial to show that,
+\begin{equation}
+    \pddt f
+    = \nablabh \cdot (\bm{\Phi} - f \textbf{u})
+    + \textbf{S}
+    + \textbf{J}_I \delta_I,
+    \label{eq:single-fluid_global}
+\end{equation}
+which is the \textit{single-fluid} formulation.
+In the following we expose the most important conservation equations for our purpose by replacing $f_k$ or $f$ by the desired quantities.
+
+
+\section{The volume averaged equations of motion}
+
+We start this section by presenting the most common technics of averages and their operators.
+Therefore, we note $\left<f\right>(\textbf{x})$ the average of an arbitrary quantity $f(\textbf{y})$,
+where $\textbf{y}$ is the spacial coordinate in the laboratory reference frame,
+and $\textbf{x}$ macro scale coordinate at which we evaluate the average.
+Therefore, we define the \textbf{volume average} operator such as,
+\begin{equation}
+    \left<f\right>(\textbf{x},t) = \int g(\textbf{x},\textbf{y}) f(\textbf{y},t)dV,
+    \label{eq:avg}
+\end{equation}
+where $g(\textbf{x},\textbf{y})$ is the smoothing (or weighting) function introduced by
+\citet{jackson1997locally,marle1982macroscopic}.
+The first argument, $\textbf{x}$, is location at which we take the average, and \textbf{y} is the variable of integration or the local coordinate vector.
+The smoothing function $g(\textbf{x},\textbf{y})$ must follow two properties, the first one is normalization to unity
+$\int g(\textbf{x},\textbf{y}) dV = 1 \;\forall g$.
+The second one is that $g$ vanish for all $\textbf{y}$ far form $\textbf{x}$, thus $\lim\limits_{|\textbf{r}| \to \infty} g(\textbf{x},\textbf{y}) = 0$ with $\textbf{r} = \textbf{x} - \textbf{y}$.
+Also, the radius $R$, of the weighting function $g$, it is defined as $1/2 = \int_{|\textbf{r}|<R} g(\textbf{x},\textbf{y})dV$.
+Those characteristics ensure that the integral of \ref{eq:avg} is convergent and well normalized.
+
+
+Now we introduce the subclass operators, or conditional average operators.
+The average of the quantity $f$ considering only the volume of the $k^{th}$ phase, will be defined, such that,
+\begin{equation}
+    \phi_k \kavg{f}
+    = \avg{\chi_k f_k},
+    \label{eq:avg_k_phase}
+\end{equation}
+where $\phi_k$ is the volume fraction of the phase $k$ at \textbf{x} and $\kavg{\ldots}$ is the conditional average operator on the phase $k$.
+It can be obtained by substituting $f$ by $1$ in \ref{eq:avg_k_phase}, it reads,
+\begin{equation*}
+    \phi_k
+    = \avg{\chi_k}
+\end{equation*}
+
+Having established averages operators over the volume of both phases independently, we now define one last conditional averaging operator.
+Namely, the surface phase average operator,
+\begin{equation}
+    a_I\Iavg{f}
+    = \avg{\delta_I f},
+    \label{eq:avg_I_phase}
+\end{equation}
+where $a_I$ is the interfacial area concentration.
+$a_I$ can be thought of the ratio between the surface of the interfaces over the volume where the interface are included.
+It is defined by,
+\begin{equation}
+    a_I
+    = \avg{\delta_I}.
+\end{equation}
+
+Now, we would like to emphasize that the quantities inside phase average, are implicitly defined inside the $k^{th}$ phase so that it avoid redundancies.
+Therefore, $\kavg{f} = \kavg{f_k}= \avg{f_k\chi_k}$.
+At the interface however it is not the case, indeed by definition, at the interface the quantities are defined in both phases.
+Thus, we adopt the following convention, when averaging an equation on the volume of phase $k$, $\Iavg{f_k}$ will be the interfacial average of $f_k$, with $f_k$ being the quantity $f$ defined on the phase $k$.
+However, $\Iavg{f}$ without the subscript $_k$, will refer to the interface average of the quantity $f$ defined on the neighboring phase of $k$.
+
+
+\subsection{Average of an arbitrary conservation equation}
+
+From the \ref{eq:two-fluid_global} and the phase average operator definition (\ref{eq:avg_k_phase}) we can show that the phase averaged conservation equation of an arbitrary quantity $f_k$ reads as,
+\begin{multline}
+    \pddt (\phi_k\kavg{f})
+    = \nablab \cdot \left(
+        \phi_k \kavg{\bm{\Phi} - f \textbf{u}}
+    \right)
+    + \phi_k \kavg{\textbf{S}}\\
+    + a_I \Iavg{
+        \bm{\Phi}_k \cdot \textbf{n}_k
+        + f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) \cdot \textbf{n}_k
+    },
+    \label{eq:avg_k_global}
+\end{multline}
+where we have used the average operator properties.
+Likewise, the jump condition can be averaged too, using \ref{eq:avg}, yielding,
+\begin{equation}
+    \sum_k
+    \Iavg{
+        \bm{\Phi}_k
+        \cdot \textbf{n}_k
+        + f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right)
+        \cdot \textbf{n}_k
+    }
+    = \Iavg{\textbf{J}_I}.
+    \label{eq:avg_general_jump}
+\end{equation}
+So as the microscopic jump condition this equation maintains the consistency between the different averaged quantity in presence.
+Similarly, the bulk or global averaged conservation equation can be obtained averaging \ref{eq:single-fluid_global} yielding,
+\begin{equation*}
+    \pddt \avg{f}
+    = \nablab \cdot \avg{\bm{\Phi} - f \textbf{u}}
+    + \avg{\textbf{S}}
+    + a_I\avg{\textbf{J}_I}.
+    \label{eq:avg_global}
+\end{equation*}
+
+\section{Lagrangian description of a single fluid particle}
+
+
+Let us define a particle indexed, $\alpha$, occupying the volume $V_\alpha(t)$ having a Lagrangian property $q_\alpha(t)$.
+Then $q_\alpha(t)$ is defined as the mean of the arbitrary Eulerian quantity $f_k(\textbf{y},t)$ over the domain $V_\alpha(t)$, or a subdomain included in $V_\alpha(t)$.
+In this section the phase $k$ represent the phase of the dispersed phase as it is arbitrary.
+Therefore, we define $q_\alpha(t)$ such as
+\begin{equation}
+    q_\alpha(t)
+    = \int_{\Omega_\alpha(t)} f_k(\textbf{y},t) d\Omega,
+    \label{eq:q_alpha}
+\end{equation}
+where $\Omega_\alpha(t)$ is the domain defined such that $\Omega_\alpha \subseteq  V_\alpha$.
+Usually, we transport volume quantities, therefore in most of the cases $\Omega_\alpha = V_\alpha$, but it can also be surface quantities, in which case $\Omega_\alpha = S_\alpha$, where $V_\alpha$ and $S_\alpha$ are respectively the volume and surface of the particle $\alpha$.
+As an example, $q_\alpha$ is the mass of the particle $\alpha$ when $f_k = \rho_k$ in \ref{eq:q_alpha}.
+
+All along this section we refer to the Lagrangian quantities labelled by $_\alpha$ solely for quantities that are owned by the particle indexed $\alpha$.
+Since, all Lagrangian quantities depend solely on time we discard the argument $t$ in all variables indexed $\alpha$.
+
+\subsection{Generalized balance equations}
+
+For any arbitrary Lagrangian quantity $q_\alpha$ we wish to define its evolution within time.
+To do so, we carry out the total derivative of $q_\alpha$, namely $\ddt q_\alpha$, thanks to Reynolds transport theorem.
+So let's introduce the general Reynolds transport equation for any quantity $q_\alpha$, namely,
+\begin{equation*}
+    \ddt  q_\alpha
+    = \ddt \int_{V_\alpha} f_k dV
+    = \int_{V_\alpha} \pddt f_kdV
+    + \int_{S_\alpha} f_k \textbf{u}_I \cdot \textbf{n}_k d S,
+\end{equation*}
+where $\textbf{u}_I$ is the velocity of the interface and $\textbf{n}_k$ the unit outward normal vector to $S_\alpha$.
+By adding and subtracting, $\int_{S_\alpha} f_k \textbf{u}_k\cdot \textbf{n}_k dS$ on the RHS,  this integral can be reformulated as,
+\begin{multline}
+    \ddt  q_\alpha
+    = \int_{V_\alpha}\left[ \pddt f_k + \nablabh \cdot\left(f_k\textbf{u}_k\right) \right]dV\\
+    + \int_{S_\alpha} f_k (\textbf{u}_I-\textbf{u}_k)\cdot \textbf{n}_k d S,
+    \label{eq:q_alpha_dt}
+\end{multline}
+where we clearly distinguish, the volume integral of the local material derivative (first term), and the surface integral of the flux of $f_k$ across the phases (second term).
+By substituting the first term with the general conservation law from \ref{eq:general_conservation}, it is straightforward to show that
+\begin{equation}
+    \ddt  q_\alpha
+    = \int_{V_\alpha} \textbf{S}_k dV
+    + \int_{S_\alpha} \left[\bm{\Phi}_k + f_k (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S,
+    \label{eq:q_alpha_balance}
+\end{equation}
+where we used the divergence theorem to transform the non-conservative flux $\bm{\Phi}$ to a surface integral.
+
+\subsection{Mass and momentum balance equations}
+
+The first set of conservation laws that we can derive rather easily, is  the mass, momentum and total energy balance equations. 
+Indeed, substituting $f_k$ with $\rho_k$, $\rho_k \textbf{u}_k$ and $\rho_k E_k$  in \ref{eq:q_alpha_balance}, lead us to respectively the mass and momentum balance equations for a whole fluid particle.
+These equations read as,
+\begin{align}
+    \label{eq:dt_m_alpha}
+    \ddt m_\alpha 
+    % = \ddt \int_{V_\alpha} \rho_k  dV
+    &= \int_{S_\alpha} M_k dS
+    = - \int_{S_\alpha} M dS, \\
+    \label{eq:dt_p_alpha}
+    \ddt \textbf{p}_\alpha 
+    % = \ddt \int_{V_\alpha} \rho_k \textbf{u}_k dV
+    &= \int_{V_\alpha} \textbf{b}_k dV
+    + \int_{S_\alpha} \left(
+    \textbf{T}_k\cdot\textbf{n}_k
+    + M_k \textbf{u}_k
+    \right)dS, 
+\end{align}
+where $m_\alpha =  \int_{V_\alpha} \rho_k dV$ and $\textbf{p}_\alpha= \int_{V_\alpha} \rho_k \textbf{u}_k dV$ are respectively the mass, momentum and total energy of the particle $\alpha$. 
+$M_k$ is the mass transfer term and \textbf{T} the stress tensor of the neighboring phase, $\textbf{b}_k$ the body forces of the phase $k$. 
+
+\subsection{Definition of the point velocity}
+Before diving in further details it is crucial to define some fundamental quantities of the particles $\alpha$.
+First, the position of the center of mass of the particle, $\textbf{y}_\alpha$, is defined as,
+\begin{equation*}
+    m_\alpha \textbf{y}_\alpha
+    = \int_{V_\alpha} \rho_k \textbf{y}_k dV,
+\end{equation*}
+Additionally, we define the distance between any points inside $V_\alpha$ and $\textbf{y}_\alpha$ by the vector \textbf{r}, such that, $\textbf{r}(\textbf{y},t) = \textbf{y} - \textbf{y}_\alpha(t)$.
+Again, we can notice here, and it will be of major importance in the next derivations, that $\textbf{r}$ is function of space and time.
+Now that the position of the center of mass is stated, we can define the point velocity of a whole fluid particle.
+The unique and non-arbitrary definition of the particle's center of mass velocity, is that it is the derivative within time of its position vector $\textbf{y}_\alpha$.
+Therefore, by making use of the Reynolds transport theorem, and classical rules of derivation, it can be shown that,
+\tb{
+    \begin{equation}
+        \textbf{u}_\alpha
+        = \frac{1}{m_\alpha} \left(
+            \textbf{p}_\alpha
+            +  \int_{S_\alpha} \textbf{r} M_k dS
+            \right)
+            \label{eq:dt_y_alpha}
+    \end{equation}
+}
+where we introduced the notation of the particle's center of mass velocity,
+\begin{equation*}
+    \textbf{u}_\alpha = \ddt \textbf{y}_\alpha,
+\end{equation*}
+and we made use of the momentum definition $\textbf{p}_\alpha = \int \rho_k \textbf{u}_k dV$.
+Notice that the first component of the RHS of the velocity is the linear momentum divided by the mass of the particle.
+The second term is less intuitive, it results from the contribution of the anisotropic mass transfer over the surface of the particle.
+We emphasize that this term is different from the momentum exchange term $\int \textbf{u}_kM_k dS$ (in \ref{eq:dt_p_alpha}) as it does not involve momentum exchange, but rather mass exchanges.
+In \citet{zaepffel2011modelisation}, \citet{paisant2014modelisation} and \citet{morel2015mathematical}, they state that the particle's center of mass velocity is $\textbf{u}_\alpha = \textbf{p}_\alpha / m_\alpha$ even though they are considering mass transfer.
+It is indeed what we would expect in most of the cases, nevertheless this definition turns out to be not adapted in the presence of anisotropic mass transfer as denoted by \ref{eq:dt_y_alpha}.
+Besides, it is interesting to notice that regardless of the particle's internal motions, the relevant velocity is $\textbf{u}_\alpha = \textbf{p}_\alpha /m_\alpha,$ if we neglect mass transfer.
+Also, we define the \textit{inner velocity} $\textbf{w}_k(\textbf{y},t)$, such that $\textbf{w}_k(\textbf{y},t) = \textbf{u}_k(\textbf{y}) - \textbf{u}_\alpha(t)$.
+Using this definition, and after manipulating \ref{eq:dt_y_alpha} we obtain the following relation for the momentum,
+\begin{equation}
+    \textbf{p}_\alpha
+    =  m_\alpha \textbf{u}_\alpha
+    - \int_{S_\alpha} \textbf{r} M_k dS
+    = m_\alpha \textbf{u}_\alpha
+    + \int_{V_\alpha} \rho_k \textbf{w}_k dV,
+    \label{eq:velocity_definition}
+\end{equation}
+where the step from the second to the third equality is made possible thanks to a relation obtained by deriving the first moment of mass, namely, 
+\begin{equation}
+    \label{eq:M_alpha_dt}
+    \ddt \int_{V_\alpha} \textbf{r} \rho_k dV
+    = \int_{V_\alpha} \rho_k  \textbf{w}_k  dV
+    + \int_{S_\alpha} \textbf{r} M_k  dS = 0.
+\end{equation}
+Anyhow, as we stated above the integral of the innner velocity is \textbf{rigorously null}, regardless of the internal motions, as long as there is no mass transfer across the  particle's surface.
+
+\section{Particular averaged equaitons}
+\label{sec:Lagrange_to_Euler}
+
+Up to now we described the particles within a Lagrangian framework, meaning that the particles' properties were solely function of time.
+Indeed, any quantity related to a particle $\alpha$, namely $q_\alpha(t)$, isn't defined though space.
+In continuous mechanics we wish to transport fields defined at any point \textbf{y} in space, so that we are able to average a quantity over several particles contained in a given volume of space.
+Therefore, we define the field quantity related  to $q_\alpha$ by, $\delta_\alpha q_\alpha$, where we introduced the Dirac delta function, $\delta_\alpha$ \citep{morel2015mathematical}, defined such as
+\begin{equation}
+    \delta_\alpha(\textbf{y},t) = \delta(\textbf{y}-\textbf{y}_\alpha(t)).
+\end{equation}
+This way, any the field $q_\alpha \delta_\alpha$ is defined everywhere in space and time, with a value of $q_\alpha$ at $\textbf{y}_\alpha$ and a null value everywhere else.
+At the microscopic level we know that the $\delta_\alpha$ function is transported along the velocity of the particle $\alpha$ since it is defined with its position $\textbf{y}_\alpha$.
+Therefore, $\delta_\alpha$ follows the transport equation
+\begin{equation}
+    \pddt \delta_\alpha
+    + \nablabh \cdot (\textbf{u}_\alpha  \delta_\alpha)
+    = \psi_\alpha \delta_\alpha,
+    \label{eq:delta_alpha_dt}
+\end{equation}
+where we included $\textbf{u}_\alpha$ in the divergence operator since we recall that it is solely function of time.
+The source term is due to change of topology, i.e. coalescence and break-up of particles.
+The function $\psi_\alpha(t)$ is defined so that it is equal to 0 for all time were the particle $\alpha$ is present, 1 when a particle $\alpha$ appear and -1 when it disappears.
+Note that $\psi$ is a Dirac function such that $\psi = \delta(t - t_0)$ where $t_0$ is either the birth or death time of a particle.
+As an example, if the particle indexed $1$ were to merge with particle $2$ at time $t_1$ giving birth to a $3^{th}$ particle indexed $3$, then $\psi_1(t_1) = \psi_2(t_1) = -1$, and $\psi_3(t_1) = 1$.
+Similarly, for any derivative of Lagrangian quantity, i.e. $\ddt q_\alpha$, we define its related field quantity, i.e. $\delta_\alpha \ddt q_\alpha$, and we show that,
+\begin{equation}
+    \delta_\alpha \ddt q_\alpha
+    = \pddt (\delta_\alpha q_\alpha)
+    + \nablabh (\delta_\alpha q_\alpha \textbf{u}_\alpha)
+    - q_\alpha \psi_\alpha \delta_\alpha
+    \label{eq:delta_q_alpha_dt}
+\end{equation}
+where we use the fact that $q_\alpha(t)$ and $\textbf{u}_\alpha(t)$ are solely function of time, and the \ref{eq:delta_alpha_dt}.
+We can observe that the source term due to change in topology is now proportional to $q_\alpha$.
+Now let's consider a volume containing $N$ particles, we define the \textit{particular} field of a given quantity, $q_\alpha$, as the sum of all independent field, i.e. $\sum_\alpha \delta_\alpha q_\alpha$.
+Notice that \ref{eq:delta_q_alpha_dt} remains valid for a sum of fields since derivative operators are linear.
+Now that we defined properly the Eulerian equivalent quantities, i.e. $\sum_\alpha q_\alpha \delta_\alpha$, we can introduce the averaging procedure.
+For consistency, we use the volume average operator from \ref{eq:avg}.
+So form this step it is similar to the last section.
+Indeed, the volume average of $\sum_\alpha \delta_\alpha q_\alpha$ yields,
+\begin{multline}
+    \pavg{q_\alpha}(\textbf{x},t)
+    = \avg{\sum_\alpha\delta_\alpha q_\alpha} (\textbf{x},t)\\
+    = \int_V
+    \sum_\alpha \delta_\alpha(\textbf{y}- \textbf{y}_\alpha) q_\alpha(t)
+    g(\textbf{x},\textbf{y})
+    dV
+    \label{eq:avg_p}
+\end{multline}
+where we introduced the number density of particles, $n(\textbf{x})$, defined by $n = \avg{\delta_\alpha}$, and the \textbf{particular average} operator, $\pavg{\ldots}$.
+The Reynolds’s, Leibniz's and Gauss's rules still hold while averaging the fields, $\sum_\alpha q_\alpha \delta_\alpha$.
+Thus, if we consider the previous properties we can show that any mean of Lagrangian derivative reads as,
+\begin{equation}
+    \pavg{\ddt q_\alpha}
+    = \pddt \left(\pavg{q_\alpha}\right)
+    + \nablab \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right)
+    - \pavg{\psi_\alpha q_\alpha}
+    ,\label{eq:q_alpha_dt_avg}
+\end{equation}
+in agreement with \citep{anderson1967fluid}.
+
+It is now straight forward to average any Lagrangian balance equation, indeed one has to multiply the aforesaid equation by $\delta_\alpha$, sum over all particles contained in a given domain and apply the volume average operator (\ref{eq:avg}) on each term.
+Applying this process on the general balance equation for an arbitrary quantity $q_\alpha$ (\ref{eq:q_alpha_balance}), yields the general particular averaged equilibrium equation,
+\begin{multline}
+    \pddt   \left(\pavg{q_\alpha}\right)
+    + \nablab \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right)
+    = \pavg{\int_{V_\alpha} \textbf{S}_k dV}\\
+    + \pavg{\int_{S_\alpha} \left[\bm{\Phi} + f (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S}
+    + \pavg{\psi_\alpha q_\alpha}
+    .\label{eq:q_avg_p_global}
+\end{multline}
+
+
+\subsection{The equivalence between continuous and particular averaged equations.}
+
+\citet{nott2011suspension} demonstrated that the continuous averaged momentum equation, for mono disperse suspension of solid spheres, were strictly equivalent to the particular averaged momentum equation.
+While they didn't provide many details on the derivation of this equivalence, they limited their study to mono disperse suspension of solid spherical particles.
+Originally, this work pointed out that no term expressed as the divergence of a stress appear in the particular averaged momentum balance.
+However, from their arguments, the dispersed phase momentum equation must possess a non-convective terms.
+Indeed, since we observe particle migration in suspensions of solid particles \citep{guazzelli2011}, a term express as the divergence of a stress must appear inside the momentum equation even at low inertia.
+That is the main argument for the proof of the existence of the so called, \textit{particle-fluid-particle} stress.
+Anyhow, our motivation is to extend this equivalence to the whole system of equation of the dispersed two-phase flows model.
+
+Based on the derivation of \citet{nott2011suspension}, in \ref{ap:exp}, we extended their theory to any kind of conservation laws and particles nature and demonstrated, as they did for mono disperse solid particles suspensions, the equivalence between both formalism.
+To be brief, in \ref{ap:exp} we demonstrate that the continuous phase averaged non-convective term of \ref{eq:avg_k_global}, i.e.  $\kavg{\bm{\Phi}}$, can  be expressed as a multipole expansion.
+Likewise, the other terms of \ref{eq:avg_k_global} can also be expanded in such a way.
+It turns out that terms of the former expansion cancel out the terms of the latter expansion except for the zeroth order moments of these expansions.
+Therefore, the phase average balance, \ref{eq:avg_k_global}, is \textbf{rigorously equivalent} to the corresponding particular averaged laws, i.e. \ref{eq:q_alpha_dt_avg}.
+Nevertheless, this property is true if and only if, there is indeed a non-convective term present in the equation, i.e. if $\bm{\Phi} \neq \textbf{0}$. Because as stated above it is the expansion of the convective term that cancels out the others terms' expansion.
+Therefore, as an example, the phase averaged mass conservation equation, and the particular averaged mass balance are not equivalent.
+The same holds for the surface conservation laws, as pointed out by \citet{lhuillier2000bilan}.
+
+From \ref{ap:exp} we can be certain that the momentum averaged equations are equivalent in the continuous and particular formulation.
+Indeed, in this case the microscale balance of momentum equation possess a non-convective term, namely $\textbf{T}$.
+
+
+\bibliography{Bib/bib_bulles.bib}
+\appendix
+\onecolumn
+
+\section{Derivation of the point velocity}
+
+Consider a particle of center of mass $\textbf{y}_\alpha$ defined such as
+\begin{equation*}
+    m_\alpha \textbf{y}_\alpha
+    = \int_{V_\alpha} \rho_k \textbf{y}_k dV,
+\end{equation*}
+its velocity can be solely the derivation of $\textbf{y}_\alpha$ whitin time.
+Yielding, 
+\begin{align*}
+    \ddt \textbf{y}_\alpha (t)
+    &=
+    \ddt \left(
+        \frac{1}{m_\alpha} \int_{V_\alpha} \rho_k \textbf{y}_k dV
+    \right)\\
+    &= \frac{1}{m_\alpha}
+    \ddt 
+    \left(
+        \int_{V_\alpha} \rho_k \textbf{y} dV
+    \right)
+    - \frac{1}{m_\alpha^2} \ddt \int_{V_\alpha} \rho_k dV \int_{V_\alpha} \rho_k \textbf{y}_k dV
+    \\
+    &= \frac{1}{m_\alpha}\int_{V_\alpha} \left[
+        \pddt (\rho_k \textbf{y}) + \nablabh \cdot\left(\rho_k \textbf{y}\textbf{u}_k\right) dV 
+    \right]\\
+    &+ \frac{1}{m_\alpha}\int_{S_\alpha} \textbf{y} M_k d S
+    -  \frac{1}{m_\alpha^2} \int_{S_\alpha} M_k dS  \int_{V_\alpha} \rho_k \textbf{y}_k dV
+    \\
+    &= \frac{1}{m_\alpha}\int_{V_\alpha} \textbf{y} \left[
+    \pddt (\rho_k) + \nablabh \cdot\left(\rho_k \textbf{u}_k\right) dV 
+    \right]dV
+    + \frac{1}{m_\alpha}\int_{V_\alpha} \rho_k  \textbf{u}_k  \cdot \nablabh \textbf{y} dV \\
+    &+ \frac{1}{m_\alpha}\int_{S_\alpha} \textbf{y}_k M_k d S
+    - \frac{1}{m_\alpha}  \textbf{y}_\alpha \int_{S_\alpha} M_k dS
+\end{align*}
+By considering the mass conservation for the first term,  noticing that $\nablabh \textbf{y} = \textbf{I}$ where $\textbf{I}$ is the identity tensor for the second term and introducing \textbf{r} in the third term gives, we get the following relation,
+\begin{equation*}
+    \textbf{u}_\alpha
+    = \frac{1}{m_\alpha} \left(
+        \textbf{p}_\alpha
+        +  \int_{S_\alpha} \textbf{r} M_k dS
+    \right)
+    % = \frac{1}{m_\alpha}  \left(
+    %     \textbf{p}_\alpha
+    % - \int_{V_\alpha} \rho_k \textbf{w} dV
+    % \right)
+\end{equation*}
+
+\section{Proof of the equivalence between particular and continuous average for an arbitrary conservation law}
+\label{ap:exp}
+
+
+A general conservation equation over the $k$ phase is written as,
+\begin{equation*}
+    \frac{\partial}{\partial t} (\phi_k\kavg{f})
+    + \nablab \cdot \left(
+        \phi_k \kavg{f \textbf{u}}
+    \right)\\
+    = \nablab \cdot \left(
+        \phi_k \kavg{\bm{\Phi}}
+    \right)
+    + \phi_k \kavg{\textbf{S}}
+    + a_I \Iavg{
+        \bm{\Phi}_k \cdot \textbf{n}_k
+        + f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) \cdot \textbf{n}_k
+    }
+\label{ap:eq:avg_k_global}
+\end{equation*}
+besides the local balance available inside the volume of the $k$ phase,
+\begin{equation}
+    \pddt f_k
+    = \nablabh \cdot \left(
+        \bm{\Phi}_k
+        - f_k\textbf{u}_k
+        \right)
+    + \textbf{S}_k
+\end{equation}
+In the particular average formalism the same balance can be written as,
+\begin{equation}
+    \pddt   \left(\pavg{q_\alpha}\right)
+    + \nablab \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right)
+    = \pavg{\int_{V_\alpha} \textbf{S}_k dV }
+    + \pavg{\int_{S_\alpha} \left[\bm{\Phi}_k + f (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S}
+\end{equation}
+where $q_\alpha = \int_{V_\alpha} f_k dV$.
+The expansion of all the terms inside the phase average equation are rather straight forward.
+Nevertheless, the divergence of the averaged non-convective flux is of a particular interest.
+Indeed, it is the only term that doesn't appear inside the particular average balance, which is normal since we transport integrated quantities.
+It can be show that,
+\begin{equation}
+    \partial_{i_{l+1}}
+    (\phi_k \kavg{\bm{\Phi}_{i_{l+1}}})=
+    \sum_l^\infty
+    \left[
+        \frac{(-1)^{l}}{l!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \sum_{\alpha}
+        g_{\alpha}
+        \int_{V_\alpha}
+        \prod^{l}_{m=1}
+        r_{i_m} \bm{\Phi}_{i_{l+1}}dV
+    \right],
+\end{equation}
+By decomposition into symmetric and antisymmetric part we arrive to the expression,
+\begin{equation}
+    \prod^{l}_{m=1} r_{i_m} \bm{\Phi}_{i_{l+1}}
+    = \frac{1}{l+1}
+    \underbrace{\left[
+    \sum_{n=1}^{l+1} \bm{\Phi}_{i_{n}}\prod^{l+1}_{\substack{m=1 \\ m \neq n}} r_{i_m} \right.}_{\text{Symmetric part}}
+    +\underbrace{\left.\sum_{n=1}^{l} (r_{i_n}\bm{\Phi}_{i_{l+1}} - r_{i_{l+1}}\bm{\Phi}_{i_{n}}) \prod^{l}_{\substack{m=1 \\ m \neq n}} r_{i_m} \right]}_{\text{Antisymmetric part}}.
+\end{equation}
+Taking the divergence of the same product yields,
+\begin{align*}
+    \nablabh \cdot \left(\prod^{l+1}_{m=1} r_{i_m} \bm{\Phi}\right)
+    &= \prod^{l+1}_{m=1} r_{i_m} \nablabh \cdot \bm{\Phi}
+    + \bm{\Phi} \cdot \nablabh \prod^{l+1}_{m=1} r_{i_m}\\
+    &= \prod^{l+1}_{m=1} r_{i_m} \nablabh \cdot \bm{\Phi}
+    + \bm{\Phi}  \cdot\sum_{m=1}^l \nablabh r_{i_m}  \prod^{l}_{\substack{n=1 \\ n \neq m}} r_{i_m}\\,
+    &= \prod^{l+1}_{m=1} r_{i_m} \nablabh \cdot \bm{\Phi}
+    + \sum_{m=1}^l \bm{\Phi}_{i_m}  \prod^{l}_{\substack{n=1 \\ n \neq m}} r_{i_m}\\,
+\end{align*}
+Which, by considering the previous relation and the fact that the anti symmetric part is null under derivation, gives,
+\begin{equation}
+    \prod^{l}_{m=1} r_{i_m} \bm{\Phi}_{i_{l+1}}
+    =\frac{1}{l+1}\sum_{m=1}^{l+1} \bm{\Phi}_{i_m}  \prod^{l+1}_{\substack{n=1 \\ n \neq m}} r_{i_m}
+    =\frac{1}{l+1}\nablabh\cdot \left(\prod^{l+1}_{m=1} r_{i_m} \bm{\Phi}\right)
+    - \frac{1}{l+1}\prod^{l+1}_{m=1} r_{i_m} \nablabh\cdot \bm{\Phi}.
+\end{equation}
+Using the micro scale conservation equation for the second term it reads,
+\begin{equation}
+    (l+1) \prod^{l}_{m=1} r_{i_m} \bm{\Phi}_{i_{l+1}}
+    =\nablabh \cdot \left(\prod^{l+1}_{m=1} r_{i_m} \bm{\Phi}\right)
+    - \prod^{l+1}_{m=1} r_{i_m} \left(
+        \pddt f
+        + \nablabh \cdot (f \textbf{u})
+        - \textbf{S}
+    \right).
+\end{equation}
+Injecting this term into the initial expansion and using Gauss theorem on the first term gives,
+\begin{align*}
+    \partial_{i_{l+1}}
+    (\phi_k \kavg{\bm{\Phi}_{i_{l+1}}})
+    & =\sum_l^\infty
+    \left[
+        \frac{(-1)^{l}}{(l+1)!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \sum_{\alpha}
+        g_{\alpha}
+        \int_{S_\alpha}
+        \prod^{l+1}_{m=1}
+        r_{i_m} \bm{\Phi}_k \cdot \textbf{n}_k dS
+    \right],\\
+    & +\sum_l^\infty
+    \left[
+        \frac{(-1)^{l}}{(l+1)!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \sum_{\alpha}
+        g_{\alpha}
+        \int_{V_\alpha}
+        \prod^{l+1}_{m=1}
+        r_{i_m} \textbf{S} dV
+    \right],\\
+    & +\sum_l^\infty
+    \left[
+        \frac{(-1)^{l+1}}{(l+1)!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \sum_{\alpha}
+        g_{\alpha}
+        \int_{V_\alpha}
+        \prod^{l+1}_{m=1}
+        r_{i_m} \pddt f dV
+    \right],\\
+    & +\sum_l^\infty
+    \left[
+        \frac{(-1)^{l+1}}{(l+1)!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \sum_{\alpha}
+        g_{\alpha}
+        \int_{V_\alpha}
+        \prod^{l+1}_{m=1}
+        r_{i_m} \nablabh \cdot (f \textbf{u}) dV
+    \right],\\
+\end{align*}
+where we recognize the expansion of the source term \textbf{S} and the one of the non-convective flux dotted with the normal, i.e. $\bm{\Phi}\cdot\textbf{n}$.
+Therefore, those series cancel directly with the expansion of the terms in the general phase averaged conservation equation, only the zeroth moments remain, yielding the particular average of the zeroth moment of \textbf{S} and $\bm{\Phi}\cdot \textbf{n}_k$.
+Now let's focus on the third and fourth term. Namely,
+\begin{align*}
+    \int_{V_\alpha}\pri{1}{l+1}\left[
+        \pddt f
+        +
+        \nablabh \cdot (f \textbf{u})
+    \right]dV
+    &= \int_{V_\alpha} \left[
+    \pddt \left(\pri{1}{l+1}  f \right)
+    +
+    \nablabh \cdot \left(
+    \prod^{l+1}_{m=1}
+    r_{i_m} f \textbf{u}
+    \right) \right]dV   \\
+    &- \int_{V_\alpha}f\left[
+        \pddt \left(\prod^{l+1}_{m=1}
+        r_{i_m} \right)
+        +
+        \textbf{u} \cdot
+        \nablabh \pri{1}{l+1}
+    \right]
+    dV.\\
+\end{align*}
+Noticing that $\pddt \textbf{r} = - \textbf{u}_\alpha$, $\nablabh \textbf{r} = \textbf{I}$, and using the Reynolds transport theorem on the first term on the RHS, gives,
+\begin{align*}
+    \int_{V_\alpha}\pri{1}{l+1}\left[
+        \pddt f
+        +
+        \nablabh \cdot (f \textbf{u})
+    \right]dV
+    &= \ddt \int_{V_\alpha}
+    \pri{1}{l+1}  f dV   \\
+    &- \int_{S_\alpha}
+    \pri{1}{l+1}  f (\textbf{u}_I - \textbf{u})\cdot \textbf{n} dV \\
+    &- \int_{V_\alpha}f \sum_{e=1}^{m=1}
+    \prod^{l+1}_{\substack{m=1\\ m\neq e}}
+    r_{i_m}
+    w_{i_e}
+    dV.\\
+\end{align*}
+The second term on the RHS, i.e. the moments of the phase transfer term, cancels directly with the expansion of the interfacial average term in the phase average balance.
+In the end, the expansion of the non-convective flux reads as,
+\begin{align*}
+    \partial_{i_{l+1}}
+    (\phi_k \kavg{\bm{\Phi}_{i_{l+1}}})
+    & =\sum_l^\infty
+    \left[
+        \frac{(-1)^{l+1}}{(l+1)!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \sum_{\alpha}
+        g_{\alpha}\ddt \int_{V_\alpha}
+        \left(\pri{1}{l+1}  f \right)dV
+    \right]\\
+    &+\sum_l^\infty
+    \left[
+        \frac{(-1)^{l}}{(l+1)!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \sum_{\alpha}
+        g_{\alpha}\int_{V_\alpha}
+        f\sum_{e=1}^{m=1}
+        \prod^{l+1}_{\substack{m=1\\ m\neq e}}
+        r_{i_m}
+        w_{i_e}
+         dV
+    \right].\\
+\end{align*}
+Notice that the time derivative doesn't commute with the particular average operator, instead one must use \ref{eq:q_alpha_dt_avg}, giving the following expression,
+\begin{align}
+    \partial_{i_{l+1}}
+    (\phi_k \kavg{\bm{\Phi}_{i_{l+1}}})
+    & =\sum_l^\infty
+    \left[
+        \frac{(-1)^{l+1}}{(l+1)!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \pddt
+        \sum_{\alpha}
+        g_{\alpha} \int_{V_\alpha}
+        \pri{1}{l+1}  f dV
+    \right]
+    \\
+    & + \sum_l^\infty
+    \left[
+        \frac{(-1)^{l+1}}{(l+1)!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \nablab \cdot
+        \sum_{\alpha}
+        g_{\alpha} \textbf{u}_\alpha
+        \int_{V_\alpha}
+        \pri{1}{l+1}  f  dV
+        \right]\\
+    % & - \sum_l^\infty
+    % \left[
+    %     \frac{(-1)^{l+1}}{(l+1)!}
+    %     \prod^{l+1}_{m=1}
+    %     \partial_{i_m}
+    %     \sum_{\alpha}
+    %     g_{\alpha} \psi
+    %     \int_{V_\alpha}
+    %     \pri{1}{l+1}  f  dV
+    %     \right]\\
+        &+\sum_l^\infty
+    \left[
+        \frac{(-1)^{l}}{(l+1)!}
+        \prod^{l+1}_{m=1}
+        \partial_{i_m}
+        \sum_{\alpha}
+        g_{\alpha}\int_{V_\alpha}
+        f\sum_{e=1}^{m=1}
+        \prod^{l+1}_{\substack{m=1\\ m\neq e}}
+        r_{i_m}
+        w_{i_e}
+        dV
+    \right].
+    \label{ap:eq:partial_Phi}
+\end{align}
+In this expression we clearly recognize the time derivative of the moments of $\pri{1}{l+1}f$, which will obviously cancel with the first term on the LHS of \ref{eq:avg_k_global}.
+Now let's compare the two remaining term to the expansion of the advection term in \ref{eq:avg_k_global}, which reads as,
+\begin{equation}
+    \nablab \cdot \phi_k \kavg{\textbf{u} f}
+    = \sum_{l=0}^\infty
+    \left[
+        \frac{(-1)^l}{l!} \prod^{l}_{m=1}\partial_{i_m}
+        \nablab \cdot
+        \sum_\alpha  g_\alpha \int_{V_\alpha} \prod^l_{m=1}r_{i_m} \textbf{u} f dV
+    \right],
+\end{equation}
+using the decomposition of the velocity, $\textbf{u} = \textbf{u}_\alpha + \textbf{w}$,
+\begin{align}
+    \nablab \cdot \phi_k \kavg{\textbf{u} f}
+    &= \sum_{l=0}^\infty
+    \left[
+        \frac{(-1)^l}{l!} \prod^{l}_{m=1}\partial_{i_m}
+        \nablab \cdot
+        \sum_\alpha  g_\alpha \textbf{u}_\alpha  \int_{V_\alpha} \prod^l_{m=1}r_{i_m} f dV
+    \right]\\
+    &+ \sum_{l=0}^\infty
+    \left[
+        \frac{(-1)^l}{l!} \prod^{l}_{m=1}\partial_{i_m}
+        \nablab \cdot
+        \sum_\alpha  g_\alpha \int_{V_\alpha} \prod^l_{m=1}r_{i_m} \textbf{w} f dV
+    \right]
+    \label{ap:eq:partial_uf}
+\end{align}
+It is now clear that the first term of this equation will cancel out with the second term on the RHS of \ref{ap:eq:partial_Phi} except for the zeroth order moments that are not present in the latter equation.
+Besides, the difference of second term of \ref{ap:eq:partial_uf} with \ref{ap:eq:partial_Phi} can be written as follows,
+\begin{equation}
+    \sum_{l=0}^\infty
+    \left[
+        \frac{(-1)^l}{l!} \prod^{l+1}_{m=1}\partial_{i_m}
+        \sum_\alpha  g_\alpha
+        \int_{V_\alpha} f_k\left(
+            \prod^l_{m=1}r_{i_m} w_{i_{l+1}}
+            -
+            \frac{1}{l+1}
+            \sum_{e=1}^{m=1}
+            \prod^{l+1}_{\substack{m=1\\ m\neq e}}
+            r_{i_m}
+            w_{i_e}
+        \right)
+        dV
+    \right]
+    \label{ap:eq:diff_rw_term}
+\end{equation}
+Notice that the integral of \ref{ap:eq:diff_rw_term} is the difference of the tensor $\pri{1}{l}w_{l_{l+1}}$ and its own antisymmetric part, i.e. $\frac{1}{l+1} \sum_{e=1}^{m=1} \prod^{l+1}_{\substack{m=1\\ m\neq e}} r_{i_m} w_{i_e}$.
+Consequently, the remaining term will be an antisymmetric tensor, in the indices $i_1i_2\ldots i_{l+1}$, which will ultimately cancel upon the operator $\partialp{1}{l+1}$.
+
+At last, the only terms remaining in \ref{eq:avg_k_global} are the following,
+\begin{equation*}
+    \pddt   \left(\pavg{\int_{V_\alpha} f_k dV}\right)
+    + \nablab \cdot \left(\pavg{\textbf{u}_\alpha \int_{V_\alpha} f_k  dV  }\right)\\
+    = \pavg{\int_{V_\alpha} \textbf{S}_k dV }
+    + \pavg{\int_{S_\alpha} \left[\bm{\Phi}_k
+    + f (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S},
+\end{equation*}
+If we note, $q_\alpha = \int_{V_\alpha} f_k dV$ it yields the particular averaged equation, i.e.
+\begin{equation}
+    \pddt   \left(\pavg{q_\alpha}\right)
+    + \nablab \cdot \left(\pavg{\textbf{u}_\alpha q_\alpha  }\right)
+    = \pavg{\int_{V_\alpha} \textbf{S}_k dV }
+    + \pavg{\int_{S_\alpha} \left[\bm{\Phi}_k
+    + f (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S},
+\end{equation}
+Thus, the phase average on the $k$ phase is equivalent to the particular average on the same phase.
+
+
+
+\end{document}

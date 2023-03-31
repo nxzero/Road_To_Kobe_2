@@ -2,15 +2,48 @@
 
 % packages, font, color, and newcommands
 \usepackage{amsfonts, amsmath, oldgerm, lmodern, bm}
+% \usepackage[font={footnotesize}]{caption}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{empheq}
+\usepackage{mdframed}
+\usepackage{bm}
+\usepackage{animate}
 
-\usepackage[font={footnotesize}]{caption}
+
+
+
+\usepackage{graphicx}
+\bibliographystyle{apalike}
+\usefonttheme{serif}
+
+
+% meta-data
+\title{The hybrid model for arbitrary dispersed two-phase flows.}
+\subtitle{Comparison between particular and \\continuous averaging approach.}
+\author{\href{mailto:qilong-kirov.liu@connect.polyu.hk}{Fintzi Nicolas}}
+\date{Created on May 22, 2022}
+
+\titlebackground{image/3D/P_PHI_5.png}
+
+% document body
+
 \newcommand{\size}{0.22\textwidth}
 \newcommand{\avg}[1]{\left<#1\right>}
 \newcommand{\davg}[1]{\left<#1\right>_d}
 \newcommand{\cavg}[1]{\left<#1\right>_c}
 \newcommand{\kavg}[1]{\left<#1\right>_k}
 \newcommand{\Iavg}[1]{\left<#1\right>_I}
-\newcommand{\pavg}[1]{n \left<#1\right>_p}
+\newcommand{\pavg}[1]{n \left<#1\right>}
+\newcommand{\pnavg}[1]{\left<#1\right>}
+% \newcommand{\nstavg}[1]{\left<#1\right>_{nst}}
+\newcommand{\nstavg}[1]{\overline{#1}_{nst}}
+\newcommand{\nstrelavg}[1]{\overline{#1}_{nst}^{rel}}
 \newcommand{\mavg}[1]{\left<#1\right>_m}
 \newcommand{\lavg}[1]{\theta_0\left<#1\right>^\lambda}
 \newcommand{\partials}[1]{\partial_{i_1}\partial_{i_2}\ldots\partial{i_{#1}}}
@@ -23,23 +56,15 @@
 \newcommand{\nablabh}{\hat{\bm{\nabla}}}
 \newcommand{\ddt}{\frac{d}{d t}}
 \newcommand{\pddt}{\frac{\partial}{\partial t}}
-\usefonttheme{serif}
-% \themecolor{blue} 
-% meta-data
-\title{The hybrid model for arbitrary dispersed two-phase flows.}
-\subtitle{Generalization to liquid dispersed phase.}
-\author{\href{mailto:qilong-kirov.liu@connect.polyu.hk}{Fintzi Nicolas}}
-\date{Created on May 22, 2022}
 
-\titlebackground{image/pic/bulles.png}
 
 % document body
 \begin{document}
 \maketitle
 
-\section{Classic two-phase flow formalism}
+\section{Local description of the two-phase flows}
 
-\begin{frame}{Governing equations at the microscopic scale.}
+\begin{frame}{Governing equations at the local scale.}
   The fluid in the phase $k$ of the flow follow :
   \begin{equation}
     \pddt f_k
@@ -111,51 +136,46 @@ Topological equation of the PIF :
 \end{equation}
 With the jump condition, 
 \begin{equation}
-  \sum_k 
-  \left[
-      \bm{\Phi}_k 
-      + f_k 
-      \left(
-          \textbf{u}_I
-          - \textbf{u}_k
-      \right) 
-  \right]
-  \cdot \textbf{n}_k
-  = \textbf{J}_I
+  \pddt (f_I\delta_I)  
+  = 
+  + \nablabh \cdot (\delta_I \mathbf{\Phi}^I_{||} - \delta_I f_I \textbf{u}^I)
+  +\textbf{S}_I \delta_I
+  - \sum_k \left[
+  f_k (\textbf{u}_I - \textbf{u}_k)
+  + \mathbf{\Phi}_k
+  \right] \cdot \textbf{n}_k \delta_I
   \label{eq:general_jump}
 \end{equation}
 \begin{itemize}
-  \item $\textbf{J}_I$ Jump quantity, (surface tension \ldots). 
+  \item The subscript $_I$ denote the surface quantities
 \end{itemize}
 \end{frame}
 
 \begin{frame}{The single fluid formulation.}
-  Adding the \textit{two-fluid} formulation on all phases $k$, we obtain the single fluid formulation, 
+  Adding (\ref{eq:two-fluid_global}) on each phase $k$ together with (\ref{eq:general_jump}) gives the single fluid formulation :
   \begin{equation}
     \pddt f
     = \nablabh \cdot (\bm{\Phi} - f \textbf{u})
     + \textbf{S}
-    +\underbrace{ 
-    \textbf{J}_I \delta_I,}_{\text{Interfacial source term}},
     \label{eq:one-fluid_global}
 \end{equation}
 where,
 \begin{itemize}
-  \item $f = \sum_k f_k \chi_k$
-  \item $\textbf{S} = \sum_k \textbf{S}_k \chi_k$
-  \item $\bm{\Phi} = \sum_k \bm{\Phi}_k \chi_k$
+  \item $f = \sum_k f_k \chi_k + \delta_I f_I$ 
+  \item $\textbf{S} = \sum_k \textbf{S}_k \chi_k + \delta_I \textbf{S}_I$
+  \item $\bm{\Phi} = \sum_k \bm{\Phi}_k \chi_k+ \delta_I \mathbf{\Phi}_I$
 \end{itemize}
 \end{frame}
 
 
-\section{Continuous averaged equations.}
+\section{Continuous phase averaged equations.}
 \begin{frame}{Continuous volume average}
 Definition of the volume average, 
   \begin{equation}
     \left<f\right>(\textbf{x},t) = \int g(\textbf{x},\textbf{y}) f(\textbf{y},t)dV,
     \label{eq:avg}
 \end{equation}
-where this operator follow those rules,
+where this operator follows those rules,
 \begin{align}
   \left<f+g\right> = \left<f\right>+\left<g\right>, \;\;\;\;
   \left<\left<f\right>g\right> = \left<f\right>\left<g\right>, \\
@@ -168,7 +188,7 @@ where this operator follow those rules,
 \begin{itemize}
   \item \textbf{x} global position vector. 
   \item $g(\textbf{x},\textbf{y})$ the weighting function. 
-  \item $\nablabh = \frac{\partial}{\partial \textbf{x}}$, is the global gradient operator.
+  \item $\nablab = \frac{\partial}{\partial \textbf{x}}$, is the global gradient operator ($\nablabh \neq \nablab$).
 \end{itemize}
 \end{frame}
 
@@ -192,26 +212,21 @@ where this operator follow those rules,
 \end{equation*}
 Averaged jump condition, 
 \begin{equation}
-  \sum_k 
-  \Iavg{
-      \bm{\Phi}_k 
-      \cdot \textbf{n}_k
-      + f_k 
-      \left(
-          \textbf{u}_I
-          - \textbf{u}_k
-      \right) 
-      \cdot \textbf{n}_k
+  \pddt (a_I\Iavg{f_I})  
+  = 
+  \nablab \cdot \left(a_I \Iavg{\mathbf{\Phi}_{||I} - f_I \textbf{u}_I}\right)
+  +a_I\Iavg{\textbf{S}_I} 
+  - a_I \sum_k \Iavg{
+  f_k (\textbf{u}_I - \textbf{u}_k)\cdot \textbf{n}_k
+  + \mathbf{\Phi}_k\cdot \textbf{n}_k
   }
-  = \Iavg{\textbf{J}_I}
-  \label{eq:general_jump}
+  \label{eq:avg_general_jump}
 \end{equation}
 Continuous average on the whole domain, 
 \begin{equation*}
   \pddt \avg{f}
   = \nablab \cdot \avg{\bm{\Phi} - f \textbf{u}}
   + \avg{\textbf{S}}
-  + a_I\avg{\textbf{J}_I},
   \label{eq:avg_global}
 \end{equation*}
 \begin{itemize}
@@ -222,16 +237,16 @@ Continuous average on the whole domain,
 
 \begin{frame}
   {Application to mass and momentum equations}
-  Mass conservation law for the phase $k$ :
+  Mass conservation law for the phase $k$ ($f_k = \rho_k$) :
   \begin{equation}
     \pddt (\phi_k \rho_k)
-    + \nablab \cdot \left(\phi_k 
-        \kavg{\rho_k \textbf{u}}
+    + \nablab \cdot \left(\phi_k \rho_k 
+        \kavg{\textbf{u}}
     \right) 
     = a_I\Iavg{M_k},
     \label{eq:avg_k_mass}
 \end{equation}
-  Momentum conservation of the $k$ phase : 
+  Momentum conservation of the $k$ phase ($f_k = \rho_k \textbf{u}_k$): 
   \begin{equation}
     \pddt (\phi_k\kavg{\rho_k\textbf{u}}) 
     % + \nablab\cdot(\phi_k\kavg{\textbf{uu}})
@@ -250,7 +265,7 @@ where,
 \end{itemize}
 \end{frame}
 
-\section{Lagrangian description of the dispersed phase.}
+\section{A Lagrangian description of the dispersed phase.}
 
 \begin{frame}{Evolution of a single particle's property.}
   For a Lagrangian property $q_\alpha$, where,
@@ -276,10 +291,10 @@ With the Reynolds transport theorem, we can show that for $\Omega_\alpha = V_\al
 \end{itemize}
 \end{frame}
 
-\begin{frame}{From lagrangian to Eulerian descripton of particles.}
+\begin{frame}{From a Lagrangian to an Eulerian description of the dispersed phase.}
   Any Lagrangian quantity $q_\alpha(t)$ will be represented by the fields $q_\alpha(t)\delta(\textbf{y}-\textbf{y}_\alpha)$.
 
-  Similarly The Lagrangian quantity $\ddt q_\alpha$ will be represented by the fields $\delta_\alpha \ddt q_\alpha$.
+  Similarly, The Lagrangian quantity $\ddt q_\alpha$ will be represented by the fields $\delta_\alpha \ddt q_\alpha$.
 
   It can be shown that : 
   \begin{equation*}
@@ -308,16 +323,16 @@ Besides, using the Reynolds transport theorem we define the velocity of the part
   % \right)
 \end{equation*}
 
-If there is more than one particle in the flow, we replace the fields $q_\alpha(t)\delta(\textbf{y}-\textbf{y}_\alpha)$ by its sum on every particles, i.e. : the field, $\sum_k q_\alpha(t)\delta(\textbf{y}-\textbf{y}_\alpha)$.
+If there is more than one particle in the flow, we replace the fields $q_\alpha(t)\delta(\textbf{y}-\textbf{y}_\alpha)$ by its sum on every particle, i.e. : the field, $\sum_k q_\alpha(t)\delta(\textbf{y}-\textbf{y}_\alpha)$.
 Notice that the above relations on the derivative still holds.
 \end{frame}
 
 
-\begin{frame}{Particular averaged equaiton}  
-  The particular average is then the volume average of $\sum_k = \delta_\alpha q_\alpha$, i.e.
+\begin{frame}{Particular averaged equations}  
+  The particular average is then the volume average of $\sum_k = \delta_\alpha q_\alpha$,
   \begin{equation*}
-    \pavg{q}(\textbf{x},t)
-    = \avg{\sum_\alpha \delta_\alpha q_\alpha} (\textbf{x},t)
+    \pavg{q}
+    = \avg{\sum_\alpha \delta_\alpha q_\alpha} 
     = \int_V g(\textbf{x},\textbf{y}) \sum_\alpha \delta_\alpha(\textbf{y}- \textbf{y}_\alpha) q_\alpha(t) dV 
     =  \sum_\alpha g(\textbf{x},\textbf{y}_\alpha) q_\alpha(t).
 \end{equation*}
@@ -329,17 +344,21 @@ The averaged Lagrangian balance for an arbitrary quantity $q_k$, yields,
   + \pavg{\int_{S_\alpha} \left[\bm{\Phi} + f (\textbf{u}_I-\textbf{u}) \right] \cdot \textbf{n}_k d S}
   \label{eq:avg_p_global}
 \end{equation}
+\begin{itemize}
+  \item $n(\textbf{x})$ is the number density of particle at \textbf{x}.  
+  \item In (\ref{eq:avg_p_global}) we used the short hands $q_\alpha \sim \sum_\alpha \delta_\alpha q_\alpha$.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-  {Application to mass and momentum equaitons}
+  {Application to mass and momentum equations}
   Setting $f_k = \rho_k$ we obtain the mass conservation equation :
   \begin{equation}
     \pddt   \left(\pavg{m_\alpha}\right)
     + \nablab \cdot \left(\pavg{m_\alpha \textbf{u}_\alpha}\right) 
     = 
      \pavg{\int_{S_\alpha} M_k d S}
-    \label{eq:avg_p_global}
+    \label{eq:avg_p_mass}
 \end{equation}
 
 Similarly, if $f_k = \rho_k \textbf{u}_k$ we obtain the momentum conservation equation :
@@ -347,17 +366,20 @@ Similarly, if $f_k = \rho_k \textbf{u}_k$ we obtain the momentum conservation eq
     \pddt   \left(\pavg{\textbf{p}_\alpha}\right)
     + \nablab \cdot \left(\pavg{\textbf{p}_\alpha \textbf{u}_\alpha}\right) 
     = \pavg{\int_{V_\alpha} \textbf{b}_k dV}
-    + \pavg{\int_{S_\alpha} \left[\textbf{T}_k + \rho_k \textbf{u}_k (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S}
+    + \pavg{\int_{S_\alpha} \left[
+      \textbf{T}_k + \rho_k \textbf{u}_k (\textbf{u}_I-\textbf{u}_k) 
+      \right] \cdot \textbf{n}_k d S}
     \label{eq:avg_p_global}
 \end{equation}
 \begin{itemize}
   \item $m_\alpha = \int_{V_\alpha} \rho_k dV$ is the mass of the particle $\alpha$.
   \item $\textbf{p}_\alpha = \int_{V_\alpha} \rho_k \textbf{u}_k dV$ is the momentum of the particle $\alpha$.
+  \item $\textbf{T}_k$ is the stress tensor of the fluid (Newtonian flows : $\textbf{T}_k = -p\textbf{I} + \mu (\nablab \textbf{u}+ \nablab \textbf{u}^T) $)
 \end{itemize}
 \end{frame}
   
 \begin{frame}
-  {Application to the diploe of mass and momentum}
+  {Application to the dipole of mass and momentum}
   The transport of the dipole of mass is obtained by setting $f_k = \rho_k \textbf{rr}$ :
   \begin{equation*}
     \pddt   \left(\pavg{\mathcal{G}_\alpha}\right)
@@ -381,17 +403,289 @@ Similarly, if $f_k = \rho_k \textbf{u}_k$ we obtain the momentum conservation eq
     \right] dS}.
 \end{multline}
 \begin{itemize}
-  \item $\mathcal{G}_\alpha = \int_{V_\alpha} \rho_k\textbf{rr} dV$ is the dipole of mass of the particle $\alpha$.
+  \item $\mathcal{G}_\alpha = \int_{V_\alpha} \rho_k\textbf{rr} dV$ is the dipole of mass of the particle $\alpha$ 
+  \begin{itemize}
+    \item Equivalent to the classic Inertia tensor for solid particles. 
+  \end{itemize}
   \item $\mathcal{P}_\alpha = \int_{V_\alpha} \rho_k \textbf{r}\textbf{u}_k dV$ is the moment of momentum of the particle $\alpha$.
   \item $2\mathcal{S}_\alpha = \int_{V_\alpha} \rho_k (\textbf{r}\textbf{u}_k+\textbf{u}_k\textbf{r}) dV$ is the symmetric part of $\mathcal{P}$. 
-  \item $2\mathcal{A}_\alpha = \int_{V_\alpha} \rho_k (\textbf{r}\textbf{u}_k-\textbf{u}_k\textbf{r}) dV$ is the antisymmetric part of $\mathcal{P}$, which is also the angular momentum. 
+  % \item $2\mathcal{A}_\alpha = \int_{V_\alpha} \rho_k (\textbf{r}\textbf{u}_k-\textbf{u}_k\textbf{r}) dV$ is the antisymmetric part of $\mathcal{P}$, which is also the angular momentum. 
 \end{itemize}
 \end{frame}
 
-\section{Equivalence between particular and continuous average.}
+\section{Equivalence between particular and continuous averaged equations.}
 
 
 \begin{frame}{What is the link between both formalism ?}
+  \textbf{Continuous average} :
+  \begin{equation*}
+      \pddt (\phi_k\kavg{f})
+      + \nablab \cdot \left(
+          \phi_k \kavg{f \textbf{u}}
+      \right)
+      = \nablab \cdot \left(
+          \phi_k \kavg{\bm{\Phi}}
+      \right)
+      + \phi_k \kavg{\textbf{S}}
+      + a_I \Iavg{
+          \bm{\Phi}_k \cdot \textbf{n}_k
+          + f_k 
+          \left(
+              \textbf{u}_I
+              - \textbf{u}_k
+          \right) \cdot \textbf{n}_k
+      },
+      \label{eq:avg_k_global}
+  \end{equation*}
+  \begin{center}
+    \color{red}
+    \textbf{Equal }
+    or 
+    \textbf{approximately equal with $\mathcal{O}(R/l)$} ?
+  \end{center}
+  \textbf{Particular average :}
+  \begin{equation*}
+    \pddt   \left(\pavg{q_\alpha}\right)
+    + \nablab \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right) 
+    = \pavg{\int_{V_\alpha} \textbf{S}_k dV}
+    + \pavg{\int_{S_\alpha} \left[\bm{\Phi}_k + f (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S}
+\end{equation*}
+\begin{itemize}
+  \item \citet{nott2011suspension} prove that those formulations were strictly equivalent the momentum equation, under the hypothesis of :
+  \begin{itemize}
+    \item Mono-disperse Solid spherical particle suspension.
+  \end{itemize}
+  \item This is the main argument for existence of the \textbf{particles-fluid-particles stress}.
+\end{itemize}
+
+Is this equivalence still true for an arbitrary dispersed phase and any conservation laws ?
+\end{frame}
+
+
+\begin{frame}{Taylor's expansion of the continuous averaged quantities}
+Expansion of the weighed function around any center of mass $\textbf{y}_\alpha$,
+\begin{equation*}
+    g(\textbf{x},\textbf{y})
+    = g_\alpha(\textbf{x},\textbf{y}_\alpha)
+    - \textbf{r} \cdot \nablab g(\textbf{x},\textbf{y})|_{\textbf{y}_\alpha}
+    + \frac{1}{2} \textbf{r}\textbf{r} : \nablab\nablab g(\textbf{x},\textbf{y})|_{\textbf{y}_\alpha}
+    + \ldots
+\end{equation*} 
+Therefore,
+\begin{align*}
+  \phi_k \kavg{f_k} = \sum_\alpha \int_{V_\alpha} g f_k dV 
+  &=  \pavg{q_\alpha}        
+      - \nablab \cdot  \left
+      (\pavg{Q_k}\right)        
+      + \frac{1}{2} \nablab\nablab : \left(\pavg{\textbf{Q}_k^2}\right)
+      + \ldots  \\
+  a_I \Iavg{f_k} = \sum_\alpha \int_{S_\alpha} g f_k dS 
+  &=  \pavg{q_\alpha^I}        
+      - \nablab \cdot  \left(\pavg{Q_k^I}\right)        
+      + \frac{1}{2} \nablab\nablab : \left(\pavg{\textbf{Q}_k^{I2}}\right)
+      + \ldots,
+\end{align*}  
+where, $Q_k = \int_{V_\alpha} \textbf{r} f_k dV$, and $Q_k = \int_{V_\alpha} \textbf{r} \textbf{r} f_k dV$  are the higher moments of $f_k$.
+\begin{itemize}
+  \item To analyzes the similarities between both formalism we carry out the expansion of the continuous averaged equation into particular average quantities. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}  {First order expansion of the non-convective term}
+  \begin{equation*}
+    \pddt (\phi_k\kavg{f})
+    +\nablab \cdot \left(
+        \phi_k \kavg{f \textbf{u}}
+    \right)
+    = \textcolor{red}{\nablab \cdot \left(
+        \phi_k \kavg{\bm{\Phi}}
+    \right)}
+    + \phi_k \kavg{\textbf{S}}
+    + a_I \Iavg{
+        \bm{\Phi}_k \cdot \textbf{n}_k
+        + f_k 
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) \cdot \textbf{n}_k
+    },
+\end{equation*}
+  The $1^{st}$ order expansion of the divergence of the non-convective term yields:
+  \begin{equation*}
+    \nablab\cdot
+    (\phi_k \kavg{\bm{\Phi}})=
+        - \nablab \cdot
+        \pavg{
+          \int_{V_\alpha}
+          \bm{\Phi}_k dV,
+        }
+\end{equation*}
+With,
+\begin{align*}
+    \int_{V_\alpha} \bm{\Phi}_k  dV
+    &= \int_{V_\alpha}  \nablabh \cdot \left(\textbf{r} \bm{\Phi}_k\right) dV
+    - \int_{V_\alpha} \textbf{r} \nablabh \cdot \mathbf{\Phi}_k dV\\
+    &=\int_{S_\alpha} \textbf{r} \bm{\Phi}_k \cdot \textbf{n}_k dS
+    + \int_{V_\alpha} \textbf{r} \left[
+        \pddt f_k 
+        + \nablabh \cdot (f_k \textbf{u}_k)
+        - \textbf{S}_k
+    \right] dV.\\
+\end{align*}
+Where we have used the local conservation law :
+ $-\nablabh \cdot \bm{\Phi}_k
+  = \pddt f_k  + \nablabh \cdot (f_k \textbf{u}_k)
+  - \textbf{S}_k$. 
+  In agreement with \citet{nott2011suspension} and \citet{prosperetti2004average}.
+\end{frame}
+
+\begin{frame}
+  {First order expansion of the non-convective term}
+From Reynolds transport theorem we deduce that :
+\begin{equation*}
+  \int_{V_\alpha} \textbf{r} \left[\pddt f_k + \nablabh \cdot (f_k \textbf{u}_k)\right]dV
+  = \ddt \int_{V_\alpha} \textbf{r} f_k dV 
+  - \int_{V_\alpha} \textbf{r} f_k (\textbf{u}_I   - \textbf{u}_k) \cdot \textbf{n}_k dV
+  - \int_{V_\alpha} f_k \textbf{w}_k dV
+\end{equation*}
+\begin{itemize}
+  \item where, $\textbf{u}_k = \textbf{u}_\alpha + \textbf{w}_k$.
+\end{itemize}
+Besides using the definition of the particular average derivative : 
+\begin{equation*}
+  \pavg{\ddt \int_{V_\alpha} \textbf{r} f_k dV}
+  = \pddt \pavg{\int_{V_\alpha} \textbf{r} f_k dV}
+  + \nablab\cdot\left(\pavg{\textbf{u}_\alpha \int_{V_\alpha} \textbf{r} f_k dV}\right)
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+  {First order expansion of the non-convective term}
+
+  \begin{align*}
+    \nablab \cdot
+    (\phi_k \kavg{\bm{\Phi}})
+    & = \nablabh
+    \cdot
+    \left[
+    \pnavg{\int_{S_\alpha}
+    \textbf{r}
+    (\bm{\Phi}_k \cdot \textbf{n}_k) dS}  \rightarrow \text{Dipole of $\mathbf{\Phi}_k$}
+    \right. \\
+      &+\pnavg{\int_{V_\alpha}
+      \textbf{r}
+      \textbf{S}_k dV} \rightarrow \text{Dipole of $\textbf{S}_k$}\\
+      &
+      + \pnavg{\int_{S_\alpha} 
+      f_k\textbf{r}
+      \left(\textbf{u}_I - \textbf{u}\right) \cdot \textbf{n}dS}
+      \rightarrow \text{Dipole of the transfer term.}\\
+      &- \pddt
+      \pnavg{\int_{V_\alpha}
+      \textbf{r}  f_k dV }\rightarrow \text{Time derivative of the Dipole of $f_k$.}\\
+      &- \nablab \cdot\left(
+        \pavg{\textbf{u}_\alpha 
+        \int_{V_\alpha}
+        \textbf{r}  f_k dV}
+      \right)\rightarrow \text{Advection of the Dipole of $f_k$.}\\
+      & \left. +\int_{V_\alpha}
+      f_k
+      \textbf{w}_k
+      dV\right]\\
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expansion of the other terms}
+  \begin{equation*}
+    \textcolor{red}{\pddt (\phi_k\kavg{f})}
+    +\nablab \cdot \left(
+        \phi_k \kavg{f \textbf{u}}
+    \right)
+    = \nablab \cdot \left(
+        \phi_k \kavg{\bm{\Phi}}
+    \right)
+    + \textcolor{red}{\phi_k \kavg{\textbf{S}}
+    + a_I \Iavg{
+        \bm{\Phi}_k \cdot \textbf{n}_k
+        + f_k 
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) \cdot \textbf{n}_k
+    }},
+\end{equation*}
+  
+\begin{equation*}
+  \pddt (\phi_k\kavg{f})
+  = \pddt \left(\pavg{\int_{V_\alpha} f_k dV}\right)
+  - \pddt\nablab \cdot \left(\pavg{\int_{V_\alpha} \textbf{r} f_k dV}\right)
+\end{equation*}
+\begin{equation*}
+  \phi_k\kavg{\textbf{S}}
+  =  \pavg{\int_{V_\alpha} \textbf{S}_k dV}
+  - \nablab \cdot \left(\pavg{\int_{V_\alpha} \textbf{r} \textbf{S}_k dV}\right)
+\end{equation*}
+\begin{equation*}
+  a_I\kavg{\bm{\Phi}_k \cdot \textbf{n}_k}
+  =  \pavg{\int_{S_\alpha} \bm{\Phi}_k \cdot \textbf{n}_k dS}
+  - \nablab \cdot \left(\pavg{\int_{S_\alpha} \textbf{r} \bm{\Phi}_k \cdot \textbf{n}_k dS}\right)
+\end{equation*}
+\begin{equation*}
+  a_I\kavg{f_k (\textbf{u}_I - \textbf{u}_k) \cdot \textbf{n}_k}
+  =  \pavg{\int_{S_\alpha} f_k (\textbf{u}_I - \textbf{u}_k) \cdot \textbf{n}_k dS}
+  - \nablab \cdot \left(\pavg{\int_{S_\alpha} \textbf{r} f_k (\textbf{u}_I - \textbf{u}_k) \cdot \textbf{n}_k dS}\right)
+\end{equation*}
+\begin{itemize}
+  \item Therefore, all the first order terms cancel out with the $\mathbf{\Phi}_k$'s zeroth order terms.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+  {First order expansion of the advection term}
+  \begin{equation*}
+    \pddt (\phi_k\kavg{f})
+    +\textcolor{red}{\nablab \cdot \left(
+        \phi_k \kavg{f \textbf{u}}
+    \right)}
+    = \nablab \cdot \left(
+        \phi_k \kavg{\bm{\Phi}}
+    \right)
+    + \phi_k \kavg{\textbf{S}}
+    + a_I \Iavg{
+        \bm{\Phi}_k \cdot \textbf{n}_k
+        + f_k 
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right) \cdot \textbf{n}_k
+    },
+    \label{eq:avg_k_global}
+\end{equation*}
+  The expansion of the divergence of the advection term reads as, 
+  \begin{align*}
+    \nablab \cdot (\phi_k \kavg{\textbf{u} f})
+    &= 
+    \nablab \cdot \left(\pavg{
+      \textbf{u}_\alpha  \int_{V_\alpha} f_k dV
+      + \int_{V_\alpha} \textbf{w}_k f_k dV} \right)\\
+    &- 
+    \nablab\nablab : 
+      \left(\pavg{\textbf{u}_\alpha  \int_{V_\alpha} \textbf{r} f_k dV} \right) +\ldots
+\end{align*}
+Where the last two terms on the RHS are equivalent to the last terms of the expansion of $\bm{\Phi}_k$.
+\begin{itemize}
+  \item Consequently, $\nablab \cdot \left(
+    \phi_k \kavg{\bm{\Phi}}
+\right)$ cancel the first moment of each term leaving with only the zeroth order moments. 
+\item \textbf{This demonstration is valid for an arbitrary number of higher order moments.}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Equivalence between both averaging methods}
   \textbf{Continuous average} :
   \begin{equation*}
       \pddt (\phi_k\kavg{f})
@@ -410,50 +704,137 @@ Similarly, if $f_k = \rho_k \textbf{u}_k$ we obtain the momentum conservation eq
       \label{eq:avg_k_global}
   \end{equation*}
 
+  \begin{center}
+    \begin{equation*}
+      \Longleftrightarrow 
+    \end{equation*}
+  \end{center}
   \textbf{Particular average :}
-  \begin{equation}
+  \begin{equation*}
     \pddt   \left(\pavg{q_\alpha}\right)
     + \nablab \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right) 
     = \pavg{\int_{V_\alpha} \textbf{S}_k dV}
     + \pavg{\int_{S_\alpha} \left[\bm{\Phi} + f (\textbf{u}_I-\textbf{u}) \right] \cdot \textbf{n}_k d S}
     \label{eq:avg_p_global}
+\end{equation*}
+\begin{itemize}
+  \item Those two equations, are therefore the representation of the \textbf{same} physical problem if $\bm{\Phi}_k \neq 0$.
+  \item The second equation provide us with particular quantities, where the first one provides us continuous phase averaged quantities. 
+\end{itemize}
+\end{frame}
+
+\section{Discussion and conclusion}
+\begin{frame}
+  {The momentum equations}
+  \textbf{Continuous average} :
+  \begin{equation*}
+      \pddt (\phi_k\kavg{\rho \textbf{u}})
+      = \nablab \cdot \left(
+          \phi_k \kavg{\textbf{T} - \rho \textbf{u} \textbf{u}}
+      \right)
+      + \phi_k \kavg{\textbf{b}}
+      + a_I \Iavg{
+          \textbf{T}_k \cdot \textbf{n}_k
+          + \rho \textbf{u}
+          \left(
+              \textbf{u}_I
+              - \textbf{u}_k
+          \right) \cdot \textbf{n}_k
+      },
+  \end{equation*}
+
+  \begin{center}
+    \begin{equation*}
+      \Longleftrightarrow 
+    \end{equation*}
+  \end{center}
+  \textbf{Particular average :}
+  \begin{equation*}
+    \pddt   \left(\pavg{\textbf{p}_\alpha}\right)
+    + \nablab \cdot \left(\pavg{\textbf{p}_\alpha \textbf{u}_\alpha}\right) 
+    = \pavg{\int_{V_\alpha} \textbf{b}_k dV}
+    + \pavg{\int_{S_\alpha} \left[
+      \textbf{T}_k + \rho_k \textbf{u}_k (\textbf{u}_I-\textbf{u}_k) 
+      \right] \cdot \textbf{n}_k d S}
+\end{equation*}
+\begin{itemize}
+  \item Those two equations are therefore \textbf{rigorously equivalent} thus using the particular average makes no error. 
+\end{itemize}
+\end{frame}
+\begin{frame}
+  {Mass transport equations}
+  \textbf{Continuous average} :
+  \begin{equation}
+    \pddt (\phi_k \rho_k)
+    + \nablab \cdot \left(\phi_k \rho_k 
+        \kavg{\textbf{u}}
+    \right) 
+    = a_I\Iavg{M_k},
 \end{equation}
-\begin{itemize}
-  \item 
-  Notice the presence of the non-convective term in the continuous average, which is the only term non-present in the particular averaged equaiton. 
-\end{itemize}
-\end{frame}
 
-
-\begin{frame}{Taylor expansion of the continuous quantities}
-Expansion of the weighed function around any center of mass $\textbf{y}_\alpha$,
-\begin{equation}
-    g(\textbf{x},\textbf{y})
-    = g_\alpha(\textbf{x},\textbf{y}_\alpha)
-    - \textbf{r} \cdot \nablab g(\textbf{x},\textbf{y})|_{\textbf{y}_\alpha}
-    + \frac{1}{2} \textbf{r}\textbf{r} : \nablab\nablab g(\textbf{x},\textbf{y})|_{\textbf{y}_\alpha}
+  \begin{center}
+    \begin{equation*}
+      \Longleftrightarrow 
+    \end{equation*}
+  \end{center}
+  \textbf{Particular average :}
+  \begin{equation}
+    \pddt   \left(\pavg{m_\alpha}\right)
+    + \nablab \cdot \left(\pavg{m_\alpha \textbf{u}_\alpha} 
+    + \frac{1}{2}\nablab\nablab : 
+    \textcolor{red}{\pavg{ \mathcal{G}_\alpha\textbf{u}_\alpha}}
     + \ldots
-    \label{eq:g_exp}
-\end{equation} 
-Therefore,
-\begin{align*}
-  \phi_k \kavg{f_k} = \sum_\alpha \int_{V_\alpha} g f_k dV 
-  &=  \pavg{q_\alpha}        
-      - \nablab \cdot  \left
-      (\pavg{Q_k}\right)        
-      + \frac{1}{2} \nablab\nablab : \left(\pavg{\textbf{Q}_k^2}\right)
-      + \ldots  \\
-  a_I \Iavg{f_k} = \sum_\alpha \int_{S_\alpha} g f_k dS 
-  &=  \pavg{q_\alpha}        
-      - \nablab \cdot  \left(\pavg{Q_k}\right)        
-      + \frac{1}{2} \nablab\nablab : \left(\pavg{\textbf{Q}_k^2}\right)
-      + \ldots,
-\end{align*}  
-where, $Q_k = \int_{V_\alpha} \textbf{r} f_k dV$, and $Q_k = \int_{V_\alpha} \textbf{r} \textbf{r} f_k dV$  are the higher moments of $f_k$.
+    \right) 
+    = -\pavg{\int_{S_\alpha} M_c d S},
+    \label{eq:massexp}
+\end{equation}
+
 \begin{itemize}
-  \item To analyzes the similarities between both formalism we carry out the expansion of the continuous averaged equation into particular average quantities. 
+  \item Due to the absence of the non-convective term in the mass balance equation we see appear additional terms linked to the shape of the particle. 
+  \item Besides, subtracting (\ref{eq:massexp}) with the original mass balance gives the following constrain, $\nablab\nablab\nablab \vdots \left(\pavg{ \mathcal{G}_\alpha\textbf{u}_\alpha}\right) = 0$
+  \item It is more likely to be negligible except for highly inhomogeneous flows. 
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+  {Area transport equations}
+  \textbf{Continuous average} :
+  \begin{equation}
+    \pddt a_I
+    + \nablab \cdot \left(a_I \textbf{u}_I
+    \right) 
+    = a_I\Iavg{\nablab \cdot \textbf{n} (\textbf{u}_I \cdot \textbf{n})},
+\end{equation}
+
+  \begin{center}
+    \begin{equation*}
+      \Longleftrightarrow 
+    \end{equation*}
+  \end{center}
+  \textbf{Particular average :}
+  \begin{equation}
+    \pddt   \left(\pavg{A_\alpha}\right)
+    + \nablab \cdot \left(\pavg{A_\alpha \textbf{u}_\alpha} 
+    \textcolor{red}{+ \pavg{\int_{S_\alpha} \textbf{u}_I \cdot \textbf{nn} dS}}
+    +\ldots
+    \right) 
+    = \pavg{\int_{S_\alpha} \nablab \cdot \textbf{n} (\textbf{u}_I \cdot \textbf{n}) dS}
+\end{equation}
+
+\begin{itemize}
+  \item $A_\alpha = \int_{S_\alpha} dS$ is the surface of the particle $_\alpha$.  
+  \item This additional term is due to the shift between mass center and surface center (cancel for spherical particles\ldots). 
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[t]
+  \frametitle{References}
+  \bibliography{Bib/bib_bulles.bib}
+\end{frame}
+\backmatter
+
 
 \begin{frame}  {Expansion of the non-convective term}
   The $n^{th}$ order expansion of the divergence of the non-convective term yields:
@@ -481,12 +862,12 @@ With,
         - \textbf{S}
     \right).
 \end{equation}
-In agreement with \citet{nott2011suspension}Nott and \citet{prosperetti2004average}prosperetti2004.
+In agreement with \citet{nott2011suspension} and \citet{prosperetti2004average}.
 \end{frame}
 
 \begin{frame}
   {Expansion of the non-convective term}
-  After the use of the divergence theorem fo rthe first term and the Reynolds transport theorem for the second term we get :
+  After the use of the divergence theorem for the first term and the Reynolds transport theorem for the second term we get :
   \begin{align*}
     \nablab \cdot
     (\phi_k \kavg{\bm{\Phi}})
@@ -572,43 +953,5 @@ If we carry out the differences of the remaining moments we are left with the se
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Equivalence between both averaging methods}
-  \textbf{Continuous average} :
-  \begin{equation*}
-      \pddt (\phi_k\kavg{f})
-      = \nablab \cdot \left(
-          \phi_k \kavg{\bm{\Phi} - f \textbf{u}}
-      \right)
-      + \phi_k \kavg{\textbf{S}}
-      + a_I \Iavg{
-          \bm{\Phi}_k \cdot \textbf{n}_k
-          + f_k 
-          \left(
-              \textbf{u}_I
-              - \textbf{u}_k
-          \right) \cdot \textbf{n}_k
-      },
-      \label{eq:avg_k_global}
-  \end{equation*}
-
-  \begin{center}
-    \begin{equation*}
-      \Longleftrightarrow 
-    \end{equation*}
-  \end{center}
-  \textbf{Particular average :}
-  \begin{equation*}
-    \pddt   \left(\pavg{q_\alpha}\right)
-    + \nablab \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right) 
-    = \pavg{\int_{V_\alpha} \textbf{S}_k dV}
-    + \pavg{\int_{S_\alpha} \left[\bm{\Phi} + f (\textbf{u}_I-\textbf{u}) \right] \cdot \textbf{n}_k d S}
-    \label{eq:avg_p_global}
-\end{equation*}
-\begin{itemize}
-  \item Those two equations, are therefore the representation of the \textbf{same} physical problem.
-  \item The second equation furnish us with particular quantities, where the first one provides us phase averaged quantities. 
-\end{itemize}
-\end{frame}
-
-\backmatter
 \end{document}
+

@@ -1,15 +1,139 @@
 \chapter{A detailed derivation of the \textit{one-fluid}, \textit{two-fluid} and volume averaged formulation of a generalized balance equations.}
 \label{ap:average}
 
+\section{General balance equations}
 
-In this appendix we derive the \textit{two-fluid} and \textit{one-fluid} formulation of a generalized conservation equation, namely,
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw (0,0) ellipse (2 and 1);
+        \draw[dashed] (0,0) ellipse (0.5 and 1)node{$A_I$};
+        \draw[->](0,1)--++(0,1)node[right]{\textbf{p}}; 
+        \draw[->](0,1)--++(0,1)node[right]{\textbf{p}}; 
+        \draw (1,0)node{$V_1$};
+        \draw (-1,0)node{$V_2$};
+    \end{tikzpicture}
+    \caption{Scheme of an arbitrary control volume}
+\end{figure}
+
+Let $f$  be an arbitrary quantity to which we link $\Phi$ which is the non-convective flux related to this quantity and $\textbf{S}$ the volumetric source of $f$. 
+Then, for an arbitrary control volume we have, 
+\begin{equation*}
+    \ddt \int_{V} f dV 
+    = 
+    \int_{V} \textbf{S} dV 
+    + \int_{\partial V} \mathbf{\Phi}\cdot \textbf{N} dS,
+\end{equation*}
+where $\textbf{N}$ is the normal of the control volume. 
+Any quantities defined in $V_k$ will be noted with a subscript $_k$ and those who are defined at the interface with $_I$. 
+Therefore, if we decompose any quantity $f$ by $f = \sum_k f_k \chi_k + f_I \delta_I$ we obtain, 
+\begin{multline*}
+    \sum_k\left[\ddt \int_{V_k} f_k dV 
+    - \int_{V_k} \textbf{S}_k dV 
+    - \int_{A_k} \mathbf{\Phi}_k\cdot \textbf{N} dS
+    \right]\\
+    + \ddt \int_{A_I} f_I dS 
+    - \int_{A_I} \textbf{S}_I dS 
+    - \int_{C} \mathbf{\Phi}_I\cdot \textbf{p} dC 
+    = 0
+\end{multline*}
+Using the Reynolds transport theorem on both derivation yields,
+\begin{align*}
+    \ddt \int_{V_k} f_k dV 
+    &= \int_{V_k} \pddt f_k dV 
+    + \int_{A_I \cup A_k} f_k \textbf{u} \cdot \textbf{n}_k dS\\
+    &= \int_{V_k} \left[
+        \pddt f_k  + \nablabh \cdot (f_k \textbf{u}_k) 
+    \right]dV 
+    + \int_{A_I} f_k (\textbf{u}_I - \textbf{u}_k) \cdot \textbf{n}_k dS\\
+\end{align*}
+where $\textbf{n}_k$ is the normal of the interface $A_I$ on the outward direction of the $k$ phase. 
+
+The second term is integrated only over $A_I$ as it is the interface between both phase and not the one of the control volume. 
+Using the Ledbiz rule for integration on surface yields, 
+\begin{align*}
+    \ddt \int_{A_I} f_I dS 
+    &= \int_{A_I} \left[
+        \pddt f_I  + \nablabh_I \cdot (f_I \textbf{u}_I) 
+    \right]dS
+\end{align*}
+
+Regarding the non-convective integrals, by using the divergence theorem we can write, 
+\begin{align*}
+    \int_{A_k} \mathbf{\Phi}_k\cdot \textbf{n}_k dS
+    = \int_{V_k} \nablabh\cdot\mathbf{\Phi}_k dV
+    - \int_{A_I} \mathbf{\Phi}_k\cdot \textbf{n}_k dS. 
+\end{align*}
+The last term can also be re-written with the divergence theorem,
+\begin{align*}
+    \int_{C} \mathbf{\Phi}_I\cdot \textbf{p} dC 
+    = \int_{A_I} \nablabh_I \cdot \mathbf{\Phi}_I dS
+    + \int_{A_I} \kappa \mathbf{\Phi}_I \cdot \textbf{n} dS
+\end{align*}
+
+Now if we consider each integration over the $V_k$ it yields the general conservation law in the phase $k$, namely, 
+\begin{equation*}
+    \pddt f_k  
+    + \nablabh \cdot (f_k \textbf{u}_k - \mathbf{\Phi}_k) 
+    =\textbf{S}_k. 
+\end{equation*}
+Similarly, if we isolate all the surface integrals over $A_I$ it yields,
 \begin{equation}
-    \frac{\partial}{\partial t} f_k
-    = \nablabh \cdot (\bm{\Phi}_k - f_k\textbf{u}_k)
-    + \textbf{S}_k.
-    \label{ap:eq:global_balance}
+    \pddt f_I  
+    + \nablabh_I \cdot (f_I \textbf{u}_I -\mathbf{\Phi}_I)
+    + \mathbf{\Phi}_I \cdot \textbf{n} \nablabh \cdot \textbf{n}
+    - \textbf{S}_I
+    = 
+    - \sum_k \left[
+    f_k (\textbf{u}_I - \textbf{u}_k)
+    + \mathbf{\Phi}_k
+    \right] \cdot \textbf{n}_k 
+    \label{ap:eq:dt_f_I}
 \end{equation}
-Then we derive the phase averaged and global averaged equation of this general equation of conservation. 
+
+Let $\textbf{F}$ be an arbitrary surface quantity. 
+It can be split into two part such as, 
+\begin{equation*}
+    \textbf{F} 
+    = \textbf{F} \cdot \textbf{n}\textbf{n}
+    + (\textbf{I} - \textbf{nn})  \cdot \textbf{F}
+    = \textbf{F}_\bot + \textbf{F}_{||}.
+\end{equation*}
+Using the Gauss theorem on an arbitrary control volume it can be shown that, 
+\begin{equation*}
+    \int_{S} \nablabh_I \cdot \textbf{F}dS
+    = 
+    \int_{S} \left[\nablabh_I \cdot \textbf{F}_{||} 
+    + \textbf{F} \cdot \textbf{n} \nablabh\cdot\textbf{n}
+    \right]dS
+\end{equation*}
+Consequently, as this relation must be valid on any interface $S$ we have the following relation,
+\begin{equation}
+    \nablabh_I \cdot \textbf{F}
+    = 
+    \nablabh_I \cdot \textbf{F}_{||} 
+    + \textbf{F} \cdot \textbf{n} \nablabh\cdot\textbf{n}
+    \label{ap:eq:nabla_I_F}
+\end{equation}
+
+Using, \ref{ap:eq:nabla_I_F} on the divergence term in \ref{ap:eq:dt_f_I} yields, 
+\begin{equation}
+    \pddt f_I  
+    + \nablabh_I \cdot (f_I \textbf{u}^I_{||} -\mathbf{\Phi}^I_{||})
+    + f_I \textbf{u}_I \cdot \textbf{n} \nablabh \cdot \textbf{n}
+    - \textbf{S}_I
+    = 
+    - \sum_k \left[
+    f_k (\textbf{u}_I - \textbf{u}_k)
+    + \mathbf{\Phi}_k
+    \right] \cdot \textbf{n}_k 
+    \label{ap:eq:dt_f_I2}
+\end{equation}
+
+
+
+\section{Topological equations}
+There is two Topological equaitons one for $\chi_k$ and an other for $\delta_I$.
 First, we recall the relations related to the phase indicator function, 
 \begin{equation}
     \frac{\partial}{\partial t} \chi_k
@@ -19,7 +143,49 @@ First, we recall the relations related to the phase indicator function,
     = - \delta_I \textbf{n}_k.
     \label{ap:eq:phase_properties}
 \end{equation}
-Now we can derive the \textit{two-fluid} formulation by multiplying \ref{ap:eq:global_balance} by the phase indicator function \ref{eq:phase_indicator}. 
+Now the surface indicator function transport equation can be obtained using the Leibniz rule for differentiation,  
+\begin{equation*}
+    \ddt \int_{A_I} dS
+    = \int_{A_I} \nablabh_I \cdot \textbf{u}_I dS,
+\end{equation*}
+Those integrals can be re rewritten as, 
+\begin{equation*}
+    \ddt \int_{V} \delta_I dV
+    = \int_{V} \delta_I \nablabh_I \cdot \textbf{u}_I dV.
+\end{equation*}
+Then using the Reynolds transport term for fixed material volume yields,
+\begin{equation*}
+    \pddt \delta_I
+    + \nablabh \cdot (\delta_I \textbf{u}_I)
+    = \delta_I \nablabh_I \cdot \textbf{u}_I. 
+\end{equation*}
+This equation can also be takes the form 
+\begin{equation}
+    \pddt \delta_I
+    + \nablabh \cdot (\delta_I \textbf{u}_I\cdot \textbf{n}\textbf{n})
+    = \delta_I \textbf{u}_I \cdot \textbf{n}\nablabh \cdot \textbf{n}. 
+    \label{ap:eq:dt_delta_I}
+\end{equation}
+Also, it can be useful to derive an expression for the gradient of the $\delta_I$ function. 
+To do so we take the gradient of \ref{ap:eq:phase_properties} yielding, 
+\begin{equation*}
+    \nablabh\delta_I 
+    = \nablabh( - \textbf{n}_k \cdot \nablabh \chi_k)
+    = \nablabh\textbf{n}_k \cdot \textbf{n}_k \delta_I
+    + \nablabh(\textbf{n}_k \delta_I) \cdot \textbf{n}_k 
+\end{equation*}
+
+\section{\textit{One-fluid} and \textit{two-fluid} formulations}
+In this appendix we derive the \textit{two-fluid} and \textit{one-fluid} formulation of a generalized conservation equation, namely,
+\begin{equation}
+    \frac{\partial}{\partial t} f_k
+    = \nablabh \cdot (\bm{\Phi}_k - f_k\textbf{u}_k)
+    + \textbf{S}_k.
+    \label{ap:eq:global_balance}
+\end{equation}
+Then we derive the phase averaged and global averaged equation of this general equation of conservation. 
+
+We can derive the \textit{two-fluid} formulation by multiplying \ref{ap:eq:global_balance} by the phase indicator function \ref{eq:phase_indicator}. 
 It yields, 
 \begin{equation*}
     \frac{\partial}{\partial t} (\chi_k f_k)
@@ -53,35 +219,34 @@ where the last term is the interfacial source term, such as the drag force if $f
 In this equation notice that all quantities are factor of the phase indicator function $\chi_k$. 
 So we transport $\chi_k f_k$ which is field quantity defined over the whole domain. 
 Thus, \ref{ap:eq:two-fluid_global} is valid over the entire domain.   
-Nevertheless, notice that the last term contain term factor of $\delta_I$. 
-The jump condition across the interface will be defined as the sum of the interfacial term on each phase $k$. 
-It will or will not be null depending on the nature of $f_k$, therefor we note,
+
+Now, we define the jump condition across the interface or the surface transport equation as the sum of the interfacial term on each phase $k$. 
+It can be obtained using  the transport of surface \ref{ap:eq:dt_f_I2}.
+Indeed, multiplying \ref{ap:eq:dt_f_I2} by $\delta_I$ gives, 
 \begin{equation}
-    \sum_k 
-    \left[
-        \bm{\Phi}_k 
-        + f_k 
-        \left(
-            \textbf{u}_I
-            - \textbf{u}_k
-        \right) 
-    \right]
-    \cdot \textbf{n}_k
-    = \textbf{J}_I
+    \pddt (f_I\delta_I)  
+    = 
+    + \nablabh \cdot (\delta_I \mathbf{\Phi}^I_{||} - \delta_I f_I \textbf{u}^I)
+    +\textbf{S}_I \delta_I
+    - \sum_k \left[
+    f_k (\textbf{u}_I - \textbf{u}_k)
+    + \mathbf{\Phi}_k
+    \right] \cdot \textbf{n}_k \delta_I
     \label{ap:eq:general_jump}
 \end{equation}
-were $\textbf{J}_I$ i the \textit{jump quantity} related to $f_k$.
-This \textit{jump quantity} is the surface tension force in the case where $f_k$ is the momentum.
+\tb{
+    Notice that the first term on the RHS is the parallele component of $\mathbf{\Phi}$ thus it must be reformulated as, 
+    
+}
 
-Now, let's derive the \textit{one-fluid} formulation of \ref{ap:eq:global_balance}.
-To do so we sum on add phases \ref{ap:eq:two-fluid_global}, and we make use of the jump condition \ref{ap:eq:general_jump} for the interfacial term. 
-Besides, we define any quantities $q$ being the sum of $q_k\chi_k$ on all phases, i.e. $q = \sum_k \chi_k q_k$.
+Now, let's derive the \textit{one-fluid} formulation of the general conservation law.
+To do so we sum on all phases \ref{ap:eq:two-fluid_global} plus the interface. 
+Besides, we define any quantities $q$ such as, $q = \sum_k \chi_k q_k + \delta_I q_I$.
 Then it is trivial to show that, 
 \begin{equation}
     \frac{\partial}{\partial t} f
     = \nablabh \cdot (\bm{\Phi} - f \textbf{u})
     + \textbf{S}
-    + \textbf{J}_I \delta_I,
     \label{ap:eq:one-fluid_global}
 \end{equation}
 which is the \textit{one-fluid} formulation. 
@@ -101,17 +266,16 @@ The volume average of \ref{ap:eq:two-fluid_global} is then straight forward, by 
             - \textbf{u}_k
         \right) \cdot \textbf{n}_k
     } 
-    \label{ap:eq:avg_k_global}
 \end{equation*}
 Similarly, the bulk average can be obtained by averaging \ref{ap:eq:one-fluid_global} yielding, 
 \begin{equation*}
     \frac{\partial}{\partial t} \avg{f}
     = \nablabh \cdot \avg{\bm{\Phi} - f \textbf{u}}
     + \avg{\textbf{S}}
-    + a_I\avg{\textbf{J}_I},
+    % + a_I\avg{\textbf{J}_I},
     \label{ap:eq:avg_global}
 \end{equation*}
-\section{A rigorous derivation of the point velocity}
+\section{Derivation of the point velocity}
 Consider a particle of center of mass $\textbf{y}_\alpha$ defined such as
 \begin{equation*}
     m_\alpha \textbf{y}_\alpha
@@ -157,6 +321,101 @@ By considering the mass conservation \ref{eq:single-fluid_mass} for the first te
     % - \int_{V_\alpha} \rho_k \textbf{w} dV
     % \right)
 \end{equation*}
+
+\section{Derivation of the surface transport equations for Lagrangian particles}
+
+By making use of the Leibniz rule together with \ref{ap:eq:dt_f_I} it can be shown that for any surface quantity $f_I$ we have, 
+\begin{align*}
+    \ddt \int_{S_\alpha} f_I dS
+    &= \int_{S_\alpha} \pddt f_I 
+    + \nablabh_I \cdot (\textbf{u}_If_I) dS\\
+    &= \int_{S_\alpha} \left(
+        \nablabh_I \cdot \mathbf{\Phi}_I
+        - \Phi_I\cdot\textbf{n}\nablabh\textbf{n}
+        + \textbf{S}_I
+    \right) dS\\
+    & - \sum_k \int_{S_\alpha} \left[
+        f_k (\textbf{u}_I - \textbf{u}_k)
+        + \mathbf{\Phi}_k
+    \right] \cdot \textbf{n}_k
+    dS
+\end{align*}
+Using the Gauss theorem for closed surface it can be shown easily that the first term on the RHS vanish, leaving with, 
+\begin{align}
+    \ddt \int_{S_\alpha} f_I dS
+    = \int_{S_\alpha} 
+        \textbf{S}_I dS
+    - \sum_k \int_{S_\alpha} \left[
+        f_k (\textbf{u}_I - \textbf{u}_k)
+        + \mathbf{\Phi}_k
+    \right] \cdot \textbf{n}_k
+    dS
+\end{align}
+In this equation we can see that $\mathbf{\Phi}_I$ plays no role at all. 
+
+Now let's derive the first moment of a surface quantity, namely $f_I \textbf{r}$. 
+\begin{align*}
+    \ddt \int_{S_\alpha} f_I \textbf{r} dS
+    &= \int_{S_\alpha} \textbf{r}\left[
+        \pddt f_I 
+        + \nablabh_I \cdot (\textbf{u}_If_I) 
+    \right]dS
+    + \int_{S_\alpha}
+    f_I \left[
+        \pddt \textbf{r} + \textbf{u}_I \cdot \nablabh_I \textbf{r}
+    \right]
+    dS\\
+\end{align*}
+Using \ref{ap:eq:dt_f_I} on the first term of the RHS and the relation $\nablabh_I \textbf{r} = (\textbf{I} - \textbf{nn})$ gives, 
+\begin{align*}
+    \ddt \int_{S_\alpha} f_I \textbf{r} dS
+    &= \int_{S_\alpha} \textbf{r}\left[
+        \nablabh_I \cdot \mathbf{\Phi}_I
+        - \Phi_I\cdot\textbf{n}\nablabh\textbf{n}
+        + \textbf{S}_I
+    \right] dS\\
+    & - \sum_k \int_{S_\alpha}\textbf{r} \left[
+        f_k (\textbf{u}_I - \textbf{u}_k)
+        + \mathbf{\Phi}_k
+    \right] \cdot \textbf{n}_k
+    dS\\
+    &+ \int_{S_\alpha}
+    f_I (\textbf{u}^I_{||} - \textbf{u}_\alpha)
+    dS\\
+\end{align*}
+Using the Gauss theorem for closed surface on the first term on the RHS, this equation can be simplified to, 
+\begin{align}
+    \ddt \int_{S_\alpha} f_I \textbf{r} dS
+    &= \int_{S_\alpha} \left(
+        \textbf{S}_I\textbf{r}
+        - \mathbf{\Phi}_{||}^I
+    \right) dS
+    + \int_{S_\alpha}
+    f_I \textbf{w}_I
+    dS\nonumber\\
+    & - \sum_k \int_{S_\alpha}\textbf{r} \left[
+        f_k (\textbf{u}_I - \textbf{u}_k)
+        + \mathbf{\Phi}_k
+    \right] \cdot \textbf{n}_k
+    dS
+    \label{ap:eq:dt_r_f_I}
+\end{align}
+where $\textbf{w}^I = \textbf{u}^I_{||} - \textbf{u}_\alpha$. 
+In the jump condition of the first moment it is now evident that $\mathbf{\Phi}^I_{||}$ is relevant. 
+
+As an example, if $f_I$ were to be the momentum of the surface, then $\mathbf{\Phi}_{||}^I = \sigma (\textbf{I} - \textbf{nn})$. 
+Thus, we can express the integrals as, 
+\begin{equation*}
+    \int_{S_\alpha}\mathbf{\Phi}_{||}^IdS
+    =\int_{S_\alpha} \sigma (\textbf{I} - \textbf{nn}) dS
+    =\int_{S_\alpha} \nablabh_I \cdot (\sigma \textbf{r}) dS
+    =\int_{S_\alpha} \sigma \textbf{r} (\nablabh\cdot\textbf{n}) \textbf{n} dS
+\end{equation*} 
+where we used the Gauss theorem on closed surface for the first term. 
+In this last expression we recognize the last term as begin the first moment of the surface tension force. 
+
+
+
 
 \section{Decomposition of the particular energy balance.}
 This section is a detailed derivation of the energy equation for a whole fluid particle, namely,

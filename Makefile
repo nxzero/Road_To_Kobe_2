@@ -13,11 +13,10 @@ clean:
 proper: clean
 	-rm Asbtract.pdf 
 	-rm rapport_bib.pdf
-	-rm final-2.pdf
+	-rm Prabu_Nott_notes.pdf
 	-rm IFP_pres.pdf
 	-rm Kobabstract.pdf
-	-rm nearest_particles_statistic_2.pdf
-	-rm nearest_particles_statistic.pdf
 	-rm note_de_calcul.pdf
 	-rm study_on_surface_tension.pdf
 	-rm The_hybride_model.pdf
+	-rm The_hybride_model_for_fluid_particles.pdf

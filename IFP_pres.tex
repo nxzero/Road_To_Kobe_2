@@ -25,10 +25,10 @@
 
 \title{A phenomenological description of pairwise interactions in water-oil emulsion.}
 \subtitle{Based on the nearest particle statistics.}
-\author{\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{\underline{N. Fintzi}, JL. Pierson and S. Popinet. }}
+\author{\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{\underline{N. Fintzi}\footnote{IFP energies nouvelles, France}, JL. Pierson$^1$} and S. Popinet\footnote{Sorbonne Universite, France}}
 % \date{Created on May 22, 2022}
 
-\titlebackground{image/3D/PHI01.png}
+\titlebackground{image/3D/P_PHI_5.png}
 
 % document body
 
@@ -62,17 +62,26 @@
 
 \begin{frame}
   \frametitle{Industrial context}
-  \begin{tikzpicture}
-    \node (img) at (0,0){
-      \includegraphics[width=\textwidth]{image/Diapo_intro.png}
-    };
-    \node[text width= 10cm] (img) at (-2,-3.5){
-      % \begin{itemize}
-        $\triangleright$ 
-        Need to predict global hydrodynamics and size distribution in oil/water emulsion. 
-      % \end{itemize}
-    };
-  \end{tikzpicture}
+  \underline{Coalescence is ubiquitous in chemical engineering processes :}
+  \begin{itemize}
+    \item Separation processes (gravity separators, flotation) in the Enhanced Oil Recovery (EOR) context
+    \item Bubble column reactors
+    \item Liquid-liquid separation
+  \end{itemize}
+  \vfill
+  \underline{In all those process we need to : }
+  \begin{itemize}
+    \item Predict global hydrodynamics in disperse bubbly flows and emulsion (interphase drag forces \ldots).
+    \begin{itemize}
+      \item Model of coalesce and size distribution 
+      \begin{itemize}
+        \item Understand the interactions between pairs of droplets
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+
+  \vfill
+  This work focus on the study of \textbf{pair interaction} in oil/water \textbf{emulsion}
 \end{frame}
 
 \section{Theoretical background on the probabilistic approach}
@@ -101,30 +110,22 @@
   \end{itemize}
   \begin{equation*}
     \Psi(\mathscr{C}) =
-    \underbrace{C}_{\text{Collisions}}
-    +\underbrace{B}_{\text{Break-up}}
+    \underbrace{B}_{\text{Break-up}}
     +\underbrace{S}_{\text{Coalescence}}
   \end{equation*}
 \end{frame}
 \begin{frame}
-  \frametitle{The modeling of the coalescence source term $S$}
-  The source averaged term of collision/coalescence can take the form \citep{rao2008introduction,fede2015monte},
-  \begin{equation*}
-    \avg{S}(\textbf{x}) = \int_{\textbf{r} \cdot \textbf{w} < 0} \left(\textbf{q}' - \textbf{q}\right)
-    P(\textbf{x}, \textbf{y})\textbf{r} \cdot \textbf{w} d\textbf{y} d\textbf{w}
-  \end{equation*}
-  \begin{itemize}
-  \item $P(\textbf{x},\textbf{y})$ is the \textbf{pair distribution} function. Or the PDF of finding a particle at \textbf{x} and \textbf{y} at the same time. 
-  \end{itemize}
-  In another context \citet{zhang2021ensemble} shows,
+  \frametitle{The modeling of the coalescence source term $\avg{S}$}
+  The averaged coalescence kernel can be express as \citep{zhang2021ensemble},
   \begin{equation*}
     \avg{S}(\textbf{x}) = \int \nstavg{S}P_{nst}(\textbf{y}|\textbf{x})d\textbf{y}
   \end{equation*}
 
   \begin{itemize}
-    \item 
-    In this work we are rather interested in the \textbf{nearest pair distribution function} $P_{nst}$.
     \item $P_{nst}(\textbf{y}|\textbf{x}) $ is the probability of finding the nearest neighboring particle at \textbf{y}, knowing a particle is in \textbf{x}.
+    \item $\nstavg{S}$ is the average of $S$ conditionally on the nearest particle position. 
+    % \item 
+    % In this work we use the \textbf{nearest pair distribution function} $P_{nst}$.
   \end{itemize}
 \end{frame}
 
@@ -154,31 +155,33 @@
 
 
 
-% \begin{frame}
-%   \frametitle{The nearest particle statistics \citep{zhang2021ensemble}.}
+\begin{frame}
+  \frametitle{The nearest particle statistics \citep{zhang2021ensemble}.}
 
-% The \textbf{nearest pair} PDF :
-% \begin{equation*}
-%   P_{nst}(\textbf{x},\textbf{y}) 
-%   = \int
-%   \sum_{\alpha\beta}^N 
-%   \delta(\textbf{x} - \textbf{x}_\alpha)\delta(\textbf{y} - \textbf{x}_\beta) h_{\alpha\beta} d\mathscr{P},
-% \end{equation*}
-% where $h_{\alpha\beta}=1$, if $\beta$ is the closest particle to $\alpha$ at time t, otherwise $h_{\alpha\beta} =0$. 
+  % \begin{definition}
+    The \textbf{nearest pair} PDF :
+    \begin{equation*}
+      P_{nst}(\textbf{x},\textbf{y}) 
+      = \int
+      \sum_{\alpha\beta}^N 
+      \delta(\textbf{x} - \textbf{x}_\alpha)\delta(\textbf{y} - \textbf{x}_\beta) h_{\alpha\beta} P(\mathscr{C}) d\mathscr{C},
+    \end{equation*}
+    The \textbf{nearest pair} average² :
+    \begin{equation*}
+      \nstavg{S} 
+      = \frac{1}{P_{nst}(\textbf{x},\textbf{y}) }\int
+      \sum_{\alpha\beta}^N S
+      \delta(\textbf{x} - \textbf{x}_\alpha)\delta(\textbf{y} - \textbf{x}_\beta) h_{\alpha\beta}  P(\mathscr{C}) d\mathscr{C},
+    \end{equation*}
 
-% The conditional \textbf{nearest pair} PDF : 
-% \begin{equation*}
-%   P_{nst}(\textbf{y}|\textbf{x}) 
-%   = P_{nst}(\textbf{r}) 
-%   = \frac{P_{nst}(\textbf{x},\textbf{y})}{n(\textbf{x})}
-% \end{equation*}
+    \begin{itemize}
+      \item $\textbf{x}_\alpha$ and $\textbf{x}_\beta$ are respectively, the position of the particle $\alpha$ and $\beta$. 
+      \item $h_{\alpha\beta}=1$, if $\beta$ is the closest particle to $\alpha$ at time t, otherwise $h_{\alpha\beta} =0$. 
+    \end{itemize}
 
-
-% \begin{itemize}
-%   \item  $P_{nst}(\textbf{y}|\textbf{x}) $ is the probability of finding the nearest neighboring particle at \textbf{y}, knowing a particle is in \textbf{x}.
-%   \item $\textbf{r} = \textbf{y} - \textbf{x}$ is the relative position vector. 
-% \end{itemize}
-% \end{frame}
+    \vfill
+    $\rightarrow$ Therefore we use the nearest particle statistics to model pair interactions. 
+\end{frame}
 
 % \begin{frame}
 %   \frametitle{The nearest particle statistics \citep{zhang2021ensemble}.}
@@ -228,11 +231,11 @@
   \item Mono-disperse distribution of droplets size.
   \item We prevent coalesce by the use of a special algorithm 
   (\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspension/no-coalescence.h}{no-coalescence.h})
-  \item CFD free open source software : \url{https://basilisk.fr}
+  \item Free software : \url{https://basilisk.fr}
 \end{itemize}
 
 \begin{figure}
-  \caption{Snapshot of a simulation at $T_g = 300$ for $\phi = 0.01$, $Ga = 75$ $\mu_r = 0.1$ and $N_b = 125$. In white : the interfaces, The background color map correspond to the pressure field. The grid represents the different core.
+  \caption{Snapshot of a simulation at $T_g = 300$ for $\phi = 0.01$, $Ga = 75$ $\mu_r = 0.1$ and $N_b = 125$. In white : the interfaces, The background color map correspond to the pressure field. The grid represents the different core ($\le 729$ !).
   }
 \end{figure}
 \column{0.5\textwidth}
@@ -247,20 +250,19 @@
     \column{0.6\textwidth}
   \underline{Dimensionless parameters :} 
   \begin{itemize}
-    \item The \textit{Galileo} number : $Ga =\frac{\rho \Delta\rho gD^3}{\mu^2} \in [5, 100]$
-    \item The \textit{Bond} number : $Bo = \frac{\Delta \rho g D^2}{\sigma} = 1$ 
-    \item The volume fraction of dispersed phase : $\phi = [0.01;0.15]$. 
-    \item The density and viscosity ratio, $\rho_r=1.11$ and $\mu_r= 0.1$. 
+    \item \textit{Galileo} number : $Ga =\frac{\sqrt{\rho \Delta\rho gD^3}}{\mu} \in [5, 100]$
+    \item \textit{Bond} number : $Bo = \frac{\Delta \rho g D^2}{\sigma} = 1$ 
+    \item volume fraction of dispersed phase : $\phi = [0.01;0.15]$. 
+    \item Density and viscosity ratio, $\rho_r=1.11$ and $\mu_r= 0.1$. 
   \end{itemize}
   
   \begin{figure}
-    \caption{Snapshot of a simulation at $T_g = 300$ for $\phi = 0.01$, $Ga = 75$ $\mu_r = 0.1$ and $N_b = 125$. In white : the interfaces, The background color map correspond to the pressure field. The grid represents the different core.
+    \caption{Snapshot of a simulation at $T_g = 300$ for $\phi = 0.01$, $Ga = 75$ $\mu_r = 0.1$ and $N_b = 125$. In white : the interfaces, The background color map correspond to the pressure field. The grid represents the different core ($\le 729$ !).
     }
-    \href{file:///work/fintzin/BUBLLES_PROJECT/movies/P_PHI_1_Ga_75.gif}{\beamergotobutton{Play}}
   \end{figure}
   \column{0.5\textwidth}
   \centering
-  \url{https://basilisk.fr}
+  \href{file:///work/fintzin/BUBLLES_PROJECT/movies/P_PHI_1_Ga_75.gif}{\beamergotobutton{Play}}
   \includegraphics[width =  1.1\textwidth]{image/PHI_01_Ga_75.png}
   \end{columns}
 \end{frame}
@@ -271,29 +273,31 @@
   \begin{columns}
     \column{0.7\textwidth}
     \centering
+    \begin{tabular}{cccc}
+      &
       \begin{tikzpicture}[color=red]
         \draw[thick,->] (0,0) -- (1,0)node[right]{$Ga$};
-      \end{tikzpicture}
-    
-    \begin{flushright}
-      \begin{tikzpicture}[color = red]
-        \draw[thick,->] (0,0) -- (0,-1)node[left]{$\phi$};
-      \end{tikzpicture}
-      \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_5_PHI_0_1.pdf}
-      \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_25_PHI_0_1.pdf}
-      \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_75_PHI_0_1.pdf}
-      
-        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_5_PHI_0_05.pdf}
-        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_25_PHI_0_05.pdf}
-        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_75_PHI_0_05.pdf}
-      \end{flushright}
-        
-      % \caption{Plots of $P_{nst} (\textbf{r})$ for different $Ga$ and $\phi$.}
-    \column{0.3\textwidth}
+      \end{tikzpicture}& & \\ 
+        \begin{tikzpicture}[color=red]
+          \draw[thick,->] (0,0) -- (0,-1)node[left]{$\phi$};
+        \end{tikzpicture} &
+        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_5_PHI_0_1.pdf}  &
+        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_25_PHI_0_1.pdf} &
+        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_75_PHI_0_1.pdf} 
+        \\
+         &
+          \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_5_PHI_0_05.pdf} &
+        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_25_PHI_0_05.pdf}&
+        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_75_PHI_0_05.pdf}\\
+      \end{tabular}
+
+      \column{0.3\textwidth}
+      \begin{figure}
+        \caption{Plots of $P_{nst} (\textbf{r})$ for different $Ga$ and $\phi$.}
+      \end{figure}
     
     \begin{itemize}
-      \item A preferred orientation is clearly visible for low $\phi$ and high $Ga$. 
-      \item It is a direct representation of the Drafting -Kissing tumbling mechanism. 
+      \item Drafting -Kissing tumbling mechanism for low $\phi$ and high $Ga$. 
     \end{itemize}
   \end{columns}
 \end{frame}
@@ -303,9 +307,9 @@
 
   \begin{figure}
     
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_10_PHI_0_1.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_50_PHI_0_1.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_75_PHI_0_1.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_10_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_25_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_75_PHI_0_05.pdf}
     
     \caption{Nearest averaged velocity fields, $\nstrelavg{\textbf{u}} (\textbf{r})$ for different $Ga$ and $\phi$. 
     Colormap : magnitude of the relative velocity $|\nstrelavg{\textbf{u}}|$. }
@@ -313,7 +317,7 @@
 
 \begin{itemize}
   \item In average particles approach from the top and leave through the sides. 
-  \item It is, again, a direct representation of the Drafting -Kissing tumbling mechanism since the velocity fields converge toward high density zone. 
+  % \item It is, again, a direct representation of the Drafting -Kissing tumbling mechanism since the velocity fields converge toward high density zone. 
 \end{itemize}
 \end{frame}
 
@@ -324,19 +328,46 @@
 
   \begin{figure}
     
-    % \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_1.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_25_PHI_0_1.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_50_PHI_0_1.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_75_PHI_0_1.pdf}
+    % \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_5_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_25_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_75_PHI_0_05.pdf}
     
-    \caption{Nearest averaged force fields, $\nstrelavg{\textbf{F}}(\textbf{r})$ for different $Ga$ and $\phi$. 
+    \caption{Nearest averaged relative acceleration fields times the mass of a particle. 
     Color map : Magnitude of the dimensionless force  $\nstrelavg{\textbf{F}} / (\Delta \rho V g)$.}
   \end{figure}
 
+  
 \begin{itemize}
-  \item At high $Ga$, $\nstrelavg{\textbf{F}}$ is correlated with the nearest particle position $|\textbf{r}|$. 
-  \item At low $Ga$, $\nstrelavg{\textbf{F}}$ the correlation is less obvious, thus the force is mainly driven by hydrodynamics interactions. 
-  \item This is a graphical representation of the particle pressure stress.  
+  \item $\nstrelavg{\textbf{F}}$ is an isotropic repulsion force at high $Ga$. 
+  \item At lower $Ga$ we observe attraction forces $\nstrelavg{\textbf{F}}$ on the sides.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Representation of the interaction force}
+
+  \begin{figure}
+    
+    % \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_5_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_25_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_75_PHI_0_05.pdf}
+    
+    \caption{Nearest averaged relative acceleration fields times the mass of a particle. 
+    Color map : Magnitude of the dimensionless force  $\nstrelavg{\textbf{F}} / (\Delta \rho V g)$.}
+  \end{figure}
+
+  
+\begin{itemize}
+  \item At low $Ga$ the magnitude of the force isn't correlated with \textbf{r}.
+  \begin{itemize}
+    \item Thus the relative hydrodynamic interactions are of the same order as the magnitude of the inter-particular interactions. 
+  \end{itemize}
+  \item  Visual representation of the particle stress : 
+    $\bm{\Sigma}_{\text{PFP}} = \sum \textbf{r} 
+    \nstavg{\textbf{F}}(\textbf{r}) 
+    $
 \end{itemize}
 \end{frame}
 
@@ -359,13 +390,15 @@
         \node (para) at (-1.2,0.75){$\mu$,$\rho$};
         \draw[->,thick](0,0.5)--++(0,0.5)node[midway,left]{$\textbf{F}_n$};
         \draw[->,thick](0,-0.5)--++(0,-0.5)node[midway,left]{$-\textbf{F}_n$};
+        \draw[<-,thick](1,0.5)--++(0,0.5)node[midway,right]{$\textbf{u}_1$};
+        \draw[<-,thick](1,-0.5)--++(0,-0.5)node[midway,right]{$\textbf{u}_2$};
       \end{tikzpicture}
       \caption{Scheme of two colliding droplets.}
     \end{figure}
     \column{0.7\textwidth}
     \begin{columns}[t]
       \column{0.5\textwidth}
-      \textbf{Current film thickness}  
+      \textbf{Current film thickness : }  
       \begin{equation*}
         \frac{h(t_c,F_n)}{D}  \sim \frac{F_n \mu^{1/2}}{t_c \sigma} 
       \end{equation*}
@@ -375,6 +408,7 @@
         \item $\sigma$ : Surface tension coefficient
         \item \underline{$t_c$ : contact time}
       \end{itemize}
+      \citet{chesters1991modelling}
       \column{0.5\textwidth}
       \textbf{Critical thickness \footnote{\citet{yoon2007coalescence}}} 
       \begin{equation*}
@@ -382,12 +416,13 @@
       \end{equation*}
       \begin{itemize}
         \item $Ca$ : Capillary number 
-        \item $A_H$ : Hamaker constant
+        \item $A_H = 2.4\cdot 10^{-21}$ : Hamaker constant
       \end{itemize}
     \end{columns}
   \end{columns}
+  \vfill
   \begin{itemize}
-    \item How to estimate $F_n$ and $t_c$ in terms of the global parameters $Ga$, $Bo$, $\phi$ and $\mu_r$ \ldots
+    \item How to estimate $F_n$ and $t_c$ ? 
   \end{itemize}
 \end{frame}
 
@@ -419,13 +454,13 @@
       \centering
       \begin{figure}
         \includegraphics[width=0.9\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_50_PHI_0_1.pdf}
-        \caption{Nearest averaged force fields, $\nstavg{\textbf{f}^1 - \textbf{f}^2}(\textbf{r})$.}
+        \caption{Nearest relative averaged force fields, $\nstrelavg{\textbf{F}}(\textbf{r})$.}
       \end{figure}
       \column{0.5\textwidth}
       \centering
       \begin{figure}
       \includegraphics[width=0.9\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_50_PHI_0_1.pdf}
-      \caption{Relative averaged velocity fields, $\nstavg{\textbf{u}^2 - \textbf{u}^1}(\textbf{r})$.}
+      \caption{Relative averaged velocity fields, $\nstrelavg{\textbf{u}}(\textbf{r})$.}
     \end{figure}
     \end{columns}
   \end{columns}
@@ -437,7 +472,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Advection of a Lagrangian particle}
+  \frametitle{Motion and coalesce of the nearest droplet}
 \centering
 \begin{tikzpicture}
   \node (img) at (0,0) {\includegraphics[width=\textwidth]{image/HOMOGENEOUS/anim/frame_1_0_1_Ga_10_PHI_0_1.pdf}};
@@ -454,7 +489,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Advection of Lagrangian particles }
+  \frametitle{Motion and coalesce of the nearest droplets }
 \centering
   \begin{tikzpicture}
     \node (img) at (0,0) {\includegraphics[width=\textwidth]{image/HOMOGENEOUS/anim/frame_1_N40_0_1_Ga_50_PHI_0_1.pdf}};
@@ -497,9 +532,9 @@
   \frametitle{General remarks and conclusion}
 
   \begin{itemize}
-    \item We used the nearest particle statistics to describe pair interactions in an emulsion water / oil. 
-    \item The relative velocity, and forces are as we could see, directly correlated to the relative position and \textit{Galileo} number and volume fraction. 
-    \item We advanced arguments on coalesce probability in the different regime. 
+    \item We used the nearest particle statistics to describe pair interactions in oil/water emulsion. 
+    \item The relative velocity, and forces/acceleration are directly correlated to the relative position, $Ga$ and $\phi$. 
+    \item We predicted coalesce event in the different regime. 
   \end{itemize}
   Future projects :   
   \begin{itemize}
@@ -512,24 +547,32 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Some correlations on the interphase drag force\ldots}
+  \frametitle{Other correlations for the averaged Navier Stokes equations}
 \begin{columns}
   \begin{column}{0.5\textwidth}
     \begin{figure}
-      \includegraphics*[width=0.8\textwidth]{image/HOMOGENEOUS/fCA/FH_mu_Re.pdf}
-      \caption{Dimensionless drag force in terms of the Reynolds number for different volume fraction.
-      Blue, orange, green and red dots correspond to respectively,  $\phi = 0.01, 0.05, 0.1$ and $0.15$}
+      \includegraphics*[width=0.7\textwidth]{image/HOMOGENEOUS/fCA/FH_mu_Re.pdf}
+      \caption{Dimensionless drag force in terms $Re$ for $\phi = 0.01, 0.05, 0.1$ and $0.15$.}
     \end{figure}
-  \end{column}
-  \begin{column}{0.5\textwidth}
     \begin{equation*}
       \frac{\avg{f}}{\mu UD} 
       = 1.18 e^{5.32\phi^{1/3}}  Re^{0.33}  + Re^{0.87} +24.12
     \end{equation*}
-    \begin{itemize}
-      \item $U$ is the relative velocity between the continuous and dispersed phase.
-      \item $Re$ is the \textit{Reynolds} number defined as, $Re = \rho D U / \mu$. 
-    \end{itemize}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.7\textwidth]{image/HOMOGENEOUS/fPA/Talpha.pdf}
+      \caption{Dimensionless particular Reynolds stress in terms of $Ga$ and $\phi$}
+  \end{figure}
+  \begin{equation}
+    \frac{\avg{\textbf{u}'\cdot \textbf{u}'}}{U^2}  \approx \frac{\phi}{Ga^2} 2.86\cdot10^{4} 
+    \label{eq:Talpha_scaling}
+\end{equation}
+    % \begin{itemize}
+    %   \item $U$ is the relative velocity between the continuous and dispersed phase.
+    %   \item $Re$ is the \textit{Reynolds} number defined as, $Re = \rho D U / \mu$. 
+    % \end{itemize}
   \end{column}
 \end{columns}
 \end{frame}
