@@ -14,18 +14,15 @@
 \usepackage{mdframed}
 \usepackage{bm}
 \usepackage{animate}
-
-
-
-
+\usepackage{xcolor,colortbl}
 
 \usepackage{graphicx}
 \bibliographystyle{apalike}
 \usefonttheme{serif}
 
-\title{A phenomenological description of pairwise interactions in water-oil emulsion.}
-\subtitle{Based on the nearest particle statistics.}
-\author{\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{\underline{N. Fintzi}\footnote{IFP energies nouvelles, France}, JL. Pierson$^1$} and S. Popinet\footnote{Sorbonne Universite, France}}
+\title{A phenomenological description of pairwise interactions in buoyant driven emulsions.}
+\subtitle{ICMF 2023}
+\author{\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{\underline{N. Fintzi}\footnote{IFP \'Energies Nouvelles, France}, JL. Pierson$^1$} and S. Popinet\footnote{Sorbonne Universit\'e, France}}
 % \date{Created on May 22, 2022}
 
 \titlebackground{image/3D/P_PHI_5.png}
@@ -81,12 +78,141 @@
   \end{itemize}
 
   \vfill
-  This work focus on the study of \textbf{pair interaction} in oil/water \textbf{emulsion}
+  This work focuses on the study of \textbf{pair interactions} in oil/water \textbf{emulsions}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{The multiscale problem of poly dispese multiphase flows}
+  \begin{tabular}{p{3cm}|p{3cm}|p{3cm}|p{3cm}}
+    Scales & 
+    Reactor (Macro) & 
+    Droplets (Micro) & 
+    Film (Nano) \\\hline
+    Theoretical modeling & 
+    \begin{itemize}
+      \item Averaged Navier Stokes
+      \item Moment equaitons
+    \end{itemize}& \cellcolor[HTML]{AA0044}
+    Two phase flow NS& 
+    Film drainage equations and Singularity \\\hline
+    Numerical modeling &
+    Euler-Euler and QMOM &\cellcolor[HTML]{AA0044} 
+     Volume Of Fluid Method with PLIC
+     Controle Coalescence&
+     DNS or \textit{multilayer solver}\\\hline
+    What it needs &
+     Micro scale closure&
+     Drainage Time &
+     Microscale hydrodynamic\\\hline
+    What it provides & 
+    Optimization & \cellcolor[HTML]{AA0044}
+    Micro scale closure &
+     Drainage time\\\hline
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{Macroscale}
+  \begin{figure}
+    \textit{Here include graphics Ask kamel}
+    \caption{Euler-Euler simulaiton}
+  \end{figure}
+  \begin{enumerate}
+    \item Theoretical modeling 
+    \begin{itemize}
+      \item Averaged Navier-Stokes Equations 
+      \item Moments Equations from Kinetic theory. 
+    \end{itemize}
+    \item Numerical modeling 
+    \begin{itemize}
+      \item Euler-Euler model
+      \item Quadrature Methods of Moments (\citet{fox2023generalized})
+    \end{itemize}
+    \item What does the model needs ? 
+    \begin{itemize}
+      \item Closure terms such as, velocity fluctuation, interphase drag forces coalesce kernel \ldots
+    \end{itemize}
+    \item Provides 
+    \begin{itemize}
+      \item Useful prediction to optimize processes. 
+    \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Microscale}
+
+  \begin{figure}
+    \caption{Partialy direct numerical simulation with driven coalescence}
+  \end{figure}
+
+  \begin{enumerate}
+    \item Theoretical modeling 
+    \begin{itemize}
+      \item Navier-Stokes Equations for two phases flows.
+    \end{itemize}
+    \item Numerical modeling 
+    \begin{itemize}
+      \item Volume of Fluid Method
+      \item PLIC for the interface 
+      \item Special algorithm to control coalesce
+    \end{itemize}
+    \item What does the model needs ? 
+    \begin{itemize}
+      \item The film drainage time to use subgrid models for coalesce. 
+    \end{itemize}
+    \item Provides 
+    \begin{itemize}
+      \item Closure for the \textbf{Macroscale} such as the drift velocity velocity fluctuation coalesce kernel. 
+      \item Hydrodynamic information of pairwise interaction useful to the  \textbf{nanoscale} film drainage problem. 
+    \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nanoscale}
+
+  \begin{figure}
+    \caption{Film drainage simulation}
+  \end{figure}
+
+  \begin{enumerate}
+    \item Theoretical modeling 
+    \begin{itemize}
+      \item Film drainage equations.
+      \item Chemical interactions
+    \end{itemize}
+    \item Numerical modeling 
+    \begin{itemize}
+      \item Multilayer solver. 
+      \item Chemical models. 
+    \end{itemize}
+    \item What does the model needs ? 
+    \begin{itemize}
+      \item The global hydrodynamic during the interactions, provided by the \textbf{Microscales} results.  
+    \end{itemize}
+    \item Provides 
+    \begin{itemize}
+      \item Time of film drainage until rupture.  
+    \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \centering
+  \begin{tikzpicture}
+    \node[draw] (macro) at (0,0){Macro};
+    \node[draw,circle] (micro) at (2,0){Micro};
+    \node[draw,circle] (nano) at (4,0){Nano};
+    \draw[->](macro) -- (micro);
+    \draw[->](micro) to[bend left] (nano);
+    \draw[->](nano) to[bend left] (micro);
+  \end{tikzpicture}
 \end{frame}
 
 \section{Theoretical background on the probabilistic approach}
 
-\begin{frame}{Population Balance Equation (PBE) to describe poly-disperse multiphase flows.}
+\begin{frame}{Population Balance Equations (PBE) to describe poly-disperse multiphase flows.}
   \begin{definition}
     \begin{itemize}
       \item Let $\mathscr{C} =\left\{\textbf{x}_1,\textbf{u}_1, \textbf{q}_1\ldots\textbf{x}_N,\textbf{u}_N, \textbf{q}_N\right\}$ be the tensor containing all the particles' parameters such as their velocities and positions vectors and any other arbitrary particles' quantities $\textbf{q}$. 
@@ -122,7 +248,7 @@
   \end{equation*}
 
   \begin{itemize}
-    \item $P_{nst}(\textbf{y}|\textbf{x}) $ is the probability of finding the nearest neighboring particle at \textbf{y}, knowing a particle is in \textbf{x}.
+    \item $P_{nst}(\textbf{y}|\textbf{x}) $ is the probability of finding the nearest neighboring particle's center of mass at \textbf{y}, knowing a particle is at \textbf{x}.
     \item $\nstavg{S}$ is the average of $S$ conditionally on the nearest particle position. 
     % \item 
     % In this work we use the \textbf{nearest pair distribution function} $P_{nst}$.
@@ -166,7 +292,7 @@
       \sum_{\alpha\beta}^N 
       \delta(\textbf{x} - \textbf{x}_\alpha)\delta(\textbf{y} - \textbf{x}_\beta) h_{\alpha\beta} P(\mathscr{C}) d\mathscr{C},
     \end{equation*}
-    The \textbf{nearest pair} average² :
+    The \textbf{nearest pair} average :
     \begin{equation*}
       \nstavg{S} 
       = \frac{1}{P_{nst}(\textbf{x},\textbf{y}) }\int
@@ -262,7 +388,7 @@
   \end{figure}
   \column{0.5\textwidth}
   \centering
-  \href{file:///work/fintzin/BUBLLES_PROJECT/movies/P_PHI_1_Ga_75.gif}{\beamergotobutton{Play}}
+  \href{file:///work/fintzin/BUBLLES_PROJECT/movies/cut.gif}{\beamergotobutton{Play}}
   \includegraphics[width =  1.1\textwidth]{image/PHI_01_Ga_75.png}
   \end{columns}
 \end{frame}
@@ -329,7 +455,7 @@
   \begin{figure}
     
     % \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_5_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_25_PHI_0_05.pdf}
     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_75_PHI_0_05.pdf}
     
@@ -350,7 +476,7 @@
   \begin{figure}
     
     % \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_5_PHI_0_05.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_25_PHI_0_05.pdf}
     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_75_PHI_0_05.pdf}
     
@@ -481,7 +607,7 @@
   % \includegraphics[width=\textwidth]{../movies/P_PHI_1_Ga_75.gif}
   
   $Ga = 10$ :
-  \href{file:///work/fintzin/BUBLLES_PROJECT/results/HOMOGENEOUS/Dim_3/N_5/PHI_0.1/rho_r_1.11/Bo_1/mu_r_0.1/Ga_10/animation_N1.mp4}{\beamergotobutton{Play}}\\
+  \href{file:///work/fintzin/BUBLLES_PROJECT/movies/First_anim.mp4}{\beamergotobutton{Play}}\\
   $Ga = 25$ :
   \href{file:///work/fintzin/BUBLLES_PROJECT/results/HOMOGENEOUS/Dim_3/N_5/PHI_0.1/rho_r_1.11/Bo_1/mu_r_0.1/Ga_25/animation_N1.mp4}{\beamergotobutton{Play}}\\
   $Ga = 50$ :
@@ -563,7 +689,7 @@
     \begin{figure}[h!]
       \centering
       \includegraphics[width=0.7\textwidth]{image/HOMOGENEOUS/fPA/Talpha.pdf}
-      \caption{Dimensionless particular Reynolds stress in terms of $Ga$ and $\phi$}
+      \caption{Dimensionless granular temperature in terms of $Ga$ and $\phi$}
   \end{figure}
   \begin{equation}
     \frac{\avg{\textbf{u}'\cdot \textbf{u}'}}{U^2}  \approx \frac{\phi}{Ga^2} 2.86\cdot10^{4} 

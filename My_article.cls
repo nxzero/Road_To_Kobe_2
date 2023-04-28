@@ -30,7 +30,8 @@
 \bibliographystyle{apalike}
 
 \RequirePackage{url}
+\RequirePackage{authblk}
+\renewcommand\Affilfont{\itshape\small}
 
-
-
+\RequirePackage{stmaryrd}
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}

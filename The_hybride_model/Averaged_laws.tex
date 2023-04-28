@@ -1,0 +1,114 @@
+
+\section{The volume averaged equations of motion}
+
+We start this section by presenting the most common technics of averages and their operators.
+Therefore, we note $\left<f\right>(\textbf{x})$ the average of an arbitrary quantity $f(\textbf{y})$,
+where $\textbf{y}$ is the spacial coordinate in the laboratory reference frame,
+and $\textbf{x}$ macro scale coordinate at which we evaluate the average.
+Therefore, we define the \textbf{volume average} operator such as,
+\begin{equation}
+    \left<f\right>(\textbf{x},t) = \int g(\textbf{x},\textbf{y}) f(\textbf{y},t)dV,
+    \label{eq:avg}
+\end{equation}
+where $g(\textbf{x},\textbf{y})$ is the smoothing (or weighting) function introduced by
+\citet{jackson1997locally,marle1982macroscopic}.
+The first argument, $\textbf{x}$, is location at which we take the average, and \textbf{y} is the variable of integration or the local coordinate vector.
+The smoothing function $g(\textbf{x},\textbf{y})$ must follow two properties, the first one is normalization to unity
+$\int g(\textbf{x},\textbf{y}) dV = 1 \;\forall g$.
+The second one is that $g$ vanish for all $\textbf{y}$ far form $\textbf{x}$, thus $\lim\limits_{|\textbf{r}| \to \infty} g(\textbf{x},\textbf{y}) = 0$ with $\textbf{r} = \textbf{x} - \textbf{y}$.
+Also, the radius $R$, of the weighting function $g$, it is defined as $1/2 = \int_{|\textbf{r}|<R} g(\textbf{x},\textbf{y})dV$.
+Those characteristics ensure that the integral of \ref{eq:avg} is convergent and well normalized.
+
+
+Now we introduce the subclass operators, or conditional average operators.
+The average of the quantity $f$ considering only the volume of the $k^{th}$ phase, will be defined, such that,
+\begin{equation}
+    \phi_k \kavg{f}
+    = \avg{\chi_k f_k},
+    \label{eq:avg_k_phase}
+\end{equation}
+where $\phi_k$ is the volume fraction of the phase $k$ at \textbf{x} and $\kavg{\ldots}$ is the conditional average operator on the phase $k$.
+It can be obtained by substituting $f$ by $1$ in \ref{eq:avg_k_phase}, it reads,
+\begin{equation*}
+    \phi_k
+    = \avg{\chi_k}
+\end{equation*}
+
+Having established averages operators over the volume of both phases independently, we now define one last conditional averaging operator.
+Namely, the surface phase average operator,
+\begin{equation}
+    a_I\Iavg{f}
+    = \avg{\delta_I f},
+    \label{eq:avg_I_phase}
+\end{equation}
+where $a_I$ is the interfacial area concentration.
+$a_I$ can be thought of the ratio between the surface of the interfaces over the volume where the interface are included.
+It is defined by,
+\begin{equation}
+    a_I
+    = \avg{\delta_I}.
+\end{equation}
+
+Now, we would like to emphasize that the quantities inside phase average, are implicitly defined inside the $k^{th}$ phase so that it avoid redundancies.
+Therefore, $\kavg{f} = \kavg{f_k}= \avg{f_k\chi_k}$.
+At the interface however it is not the case, indeed by definition, at the interface the quantities are defined in both phases.
+Thus, we adopt the following convention, when averaging an equation on the volume of phase $k$, $\Iavg{f_k}$ will be the interfacial average of $f_k$, with $f_k$ being the quantity $f$ defined on the phase $k$.
+However, $\Iavg{f}$ without the subscript $_k$, will refer to the interface average of the quantity $f$ defined on the neighboring phase of $k$.
+
+
+\subsection{Average of an arbitrary conservation equation}
+
+From the \ref{eq:two-fluid_global} and the phase average operator definition (\ref{eq:avg_k_phase}) we can show that the phase averaged conservation equation of an arbitrary quantity $f_k$ reads as,
+\begin{align}
+    \pddt \avg{\chi_k f_k}
+    &= \nablabh \cdot \avg{\chi_k \bm{\Phi}_k - \chi_k f_k \textbf{u}_k}
+    + \avg{\chi_k \textbf{S}_k}
+    + \avg{\delta_I\left[
+        \bm{\Phi}_k
+        + f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right)
+    \right]
+    \cdot \textbf{n}_k} ,
+    \label{eq:avg_dt_chif}\\
+    \pddt \avg{\delta_If_I}
+    &= 
+    \nablabh \cdot \avg{\delta_I \mathbf{\Phi}_{I||} - \delta_I f_I \textbf{u}_I}
+    +\avg{\delta_I\textbf{S}_I} 
+    - \avg{\delta_I \Jump{
+    f_k (\textbf{u}_I - \textbf{u}_k)
+    + \mathbf{\Phi}_k
+    } }
+    \label{eq:avg_dt_deltaf}
+\end{align}
+So as the microscopic jump condition this equation maintains the consistency between the different averaged quantity in presence.
+Similarly, the bulk or global averaged conservation equation can be obtained averaging \ref{eq:single-fluid_global} yielding,
+\begin{equation*}
+    \pddt \avg{f}
+    = \nablab \cdot \avg{\bm{\Phi} - f \textbf{u}}
+    + \avg{\textbf{S}}
+    \label{eq:avg_global}
+\end{equation*}
+
+
+Likewise, we can take the average of the particular fields equations \ref{eq:dt_dq_alpha} and \ref{eq:dt_dq_I_alpha}, 
+\begin{align}
+    \pddt \pavg{ q_\alpha}
+    + \nablabh \pavg{ q_\alpha \textbf{u}_\alpha}
+    &= \pavg{\int_{\Omega_\alpha} \textbf{S}_k d\Omega}\nonumber\\
+    &+ \pavg{\int_{\Sigma_\alpha} \left[\bm{\Phi}_k + f_k (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d\Sigma},
+    \label{eq:avg_dt_dq_alpha}\\
+    \pddt \pavg{ q_{I\alpha}}
+    + \nablabh \pavg{ q_{I\alpha} \textbf{u}_\alpha}
+    &= \pavg{\int_{\Sigma_\alpha} 
+        \textbf{S}_I
+    d\Sigma}\nonumber\\
+    &- \pavg{\int_{\Sigma_\alpha} \Jump{
+        f_k (\textbf{u}_I - \textbf{u}_k)
+        + \mathbf{\Phi}_k
+    }
+    d\Sigma}
+    \label{eq:avg_dt_dq_I_alpha}
+\end{align}

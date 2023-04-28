@@ -18,5 +18,5 @@ proper: clean
 	-rm Kobabstract.pdf
 	-rm note_de_calcul.pdf
 	-rm study_on_surface_tension.pdf
-	-rm The_hybride_model.pdf
+	-rm The_hybride_model_diapo.pdf
 	-rm The_hybride_model_for_fluid_particles.pdf
