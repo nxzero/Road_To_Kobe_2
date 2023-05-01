@@ -198,43 +198,37 @@
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{Solve, Needs and Provides diagram}
-  \centering
-  \begin{tikzpicture}[very thick]
-    \node[draw] (macro) at (0,0){Macro};
-    \node[draw,circle] (micro) at (3,0){Micro};
-    \node[draw,circle] (nano) at (6,0){Nano};
-    \draw[->](macro) -- (micro);
-    \draw[->](micro) to[bend left] (nano);
-    \draw[->](nano) to[bend left] (micro);
-  	\node (item) at (0,0){
- 	\begin{itemize}
- 	\item Solve. 
- 	\item Needs. 
- 	\item Provides. 
- 	\end{itemize}};
-\end{tikzpicture}
-  	
+\begin{frame}{Solve, Needs and Provides and dependency diagram}
+  
 	\textbf{Macro-scale}
 	\begin{enumerate}
 		\item Averaged Navier-Stokes or Population Balance Equations (PBE). 
 		\item Drag forces, velocity fluctuation and \textbf{coalescence kernel} closure terms. 
 		\item Optimize industrial processes. 
 	\end{enumerate}
-
+  
 	\textbf{Drop-scale}
 	\begin{enumerate}
 		\item Navier-Stokes two-phase flows equations. 
 		\item Film drainage models.  
-		\item Closure for \textbf{Macro-scale} and \textbf{Nano-scale} modeling.  
+		\item \textcolor{blue}{Closure for \textbf{Macro-scale}, (interphase drag forces, velocity fluctuations \ldots) And \textcolor{red}{pairs interactions modeling} for the \textbf{Nano-scale} problem.}  
 	\end{enumerate}
-
+  
 	\textbf{Film-scale}
 	\begin{enumerate}
 		\item Film drainage equations . 
 		\item Interaction models microscale hydrodynamic.   
 		\item Time of coalescance closure.  
 	\end{enumerate}
+  \centering
+  \begin{tikzpicture}[very thick]
+    \node[draw] (macro) at (0,0){Macroscale};
+    \node[draw] (micro) at (4,0){Microscale};
+    \node[draw] (nano) at (8,0){Nanoscale};
+    \draw[<-,blue](macro) -- (micro);
+    \draw[->,red](micro) to[bend left] (nano);
+    \draw[->](nano) to[bend left] (micro);
+\end{tikzpicture}
 \end{frame}
 
 \section{Theoretical background on the probabilistic approach}
