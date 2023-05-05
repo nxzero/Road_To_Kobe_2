@@ -1,0 +1,103 @@
+\section{Derivation of the point velocity}
+\label{ap:velocity_definition}
+In this Appendix we provide some details on the point velocity of the center of mass of any particle $\alpha$. 
+
+Consider a particle of center of mass $\textbf{y}_\alpha$ defined such as
+\begin{equation*}
+    m_\alpha(t) \textbf{y}_\alpha(t)
+    = \int_{\Omega_\alpha} \rho_k \textbf{y}_k d\Omega,
+\end{equation*}
+where we empathize that both, $m_\alpha(t)$ and $\textbf{y}_\alpha$ is function of time. 
+The point velocity can be solely defined as the derivative of $\textbf{y}_\alpha$ within time.
+Yielding, 
+\begin{align*}
+    \ddt \textbf{y}_\alpha (t)
+    &=
+    \ddt \left(
+        \frac{1}{m_\alpha} \int_{\Omega_\alpha} \rho_k \textbf{y}_k d\Omega
+    \right)\\
+    &= \frac{1}{m_\alpha}
+    \ddt 
+    \left(
+        \int_{\Omega_\alpha} \rho_k \textbf{y} d\Omega
+    \right)
+    - \frac{1}{m_\alpha^2} \ddt \int_{\Omega_\alpha} \rho_k d\Omega \int_{\Omega_\alpha} \rho_k \textbf{y}_k d\Omega
+    \\
+    &= \frac{1}{m_\alpha}\int_{\Omega_\alpha} \left[
+        \pddt (\rho_k \textbf{y}) + \nablabh \cdot\left(\rho_k \textbf{y}\textbf{u}_k\right) d\Omega 
+    \right]\\
+    &+ \frac{1}{m_\alpha}\int_{\Sigma_\alpha} \textbf{y} \rho_k(\textbf{u}_I   - \textbf{u}_k) \cdot \textbf{n}_k d \Sigma
+    -  \frac{1}{m_\alpha^2} \int_{\Sigma_\alpha} \rho_k(\textbf{u}_I   - \textbf{u}_k) \cdot \textbf{n}_k d\Sigma  \int_{\Omega_\alpha} \rho_k \textbf{y}_k d\Omega
+    \\
+    &= \frac{1}{m_\alpha}\int_{\Omega_\alpha} \textbf{y} \left[
+    \pddt (\rho_k) + \nablabh \cdot\left(\rho_k \textbf{u}_k\right) 
+    \right]d\Omega
+    + \frac{1}{m_\alpha}\int_{\Omega_\alpha} \rho_k  \textbf{u}_k  \cdot \nablabh \textbf{y} d\Omega \\
+    &+ \frac{1}{m_\alpha}\int_{\Sigma_\alpha} \textbf{y}_k \rho_k (\textbf{u}_I - \textbf{u}_k) \cdot \textbf{n}_k d \Sigma
+    - \frac{1}{m_\alpha}  \textbf{y}_\alpha \int_{\Sigma_\alpha} \rho_k(\textbf{u}_I   - \textbf{u}_k) \cdot \textbf{n}_k d\Sigma
+\end{align*}
+By considering the mass conservation on a single fluid particle for the first term, noticing that $\nablabh \textbf{y} = \textbf{I}$ where $\textbf{I}$ is the identity tensor for the second term, and introducing \textbf{r} in the third term gives, we get the following relation,
+\begin{equation*}
+    \textbf{u}_\alpha
+    = \frac{1}{m_\alpha} \left(
+        \int_{\Omega_\alpha} \rho_k \textbf{u}_k d\Omega
+        +  \int_{\Sigma_\alpha} \textbf{r} \rho_k (\textbf{u}_I - \textbf{u}_k) \cdot \textbf{n}_k d\Sigma
+    \right)
+    % = \frac{1}{m_\alpha}  \left(
+    %     \textbf{p}_\alpha
+    % - \int_{\Omega_\alpha} \rho_k \textbf{w} d\Omega
+    % \right)
+\end{equation*}
+
+
+\section{A detailed derivation of the moment derivative}
+\label{ap:moment_derivative}
+The first moment or dipoles of any property $q_\alpha$ can be defined as,
+\begin{equation*}
+    \textbf{Q}_\alpha 
+    = \int_{V_\alpha} \textbf{r} f_k dV
+\end{equation*}
+As, before we use the Reynolds transport theorem to describe the evolution of any $\textbf{Q}_\alpha$ within time. 
+Yielding,
+\begin{align}
+    \ddt \textbf{Q}_\alpha
+    & = \ddt \int_{V_\alpha} \textbf{r} f_k dV  
+    =  \int_{V_\alpha} \left[
+        \pddt(\textbf{r}  f_k)
+        + \nablabh \cdot \left(f \textbf{r} \textbf{u}_k\right)
+    \right]dV \nonumber \\
+    &+ \int_{S_\alpha} \textbf{r}  f_k  (\textbf{u}_I-\textbf{u}_k)\cdot \textbf{n}_k  dS  \nonumber \\
+    &=  \int_{V_\alpha} \textbf{r}\left[
+        \pddt f_k
+        + \nablabh \cdot \left(f_k \textbf{u}_k\right)
+    \right] dV
+    + \int_{V_\alpha} f_k \left[
+        \pddt \textbf{r}
+        +\textbf{u}_k \nablabh \textbf{r}
+    \right]dV\\
+    &+ \int_{S_\alpha} \textbf{r}  f_k (\textbf{u}_I-\textbf{u}_k)\cdot \textbf{n}_k  dS,
+\end{align}
+Using \ref{eq:general_conservation} for the first term, and considering the relation,
+$  \pddt \textbf{r}
++ \textbf{u}_k \cdot \nablabh \textbf{r}
+= - \frac{d}{dt} \textbf{y}_\alpha  + \textbf{u}_k \cdot \textbf{I}
+= \textbf{w}_k$,
+where $\textbf{I}$ is the identity tensor. 
+Applying this relation for the second term, we get, 
+\begin{align}
+    \ddt \textbf{Q}_\alpha
+    &= \int_{V_\alpha} \textbf{r} \left[
+         \textbf{S}_k +  \nablabh \cdot \bm{\Phi}_k
+    \right]dV
+    +\int_{V_\alpha} f_k  \textbf{w}_k dV
+    + \int_{S_\alpha} \textbf{r}  f_k (\textbf{u}_I-\textbf{u}_k)\cdot \textbf{n}_k  dS,\\
+    &= \int_{V_\alpha} \left( 
+        \textbf{r} \textbf{S}_k 
+        - \bm{\Phi}_k
+        + f_k  \textbf{w}_k 
+    \right) dV
+    + \int_{S_\alpha} \textbf{r} \left[
+        \bm{\Phi}_k
+        + f_k (\textbf{u}_I-\textbf{u}_k)
+    \right]\cdot \textbf{n}_k  dS.
+\end{align}

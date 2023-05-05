@@ -1,19 +1,19 @@
 
-\section{The  two-fluid model}
-\label{sec:conservation_laws}
+\label{sec:two-fluid}
 
-In this section we define the local scale governing equations of multiphase flow using the formulation of \citet{kataoka1986local} and \citet{drew1983mathematical}.
-Before diving into the derivation we would like to emphasize that the local position vector at the local scale is noted $\textbf{y}$.
-This clarification will have its usage in the next section where we will use another variable for the global location, namely the vector $\textbf{x}$.
-Also, in this manuscript we write in bold symbols the vectors and tensors, while the scalar variables are written with the usual font.
-
-
-
-\subsection{Evolution of the topology}
-
-Before introducing the physical balance equations such as the mass and momentum conservation equations, we study the transport of the volume occupied by a phase $k$ and the interface between the phases considered.
-Therefore, the topological balance equations correspond to the transport equations of $\chi_k$, and the transport of its \textit{roots} along the velocity of its interfaces.
-
+We consider a system made of two phases, $\Omega_1(t)$ and $\Omega_2(t)$, separated by a sharp interface $\Sigma$(t), that fill the considered domain $\Omega \subset \mathbb{R}^3$, in such a way that $\Omega = \Sigma(t) \cup \Omega_1(t) \cup \Omega_2(t)$ (see \ref{fig:Scheme}). 
+These domains obey the same mathematical constrains as defined in \cite{bothe2022sharp}. 
+To track the position of the phases we define the Phase Indicator Function (PIF), 
+\begin{equation}
+    \chi_k(\textbf{y},t) =  \left\{
+      \begin{tabular}{cc}
+        $1 \;\text{if} \;\textbf{y} \in \Omega_k(t)$\\
+        $0 \;\text{if} \;\textbf{y} \notin \Omega_k(t)$
+      \end{tabular}
+      \right.
+      \text{for $k \in 1,2$}
+      \label{eq:PIF}
+\end{equation}
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}
@@ -46,97 +46,86 @@ Therefore, the topological balance equations correspond to the transport equatio
         \draw(0.8,1.3)node{$\Omega_\alpha$};
     \end{tikzpicture}
     \caption{Scheme of the topology of dispersed two phase flows.}
+    \label{fig:Scheme}
 \end{figure}
-To carry out the derivation of these equations we first introduce the Phase Indicator Function (PIF),
-\begin{equation}
-    \chi_k(\textbf{y}) =  \left\{
-      \begin{tabular}{cc}
-        $1 \;\text{if} \;\textbf{y} \in \Omega_k$\\
-        $0 \;\text{if} \;\textbf{y} \notin \Omega_k$
-      \end{tabular}
-      \right.,
-      \label{eq:phase_indicator}
-\end{equation}
-with $V_k$ the volume occupied by the $k^{th}$ phase.
-As an example, $V_c$ is the volume occupied by the continuous phase and $V_d$ by the dispersed phase.
-With the use of this function we will be able to generalize the phase quantities to general fields, and to derive two kinds of conservation equations, namely, the single-fluid formulation and the two-fluid formulation.
-
-First, the transport equation of $\chi_k$ reads as \citep{drew1983mathematical,kataoka1986local,morel2015mathematical},
+From now on the $k$ indies will refer to either the phase $1$ or $2$, and we drop the time and position arguments in each functions. 
+Then, the transport equation of $\chi_k$ can be written as \citep{drew1983mathematical,kataoka1986local,morel2015mathematical},
 \begin{equation}
     \pddt \chi_k
     + \textbf{u}_I \cdot \nablabh \chi_k
     = 0,
-    \label{eq:phaseindicator_transport}
+    \label{eq:dt_chi_k}
 \end{equation}
-where $\textbf{u}_I$ is the velocity of the interface.
-It is important here to make the distinction between the velocity \textbf{of the interface} which is different from the velocity of the phase $k$ \textbf{at the interface} location which is noted $\textbf{u}_k$.
-Besides, it can be shown \citep{tryggvason2011direct} that,
+where $\textbf{u}_I$ is the velocity of $\Sigma(t)$.
+Besides, it can be shown \citep{tryggvason2011direct,drew1983mathematical,kataoka1986local,bothe2022sharp} that,
 \begin{equation}
     \nablabh \chi_k
     = - \delta_I \textbf{n}_k
+    \label{eq:grad_chi_k}
 \end{equation}
-where we have introduced the interface indicator function $\delta_I$, defined as $\delta(\textbf{y}-\textbf{y}_I)$, where $\delta$ is the Dirac-delta function and $\textbf{y}_I$ the position vector of the interfaces.
-We also define $\textbf{n}_k$ as the outward normal vector of the phase $k$.
-
-As pointed out by \citet{morel2007surface}, this equation can be rewritten under the more common form,
+where we have introduced the Interface Indicator Function (IIF) defined as $\delta(\textbf{y}-\textbf{y}_I)$, with $\delta$ being the Dirac-delta function and $\textbf{y}_I$ the position vectors lying on the domain $\Sigma(t)$.
+We also define $\textbf{n}_k$ as the outward normal vector of the domain $\Omega_k$.
+Taking the gradient of \ref{eq:dt_chi_k} yields the IIF transport equation namely,
+\begin{equation}
+    \pddt \delta_I
+    + \nablabh \cdot \left[(\textbf{u}_I\cdot\textbf{n})\textbf{n} \delta_I\right]
+    = \delta_I (\textbf{u}_I\cdot\textbf{n})(\nablabh \cdot\textbf{n})
+\end{equation}
+As pointed out by \citet{morel2007surface}, it is more convenient to rewrite this equation under the following form,
 \begin{equation}
     \pddt \delta_I
     + \nablabh \cdot (\delta_I \textbf{u}_I)
     = \delta_I \nablabhI \cdot \textbf{u}_I.
-    \label{eq:interface_transport2}
+    \label{eq:dt_delta_I}
 \end{equation}
-Notice that now the velocity involved is simply $\textbf{u}_I$ and not the normal velocity $\textbf{u} \cdot \textbf{n}$ as in \ref{eq:interface_transport}.
-Also, it can be useful to derive an expression for the gradient of the $\delta_I$ function. 
-To do so we take the gradient of \ref{ap:eq:phase_properties} yielding, 
-\begin{align*}
-    &\nablabh\delta_I 
+where we introduced the surface divergence operator defined as $\nablabhI \cdot ()= (\textbf{I}-\textbf{nn})\cdot \nablabh \cdot ()$.
+Likewise, we can derive an expression for the gradient of $\delta_I$ by taking the gradient of \ref{eq:grad_delta_I} yielding,
+\begin{equation}
+    % &
+    \nablabh\delta_I 
     = \textbf{n} \cdot \nablabh (\textbf{n} \delta_I),
-    &
-    \pddt\delta_I 
-    = - \textbf{n} \cdot \nablabh (\textbf{u}_I  \cdot \textbf{n} \delta_I)
-\end{align*}
+    % &
+    % \pddt\delta_I 
+    % = - \textbf{n} \cdot \nablabh (\textbf{u}_I  \cdot \textbf{n} \delta_I)
+    \label{eq:grad_delta_I}
+\end{equation}
 
 
-\subsection{Local conservation equations}
-Any conservation equation for an arbitrary quantity $f_k(\textbf{y})$, where $f_k$ represent the quantity $f$ but defined in the arbitrary phase $k$, will takes the form,
+Let $f_k(\textbf{y})$ being a volumetric property of the flow solely defined in $\Omega_k(t)$.
+Likewise, let $f_I(\textbf{y})$ be an arbitrary surface property defined on $\Sigma(t)$.
+Then it is possible to derive the local conservation equations for volumetric and surface quantities \citep{bothe2022sharp,morel2015mathematical,tignol1986modelisation}, using Reynolds transport theorem  and divergence theorem on an arbitrary control volume.
+These conservation laws read as, 
 \begin{align}
-    \label{eq:general_conservation}
+    \label{eq:dt_f_k}
     \pddt f_k
     &= \nablabh \cdot \left(
         \bm{\Phi}_k
         - f_k\textbf{u}_k
         \right)
     + \textbf{S}_k
-    & \forall \textbf{y} \in \Omega_k&\\
+    & \text{ in } \Omega_k,&\\
     \pddt f_I  
     &= 
-    \nablabhI \cdot (\mathbf{\Phi}_{||}^I - f_I \textbf{u}_I)
+    \nablabhI \cdot (\mathbf{\Phi}_{I||} - f_I \textbf{u}_I)
     + \textbf{S}_I
     - \Jump{
         f_k (\textbf{u}_I - \textbf{u}_k)
         + \mathbf{\Phi}_k
      } 
-    & \forall \textbf{y} \in \Sigma&
+    & \text{ on } \Sigma&
     \label{eq:dt_f_I}
 \end{align}
-where $\nablabh\cdot()$ is the local divergence operator defined as, $\frac{\partial}{\partial \textbf{y}}\cdot()$, $\textbf{u}_k$ is the phase velocity defined in the phase $k$.
-$\bm{\Phi}_k$ is the non-conservative flux corresponding to the quantity $f_k$,
+for respectively the volumetric and surface properties.
+In \ref{eq:dt_f_I} we introduced the notation $\Jump{\ldots}$ to indicate the sum over both phases, i.e. $\sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$. 
+Where we introduced $\bm{\Phi}_k$ and $\bm{\Phi}_I$ as the non-conservative flux tensor corresponding to $f_k$ and $f_I$. 
 The non-conservative flux is often expressed through a constitutive equation depending on the nature of the flow such as the stress tensor for the momentum.
-And $\textbf{S}_k$ is the volumetric source of $f_k$, such as the body forces still for the momentum equation.
-It is important to notice that \ref{eq:general_conservation} is solely defined in the volume occupied by the phase $k$.
-To generalize the conservation equation over the whole domain, i.e. in each phase and also at the interfaces, we will need supplementary equations.
+$\textbf{S}_k$ and $\textbf{S}_I$ is defined as the volumetric source term of respectively the phase $k$ and at the interface $\Sigma$.
+It is important to notice that \ref{eq:dt_f_k} and \ref{eq:dt_f_I} are solely defined in respectively $\Omega_k$ and $\Sigma$, therefore these equations are referred as local conservation equations.
 
-
-\subsection{Global conservation equations}
-
-As stipulated above, \ref{eq:general_conservation} is solely defined on phase $k$.
-We thus need to generalize this equation over the whole domain constituted by all phases.
-There are two possible formulations to carry out this task.
-In the following, we give a brief overview of both formulations in the case of a general conservation equation such as \ref{eq:general_conservation}.
-The first formulation is the so-called \textit{Two-fluid formulation}.
-In this formulation we transport the quantity $f_k\chi_k$, so that $f_k\chi_k$ is defined over the whole domain, since $\chi_k f_k = f_k$ where $\textbf{y} \in V_k$ and $\chi_k f_k = 0$ else where.
-So we derive the so called \textit{two-fluid} formulation by multiplying \ref{eq:general_conservation} by the PIF, $\chi_k$ and rearranging each term.
-By making use of the \ref{eq:phaseindicator_transport}, it yields
+To generalize these equations over the domain $\Omega$ we follow the formalism of \citet{drew1983mathematical,marle1982macroscopic} and \citet{kataoka1986local} for the volumetric quantities.
+Indeed, to any local quantities $f_k$ defined in $\Omega_k$, we assign the field $\chi_k f_k$ which is defined in $\Omega$. 
+Similarly, for any local surface quantities $f_I$ defined on $\Sigma$ we assign the field quantity $\delta_I f_I$ defined on $\Omega$. 
+Then, multiplying \ref{eq:dt_f_k} and \ref{eq:dt_f_I} by respectively $\chi_k$ and $\delta_I$, and making use of \ref{eq:dt_chi_k} and \ref{eq:dt_delta_I} gives, 
 \begin{align}
     \pddt (\chi_k f_k)
     &= \nablabh \cdot (\chi_k \bm{\Phi}_k - \chi_k f_k \textbf{u}_k)
@@ -151,7 +140,7 @@ By making use of the \ref{eq:phaseindicator_transport}, it yields
     \right]
     \cdot \textbf{n}_k ,
     % & \forall \textbf{y} \in \Omega&
-    \label{eq:two-fluid_global}\\
+    \label{eq:dt_chi_k_f_k}\\
     \pddt (\delta_If_I)  
     &= 
     \nablabh \cdot (\delta_I \mathbf{\Phi}_{I||} - \delta_I f_I \textbf{u}_I)
@@ -159,26 +148,22 @@ By making use of the \ref{eq:phaseindicator_transport}, it yields
     - \delta_I \Jump{
     f_k (\textbf{u}_I - \textbf{u}_k)
     + \mathbf{\Phi}_k
-    } 
-    \label{ap:eq:general_jump}
+    }.
+    \label{eq:dt_delta_I_f_I}
 \end{align}
-where the last term is the interfacial source term representing the interactions across the phases.
-As an example, if $f_k$ turns out to be the momentum, then the interfacial source term would be the drag forces between the phases (see next section).
-As desired, in this equation all quantities $f_k$ are factor of $\chi_k$.
-So we transport the field $\chi_k f_k$, which is a field quantity defined over the whole domain.
-Notice that the interfacial term is factor of $\delta_I$ instead of $\chi_k$ as it is defined on the interface.
-Anyhow, \ref{eq:two-fluid_global} is defined over the entire domain and is therefore considered as a valid transport equation.
+We obtained $k$'s equations defined over the domain $\Omega$ for the bulk quantities, and third global equations for the surface quantities also valid over $\Omega$. 
+The transformation of these equations from local to global conservation makes appear a term on the RHS of \ref{eq:dt_chi_k_f_k} representing the interfacial transfer of $f_k$ and $\mathbf{\Phi}_k$, while the surface transport equation did not change fundamentally. 
+The set of equations formed by \ref{eq:dt_chi_k_f_k} for $k =1,2$ is commonly known as the \textit{two-fluid} formulation of multiphase flows, to which we add the \textit{jump condition} across the phase given by \ref{eq:dt_delta_I_f_I} \citep{morel2015mathematical,tryggvason2011direct,drew1983mathematical,kataoka1986local}. 
+In this work, we prefer to think of those equations as a set of three equations, formed by \ref{eq:dt_chi_k_f_k} for the volumetric conservation equations and \ref{eq:dt_delta_I_f_I} for the surface conservation equations. 
 
-Now that we properly defined any conservation laws inside and across each phase, let's derive the \textit{single-fluid} formulation for \ref{eq:general_conservation}.
-To do so we sum on all phases \ref{eq:two-fluid_global}, and make use of the jump condition \ref{eq:general_jump} to simplify the interfacial terms.
-Besides, we define the arbitrary quantity $f$ being $f = \sum_k \chi_k f_k + \delta_I f_I$.
-By taking into account these remarks it is trivial to show that,
+Now that we properly defined the volumetric and surface conservation laws over $\Omega$, let's derive of two phase flows.
+We now define any bulk quantity $f$ as $f = \sum_k \chi_k f_k + \delta_I f_I$.
+Then adding \ref{eq:dt_chi_k_f_k} for $k=1,2$ and \ref{eq:dt_delta_I_f_I} give the commonly known as the \textit{single-fluid} formulation,
 \begin{equation}
     \pddt f
     = \nablabh \cdot (\bm{\Phi} - f \textbf{u})
-    + \textbf{S}
-    \label{eq:single-fluid_global}
+    + \textbf{S}.
+    \label{eq:dt_f}
 \end{equation}
-which is the \textit{single-fluid} formulation.
-In the following we expose the most important conservation equations for our purpose by replacing $f_k$ or $f$ by the desired quantities.
-
+Actually, it is more common in the literature to define the bulk quantities as $f = \sum_k \chi_k f_k$ and consider the interfacial terms as source terms as it is often neglected \citep{morel2015mathematical,tryggvason2011direct}. 
+Nevertheless, in this work we consider a general case without approximation therefore it is more convenient to think of the bulk quantities as a sum of three phase quantities. 
