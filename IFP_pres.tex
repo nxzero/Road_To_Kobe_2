@@ -21,8 +21,8 @@
 \usefonttheme{serif}
 
 \title{A phenomenological description of pairwise interactions in buoyant driven emulsions.}
-\subtitle{ICMF 2023}
-\author{\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{\underline{N. Fintzi}\footnote{IFP \'Energies Nouvelles, France}, JL. Pierson$^1$} and S. Popinet\footnote{Sorbonne Universit\'e, France}}
+\subtitle{PhD Thesis presentation}
+\author{\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{\underline{N. Fintzi}\footnote{IFP \'Energies Nouvelles, France}$^{,2}$}, JL. Pierson$^1$ and S. Popinet\footnote{Sorbonne Universit\'e, France}}
 % \date{Created on May 22, 2022}
 
 \titlebackground{image/3D/P_PHI_5.png}
@@ -61,7 +61,7 @@
   \frametitle{Industrial context}
   \underline{Coalescence is ubiquitous in chemical engineering processes :}
   \begin{itemize}
-    \item Separation processes (gravity separators, flotation) in the Enhanced Oil Recovery (EOR) context
+    \item Separation processes (gravity separators, flotation)
     \item Bubble column reactors
     \item Liquid-liquid separation
   \end{itemize}
@@ -78,299 +78,159 @@
   \end{itemize}
 
   \vfill
-  This work focuses on the study of \textbf{pair interactions} in oil/water \textbf{emulsions}.
-\end{frame}
-
-\begin{frame}
-  \frametitle{The multiscale problem of poly dispese multiphase flows}
-  \begin{tabular}{||p{3cm}||p{3cm}||p{3cm}||p{3cm}||}\hline
-    Scales & 
-    Reactor (Macro) & 
-    Droplets (Micro) & 
-    Film (Nano) \\\hline
-    Theoretical modeling & 
-    \begin{itemize}
-      \item Averaged Navier Stokes
-      \item Moment equaitons
-    \end{itemize}& \cellcolor[HTML]{AA0044}
-    Two phase flow NS& 
-    Film drainage equations and Singularity \\\hline
-    Numerical modeling &
-    Euler-Euler and QMOM &\cellcolor[HTML]{AA0044} 
-     Volume Of Fluid Method with PLIC
-     Controle Coalescence&
-     DNS or \textit{multilayer solver}\\\hline
-    What it needs &
-     Micro scale closure&
-     Drainage Time &
-     Microscale hydrodynamic\\\hline
-    What it provides & 
-    Optimization & \cellcolor[HTML]{AA0044}
-    Micro scale closure &
-     Drainage time\\\hline
-  \end{tabular}
-\end{frame}
-
-\begin{frame}{Macroscale}
-  \begin{figure}
-    \textit{Here include graphics Ask kamel}
-    \caption{Euler-Euler simulaiton}
-  \end{figure}
-  \begin{enumerate}
-    \item Theoretical modeling 
-    \begin{itemize}
-      \item Averaged Navier-Stokes Equations 
-      \item Moments Equations from Kinetic theory. 
-    \end{itemize}
-    \item Numerical modeling 
-    \begin{itemize}
-      \item Euler-Euler model
-      \item Quadrature Methods of Moments (\citet{fox2023generalized})
-    \end{itemize}
-    \item What does the model needs ? 
-    \begin{itemize}
-      \item Closure terms such as, velocity fluctuation, interphase drag forces coalesce kernel \ldots
-    \end{itemize}
-    \item Provides 
-    \begin{itemize}
-      \item Useful prediction to optimize processes. 
-    \end{itemize}
-  \end{enumerate}
+  Therefore, in this work focuses on the study of \textbf{pair interactions} in oil/water \textbf{emulsions}.
 \end{frame}
 
 
-\begin{frame}
-  \frametitle{Microscale}
-
-  \begin{figure}
-    \caption{Partialy direct numerical simulation with driven coalescence}
-  \end{figure}
-
-  \begin{enumerate}
-    \item Theoretical modeling 
-    \begin{itemize}
-      \item Navier-Stokes Equations for two phases flows.
-    \end{itemize}
-    \item Numerical modeling 
-    \begin{itemize}
-      \item Volume of Fluid Method
-      \item PLIC for the interface 
-      \item Special algorithm to control coalesce
-    \end{itemize}
-    \item What does the model needs ? 
-    \begin{itemize}
-      \item The film drainage time to use subgrid models for coalesce. 
-    \end{itemize}
-    \item Provides 
-    \begin{itemize}
-      \item Closure for the \textbf{Macroscale} such as the drift velocity velocity fluctuation coalesce kernel. 
-      \item Hydrodynamic information of pairwise interaction useful to the  \textbf{nanoscale} film drainage problem. 
-    \end{itemize}
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Nanoscale}
-
-  \begin{figure}
-    \caption{Film drainage simulation}
-  \end{figure}
-
-  \begin{enumerate}
-    \item Theoretical modeling 
-    \begin{itemize}
-      \item Film drainage equations.
-      \item Chemical interactions
-    \end{itemize}
-    \item Numerical modeling 
-    \begin{itemize}
-      \item Multilayer solver. 
-      \item Chemical models. 
-    \end{itemize}
-    \item What does the model needs ? 
-    \begin{itemize}
-      \item The global hydrodynamic during the interactions, provided by the \textbf{Microscales} results.  
-    \end{itemize}
-    \item Provides 
-    \begin{itemize}
-      \item Time of film drainage until rupture.  
-	    \end{itemize}
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}{Solve, Needs and Provides and dependency diagram}
+% \begin{frame}{Multiscale problem : 1. Solve, 2. Needs and 3. Provides}
   
-	\textbf{Macro-scale}
-	\begin{enumerate}
-		\item Averaged Navier-Stokes or Population Balance Equations (PBE). 
-		\item Drag forces, velocity fluctuation and \textbf{coalescence kernel} closure terms. 
-		\item Optimize industrial processes. 
-	\end{enumerate}
-  
-	\textbf{Drop-scale}
-	\begin{enumerate}
-		\item Navier-Stokes two-phase flows equations. 
-		\item Film drainage models.  
-		\item \textcolor{blue}{Closure for \textbf{Macro-scale}, (interphase drag forces, velocity fluctuations \ldots) And \textcolor{red}{pairs interactions modeling} for the \textbf{Nano-scale} problem.}  
-	\end{enumerate}
-  
-	\textbf{Film-scale}
-	\begin{enumerate}
-		\item Film drainage equations . 
-		\item Interaction models microscale hydrodynamic.   
-		\item Time of coalescance closure.  
-	\end{enumerate}
-  \centering
-  \begin{tikzpicture}[very thick]
-    \node[draw] (macro) at (-4,0){Macroscale};
-    \node[draw] (meso) at (0,0.5){Mesoscale};
-    \node[draw] (micro) at (4,0){Microscale};
-    \node[draw] (nano) at (8,0){Nanoscale};
-    \draw[<-,blue](macro) -- (micro);
-    \draw[->,blue](micro) -- (meso.east);
-    \draw[<-](macro) -- (meso.west);
-    \draw[->,red](micro) to[bend left] (nano);
-    \draw[->](nano) to[bend left] (micro);
-\end{tikzpicture}
-\end{frame}
+% 	\textbf{Reactor scale or Macroscale :} 
+%     \hfill\underline{PhD R17, Kamel Landal}
+%     \begin{enumerate}
+%       \item Averaged Navier-Stokes and Population Balance Equations. 
+%       \item Drag forces, velocity fluctuation and \textbf{coalescence kernel} closure terms. 
+%       \item Optimize industrial processes. 
+%     \end{enumerate}
 
-\section{Theoretical background on the probabilistic approach}
+%     \textbf{Drop-scale or Microscale : } 
+%     \hfill\underline{PhD R17, Nicolas Fintzi}
+%     \begin{enumerate}
+%       \item Navier-Stokes two-phase flows equations. 
+%       \item Film drainage time.  
+%       \item \textcolor{blue}{Closure for \textbf{Macro-scale}, (interphase drag forces, velocity fluctuations \ldots) And \textcolor{red}{pairs interactions modeling} for the \textbf{Nano-scale}  problem.}  
+%     \end{enumerate}
 
-\begin{frame}{Population Balance Equations (PBE) to describe poly-disperse multiphase flows.}
+%     \textbf{Film-scale or Nanoscale :}
+%     \hfill\underline{Future PhD R17 2024}
+% 	\begin{enumerate}
+% 		\item Film drainage equations. 
+% 		\item Interaction models microscale hydrodynamic.   
+% 		\item Time of coalescence closure.  
+% 	\end{enumerate}
+%   \centering
+%   \begin{tikzpicture}[very thick]
+%     \node[draw] (macro) at (-2,0){Macroscale};
+%     \node[draw] (micro) at (4,0){Microscale};
+%     \node[draw] (nano) at (8,0){Nanoscale};
+%     \draw[<-,blue](macro) -- (micro);
+%     \node[draw,dashed] (meso) at (1,0.5){Mesoscale};
+%     \draw[dashed,->,blue](micro) -- (meso.east);
+%     \draw[dashed,<-](macro) -- (meso.west);
+%     \draw[->,red](micro) to[bend left] (nano);
+%     \draw[->](nano) to[bend left] (micro);
+% \end{tikzpicture}
+% \end{frame}
+
+\section{Theoretical modeling of mesoscale equations to describe relative interactions}
+\section*{}
+
+\begin{frame}{General form of the kinetic theory.}
   \begin{definition}
     \begin{itemize}
-      \item Let $\mathscr{C} =\left\{\textbf{x}_1,\textbf{u}_1, \textbf{q}_1\ldots\textbf{x}_N,\textbf{u}_N, \textbf{q}_N\right\}$ be the tensor containing all the particles' parameters such as their velocities and positions vectors and any other arbitrary particles' quantities $\textbf{q}$. 
+      \item Let $\mathscr{C} =\left\{\textbf{x}_1,\textbf{u}_1, \textbf{q}_1\ldots\textbf{x}_N,\textbf{u}_N, \textbf{q}_N\right\}$ be the vector containing all the particles' internal coordinates such as their velocities and positions vectors and any other arbitrary particles' quantities $\textbf{q}$. 
       \item Then $P(\mathscr{C},t)$ is the probability density function of finding the flow in the state $\mathscr{C}$, at time $t$. 
     \end{itemize}
   \end{definition}
   Transport equation of the Probability Density Function (PDF) is defined as,
-  \begin{equation*}
+  \begin{equation}
     \pddt P(\mathscr{C},t)
     + \frac{\partial}{\partial \mathscr{C}} \cdot
-    \left(
+    \left[
         \frac{d\mathscr{C}}{dt}  
         P(\mathscr{C},t)
-    \right)
+    \right]
     = \Psi(\mathscr{C})
     \label{eq:dt_P}
-\end{equation*}
+\end{equation}
 
   \begin{itemize}
     \item $\Psi(\mathscr{C})$ is the source term due to the particles' interactions, such as break-up coalesce and collisions phenomenons. 
   \end{itemize}
   \begin{equation*}
     \Psi(\mathscr{C}) =
-    \underbrace{B}_{\text{Break-up}}
-    +\underbrace{S}_{\text{Coalescence}}
+    \underbrace{B(\mathscr{C})}_{\text{Break-up}}
+    +\underbrace{S(\mathscr{C})}_{\text{Coalescence}}
   \end{equation*}
 \end{frame}
-\begin{frame}
-  \frametitle{The modeling of the coalescence source term $\avg{S}$}
-  The averaged coalescence kernel can be express as \citep{zhang2021ensemble},
-  \begin{equation*}
-    \avg{S}(\textbf{x}) = \int \nstavg{S}P_{nst}(\textbf{y}|\textbf{x})d\textbf{y}
-  \end{equation*}
+
+\begin{frame}{The point PDF for Population Balance Equations.}
+  \begin{definition}
+    \begin{itemize}
+      \item Let $\mathscr{C} =\left\{\textbf{x}_1,\textbf{u}_1,d_1\right\}$ be the vector containing a  particles' velocity, position vectors and diameters. 
+      \item Then $P_1(\textbf{x},\textbf{u},d,t)$ is the probability density function of finding this particle at the position $\textbf{x} = \textbf{x}_1$, $d = d_1$ and $\textbf{u} = \textbf{u}_1$.  
+    \end{itemize}
+  \end{definition}
+  Transport equation of the one point PDF reads as,
+  \begin{equation}
+    \pddt P_1
+    + \frac{\partial}{\partial \textbf{x}} \cdot
+    (\textbf{u}P_1)
+    + \frac{\partial}{\partial \textbf{u}} \cdot
+    (\textbf{f}P_1)
+    + \frac{\partial}{\partial d} \cdot
+    (\dot{d} P_1)
+    = \Psi(\textbf{x},\textbf{u},d,t)
+    \label{eq:dt_P_1}
+\end{equation}
 
   \begin{itemize}
-    \item $P_{nst}(\textbf{y}|\textbf{x}) $ is the probability of finding the nearest neighboring particle's center of mass at \textbf{y}, knowing a particle is at \textbf{x}.
-    \item $\nstavg{S}$ is the average of $S$ conditionally on the nearest particle position. 
-    % \item 
-    % In this work we use the \textbf{nearest pair distribution function} $P_{nst}$.
+    \item $\textbf{f} = \ddt \textbf{u}$ is the forces per unit of mass applied on the particle test. 
+    \item By Multiplying Eq. (\ref{eq:dt_P_1}) by the momentum or the mass and integrating on all \textbf{u} we would recover the conservation equation for respectively the momentum or the mass. 
   \end{itemize}
 \end{frame}
 
-%%%%%%%%%%%%
-% \begin{frame}
-%   \frametitle{Reduced  Probability Density Function (PDF)}
-% The bulk \textbf{number density} :
-% \begin{equation*}
-%   n(\textbf{x})
-%   = \int \sum_\alpha^N \delta(\textbf{x} - \textbf{x}_\alpha) d\mathscr{P},
-% \end{equation*}
-% with $d\mathscr{P} = P(\mathscr{C})d\mathscr{C}$. 
 
-% The \textbf{pair} PDF :
-% \begin{equation*}
-%   P(\textbf{x},\textbf{y})
-%   = \int \sum_{\alpha\beta}^N 
-%   \delta(\textbf{x} - \textbf{x}_\alpha)\delta(\textbf{y} - \textbf{x}_\beta) d\mathscr{P}
-% \end{equation*}
-
-% \begin{itemize}
-%   \item $\delta(\textbf{x})$ is the Dirac delta function. 
-%   \item $n(\textbf{x})$ is the average number of particle per unit volume at the position \textbf{x}.
-%   \item $P(\textbf{x},\textbf{y})$ is the PDF of finding a particle at \textbf{x} and \textbf{y} at the same time. 
-% \end{itemize}
-% \end{frame}
-
-
-
-\begin{frame}
-  \frametitle{The nearest particle statistics \citep{zhang2021ensemble}.}
-
-  % \begin{definition}
-    The \textbf{nearest pair} PDF :
-    \begin{equation*}
-      P_{nst}(\textbf{x},\textbf{y}) 
-      = \int
-      \sum_{\alpha\beta}^N 
-      \delta(\textbf{x} - \textbf{x}_\alpha)\delta(\textbf{y} - \textbf{x}_\beta) h_{\alpha\beta} P(\mathscr{C}) d\mathscr{C},
-    \end{equation*}
-    The \textbf{nearest pair} average :
-    \begin{equation*}
-      \nstavg{S} 
-      = \frac{1}{P_{nst}(\textbf{x},\textbf{y}) }\int
-      \sum_{\alpha\beta}^N S
-      \delta(\textbf{x} - \textbf{x}_\alpha)\delta(\textbf{y} - \textbf{x}_\beta) h_{\alpha\beta}  P(\mathscr{C}) d\mathscr{C},
-    \end{equation*}
-
+\begin{frame}{The nearest particle PDF   to describe relative interactions equations (Zhang, JFM, 2021).}
+  \begin{definition}
     \begin{itemize}
-      \item $\textbf{x}_\alpha$ and $\textbf{x}_\beta$ are respectively, the position of the particle $\alpha$ and $\beta$. 
-      \item $h_{\alpha\beta}=1$, if $\beta$ is the closest particle to $\alpha$ at time t, otherwise $h_{\alpha\beta} =0$. 
+      \item Let $\mathscr{C} =\left\{\textbf{x}_1, \textbf{r}, \textbf{w}\right\}$ be the vector containing the position $\textbf{x}_1$ of a particle and its nearest neighboring particle relative position $\textbf{r}$ and velocity \textbf{w}.
+      \item Then, $P_{nst}(\textbf{x},\textbf{r},\textbf{w}) $ is the probability of finding a particle at \textbf{x} with its nearest neighboring particle at \textbf{r} with a relative velocity of \textbf{w}. 
     \end{itemize}
+  \end{definition}
+  Transport equation of the reduced PDF,
+  \begin{equation*}
+    \underbrace{
+      \pddt P_{nst}
+      + \frac{\partial}{\partial\textbf{x}} \cdot
+      \left(
+        \nstavg{\textbf{u}}
+        P_{nst}
+      \right)
+      % + \frac{\partial}{\partial\textbf{u}} \cdot
+      % \left(
+      %   \nstavg{\textbf{a}}
+      %   P_{nst}
+      % \right)
+    }_{\text{Macroscopic scale}}
+    + 
+    \underbrace{
+      \frac{\partial}{\partial \textbf{r}} \cdot
+    \left(
+        \nstavg{\textbf{w}}
+        P_{nst}
+    \right)
+      + \frac{\partial}{\partial \textbf{w}} \cdot
+    \left(
+        \nstavg{\textbf{a}}
+        P_{nst}
+    \right)
+    }_{\text{inter-particle scale}}
+    = \Psi
+    \label{eq:dt_P_nst}
+\end{equation*}
 
-    \vfill
-    $\rightarrow$ Therefore we use the nearest particle statistics to model pair interactions. 
+  \begin{itemize}
+    \item $\nstavg{\textbf{u}}(\textbf{x},\textbf{r}) = \ddt \textbf{x}_1$ is the particle velocity at \textbf{x} knowing a particle at \textbf{r}. 
+    \item $\nstavg{\textbf{w}}(\textbf{x},\textbf{r}) = \ddt \textbf{r}$ is the nearest particle \textbf{relative} velocity. 
+    \item $\nstavg{\textbf{a}}(\textbf{x},\textbf{r}) = \ddt \textbf{w}$ is the averaged relative acceleration.
+  \end{itemize}
+  \underline{In this work we will be interested in the \textbf{nearest particle statistic} $P_{nst}$}
 \end{frame}
 
-% \begin{frame}
-%   \frametitle{The nearest particle statistics \citep{zhang2021ensemble}.}
-%   The \textbf{global average} of $\textbf{q}_\alpha$ :
-%   \begin{equation*}
-%     \pavg{\textbf{q}}(\textbf{x})
-%     = \int \sum_\alpha^N \delta(\textbf{x} - \textbf{x}_\alpha) \textbf{q}_\alpha d\mathscr{P}.
-%   \end{equation*}
 
-  
-%   The \textbf{nearest average} of $\textbf{q}_\alpha$ :
-%   \begin{equation}
-%     \nstavg{\textbf{q}}(\textbf{y}|\textbf{x})
-%     =\frac{1}{P_{nst}(\textbf{y}|\textbf{x})}\int
-%     \sum_{\alpha\beta}^N
-%     \delta(\textbf{x} - \textbf{x}_\alpha)\delta(\textbf{y} - \textbf{x}_\beta) h_{\alpha\beta} \textbf{q}_\alpha d\mathscr{P},
-%     \label{eq:q_nst}
-%   \end{equation}
+\section{Numerical investigation of drops interactions}
 
-%   The \textbf{relative nearest average} of $\textbf{q}_\alpha$ :
-%   \begin{equation}
-%     \nstrelavg{\textbf{q}}(\textbf{y}|\textbf{x})
-%     =\frac{1}{P_{nst}(\textbf{y}|\textbf{x})}\int
-%     \sum_{\alpha\beta}^N 
-%     \delta(\textbf{x} - \textbf{x}_\alpha)\delta(\textbf{y} - \textbf{x}_\beta) h_{\alpha\beta} (\textbf{q}_\beta -\textbf{q}_\alpha)d\mathscr{P}.
-%     \label{eq:q_nst_rel}
-%   \end{equation}
-%   % Both average are related through,
-%   % \begin{equation*}
-%   %   \pnavg{\textbf{q}}(\textbf{x})
-%   %   =\int
-%   %   \nstavg{\textbf{q}}
-%   %   P_{nst}(\textbf{x},\textbf{y}) d\textbf{y},
-%   % \end{equation*}
-% \end{frame}
-
-
-\section{Visual insight of particles interactions}
-
+\section*{}
 \begin{frame}
 \frametitle{Direct Numerical Simulation of buoyant emulsions}
 \begin{columns}
@@ -429,8 +289,9 @@
         \draw[thick,->] (0,0) -- (1,0)node[right]{$Ga$};
       \end{tikzpicture}& & \\ 
         \begin{tikzpicture}[color=red]
-          \draw[thick,->] (0,0) -- (0,-1)node[left]{$\phi$};
-        \end{tikzpicture} &
+          \draw[thick,<-] (0,0) -- (0,-1)node[left]{$\phi$};
+        \end{tikzpicture} 
+        &
         \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_5_PHI_0_1.pdf}  &
         \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_25_PHI_0_1.pdf} &
         \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_75_PHI_0_1.pdf} 
@@ -461,23 +322,81 @@
     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_25_PHI_0_05.pdf}
     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_75_PHI_0_05.pdf}
     
-    \caption{Nearest averaged velocity fields, $\nstrelavg{\textbf{u}} (\textbf{r})$ for different $Ga$ and $\phi$. 
-    Colormap : magnitude of the relative velocity $|\nstrelavg{\textbf{u}}|$. }
+    \caption{Nearest averaged velocity fields, $\nstavg{\textbf{w}} (\textbf{r})$ for different $Ga$ and $\phi$. 
+    Colormap : magnitude of the relative velocity $|\nstavg{\textbf{w}}|$. }
   \end{figure}
 
 \begin{itemize}
   \item In average particles approach from the top and leave through the sides. 
-  % \item It is, again, a direct representation of the Drafting -Kissing tumbling mechanism since the velocity fields converge toward high density zone. 
+  % \item How to quantify this phenomenon ? 
+  \item Representation of the Drafting -Kissing tumbling mechanism since the velocity fields converge toward high density zone. 
 \end{itemize}
 \end{frame}
 
+% \begin{frame}{The averaged nearest relative velocity equation}
+%   \begin{equation}
+%       \pddt P_{nst}
+%       + \frac{\partial}{\partial\textbf{x}} \cdot
+%       \left(
+%         \nstavg{\textbf{u}}
+%         P_{nst}
+%       \right)
+%       % + \frac{\partial}{\partial\textbf{u}} \cdot
+%       % \left(
+%       %   \nstavg{\textbf{a}}
+%       %   P_{nst}
+%       % \right)
+%     + 
+%     \frac{\partial}{\partial \textbf{r}} \cdot
+%     \left(
+%         \nstavg{\textbf{w}}
+%         P_{nst}
+%     \right)
+%     = \Psi
+%     \label{eq:dt_P_nst1}
+% \end{equation}
+% Multiplying Eq. (\ref{eq:dt_P_nst1}) by \textbf{rr}, yields :
+% %  the \textbf{Mean square particles distance conservation equation  :}
+% \begin{equation}
+%   \pddt (\pavg{\textbf{R}})
+%   + \frac{\partial}{\partial\textbf{x}} \cdot
+%   (\pavg{\textbf{uR}})
+%   = 2\pavg{\textbf{P}}
+%   + \int \textbf{rr} \Psi d\textbf{r}
+% \end{equation}
 
+% \begin{itemize}
+%   \item $\textbf{R} = \int \textbf{rr} P_{nst} d\textbf{r}$ Mean square distance to the nearest particle. 
+%   \item $\textbf{P} = \int \textbf{r} \nstavg{\textbf{w}} P_{nst} d\textbf{r}$ correlation between $\nstavg{\textbf{w}}$ and $\textbf{r}$. 
+%   % \item $\int \textbf{rr} \dot{P_{nst}} d\textbf{r}$  source term tensor, still accounting for coalesces and breakup. 
+% \end{itemize}
+
+% $\rightarrow $ \textbf{R} is the mathematical representation of the mesoscale structures (cluster \ldots)
+% $\rightarrow $ The evolution of \textbf{R}, is proportional to \textbf{P}.
+% \end{frame}
+
+% \begin{frame}
+%   \frametitle{Computation of the correlation tensor $\avg{\nstavg{\textbf{rw}}}$ }
+%   \begin{figure}
+%     \begin{centering}
+%       \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fPA/URxx.pdf}
+%       \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fPA/URyy.pdf}
+%       % \includegraphics[height=0.2\textwidth]{image/HOMOGENEOUS/fPA/UR.pdf}
+%       \caption{Dimensionless correlation tensor $\avg{\textbf{r}\nstavg{\textbf{w}}} =  \int \textbf{r}\nstavg{\textbf{w}} P_{nst}(\textbf{x},\textbf{r})d\textbf{r}$}
+%     \end{centering}
+%   \end{figure}
+
+%   \begin{itemize}
+%     \item $r_x\nstrelavg{u_x} > 0$ \textbf{outward} particle flux.  
+%     \item $r_y\nstrelavg{u_y} < 0$ \textbf{inward} particle flux. 
+%     \item $\text{tr}\left(\textbf{r}\nstavg{\textbf{w}}\right) = 0$ conservation of the number of the nearest particle flux. 
+%   \end{itemize} 
+% \end{frame}
 
 \begin{frame}
   \frametitle{Representation of the interaction force}
 
   \begin{figure}
-    
     % \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_25_PHI_0_05.pdf}
@@ -492,36 +411,90 @@
   \item $\nstrelavg{\textbf{F}}$ is an isotropic repulsion force at high $Ga$. 
   \item At lower $Ga$ we observe attraction forces $\nstrelavg{\textbf{F}}$ on the sides.
 \end{itemize}
+$\rightarrow$ How to quantify these fields ? 
 \end{frame}
 
-\begin{frame}
-  \frametitle{Representation of the interaction force}
 
-  \begin{figure}
+% \begin{frame}
+%   \frametitle{Representation of the interaction force}
+
+%   \begin{figure}
     
-    % \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_25_PHI_0_05.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_75_PHI_0_05.pdf}
+%     % \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
+%     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_10_PHI_0_05.pdf}
+%     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_25_PHI_0_05.pdf}
+%     \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/F_mu_r_0_1_Ga_75_PHI_0_05.pdf}
     
-    \caption{Nearest averaged relative acceleration fields times the mass of a particle. 
-    Color map : Magnitude of the dimensionless force  $\nstrelavg{\textbf{F}} / (\Delta \rho V g)$.}
-  \end{figure}
+%     \caption{Nearest averaged relative acceleration fields times the mass of a particle. 
+%     Color map : Magnitude of the dimensionless force  $\nstrelavg{\textbf{F}} / (\Delta \rho V g)$.}
+%   \end{figure}
 
   
-\begin{itemize}
-  \item At low $Ga$ the magnitude of the force isn't correlated with \textbf{r}.
+% \begin{itemize}
+%   \item At low $Ga$ the magnitude of the force isn't correlated with \textbf{r}.
+  % \begin{itemize}
+    % \item Thus the relative hydrodynamic interactions are of the same order as the magnitude of the inter-particular interactions. 
+  % \end{itemize}
+  % \item  Visual representation of the particle stress : 
+  %   $\bm{\Sigma}_{\text{PFP}} = \sum \textbf{r} 
+  %   \nstavg{\textbf{F}}(\textbf{r}) 
+  %   $
+%     \item How to quantify the dynamical interaction ?
+% \end{itemize}
+% \end{frame}
+
+
+\begin{frame}{The averaged nearest relative momentum equation}
+  
+  Multiplying the transport equation of $P_{nst}$ by \textbf{rw}, yields the transport equation of $\textbf{P}$, 
+  % and integrating  over  all  \textbf{r} and \textbf{w} yields the \textbf{Mean relative momentum correlation equation :}
+  
+  
+  \begin{equation*}
+    \pddt (\pavg{\textbf{P}})
+    + \frac{\partial}{\partial\textbf{x}} \cdot
+    (\pavg{\textbf{uP}})
+    = 2\pavg{\textbf{w}\nstavg{\textbf{w}}}
+    + \mathbf{\Sigma}_{PFP}
+    + \mathbf{\Sigma}_{B}
+    + \int \textbf{ru} \Psi d\textbf{r}d\textbf{w}
+  \end{equation*}
+  
   \begin{itemize}
-    \item Thus the relative hydrodynamic interactions are of the same order as the magnitude of the inter-particular interactions. 
+      \item $\textbf{P} = \int \textbf{r} \nstavg{\textbf{w}} P_{nst} d\textbf{r}$ correlation between the relative velocity $\nstavg{\textbf{w}}$ and $\textbf{r}$. 
+    \item $\mathbf{\Sigma}_{PFP} = \int \textbf{r} \nstavg{\textbf{F}} P_{nst} d\textbf{r}d\textbf{w}$ correlation between \textbf{r} and the hydrodynamic  drag force on the particle $\nstavg{\textbf{F}}$. (\citet{zhang2021ensemble} : \textbf{particle stress})
+    \item $\mathbf{\Sigma}_{B} = \int \textbf{r} \nstrelavg{\textbf{b}} P_{nst} d\textbf{r}d\textbf{w} = 0$, correlation between \textbf{r} and the \textbf{relative body} forces applied on the pair of nearest particles.
   \end{itemize}
-  \item  Visual representation of the particle stress : 
-    $\bm{\Sigma}_{\text{PFP}} = \sum \textbf{r} 
-    \nstavg{\textbf{F}}(\textbf{r}) 
-    $
+  
+  $\rightarrow$  Direct link between the relative velocities' tensor \textbf{P} and the relative hydrodynamic and body forces correlation, respectively $\Sigma_{PFP}$ and $\Sigma_B$.
+  \end{frame}
+  
+
+\begin{frame}
+  \frametitle{Computation of the particle stress}
+  \underline{What is the particle stress (Zhang, JFM, 2021) ?}  
+   : $\avg{\text{Drag Force}} = \avg{F} + \nablab \cdot \Sigma_{PFP}$
+  \begin{figure}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fPA/RR.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fPA/PFP.pdf}
+    \caption{ 
+      (left) Dimensionless  mean square distance to the nearest neighbor. 
+      (right) Particle stress $\mathbf{\Sigma}_{PFP} = \int \textbf{r}\nstavg{\textbf{f}} P_{nst}d\textbf{r}$.
+      }
+  \end{figure}
+  
+\begin{itemize}
+  \item $\text{tr}(\mathbf{\Sigma}_{PFP}) < 0$ global repulsion for high $\phi$ and $Ga$. 
+  \item $\text{tr}(\mathbf{\Sigma}_{PFP}) > 0$ global attraction for small $Ga$ and $\phi$.
+  % \item $\text{tr}(\mathbf{\Sigma}_{PFP}) = 0$ no pressure, when $\phi \rightarrow 0$ and $Ga \rightarrow 0$. 
+  \item  $\mathbf{\Sigma}_{PFP}$ is directly correlated with the mean nearest particle distance $\textbf{R}$. 
 \end{itemize}
+
 \end{frame}
 
-\section{Coalescence modeling}
+
+\section{First glimpse of coalescence modeling}
+\section*{}
 
 \begin{frame}
   \frametitle{Film drainage models to predict coalescence.}
@@ -550,7 +523,7 @@
       \column{0.5\textwidth}
       \textbf{Current film thickness : }  
       \begin{equation*}
-        \frac{h(t_c,F_n)}{D}  \sim \frac{F_n \mu^{1/2}}{t_c \sigma} 
+        \frac{h(t_c,F_n)}{D}  \sim \frac{\textcolor{red}{F_n} \mu^{1/2}}{\textcolor{red}{t_c} \sigma} 
       \end{equation*}
       \begin{itemize}
         \item \underline{$F_n$ : Interaction force}
@@ -572,9 +545,10 @@
   \end{columns}
   \vfill
   \begin{itemize}
-    \item How to estimate $F_n$ and $t_c$ ? 
+    \item How to estimate $\textcolor{red}{F_n}$ and $\textcolor{red}{t_c}$ ? 
   \end{itemize}
 \end{frame}
+
 
 \begin{frame}
   \frametitle{Prediction of $F_n$ and $t_c$ with DNS results.}
@@ -610,14 +584,14 @@
       \centering
       \begin{figure}
       \includegraphics[width=0.9\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_50_PHI_0_1.pdf}
-      \caption{Relative averaged velocity fields, $\nstrelavg{\textbf{u}}(\textbf{r})$.}
+      \caption{Relative averaged velocity fields, $\nstavg{\textbf{w}}(\textbf{r})$.}
     \end{figure}
     \end{columns}
   \end{columns}
   \begin{itemize}
     \item We notice that $F_c$ and $t_c$ are function of \textbf{r}, $\phi$, $Ga$, $\mu_r$ \ldots
     \item Therefore,
-    $ h(t_c,F_n)  \sim F_n(\textbf{r}) / t_c(\textbf{r}) D \sigma^{-1} \mu^{1/2}$
+    $ h(t_c,F_n,\textbf{r})  \sim F_n(\textbf{r}) / t_c(\textbf{r}) D \sigma^{-1} \mu^{1/2}$
   \end{itemize}
 \end{frame}
 
@@ -678,26 +652,36 @@
 \end{frame}
 
 \section{Conclusion and discussion}
+\section*{}
 \begin{frame}
   \frametitle{General remarks and conclusion}
 
   \begin{itemize}
-    \item We used the nearest particle statistics to describe pair interactions in oil/water emulsion. 
-    \item The relative velocity, and forces/acceleration are directly correlated to the relative position, $Ga$ and $\phi$. 
+    \item We used the nearest particle statistics to derive relative pair interactions equation. 
+    \item We found out that relative velocity and forces are directly correlated to the relative position \textbf{r} with $Ga$ and $\phi$. 
     \item We predicted coalesce event in the different regime. 
   \end{itemize}
-  Future projects :   
-  \begin{itemize}
-    \item Deriving semi empirical formulation for the coalescence source term $\avg{S}$, which takes in account the phenomenology of interactions in emulsion presented in this work. 
-  \end{itemize}
+  \begin{columns}
+    \column{0.6\textwidth}
+    \underline{Future projects : }  
+    
+    \begin{itemize}
+      \item Deriving semi empirical formulation for the coalescence kernel which takes in account the cinematic \textbf{P}, the dynamics $\mathbf{\Sigma}_{PFP}$, and the mean total time of interaction. 
+    \end{itemize}
+    \column{0.4\textwidth}
+    \begin{figure}
+      \includegraphics[width=\textwidth]{image/HOMOGENEOUS/fPA/age.pdf}
+      % \caption{Normalized time of interaction}
+    \end{figure}
+  \end{columns}
+    
+% \vspace{1cm}
+See my work : \url{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/}
 
-\vspace{1cm}
-\textbf{The buoyant emulsion DNS code is open source and available at} : 
-\url{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Other correlations for the averaged Navier Stokes equations}
+  \frametitle{Closure terms for the averaged Navier Stokes equation.}
 \begin{columns}
   \begin{column}{0.5\textwidth}
     \begin{figure}
@@ -726,8 +710,8 @@
     % \end{itemize}
   \end{column}
 \end{columns}
-\end{frame}
 
+\end{frame}
 
 \begin{frame}[t]
   \frametitle{References}
@@ -743,8 +727,8 @@
     \includegraphics[width=0.27\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_25_PHI_0_05.pdf}
     \includegraphics[width=0.27\textwidth]{image/HOMOGENEOUS/fDrop/Upos_mu_r_0_1_Ga_25_PHI_0_05.pdf}
     \includegraphics[width=0.27\textwidth]{image/HOMOGENEOUS/fDrop/Uneg_mu_r_0_1_Ga_25_PHI_0_05.pdf}
-    \caption{Nearest averaged force fields, $\nstrelavg{\textbf{u}}(\textbf{r})$ for different $Ga$ and $\phi$. 
-    Color map : Magnitude of the dimensionless force  $\nstrelavg{\textbf{u}} / (\Delta \rho V g)$.
+    \caption{Nearest averaged force fields, $\nstavg{\textbf{w}}(\textbf{r})$ for different $Ga$ and $\phi$. 
+    Color map : Magnitude of the dimensionless force  $\nstavg{\textbf{w}} / (\Delta \rho V g)$.
     (middle) conditional average  $\nstrelavg{\textbf{u}| u_r > 0}(\textbf{r})$. 
     (right) conditional average  $\nstrelavg{\textbf{u}| u_r < 0}(\textbf{r})$ }
   \end{figure}

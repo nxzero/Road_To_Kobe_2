@@ -1,3 +1,211 @@
 \section{Mesoscale equations}
 
-This aim of this part is to derive the evolution equation of $\nstavg{\textbf{u}}(\textbf{x},\textbf{r})$
+Let $\delta_i(\textbf{x},t) = \delta(\textbf{x} - \textbf{x}_i(t))$ with $\delta$ the Dirac function and $\textbf{x}_i$ the position of the particle $i$.  
+Similarly, we define $\delta_j(\textbf{y},t) =\delta(\textbf{y} - \textbf{x}_j(t)) $ for the particle label $j$. 
+Then, it is trivial to show that, 
+\begin{align*}
+    \pddt \delta_i + \partial_\textbf{x} \cdot (\textbf{u}_i \delta_i) &= 0\\
+    \pddt \delta_j + \partial_\textbf{y} \cdot (\textbf{u}_j \delta_j) &= 0.
+\end{align*}
+where we introduced $\textbf{u} = \ddt \textbf{x}$
+and both equation equal $0$ since we do not consider particle appearance or vanishing. 
+Manipulating those equations we can then have, 
+\begin{equation}
+    \pddt (\delta_j\delta_i) + \partial_\textbf{x} \cdot (\textbf{u}_i \delta_i\delta_j) + \partial_\textbf{y} \cdot (\textbf{u}_j \delta_i\delta_j) = 0.
+    \label{eq:delta_beta_delat_alpha}
+\end{equation}
+The pair distribution function is defined as,
+\begin{equation}
+    P_2(\textbf{x},\textbf{y}) = \int \sum_i\delta_i(\textbf{x},t) \sum_j\delta_j(\textbf{y},t) P(\mathscr{C})d\mathscr{C}
+\end{equation}
+and the conditional pair average of a quantity \textbf{q} is defined as, 
+\begin{equation}
+    \avg{\textbf{q}}_2(\textbf{x},\textbf{y})P_2(\textbf{x},\textbf{y}) = \int \sum_i\delta_i(\textbf{x},t) \sum_j\delta_j(\textbf{y},t) \textbf{q} P(\mathscr{C})d\mathscr{C}
+\end{equation}
+Therefore, summing \ref{eq:delta_beta_delat_alpha} over all $i$ and $j$ and integrating on every configuration gives, 
+\begin{equation}
+    \pddt P_2 + \partial_\textbf{x} \cdot (\avg{\textbf{u}_i}_2P_2) + \partial_\textbf{y} \cdot (\avg{\textbf{u}_j}_2P_2) = 0.
+    \label{eq:P_2}
+\end{equation}
+where then obtain an evolution equation for $P_2(\textbf{x},\textbf{y},t)$
+integrating \ref{eq:P_2} over $\textbf{y}$ would give us the classic number density equation. 
+
+Now let's define 
+\begin{equation*}
+    h_{ij} 
+    = \frac{1}{N_i}
+    \prod_{k \neq i,j}
+    H(|\textbf{x}_k - \textbf{x}_i| - |\textbf{x}_j - \textbf{x}_i|)
+    = \frac{1}{N_i}
+    \prod_{k \neq i,j}
+    H_{kij}
+\end{equation*}
+\begin{equation*}
+    N_i
+    = 
+    \sum_{j\neq i}
+    \prod_{k \neq i,j}
+    H(|\textbf{x}_k - \textbf{x}_i| - |\textbf{x}_j - \textbf{x}_i|)
+    = 
+    \sum_{j\neq i}
+    \prod_{k \neq i,j}
+    H_{kij}
+\end{equation*}
+The function $h_{ij} (\mathscr{C}) = 1/N_i$ , if particle $j$ is one
+of the nearest neighbors to particle $i$ in configuration $\mathscr{C}$ ;
+and $h_{ij} (\mathscr{C} ) = 0$ otherwise.
+
+Multiplying \ref{eq:delta_beta_delat_alpha} by $h_{ij}$ gives, 
+\begin{equation}
+    \pddt (\delta_j\delta_i h_{ij}) + \partial_\textbf{x} \cdot (\textbf{u}_i \delta_i\delta_j h_{ij}) + \partial_\textbf{y} \cdot (\textbf{u}_j \delta_i\delta_j h_{ij}) = \delta_j\delta_i\pddt h_{ij}
+    \label{eq:delta_beta_delat_alpha_h}
+\end{equation}
+Considering implicit summation on $i$ and $j$ and integrating equation \ref{eq:delta_beta_delat_alpha_h}  yields, 
+
+\begin{multline}
+    \pddt \left(\int \delta_j\delta_i h_{ij} d\mathscr{P} \right) 
+    + \partial_\textbf{x} \cdot \left(\int\textbf{u}_i \delta_i\delta_j h_{ij} d\mathscr{P} \right) 
+    + \partial_\textbf{y} \cdot \left( \int \textbf{u}_j \delta_i\delta_j h_{ij} d\mathscr{P} \right) 
+    \\=\int \delta_j\delta_i\pddt h_{ij} \mathscr{P}
+\end{multline}
+defining $\nstavg{\textbf{u}_i} P_{nst}= \int\textbf{u}_i \delta_i\delta_j h_{ij} d\mathscr{P} $ and $P_{nst} = \int \delta_j\delta_i h_{ij} d\mathscr{P} $ we obtain :
+\begin{equation}
+    \pddt \left(P_{nst} \right) 
+    + \partial_\textbf{x} \cdot \left(\nstavg{\textbf{u}_i} P_{nst}\right) 
+    + \partial_\textbf{y} \cdot \left( \nstavg{\textbf{u}_j} P_{nst} \right) 
+    =\int \delta_j\delta_i\pddt h_{ij} \mathscr{P}
+\end{equation}
+
+
+We now want to find the expression of $\pddt h$. 
+\begin{align*}
+    \pddt h_{ij}
+    &= \pddt \left(
+        \frac{1}{N_i}
+    \right)
+    \prod_{k \neq i,j}  H_{kij}
+    + \frac{1}{N_i} \pddt \left[
+        \prod_{k \neq i,j}
+        H_{kij} 
+    \right] \\
+    &= - \frac{\pddt N_i}{N_i^2}
+    \prod_{k \neq i,j}  H_{kij}
+    + \frac{1}{N_i} \sum_{l \neq i,j} \left[
+        \pddt H_{lij}
+        \prod_{k \neq i,j,l}
+        H_{kij} 
+    \right] \\
+\end{align*}
+From now on we decompose the calculation. 
+Notice that we need to derive $\pddt N_i$ which is, 
+\begin{equation}
+   \pddt N_i
+    = 
+    \sum_{j\neq i}
+    \pddt
+    \prod_{k \neq i,j}
+    H_{kij}\\
+    = \sum_{j\neq i}
+    \sum_{l \neq i,j} \left[
+        \pddt H_{lij}
+        \prod_{k \neq i,j,l}
+        H_{kij} 
+    \right]
+\end{equation}
+Then we can imporove the notaition
+\begin{multline}
+    \pddt h_{ij}
+    = \\
+    - h_{ij} \frac{1}{N_i}
+    \sum_{j\neq i}
+    \sum_{l \neq i,j} \left[
+        \pddt H_{lij}
+        \prod_{k \neq i,j,l}
+        H_{kij} 
+    \right]
+    + \frac{1}{N_i} \sum_{l \neq i,j} \left[
+        \pddt H_{lij}
+        \prod_{k \neq i,j,l}
+        H_{kij} 
+    \right] 
+\end{multline}
+
+Considering that 
+\begin{equation*}
+    \pddt H(|\textbf{x}_l - \textbf{x}_i| - |\textbf{x}_j - \textbf{x}_i|)
+    = \left(
+        \pddt|\textbf{x}_l - \textbf{x}_i| - \pddt|\textbf{x}_j - \textbf{x}_i|
+    \right)
+    \delta(|\textbf{x}_l - \textbf{x}_i| - |\textbf{x}_j - \textbf{x}_i|)
+\end{equation*}
+where we assumed that $\pddt H(x) = \delta(x)$, and if we take $\pddt |f(x)| = \frac{f(x) f'(x)}{|f(x)|}$
+\begin{multline*}
+    \pddt H(|\textbf{x}_l - \textbf{x}_i| - |\textbf{x}_j - \textbf{x}_i|)
+    \\= 
+    \left[
+    \frac{(\textbf{x}_l - \textbf{x}_i) \cdot (\textbf{u}_l - \textbf{u}_i)}{|\textbf{x}_l - \textbf{x}_i|}
+    - 
+    \frac{(\textbf{x}_j - \textbf{x}_i) \cdot(\textbf{u}_j - \textbf{u}_i)}{|\textbf{x}_j - \textbf{x}_i|}
+    \right]\delta(|\textbf{x}_l - \textbf{x}_i| - |\textbf{x}_j - \textbf{x}_i|)
+    \\= 
+    \left[
+    \textbf{n}_{li}\cdot \textbf{w}_{li}
+    - 
+    \textbf{n}_{ji}\cdot\textbf{w}_{ji}
+    \right]\delta(|\textbf{x}_l - \textbf{x}_i| - |\textbf{x}_j - \textbf{x}_i|)
+    \\= U_{lij}\delta_{lij}
+\end{multline*}
+Therefore, $\pddt H$ is the difference between the relative velocities between the $j$ and $l$ with the particle $i$ particles along their relative position. 
+
+Finally, 
+\begin{multline}
+    \pddt h_{ij}
+    = 
+   \frac{1}{N_i} \sum_{l \neq i,j} \left[
+    U_{lij}
+    \delta_{lij}
+    \prod_{k \neq i,j,l}
+    H_{kij} 
+    \right] 
+    -  \frac{h_{ij}}{N_i}
+    \sum_{j\neq i}
+    \sum_{l \neq i,j} \left[
+        U_{lij}
+        \delta_{lij}
+        \prod_{k \neq i,j,l}
+        H_{kij} 
+    \right]
+    \label{eq:dt_h_ij}
+\end{multline}
+To summary : 
+\begin{itemize}
+    \item $H_{kij} =  1$ if $|\textbf{x}_k - \textbf{x}_i| > |\textbf{x}_j - \textbf{x}_i|$ if $j$ is closer to $i$ than $k$ to $i$.
+    \item $H_{kij} =  0$ if $|\textbf{x}_k - \textbf{x}_i| < |\textbf{x}_j - \textbf{x}_i|$ if $k$ is closer to $i$ than $j$ to $i$.
+    \item $\delta_{lij} =  0$ if $|\textbf{x}_l - \textbf{x}_i| \neq |\textbf{x}_j - \textbf{x}_i|$ if $k$ and $i$ are at a different distance than $j$ and $i$. 
+    \item $\delta_{lij} =  1$ if $|\textbf{x}_l - \textbf{x}_i| = |\textbf{x}_j - \textbf{x}_i|$ if $k$ and $i$ are at the same distance as $j$ and $i$. 
+\end{itemize}
+Meaning that the first term of \ref{eq:dt_h_ij} is :
+\begin{itemize}
+    \item $\prod_{k \neq i,j,l} H_{kij} = 1$ if $j$ is the nearest neighbor to $i$ excluding the particle $l$. 
+    \item $U_{lij}\delta_{lij}\prod_{k \neq i,j,l} H_{kij} = U_{lij}$ if $j$ and $l$ are at the same distance to $i$. 
+    \item $1/N_i\sum_{l\neq i,j}U_{lij}\delta_{lij}\prod_{k \neq i,j,l} H_{kij} = U_{lij}/N_i$ if there is at least one particle $l$ at the same distance than $j$ to $i$.  
+\end{itemize}
+
+On the second term we add up this same contribution over all the neighbor $j$. 
+Since the problem is symmetric when having two nearest neighbor this contribution will ultimately vanish. 
+
+
+As a result we obtain, 
+\begin{equation*}
+    \pddt h_{ij} 
+    = \frac{1}{N_i} \sum_{l \neq i,j} \left[
+        \left[
+    \textbf{n}_{li}\cdot \textbf{w}_{li}
+    - 
+    \textbf{n}_{ji}\cdot\textbf{w}_{ji}
+    \right]\delta(|\textbf{x}_l - \textbf{x}_i| - |\textbf{x}_j - \textbf{x}_i|)
+        \prod_{k \neq i,j,l}
+        H_{kij} 
+        \right] 
+\end{equation*}
+
