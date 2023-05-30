@@ -2,8 +2,8 @@
 \label{sec:two-fluid}
 
 We consider a system made of two phases, $\Omega_1(t)$ and $\Omega_2(t)$, separated by a sharp interface $\Sigma$(t), that fill the considered domain $\Omega \subset \mathbb{R}^3$, in such a way that $\Omega = \Sigma(t) \cup \Omega_1(t) \cup \Omega_2(t)$ (see \ref{fig:Scheme}). 
-These domains obey the same mathematical constrains as defined in \cite{bothe2022sharp}. 
-To track the position of the phases we define the Phase Indicator Function (PIF), 
+These domains obey the physical and mathematical constraints defined in \cite{bothe2022sharp}. 
+To track the position of the phase indexed $k$, we introduce the Phase Indicator Function (PIF), 
 \begin{equation}
     \chi_k(\textbf{y},t) =  \left\{
       \begin{tabular}{cc}
@@ -11,7 +11,7 @@ To track the position of the phases we define the Phase Indicator Function (PIF)
         $0 \;\text{if} \;\textbf{y} \notin \Omega_k(t)$
       \end{tabular}
       \right.
-      \text{for $k \in 1,2$}
+      \text{for $k = 1,2$}
       \label{eq:PIF}
 \end{equation}
 \begin{figure}[h!]
@@ -48,28 +48,30 @@ To track the position of the phases we define the Phase Indicator Function (PIF)
     \caption{Scheme of the topology of dispersed two phase flows.}
     \label{fig:Scheme}
 \end{figure}
-From now on the $k$ indies will refer to either the phase $1$ or $2$, and we drop the time and position arguments in each functions. 
-Then, the transport equation of $\chi_k$ can be written as \citep{drew1983mathematical,kataoka1986local,morel2015mathematical},
+From this point we drop the time and position arguments in the PIF. 
+
+\subsubsection*{Topological equations}
+By considering that the convective derivative of $\chi_k$ is zero at the interface points we can deduce that the transport equation of the $\chi_k$ reads \citep{drew1983mathematical,kataoka1986local,morel2015mathematical},
 \begin{equation}
     \pddt \chi_k
     + \textbf{u}_I \cdot \nablabh \chi_k
     = 0,
     \label{eq:dt_chi_k}
 \end{equation}
-where $\textbf{u}_I$ is the velocity of $\Sigma(t)$.
-Besides, it can be shown \citep{tryggvason2011direct,drew1983mathematical,kataoka1986local,bothe2022sharp} that,
+where $\textbf{u}_I$ is the velocity of the interface $\Sigma(t)$.
+Additionally, it can be shown \citep{tryggvason2011direct,drew1983mathematical,kataoka1986local,bothe2022sharp} that,
 \begin{equation}
     \nablabh \chi_k
     = - \delta_I \textbf{n}_k
     \label{eq:grad_chi_k}
 \end{equation}
-where we have introduced the Interface Indicator Function (IIF) defined as $\delta(\textbf{y}-\textbf{y}_I)$, with $\delta$ being the Dirac-delta function and $\textbf{y}_I$ the position vectors lying on the domain $\Sigma(t)$.
-We also define $\textbf{n}_k$ as the outward normal vector of the domain $\Omega_k$.
-Taking the gradient of \ref{eq:dt_chi_k} yields the IIF transport equation namely,
+where we introduced the Interface Indicator Function (IIF) defined as $\delta_I = \delta(\textbf{y}-\textbf{y}_I)$ with $\delta$ the Dirac-delta function and $\textbf{y}_I$ the position vector lying on the domain $\Sigma(t)$.
+Besides, $\textbf{n}_k$ is defined as the outward normal vector of the domain $\Omega_k$ (see \ref{fig:Scheme}).
+To describe the evolution of $\delta_I$ we take the gradient of \ref{eq:dt_chi_k} which yields the IIF transport equation,
 \begin{equation}
     \pddt \delta_I
     + \nablabh \cdot \left[(\textbf{u}_I\cdot\textbf{n})\textbf{n} \delta_I\right]
-    = \delta_I (\textbf{u}_I\cdot\textbf{n})(\nablabh \cdot\textbf{n})
+    = \delta_I (\textbf{u}_I\cdot\textbf{n})(\nablabh \cdot\textbf{n}). 
 \end{equation}
 As pointed out by \citet{morel2007surface}, it is more convenient to rewrite this equation under the following form,
 \begin{equation}
@@ -78,24 +80,28 @@ As pointed out by \citet{morel2007surface}, it is more convenient to rewrite thi
     = \delta_I \nablabhI \cdot \textbf{u}_I.
     \label{eq:dt_delta_I}
 \end{equation}
-where we introduced the surface divergence operator defined as $\nablabhI \cdot ()= (\textbf{I}-\textbf{nn})\cdot \nablabh \cdot ()$.
-Likewise, we can derive an expression for the gradient of $\delta_I$ by taking the gradient of \ref{eq:grad_delta_I} yielding,
+where we introduced the surface divergence operator defined as $\nablabhI \cdot ()= (\textbf{I}-\textbf{nn})\cdot \nablabh \cdot ()$ which is the divergence operator projected on the tangential plan of $\Sigma(t)$. 
+All along this work we define $\textbf{F}_{||} = (\textbf{I}-\textbf{nn})\cdot \textbf{F}$ for any arbitrary tensor $\textbf{F}$, and use the subscript $_I$ to denote any quantity belonging to $\Sigma$.   
+Lastly, we can derive an expression for the gradient of $\delta_I$ by taking the gradient of \ref{eq:grad_delta_I} yielding,
 \begin{equation}
     \nablabh\delta_I 
     = \textbf{n} \cdot \nablabh (\textbf{n} \delta_I).
     \label{eq:grad_delta_I}
 \end{equation}
+Then, \ref{eq:dt_chi_k},\ref{eq:grad_chi_k}\ref{eq:dt_delta_I} and \ref{eq:grad_delta_I} form the so-called topological equations for two phase flows which describe the local geometry of the flow.
+
+\subsubsection*{Local conservation equations}
 
 
-Let $f_k(\textbf{y})$ being a volumetric property of the flow solely defined in $\Omega_k(t)$.
-Likewise, let $f_I(\textbf{y})$ be an arbitrary surface property defined on $\Sigma(t)$.
-Then it is possible to derive the local conservation equations for volumetric and surface quantities \citep{bothe2022sharp,morel2015mathematical,tignol1986modelisation}, using Reynolds transport theorem  and divergence theorem on an arbitrary control volume.
-These conservation laws read as, 
+Let $f_k(\textbf{y},t)$ being an arbitrary volumetric property defined in $\Omega_k(t)$. 
+Likewise, let $f_I(\textbf{y},I)$ be an arbitrary surface property defined on $\Sigma(t)$.
+Then it is possible to derive the local conservation equations for both volumetric and surface quantities following the strategy of \citep{bothe2022sharp,morel2015mathematical,tignol1986modelisation,marle1982macroscopic}.
+Indeed, using Reynolds transport theorem  and divergence theorem on an arbitrary small control volume we eventually find,
 \begin{align}
     \label{eq:dt_f_k}
     \pddt f_k
     &= \nablabh \cdot \left(
-        \bm{\Phi}_k
+        \mathbf{\Phi}_k
         - f_k\textbf{u}_k
         \right)
     + \textbf{S}_k
@@ -108,26 +114,29 @@ These conservation laws read as,
         f_k (\textbf{u}_I - \textbf{u}_k)
         + \mathbf{\Phi}_k
      } 
-    & \text{ on } \Sigma&
+    & \text{ on } \Sigma,&
     \label{eq:dt_f_I}
 \end{align}
-for respectively the volumetric and surface properties.
-In \ref{eq:dt_f_I} we introduced the notation $\Jump{\ldots}$ to indicate the sum over both phases, i.e. $\sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$. 
-Where we introduced $\bm{\Phi}_k$ and $\bm{\Phi}_I$ as the non-conservative flux tensor corresponding to $f_k$ and $f_I$. 
+which is respectively the conservation equations of $f_k$ and $f_I$.
+In \ref{eq:dt_f_I} we introduced the notation $\Jump{\ldots}$ which indicate the summing over both phases, i.e. $\sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$. 
+We defined $\mathbf{\Phi}_k$ and $\mathbf{\Phi}_I$ as the non-conservative flux tensor corresponding to $f_k$ and $f_I$. 
 The non-conservative flux is often expressed through a constitutive equation depending on the nature of the flow such as the stress tensor for the momentum.
-$\textbf{S}_k$ and $\textbf{S}_I$ is defined as the volumetric source term of respectively the phase $k$ and at the interface $\Sigma$.
-It is important to notice that \ref{eq:dt_f_k} and \ref{eq:dt_f_I} are solely defined in respectively $\Omega_k$ and $\Sigma$, therefore these equations are referred as local conservation equations.
+$\textbf{S}_k$ and $\textbf{S}_I$ are defined as the volumetric and surface source term on respectively, the domains $\Omega_k$ and $\Sigma$. 
+Lastly, $\textbf{u}_k$ corresponds to the velocity fields defined in $\Omega_k$. 
+It is important to notice that \ref{eq:dt_f_k} and \ref{eq:dt_f_I} are solely defined in respectively, $\Omega_k$ and $\Sigma$, therefore these equations are referred to, as local conservation equations.
 
-To generalize these equations over the domain $\Omega$ we follow the formalism of \citet{drew1983mathematical,marle1982macroscopic} and \citet{kataoka1986local} for the volumetric quantities.
-Indeed, to any local quantities $f_k$ defined in $\Omega_k$, we assign the field $\chi_k f_k$ which is defined in $\Omega$. 
-Similarly, for any local surface quantities $f_I$ defined on $\Sigma$ we assign the field quantity $\delta_I f_I$ defined on $\Omega$. 
-Then, multiplying \ref{eq:dt_f_k} and \ref{eq:dt_f_I} by respectively $\chi_k$ and $\delta_I$, and making use of \ref{eq:dt_chi_k} and \ref{eq:dt_delta_I} gives, 
+\subsubsection*{Global conservation equations}
+
+To generalize \ref{eq:dt_f_k} and \ref{eq:dt_f_I} over $\Omega$, we follow the method of \citet{drew1983mathematical} and \citet{kataoka1986local} for the volumetric equation, and \citet{marle1982macroscopic} for the surface equation.
+Indeed, to any local quantities $f_k$ defined in $\Omega_k$, we assign the field $\chi_k f_k$ which is defined over the whole domain $\Omega$. 
+Likewise, for any surface property $f_I$ defined on $\Sigma$, we assign the field quantity $\delta_I f_I$ which is also defined all over $\Omega$. 
+Then, multiplying \ref{eq:dt_f_k} and \ref{eq:dt_f_I} by respectively $\chi_k$ and $\delta_I$, and making use of \ref{eq:dt_chi_k}, \ref{eq:dt_delta_I} and \ref{eq:grad_delta_I} gives, 
 \begin{align}
     \pddt (\chi_k f_k)
-    &= \nablabh \cdot (\chi_k \bm{\Phi}_k - \chi_k f_k \textbf{u}_k)
+    &= \nablabh \cdot (\chi_k \mathbf{\Phi}_k - \chi_k f_k \textbf{u}_k)
     + \chi_k \textbf{S}_k
     + \delta_I\left[
-        \bm{\Phi}_k
+        \mathbf{\Phi}_k
         + f_k
         \left(
             \textbf{u}_I
@@ -147,19 +156,16 @@ Then, multiplying \ref{eq:dt_f_k} and \ref{eq:dt_f_I} by respectively $\chi_k$ a
     }.
     \label{eq:dt_delta_I_f_I}
 \end{align}
-We obtained $k$'s equations defined over the domain $\Omega$ for the bulk quantities, and third global equations for the surface quantities also valid over $\Omega$. 
-The transformation of these equations from local to global conservation makes appear a term on the RHS of \ref{eq:dt_chi_k_f_k} representing the interfacial transfer of $f_k$ and $\mathbf{\Phi}_k$, while the surface transport equation did not change fundamentally. 
+which is respectively the volume and surface conservation of $\chi_kf_k$ and $\delta_If_I$. 
 The set of equations formed by \ref{eq:dt_chi_k_f_k} for $k =1,2$ is commonly known as the \textit{two-fluid} formulation of multiphase flows, to which we add the \textit{jump condition} across the phase given by \ref{eq:dt_delta_I_f_I} \citep{morel2015mathematical,tryggvason2011direct,drew1983mathematical,kataoka1986local}. 
-In this work, we prefer to think of those equations as a set of three equations, formed by \ref{eq:dt_chi_k_f_k} for the volumetric conservation equations and \ref{eq:dt_delta_I_f_I} for the surface conservation equations. 
-
-Now that we properly defined the volumetric and surface conservation laws over $\Omega$, let's derive of two phase flows.
-We now define any bulk quantity $f$ as $f = \sum_k \chi_k f_k + \delta_I f_I$.
-Then adding \ref{eq:dt_chi_k_f_k} for $k=1,2$ and \ref{eq:dt_delta_I_f_I} give the commonly known as the \textit{single-fluid} formulation,
+In this work, we prefer to think of those equations as a set of three equations formed by \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I}. 
+Indeed, if we define the \textit{bulk} property $f$ such as $f = \sum_k \chi_k f_k + \delta_I f_I$.
+Then by adding \ref{eq:dt_chi_k_f_k} for $k=1,2$ and \ref{eq:dt_delta_I_f_I} gives the \textit{single-fluid} formulation,
 \begin{equation}
     \pddt f
-    = \nablabh \cdot (\bm{\Phi} - f \textbf{u})
-    + \textbf{S}.
+    = \nablabh \cdot (\mathbf{\Phi} - f \textbf{u})
+    + \textbf{S},
     \label{eq:dt_f}
 \end{equation}
-Actually, it is more common in the literature to define the bulk quantities as $f = \sum_k \chi_k f_k$ and consider the interfacial terms as source terms as it is often neglected \citep{morel2015mathematical,tryggvason2011direct}. 
-Nevertheless, in this work we consider a general case without approximation therefore it is more convenient to think of the bulk quantities as a sum of three phase quantities. 
+Remark that we rather define \textit{bulk} quantities as $f = \sum_k \chi_k f_k$ and consider the interfacial component as a source term \citep{morel2015mathematical,tryggvason2011direct,drew1983mathematical}. 
+Nevertheless, it is more practical to consider 3 phases flows variable since we made no assumption on the interfacial conservation equation. 

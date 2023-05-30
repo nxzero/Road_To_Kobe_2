@@ -14,18 +14,17 @@
 \RequirePackage{mathrsfs}
 \RequirePackage{empheq}
 % \RequirePackage{mdframed}
-\RequirePackage{bm}
 \RequirePackage[
-  colorlinks=true
+  % colorlinks=true
 ]{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue!50!black,
-    filecolor=blue!50!black,
-    citecolor = green!50!black,
-    urlcolor=cyan,
-}
-\RequirePackage{bm}
+% \hypersetup{
+%     colorlinks=true,
+%     linkcolor=blue!50!black,
+%     filecolor=blue!50!black,
+%     citecolor = green!50!black,
+%     urlcolor=cyan,
+% }
+\RequirePackage[doublespacing]{setspace}
 \RequirePackage{natbib}
 \bibliographystyle{apalike}
 
