@@ -43,13 +43,28 @@ The second term can be reformulated such as,
 Including this relation into the former equation yields, 
 \begin{multline*}
     \ddt Q_{i_1\ldots i_n}
-    = \sum_{e=1}^{n} \int_{V_\alpha} \prod^{n}_{\substack{ m=1 \\   m \neq e}} r_{i_m} (w_{i_e}f  - \Phi)dV
+    = \sum_{e=1}^{n} \int_{V_\alpha} \prod^{n}_{\substack{ m=1 \\   m \neq e}} r_{i_m} (w_{i_e}f  - \mathbf{\Phi}_{i_e})dV
     +\int_{S_\alpha} \pri{1}{n} \mathbf{\Phi} \cdot \textbf{n}dS\\
     + \int_{V_\alpha} \pri{1}{n} \textbf{S} dV
     +\int_{S_\alpha} \pri{1}{n} f \left(u^I_k - u_k\right) n_k dS.
 \end{multline*}
 Then it is possible from this equation to carry out a particular average but also to get the local scale equations. 
 Indeed, if we consider $V_\alpha$ as being a fixed control volume the above equality can be rewritten such as, 
+\begin{multline*}
+    \pddt \pavg{Q_{i_1\ldots i_n}^\alpha}
+    + \partial_k  \pavg{Q_{i_1\ldots i_n}^\alpha u_k^\alpha}
+    = \sum_{e=1}^{n} \pavg{\int_{V_\alpha} \prod^{n}_{\substack{ m=1 \\   m \neq e}} r_{i_m} (w_{i_e}f  - \mathbf{\Phi}_{i_e})dV}\\
+    + \pavg{\int_{V_\alpha} \pri{1}{n} \textbf{S} dV}
+    + \pavg{\int_{\Omega_\alpha} \pri{1}{n} \left[
+            \mathbf{\Phi}_k
+            + f_k
+            \left(
+                \textbf{u}_I
+                - \textbf{u}_k
+            \right)
+        \right]
+        \cdot \textbf{n}_kd\Omega}
+\end{multline*}
 % \begin{multline}
 %     \pddt \left(\pri{1}{n}f\right)
 %     + \nablabh \cdot \left(\pri{1}{n}f \textbf{u}\right)
@@ -57,5 +72,110 @@ Indeed, if we consider $V_\alpha$ as being a fixed control volume the above equa
 %     + \pri{1}{n} \textbf{S} 
 %     + \nablabh \cdot \left( \pri{1}{n} \mathbf{\Phi} \right)
 %     \label{ap:eq:dt_Q_alpha_n}
-% \end{multline}
-
+% \end{multline}$
+\subsection*{Arbitrary order equivalence}
+\begin{align}    
+    0 &= 
+    - \pddt \pavg{q_\alpha} +  \nablab \cdot  \partial_t\pavg{\textbf{Q}_\alpha} \ldots \nonumber\\
+    &+ \nablab \cdot \pavg{\int_{\Omega_\alpha}\left(\mathbf{\Phi}_k - f_k \textbf{u}_k \right)d\Omega}
+    -\nablab\nablab : \pavg{\int_{\Omega_\alpha}\textbf{r}\left(\mathbf{\Phi}_k - f_k \textbf{u}_k \right)d\Omega}
+    \ldots\nonumber\\
+    &+ \pavg{ \int_{\Omega_\alpha} \textbf{S}_k d\Omega}
+    - \nablab \cdot \pavg{ \int_{\Omega_\alpha} \textbf{r}\textbf{S}_k d\Omega}
+    \ldots\nonumber\\
+    &+ \pavg{\int_{\Sigma_\alpha}\left[
+        \mathbf{\Phi}_k
+        + f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right)
+    \right]
+    \cdot \textbf{n}_kd\Sigma} \ldots\nonumber\\
+    &-  \nablab \cdot \pavg{\int_{\Sigma_\alpha} \textbf{r}\left[
+        \mathbf{\Phi}_k
+        + f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right)
+    \right]
+    \cdot \textbf{n}_kd\Sigma} \ldots
+\end{align}
+We assume an infinite summation on $l$
+\begin{equation}
+        \pddt \avg{\chi_k f_k}
+        = \nablabh \cdot \avg{\chi_k \mathbf{\Phi}_k - \chi_k f_k \textbf{u}_k}
+        + \avg{\chi_k \textbf{S}_k}
+        + \avg{\delta_I\left[
+            \mathbf{\Phi}_k
+            + f_k
+            \left(
+                \textbf{u}_I
+                - \textbf{u}_k
+            \right)
+        \right]
+        \cdot \textbf{n}_k} 
+\end{equation}
+expangin each term gives,
+\begin{align}
+        0 &=
+        - \pddt \expo{f_k} \\
+        &+\nablabh \cdot \expo{(\mathbf{\Phi}_k - f_k \textbf{u}_k)}\\
+        &+ \expo{ \textbf{S}_k}\\
+        &+ \expoS{\left[
+            \mathbf{\Phi}_k
+            + f_k
+            \left(
+                \textbf{u}_I
+                - \textbf{u}_k
+            \right)
+        \right]
+        \cdot \textbf{n}_k} \\
+\end{align}
+considering, 
+\begin{multline}
+    \expo{f_k \textbf{u}_k}\\
+    =     \expoU{f_k }\\
+    +     \expo{f_k \textbf{w}_k}
+\end{multline}
+Then by factorizing the above equation we obtain : 
+\begin{align}
+    & \pddt \expo{f_k} \\
+    &+ \nablabh \cdot \expoU{f_k}\\
+    &= \nablabh \cdot \expo{(\mathbf{\Phi}_k - f_k \textbf{w}_k)}\\
+    &+ \expo{ \textbf{S}_k}\\
+    &+ \expoS{\left[
+        \mathbf{\Phi}_k
+        + f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right)
+    \right]
+    \cdot \textbf{n}_k} \\
+\end{align}
+where we can factorize such as, 
+\begin{multline}
+    0 = \frac{(-1)^n}{n!}
+    \partialp{1}{n}
+    \left[
+        - \partial_t
+        \pavg{\int_{\Omega_\alpha} \pri{1}{n}f_k d\Omega}
+        - \nablab \cdot \pavg{\textbf{u}_\alpha \int_{\Omega_\alpha} \pri{1}{n}f_k d\Omega}
+    \right.\\\left.
+        +\pavg{\int_{\Omega_\alpha} \pri{1}{n-1} (\mathbf{\Phi}_k - f_k \textbf{w}_k) d\Omega}
+        +\pavg{\int_{\Omega_\alpha} \pri{1}{n} \textbf{S}_k d\Omega}
+        \right.\\\left.
+        +\pavg{\int_{\Omega_\alpha} \pri{1}{n} \left[
+            \mathbf{\Phi}_k
+            + f_k
+            \left(
+                \textbf{u}_I
+                - \textbf{u}_k
+            \right)
+        \right]
+        \cdot \textbf{n}_kd\Omega}
+    \right]
+\end{multline}
+where the third term is undefined for $n=0$ meaning that it must not be conisdered

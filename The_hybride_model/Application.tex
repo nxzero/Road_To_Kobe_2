@@ -197,13 +197,94 @@ Anyhow, if we neglect this last term and if the solid motion hypothesis remain t
 Each term on the RHS can be for one part factorized by \textbf{I} yieldings the equivalent pressure of the suspension, and an other part by $\avg{\textbf{E}}$ yielding the equivalent viscosity. 
 
 
-\section{Compressible air bubble}
+\subsection{Compressible air bubble}
 \begin{itemize}
     \item Conisder compressible air bubble such as (88) in \citet{zhang1994ensemble}
     \item From \ref{eq:hybrid_avg_dt_dD_alpha} derive the \textit{Rayleigh-Plesset} equation Similarly to (88) of Zhang. 
     \item Do the same calculation than Lhuiller's note but for compressible bubble instead of mass transfer equations section 4.2 de ses notes
 \end{itemize}
-\section{Bulk stress in drop with linear internal motion}
+
+\subsubsection{First order equation}
+Let consider spherical air bubble with raduis $a_\alpha(t)$ and constant mass but variable density.
+First we reduce the internal velocity field as radial linear motion, yielding, 
+\begin{align}
+    \textbf{u}_I = \textbf{u}_\alpha + \frac{d a_\alpha}{dt} \textbf{n}_2
+    &&
+    \textbf{u}_2 = \textbf{u}_\alpha + \frac{d a_\alpha}{dt} \frac{\textbf{r}}{a_\alpha} 
+    \label{eq:a_definition}
+\end{align}
+Consequently, 
+\begin{align*}
+    \mathcal{M}_\alpha 
+    = \frac{1}{5} m_\alpha a_\alpha^2 \textbf{I}
+    &&
+    \mathcal{P}_\alpha 
+    = \frac{1}{5} m_\alpha a_\alpha \frac{d a_\alpha}{dt} \textbf{I}
+\end{align*}
+Now let's consider the trace of the first moment equation which yield in our case,
+\begin{multline}
+    \frac{3}{5}
+    m_\alpha 
+    a_\alpha
+    \frac{d^2 a_\alpha}{dt^2}
+    = - \int_{\Omega_\alpha} 
+         \mathbf{T}_2 : \textbf{I}
+         d\Omega
+        - 2\int_{\Sigma_\alpha} \sigma d\Sigma
+        + \int_{\Sigma_\alpha} \textbf{r}\cdot(\textbf{T}_1\cdot\textbf{n}_2) d\Sigma
+\end{multline}
+Considering fluctuation velocity such as in \ref{eq:a_definition} and Newtonian stress tensor we have, 
+\begin{equation*}
+    \mathbf{T}_2 : \textbf{I}
+    = 
+    -  3p_2
+    + \mu_2 \left[
+        \nabla \cdot \textbf{u}_2 
+        + (\nabla \cdot \textbf{u}_2 )^T
+    \right]
+    = 
+    6\frac{\mu_2}{a_\alpha}\frac{d a_\alpha}{dt} 
+    -3 p_2
+\end{equation*}
+On $\Sigma(t)$ we have the following equality,
+\begin{equation}
+    \textbf{r}\cdot\textbf{T}_1\cdot\textbf{n}_2 
+    % = a_\alpha \textbf{n}_2\cdot\textbf{T}_1\cdot\textbf{n}_2 
+    = a_\alpha \textbf{n}_2\cdot(-p_1 \textbf{I}+ \mu_1 \textbf{E})\cdot\textbf{n}_2 
+    = -2\mu_1\frac{d a_\alpha}{dt}-a_\alpha p_1
+\end{equation}
+which gives,
+\begin{equation}
+    \frac{3}{5}
+    m_\alpha 
+    a_\alpha
+    \frac{d^2 a_\alpha}{dt^2}
+    = 4\pi a_\alpha^3\left[
+         (p_2)_{\Omega_{\alpha}}
+        - 2\frac{\mu_2}{a_\alpha}\frac{d a_\alpha}{dt} 
+    \right]
+    - 8\sigma  \pi a_\alpha^2
+    + 4 \pi a^3_\alpha \left[
+        - 2\frac{\mu_1}{a_\alpha} \frac{d a_\alpha}{dt}
+        -  (p_1)_{\Sigma\alpha}
+    \right]
+\end{equation}
+\begin{equation}
+    \frac{1}{5}
+    \rho_\alpha 
+    a_\alpha
+    \frac{d^2 a_\alpha}{dt^2}
+    + \frac{2}{a_\alpha}\frac{d a_\alpha}{dt} \left(
+        \mu_2 
+        + \mu_1 
+        + \sigma
+    \right)
+    = 
+         (p_2)_{\Omega_{\alpha}}
+        - \left(p_1\right)_{\Sigma\alpha}
+\end{equation}
+
+\subsection{Bulk stress in drop with linear internal motion}
 
 \begin{itemize}
     \item compute the bulk stress with \ref{eq:T2_definition}

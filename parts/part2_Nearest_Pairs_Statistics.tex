@@ -76,7 +76,7 @@ defining $\nstavg{\textbf{u}_i} P_{nst}= \int\textbf{u}_i \delta_i\delta_j h_{ij
     =\int \delta_j\delta_i\pddt h_{ij} \mathscr{P}
 \end{equation}
 
-
+\subsection*{Computation of the kernel }
 We now want to find the expression of $\pddt h$. 
 \begin{align*}
     \pddt h_{ij}
@@ -208,4 +208,270 @@ As a result we obtain,
         H_{kij} 
         \right] 
 \end{equation*}
+\begin{equation*}
+    \pddt h_{ij} 
+    = \frac{1}{N_i} \sum_{l \neq i,j} \left[
+        \left[
+    \textbf{n}_{li}\cdot \textbf{w}_{li}
+    - 
+    \textbf{n}_{ji}\cdot\textbf{w}_{ji}
+    \right]\delta(|\textbf{r}_{li}| - |\textbf{r}_{ji}|)
+        \prod_{k \neq i,j,l}
+        H_{kij} 
+        \right] 
+\end{equation*}
 
+Then, 
+\begin{equation*}
+    \int \delta_j\delta_i\pddt h_{ij} \mathscr{P}
+    = \int \delta_j \delta_i
+    \frac{1}{N_i} \sum_{l \neq i,j} \left[
+        \left[
+    \textbf{n}_{li}\cdot \textbf{w}_{li}
+    - 
+    \textbf{n}_{ji}\cdot\textbf{w}_{ji}
+    \right]\delta(|\textbf{r}_{li}| - |\textbf{r}_{ji}|)
+        \prod_{k \neq i,j,l}
+        H_{kij} 
+        \right] d\mathscr{P}
+\end{equation*}
+Since $r_{li} = r_{ji}$ we drop the restriction on $k$ yielding, 
+\begin{equation*}
+    \int \delta_j\delta_i\pddt h_{ij} \mathscr{P}
+    = \int \delta_j \delta_i
+    \sum_{l \neq i,j} \left[
+    \textbf{n}_{li}\cdot \textbf{w}_{li}
+    - 
+    \textbf{n}_{ji}\cdot\textbf{w}_{ji}
+    \right]\delta(|\textbf{r}_{li}| - |\textbf{r}_{ji}|)
+        h_{ij}d\mathscr{P}
+\end{equation*}
+
+
+\section{Transport of relative properties}
+
+We start from 
+\begin{equation}
+    \pddt (\delta_j\delta_i h_{ij}) + \partial_\textbf{x} \cdot (\textbf{u}_i \delta_i\delta_j h_{ij}) + \partial_\textbf{y} \cdot (\textbf{u}_j \delta_i\delta_j h_{ij}) = \delta_j\delta_i\pddt h_{ij}
+\end{equation}
+Let $q_{ij}$ be a relative property to the particle $i$ and $j$ and time, then multiplying this equation by $q_{ij}$ gives,
+\begin{equation}
+    \pddt (\delta_j\delta_i h_{ij}q_{ij}) 
+    + \partial_\textbf{x} \cdot (\textbf{u}_i \delta_i\delta_j h_{ij}q_{ij}) 
+    + \partial_\textbf{y} \cdot (\textbf{u}_j \delta_i\delta_j h_{ij}q_{ij}) 
+    = q_{ij}\delta_j\delta_i\pddt h_{ij}
+    + \delta_j\delta_i h_{ij}\dot{q_{ij}}
+\end{equation}
+Introducing, 
+\begin{equation*}
+    \nstavg{q_{ij}} P_{nst}(\textbf{x},\textbf{y})= \int\delta_i\delta_j h_{ij}q_{ij} d\mathscr{P} 
+\end{equation*}
+and integrating the previous equation yields, 
+\begin{equation}
+    \pddt (\nstavg{q_{ij}} P_{nst}) 
+    + \partial_\textbf{x} \cdot (\nstavg{\textbf{u}_i q_{ij}} P_{nst}) 
+    + \partial_\textbf{y} \cdot (\nstavg{\textbf{u}_j q_{ij}}P_{nst}) 
+    = q_{ij}\dot{P_{nst}}
+    + \nstavg{\dot{q_{ij}}}P_{nst}
+\end{equation}
+
+let's mark $\textbf{r} = \textbf{y} - \textbf{x}$
+\begin{equation*}
+    \nstavg{q_{ij}} P_{nst}(\textbf{x},\textbf{x}+\textbf{r})= \int\delta_i(\textbf{x})\delta_j(\textbf{x}+\textbf{r}) h_{ij}q_{ij} d\mathscr{P} 
+\end{equation*}
+reformulating in conditional probability, 
+\begin{equation*}
+    \nstavg{q_{ij}} P_{nst}(\textbf{x}+\textbf{r}|\textbf{x}) P(\textbf{x})= \int\delta_i(\textbf{x})\delta_j(\textbf{x}+\textbf{r}) h_{ij}q_{ij} d\mathscr{P} 
+\end{equation*}
+the mean relative velocity $w_{ij}$
+\begin{align*}
+    \nstavg{w_{ij}} P_{nst}(\textbf{x},\textbf{y}) 
+    &= \int\delta_i\delta_j w_{ij}h_{ij} d\mathscr{P} \\
+    &= \int\delta_i\delta_j (u_j - u_i)h_{ij} d\mathscr{P} \\
+    &= \int\delta_i\delta_j u_j h_{ij} d\mathscr{P} 
+    - \int\delta_i\delta_j u_i h_{ij} d\mathscr{P} \\
+    &= (\nstavg{u_j} - \nstavg{u_i}) P_{nst}(\textbf{x},\textbf{y})
+\end{align*}
+first term : velocity of the particle at \textbf{x} knowing \textbf{y}.
+Second :  velocity of the particle at \textbf{y} knowing \textbf{x}.
+Since $P_{nst}$ isn't necessarily symmetric it is not nulle. 
+but,  
+\begin{align*}
+    \avg{\delta_i w_{ij}}
+    &=\iint\delta_i\delta_j w_{ij}h_{ij} d\mathscr{P}d\textbf{y}\\
+    &= \int \nstavg{u_j} P_{nst}(\textbf{x},\textbf{y}) d\textbf{y}
+    - \int \nstavg{u_i} P_{nst}(\textbf{x},\textbf{y}) d\textbf{y}
+    = 
+    \avg{\delta_i (u_j-u_i)}
+    = 0
+\end{align*}
+Product , 
+\begin{align*}
+    \nstavg{w_{ij}w_{ij}} P_{nst}(\textbf{x},\textbf{y}) 
+    &= \int\delta_i\delta_j (u_j - u_i)(u_j - u_i) h_{ij} d\mathscr{P} \\
+    &= \int\delta_i\delta_j (u_ju_j + u_iu_i - u_iu_j - u_ju_i) h_{ij} d\mathscr{P} \\
+    &= (\nstavg{u_iu_i}+ \nstavg{u_ju_j} - \nstavg{u_iu_j}- \nstavg{u_ju_i}) P_{nst}(\textbf{x},\textbf{y})
+\end{align*}
+So the general avg 
+\begin{align*}
+    \avg{\delta_i w_{ij}w_{ij}}
+    &=\int \nstavg{w_{ij}w_{ij}} P_{nst}(\textbf{x},\textbf{y}) d\textbf{y}\\
+    &= \int(\nstavg{u_iu_i}+ \nstavg{u_ju_j} - \nstavg{u_iu_j}- \nstavg{u_ju_i}) P_{nst}(\textbf{x},\textbf{y})d\textbf{y}\\
+    &= \avg{\delta_i u_iu_i} 
+    + \avg{\delta_i u_ju_j}
+    - \avg{\delta_i u_iu_j}
+    - \avg{\delta_i u_ju_i}
+\end{align*}
+The last term is interesting indeed, 
+\begin{align*}
+    \avg{\delta_i u_ju_i}
+    =\iint \delta_i \delta_j u_ju_i h_{ij} d\mathscr{P} d\textbf{y}
+\end{align*}
+
+so we can arrive to the conclsion 
+\begin{align*}
+    2\avg{\delta_i u_iu_i} 
+    =\avg{\delta_i w_{ij}w_{ij}}
+    + 2\avg{\delta_i u_iu_j}
+\end{align*}
+or 
+\begin{align}
+    \pavg{u_iu_i}
+    = \frac{1}{2}\pavg{w_{ij}w_{ij}}
+    + \pavg{u_iu_j}
+\end{align}
+
+\subsection*{Yet Another transport}
+Let $\textbf{y} = \textbf{x} + \textbf{r}$, then $\delta_j(\textbf{x}_j - \textbf{x}-\textbf{r})$. 
+Remark that 
+$\pddt \delta_j(\textbf{x}_j - \textbf{x}-\textbf{r}) 
+= \textbf{u}_j \cdot \partial_{\textbf{x}_j} \delta_j(\textbf{x}_j - \textbf{x}-\textbf{r})
+= - \textbf{u}_j \cdot  \partial_{\textbf{r}}   \delta_j(\textbf{x}_j - \textbf{x}-\textbf{r})
+= - \textbf{u}_j \cdot  \partial_{\textbf{x}}   \delta_j(\textbf{x}_j - \textbf{x}-\textbf{r})
+$
+Therefore by adding and substracting ,
+\begin{align*}
+    \pddt \delta_i
+    + \textbf{u}_i \cdot \partial_{\textbf{x}}    \delta_i
+    &= 0 \\
+    \pddt \delta_j
+    + (\textbf{u}_j - \textbf{u}_i) \cdot \partial_{\textbf{r}}    \delta_j 
+    + \textbf{u}_i \cdot \partial_{\textbf{x}}    \delta_j 
+    &= 0 
+\end{align*}
+Then multiplying the second eq by $\delta_i$ 
+\begin{equation*}    
+    \pddt (\delta_i\delta_j)
+    + \partial_{\textbf{r}} \cdot  (\textbf{w}_{ij} \delta_j \delta_i )
+    +\partial_{\textbf{x}} \cdot (\textbf{u}_i\delta_j \delta_i )
+\end{equation*}
+multipliying by $h_{ij}$ gives
+\begin{equation*}    
+    \pddt (\delta_i\delta_j h_{ij})
+    +\partial_{\textbf{x}} \cdot (\textbf{u}_i\delta_i \delta_j h_{ij} )
+    + \partial_{\textbf{r}} \cdot  (\textbf{w}_{ij} \delta_i \delta_j h_{ij} )
+    = \delta_i\delta_j \pddt h_{ij}
+\end{equation*}
+multipliying by an arbitratry qte $q_{ij}$ gives
+\begin{equation*}    
+    \pddt (\delta_i\delta_j h_{ij}q_{ij})
+    +\partial_{\textbf{x}} \cdot (\textbf{u}_i\delta_i \delta_j h_{ij}q_{ij} )
+    + \partial_{\textbf{r}} \cdot  (\textbf{w}_{ij} \delta_i \delta_j h_{ij}q_{ij} )
+    = 
+    \delta_i\delta_j q_{ij}\pddt h_{ij}
+    + \delta_i\delta_j h_{ij}\pddt q_{ij}
+\end{equation*}
+Considering,
+\begin{equation*}
+    \nstavg{q_{ij}} P_{nst}(\textbf{x},\textbf{r})= \int\delta_i\delta_{ij} q_{ij} h_{ij} d\mathscr{P} 
+\end{equation*}
+Thus averaging the above eq gives, 
+\begin{multline*}
+    \pddt (\nstavg{q_{ij}} P_{nst}(\textbf{x},\textbf{r})) 
+    + \partial_\textbf{x} \cdot ( \nstavg{q_{ij}\textbf{u}_i} P_{nst}(\textbf{x},\textbf{r}))\\
+    + \partial_\textbf{r} \cdot ( \nstavg{q_{ij}\textbf{w}_{ij}} P_{nst}(\textbf{x},\textbf{r})) 
+    = 
+    \avg{\delta_i\delta_{j}q_{ij}\pddt h_{ij} }
+\end{multline*}
+Integrating this equation along \textbf{r} gives, 
+\begin{equation}
+    \pddt \avg{\delta_i q_{ij}} 
+    + \partial_\textbf{x} \cdot  \avg{\delta_i q_{ij}\textbf{u}_i}
+    = 
+    \avg{\delta_i \ddt q_{ij}}
+    + \int \condavg{q_{ij}\pddt h_{ij}}{P(\textbf{x},\textbf{r})}d\textbf{r}
+\end{equation}
+The third term canceled du to theorem of divergence, and the last one probably would too 
+This equation implies that $ \int\avg{\delta_i\delta_{ij}q_{ij}\pddt h_{ij} }d\textbf{r} =0 $  ? or does it ??
+Yes it must bu null\ldots
+
+
+
+
+\subsubsection*{First moments}
+Let multiply by \textbf{r}. 
+\begin{multline*}
+      \pddt (\delta_i\delta_{j}q_{ij}\textbf{r}h_{ij}) 
+    + \partial_\textbf{x} \cdot (\textbf{u}_i \textbf{r}\delta_i\delta_{j}q_{ij}h_{ij})
+    + \partial_\textbf{r} \cdot (\textbf{w}_{ij} \textbf{r}\delta_i\delta_{j}q_{ij}h_{ij}) \\= 
+    + \textbf{r} \cdot \textbf{w}_{ij} \delta_i\delta_{j}q_{ij}h_{ij}
+    \delta_i\delta_{j}\textbf{r}\pddt q_{ij}h_{ij} 
+    + \delta_i\delta_{j}q_{ij}\textbf{r}\pddt h_{ij} 
+\end{multline*}
+averaging on $\iint \ldots d\mathscr{P}d\textbf{y}$ gives, 
+\begin{multline*}
+      \pddt \avg{\delta_iq_{ij}\textbf{r}} 
+    + \partial_\textbf{x} \cdot \avg{\delta_i\textbf{u}_i \textbf{r}q_{ij}}
+    = \avg{\delta_i\textbf{w}_{ij}q_{ij}}
+    + \avg{\delta_i\textbf{r}\pddt q_{ij}} 
+    + \avg{\delta_i\delta_{j}q_{ij}\textbf{r}\pddt h_{ij} }
+\end{multline*}
+
+
+\subsubsection*{momentum}
+Let's $\textbf{p}_{ij} = \textbf{m}_j \textbf{u}_j-\textbf{m}_i \textbf{u}_i =\int_{\Omega_j}\rho_2 \textbf{u}_2d\Omega
+- \int_{\Omega_i}\rho_2 \textbf{u}_2d\Omega$, 
+\begin{equation}
+\ddt \textbf{p}_{ij} 
+= \int_{\Omega_j}\rho_2\textbf{g}d\Omega 
+- \int_{\Omega_i}\rho_2\textbf{g}d\Omega
++ \int_{\Sigma_j} \textbf{T}_1 \cdot \textbf{n}_2d\Sigma
+-\int_{\Sigma_i} \textbf{T}_1 \cdot \textbf{n}_2d\Sigma
+=\textbf{B}_{ij} + \textbf{F}_{ij}
+\end{equation}
+\begin{equation}
+\ddt \textbf{p}_{i} 
+= \ddt (\textbf{m}_i \textbf{u}_i)
+= \int_{\Omega_i}\rho_2\textbf{g}d\Omega
++ \int_{\Sigma_i} \textbf{T}_1 \cdot \textbf{n}_2d\Sigma
+= \textbf{B}_{i} + \textbf{F}_{i}
+\end{equation}
+
+Thus,
+\begin{multline*}
+    \pddt \avg{\delta_i\textbf{p}_{ij}\textbf{r}} 
+  + \partial_\textbf{x} \cdot \avg{\delta_i\textbf{u}_i \textbf{r}\textbf{p}_{ij}}
+  = \avg{\delta_i\textbf{w}_{ij}\textbf{p}_{ij}}
+  + \avg{\delta_i\textbf{r}\textbf{B}_{ij}} 
+  + \avg{\delta_i\textbf{r}\textbf{F}_{ij}} 
+  + \avg{\delta_i\delta_{j}\textbf{p}_{ij}\textbf{r}\pddt h_{ij} }
+\end{multline*}
+and respectively , 
+\begin{multline*}
+    \pddt \avg{\delta_i\textbf{mu}_{i}\textbf{r}} 
+  + \partial_\textbf{x} \cdot \avg{\delta_i\textbf{u}_i \textbf{r}\textbf{mu}_{i}}
+  = \avg{\delta_i\textbf{w}_{ij}\textbf{mu}_{i}}
+  + \avg{\delta_i\textbf{r}\textbf{B}_{i}} 
+  + \avg{\delta_i\textbf{r}\textbf{F}_{i}} 
+  + \avg{\delta_i\delta_{j}\textbf{mu}_{i}\textbf{r}\pddt h_{ij} }
+\end{multline*}
+
+For mono disperse suspension 
+\begin{multline*}
+    \pddt \avg{\delta_i\textbf{w}_{ij}\textbf{r}} 
+  + \partial_\textbf{x} \cdot \avg{\delta_i\textbf{u}_i \textbf{r}\textbf{w}_{ij}}
+  = \avg{\delta_i\textbf{w}_{ij}\textbf{w}_{ij}}
+  + \avg{\delta_i\textbf{r}\textbf{B}_{ij}} 
+  + \avg{\delta_i\textbf{r}\textbf{F}_{ij}} 
+  + \avg{\delta_i\delta_{j}\textbf{w}_{ij}\textbf{r}\pddt h_{ij} }
+\end{multline*}

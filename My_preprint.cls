@@ -34,3 +34,4 @@
 
 \RequirePackage{stmaryrd}
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
+
