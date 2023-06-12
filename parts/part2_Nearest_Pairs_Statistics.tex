@@ -24,7 +24,7 @@ and the conditional pair average of a quantity \textbf{q} is defined as,
 \end{equation}
 Therefore, summing \ref{eq:delta_beta_delat_alpha} over all $i$ and $j$ and integrating on every configuration gives, 
 \begin{equation}
-    \pddt P_2 + \partial_\textbf{x} \cdot (\avg{\textbf{u}_i}_2P_2) + \partial_\textbf{y} \cdot (\avg{\textbf{u}_j}_2P_2) = 0.
+    \pddt P_2 + \partial_\textbf{x} \cdot (\condavg{\textbf{u}_i}{2}P_2) + \partial_\textbf{y} \cdot (\condavg{\textbf{u}_j}{2}P_2) = 0.
     \label{eq:P_2}
 \end{equation}
 where then obtain an evolution equation for $P_2(\textbf{x},\textbf{y},t)$
@@ -272,7 +272,7 @@ and integrating the previous equation yields,
     + \partial_\textbf{x} \cdot (\nstavg{\textbf{u}_i q_{ij}} P_{nst}) 
     + \partial_\textbf{y} \cdot (\nstavg{\textbf{u}_j q_{ij}}P_{nst}) 
     = q_{ij}\dot{P_{nst}}
-    + \nstavg{\dot{q_{ij}}}P_{nst}
+    + \nstavg{\partial_t q_{ij}}P_{nst}
 \end{equation}
 
 let's mark $\textbf{r} = \textbf{y} - \textbf{x}$
@@ -392,6 +392,7 @@ Thus averaging the above eq gives,
     + \partial_\textbf{r} \cdot ( \nstavg{q_{ij}\textbf{w}_{ij}} P_{nst}(\textbf{x},\textbf{r})) 
     = 
     \avg{\delta_i\delta_{j}q_{ij}\pddt h_{ij} }
+    + \nstavg{\partial_t q_{ij}}P_{nst}
 \end{multline*}
 Integrating this equation along \textbf{r} gives, 
 \begin{equation}
@@ -399,12 +400,11 @@ Integrating this equation along \textbf{r} gives,
     + \partial_\textbf{x} \cdot  \avg{\delta_i q_{ij}\textbf{u}_i}
     = 
     \avg{\delta_i \ddt q_{ij}}
-    + \int \condavg{q_{ij}\pddt h_{ij}}{P(\textbf{x},\textbf{r})}d\textbf{r}
+    + \int \condavg{q_{ij}\pddt h_{ij}}{2}P_2d\textbf{r}
 \end{equation}
 The third term canceled du to theorem of divergence, and the last one probably would too 
 This equation implies that $ \int\avg{\delta_i\delta_{ij}q_{ij}\pddt h_{ij} }d\textbf{r} =0 $  ? or does it ??
 Yes it must bu null\ldots
-
 
 
 
@@ -413,22 +413,60 @@ Let multiply by \textbf{r}.
 \begin{multline*}
       \pddt (\delta_i\delta_{j}q_{ij}\textbf{r}h_{ij}) 
     + \partial_\textbf{x} \cdot (\textbf{u}_i \textbf{r}\delta_i\delta_{j}q_{ij}h_{ij})
-    + \partial_\textbf{r} \cdot (\textbf{w}_{ij} \textbf{r}\delta_i\delta_{j}q_{ij}h_{ij}) \\= 
-    + \textbf{r} \cdot \textbf{w}_{ij} \delta_i\delta_{j}q_{ij}h_{ij}
-    \delta_i\delta_{j}\textbf{r}\pddt q_{ij}h_{ij} 
+    + \partial_\textbf{r} \cdot (\textbf{w}_{ij} \textbf{r}\delta_i\delta_{j}q_{ij}h_{ij}) \\
+    =  \textbf{w}_{ij} \delta_i\delta_{j}q_{ij}h_{ij}
+    + \delta_i\delta_{j}\textbf{r}\pddt q_{ij}h_{ij} 
     + \delta_i\delta_{j}q_{ij}\textbf{r}\pddt h_{ij} 
 \end{multline*}
 averaging on $\iint \ldots d\mathscr{P}d\textbf{y}$ gives, 
-\begin{multline*}
+\begin{equation*}
       \pddt \avg{\delta_iq_{ij}\textbf{r}} 
     + \partial_\textbf{x} \cdot \avg{\delta_i\textbf{u}_i \textbf{r}q_{ij}}
     = \avg{\delta_i\textbf{w}_{ij}q_{ij}}
     + \avg{\delta_i\textbf{r}\pddt q_{ij}} 
     + \avg{\delta_i\delta_{j}q_{ij}\textbf{r}\pddt h_{ij} }
-\end{multline*}
+\end{equation*}
+\subsection*{Position :}
+Let $\textbf{r} = \textbf{x}_j - \textbf{x}_i$, thus, 
+$\ddt \textbf{r} = \ddt (\textbf{x}_j - \textbf{x}_i) = \textbf{u}_j - \textbf{u}_i$. 
+Thus injecting $q_{ij} =\textbf{r}$, 
+\begin{equation*}
+    \pddt \avg{\delta_i \textbf{r}\textbf{r}} 
+  + \partial_\textbf{x} \cdot \avg{\delta_i\textbf{u}_i \textbf{r} \textbf{r}}
+  = \avg{\delta_i\textbf{w}_{ij} \textbf{r}}
+  + \avg{\delta_i\textbf{r} \textbf{w}_{ij}} 
+  + \int \avg{\delta_i\delta_{j} \textbf{r}\textbf{r}\pddt h_{ij} } d\textbf{r}
+\end{equation*}
+Let $\mathbb{M} = \avg{\delta_i \textbf{r}\textbf{r}}$ then, 
+$\avg{\delta_i\textbf{u}_i \textbf{r} \textbf{r}} 
+= P_1\condavg{\textbf{u}_i \textbf{r} \textbf{r}}{1} 
+= P_1\condavg{\textbf{u}_i}{1} \condavg{\textbf{r} \textbf{r}}{1} 
++ P_1\condavg{\textbf{u}_i' (\textbf{r} \textbf{r})'}{1}
+=\condavg{\textbf{u}_i}{1} \mathbb{M} 
++ \avg{\delta_i\textbf{u}_i' (\textbf{r} \textbf{r})'}$
+Besides, 
+\begin{equation*}
+    \int \int\delta_i\delta_{j} \textbf{r}\textbf{r}\pddt h_{ij} d\mathscr{P} d\textbf{r}
+    =P_1\condavg{\textbf{r}\textbf{r}\pddt h_{ij}}{1}
+    = \mathbb{M}\condavg{\pddt h_{ij}}{1}
+    +\avg{\delta_i(\textbf{r}\textbf{r})'(\pddt h_{ij})'}
+\end{equation*}
+
+Therefore the evolution of $\mathbb{M}$ yields, 
+\begin{equation*}
+    \pddt \mathbb{M} 
+  + \partial_\textbf{x} \cdot (\mathbb{M} \condavg{\textbf{u}_i}{1}
+  + \avg{\delta_i\textbf{u}_i' (\textbf{r} \textbf{r})'})
+  = 
+   \mathbb{S}
+  + P_1\condavg{\textbf{r}\textbf{r}\pddt h_{ij}}{1}
+\end{equation*}
+The last term on the RHS represent the mean square distance at which particle switch nearest neighbors, $\mathbb{S} = \avg{\delta_i\textbf{w}_{ij} \textbf{r}}
++ \avg{\delta_i\textbf{r} \textbf{w}_{ij}} $
 
 
-\subsubsection*{momentum}
+
+\subsubsection*{Momentum :}
 Let's $\textbf{p}_{ij} = \textbf{m}_j \textbf{u}_j-\textbf{m}_i \textbf{u}_i =\int_{\Omega_j}\rho_2 \textbf{u}_2d\Omega
 - \int_{\Omega_i}\rho_2 \textbf{u}_2d\Omega$, 
 \begin{equation}
@@ -437,41 +475,133 @@ Let's $\textbf{p}_{ij} = \textbf{m}_j \textbf{u}_j-\textbf{m}_i \textbf{u}_i =\i
 - \int_{\Omega_i}\rho_2\textbf{g}d\Omega
 + \int_{\Sigma_j} \textbf{T}_1 \cdot \textbf{n}_2d\Sigma
 -\int_{\Sigma_i} \textbf{T}_1 \cdot \textbf{n}_2d\Sigma
-=\textbf{B}_{ij} + \textbf{F}_{ij}
 \end{equation}
 \begin{equation}
 \ddt \textbf{p}_{i} 
 = \ddt (\textbf{m}_i \textbf{u}_i)
 = \int_{\Omega_i}\rho_2\textbf{g}d\Omega
 + \int_{\Sigma_i} \textbf{T}_1 \cdot \textbf{n}_2d\Sigma
-= \textbf{B}_{i} + \textbf{F}_{i}
 \end{equation}
-
-Thus,
-\begin{multline*}
-    \pddt \avg{\delta_i\textbf{p}_{ij}\textbf{r}} 
-  + \partial_\textbf{x} \cdot \avg{\delta_i\textbf{u}_i \textbf{r}\textbf{p}_{ij}}
-  = \avg{\delta_i\textbf{w}_{ij}\textbf{p}_{ij}}
-  + \avg{\delta_i\textbf{r}\textbf{B}_{ij}} 
-  + \avg{\delta_i\textbf{r}\textbf{F}_{ij}} 
-  + \avg{\delta_i\delta_{j}\textbf{p}_{ij}\textbf{r}\pddt h_{ij} }
-\end{multline*}
-and respectively , 
-\begin{multline*}
-    \pddt \avg{\delta_i\textbf{mu}_{i}\textbf{r}} 
-  + \partial_\textbf{x} \cdot \avg{\delta_i\textbf{u}_i \textbf{r}\textbf{mu}_{i}}
-  = \avg{\delta_i\textbf{w}_{ij}\textbf{mu}_{i}}
-  + \avg{\delta_i\textbf{r}\textbf{B}_{i}} 
-  + \avg{\delta_i\textbf{r}\textbf{F}_{i}} 
-  + \avg{\delta_i\delta_{j}\textbf{mu}_{i}\textbf{r}\pddt h_{ij} }
-\end{multline*}
-
-For mono disperse suspension 
-\begin{multline*}
+Consequently, 
+\begin{align*}
+    \ddt \textbf{w}_{ij} 
+    &= \frac{1}{m_j}\int_{\Omega_j}\rho_2\textbf{g}d\Omega 
+    - \frac{1}{m_i}\int_{\Omega_i}\rho_2\textbf{g}d\Omega
+    + \frac{1}{m_j}\int_{\Sigma_j} \textbf{T}_1 \cdot \textbf{n}_2d\Sigma
+    - \frac{1}{m_i}\int_{\Sigma_i} \textbf{T}_1 \cdot \textbf{n}_2d\Sigma\\
+    &=\textbf{B}_{ij} + \textbf{F}_{ij}
+\end{align*}
+and, 
+\begin{equation}
+    \ddt \textbf{u}_{i} 
+    = \frac{1}{m_i}\int_{\Omega_i}\rho_2\textbf{g}d\Omega
+    + \frac{1}{m_i}\int_{\Sigma_i} \textbf{T}_1 \cdot \textbf{n}_2d\Sigma
+    = \textbf{B}_i + \textbf{F}_i
+\end{equation}
+using the avg procedure 
+\begin{equation*}
     \pddt \avg{\delta_i\textbf{w}_{ij}\textbf{r}} 
   + \partial_\textbf{x} \cdot \avg{\delta_i\textbf{u}_i \textbf{r}\textbf{w}_{ij}}
   = \avg{\delta_i\textbf{w}_{ij}\textbf{w}_{ij}}
-  + \avg{\delta_i\textbf{r}\textbf{B}_{ij}} 
-  + \avg{\delta_i\textbf{r}\textbf{F}_{ij}} 
+  + \avg{\delta_i\textbf{r} \textbf{B}_{ij}} 
+  + \avg{\delta_i\textbf{r} \textbf{F}_{ij}} 
   + \avg{\delta_i\delta_{j}\textbf{w}_{ij}\textbf{r}\pddt h_{ij} }
+\end{equation*}
+Let $\mathbb{P} = \avg{\delta_i \textbf{rw}_{ij}}$, then, 
+\begin{equation*}
+    \pddt \mathbb{P} 
+  + \partial_\textbf{x} \cdot (\condavg{\textbf{u}_i}{1} \mathbb{P}
+  + P_1\condavg{\textbf{u}_i' (\textbf{r}\textbf{w}_{ij})'}{1})
+  = \avg{\delta_i\textbf{w}_{ij}\textbf{w}_{ij}}
+  + \avg{\delta_i\textbf{r} \textbf{B}_{ij}} 
+  + \avg{\delta_i\textbf{r} \textbf{F}_{ij}} 
+  + P_1\condavg{\textbf{w}_{ij}\textbf{r}\pddt h_{ij}}{1}
+\end{equation*}
+
+Now we consider the transport of the velocity, 
+\begin{equation*}
+    \pddt \avg{\delta_i\textbf{u}_{i}\textbf{r}} 
+  + \partial_\textbf{x} \cdot \avg{\delta_i \textbf{r}\textbf{u}_i\textbf{u}_{i}}
+  = \avg{\delta_i\textbf{u}_{i}\textbf{w}_{ij}}
+  + \Sigma_{PFP}
+  + \avg{\delta_i\delta_{j}\textbf{w}_{ij}\textbf{r}\pddt h_{ij} }
+\end{equation*}
+where we considered that $\avg{\delta_i\textbf{r} \textbf{B}_{i}} = 0 $ since $\textbf{B}_i$ is constant for a given particle and $\Sigma_{PFP} = \avg{\delta_i\textbf{r} \textbf{F}_{i}}$ 
+
+
+
+Besides assuming $\textbf{w}_{ij} = \textbf{u}_j - \textbf{u}_i$, 
+\begin{equation}
+    \avg{\delta_i \textbf{ru}_{i}}
+    = 
+    \int{\textbf{r}\nstavg{\textbf{u}_{i}}} P_{nst}d\textbf{r}
+    = \int{\textbf{r}\nstavg{\textbf{u}_{j}}} P_{nst}d\textbf{r}
+    - \int{\textbf{r}\nstavg{\textbf{w}_{ij}}} P_{nst}d\textbf{r}
+\end{equation}
+If we decompose, $\textbf{r}\nstavg{\textbf{u}_{i}} = \nstavg{\textbf{u}_{i}}$
+\subsection{Conditional particular shape}
+\begin{multline*}
+    \pddt (\nstavg{\mathcal{M}_{i}} P_{nst}) 
+    + \partial_\textbf{x} \cdot ( \nstavg{\mathcal{M}_{i}\textbf{u}_i} P_{nst})\\
+    + \partial_\textbf{r} \cdot ( \nstavg{\mathcal{M}_{i}\textbf{w}_{ij}} P_{nst}) 
+    = 
+    \condavg{\mathcal{M}_{i}\pddt h_{ij}}{2}P_2
+    + \nstavg{\mathcal{S}_i}P_{nst}
 \end{multline*}
+\subsection{Conditional particular stress}
+
+Evolution of the stresslet of an arbitratry dispersed phase without mass transfer. 
+For a signgle partile, 
+\begin{equation}    
+     \ddt \mathcal{S}_i
+    =  \int_{\Omega_i} \rho_2 \textbf{w}_2 \textbf{w}_2d\Omega
+    - \int_{\Omega_i}\mathbf{T}_2d\Omega
+    -  \textbf{M}_i^\sigma
+    +   \textbf{S}_i
+\end{equation}
+\begin{multline*}
+    \pddt (\nstavg{\mathcal{S}_{i}} P_{nst}) 
+    + \partial_\textbf{x} \cdot ( \nstavg{\mathcal{S}_{i}\textbf{u}_i} P_{nst})
+    + \partial_\textbf{r} \cdot ( \nstavg{\mathcal{S}_{i}\textbf{w}_{ij}} P_{nst}) \\
+    = 
+    \condavg{\mathcal{S}_{i}\pddt h_{ij}}{2}P_2
+    + P_{nst}\left(
+        \nstavg{\int_{\Omega_i} \rho_2 \textbf{w}_2 \textbf{w}_2d\Omega}
+        - \nstavg{\int_{\Omega_i}\mathbf{T}_2d\Omega}
+        - \nstavg{\textbf{M}_i^\sigma}
+        + \nstavg{\textbf{S}_i}
+    \right)
+\end{multline*}
+
+Integrating over $\textbf{r}$ : 
+\begin{multline*}
+    \avg{\delta_i \int_{\Omega_i}\mathbf{T}_2d\Omega}
+    =
+    \avg{\delta_i\mathcal{S}_{i}\pddt h_{ij}}
+    - \partial_t \avg{\delta_i \mathcal{S}_i}
+    - \partial_\textbf{x} \cdot \avg{\delta_i  \textbf{u}_i \mathcal{S}_i}\\
+    + \avg{\delta_i\int_{\Omega_i} \rho_2 \textbf{w}_2 \textbf{w}_2d\Omega}
+    - \avg{\delta_i\int_{\Omega_i}\mathbf{T}_2d\Omega}
+    - \avg{\delta_i\textbf{M}_i^\sigma}
+    + \avg{\delta_i\textbf{S}_i}
+\end{multline*}
+
+\begin{multline*}
+    \pddt (\delta_i\delta_{j}q_{ij}\textbf{r}h_{ij}) 
+  + \partial_\textbf{x} \cdot (\textbf{u}_i \textbf{r}\delta_i\delta_{j}q_{ij}h_{ij})
+  + \partial_\textbf{r} \cdot (\textbf{w}_{ij} \textbf{r}\delta_i\delta_{j}q_{ij}h_{ij}) \\
+  =  \textbf{w}_{ij} \delta_i\delta_{j}q_{ij}h_{ij}
+  + \delta_i\delta_{j}\textbf{r}\pddt q_{ij}h_{ij} 
+  + \delta_i\delta_{j}q_{ij}\textbf{r}\pddt h_{ij} 
+\end{multline*}
+
+\section*{Rate of coalesence }
+
+the rate of coalescence assuming instantaneous film drainage and homogeneous diameter D is :
+\begin{equation*}
+    R^+ 
+    = \int_{\textbf{r}<D}\delta_i(\textbf{x} - \textbf{x}_i)\delta_{j}(\textbf{x} + \textbf{r} - \textbf{x}_j) q_{ij} h_{ij} d\mathscr{P}  
+\end{equation*} 
+
+
+
