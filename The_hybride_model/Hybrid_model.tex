@@ -2,7 +2,7 @@
 Now let us introduce the averaged hybrid model for arbitrary two-phase flows. 
 From \ref{fig:Scheme} we recall that the fluid or continuous phase is indexed $k=1$ and the particle phase by $k=2$.  
 
-\subsubsection*{Continuous phase equations}
+\subsection{Continuous phase equations}
 First we introduce the equation of the continuous phase equation by setting $k = 1$ in \ref{eq:avg_dt_chi_f} and by using \ref{eq:f_exp} on the interfacial, yieldings,
 \begin{multline}
     \pddt \avg{\chi_1 f_1}
@@ -29,10 +29,13 @@ First we introduce the equation of the continuous phase equation by setting $k =
     \label{eq:hybrid_avg_dt_chif}
 \end{multline}
 Notice that the sign of the second and last terms are opposite, indeed we switched the normal vector from $\textbf{n}_1$ to $-\textbf{n}_2$ in both integral. 
-This way we expressed these as the projection on the outward normal vector of the particle phase, which is the conventional way to express these terms. 
-Notice that we neglected the second and higher order moments of the interfacial term meaning that we assume an error of $\mathcal{O}\left(a^2/l^2\right)$ \citep{jackson1997locally}. 
+This way we expressed these as the projection on the outward normal vector of the particle phase, which is the conventional way to express these terms.  \JL{deux dernieres phrases a re ecrire l'anglais y est vraiment pas top}
+Notice that we neglected the second and higher order moments of the coupling term between the two phases \citep{jackson1997locally}
 
-\subsubsection*{Particle phase equations}
+%meaning that we assume an error of $\mathcal{O}\left(a^2/l^2\right)$ \citep{jackson1997locally}. 
+\JL{ce n'eest pas evident de montrer que l'erreur est en $\mathcal{O}\left(a^2/l^2\right)$. Il vaut mieux eviter d'entrer dans ce genre de details si on les explicite pas. Interfacial term n'est pas tres bien choisi je trouve. Je prefere coupling term ...}
+
+\subsection{Particle phase equations}
 For the dispersed phase, we consider the volume of the particle, and the interfaces, as a whole since both quantities are advected along the same velocity, $\pavg{\textbf{u}_\alpha}$ (see \ref{eq:avg_dt_dq_alpha} and \ref{eq:avg_dt_dq_I_alpha}).
 Then we can obtain the dispersed phase equations by adding \ref{eq:avg_dt_dq_alpha} and \ref{eq:avg_dt_dq_I_alpha}, which directly gives us, 
 \begin{multline}
@@ -60,18 +63,20 @@ Additionally, to reach a first order accuracy in our system we add \ref{eq:dt_Q_
     + \pavg{\int_{\Sigma_\alpha} \textbf{r}\left[\mathbf{\Phi}_1 + f_1 (\textbf{u}_I-\textbf{u}_1) \right] \cdot \textbf{n}_2 d\Sigma}\\
     \label{eq:hybrid_avg_dt_dQ_alpha}\\
 \end{multline}
-Under this form the interfacial terms in \ref{eq:hybrid_avg_dt_chif} correspond to the ones appearing in both, \ref{eq:hybrid_avg_dt_dq_alpha} and \ref{eq:hybrid_avg_dt_dQ_alpha} which is of a great interest for the closure problem.
-\ref{eq:hybrid_avg_dt_chif}, \ref{eq:hybrid_avg_dt_dq_alpha} and \ref{eq:hybrid_avg_dt_dQ_alpha}, are the most general form of a first order accurate the hybrid model. 
+Under this form the interfacial terms in \ref{eq:hybrid_avg_dt_chif} correspond to the ones appearing in both, \ref{eq:hybrid_avg_dt_dq_alpha} and \ref{eq:hybrid_avg_dt_dQ_alpha} which is of a great interest for the closure problem. \JL{a expliciter : tu ne peux dire que c'est d'un grand interet si tu n'expliques pas pourquoi. De maniere generale il faut eviter ce genre de phrase}
+\ref{eq:hybrid_avg_dt_chif}, \ref{eq:hybrid_avg_dt_dq_alpha} and \ref{eq:hybrid_avg_dt_dQ_alpha}, \JL{repetition du mot equation} are the most general form of a first order accurate the hybrid model. 
 It is straightforward to show that by adding more terms in the expansion of \ref{eq:avg_dt_chi_f} and higher order moments equations, one can reach an arbitrary order of accuracy hybrid model. 
 
 \subsection{Poly-disperse volume and momentum conservation equations without mass transfer}
+\JL{tu n'as qu'une seul sous-section cela n'a pas de sens.}
 
-We consider a multiphase flow with no-mass transfer, and interfaces with negligible weight, as it is often the cases in bubbly flows or emulsion. 
+We consider a multiphase flow with no-mass transfer, and interfaces with negligible weight. \JL{evite les phrases comme : as it is often the cases in bubbly flows or emulsion. N'importe quel reviewer te dira que cela depend de l'application que tu regardes. Par ailleurs je pense que sharp interfaces convient mieux que negligible weight.}%, as it is often the cases in bubbly flows or emulsion. 
 
 
-\subsubsection*{The volume conservation equations}
+\subsubsection{The volume conservation equations}
+\JL{le titre ne me convient pas car on ne conserve pas que le volume (surface, ...). A mediter}
 
-To derive the volume conservation equations we set $f_{1|2} = 1$, $f_I = 0$ and  $\Phi_{1|2} = S_{1|2} =\Phi_{I} = S_{I} = 0$. 
+To derive the volume conservation equations we set $f_{1|2} = 1$, $f_I = 0$ and  $\Phi_{1|2} = S_{1|2} =\Phi_{I} = S_{I} = 0$. \JL{je ne comprends pas du tout la notation $_{1|2}$. tu veux dire 1 sachant 2 ? quel est l'interet de cela quand on utilise des moyennes volumiques ?}
 Applying this into \ref{eq:hybrid_avg_dt_chif} and using the conditional average definition from \ref{eq:1_avg} gives us,
 \begin{equation}
     \pddt \phi_1
@@ -82,8 +87,8 @@ Applying this into \ref{eq:hybrid_avg_dt_chif} and using the conditional average
 which is the transport equation of the continuous phase volume fraction, $\phi_1$,along the conditional phase velocity, $\oneavg{\textbf{u}}$. 
 
 For the particle phase we first consider the volume of the particle, $v_\alpha = \int_{\Omega_\alpha} d\Omega$.
-Note that the corresponding surface quantities appearing in \ref{eq:hybrid_avg_dt_dq_alpha}, would be the volume of the surface, namely $v_{I\alpha} = \int_{\Sigma_\alpha} e_I d\Sigma$, with $e_I$ the thickness of the surface. 
-Nevertheless, it will not be considered since the volume of the surface is by essence negligible.
+Note that the corresponding surface quantities appearing in \ref{eq:hybrid_avg_dt_dq_alpha}, would be the volume of the surface, namely $v_{I\alpha} = \int_{\Sigma_\alpha} e_I d\Sigma$, with $e_I$ the thickness of the surface. \JL{cette derniere phrase ne veut rien dire ! La quantite equivalente a la moyenne volumique dans ce cas surfasique est simplement la surface.}
+%Nevertheless, it will not be considered since the volume of the surface is by essence negligible.
 Instead,  we study the zeroth order moment of surface $s_{I\alpha} = \int_{\Sigma_\alpha} d\Sigma$. 
 Injecting, $q_\alpha = 1$,$v_\alpha, s_\alpha$ in respectively, \ref{eq:avg_dt_dq_alpha}, \ref{eq:avg_dt_dq_I_alpha}, \ref{eq:hybrid_avg_dt_dQ_alpha} and making use of \ref{eq:p_avg} gives the number density, surface and volume transport equation for the particle fields, respectively,
 \begin{align}
@@ -102,17 +107,17 @@ Injecting, $q_\alpha = 1$,$v_\alpha, s_\alpha$ in respectively, \ref{eq:avg_dt_d
     \label{eq:hybrid_avg_dt_dv_alpha}
 \end{align}
 It is important to understand that the RHS of both \ref{eq:hybrid_avg_dt_n} and \ref{eq:hybrid_avg_dt_dv_alpha} is zeroth due to the consideration of no mass transfer and no changes in topology such as coalesce ad break up.
-However, in the surface equation we must consider a source term of the form $\dot{s}_\alpha = \int_{\Sigma_\alpha} \textbf{u}_I \cdot \textbf{n}(\nablabh \cdot \textbf{n}) d\Sigma$ since the surface of a particle isn't constant under deformation \citep{morel2007surface}. 
+However, in the surface equation we must consider a source term of the form $\dot{s}_\alpha = \int_{\Sigma_\alpha} \textbf{u}_I \cdot \textbf{n}(\nablabh \cdot \textbf{n}) d\Sigma$ since the surface of a particle isn't constant under deformation \citep{morel2007surface}. Remark that the system of equation formed by \ref{eq:hybrid_avg_dt_n} to \ref{eq:hybrid_avg_dt_dv_alpha} share some similarities with the moment equations derived using Population Balance Equations (PBE)\citet{KAMP20011363,marchisio2013computational}. \JL{j'ai commente tout le reste}.
 
-Remark that the system of equation formed by \ref{eq:hybrid_avg_dt_n} to \ref{eq:hybrid_avg_dt_dv_alpha} is equivalent to the diameter weighted distribution  Population Balance Equations (PBE)\citet{KAMP20011363}. 
-Indeed, if we note,$\xi_\alpha$ the diameter of a particle, $\mathcal{M}_k = \int  \xi^k_\alpha \delta_\alpha d\mathscr{P} $ and $\mathcal{U}_k = \int \xi_\alpha^k \textbf{u}_\alpha \delta_\alpha  d\mathscr{P}$, as respectively, the mean weighted diameter and velocity $k^{th}$ moment of the diameter distribution \citet{marchisio2013computational,zaepffel2012multisize}. 
-For an arbitrary shaped particle we have $s_\alpha \sim \xi_\alpha^2$, $v_\alpha \sim \xi_\alpha^3$.
-Thus, considering definition of $\mathcal{M}_k$ and the particular average we easily find the following equivalence,  $n_p = \mathcal{M}_0$, $\pnavg{s_\alpha} \sim \mathcal{M}_2$ and $\pnavg{v_\alpha} \sim \mathcal{M}_3$ \citet[Chapter 2]{zaepffel2012multisize}. 
-Similarly, we can show that, $\pnavg{\textbf{u}_\alpha}\sim\mathcal{U}_0$, $\pnavg{s_\alpha\textbf{u}_\alpha}\sim\mathcal{U}_2$ and so on. 
-Therefore, \ref{eq:hybrid_avg_dt_n} to \ref{eq:hybrid_avg_dt_dv_alpha} are equivalent to the PBE, namely, $\pddt \mathcal{M}_k + \nablabh \cdot\mathcal{U}_k = \dot{\mathcal{M}_k}$ 
-\citep{fox2023generalized,sporleder2012population,morel2010comparison,randolph2012theory}.
-Consequently, we could recover the size distribution $P(\xi)$ from $n_p,\pnnavg{s_\alpha}$ and $\pnnavg{v_\alpha}$ assuming a priori a 3 parameter distribution for $P$.
-Nevertheless, it has been shown by \citet{fox2023generalized} that it is more convenient to use the moments equations from a purely mathematical point of view. 
+%is equivalent to the diameter weighted distribution  Population Balance Equations (PBE)\citet{KAMP20011363}. 
+%Indeed, if we note,$\xi_\alpha$ the diameter of a particle, $\mathcal{M}_k = \int  \xi^k_\alpha \delta_\alpha d\mathscr{P} $ and $\mathcal{U}_k = \int \xi_\alpha^k \textbf{u}_\alpha \delta_\alpha  d\mathscr{P}$, as respectively, the mean weighted diameter and velocity $k^{th}$ moment of the diameter distribution \citet{marchisio2013computational,zaepffel2012multisize}. 
+%For an arbitrary shaped particle we have $s_\alpha \sim \xi_\alpha^2$, $v_\alpha \sim \xi_\alpha^3$.
+%Thus, considering definition of $\mathcal{M}_k$ and the particular average we easily find the following equivalence,  $n_p = \mathcal{M}_0$, $\pnavg{s_\alpha} \sim \mathcal{M}_2$ and $\pnavg{v_\alpha} \sim \mathcal{M}_3$ \citet[Chapter 2]{zaepffel2012multisize}. 
+%Similarly, we can show that, $\pnavg{\textbf{u}_\alpha}\sim\mathcal{U}_0$, $\pnavg{s_\alpha\textbf{u}_\alpha}\sim\mathcal{U}_2$ and so on. 
+%Therefore, \ref{eq:hybrid_avg_dt_n} to \ref{eq:hybrid_avg_dt_dv_alpha} are equivalent to the PBE, namely, $\pddt \mathcal{M}_k + \nablabh \cdot\mathcal{U}_k = \dot{\mathcal{M}_k}$ 
+%\citep{fox2023generalized,sporleder2012population,morel2010comparison,randolph2012theory}.
+%Consequently, we could recover the size distribution $P(\xi)$ from $n_p,\pnnavg{s_\alpha}$ and $\pnnavg{v_\alpha}$ assuming a priori a 3 parameter distribution for $P$.
+%Nevertheless, it has been shown by \citet{fox2023generalized} that it is more convenient to use the moments equations from a purely mathematical point of view. 
 
 
 In order to reach a higher order description of the shape of the particles we introduce the second order moment volume tensor,  $\mathcal{V}_\alpha = \int_{\Omega_\alpha} \textbf{rr} d\Omega$. 
@@ -127,7 +132,7 @@ Injecting, $Q_\alpha = \mathcal{V}_\alpha$ in the second order moment equation \
     = \rho_2^{-1}\pnavg{\mathcal{P}_\alpha+\mathcal{P}_\alpha^T}.
     \label{eq:hybrid_avg_dt_dV_alpha}
 \end{equation}
-where we introduced the first moment of momentum by $\mathcal{P}_\alpha = \int_{\Omega_\alpha} \rho_2\textbf{ru}_2 d\Omega$ which symmetric and antisymmetric part being respectively, the stretch of momentum and the angular momentum of a particle. 
+where we introduced the first moment of momentum by $\mathcal{P}_\alpha = \int_{\Omega_\alpha} \rho_2\textbf{ru}_2 d\Omega$ which symmetric and antisymmetric part being respectively, the stretch of momentum and the angular momentum of a particle.\JL{il faut expliciter la partie symmetrique et anti-symetrique de ce tenseur.} 
 The meaning of \ref{eq:hybrid_avg_dt_dV_alpha} is that the shape of the particle described at the first order by the tensor $\mathcal{V}_\alpha$, depends solely on the symmetric part of $\mathcal{P}_\alpha$ which turn out to be the stretching of momentum.  
 It is important to mention that the trace of the \textit{shape} tensor represent the particle's radius of gyration.
 Consequently, particles with no changes in volume, yield the interesting property, $\ddt \mathcal{V}_\alpha : \textbf{I} = 0$.
@@ -140,8 +145,8 @@ $\mathbf{\Phi}_{1|2} = \textbf{T}_{1|2}$,
 $\textbf{S}_{1|2} = \textbf{g}$, 
 $\mathbf{\Phi}_I  =  \sigma (\textbf{I} - \textbf{nn})$,
 $\mathbf{S}_I  =  f_I = 0$,
-where we introduced the stress tensor $\textbf{T}_{1|2}$ defined in the phases $1$ and $2$, the surface tension coefficient $\sigma$, and the gravitational acceleration \textbf{g}.
-Under the assumption of no-interfacial viscosity (no Boussinesq-Scriven surface stress), the expression of $\mathbf{\Phi}_I$, can be obtained following \citet[Chapter 2]{tryggvason2011direct}\citet{brenner2013interfacial} where $\sigma$ isn't necessary constant.  
+where we introduced the stress tensor $\textbf{T}_{1|2}$ \JL{encore une fois je ne comprends pas bien la notation $_{1|2}$. tu veux dire 1 sachant 2 ? quel est l'interet de cela quand on utilise des moyennes volumiques ?}  defined in the phases $1$ and $2$, the surface tension coefficient $\sigma$, and the gravitational acceleration \textbf{g}.
+Under the assumption of no-interfacial viscosity (no Boussinesq-Scriven surface stress), the expression of $\mathbf{\Phi}_I$, can be obtained following \citet[Chapter 2]{tryggvason2011direct}\citet{brenner2013interfacial} where $\sigma$ isn't necessary constant \JL{je ne connaissais pas cette expression de $\mathbf{\Phi}_I$ d'ou la tires tu ? il faudrait aussi peut etre presenter les hypothèses dont tu parles en amont quand on dit qu'il n'y a pas de transfert de masse etc ...}.  
 Then, from \ref{eq:hybrid_avg_dt_chif} and \ref{eq:1_avg}, we easily derive the averaged momentum  equation of the phase $1$, namely, 
 \begin{equation}
     \pddt (\rho_1\phi_1\oneavg{\textbf{u}})
@@ -155,7 +160,7 @@ Then, from \ref{eq:hybrid_avg_dt_chif} and \ref{eq:1_avg}, we easily derive the 
     \right]
     \label{eq:hybrid_avg_dt_rhou}
 \end{equation}
-with $\textbf{f}_\alpha = \int_{\Sigma_\alpha} \mathbf{T}_1 \cdot \textbf{n}_2d\Sigma$ is the drag force applied on the particle $\alpha$,
+with $\textbf{f}_\alpha = \int_{\Sigma_\alpha} \mathbf{T}_1 \cdot \textbf{n}_2d\Sigma$ is the drag force applied on the particle $\alpha$ \JL{surement pas que la "drag force". The sum of hydrodynamics forces on the particles. D'ailleurs je pense qu'il manque une etape. Ce terme ne peut pas etre interprete comme une force. Il faut lui soustraire la partie moyennee des contraintes. Cf bouquin de Jackson (section 2.2), Cours de Lhuillier equation (122) (qui fait quelque chose de legerement different) et papier de Zhang et Prosperretti (1997). Car sinon tu peux creer de la contrainte "juste" par effet d'inhomogeneite de fraction volumique. },
 $\mathbf{\Sigma}_P = \pnavg{\textbf{M}_\alpha} -  \rho_1\phi_1\oneavg{\textbf{u}'\textbf{u}'}$ is the particle contribution to the suspension stress,
 with $\textbf{M}_\alpha = \int_{\Sigma_\alpha} \textbf{r}\mathbf{T}_1\cdot \textbf{n}_2d\Sigma $ the first hydrodynamic moment on the particle $\alpha$.
 The deviatoric part of $\textbf{M}_\alpha$ is usually decomposed into a symmetric and antisymmetric part, i.e. $M^\alpha_{ij} - \frac{1}{3}M^\alpha_{kk}\delta_{ij} = S^\alpha_{ij}+T^\alpha_{ij}$, with,
@@ -175,11 +180,12 @@ The deviatoric part of $\textbf{M}_\alpha$ is usually decomposed into a symmetri
         - (T^1_{ik}n^2_k)r_j
     \right]d\Sigma \nonumber
 \end{align}
+\JL{que signifient les exposants 1 et 2 ici (le fluide ?)? car pour l'instant on utilisait systematiquement l'indice du bas pour les designer $_1$ ou $_2$}
 which correspond  to respectively, the hydrodynamic stresslet and torque applied on the particle $\alpha$ \citep{guazzelli2011,kim2013microhydrodynamics}. 
 We  also introduce the hydrodynamical torque vector as $\textbf{t}_\alpha = \int_{\Sigma_\alpha} \textbf{r} \times (\mathbf{T}_1\cdot \textbf{n}_2) d\Sigma$ which is related to the torque tensor by $t^\alpha_i = \epsilon_{ikj} T^\alpha_{jk}$, where $\epsilon$ the third order alternating tensor. 
 
 Regarding the particle phase averaged equations, we consider at first the equation for the zeroth order of momentum, i.e. $\textbf{p}_\alpha = \int_{\Omega_\alpha} \rho_2 \textbf{u}_2 d\Omega$. 
-By injecting $q_\alpha = \textbf{p}_\alpha$ in respectively, \ref{eq:hybrid_avg_dt_dq_alpha} and making use of the momentum decomposition $\textbf{p}_\alpha = \textbf{m}_\alpha \textbf{u}_\alpha$ from \ref{eq:dt_q_alpha}, we obtain the following equation,
+By injecting $q_\alpha = \textbf{p}_\alpha$ in respectively, \ref{eq:hybrid_avg_dt_dq_alpha} and making use of the momentum decomposition $\textbf{p}_\alpha = \textbf{m}_\alpha \textbf{u}_\alpha$ from \ref{eq:dt_q_alpha}, \JL{deja ce n'est pas lequation 16 mais lequation 14. Par ailleurs il manque un terme ou alors tu le neglige ?} we obtain the following equation,
 
 \begin{equation}
     \pddt (\pnavg{\rho_2 v_\alpha\textbf{u}_\alpha})
@@ -190,7 +196,7 @@ By injecting $q_\alpha = \textbf{p}_\alpha$ in respectively, \ref{eq:hybrid_avg_
 \end{equation}
 First notice that in \ref{eq:hybrid_avg_dt_dp_alpha} has the same form as for solid spherical particle momentum conservation \citep{jackson1997locally} even-so we considered arbitrary particle shape and internal motion. 
 Consequently, it is remarkable to observe that neither the surface tension nor the internal motion play a role in the linear momentum. 
-Nevertheless, it is important to notice that due to the poly disperse nature of the flow we obtain mass weighted velocity terms $\pnavg{\rho_2 v_\alpha\textbf{u}_\alpha}$ and $\pnavg{\rho_2 v_\alpha\textbf{u}_\alpha\textbf{u}_\alpha}$. 
+Nevertheless, it is important to notice that due to the polydisperse nature of the flow we obtain mass weighted velocity terms $\pnavg{\rho_2 v_\alpha\textbf{u}_\alpha}$ and $\pnavg{\rho_2 v_\alpha\textbf{u}_\alpha\textbf{u}_\alpha}$. 
 Therefore, this equation is not sufficient to describe the momentum of the particle phase, instead one have to solve for the size-weighted velocity moments corresponding to the Generalized Population Balance Equations (GPBE)  \citep{fox2023generalized}. 
 In order to solve this equation for the averaged velocity, we suggest dividing the single particle momentum balance (\ref{eq:dt_q_alpha}), by the mass. 
 Then, by applying the particle phase average on this acceleration balance gives, 
@@ -198,19 +204,19 @@ Then, by applying the particle phase average on this acceleration balance gives,
     \pddt (\pnavg{\textbf{u}_\alpha})
     + \nablabh \cdot(\pnavg{\textbf{u}_\alpha}\pnnavg{ \textbf{u}_\alpha })
     = 
-    \pnavg{\textbf{f}_\alpha(v_\alpha\rho_2)^{-1}}
+    \pnavg{\frac{1}{v_\alpha\rho_2}\textbf{f}_\alpha}
     + n_p \textbf{g}
     - \nablabh \cdot(\pnavg{\textbf{u}'_\alpha \textbf{u}'_\alpha })
     \label{eq:hybrid_avg_dt_dp2_alpha}
 \end{equation}
-where $\pnavg{\textbf{u}'_\alpha \textbf{u}'_\alpha }$ and $\pnavg{(v_\alpha\rho_2)^{-1} \textbf{f}_\alpha }$, correspond respectively to the granular temperature or the pseudo Reynolds tensor \citep{jackson1997locally} and the inverse volume weighted drag force term. 
+where $\pnavg{\textbf{u}'_\alpha \textbf{u}'_\alpha }$ and $\pnavg{(v_\alpha\rho_2)^{-1} \textbf{f}_\alpha }$, correspond respectively to the granular temperature or the pseudo Reynolds tensor \citep{jackson1997locally} and the inverse mass weighted drag force term. 
 Then we observe that the weighted velocity term vanish. 
 Consequently, if we wish to describe poly disperse flows, two options are available. 
 Either to solve for the size weighted velocity equations for the $\mathcal{U}_k$, from the GPBE \citet{fox2023generalized,marchisio2013computational}.
 Alternatively \ref{eq:hybrid_avg_dt_dp2_alpha} can be solved solely using the mean particle velocity with the weighted mass drag force which is a function of the size-distribution.  
-The usefulness of this \ref{eq:hybrid_avg_dt_dp2_alpha} is that we often neglect the size-weighted velocities in the PBE, but we still recover a size distribution. 
+The usefulness of this \ref{eq:hybrid_avg_dt_dp2_alpha} is that we often neglect the size-weighted velocities in the PBE, but we still recover a size distribution.\JL{je ne comprends pas cette phrase} 
 Therefore, it is more accurate to use \ref{eq:hybrid_avg_dt_dp2_alpha} than \ref{eq:hybrid_avg_dt_dp_alpha} in those cases. 
-\tb{Some worlds about particle fluid particle stress and contact forces stress ? }
+\tb{Some worlds about particle fluid particle stress and contact forces stress ? } \JL{pourquoi pas.}
 
 To reach a higher order description of the particle phase we define the first moment of the momentum of a particle by, $\mathcal{P}_\alpha = \int_{\Omega_\alpha} \rho_2 \textbf{r} \textbf{u}_2 d\Omega$.
 Then, by setting $\textbf{Q}_\alpha = \mathcal{P}_\alpha$ in \ref{eq:hybrid_avg_dt_dQ_alpha} gives,
@@ -226,11 +232,11 @@ Then, by setting $\textbf{Q}_\alpha = \mathcal{P}_\alpha$ in \ref{eq:hybrid_avg_
     \label{eq:hybrid_avg_dt_dP_alpha}
 \end{multline}
 in agreement with \citet[Appendix C]{morel2015mathematical} and \citet[chapter 1]{zaepffel2011modelisation}.
-We introduced the first moment of the surface tension $\textbf{M}_\alpha^\sigma = \int_{\Sigma_\alpha} \sigma (\textbf{I} - \textbf{nn}) d\Sigma$.
+We introduced the first moment of the surface tension $\textbf{M}_\alpha^\sigma = \int_{\Sigma_\alpha} \sigma (\textbf{I} - \textbf{nn}) d\Sigma$ \JL{il manque un $\textbf{r}$ non ?}.
 Notice that the first moment of weight canceled due to the fact that $\textbf{g}$ is constant all over the volume. 
-Under this form \ref{eq:hybrid_avg_dt_dP_alpha} is not particle. 
+Under this form \ref{eq:hybrid_avg_dt_dP_alpha} is not particle \JL{que signifie cela ?}. 
 In order to give it a clearer physical meaning we must decompose this equation into three distinct part. 
-In the same spirit as \ref{eq:M_decomposition} we decompose the moment of momentum such that, $\mathcal{P}^\alpha_{ij} - D\delta_{ij} = \mathcal{S}^\alpha_{ij}+\mathcal{T}^\alpha_{ij}$, where $D_\alpha = \frac{1}{3}\mathcal{P}^\alpha_{kk}$ is the trace ,$\mathcal{S}^\alpha$ is symmetric part and $\mathcal{T}^\alpha$ the antisymmetric part, corresponding respectively to the momentum of compression, stretching and torque on the particle. 
+In the same spirit as \ref{eq:M_decomposition} we decompose the moment of momentum such that, $\mathcal{P}^\alpha_{ij} - D\delta_{ij} = \mathcal{S}^\alpha_{ij}+\mathcal{T}^\alpha_{ij}$, where $D_\alpha = \frac{1}{3}\mathcal{P}^\alpha_{kk}$ is the trace ,$\mathcal{S}^\alpha$ is symmetric part and $\mathcal{T}^\alpha$ the antisymmetric part, corresponding respectively to the momentum of compression \JL{momentum of compression ne veut rien dire : prefere incompressibility of the particle}, stretching and torque on the particle. 
 
 We start by taking the trace of \ref{eq:hybrid_avg_dt_dP_alpha}, which directly yields the scalar equation, 
 \begin{multline}
@@ -244,9 +250,9 @@ We start by taking the trace of \ref{eq:hybrid_avg_dt_dP_alpha}, which directly 
         + \pnavg{\int_{\Sigma_\alpha} \textbf{r}\cdot(\textbf{T}_1\cdot\textbf{n}_2) d\Sigma}
     \label{eq:hybrid_avg_dt_dD_alpha}
 \end{multline}
-whihc correspond to the total work energy within the particle. 
+which correspond to the total work energy \JL{work ou energy ?}within the particle. \JL{dans l'ideal il faudrait donner la signification physique de chacun des termes de cette equation.}
 It is interesting to notice that in the case where the particle has a constant volume $D_\alpha = \ddt \text{tr}(\mathcal{V}_\alpha)  = 0$. 
-Besides, notice that applying the above equation for static spherical particle gives Laplace law back. 
+Besides, notice that applying the above equation for static spherical particle gives Laplace law back. \JL{je ne vois pas de quel loi de Laplace tu parles. Ce serait bien de l'expliciter.}
 
 
 
@@ -259,6 +265,7 @@ Then, the conservation equation of the angular momentum $\mu_\alpha$ can be obta
     \pnavg{\textbf{t}_\alpha},
     \label{eq:hybrid_avg_dt_dmu_alpha}
 \end{equation}
+\JL{as tu compare cette equation a Zhang $\&$ Prosperetti 1997 p 434 ?}
 Notice that any other component of \ref{eq:hybrid_avg_dt_dP_alpha} vanish due their symmetric nature. 
 Likewise, taking the symmetric part of \ref{eq:hybrid_avg_dt_dP_alpha}, yield an equation for the symmetric part of the moment of momentum, namely,
 \begin{multline}    
@@ -272,8 +279,9 @@ Likewise, taking the symmetric part of \ref{eq:hybrid_avg_dt_dP_alpha}, yield an
         + \pnavg{\textbf{S}_\alpha}.
     \label{eq:hybrid_avg_dt_dS_alpha}
 \end{multline}
+\JL{idem il faudrait donner la signification physique de chacun des termes de cette equation.}
 Since, $\ddt \mathcal{V}_\alpha = \mathcal{S}_\alpha$ we can deduce that the evolution of $\mathcal{V}_\alpha$ is motivated by velocity fluctuations and the stresslet, while it is being counteracted by surface tension forces and internal stress. 
-This equilibrium tends to keep the fluid particle in a stable shape. 
+This equilibrium tends to keep the fluid particle in a stable shape\JL{je ne vois pas en quoi cette equilibre maintient la particule en etat stable. d'ailleurs il vaut mieux eviter des mots tel que stabilite qui ont des definitions bien precises.}. 
 Note that the surface tension forces play a role in the symmetric part of first moment of momentum evolution while it does not on the linear momentum \ref{eq:hybrid_avg_dt_dp_alpha}.
 As a consequence, the surface tension coefficient impact the linear momentum on the particle through its action on the shape. 
 \ref{eq:hybrid_avg_dt_dS_alpha} can also be seen as an equation for the averaged internal particle stress, by rearranging the terms yield, 
@@ -286,8 +294,8 @@ As a consequence, the surface tension coefficient impact the linear momentum on 
     \label{eq:T_definition}
 \end{equation}
 The determination of the internal particle stress is primordial in the study of Rheology.
-As an example, for solid spherical particle in Stokes regime, this equation reduce to $ \int_{\Omega_\alpha}\mathbf{T}_2d\Omega = \frac{1}{2}\textbf{S}_\alpha$, which eventually leads us the computation of the Einstein viscosity. 
-In general, from \ref{eq:T_definition} we remark that if one aim to compute the particle viscosity he must know the internal fluctuations, rate of stain moment of surface tension and of course the stress let. 
+As an example, for solid spherical particle in Stokes regime, this equation reduce to $ \int_{\Omega_\alpha}\mathbf{T}_2d\Omega = \frac{1}{2}\textbf{S}_\alpha$, which eventually leads us the computation of the Einstein viscosity. \JL{a detailler, meme si le calcul est naturel on ne peut pas juste le dire comme cela. D'ailleurs d'ou vient le $1/2$ ?}
+In general, from \ref{eq:T_definition} we remark that if one aim to compute the particle viscosity he must know the internal fluctuations, rate of stain moment of surface tension \JL{quesaquo ?} and of course the stress let \JL{stresslet}. 
 
 
 As remarked by \citet{jackson1997locally} for solid spherical particle, and here in a more general case :\ref{eq:hybrid_avg_dt_rhou} and \ref{eq:hybrid_avg_dt_dp_alpha}may seem to be not coupled with the moment of momentum and the moment of volume equations since $\mathcal{P}_\alpha$ and $\mathcal{V}_\alpha$ do not appear in \ref{eq:hybrid_avg_dt_rhou} and \ref{eq:hybrid_avg_dt_dp_alpha}.

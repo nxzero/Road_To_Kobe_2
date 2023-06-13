@@ -24,7 +24,7 @@
 %     citecolor = green!50!black,
 %     urlcolor=cyan,
 % }
-\RequirePackage[doublespacing]{setspace}
+%\RequirePackage[doublespacing]{setspace}
 \RequirePackage{natbib}
 \bibliographystyle{apalike}
 

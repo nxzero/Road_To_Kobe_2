@@ -1,8 +1,10 @@
 
 \label{sec:two-fluid}
 
-We consider a system made of two phases, $\Omega_1(t)$ and $\Omega_2(t)$, separated by a sharp interface $\Sigma$(t), that fill the considered domain $\Omega \subset \mathbb{R}^3$, in such a way that $\Omega = \Sigma(t) \cup \Omega_1(t) \cup \Omega_2(t)$ (see \ref{fig:Scheme}). 
-These domains obey the physical and mathematical constraints defined in \cite{bothe2022sharp}. 
+%We consider a system made of two phases, $\Omega_1(t)$ and $\Omega_2(t)$, separated by a sharp interface $\Sigma$(t), that fill the considered domain $\Omega \subset \mathbb{R}^3$, in such a way that $\Omega = \Sigma(t) \cup \Omega_1(t) \cup \Omega_2(t)$ (see \ref{fig:Scheme}). 
+We consider a system made of two phases, \JL{1 and 2 (evite au maximum le verbiage mathematique qui n'apporte rien en physique)}, separated by a sharp interface $\Sigma$. Each phase subdomain is denoted $\Omega_1$ and $\Omega_2$ (see \ref{fig:Scheme}). These domains obey the physical and mathematical constraints defined in \cite{bothe2022sharp}. 
+\JL{je ne vois pas bien ce que vient faire le papier de D. Bothe à ce stade ...} 
+%These domains obey the physical and mathematical constraints defined in \cite{bothe2022sharp}. 
 To track the position of the phase indexed $k$, we introduce the Phase Indicator Function (PIF), 
 \begin{equation}
     \chi_k(\textbf{y},t) =  \left\{
@@ -50,8 +52,10 @@ To track the position of the phase indexed $k$, we introduce the Phase Indicator
 \end{figure}
 From this point we drop the time and position arguments in the PIF. 
 
-\subsubsection*{Topological equations}
-By considering that the convective derivative of $\chi_k$ is zero at the interface points we can deduce that the transport equation of the $\chi_k$ reads \citep{drew1983mathematical,kataoka1986local,morel2015mathematical},
+\subsection{Topological equations}
+%By considering that the convective derivative of $\chi_k$ is zero at the interface points we can deduce that the transport equation of the $\chi_k$ reads 
+
+Using the distribution formalism, one may show that the transport equation of $\chi_k$ reads\citep{drew1983mathematical} \JL{tu cites plein de papier en plus de Drew, mais cela n’est pas necessaire. Il faut juste citer la reference originelle}%,kataoka1986local,morel2015mathematical},
 \begin{equation}
     \pddt \chi_k
     + \textbf{u}_I \cdot \nablabh \chi_k
@@ -59,15 +63,16 @@ By considering that the convective derivative of $\chi_k$ is zero at the interfa
     \label{eq:dt_chi_k}
 \end{equation}
 where $\textbf{u}_I$ is the velocity of the interface $\Sigma(t)$.
-Additionally, it can be shown \citep{tryggvason2011direct,drew1983mathematical,kataoka1986local,bothe2022sharp} that,
+Additionally, it can be shown \citep{tryggvason2011direct,drew1983mathematical,kataoka1986local,bothe2022sharp} \JL{tu cites plein de papier en plus de Drew, mais cela n’est pas necessaire. Il faut juste citer la reference originelle} that,
 \begin{equation}
     \nablabh \chi_k
     = - \delta_I \textbf{n}_k
     \label{eq:grad_chi_k}
 \end{equation}
-where we introduced the Interface Indicator Function (IIF) defined as $\delta_I = \delta(\textbf{y}-\textbf{y}_I)$ with $\delta$ the Dirac-delta function and $\textbf{y}_I$ the position vector lying on the domain $\Sigma(t)$.
+\JL{es tu sur du signe ?}
+where we introduced the Interface Indicator Function (IIF) defined as $\delta_I = \delta(\textbf{y}-\textbf{y}_I)$ with $\delta$ \JL{is} the Dirac-delta function and $\textbf{y}_I$ the position vector lying on the domain $\Sigma(t)$ \JL{and $\textbf{y}_I$ the position of the interface}.
 Besides, $\textbf{n}_k$ is defined as the outward normal vector of the domain $\Omega_k$ (see \ref{fig:Scheme}).
-To describe the evolution of $\delta_I$ we take the gradient of \ref{eq:dt_chi_k} which yields the IIF transport equation,
+To describe the evolution of $\delta_I$ we take the gradient of \ref{eq:dt_chi_k} which yields \JL{reference ?}%the IIF transport equation,
 \begin{equation}
     \pddt \delta_I
     + \nablabh \cdot \left[(\textbf{u}_I\cdot\textbf{n})\textbf{n} \delta_I\right]
@@ -80,23 +85,28 @@ As pointed out by \citet{morel2007surface}, it is more convenient to rewrite thi
     = \delta_I \nablabhI \cdot \textbf{u}_I.
     \label{eq:dt_delta_I}
 \end{equation}
-where we introduced the surface divergence operator defined as $\nablabhI \cdot ()= (\textbf{I}-\textbf{nn})\cdot \nablabh \cdot ()$ which is the divergence operator projected on the tangential plan of $\Sigma(t)$. 
-All along this work we define $\textbf{F}_{||} = (\textbf{I}-\textbf{nn})\cdot \textbf{F}$ for any arbitrary tensor $\textbf{F}$, and use the subscript $_I$ to denote any quantity belonging to $\Sigma$.   
-Lastly, we can derive an expression for the gradient of $\delta_I$ by taking the gradient of \ref{eq:grad_delta_I} yielding,
+where we introduced the surface divergence operator defined as $\nablabhI \cdot ()= (\textbf{I}-\textbf{nn})\cdot \nablabh \cdot ()$ which is the \JL{surface} divergence operator \JL{la notation $\nablabhI$ n’est pas res heureuse, pq ne pas utiliser $\nabla _s$ comme tout le monde}
+
+%projected on the tangential plan of $\Sigma(t)$. 
+All along this work we \JL{make use of the subscript $_s$ to denote a quantity projected along the interface} such that $\textbf{f}_{s} = (\textbf{I}-\textbf{nn})\cdot \textbf{f}$ where $f$ is an arbitrary quantity \JL{mais f est une quantite arbitraire mais a quelle phase appartient elle ? est on oblige de definir cela maintenant ?}. for any arbitrary tensor $\textbf{F}$. \JL{We also} use the subscript $_I$ to denote any quantity belonging to $\Sigma$.   
+Lastly, we can derive an expression for the gradient of $\delta_I$ by taking the gradient of \ref{eq:grad_delta_I} yielding \JL{tu cites lequation 6 que tu definis juste en dessous},
 \begin{equation}
     \nablabh\delta_I 
     = \textbf{n} \cdot \nablabh (\textbf{n} \delta_I).
     \label{eq:grad_delta_I}
 \end{equation}
-Then, \ref{eq:dt_chi_k},\ref{eq:grad_chi_k}\ref{eq:dt_delta_I} and \ref{eq:grad_delta_I} form the so-called topological equations for two phase flows which describe the local geometry of the flow.
+Then, \ref{eq:dt_chi_k},\ref{eq:grad_chi_k}\ref{eq:dt_delta_I} and \ref{eq:grad_delta_I} \JL{repetition d'Equation a modifier} form the so-called topological equations for two phase flows. %which describe the local geometry of the flow.
 
-\subsubsection*{Local conservation equations}
+\subsection{Local conservation equations}
 
 
-Let $f_k(\textbf{y},t)$ being an arbitrary volumetric property defined in $\Omega_k(t)$. 
-Likewise, let $f_I(\textbf{y},I)$ be an arbitrary surface property defined on $\Sigma(t)$.
-Then it is possible to derive the local conservation equations for both volumetric and surface quantities following the strategy of \citep{bothe2022sharp,morel2015mathematical,tignol1986modelisation,marle1982macroscopic}.
-Indeed, using Reynolds transport theorem  and divergence theorem on an arbitrary small control volume we eventually find,
+Let $f_k(\textbf{y},t)$ being a volumetric quantity of arbitrary tensorial order defined in \JL{the k phase}%$\Omega_k(t)$.
+
+
+%an arbitrary volumetric property
+Likewise, let $f_I(\textbf{y},I)$ be an arbitrary surface property defined on $\Sigma(t)$ of arbitrary tensorial order.
+Then it is possible to derive the local conservation equations for both volumetric and surface quantities following the strategy of \citep{bothe2022sharp,morel2015mathematical,tignol1986modelisation,marle1982macroscopic} \JL{est ce necessaire de citer tout ces papiers. D'ailleurs as tu regarde le papier de Gatignol ? je ne pense pas que ce soit l'objet du papier}.
+Indeed, using Reynolds transport theorem \JL{a definir} and divergence theorem on an arbitrary small control volume we eventually find, \JL{ne serait il pas plus simple de dire:We assume $f_k(y, t)$ and ... obey the following conservation laws }
 \begin{align}
     \label{eq:dt_f_k}
     \pddt f_k
@@ -117,11 +127,14 @@ Indeed, using Reynolds transport theorem  and divergence theorem on an arbitrary
     & \text{ on } \Sigma,&
     \label{eq:dt_f_I}
 \end{align}
-which is respectively the conservation equations of $f_k$ and $f_I$.
-In \ref{eq:dt_f_I} we introduced the notation $\Jump{\ldots}$ which indicate the summing over both phases, i.e. $\sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$. 
-We defined $\mathbf{\Phi}_k$ and $\mathbf{\Phi}_I$ as the non-conservative flux tensor corresponding to $f_k$ and $f_I$. 
-The non-conservative flux is often expressed through a constitutive equation depending on the nature of the flow such as the stress tensor for the momentum.
-$\textbf{S}_k$ and $\textbf{S}_I$ are defined as the volumetric and surface source term on respectively, the domains $\Omega_k$ and $\Sigma$. 
+which are respectively the conservation equations of $f_k$ and $f_I$.
+In \ref{eq:dt_f_I} we introduced the notation $\Jump{}$ which indicate the sum over both phases, i.e. $\Jump{} = \sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$ \JL{a on vraiment besoin de definir cette notation. Je trouve le signe $\sum$ plus claire}. 
+ \JL{We defined defined different de define. pas de passe ici ! plus ce nest pas une definition mais une "conséquence" des equations definies ci-dessus.} $\mathbf{\Phi}_k$ and $\mathbf{\Phi}_I$ are the non-conservative flux tensors corresponding to $f_k$ and $f_I$. \JL{non-conservative ??? non-convective plutot. relis toi !}
+The non-convective flux are often expressed through a constitutive equation depending on the nature of the flow such as the stress tensor for the momentum. \JL{pas claire : le tenseur
+des contraintes est simplement l’expression du flux non convectif dans le
+lequation de qdm. Les lois constitutives n’apparaissent que pour exprimer
+par exemple la contrainte en fonction des grandeurs resolues}
+$\textbf{S}_k$ and $\textbf{S}_I$ are respectively the volumetric and surface source terms.% on respectively, the domains $\Omega_k$ and $\Sigma$. 
 Lastly, $\textbf{u}_k$ corresponds to the velocity fields defined in $\Omega_k$. 
 It is important to notice that \ref{eq:dt_f_k} and \ref{eq:dt_f_I} are solely defined in respectively, $\Omega_k$ and $\Sigma$, therefore these equations are referred to, as local conservation equations.
 
