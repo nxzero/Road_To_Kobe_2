@@ -13,6 +13,8 @@
 \RequirePackage{amsthm}
 \RequirePackage{mathrsfs}
 \RequirePackage{empheq}
+
+\RequirePackage{bm}
 % \RequirePackage{mdframed}
 \RequirePackage[
   % colorlinks=true
@@ -33,5 +35,7 @@
 \renewcommand\Affilfont{\itshape\small}
 
 \RequirePackage{stmaryrd}
-\AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
 
+\AtBeginDocument{\newcommand{\refn}[1]{\ref{#1}}}
+\AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
+\numberwithin{equation}{section}

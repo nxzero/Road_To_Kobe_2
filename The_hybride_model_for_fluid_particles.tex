@@ -8,16 +8,18 @@
 \newcommand{\Exp}[1]{\overline{\overline{#1}}}
 \newcommand{\davg}[1]{\left<#1\right>_d}
 \newcommand{\cavg}[1]{\left<#1\right>_c}
-\newcommand{\kavg}[1]{\left<#1\right>_k}
 \newcommand{\Iavg}[1]{\left<#1\right>_I}
 \newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
 % \newcommand{\pnavg}[1]{n\left<#1\right>_p}
 
 \newcommand{\avgcond}[1]{\left<#1\right>}
 \renewcommand{\avgcond}[1]{\overline{#1}}
+\newcommand{\kavg}[1]{\avgcond{#1}^k}
 \newcommand{\pnnavg}[1]{\avgcond{#1}^{p}}
 \newcommand{\pnavg}[1]{n_p\pnnavg{#1}}
 \newcommand{\oneavg}[1]{\avgcond{#1}^1}
+\newcommand{\smallavg}[2]{\avgcond{#1}^{#2}}
+\newcommand{\sym}[1]{\left(#1\right)^{\text{Sym}}}
 
 \newcommand{\nstavg}[1]{\overline{#1}_{nst}}
 \newcommand{\nstrelavg}[1]{\overline{#1}_{nst}^{rel}}
@@ -37,46 +39,50 @@
 \renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
 \newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
-\newcommand{\tb}[1]{\color{blue}#1\color{black}}
-
 
 %%% Utiliser pour les commentaires
 \newcommand{\JL}[1]{\color{red}#1\color{black}}
+\newcommand{\tb}[1]{\color{blue}#1\color{black}}
 % \renewcommand{\alpha}{}
+% \renewcommand{\JL}[1]{}
 % \renewcommand{\tb}[1]{}
 
-% \renewcommand{\ref}[1]{\autoref{#1}}
 \renewcommand{\size}[1]{0.3\textwidth}
 \newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
 \newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
 \newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Sigma_\alpha} \pri{1}{#1}#2 d\Sigma}}
 
+% \newcommand{\numref}[1]{\ref{#1}}
+\renewcommand{\ref}[1]{\autoref{#1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %\title{The hybrid model for arbitrary dispersed multiphase flows with surface properties}
-\title{Averaged equations for disperse two-phase flow made of fluid particles}
+\title{Averaged equations for disperse two-phase flow made of fluid particles with surface properties}
 
 \author[1,2]{Nicolas Fintzi}
 \author[1]{Jean-Lou Pierson}
 % \author[2]{Stephane Popinet}
 \author[2]{Daniel Lhuillier}
 \affil[1]{IFP Energies Nouvelles, Rond-point de l’changeur de Solaize, 69360 Solaize}
-\affil[2]{Institut Jean le Rond ∂’Alembert, Sorbonne Université, Centre National de la Recherche Scientifique, UMR 7190, 75005, Paris, France}
+\affil[2]{Sorbonne Université, Institut Jean le Rond ∂’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-\JL{On ne commence pas un resume par ”the aim of this paper” ... C’est plutot quelque chose que l’on ecrit a la fin de l’introduction. On prefere plutot : ”In this article we ...”}
-    The aim of this paper is two-folds,
-    it first provides a general hybrid model formulation for suspension of fluid particles with surface properties,
-    and also clarifies unclear points regarding averaged equations. 
-    While deriving averaged equations for dispersed multiphase flows it is common to use the Lagrangian approach to describe the dispersed phase.
-    Nevertheless, it is also possible to use the classic continuous average method on the dispersed phase.
-    Therefore, in this work we provide a proof of the equivalence between particle and continuous averaged equations for the dispersed phase.
-    Additionally, we provide the most conservation laws for dispersed multiphase flows.
+    This article presents a comprehensive study of the averaged equations for dispersed multiphase flows.
+    We present a systematic derivation of a general averaged hybrid model that incorporates the influence of surface properties of fluid particles dispersed in a continuous phase.
+    The dispersed phase averaged equations are derived using two distinct formalism :
+    the particle-average or Lagrangian formalism proposed by \citet{zhang1994ensemble};
+    and the phase-average method, which is also employed for the continuous phase based on the approach of \citet{drew1983mathematical}. 
+    The second major contribution of this work is the proof of the equivalence between the particle-averaged and phase-averaged equations. 
+    We demonstrate that the phase-averaged equation of the dispersed phase is a series expansion of the so-called particle-averaged moments equations. 
+    Consequently, as first stated by \citet{zhang1997momentum}, here we proved that by incorporating an arbitrary number of moment equations, we can achieve an arbitrary order of accuracy in the modeling of the dispersed phase.
+    Finally, to give it a more physical meaning, we propose to study contaminated rising bubbly flows. 
+    Specifically, we demonstrate how to predict the distribution of surfactant over the interface of bubbles, using this particle-averaged hybrid model.
 \end{abstract}
 
 \JL{Je ne trouve pas le titre tres parlant : the hybrid model parle peu pour des non specialistes et qu'entends tu par surface properties ? j'ai modifie, mais cela pourra sans doute changer encore.}
@@ -93,71 +99,98 @@ Dans l'ensemble cela peut faire un bon papier car je pense qu'il y a quelques no
 \item Je pense que tu maitrises bien les papiers historiques de lequipe de Morel $\&$ Lhuillier. Par contre clairement il faut que tu lises ou relises les papiers suivants : 
 \begin{itemize}
 \item tous les papiers de Zhang et Prosperetti (1994a,1994b,1997). En particulier celui de 1997 qui contient beaucoup de matiere en commun avec ce que l'on discute. Sais tu egalement que l'analogie avec l'equqation de Rayleigh-PLesset est deja faite dans Zhang et Prosperetti (1994b) ?
-\item j'ai trouve un papier : "A Note on the Net Force and Moment on a Drop Due to Surface Forces" de Hesla et al. 1993, qui je pense discute d'une partie de l'influence de la tension de surface sur les equations des moments. Ce serait bien de verifier si on n'obtient des resultats analogues
-\item concernant le tranport de $<pipj>$ le papier le plus claire il me semble est celui de Wang $\&$ Tucker 2008.
+\tb{
+    \begin{itemize}
+        \item \citet{zhang1997momentum} : Il parle effectivement du fait que l'on peut décrire la phase dispersé avec un nombre arbitraire de moments. aussi il démontre l'équivalence de la même manière que Nott masi uniquement a l'ordre 1. 
+        \item Je pense que ce papier peut servir d'introduction dans le sens ou il pose les même question que nous (sur les moment d'order sup) mais n'y repond pas entièrement, ce que l'on fait. 
+    \end{itemize}
+}
+    \item j'ai trouve un papier : "A Note on the Net Force and Moment on a Drop Due to Surface Forces" de Hesla et al. 1993, qui je pense discute d'une partie de l'influence de la tension de surface sur les equations des moments. Ce serait bien de verifier si on n'obtient des resultats analogues
+    
+\begin{itemize}
+    \item 
+    \tb{Dans ce papie il demontre que la force de tension de surface n'agit pas sur la quantité de mouvement et le torque même en présence de force de marangonie comme nous donc. 
+    Mais nous avons une information en plus, c'est la partie symmetrique de l'équation du premier moments de al quantitée de mouvement, et la on voit l'impact des forces de tension de surface contrairement a lui. }
 \end{itemize}
+    \JL{\item concernant le tranport de $<pipj>$ le papier le plus claire il me semble est celui de Wang $\&$ Tucker 2008.}
+    \tb{
+        \item Oui c'est très clair, la difference avec nous c'est que l'on ne va pas plus loin que l'expression $\dot{\textbf{p}} = \omega \times \textbf{p}$ qui est trivial.
+        Alors que il est possible exprimer $ \omega\times\textbf{p} $ en fonction des charatériqtique de l'ecoulements grace aux loi de faxen, ce qui donne l'equation de jeffrey dans le cas des fiberes/stokes, qui est une equation fermé de la cinématique 
+        \item  dans notre approche on reste trivial sur la cinematique mais on fait apparaitre des term de fluctuation et en plus de ca on doit résoudre la dynamic 
+        }
+\end{itemize}
+\end{itemize}
+}
 %tout les paiers de Zhang et Prosp, papier de Hesla, papier de Advani et tcucker ?, papier bulle ellispodiale ?(je m'en charge)
 
 %\item mon principal probleme avec la version actuelle du papier est que l'on ne voit pas encore bien la plus value par rapport à la litterature existante.  En particulier comme on en discutait je pense qu'il faut insister sur lequivalence entre particle phase and solide phase averaging, plus le fait que tu derives tout un set dequations sans hypotheses.
 
-\end{itemize}
-%\begin{itemize}
-
+\JL{
 Remarques specifiques :
 \begin{itemize}
 \item la reference au livre de Morel nest pas complete ni celle de Gatignol d'ailleurs. Merci de bien verifier que les articles sont cites correctement
+
+\tb{Fait}
+
 \item trier les references par odre alphabétique dans le .bib permets de bien mieux s'y retrouver. Je t'avais deja fait la remarque ce serait bien de le faire ...
+
+\tb{Fait}
+
 \item l'anglais est clairement a revoir tout comme la construction de certaines phrases. tu trouveras un certain nombre d'exemple dans le corps du texte. Tu emplois tres regulierement besides qui a ma connaissance ne s'emploie que rarement. Idem pour "This way" ...
 \item tu introduis des subsubsection alors qu'il n 'y a pas de subsection. Ce n'est pas recommande.
 \item merci de bien verifier que tes citations d'equations apparaissent et qu'elles pointent bien vers la bonne equation.
 \item de maniere generale il faut etre plus precis dans ce que tu fais. Quand tu cites un papier il faut citer avec precision le bon ou les bons auteurs, quand tu ecris quelque chose il faut que tu sois sur de sa veracite et egalement ecrit de la maniere la plus limpide possible.
 \item pour definir les quantités lagrangiennes cela pourrait etre interessant dutiliser une police ou une notation differente comme discute ensemble. Par exemple mathcal et/ou eventuellement de mettre ces quantites en majuscule.
 \item comme suggerais dans un des mails de Lhuillier je trouve que la notation 1 et 2 pourrait etre rendue plus claire par l'utilisation de c (continuous) et dispersed. Apres c'est peut etre plus lourd en terme de notation.
-\item je pense qu'il faut definir le theoreme de Reynolds que tu utilises un certain nombre de fois au cours du papier.
+\item je pense qu'il faut definir le theoreme de Reynolds que tu utilises un certain nombre de fois au cours du papier.\tb{Thermohydraulique des réacteurs}
 \item en relisant le cours de Daniel Lhuillier, je m'apercois que beaucoup de resultats (et de notations) sont semblables. Ce serait peut etre bien de le citer non ?
+\tb{Voir avec daniel }
 \item j'ai trouve la partie sur les moyennes franchement peu claire : tu commencais par parler des moyennes volumiques pour finalement decrire egalement les autres types de moyennes etc ... J'ai reorganise. Par ailleurs tu mixais definition probabiliste des moyennes (nottament pour la fraction volumqie par exemple) et moyenne volumique. L'ideal pour perdre le lecteur ! Pour information un article n'est pas un chapitre de these et n'est pas oblige d'etre exhaustif. L'idee est plutot d'aller droit au but. Si tu uitlises la moyenne volumique tu la decris et point final.
 \item en terme d'application : je pense que les deux applications que tu proposes sont bien : spheroide + bulle. Il faudrait aussi faire le lien avec le papier de Prosperetti sur les contraintes non symetrique.
+\tb{le quel ? regarder Prosperetti}
 \item il faut eviter les phrases du du type "this term is of great interest". Explique plutot la signification physique de ce dernier.
 \item dans la section 5 : tu repars sur des notations probabilistiques ( $_{1|2}$ par exemple). Encore une fois un article n'est pas un chapitre de thèse. Si tu as decide de faire une moyenne volumique il ne FAUT PAS parler de probabilite.
 \item de meme si tu peux tenter des choses, je ne suis pas contre mais dans un article il faut etre sur a 200\% de ce que l'on dit. "Note that the corresponding surface quantities appearing in \ref{eq:hybrid_avg_dt_dq_alpha}, would be the volume of the surface, namely $v_{I\alpha} = \int_{\Sigma_\alpha} e_I d\Sigma$, with $e_I$ the thickness of the surface." Cette derniere phrase ne veut rien dire ! La quantite equivalente a la moyenne volumique dans ce cas surfasique est simplement la surface.
+\tb{Non pas d'accord dans  les deux quantité doivent avoire la même unité qd on fait la somme des equations de surafce et de volume donc le volume de la surafce est bien son épaisseur fois la surafec, de la même manière que l'on integre la mass surfacique pour obtenir la mass de la surface. tout ca vient du fait que l'on modélise l'interface comme une surface et non comme un volume }
 \item concernant la partie application je pense qu'il faut etre honnete et dire que l'on va rester phenomenologique dans la fermeture des equations. Meme en regime de Stokes cela semble tres (tres) complique. On pourra egalement parler de l'application bulles ellipsoidales (je m'en chargerai). Comme cela c'est plus en accord avec le reste du papier (particules fluides).
+\tb{Bubble ellispoidale avec mass ajouté ? ca pourrait etre interessant de faire le parrallel avec le papier de fox dont on a parlé l'autre fois}
 \end{itemize}
 
 
 }
 
 %\section{The two-fluid model}
-\section{Eulerian equation of motions}
-\JL{Eulerian equation of motions me semble plus parlant que "The two fluid model". D'autant plus que "The two fluid model" est generalement synonyme de modele moyennee}
-
+% \section{Eulerian equation of motion}
+\section{Eulerian equation of conservation}
+\label{sec:two-fluid}
 \input{The_hybride_model/Local_scale_laws.tex}
 
-%\section{Dispersed phase modeling}
-\section{Lagrangian equation of motions for the dispersed phase}
-\JL{Ce titre me semble plus convenir}
 
-
+\section{Lagrangian equation of conservation for the dispersed phase}
+\label{sec:Lagrangian}
 \input{The_hybride_model/Lagrangian_description.tex}
 
 \section{Averaged equations}
-
+\label{sec:averaged_eq}
 \input{The_hybride_model/Averaged_laws.tex}
-
 \input{The_hybride_model/Equivalence.tex}
 
-\section{The hybrid model}
-
-\input{The_hybride_model/Hybrid_model.tex}
-
-\section{Application}
-\input{The_hybride_model/Application.tex}
 
 
+% \section{Application}
+% \input{The_hybride_model/Application.tex}
+\section{Examples}
+\label{sec:Exemples}
+
+\input{The_hybride_model/Disscusion.tex}
 
 
+
+\section{Disscusion and conclusion}
 \input{The_hybride_model/Conclusion.tex}
 
-
+\section*{Acknowlegement}
+We would like to express our sincere gratitude to Professor Lhuillier for his inspiring and insightful class, which has greatly influenced our work.
 \bibliography{Bib/bib_bulles.bib}
 
 

@@ -1,41 +1,18 @@
-\JL{je trouve cette section assez mal organise donc j'ai un peu reorganise : pour moi le plus simple est de presenter brievement les techniques de moyennes. De dire ensuite qu'on choisit ici la moyenne volumique et de la presenter ensuite.}
-The volume average method is one among others such as the time average \citep{ishii2010thermo} and ensemble average \citep{zhang1994averaged}. 
-However, all of these averaging technics remains equivalent \citep{jackson1997locally} as long as the separation of scale condition is respected, namely,
-\begin{equation*}
-    a \ll l \ll L,
-\end{equation*}
-where we recall that $a$ is the particle length scale, $l$ the length scale of the weighting function and $L$ the macroscopic length scale.
+In this study we use the statistical approach to derive the averaged equations of conservation. 
+Specifically, we use the method described in \citet{zhang2021ensemble} which extended the ensemble average definition of \citet{batchelor1972sedimentation}. 
+In the following we recall some properties of the ensemble average operator. 
 
-\JL{Tu ne peux pas avoir 2 pages de texte apres une section puis une sous section. J'ai donc ajoute une sous section.}
-\subsection{Volume averaging}
-Following  the strategy of \citet{jackson1997locally},  we assign to the microscopic field $f(\textbf{y})$ defined over $\Omega$ the corresponding averaged field $\avg{f}(\textbf{x})$. 
-Where $\avg{\ldots}$ is the average operator, $\textbf{y}$ is the spacial coordinate in the laboratory reference frame,
-and $\textbf{x}$ macro scale coordinate in the averaged phase space.
-The volume average of the microscopic field $f$ is then defined as \citep{nott2011suspension,jackson1997locally,marle1982macroscopic},
-\JL{le bon papier de marle a citer dans ce cadre est celui de 1967. je pense pas que Nott soit pertinent ici}
+\subsection{Ensemble phase average}
+
+Let, $P(\mathscr{C},t)$ be the probability density function that describe the probability of finding the flow in the configuration $\mathscr{C}$ at time $t$, were $\mathscr{C} = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a finite set of all the parameters describing the flow configuration. 
+Then, we define $d\mathscr{P} = P(\mathscr{C},t)d\mathscr{C}$ as the probable number of particles in the incremental region of the particles' phase space $d\mathscr{C}$ around $\mathscr{C}$ at time $t$. 
+It follows this definition, that the ensemble average of an arbitrary property $f$ defined on $\Omega$, yields,
 \begin{equation}
-    \left<f\right>(\textbf{x}) = \int g(\textbf{x},\textbf{y}) f(\textbf{y})d \textbf{y},
+    \avg{f}(\textbf{x},t)
+    =\int f(\textbf{x},\mathscr{C},t) d\mathscr{P}. 
     \label{eq:avg}
-\end{equation}
-where $g(\textbf{x},\textbf{y})$ is the smoothing or weighting function.
-The first argument $\textbf{x}$, is location at which we take the average, and \textbf{y} is the variable of integration or the local coordinate vector.
-The smoothing function $g(\textbf{x},\textbf{y})$ must follow two properties, the first one is normalization to unity
-$\int g(\textbf{x},\textbf{y}) d\textbf{y} = 1$.
-The second one is that $g$ vanish for all $\textbf{y}$ far form $\textbf{x}$, thus $\lim\limits_{|\textbf{r}| \to \infty} g(\textbf{x},\textbf{y}) = 0$ with $\textbf{r} = \textbf{x} - \textbf{y}$.
-Also, the radius $l$, of the weighting function $g$, it is defined such that $\int_{|\textbf{r}|<l} g(\textbf{x},\textbf{y})d\textbf{y} = 1/2$.
-Those characteristics ensure that the integral of \ref{eq:avg} is convergent and well normalized. \JL{je ne sais pas si c'est necessaire de decrire autant les proprietes de g. Tu peux juste dire que g doit satisfaires certaines hypotheses resumees dans les travaux de Jackson...}
-
-Similarly, we can use the statistical approach to carry out the average. \JL{pourquoi parles tu de l'approche statistique pour moyennee ? ce n'est pas une revue choisi en une et c'est termine.}
-% In order to derive the averaged equations we use the method of \citet{zhang2021ensemble} which extended the ensemble average definition of \citet{batchelor1972sedimentation}. 
-% Let, $P(\mathscr{C},t)$ be the probability density function that describe the probability of finding the flow in the configuration $\mathscr{C}$ at time $t$, were $\mathscr{C} = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a finite set of all the parameters describing the dispersed phase at time $t$. 
-% Then, we define $d\mathscr{P} = P(\mathscr{C},t)d\mathscr{C}$ as the probable number of particles in the incremental region of the particles' phase space $d\mathscr{C}$ around $\mathscr{C}$ at time $t$. 
-% It follows this definition, that the ensemble average of an arbitrary property $f$ defined over $\Omega$ yields,
-% \begin{equation}
-%     \avg{f}(\textbf{x},t)
-%     =\int f(\textbf{x},\mathscr{C},t) d\mathscr{P}. 
-%     \label{eq:ensemble_avg}
-% \end{equation}  
-Besides, it is interesting to mention some mathematical properties shared by all the averaging operators. 
+\end{equation}  
+It is interesting to mention some mathematical properties of the ensemble average operators. 
 For two arbitrary Eulerian fields $f$ and $h$ we have,
 \begin{align}
     &\avg{f+h} = \avg{f}+\avg{h}, 
@@ -48,29 +25,27 @@ For two arbitrary Eulerian fields $f$ and $h$ we have,
 \end{align}
 The two first relations are called the Reynolds' rules, the $3^{th}$ one is the Leibniz' 
 rule and the last one, the Gauss' rule \citep{drew1983mathematical}.
-It is important to understand both method lead to the same results and thus are rigorously equivalent. \JL{je n'avais jamais entendu parler du nom de ces regles. Pour moi l'ensemble de ces regles correspondent à l'operateur de Reynolds, mais est il necessaire de le specifier ?}
-
-
-Additionally, for any phase quantity defined in $\Omega_1$ we introduce the definition, 
+Additionally, for any phase quantity defined in $\Omega_k$ we introduce the definition, 
 \begin{equation}
-    \phi_1\oneavg{f}(\textbf{x},t) = \avg{\chi_1 f_1}
+    \phi_k\kavg{f}(\textbf{x},t) = \avg{\chi_k f_k}
     \label{eq:1_avg}
 \end{equation}
-\JL{je trouve la notation $<>^1$ plus claire que $\oneavg{}$}
-where, $\phi_1(\textbf{x},t) = \avg{\chi_1}$ is the probability of being in the phase $1$ at \textbf{x}, known as the volume fraction \JL{$\phi _1$ est  la fraction volumique c n'a rien a voir avec une probabilite}, and 
-$\oneavg{f}$ is the average of the field $\chi_1 f_1$ knowing that $\textbf{x}\in \Omega_1$ \JL{idem $\oneavg{f}$ est la moyenne sur la phase 1, pas la peine de parler de probabilite}. 
+where, $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$.
+Therefore, $\kavg{f}$ is the conditional average of the field $\chi_k f_k$ knowing that we are in the phase $k$.
 Similarly, for the particle fields, we can introduce the particle phase average by,
 \begin{equation}
      \pnavg{q_\alpha}(\textbf{x},t) = \avg{\delta_\alpha f_\alpha}
      \label{eq:p_avg}
 \end{equation}
-where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of finding the center of mass of a particle inside the volume $d\textbf{x}$ around the position \textbf{x} and  at time $t$, known as the number density. 
-And, $\pnnavg{q_\alpha}$ is the consitional average of $q_\alpha\delta_\alpha$ knowing a particle is present inside the volume $d\textbf{x}$ around the position \textbf{x} at time $t$. 
-\JL{meme remarque que precedemment}
+where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of finding a particle center of mass at $\textbf{x}$. 
+Thus, $\pnnavg{q_\alpha}$ is the conditional average of $q_\alpha$ on the set of particle. 
 
-%\subsubsection*{Continuous and particle averaged equations}
+
+The ensemble average method is one among others, such as the volume average method\citep{jackson1997locally} or the time average
+\citep{ishii2010thermo} and ensemble average \citep{zhang1994averaged}. 
+However, all of these averaging technics remains equivalent \citep{jackson1997locally}. 
+
 \subsection{Phase average and particle averaged equations}
-\JL{j'ai legerement modifie le titre. Je pense que phase average est plus parlant que continuous average}
 
 Applying \ref{eq:avg} on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and considering the properties from \ref{eq:avg_properties} yields the general form of the averaged equations of multiphase flows, namely,
 \begin{align}
@@ -97,8 +72,8 @@ Applying \ref{eq:avg} on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and c
     } }.
     \label{eq:avg_dt_delta_f}
 \end{align}
-Together \ref{eq:avg_dt_delta_f}  and \ref{eq:avg_dt_delta_f} \JL{erreur de numerotation} form the \textit{two-fluid} formulation of averaged multiphase flows problem. 
-Besides, on can derive the so-called averaged \textbf{single-fluid} formulation by applying \ref{eq:avg} on \ref{eq:dt_f} which directly gives us, 
+Together \ref{eq:avg_dt_chi_f}  and \ref{eq:avg_dt_delta_f} form the \textit{two-fluid} formulation of averaged multiphase flows problem. 
+One can derive the so-called averaged \textit{single-fluid} formulation by applying \ref{eq:avg} on \ref{eq:dt_f} which directly gives us, 
 \begin{equation}
     \pddt \avg{f}
     = \nablab \cdot \avg{\mathbf{\Phi} - f \textbf{u}}
@@ -107,26 +82,32 @@ Besides, on can derive the so-called averaged \textbf{single-fluid} formulation 
 \end{equation}
 It is interesting to notice that in Volume Of Fluid method we solve for the fields averaged on a cell volume, thus we actually discretize \ref{eq:avg_dt_f} and solve for the averaged quantities \citep{popinet2018numerical,tryggvason2011direct} instead of directly solving the local transport equations \ref{eq:dt_f}.
 
-Correspondingly, we take the average of the particle fields equations by using \ref{eq:avg} on \ref{eq:dt_dq_alpha} and \ref{eq:dt_dq_I_alpha}, giving, 
+Correspondingly, we take the average of the particle fields equations by using \ref{eq:avg} on \ref{eq:dt_dq_alpha_tot} and \ref{eq:dt_dQ_alpha_tot}, which gives, 
 \begin{multline}
-    \pddt \pavg{ q_\alpha}
-    + \nablabh\cdot \pavg{ q_\alpha \textbf{u}_\alpha}
-    = \pavg{\int_{\Omega_\alpha} \textbf{S}_k d\Omega}\\
-    + \pavg{\int_{\Sigma_\alpha} \left[\mathbf{\Phi}_k + f_k (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d\Sigma},
-    \label{eq:avg_dt_dq_alpha}
+    \pddt \avg{\delta_\alpha (q_\alpha+q_{I_\alpha})}
+    + \nablabh \cdot \avg{\delta_\alpha\textbf{u}_\alpha(q_\alpha+q_{I_\alpha})}
+    = \avg{\delta_\alpha\int_{\Omega_\alpha} \textbf{S}_2 d\Omega}\\
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \textbf{S}_I d\Sigma}
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left[\mathbf{\Phi}_1 + f_1 (\textbf{u}_I-\textbf{u}_1) \right] \cdot \textbf{n}_2 d\Sigma,}
+    \label{eq:avg_dt_dq_alpha_tot}
 \end{multline}
 \begin{multline}
-    \pddt \pavg{ q_{I\alpha}}
-    + \nablabh\cdot \pavg{ q_{I\alpha} \textbf{u}_\alpha}
-    = \pavg{\int_{\Sigma_\alpha} 
-    \textbf{S}_I
-    d\Sigma}\\
-    - \pavg{\int_{\Sigma_\alpha} \Jump{
-        f_k (\textbf{u}_I - \textbf{u}_k)
-        + \mathbf{\Phi}_k}
-        d\Sigma}.
-        \label{eq:avg_dt_dq_I_alpha}
+    \pddt \avg{\delta_\alpha (\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})}
+    + \nablabh \cdot \avg{\delta_\alpha\textbf{u}_\alpha(\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})}
+    =\\ \avg{\delta_\alpha\int_{\Omega_\alpha} \left(
+        \textbf{r} \textbf{S}_2         
+        + f_2  \textbf{w}_2 
+        - \mathbf{\Phi}_2
+    \right) d\Omega}
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left(
+        \textbf{r}\textbf{S}_I
+        + f_I \textbf{w}_I
+        - \mathbf{\Phi}_{||}^I
+    \right) d\Sigma}\\
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \textbf{r} \left[
+        \mathbf{\Phi}_1
+        + f_1 (\textbf{u}_I-\textbf{u}_1)
+    \right]\cdot \textbf{n}_2  d\Sigma}.
+    \label{eq:avg_dt_dQ_alpha_tot}
 \end{multline}
-\JL{les phrases qui suivaient sur le Euler-Euler n'apportaient rien. Je les ai commentees.}
-%When considering a dispersed multiphase flows problem we use Euler-Euler method to solves the equations of the continuous and dispersed phase numerically. 
-%In those code we solve the equations for the cell averaged values, thus we should consider discretizing \ref{eq:avg_dt_dq_I_alpha} and \ref{eq:avg_dt_dq_alpha} while solving the dispersed phase equations.
+From \ref{ap:Moments_equations} the derivation of the higher moment particle-average equations is straightforward. 

@@ -2,128 +2,172 @@
 %\subsubsection*{Equivalence between particle and continuous models}
 \subsection{Equivalence between particle average and phase average}
 
-To model the dispersed phase we can either use \ref{eq:avg_dt_chi_f} with $k=2$ or \ref{eq:avg_dt_dq_alpha}. 
-As mentioned in \ref{sec:dispersed-two-fluid} we notified that \ref{eq:dt_dq_alpha} and \ref{eq:dt_dq_I_alpha} were already subject to an average of length scale $a$. \JL{pas claire, plutot une moyenne volumique ou surfacique sur la particule elle meme.}
-Consequently, it is fair to address the question of the compatibility and differences of both, \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_dq_alpha}. 
-In this work we limit the derivation to the equivalence between \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_dq_alpha} as the interfacial equations yield essentially the same. 
-To start with, it is well known that the weighting function $g(\textbf{x},\textbf{y})$ in \ref{eq:avg} can be expressed as a Taylor series expansion around any particles center of mass $\textbf{y}_\alpha$ \citep{nott2011suspension, jackson1997locally}, \JL{les papiers cites ne sont pas les bons. par ordre d'apparition Buyevich \& Shedolka 1978, Lhuillier\& Nozieres 1992, et Jackson 1997}
-\begin{equation}
-    g(\textbf{x},\textbf{y})
-    = g(\textbf{x},\textbf{y}_\alpha)
-    - \textbf{r} \cdot \nablab g(\textbf{x},\textbf{y}_\alpha)
-    + \frac{1}{2} \textbf{r}\textbf{r} : \nablab\nablab g(\textbf{x},\textbf{y}_\alpha)
-    + \ldots
-    \label{eq:g_exp}
-\end{equation} 
-From this Taylor expansion it can be shown that any volume and interface averaged quantities can be expressed as a Taylor expansion series of particle field averaged quantities, yielding \citep{nott2011suspension,jackson1997locally,buyevich1979flow},
+To model the dispersed phase we can either use \ref{eq:avg_dt_chi_f} with $k=2$, or the particle-average \ref{eq:avg_dt_dq_alpha_tot}, \ref{eq:avg_dt_dQ_alpha_tot} and possibly the higher moments. 
+As mentioned in \ref{sec:dispersed-two-fluid} we notified that \ref{eq:dt_dq_alpha_tot} was already subject to an average over the particles' volume and the surfaces. 
+Consequently, it is fair to address the question of the compatibility and differences  between both formalism, i.e. \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_dq_alpha_tot}. 
+
+To begin with, it has been demonstrated in various studies \citep{nott2011suspension,jackson1997locally,zhang1994averaged}, that volume and interface averaged quantities can be expressed as a Taylor series expansion of particle-field averaged quantities, yielding, 
 \begin{align}
     \avg{\chi_kf_k} 
     &=  \pavg{q_\alpha}
         - \nablab \cdot  
-        \pavg{\textbf{Q}_\alpha}        
-        + \frac{1}{2} \nablab\nablab : \pavg{\textbf{Q}_\alpha^2}
+        \pavg{\mathcal{Q}_\alpha}        
+        + \frac{1}{2} \nablab\nablab : \pavg{\mathcal{Q}_\alpha^2}
         + \ldots  \\
     \avg{\delta_I f_k} 
     &=  \pavg{q_{I\alpha}}        
-        - \nablab \cdot \pavg{\textbf{Q}_{I\alpha}}
-        + \frac{1}{2} \nablab\nablab : \pavg{\textbf{Q}_{I\alpha}^{2}}
+        - \nablab \cdot \pavg{\mathcal{Q}_{I\alpha}}
+        + \frac{1}{2} \nablab\nablab : \pavg{\mathcal{Q}_{I\alpha}^{2}}
         + \ldots  
     \label{eq:f_exp}
-\end{align}      
-where we used \ref{eq:avg}, the moments' definition (\ref{eq:Q_n_definition})and \ref{eq:g_exp}. 
-To prove the equivalence between both model we follow the strategy of \citep{lhuillier2000bilan} and take the Taylor expansion of each terms in \ref{eq:dt_dq_alpha} \JL{tu es sur que c'est lequation 26 j'aurais plutot dit l'equation 32} yielding directly, 
-\begin{align}    
-    0 &= 
-    - \pddt \pavg{q_\alpha} +  \nablab \cdot  \partial_t\pavg{\textbf{Q}_\alpha} \ldots\nonumber\\
-    &+ \nablab \cdot \pavg{\int_{\Omega_\alpha}\left(\mathbf{\Phi}_k - f_k \textbf{u}_k \right)d\Omega}
-    -\nablab\nablab : \pavg{\int_{\Omega_\alpha}\textbf{r}\left(\mathbf{\Phi}_k - f_k \textbf{u}_k \right)d\Omega}
-    \ldots\nonumber\\
-    &+ \pavg{ \int_{\Omega_\alpha} \textbf{S}_k d\Omega}
-    - \nablab \cdot \pavg{ \int_{\Omega_\alpha} \textbf{r}\textbf{S}_k d\Omega}
-    \ldots\nonumber\\
-    &+ \pavg{\int_{\Sigma_\alpha}\left[
-        \mathbf{\Phi}_k
-        + f_k
-        \left(
-            \textbf{u}_I
-            - \textbf{u}_k
-        \right)
-    \right]
-    \cdot \textbf{n}_kd\Sigma} \ldots\nonumber\\
-    &-  \nablab \cdot \pavg{\int_{\Sigma_\alpha} \textbf{r}\left[
-        \mathbf{\Phi}_k
-        + f_k
-        \left(
-            \textbf{u}_I
-            - \textbf{u}_k
-        \right)
-    \right]
-    \cdot \textbf{n}_kd\Sigma} \ldots
 \end{align}
-\JL{que signifie les ... ?}
-where we ignored the terms of second order or higher. 
-By using the relation : $\int_{\Omega_\alpha} f_k \textbf{u}_k d\Omega = q_\alpha\textbf{u}_\alpha  + \int_{\Omega_\alpha} f_k \textbf{w}_k d\Omega$
-together with $\int_{\Omega_\alpha} \textbf{r} \textbf{u}_k f_k d\Omega = Q_\alpha\textbf{u}_\alpha  + \int_{\Omega_\alpha}\textbf{r} f_k \textbf{w}_k d\Omega$ and  rearranging each terms of the equations gives,
-\begin{align}    
-    0 = 
-    &- \pavg{\ddt q_\alpha}
-    + \pavg{ \int_{\Omega_\alpha} \textbf{S}_k d\Omega}
-    + \pavg{\int_{\Sigma_\alpha}\left[
-        \mathbf{\Phi}_k
-        + f_k
-        \left(
-            \textbf{u}_I
-            - \textbf{u}_k
-        \right)
-    \right]
-    \cdot \textbf{n}_kd\Sigma} \nonumber\\
-    &-  \nablab \cdot  \left[
-        - \pavg{\ddt \textbf{Q}_\alpha} 
-         + \pavg{ \int_{\Omega_\alpha} \left(
-            \textbf{r}\textbf{S}_k - \mathbf{\Phi}_k + \textbf{w}_kf_k 
-         \right)d\Omega}
-    \right.
-    \nonumber\\
-    &\left. 
-         + \pavg{\int_{\Sigma_\alpha} \textbf{r}\left[
-        \mathbf{\Phi}_k
-        + f_k
-        \left(
-            \textbf{u}_I
-            - \textbf{u}_k
-        \right)
-        \right]
-        \cdot \textbf{n}_kd\Sigma} 
-    \right]\nonumber\\
-    &+  \frac{1}{2}\nablab\nablab :
-         \pavg{ \int_{\Omega_\alpha} 2\textbf{r}\left(\mathbf{\Phi}_k + \textbf{w}_kf_k 
-         \right)d\Omega}
-         + \ldots
-    \label{eq:expansion_final}
-\end{align}
-In this last expansion we easily recognize that the first line correspond to \ref{eq:avg_dt_dq_alpha}, and each terms of the second and third lines constitute the average of \ref{eq:dt_Q_alpha}. 
-Besides, higher order terms of this expansion would constitute the higher moments equations derived in \ref{ap:moment_derivative}. 
 
-Therefore, the continuous phase averaged equation is a combination of the particle fields averaged equations, from the zeroth to an infinite number of moments equations. 
-To expose this equivalence more clearly let's write \ref{eq:avg_dt_chi_f} as $C(\chi_2f_2) = 0$, where we introduced the operator $C$ which represent  \ref{eq:avg_dt_chi_f}.
-Similarly let's write \ref{eq:avg_dt_dq_alpha} with $M(f_k) = 0$ and the higher order moments equation with  $M(\textbf{Q}_\alpha) =0$, $M(\textbf{Q}_\alpha) =0$ and so on.\JL{je ne comprends pas cette derniere phrase, il y a deux M.}
-Then, we demonstrated from \ref{eq:expansion_final} that, 
+Then, in order to establish the equivalence between both formalism, we follow the strategy of \citep{lhuillier2000bilan} by taking the Taylor expansion of each terms in \ref{eq:avg_dt_chi_f} for the case $k=2$. 
+As the resulting expression can become quite cumbersome, we will adopt the following definition. 
+Let $\mathbb{C}$ represent the phase-averaged equation of conservation (\ref{eq:avg_dt_chi_f}), namely, 
+\begin{equation*}
+    \mathbb{C}
+    =
+    - \pddt \avg{\chi_2f_2}
+    - \nablabh \cdot \avg{\chi_2 \mathbf{\Phi}_2 - \chi_2f_2 \textbf{u}_2}
+    + \avg{\chi_2 \textbf{S}_2}\\
+    + \avg{\delta_I\left[
+        \mathbf{\Phi}_2
+        + f_2
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_2
+        \right)
+    \right]
+    \cdot \textbf{n}_2}. 
+\end{equation*}
+Therefore, it must be understood from \ref{eq:avg_dt_chi_f} that $\mathbb{C}=0$.
+Then, by taking the Taylor expansion of each terms of $\mathbb{C}$ according to \ref{eq:f_exp}, we can equally show that,
 \begin{equation}
-    C(\chi_2 f_2) = M(q_\alpha) - \nablab \cdot M(\textbf{Q}_\alpha) + \frac{1}{2} \nablab\nablab : M(\textbf{Q}^2_\alpha) \ldots = 0,
+    \mathbb{C} = \mathbb{M}_0 - \nablab \cdot \mathbb{M}_1 + \frac{1}{2} \nablab\nablab : \mathbb{M}_2 \ldots = 0,
     \label{eq:scheme_equivalence}
 \end{equation} 
-in agreement with \cite{lhuillier2000bilan}, which reach similar conclusion when comparing the area density continuous and particle field averaged equation of spherical particle. 
-Considering that $M(\textbf{Q}_\alpha) =0$ and $M(\textbf{Q}^2_\alpha) =0$ form the higher order momentum balance in \ref{ap:moment_derivative}, we can rewrite \ref{eq:scheme_equivalence} such as, 
-\begin{equation}
-    C(\chi_2 f_2) = M(q_\alpha).
-\end{equation}
-Meaning that \ref{eq:avg_dt_chi_f} is rigorously equivalent to \ref{eq:avg_dt_dq_alpha} in agreement with what \cite{nott2011suspension} concluded.
-Nevertheless, it is true if and only if \ref{eq:dt_Q_alpha} and the other higher moments equations are considered.
-Therefore, \ref{eq:avg_dt_chi_f} is not quite similar to the whole set of particle field equations, \ref{eq:avg_dt_dq_alpha} and higher moments.
-Indeed, the particle phase averaged equations, constitute a system of equations with one equation for each moment, while the continuous model contain all these moments in a single equation. 
-Therefore, the particle phase averaged equations are more relevant since they isolate each moment of the distribution in an independent equation 
-\JL{je vois grosso modo comment tu montre lequivalence mais il va falloir travailler la forme.}
+where the expression $\mathbb{M}_0$ and $\mathbb{M}_1$ turn out to be, 
+\begin{multline*}
+    \mathbb{M}_0
+    = 
+    - \pddt \avg{\delta_\alpha (q_\alpha+q_{I_\alpha})}
+    - \nablabh \cdot \avg{\delta_\alpha\textbf{u}_\alpha(q_\alpha+q_{I_\alpha})}
+    + \avg{\delta_\alpha\int_{\Omega_\alpha} \textbf{S}_2 d\Omega}\\
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \textbf{S}_I d\Sigma}
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left[\mathbf{\Phi}_1 + f_1 (\textbf{u}_I-\textbf{u}_1) \right] \cdot \textbf{n}_2 d\Sigma},
+\end{multline*}
+and,
+\begin{multline*}
+    \mathbb{M}_1 =
+    - \pddt \avg{\delta_\alpha (\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})}
+    - \nablabh \cdot \avg{\delta_\alpha\textbf{u}_\alpha(\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})}
+    \\ + \avg{\delta_\alpha\int_{\Omega_\alpha} \left(
+        \textbf{r} \textbf{S}_2         
+        + f_2  \textbf{w}_2 
+        - \mathbf{\Phi}_2
+    \right) d\Omega}
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left(
+        \textbf{r}\textbf{S}_I
+        + f_I \textbf{w}_I
+        - \mathbf{\Phi}_{||}^I
+    \right) d\Sigma}\\
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \textbf{r} \left[
+        \mathbf{\Phi}_1
+        + f_1 (\textbf{u}_I-\textbf{u}_1)
+    \right]\cdot \textbf{n}_2  d\Sigma},
+\end{multline*}
+respectively. 
+In the presence of \ref{eq:scheme_equivalence} we reach the major conclusion of this work. 
+Indeed, we can observe that $\mathbb{M}_0$, $\mathbb{M}_1$ and $\mathbb{M}_2$ represent the zeroth, first and second order moments equations, respectively. 
+In fact, it is shown in \ref{ap:Moments_equations} that the coefficient $\mathbb{M}_n$ in \ref{eq:scheme_equivalence} correspond to the $n^{th}$ order particle-average conservation equation. 
+As a matter of fact, the phase average applied to the dispersed phase contains all the particle-averaged moments equations.
+In \ref{ap:Moments_equations} we provide the expression for each moment equation $\mathbb{M}_n$ as well as the complete derivation of \ref{eq:scheme_equivalence}. 
+In \cite{lhuillier2000bilan} they reached similar conclusion when comparing the area density phase-averaged and particle-averaged equations of conservation for spherical particles. 
+Thus, from \ref{eq:scheme_equivalence} it is evident that one can use an arbitrary order of moments equations to reach an arbitrary accurate description of the dispersed phase.
+This fact was previously suggested by \citet{zhang1997momentum}, here we provided the detailed derivation.  
 
+% yielding directly, 
+% \begin{align}    
+%     0 &= 
+%     - \pddt \pavg{q_\alpha} +  \nablab \cdot  \partial_t\pavg{\mathcal{Q}_\alpha} \nonumber\\
+%     &+ \nablab \cdot \pavg{\int_{\Omega_\alpha}\left(\mathbf{\Phi}_k - f_k \textbf{u}_k \right)d\Omega}
+%     -\nablab\nablab : \pavg{\int_{\Omega_\alpha}\textbf{r}\left(\mathbf{\Phi}_k - f_k \textbf{u}_k \right)d\Omega}
+%     \nonumber\\
+%     &+ \pavg{ \int_{\Omega_\alpha} \textbf{S}_k d\Omega}
+%     - \nablab \cdot \pavg{ \int_{\Omega_\alpha} \textbf{r}\textbf{S}_k d\Omega}
+%     \nonumber\\
+%     &+ \pavg{\int_{\Sigma_\alpha}\left[
+%         \mathbf{\Phi}_k
+%         + f_k
+%         \left(
+%             \textbf{u}_I
+%             - \textbf{u}_k
+%         \right)
+%     \right]
+%     \cdot \textbf{n}_kd\Sigma} \nonumber\\
+%     &-  \nablab \cdot \pavg{\int_{\Sigma_\alpha} \textbf{r}\left[
+%         \mathbf{\Phi}_k
+%         + f_k
+%         \left(
+%             \textbf{u}_I
+%             - \textbf{u}_k
+%         \right)
+%     \right]
+%     \cdot \textbf{n}_kd\Sigma} 
+% \end{align}
+% where we ignored the terms of second order or higher. 
+% By using the relation : $\int_{\Omega_\alpha} f_k \textbf{u}_k d\Omega = q_\alpha\textbf{u}_\alpha  + \int_{\Omega_\alpha} f_k \textbf{w}_k d\Omega$
+% together with $\int_{\Omega_\alpha} \textbf{r} \textbf{u}_k f_k d\Omega = Q_\alpha\textbf{u}_\alpha  + \int_{\Omega_\alpha}\textbf{r} f_k \textbf{w}_k d\Omega$ and  rearranging each terms of the equations gives,
+% \begin{align}    
+%     0 = 
+%     &- \pavg{\ddt q_\alpha}
+%     + \pavg{ \int_{\Omega_\alpha} \textbf{S}_k d\Omega}
+%     + \pavg{\int_{\Sigma_\alpha}\left[
+%         \mathbf{\Phi}_k
+%         + f_k
+%         \left(
+%             \textbf{u}_I
+%             - \textbf{u}_k
+%         \right)
+%     \right]
+%     \cdot \textbf{n}_kd\Sigma} \nonumber\\
+%     &-  \nablab \cdot  \left[
+%         - \pavg{\ddt \mathcal{Q}_\alpha} 
+%          + \pavg{ \int_{\Omega_\alpha} \left(
+%             \textbf{r}\textbf{S}_k - \mathbf{\Phi}_k + \textbf{w}_kf_k 
+%          \right)d\Omega}
+%     \right.
+%     \nonumber\\
+%     &\left. 
+%          + \pavg{\int_{\Sigma_\alpha} \textbf{r}\left[
+%         \mathbf{\Phi}_k
+%         + f_k
+%         \left(
+%             \textbf{u}_I
+%             - \textbf{u}_k
+%         \right)
+%         \right]
+%         \cdot \textbf{n}_kd\Sigma} 
+%     \right]\nonumber\\
+%     &+  \frac{1}{2}\nablab\nablab :
+%          \pavg{ \int_{\Omega_\alpha} 2\textbf{r}\left(\mathbf{\Phi}_k + \textbf{w}_kf_k 
+%          \right)d\Omega}
+%          + \ldots
+%     \label{eq:expansion_final}
+% \end{align}
+% In this last expansion we easily recognize that the first line correspond to \ref{eq:avg_dt_dq_alpha}, and each terms of the second and third lines constitute the average of \ref{eq:dt_Q_alpha}. 
+% Besides, the higher order terms of this expansion constitute the higher moments equations derived in \ref{ap:moment_derivative} as it is shown in \ref{ap:Moments_equations}. 
+
+Another approach to the problem is to notice that $\mathbb{M}_n=0$ for all $n$. Thus, we can rewrite \ref{eq:scheme_equivalence} such that all moments equations vanish, except $\mathbb{M}_0$, which gives, 
+\begin{equation}
+    \mathbb{C} = \mathbb{M}_0 = 0.
+\end{equation}
+This implies that equation \ref{eq:avg_dt_chi_f} is rigorously equivalent to \ref{eq:avg_dt_dq_alpha_tot} as shown by \cite[Appendix A]{nott2011suspension} for the specific case of the momentum conservation equation of solid spherical particle.
+Nevertheless, it is important to note that this conclusion is not entirely objective since following the same procedure we could show equally that $\mathbb{C} = -\nablab\cdot\mathbb{M}_1=0$ and $\mathbb{C} = \frac{1}{2}\nablab\nablab:\mathbb{M}_2=0$ and so on for the other higher terms. 
+Thus, it is preferable to look at the problem with the view of \ref{eq:scheme_equivalence}. 
+Namely, the particle-averaged equations constitute a system of equations with one equation for each moment, while the phase-averaged equation contains all the terms of the particle-averaged equations within a single equation.
+Therefore, the particle-averaged formalism is more meaningful since it provide one equation for each moment. 
 
 %\tb{
 %It is noteworthy to mention that in Population Balance Equations (PBE) we encounter a similar issue. 
@@ -135,8 +179,44 @@ Therefore, the particle phase averaged equations are more relevant since they is
 %It is possible to generalize this thinking on any kind of internal coordinate of a particle.
 %It is even possible to generalize it to relative internal coordinate \citet{zhang2021ensemble}.   
 %As a conclusion, from \ref{eq:avg_dt_chi_f} we can recover any sort of moment equations expending on the variable used to carry out the expansion. 
-%}
+%
 
-\JL{interessant ce pragraphe sur les PBEs, mais pas utile ici. Autant eviter au maximum de parler des PBE (sauf peut etre dans les discussions perspectives) pour ne pas complexifier le propos. J'ai commente.}
+\subsection{The hybrid model}
 
+Now that we reached a clear understanding of the averaged models, it is time to introduce the Hybrid model for dispersed two phase flows. 
+From \ref{fig:Scheme} we recall that the fluid or continuous phase is indexed $k=1$ while the particle phase by $k=2$.  
 
+First, we introduce the equation used to model the continuous phase. 
+It is derived by setting $k = 1$ in \ref{eq:avg_dt_chi_f}, and by using \ref{eq:f_exp} to expand the exchange term into a series.
+This yields the following expression~:
+\begin{multline}
+    \pddt \avg{\chi_1 f_1}
+    = \nablabh \cdot \avg{\chi_1 \mathbf{\Phi}_1 - \chi_1 f_1 \textbf{u}_1}
+    - \pavg{\int_{\Sigma_\alpha}\left[
+        \mathbf{\Phi}_1  
+        + f_1
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_1
+        \right)
+    \right]
+    \cdot \textbf{n}_2d\Sigma} \\
+    + \avg{\chi_1 \textbf{S}_1}
+    +  \nablab \cdot \pavg{\int_{\Sigma_\alpha} \textbf{r}\left[
+        \mathbf{\Phi}_1
+        + f_1
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_1
+        \right)
+    \right]
+    \cdot \textbf{n}_2d\Sigma} 
+    \label{eq:hybrid_avg_dt_chif}
+\end{multline}
+Notice that we switched the normal vector from $\textbf{n}_1$ to $-\textbf{n}_2$ in the second and the last integral on the RHS, which is the conventional way to express these couplings terms. 
+Moreover, it should be noted that we neglected the second and higher order moments of the coupling term between the two phases \citep{jackson1997locally}.
+
+Regarding the dispersed phase, we consider the zeroth and first moment equation (\ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}) as  a part of the hybrid model.
+Under this form the couplings terms in \ref{eq:hybrid_avg_dt_chif} correspond to the ones appearing in both, \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot} which is of a great interest since we reduce the number of closure terms.
+Then, \ref{eq:hybrid_avg_dt_chif}, \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}, are the most general form of a first-order accurate hybrid model for arbitrary particle. 
+Lastly, it is worth noting that by incorporating more terms in the expansion of \ref{eq:avg_dt_chi_f} and higher order moments equations, one can reach an arbitrary order of accuracy, as stated by \citet{zhang1997momentum}. 

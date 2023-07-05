@@ -1,78 +1,103 @@
 
-% \section{Lagrangian description of a single fluid particle}
-\label{sec:dispersed-two-fluid}
-While \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} describe multiphase-flow in the most general way, they do not take advantage of the topology of the dispersed phase. 
-Therefore, we introduce a model assuming Lagrangian particle while describing the dispersed phase to an arbitrary order of accuracy. 
+While \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} describe multiphase-flow in a general manner, they do not leverage the topology of the dispersed phase. 
+Therefore, in this section we present a model based on the Lagrangian particle assumption capable of describing the dispersed phase with arbitrary order of accuracy. 
 
-%\subsubsection*{Zeroth order balance }
-\JL{Zeroth order balance ne parle pas vraiment ... j'ai renomme. j'ai aussi deplace la partie "fundamental properties" car elle me semble etre la premiere qui doit apparaitre}
 \subsection{Fundamental properties}
-Before diving in further details it is crucial to define some fundamental quantities related to the particles $\alpha$.
-We first define, the center of mass position vector and the momentum of the particle, as respectively,
+In the first place, it is crucial to define some fundamental properties associated to each particle.
+To begin, let us define the mass, position of center of mass and momentum of the particle $\alpha$, as respectively,
 \begin{align}
-    m_\alpha \textbf{y}_\alpha
-    = \int_{\Omega_\alpha} \rho_k \textbf{y}_k d\Omega,
+    m_\alpha(t)
+    = \int_{\Omega_\alpha(t)} \rho_2  d\Omega,
     &&
-    \textbf{p}_\alpha 
-    = \int_{\Omega_\alpha} \rho_k \textbf{u}_k d\Omega,
+    \textbf{y}_\alpha(t)
+    = \frac{1}{m_\alpha(t) }\int_{\Omega_\alpha(t)} \rho_2 \textbf{y} d\Omega,
+    &&
+    \textbf{p}_\alpha(t) 
+    = \int_{\Omega_\alpha(t)} \rho_2 \textbf{u}_2 d\Omega,
     \label{eq:position_and_momentum_def}
 \end{align}
-with $\rho_k$ the density of the phase $k$. 
-We then define the particle's center of mass velocity $\textbf{u}_\alpha$ as $\textbf{u}_\alpha = \ddt \textbf{y}_\alpha$. The derivation of the expression of $\textbf{u}_\alpha$ is straightforward but requires some algebra whic are detailed in \ref{ap:velocity_definition}. The final expression reads% since $m_\alpha$ is a function of time therefore we provide a detailed derivation in \ref{ap:velocity_definition}.
-
-%by deriving within time its position vector,
-
- %yielding,
+with $\rho_2$ the density of the phase $2$ and $\Omega_\alpha$ the domain occupied by the particle $\alpha$ (see \ref{fig:Scheme}). 
+Subsequently, we define the velocity of the particle's center of mass, denoted as $\textbf{u}_\alpha$ which is given by $\textbf{u}_\alpha = \ddt \textbf{y}_\alpha$. 
+The derivation of $\ddt \textbf{y}_\alpha$ is straightforward but requires some algebra which are detailed in \ref{ap:velocity_definition}. 
+The final expression reads,
 \begin{equation}
-    \textbf{u}_\alpha = \frac{1}{m_\alpha} \left(
-        \textbf{p}_\alpha
-        +  \int_{\Sigma_\alpha} \rho_k \textbf{r} (\textbf{u}_I - \textbf{u}_k)\cdot \textbf{n}_k d\Sigma
+    \textbf{u}_\alpha(t) = \frac{1}{m_\alpha(t)} \left(
+        \textbf{p}_\alpha(t)
+        +  \int_{\Sigma_\alpha(t)} \rho_2 \textbf{r} (\textbf{u}_I - \textbf{u}_2)\cdot \textbf{n}_2 d\Sigma
         \right),
         \label{eq:dt_y_alpha}
 \end{equation}
-\JL{c'est assez marrant comme expression car cela signifie que la vitesse du centre de masse ne varie pas que l'on prenne k =1 ou k=2 ...}
-where \JL{Inutile : we defined the distance between any points inside $\Omega_\alpha$ and $\textbf{y}_\alpha$ by the vector \textbf{r}, such that,} $\textbf{r}(\textbf{y},t) = \textbf{y} - \textbf{y}_\alpha(t)$. From \ref{eq:dt_y_alpha} we observe that the first component of the velocity is the linear momentum divided by the mass of the particle, i.e., the mass averaged velocity over the volume of the particle. The second term results from the contribution of the anisotropic mass transfer across the surface of the particle to the motion of the center of mass. \JL{Un exemple de texte a completer pour finaliser l'analysique physique de ce termeTo be more specific let us consider a drop lying over a very hot plate. If we consider that the plate is sufficiently hot such that evaporation occurs on the bottom part of the drop. The evaporation flux can be defined as $\rho_k (\textbf{u}_I - \textbf{u}_k)$. Hence under the effect of an anisotropic evaporation flux one may expect the second term to be non-negligible.}. Note that the previous equation generalized previous expression given by \citet{morel2015mathematical}%, they state that the particle's center of mass velocity is $\textbf{u}_\alpha = \textbf{p}_\alpha / m_\alpha$ even though they are considering mass transfer.
-%It is indeed what we would expect in most of the cases, nevertheless this definition turns out to be not adapted in the presence of anisotropic mass transfer as denoted by \ref{eq:dt_y_alpha}. 
-\JL{pas la peine de tartiner une couche sur le dos de Morel. Ca suffit de dire que ce que l'expression est plus generale.}
+where $\textbf{r}(\textbf{y},t) = \textbf{y} - \textbf{y}_\alpha(t)$. 
+In Equation \ref{eq:dt_y_alpha}, it can be observed that the first component of the velocity represents the linear momentum divided by the mass of the particle. 
+This corresponds to the mass-averaged velocity over the volume of the particle.
+The second term in Equation \ref{eq:dt_y_alpha} arises from the contribution of anisotropic mass transfer across the surface of the particle. 
+This mass transfer leads to the motion of the particle's center of mass, thereby contributing to the total velocity.
+To illustrate this concept, let us consider a fixed drop with no momentum lying over a very hot plate.
+In this scenario, we assume that the plate is sufficiently hot to induce evaporation, specifically on the bottom portion of the drop.
+Hence, under the effect of an anisotropic evaporation flux one may expect the second term to be non-negligible.
+Consequently, the center of mass of the drop has a non-zero velocity in the opposite direction of the plate, even though the momentum is assumed to be zero.
+We can also consider the case of the nucleation of a bubble in water. 
+In this case, although the particle momentum is null at all time the center of mass of the particle moves due to the growth of the particle. 
+In both cases, we need to take into account the mass transfer term in \ref{eq:dt_y_alpha}, while the first term is negligible. 
+Note that \ref{eq:dt_y_alpha} generalized previous expression given by \citet{morel2015mathematical} whom neglect the second term.
 
-The particle's internal relative motions or the \textit{inner velocity} is $\textbf{w}_k(\textbf{y},t) = \textbf{u}_k(\textbf{y}) - \textbf{u}_\alpha(t)$.
-Then, using this decomposition, the momentum definition \ref{eq:position_and_momentum_def}, and after manipulating \ref{eq:dt_y_alpha}, we obtain the following relation,
+The particle's internal relative motions or the \textit{inner velocity} is given by $\textbf{w}_2(\textbf{y},t) = \textbf{u}_2(\textbf{y}) - \textbf{u}_\alpha(t)$.
+Thus, we can rewrite the momentum as follows,
+\begin{equation}
+    \label{eq:momentum_definition_1}
+    \textbf{p}_\alpha
+    = m_\alpha \textbf{u}_\alpha
+    + \int_{\Omega_\alpha} \rho_2 \textbf{w}_2 d\Omega.
+\end{equation}
+Alternatively, by manipulating \ref{eq:dt_y_alpha}, we obtain,
 \begin{equation}
     \textbf{p}_\alpha
     =  m_\alpha \textbf{u}_\alpha
-    - \int_{\Sigma_\alpha} \textbf{r} \rho_k (\textbf{u}_I - \textbf{u}_k)\cdot \textbf{n}_k d\Sigma
-    = m_\alpha \textbf{u}_\alpha
-    + \int_{\Omega_\alpha} \rho_k \textbf{w}_k d\Omega,
+    - \int_{\Sigma_\alpha} \textbf{r} \rho_2 (\textbf{u}_I - \textbf{u}_2)\cdot \textbf{n}_2 d\Sigma
     \label{eq:momentum_definition}
 \end{equation}
-\JL{Comment passes tu de la premiere egalite a la seconde ?}
-Therefore, the momentum of a particle can be seen as a sum of the mean velocity plus the integral of the fluctuation, with the latter being equivalent to minus the anisotropic mass transfer term. 
+Therefore, the momentum of a particle can be seen as a sum of the mean velocity plus the integral of the fluctuation (\ref{eq:momentum_definition_1}), with the latter being equivalent to minus the anisotropic mass transfer term (\ref{eq:momentum_definition}).
+The essential aspect of this definition is that the internal velocity fluctuations within a fluid particle do not affect the linear momentum as long as the anisotropic mass transfer is negligible.  
+
+In the following we discard the time dependency notation for all Lagrangian quantities denoted by the subscript $_\alpha$ and also $\Sigma(t)$ and $\Omega_\alpha$.
+Nevertheless, the reader must understand that all Lagrangian quantities and integration domains are function of time. 
 
 \subsection{Conservation laws}
 
-Following the strategy of \citet{paisant2014modelisation,zaepffel2012multisize,zaepffel2011modelisation,lhuillier2010multiphase} and \citet[Chapter 4]{morel2015mathematical}\JL{je ne vois pas bien ou ce genre de definition est donnee dans le papier de 2010 de Lhuillier. De mon point de vue les bonnes refs sont Morel 2015 et zaeppfell 2012 meme si je n'arrive pas a me procurer ce dernier}, 
-we assign to a particle indexed, $\alpha$, occupying the domain $\Omega_\alpha$ included in $\Omega_2$, (see \ref{fig:Scheme}) a Lagrangian property $q_\alpha(t)
-= \int_{\Omega_\alpha(t)} f_k(\textbf{y},t) d\Omega$.
-Likewise, we define $q_{I\alpha}(t) = \int_{\Sigma_\alpha(t)} f_I(\textbf{y},t) d\Sigma$ as being a surface property linked to the particle $\alpha$.
-Since, all Lagrangian quantities depend solely on time we discard the argument $t$ in all variables with the subscript $_\alpha$.
+Following the strategy of \citet{zaepffel2011modelisation} and \citet[Chapter 2]{morel2015mathematical} we assign to a particle indexed, $\alpha$, occupying the domain $\Omega_\alpha$ an arbitrary Lagrangian property $q_\alpha$ defined by $q_\alpha  = \int_{\Omega_\alpha} f_2(\textbf{y},t) d\Omega$.
+Similarly, we define $q_{I\alpha} = \int_{\Sigma_\alpha} f_I(\textbf{y},t) d\Sigma$ as being an integrated surface property associated to the particle $\alpha$.
 
-For any arbitrary Lagrangian quantity $q_\alpha$ we wish to define its evolution within time.
-Then from the general Reynolds transport theorem we deduce that \citep{morel2015mathematical},
+To describe the evolution of any arbitrary Lagrangian quantity $q_\alpha$, we need to establish its time derivative.
+Since, $q_\alpha$ is an integral quantity with a time-dependent domain of integration, we apply the general Reynolds transport theorem for volume integral (exposed in \ref{ap:math}) to compute its time derivative \citep{morel2015mathematical}.
+This yields the following expression :
 \begin{equation}
     \ddt  q_\alpha
-    = \int_{\Omega_\alpha(t)}\left[ \pddt f_k + \nablabh \cdot\left(f_k\textbf{u}_k\right) \right]d\Omega\\
-    + \int_{\Sigma_\alpha(t)} f_k (\textbf{u}_I-\textbf{u}_k)\cdot \textbf{n}_k d\Sigma,
+    = \int_{\Omega_\alpha}\left[ \pddt f_2 + \nablabh \cdot\left(f_2\textbf{u}_2\right) \right]d\Omega\\
+    + \int_{\Sigma_\alpha} f_2 (\textbf{u}_I-\textbf{u}_2)\cdot \textbf{n}_2 d\Sigma.
 \end{equation}
-where we clearly distinguish  that the second term on the RHS is the surface integrated of the flux of the local property $f_k$ across both phases.
-By substituting the first term with the local conservation law from \ref{eq:dt_f_k}, it is straightforward to show that,
+By substituting the integrand of the first integral on the right-hand side (RHS) with \ref{eq:dt_f_k} we obtain the conservation laws of the quantity $q_\alpha$, namely,  
 \begin{equation}
     \ddt  q_\alpha
-    = \int_{\Omega_\alpha} \textbf{S}_k d\Omega
-    + \int_{\Sigma_\alpha} \left[\mathbf{\Phi}_k + f_k (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d\Sigma,
+    = \int_{\Omega_\alpha} \textbf{S}_2 d\Omega
+    + \int_{\Sigma_\alpha} \left[
+        f_2 (\textbf{u}_I-\textbf{u}_2) 
+        + \mathbf{\Phi}_2 
+        \right] \cdot \textbf{n}_2 d\Sigma,
     \label{eq:dt_q_alpha}
 \end{equation}
-where we used the divergence theorem to transform the volume integral of $\mathbf{\Phi}_k$ into a surface integral. \JL{ce serait bien a ce stade de dommenter cha}
-Likewise, for surface quantities it can be shown using the general Leibniz rule that \citep{bothe2022sharp,morel2015mathematical,stone1990simple}, 
+The first term on the RHS accounts for the total contribution of the source term $\textbf{S}_2$ to the particle $\alpha$.
+While, The second term on the RHS is the surface integration of the exchange terms, which includes the phase transfer flux $f_2 (\textbf{u}_I-\textbf{u}_2)$ and the diffusive flux $\mathbf{\Phi}_2$. 
+For clarity, let us consider the specific case of the momentum balance, i.e., when $q_\alpha = \textbf{p}_\alpha$.
+In this situation, the first term reads as $\int_{\Omega_\alpha} \rho_2\textbf{g} d\Omega$ and represents the total weight acting on the particle $\alpha$. 
+Likewise, the second term represents the total source of momentum due to phase transfer, and it is expressed as, $\int_{\Sigma_\alpha} \rho_2 \textbf{u}_2 (\textbf{u}_I-\textbf{u}_2)\cdot\textbf{n}_2 d\Sigma$. 
+Lastly, it is evident that $\int_{\Sigma_\alpha} \textbf{T}_2\cdot\textbf{n}_2 d\Sigma$ represents the resultant of the hydrodynamic forces acting on the surface of the particle.
+It is important to notice that under this form, the exchange terms are expressed as integrals of dispersed phase fields denoted by the subscript $_2$.
+Nevertheless, depending on the nature of the dispersed phase, these fields may not always be defined.
+For infinitely rigid particles it is indeed the case since, the stress $\textbf{T}_2$ isn't defined.  
+Hence, our objective is to express the exchange terms in terms of the continuous phase field quantities interested of the dispersed phase field, i.e. in terms of $\mathbf{\Phi}_1$ and $\textbf{u}_1$ rather than $\mathbf{\Phi}_2$ and $\textbf{u}_2$. 
+
+To address this issue, let us derive the conservation equation for the integrated surface property $q_{I\alpha}$.
+To differentiate time-varying surface integrals within time, we can use the general Leibniz rule (see \ref{eq:Leibnitz})\citep{bothe2022sharp,morel2015mathematical,stone1990simple} to derive the following expression :
 \begin{equation}
     \ddt  q_{I\alpha}
     = \int_{\Sigma_\alpha} \left[
@@ -81,171 +106,414 @@ Likewise, for surface quantities it can be shown using the general Leibniz rule 
     \right]d\Sigma.
     \label{eq:surface_derivative}
 \end{equation}
-\JL{Il y a certain moment ou tu affiches la dependance de $\Sigma_\alpha$ en fonction du temps et d'autre non. il faut choisir et specifier que dans un cas general ces grandeurs dependent du temps.}
-
-By substituting the RHS of \ref{eq:surface_derivative}, using \ref{eq:dt_f_I}, and by making use of the surface divergence theorem on closed surfaces \citep{kanwal1998generalized} \JL{pas tres claire + evite les abreviations de type RHS ou defini les}, we arrive at the following relation,
+Substituting the RHS terms of \ref{eq:surface_derivative} using \ref{eq:dt_f_I}, and making use of the surface divergence theorem on closed surfaces (see \ref{eq:surf_div_theorem}), gives,
 \begin{equation}
     \ddt  q_{I\alpha}
     = \int_{\Sigma_\alpha} 
         \textbf{S}_I
     d\Sigma
     - \int_{\Sigma_\alpha} \Jump{
-        f_k (\textbf{u}_I - \textbf{u}_k)
-        + \mathbf{\Phi}_k
+        f_2 (\textbf{u}_I - \textbf{u}_2)
+        + \mathbf{\Phi}_2
     }
     d\Sigma.
     \label{eq:dt_q_I_alpha}
 \end{equation}
-We obtained two Lagrangian balance, \ref{eq:dt_q_alpha} and \ref{eq:dt_q_I_alpha} for respectively the integrated volumetric and surface properties on a single particle.
-These equations are basically a general form of Newton second law of motions, but valid for any particle immersed into a medium following the local balance, \ref{eq:dt_f_k} and \ref{eq:dt_f_I}. 
-We refer these equations as the zeroth order equations of motions, as it provide us solely with the resultant of the local fields $f_k$ and $f_I$.
-It is interesting to notice that the non-convective term $\mathbf{\Phi}_I$ plays no role at all in \ref{eq:dt_q_I_alpha}. 
+This equation can be interpreted as the surface conservation equation for the integrated surface property $f_I$, or as the flux jump condition integrated on a closed surface. 
 
-%\subsubsection*{Fundamental properties }
+As discussed above we wish to get rid of $\mathbf{\Phi}_2$ in \ref{eq:dt_q_alpha}. To achieve this, we treat the particle's volume and surface as a unified entity and derive a conservation equation for $q_\alpha + q_{I\alpha}$. 
+This is done by summing \ref{eq:dt_q_alpha} and \ref{eq:dt_q_I_alpha} which leads to, 
+\begin{equation}
+    \ddt  (q_\alpha+q_{I\alpha})
+    = 
+    \int_{\Omega_\alpha} \textbf{S}_2 d\Omega
+    + \int_{\Sigma_\alpha} \textbf{S}_I d\Sigma
+    + \int_{\Sigma_\alpha} \left[
+        f_1 (\textbf{u}_I-\textbf{u}_1) 
+        + \mathbf{\Phi}_1 
+        \right] \cdot \textbf{n}_2 d\Sigma. 
+    \label{eq:dt_q_alpha_tot}
+\end{equation}
+This equation is the general form of the linear conservation law of the system consisting of the particle domain $\Omega_\alpha$ and its surface $\Sigma_\alpha$. It is applicable to any particle immersed into a continuous phase following the local conservation,\ref{eq:dt_f_k} and \ref{eq:dt_f_I}.
+We refer to this equation as the zeroth-order conservation equation or the linear conservation law for the particle $\alpha$.
 
+Assuming interface with a negligible area density ($\rho_I=0$), and no phase transfer, $\textbf{u}_I=\textbf{u}_2=\textbf{u}_1$, the linear momentum balance yields, 
+\begin{equation}
+    \ddt \textbf{p}_\alpha
+    = 
+    \rho_2\textbf{g}v_\alpha
+    + \textbf{f}_\alpha
+    \label{eq:dt_p_alpha}
+\end{equation}
+where $m_\alpha = \int_{\Omega_\alpha}\rho_2 d\Omega$ is the volume of the particle, and $\textbf{f}_\alpha = \int_{\Sigma_\alpha}  \textbf{T}_1 \cdot \textbf{n}_2 d\Sigma$ is the resultants of the hydrodynamic force. 
+This model does not account for inter-particle interactions. 
+However, it is possible to include manually such forces in equation \ref{eq:dt_p_alpha}.
+Finally, we would like to highlight that  due to the consideration of closed surface, the diffusive flux $\mathbf{\Phi}_I$, plays no role at all in \ref{eq:dt_q_I_alpha} and \ref{eq:dt_q_alpha_tot}.
+Therefore, in the case of the linear momentum conservation law, the contribution of the surface tension forces exposed in \ref{eq:surface_tension}, don't contribute to the momentum balance in \ref{eq:dt_p_alpha}.
+As a consequence, even in the presence of local Marangoni forces, the resultant of the local surface tension forces cancels out in the linear momentum balance.
+This fact has already been demonstrated by \citet{hesla1993note} who showed that the surface tension force does not contribute to the linear and angular momentum balance. 
+Here, we have provided the general proof that the interfacial diffusive flux $\mathbf{\Phi}_I$, which is present at the local scale according to \ref{eq:dt_f_I}, does not contribute to the zeroth-order conservation law of a particle with a closed surface.
+This principle is therefore applicable to other conservation equations, such as the surface energy balance or the surface mass balance of constituents, where surface diffusive fluxes are also present \citep{bothe2022sharp}. 
 
+Nevertheless, it is known that surface tension forces impact the hydrodynamic of droplets and bubbles \citep{kentheswaran2022direct,pesci2018computational}. 
+Therefore, if the diffusive flux of surface are not involved in the linear conservation law, it must appear at some point in the mathematical description of Lagrangian particles. 
+To find out where this contribution arise we shall describe the particle with a higher level of accuracy. 
+This is the purpose of the next section. 
 
-
-
-%\subsubsection*{First order moments equations}
 \subsection{First order moment equations}
 
-To better describe the local properties within the particle's surface or volume we now introduce the first moment or the dipole of the particle $\alpha$ \JL{es tu sur que l'expression dipole est appropriee ?}. 
-The first moment of any properties $f_k$ and $f_I$, is defined by respectively,
+To better describe the local properties within the particles, we now introduce the first moment or the dipole of a particle.
+We define the first moment of any properties $f_2$ and $f_I$ by respectively,
 \begin{align}
-    &\textbf{Q}_\alpha 
-    = \int_{\Omega_\alpha} \textbf{r} f_k d\Omega,
+    &\mathcal{Q}_\alpha 
+    = \int_{\Omega_\alpha} \textbf{r} f_2 d\Omega,
     &\text{and}&
-    &\textbf{Q}_{I\alpha}
-    = \int_{\Sigma_\alpha} \textbf{r} f_I d\Sigma.
+    &\mathcal{Q}_{I\alpha}
+    = \int_{\Sigma_\alpha} \textbf{r} f_I d\Sigma,
     \label{eq:first_moment_definition}
 \end{align}
-\JL{je pense que le premier moment peut etre defini comme $\mathcal{M}$. Je trouve cela plus parlant que $Q$. Il faut eviter le double subscript $I\alpha$}
-Considering \ref{eq:dt_f_k}, \ref{eq:dt_f_I} and the Reynolds theorem for volume and surface integral we can show equally that,
+where we recall that $\textbf{r}$ is the distance between any point inside $\Omega_\alpha$ or $\Sigma_\alpha$, to the center of mass of the particle $\alpha$.
+It is then possible to differentiate these moments with respect to time in order to obtain their conservation laws.
+Indeed, considering \ref{eq:dt_f_k}, \ref{eq:dt_f_I} and applying the Leibniz rule for volume and surface integrals (see \ref{eq:Reynolds} and \ref{eq:Leibnitz} respectively), we can show equally that,
 \begin{align}
-    \ddt \textbf{Q}_\alpha
-    &= \int_{\Omega_\alpha} \textbf{r} \textbf{S}_k d\Omega 
-    + \int_{\Sigma_\alpha} \textbf{r} \left[
-        \mathbf{\Phi}_k
-        + f_k (\textbf{u}_I-\textbf{u}_k)
-    \right]\cdot \textbf{n}_k  d\Sigma + \int_{\Omega_\alpha} \left(        
-        - \mathbf{\Phi}_k
-        + f_k  \textbf{w}_k 
+    \ddt \mathcal{Q}_\alpha
+    &= \int_{\Omega_\alpha} \left(
+        \textbf{r} \textbf{S}_2         
+        + f_2  \textbf{w}_2 
+        - \mathbf{\Phi}_2
     \right) d\Omega,
+    + \int_{\Sigma_\alpha} \textbf{r} \left[
+        \mathbf{\Phi}_2
+        + f_2 (\textbf{u}_I-\textbf{u}_2)
+    \right]\cdot \textbf{n}_2  d\Sigma 
     \label{eq:dt_Q_alpha}\\
-    \ddt \textbf{Q}_{I\alpha}
-    &= \int_{\Sigma_\alpha} 
-        \textbf{r}\textbf{S}_I d\Sigma 
-    - \int_{\Sigma_\alpha}\textbf{r} \Jump{\mathbf{\Phi}_k
-        + f_k (\textbf{u}_I - \textbf{u}_k)
-    }
-    d\Sigma+ \int_{\Sigma_\alpha} \left(
-        - \mathbf{\Phi}_{||}^I
+    \ddt \mathcal{Q}_{I\alpha}
+    &= \int_{\Sigma_\alpha} \left(
+        \textbf{r}\textbf{S}_I
         + f_I \textbf{w}_I
+        - \mathbf{\Phi}_{||}^I
     \right) d\Sigma,
+    - \int_{\Sigma_\alpha}\textbf{r} \Jump{\mathbf{\Phi}_2
+        + f_2 (\textbf{u}_I - \textbf{u}_2)
+    }
+    d\Sigma
     \label{eq:dt_Q_I_alpha}
 \end{align}
 where $\textbf{w}_I = \textbf{u}_I - \textbf{u}_\alpha$.
-The detailed derivation of these equations are provided in \ref{ap:moment_derivative}. \JL{je n'ai pas relu la derivation detaillee en annexe, ... je te fais confiance. par contre en annexe tu ne derive pas le premier moment interfacial. J'imagine que la derivation est la meme encore faut il le preciser. Egalement j'ai regorganise les elements dans les equations precedentes par signification physique. D'ailleurs il y avait des differences dans les deux equations (la premiere $r S$, la seconde $S r$)... Merci de faire attention a ce genre de detail. J'avoue avoir du mal a comprendre l'interpretation physique de l'integrale de la contrainte dans le volume. Comme on en discutait, par exemple pour une particule solide, celle integrale n'est pas determinee, donc il faudrait la remplacer par quelque chose que l'on connait non ? Enfin bon a discuter (pas forcement ici). je pense que c'est un point important. Par ailleurs dans quel cas l'integrale des fluctuations $w_k$ est elle nulle ? pour une particule solide est ce le cas ? j'imagine que oui ? J'imagine que tout cela est traite plus tard (dans la derniere section), mais ca me parait crucial de bien expliquer a quoi servent ces termes et dans quel cas ils sont nuls. Une maniere d'expliciter tout cela pourrait etre de separer j'imagine le premier moment (au moins pour la vitesse) en une partie symmetrique et une partie anti symmetrique pour bien differencier ce qui est lie a la vitesse angulaire et la deformation.}
-In \ref{eq:dt_Q_alpha} we recognize by definition, the first moment of the source term $\textbf{S}_k$, the first moment of the non-convective flux term $\mathbf{\Phi}_k\cdot\textbf{n}_k$ and the first moment of phase exchange term, $f_k (\textbf{u}_I-\textbf{u}_k)\cdot\textbf{n}_k$. 
-Besides, two supplementary terms appear in this equation, the integral of the non-convective flux $- \int \mathbf{\Phi}_k d\Omega$ and a term related to the fluctuation of the internal velocity $f_k \textbf{w}_k$.
-For \ref{eq:dt_Q_I_alpha} similar remarks can be made as the equation yields comparable terms. 
-It is worth mentioning that although the internal fluctuation and the non-convective term do not appear in \ref{eq:dt_q_alpha} and \ref{eq:dt_q_I_alpha} they are present in the first order balance \ref{eq:dt_Q_alpha} and \ref{eq:dt_Q_I_alpha}.
-Consequently, the non-convective surface flux and the fluctuating volume and surface velocities do not impact explicitly the mean properties of the particles, but have an importance on the first order moment of the distribution of $f_k$ and $f_I$.  
+The detailed derivation of \ref{eq:dt_Q_alpha} is provided in \ref{ap:moment_derivative}.
+The derivation of \ref{eq:dt_Q_I_alpha} follows a similar procedure. 
+% \JL{je n'ai pas relu la derivation detaillee en annexe, ... je te fais confiance. par contre en annexe tu ne derive pas le premier moment interfacial. 
+% J'imagine que la derivation est la meme encore faut il le preciser. 
+% Egalement j'ai regorganise les elements dans les equations precedentes par signification physique. 
+% D'ailleurs il y avait des differences dans les deux equations (la premiere $r S$, la seconde $S r$)... 
+% Merci de faire attention a ce genre de detail. 
+% J'avoue avoir du mal a comprendre l'interpretation physique de l'integrale de la contrainte dans le volume. 
+% Comme on en discutait, par exemple pour une particule solide, celle integrale n'est pas determinee, donc il faudrait la remplacer par quelque chose que l'on connait non ? 
+% \tb{Dans le cas ou les contrainte ne sont pas defini les degrées de liberté des particules solid font que cette contrainte ne peux ne pas etre prise en compte la partie symmetrique de cette formule 
+% permet justement de remonter a la contrainte dans le cas ou elle ne serait pas defini. dans le cas des particue fluid cela a du sens parcontre c'est les contraintes interne qui s'oppose a la deformations}}
+% \JL{
+%  Enfin bon a discuter (pas forcement ici). 
+%  je pense que c'est un point important. 
+% }\tb{cela va etre discuter dans la partie ou on traitre du momentum non ?}
+% \JL{
+%  Par ailleurs dans quel cas l'integrale des fluctuations $w_2$ est elle nulle ? 
+%  pour une particule solide est ce le cas ? 
+%  j'imagine que oui ? 
+%  J'imagine que tout cela est traite plus tard (dans la derniere section), mais ca me parait crucial de bien expliquer a quoi servent ces termes et dans quel cas ils sont nuls. 
+%  \tb{dur a expliquer pour une quantité general }
+%  }\JL{
+%  Une maniere d'expliciter tout cela pourrait etre de separer j'imagine le premier moment (au moins pour la vitesse) en une partie symmetrique et une partie anti symmetrique pour bien differencier ce qui est lie a la vitesse angulaire et la deformation. 
+%  \tb{dans ce cas il faudrait donner l'application du momentum maintenant ce qui change le plan}}
+In \ref{eq:dt_Q_alpha}, we recognize the first moment of the source term $\textbf{S}_2$, the first moment of the diffusive flux term $\mathbf{\Phi}_2\cdot\textbf{n}_2$ and the first moment of phase exchange term, $f_2 (\textbf{u}_I-\textbf{u}_2)\cdot\textbf{n}_2$. 
+Additionally, two supplementary terms appear in \ref{eq:dt_Q_alpha}, namely : the integral of the diffusive flux $\mathbf{\Phi}_2$, and a term related to the fluctuation of the internal velocity $f_2 \textbf{w}_2$.
+Similar observations can be made for the fist moment of surface equation \ref{eq:dt_Q_I_alpha}, as it shares similarities with \ref{eq:dt_Q_alpha}. 
+In particular, it is worth noting the presence of the surface diffusive flux $\mathbf{\Phi}_{I||}$ in \ref{eq:dt_Q_I_alpha}.
+This term will be further discussed and analyzed in the following. 
 
-%\subsection{Higher order moment equations} %description of the particle}
-\JL{je ne pense pas qu'une sous section supplementaire soit necessaire on peut simplement finir la section precedente en precisant que les equations de transport pr les moments d'ordre superieurs ont une forme similaire a l'equation d'ordre 1.}
-Furthermore, it can be shown that the derivative \JL{with time} of the arbitrary order moments of volume and surface, namely,
+For similar reason than the linear conservation equations, we add \ref{eq:dt_Q_alpha} and \ref{eq:dt_Q_I_alpha} to expresses the conservation equation of the total first moment $\mathcal{Q}_\alpha + \mathcal{Q}_{I\alpha}$.
+This leads to the following expression:
+\begin{multline}
+    \ddt (\mathcal{Q}_\alpha+\mathcal{Q}_{I\alpha})
+    = \int_{\Omega_\alpha} \left(
+        \textbf{r} \textbf{S}_2         
+        + f_2  \textbf{w}_2 
+        - \mathbf{\Phi}_2
+    \right) d\Omega\\
+    + \int_{\Sigma_\alpha} \left(
+        \textbf{r}\textbf{S}_I
+        + f_I \textbf{w}_I
+        - \mathbf{\Phi}_{||}^I
+    \right) d\Sigma
+    + \int_{\Sigma_\alpha} \textbf{r} \left[
+        \mathbf{\Phi}_1
+        + f_1 (\textbf{u}_I-\textbf{u}_1)
+    \right]\cdot \textbf{n}_2  d\Sigma.
+    \label{eq:dt_Q_tot}
+\end{multline}
+Additionally, a conservation law can be derived for an arbitrary order moments of volume and surface, i.e. for
 \begin{align}
-    \textbf{Q}_\alpha^n
-    = \int_{\Omega_\alpha} \underbrace{
-        \textbf{r}\textbf{r}\ldots\textbf{r}
-    }_{
-        \text{n times}
-    }
-    f_k d\Omega,
-    && \text{and} &&
-    \textbf{Q}_{I\alpha}^n
+    \mathcal{Q}_\alpha^n
+    = \int_{\Omega_\alpha}
+        \textbf{r}^n
+        f_2 d\Omega,
+        && \text{and} &&
+    \mathcal{Q}_{I\alpha}^n
     = \int_{\Sigma_\alpha}
-        \textbf{r}\textbf{r}\ldots\textbf{r}
+        \textbf{r}^n
     f_I d\Sigma,
     \label{eq:Q_n_definition}
 \end{align} 
-\JL{je trouve la notation $\text{n times}$ pas tres heureuse. N'y aurait il pas un autre moyen de specifier que l'on a n $\textbf{r}$ ?}
-do not involve any additional terms than in \ref{eq:dt_Q_alpha} and \ref{eq:dt_Q_I_alpha}, but rather just the $n^{th}$ order moments of the already presented terms.
-We provide the full derivation of $\textbf{Q}_\alpha^n$ in \ref{ap:Moments_equations}.
-In short, these higher order moments describe the distributions of the local quantities $f_k$ and $f_I$ inside the domain $\Omega_\alpha$.
-As an example, the zeroth order moments are the summation of the distribution, the first order moments measure the mean of the distribution, the second order moments represent the standard deviations of the distribution and the third order moments holds information on the skewness of the distribution. \JL{pas claire. Pour moi la moyenne d'une quantite est donnee par le moment d'ordre 0.}
-Consequently, an infinity number of moments would be theoretically necessary to recover the fields of $f_k$ within $\Omega_\alpha$. 
+respectively, where $\textbf{r}^n$ is the shorthand for the tensor product of \textbf{r} with $n$ times itself. 
+It can be shown that the derivative with time of do not involve any additional terms than in \ref{eq:dt_Q_alpha} and \ref{eq:dt_Q_I_alpha}, but rather just the $n^{th}$ order moments of the already presented terms.
+We provide the full derivation of $\mathcal{Q}_\alpha^n$ in \ref{ap:Moments_equations}.
+In short, these higher order moments describe the distributions of the local quantities $f_2$ and $f_I$ inside the domain $\Omega_\alpha$.
+Consequently, an infinite number of moments would be theoretically necessary to recover the fields of $f_2$ within $\Omega_\alpha$. 
 
 
-\subsubsection*{From Lagrangian to Eulerian fields}
+At this stage it is difficult to interpret the physical meaning behind these moments equations. 
+Therefore, to gain in understanding we now discuss the second order moment of mass and first order moment of momentum conservation equations. 
+For clearly, in the following examples, we consider a negligible area density, i.e. $\rho_I=0$. 
+Additionally, we assume that no phase exchange occurs, resulting in $\textbf{u}_I=\textbf{u}_1=\textbf{u}_2$. 
 
-Up to now we described the dispersed phase within a Lagrangian framework, for each particle we derived a set of equations solely function of time.
-However, to be coherent with the Eulerian conservation equations used to describe the continuous phase in the previous section, we need to extend the Lagrangian equations to an Eulerian modeling. 
-In order to accomplish this, we introduce the dirac function $\delta_\alpha$ defined such as, 
+Following \ref{eq:Q_n_definition} we define the second-order moment of mass and the first-order moment of momentum as respectively,
+\begin{equation}
+    \mathcal{M}_\alpha 
+    = \int_{\Omega_\alpha} \rho_2 \textbf{r} \textbf{r} d\Omega
+    \;\;\;\text{and}\;\;\;
+    \mathcal{P}_\alpha 
+    = \int_{\Omega_\alpha} \rho_2 \textbf{r} \textbf{u}_2 d\Omega.
+    \label{eq:first_moment_of_momentum_def}
+\end{equation}
+Note that $\mathcal{M}_\alpha$ is related to the inertia tensor $\mathcal{I}_\alpha$, through the expression, $\mathcal{I}_\alpha = \mathcal{M}_\alpha - \text{tr}(\mathcal{M}_\alpha)\textbf{I}$,
+where $\mathcal{I}_\alpha$. 
+At constant $\rho_2$ the tensor $\mathcal{M}_\alpha$ describes the volume distribution around the particle's center of mass and, consequently, the shape of the particle.
+In order to provide a clearer physical interpretation to the moment of momentum tensor, we decompose $\mathcal{P}_\alpha$ into two distinct part, namely,
+$\mathcal{P}_\alpha = \mathcal{S}_\alpha+\mathcal{T}_\alpha$ where $\mathcal{S}^\alpha$ represents the symmetric part and $\mathcal{T}^\alpha$ is the antisymmetric part of $\mathcal{P}_\alpha$.
+Then, the tensors $\mathcal{S}_\alpha$ and $\mathcal{T}_\alpha$ correspond respectively to the stretching and angular momentum of the particle $\alpha$. 
+The tensor $\mathcal{S}_\alpha$ quantifies how fast and in which direction the particle get elongated, it represents the rate of stretching or deformation experienced by the particle
+The tensor $\mathcal{T}_\alpha$ is related to the angular momentum of the particle. 
+In this study we use the pseudo vector $\mu_\alpha = \int_{\Omega_\alpha} \rho_2 \textbf{r} \times \textbf{u}_2 d\Omega$ to express this quantity. 
+Indeed, both  $\mathcal{T}_\alpha$ and $\mu_\alpha$ represent the angular momentum and are related through $(\mu_\alpha)_i = \epsilon_{ijk} (\mathcal{P}_\alpha)_{jk}= \epsilon_{ijk} (\mathcal{T}_\alpha)_{jk}$, where $\epsilon$ is the third order alternating unit tensor. 
+Lastly, we also introduce the scalar $\mathcal{D}_\alpha = \text{tr}(\mathcal{P}_\alpha) = \frac{1}{3}\int_{\Omega_\alpha} \rho_2 \textbf{r} \cdot \textbf{u}_2 d\Omega.$, which quantifies the rate at which the particle is being compressed due to isotropic pressure or external forces.
+
+
+Injecting, $f_2 = \rho_2$ in the second-order moment equation derived in \ref{ap:Moments_equations} gives:
+\begin{equation}
+    \ddt \mathcal{M}_\alpha=2\mathcal{S}_\alpha. 
+    \label{eq:dt_M_alpha}
+\end{equation}
+From \ref{eq:dt_M_alpha} we deduce that the evolution of the distribution of mass of a particle is solely motivated by the stretching of momentum, denoted by $\mathcal{S}_\alpha$. 
+Note that if the particle has a constant $\mathcal{M}_\alpha$ such as for solid spherical particle, the stretching of momentum is then null.
+This argument is also valid for spherical fluid particles with inner velocity motion.  
+Additionally, applying the trace operator on both sides of \ref{eq:dt_M_alpha}, yields the interesting relation : $\ddt \text{tr}(\mathcal{M}_\alpha)=2\mathcal{D}_\alpha$.
+Since the tensor $\mathcal{M}_\alpha$ is symmetric, it can always be diagonalized. 
+Therefore, we can state that $\text{tr}(\mathcal{M}_\alpha) = \lambda^\alpha_1(t)+\lambda^\alpha_2(t)+\lambda^\alpha_3(t)$, with $\lambda_1^\alpha$,$\lambda_2^\alpha$ and $\lambda_3^\alpha$, being the eigenvalues of $\mathcal{M}_\alpha$.
+For unreformable particles it is evident that the eigenvalues are not function of time, therefore $\ddt \text{tr}(\mathcal{M}_\alpha)=0$.  
+Consequently, $\mathcal{D}_\alpha$ has the notable property of being null whenever the particle shape remain constant, irrespective of the orientation.
+% It could also be  demonstrated that the time derivative of the determinant of $\mathcal{M}_\alpha$ is null, i.e. $\ddt \text{det}(\mathcal{M}_\alpha)=0$, for any particle with constant mass. 
+
+
+% \begin{figure}
+%     \centering
+%     \begin{tikzpicture}
+%         % \draw[fill=gray] (-4,0) circle(1);
+%         \draw[fill=gray] (0,0) circle(1);
+%         \foreach \th in {0,30,60,90,120,150,180}{
+%         \foreach \r in {0.2,0.5,0.8}{
+%             \draw[->](\r*{cos(\th)},\r*{cos(\th)})--(\r*{cos(\th)},\r*{cos(\th)});
+%         }
+%         }
+%         % \draw[fill=gray] (4,0) circle(1);
+%     \end{tikzpicture}
+%     \caption[short]{Representation of the internal velocity fields for three case with pur symmetric , antisymmetric and isotropic  moment of momentum }
+% \end{figure}
+
+
+The moment of momentum equation is derived using \ref{eq:dt_Q_tot}, it reads, 
+\begin{equation}
+    \ddt \mathcal{P}_\alpha
+    = \int_{\Omega_\alpha} \left(
+        \rho_2  \textbf{w}_2 \textbf{w}_2 
+        - \mathbf{T}_2
+    \right) d\Omega
+    - \int_{\Sigma_\alpha} 
+        \sigma \textbf{I}_{||}
+    d\Sigma
+    + \textbf{M}_\alpha
+    \label{eq:dt_P_alpha}
+\end{equation}
+where $\textbf{M}_\alpha = \int_{\Sigma_\alpha} \textbf{r}\mathbf{T}_1\cdot \textbf{n}_2d\Sigma $ represents the first hydrodynamic moment on the particle $\alpha$.
+The deviatoric part of $\textbf{M}_\alpha$ is usually decomposed into a symmetric and antisymmetric part, i.e. $M^\alpha_{ij} - \frac{1}{3}M^\alpha_{kk}\delta_{ij} = S^\alpha_{ij}+T^\alpha_{ij}$, with,
+\begin{align}
+    \label{eq:M_decomposition}
+    S^\alpha_{ij} 
+    &= \frac{1}{2}  \int_{\Sigma_\alpha} \left[
+        r_i(T_{jk}n_k)
+        + (T_{ik}n_k)r_j
+        \right]d\Sigma
+        - \frac{\delta_{ij}}{3}\int_{\Sigma_\alpha} \left[
+            r_l(T_{lk}n_k)
+    \right]d\Sigma\\
+    T^\alpha_{ij}
+    &= \frac{1}{2}  \int_{\Sigma_\alpha} \left[
+        r_i(T_{jk}n_k)
+        - (T_{ik}n_k)r_j
+    \right]d\Sigma \nonumber
+\end{align}
+where $T_{ij}$ and $n_k$ represents the components of the tensors $\textbf{T}_1$ and $\textbf{n}_2$ respectively. 
+The tensors $\textbf{S}_\alpha$ and $\textbf{T}_\alpha$ correspond, respectively, to the hydrodynamic stresslet and torque applied on the particle $\alpha$ \citep{guazzelli2011,kim2013microhydrodynamics}. 
+We also introduce the hydrodynamical torque vector as $\textbf{t}_\alpha = \int_{\Sigma_\alpha} \textbf{r} \times (\mathbf{T}_1\cdot \textbf{n}_2) d\Sigma$ which is related to the torque tensor by $t^\alpha_i = \epsilon_{ikj} T^\alpha_{jk}$, where $\epsilon$ the third-order alternating tensor. 
+Notice that the first moment  $\int_{\Omega_\alpha} \textbf{rg} d\Omega$ canceled since \textbf{g} is constant all over the volume, i.e. $\int_{\Omega_\alpha} \textbf{rg} d\Omega =\textbf{g}\int_{\Omega_\alpha} \textbf{r} d\Omega=0$. 
+Each of the other terms appearing in \ref{eq:dt_P_alpha} is discussed in further detail in the following.
+
+The conservation equation of the angular momentum $\mu_\alpha$ is then obtained by taking the double contracted product of \ref{eq:hybrid_avg_dt_dP_alpha} with $\epsilon$, which gives the simple expression :
+\begin{equation}
+    \ddt\mu_\alpha
+    =  
+    \textbf{t}_\alpha.
+    \label{eq:dt_mu_alpha}
+\end{equation}
+Notice that every other term of \ref{eq:dt_P_alpha} vanishes due to their symmetric nature. 
+Particularly, the surface tension terms do not appear in the angular momentum balance, which is consistent with the findings of \citet{hesla1993note}. 
+As a consequence, the surface tension has no effect on the angular momentum. 
+In the literature it is common to include the torque due to inter-particular interactions in the angular momentum balance, as it is done in \citet{jackson1997locally} and \citet{zhang1997momentum}.
+Here, it can be manually included on the RHS of \ref{eq:dt_mu_alpha}. 
+
+
+Taking the symmetric part of \ref{eq:hybrid_avg_dt_dP_alpha}, yield an equation for the stretching of momentum, which can be written as,
+\begin{equation}    
+    \ddt \mathcal{S}_\alpha
+    =  \int_{\Omega_\alpha} \left(
+        \rho_2\textbf{w}_2 \textbf{w}_2
+        - \mathbf{T}_2
+        \right) d\Omega
+        - \int_{\Sigma_\alpha} 
+        \sigma \textbf{I}_{||}
+        d\Sigma
+        + \textbf{S}_\alpha.
+    \label{eq:dt_S_alpha}
+\end{equation}
+On the RHS of \ref{eq:dt_S_alpha} we can identify several terms: 
+the internal kinetic energy $\int \textbf{w}_2\textbf{w}_2 d\Omega$; 
+the integral of the particle internal stress $\int_{\Omega_\alpha} \mathbf{T}_2 d\Omega$; 
+the first moment of the surface tension forces $\int_{\Sigma_\alpha} \sigma \textbf{I}_{||} d\Sigma$; 
+and the stresslet tensor, $\textbf{S}_\alpha$ introduced earlier.
+Based on \ref{eq:dt_M_alpha} we can infer that the evolution of $\mathcal{M}_\alpha$ is driven by the internal kinetic energy and the stresslet.
+However, it is being counteracted by surface tension forces and internal stresses which tend to oppose the deformation of the particle. 
+Therefore, if the surface tension forces play no role in the linear and angular momentum equation, it does impact the stretching of momentum $\mathcal{S}_\alpha$.
+As a consequence, the surface tension forces impact the hydrodynamic behavior of a particle solely through their action on $\mathcal{S}_\alpha$, which is related to the shape of a particle through the relation from \ref{eq:dt_M_alpha}.
+
+Lastly, we take the trace of \ref{eq:dt_Q_tot}, which directly yields the scalar equation :
+\begin{equation}
+    \ddt \mathcal{D}_\alpha
+    = \int_{\Omega_\alpha} \left(
+        \rho_2 \textbf{w}_2 \cdot \textbf{w}_2
+        - \mathbf{T}_2 : \textbf{I}
+        \right) d\Omega
+        - 2\int_{\Sigma_\alpha} \sigma d\Sigma
+        + \text{tr}(\textbf{M}_\alpha)
+    \label{eq:dt_D_alpha}
+\end{equation}
+which correspond to the isotropic work balance within the particle's volume and surface. 
+As a matter of fact, the rate of compression of a particle, denoted by the scalar $\mathcal{D}_\alpha$ evolves according to : 
+the internal kinetic energy, $\int_{\Omega_\alpha} \textbf{w}_2 \cdot \textbf{w}_2 d\Omega$;
+the trace of the integral of the hydrodynamic stresses, $\int_{\Omega_\alpha} \text{tr}(\textbf{T}_2)d\Omega$; 
+the surface energy $\int_{\Sigma_\alpha} \sigma d\Sigma$; 
+and the trace of the hydrodynamic first moment, $\text{tr}(\textbf{M}_\alpha)$.
+To provide a concrete insight of the physical implication of the above equation, we consider the following example :
+we examine a single spherical fluid particle of radius $a$, immersed in a steady flow such that $\textbf{u} = 0$ on $\Omega$. 
+In this situation, the stress tensor can be written as $\textbf{T}_k = \textbf{I} p_k$ for $k = 1, 2$ where $p_k$ is the pressure in the phase $k$. 
+Therefore, applying these considerations to \ref{eq:dt_D_alpha} yields the relation, 
+\begin{equation*}
+    \smallavg{p_1}{\Sigma_\alpha}
+    -  \smallavg{p_2}{\Omega_\alpha} 
+    =
+    \frac{2}{a} \smallavg{\sigma}{\Sigma_\alpha}
+    \label{eq:Laplace_law}
+\end{equation*}
+where,  $\smallavg{p_1}{\Sigma_\alpha}$ and  $\smallavg{\sigma}{\Sigma_\alpha}$ are the surface-averaged external pressure and surface tension coefficient respectively, and $\smallavg{p_2}{\Omega_\alpha}$ represent the volume-averaged internal pressures.
+Under this form it is evident that \ref{eq:Laplace_law} represent the well-known Laplace's Law. 
+Additionally, in light of \ref{eq:dt_M_alpha}, this equation can be interpreted as an equilibrium equation for the particle mass distribution since $\ddt\text{tr}(\mathcal{M}_\alpha) = 2 \mathcal{D}_\alpha$. 
+From this argument and \ref{eq:dt_D_alpha}, one can derive the \textit{Rayleigh-Plesset} equaiton by considering compressible spherical particles with non-constant density $\rho_2$.
+A demonstration of this derivation can be found in the class of \tb{CITER LE COURS DE Lhuillier}. 
+By the mean of kinetic theory \citet{zhang1994averaged} also derived the \textit{Rayleigh-Plesset} equation.
+However, their derivation involves more complex mathematical considerations.
+
+
+\subsection{From Lagrangian to Eulerian fields}
+Up to this point, we have described the dispersed phase within a Lagrangian framework.
+However, to be coherent with the Eulerian conservation equations used to describe the continuous phase, we need to extend the Lagrangian equations to an Eulerian models. 
+In order to achieve this, we introduce the function $\delta_\alpha$, which is defined as follows, 
 \begin{align}
     \delta_\alpha(\textbf{y},t) = \delta(\textbf{y}-\textbf{y}_\alpha(t)).
     \label{eq:delta_alpha}
 \end{align}
-where this function is valid for all point in space and for all time\citep[Chapter 2]{morel2015mathematical}. 
-By noticing that $\delta_\alpha(\textbf{x}_\alpha,t) = 1$ independently of $t$, it can be demonstrated that the convective derivative of the function $\delta_\alpha(\textbf{y},t)$ is nil \JL{??} which yields, 
+where $\delta$ is the Dirac delta function.
+By noticing that $\delta_\alpha(\textbf{x}_\alpha,t) = 1$ independently of the time $t$, it can be shown that the convective derivative of the function $\delta_\alpha(\textbf{y},t)$ results in the following expression, 
 \begin{equation}
     \pddt \delta_\alpha
     + \nablabh \cdot (\textbf{u}_\alpha  \delta_\alpha)
     =0,
     \label{eq:dt_delta_alpha}
 \end{equation}
-where we included $\textbf{u}_\alpha$ in the divergence operator since we recall that $\textbf{u}_\alpha$ is a function of time only.
-Besides, it must be said that \ref{eq:dt_delta_alpha} isn't valid if changes in topology such as break up or coalescence events occur.
-Indeed, in those cases we must add a source terms on the RHS of \ref{eq:dt_delta_alpha} to account for particle birth or death. 
-
-Multiplying each Lagrangian quantities by $\delta_\alpha$ yields the \textit{particle} field, $q_\alpha(t)\delta_\alpha(\textbf{y},t)$, which is valid through space and time.
-Likewise, for any derivative of Lagrangian quantities we define its related field, i.e. $\delta_\alpha \ddt q_\alpha$, and we show that,
+Additionally, it should be noted that \ref{eq:dt_delta_alpha} is not applicable if changes in topology, such as break up or coalescence events, occur.
+In such cases it is possible to include a source term on the RHS of \ref{eq:dt_delta_alpha} to account for particle birth or death. 
+Multiplying each Lagrangian quantities by $\delta_\alpha$ yields the \textit{particle field}, denoted as $q_\alpha(t)\delta_\alpha(\textbf{y},t)$, which is defined throughout space and time.
+Likewise, for any derivative of Lagrangian quantities, such as $\ddt q_\alpha$, we define its corresponding Eulerian field by Multiplying it with $\delta_\alpha$ and show that :
 \begin{equation}
     \delta_\alpha \ddt q_\alpha
     = \pddt (\delta_\alpha q_\alpha)
     + \nablabh \cdot (\delta_\alpha q_\alpha \textbf{u}_\alpha)
     \label{eq:dt_delta_alpha_q_alpha}
 \end{equation}
-where we use the fact that $q_\alpha(t)$ and $\textbf{u}_\alpha(t)$ were solely function of time and made use of \ref{eq:dt_delta_alpha}.
-Now let's consider a volume containing $N$ particles, we define the \textit{particle} field of a given quantity, $q_\alpha$, as the sum of all the independent field, i.e. $\sum_\alpha^N \delta_\alpha q_\alpha$.
+where we have utilized the fact that $q_\alpha(t)$ and $\textbf{u}_\alpha(t)$ are solely functions of time, and we made use of \ref{eq:dt_delta_alpha}.
+Additionally, let's consider a volume containing $N$ particles.
+We can then define the particle-field of a given quantity $q_\alpha$ as the sum of all the independent field, i.e. $\sum_\alpha^N \delta_\alpha q_\alpha$.
 Notice that \ref{eq:dt_delta_alpha_q_alpha} remains valid for a sum of fields since derivative operators are linear.
-However, as the summation notation can become quite cumbersome, we choose to consider implicitly the summation over all particles included in $\Omega$ whenever a Lagrangian fields property denoted by $\delta_\alpha (\ldots)$ is present.
+However, to simplify notation, we consider implicitly the summation over all particles included in $\Omega$ whenever a Lagrangian field denoted by $\delta_\alpha (\ldots)$ is present.
 
-Multiplying \ref{eq:dt_q_alpha} and \ref{eq:dt_q_I_alpha} by $\delta_\alpha$, and by considering \ref{eq:dt_delta_alpha_q_alpha} it is then trivial\JL{evite le mot trivial ca fait pompeux. Prefere straighfoward.} to show that,
-\begin{align}
-    \pddt (\delta_\alpha q_\alpha)
-    + \nablabh \cdot (\delta_\alpha q_\alpha \textbf{u}_\alpha)
-    &= \delta_\alpha\int_{\Omega_\alpha} \textbf{S}_k d\Omega
-    + \delta_\alpha\int_{\Sigma_\alpha} \left[\mathbf{\Phi}_k + f_k (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d\Sigma,
-    \label{eq:dt_dq_alpha}\\
-    \pddt (\delta_\alpha q_{I\alpha})
-    + \nablabh \cdot(\delta_\alpha q_{I\alpha} \textbf{u}_\alpha)
-    &= \delta_\alpha\int_{\Sigma_\alpha} 
-        \textbf{S}_I
-    d\Sigma
-    - \delta_\alpha\int_{\Sigma_\alpha} \Jump{
-        f_k (\textbf{u}_I - \textbf{u}_k)
-        + \mathbf{\Phi}_k
-    }
-    d\Sigma.
-    \label{eq:dt_dq_I_alpha}
-\end{align}
-Similar consideration can be applied to \ref{eq:dt_Q_alpha} and \ref{eq:dt_Q_I_alpha} and the higher order moments equation in \ref{ap:moment_derivative}.
-Therefore, we obtained Eulerian equations of conservation of the particle field, for any Lagrangian property of the particles $q_\alpha$\;$q_{I\alpha}$, $Q_\alpha$ and $Q_{I\alpha}$ and any other higher moments. 
+Multiplying \ref{eq:dt_q_alpha_tot} and \ref{eq:dt_Q_tot} by $\delta_\alpha$, summing over all particles, and by considering \ref{eq:dt_delta_alpha_q_alpha}, it is straightforward to show that,
+\begin{multline}
+    \pddt (\delta_\alpha (q_\alpha+q_{I_\alpha}))
+    + \nablabh \cdot (\delta_\alpha\textbf{u}_\alpha(q_\alpha+q_{I_\alpha}))
+    = \delta_\alpha\int_{\Omega_\alpha} \textbf{S}_2 d\Omega\\
+    + \delta_\alpha\int_{\Sigma_\alpha} \textbf{S}_I d\Sigma
+    + \delta_\alpha\int_{\Sigma_\alpha} \left[\mathbf{\Phi}_1 + f_1 (\textbf{u}_I-\textbf{u}_1) \right] \cdot \textbf{n}_2 d\Sigma,
+    \label{eq:dt_dq_alpha_tot}
+\end{multline}
+\begin{multline}
+    \pddt (\delta_\alpha (\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha}))
+    + \nablabh \cdot (\delta_\alpha\textbf{u}_\alpha(\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha}))
+    = \delta_\alpha\int_{\Omega_\alpha} \left(
+        \textbf{r} \textbf{S}_2         
+        + f_2  \textbf{w}_2 
+        - \mathbf{\Phi}_2
+    \right) d\Omega\\
+    + \delta_\alpha\int_{\Sigma_\alpha} \left(
+        \textbf{r}\textbf{S}_I
+        + f_I \textbf{w}_I
+        - \mathbf{\Phi}_{||}^I
+    \right) d\Sigma
+    + \delta_\alpha\int_{\Sigma_\alpha} \textbf{r} \left[
+        \mathbf{\Phi}_1
+        + f_1 (\textbf{u}_I-\textbf{u}_1)
+    \right]\cdot \textbf{n}_2  d\Sigma.
+    \label{eq:dt_dQ_alpha_tot}
+\end{multline}
+Similar consideration can be applied to the higher order moments equations derived in \ref{ap:moment_derivative}.
 
-At this stage, there is two set of equations that can be used to describe the dispersed phase. 
-The first one is to use the initial global conservation, \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I}. 
-The other way is to use \ref{eq:dt_dq_alpha} and \ref{eq:dt_dq_I_alpha} and possibly the higher moments equations.
-Therefore, some comments are in order on the differences and compatibility of these two set of equations, we restrict the argumentation solely to the volumetric quantities.
-First, solving \ref{eq:dt_dq_alpha} provides us with a field $q_\alpha\delta_\alpha$ which contains the Lagrangian properties of the particles $q_\alpha$, which correspond to the volume integral of $f_k$ within the domains $\Omega_\alpha$.
-While, in \ref{eq:dt_chi_k_f_k} we solve the equation for the field complete field $f_k$ over the domains $\Omega_\alpha$.  
-Thus, from  \ref{eq:dt_f_k} to \ref{eq:avg_dt_dq_alpha} we lose the detailed description of the field $f_k$ within the particles, to recover solely the integrated value or the zeroth order moment of the distribution of $f_k$ in $\Omega_\alpha$, namely $q_\alpha$. 
-The same comments can be made on the surface equations when comparing \ref{eq:avg_dt_dq_I_alpha} with \ref{eq:dt_f_I}. 
-Therefore, \ref{eq:dt_dq_alpha} and \ref{eq:dt_dq_I_alpha} can be though \JL{}thought as the averaged equations of respectively, \ref{eq:dt_chi_k_f_k} and  \ref{eq:dt_delta_I_f_I} since we recover only the resultant values on each particle. 
-It is important to understand that in this sense, the average from \ref{eq:dt_chi_k_f_k} to \ref{eq:dt_dq_alpha} is carried out over the particle length scale.\JL{je ne comprends pas cette derniere phrase. Pour moi on a pas effectue de moyenne (sauf sur le volume ou la surface de la particule) c'est juste deux manieres differentes de voir les choses.}
+At this stage, there are two sets of equations that can be used to describe the dispersed phase. 
+The first set of equations is the global conservation laws, i.e. \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} for $k=2$. 
+The other is the particle-fields equations, such as \ref{eq:dt_dq_alpha_tot} and potentially the higher moments equations.
+Therefore, some comments are in order regarding the differences and compatibility of these two sets of equations.
+Solving \ref{eq:dt_dq_alpha_tot} provides us with a field $\delta_\alpha(q_\alpha+q_{I\alpha})$ which contains the Lagrangian properties $q_\alpha+q_{I\alpha}$.
+Thus, it corresponds to the volume and surface integral of $f_2$ and $f_I$ on $\Omega_\alpha$ and $\Sigma_\alpha$ respectively.
+While, in \ref{eq:dt_chi_k_f_k} we solve the equation for the complete field $f_2$ defined inside the domains $\Omega_\alpha$.  
+Thus, from  \ref{eq:dt_f_k} to \ref{eq:avg_dt_dq_alpha_tot} we lose the detailed description of $f_2$ within the particles' domain.
+Indeed, with \ref{eq:avg_dt_dq_alpha_tot}, we recover solely the integrated value of $f_2$ over the particles' volume and surface. 
+Therefore, \ref{eq:dt_dq_alpha_tot} can be though as the averaged equations of \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} since we recover only the integrated properties of each particle. 
+It is important to understand that in this sense, the passage from \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} to \ref{eq:dt_dq_alpha_tot} is an average operation carried out on the particles' volume and surface.
 Unlike the usual averaged technics that refer to the ones used to derive the classic averaged models \citep{jackson1997locally,zhang1994averaged}, which are the subject of the following section. 
 
-\JL{remarque annexe : pourquoi ne derives tu 26 et 27 que pour le moment d'ordre 0 ?}
+
 
