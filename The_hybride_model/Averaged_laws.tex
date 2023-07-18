@@ -2,16 +2,17 @@ In this study we use the statistical approach to derive the averaged equations o
 Specifically, we use the method described in \citet{zhang2021ensemble} which extended the ensemble average definition of \citet{batchelor1972sedimentation}. 
 In the following we recall some properties of the ensemble average operator. 
 
-\subsection{Ensemble phase average}
+\subsection{Ensemble average}
 
 Let, $P(\mathscr{C},t)$ be the probability density function that describe the probability of finding the flow in the configuration $\mathscr{C}$ at time $t$, were $\mathscr{C} = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a finite set of all the parameters describing the flow configuration. 
 Then, we define $d\mathscr{P} = P(\mathscr{C},t)d\mathscr{C}$ as the probable number of particles in the incremental region of the particles' phase space $d\mathscr{C}$ around $\mathscr{C}$ at time $t$. 
-It follows this definition, that the ensemble average of an arbitrary property $f$ defined on $\Omega$, yields,
+It follows from this definition, that the ensemble average of an arbitrary Eulerian property $f$ defined on $\Omega$, yields,
 \begin{equation}
     \avg{f}(\textbf{x},t)
     =\int f(\textbf{x},\mathscr{C},t) d\mathscr{P}. 
     \label{eq:avg}
 \end{equation}  
+This definition can be applied to Lagrangian properties as well by using the previous formulation, namely $\pavg{q_\alpha} = \int \delta(\textbf{x} - \textbf{x}_\alpha) q_\alpha(\mathscr{C}) d\mathscr{P}. $
 It is interesting to mention some mathematical properties of the ensemble average operators. 
 For two arbitrary Eulerian fields $f$ and $h$ we have,
 \begin{align}
@@ -30,20 +31,31 @@ Additionally, for any phase quantity defined in $\Omega_k$ we introduce the defi
     \phi_k\kavg{f}(\textbf{x},t) = \avg{\chi_k f_k}
     \label{eq:1_avg}
 \end{equation}
-where, $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$.
-Therefore, $\kavg{f}$ is the conditional average of the field $\chi_k f_k$ knowing that we are in the phase $k$.
+where, $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$
+and $\kavg{f}$ the conditional average of the field $\chi_k f_k$ on the phase $k$.
 Similarly, for the particle fields, we can introduce the particle phase average by,
 \begin{equation}
      \pnavg{q_\alpha}(\textbf{x},t) = \avg{\delta_\alpha f_\alpha}
      \label{eq:p_avg}
 \end{equation}
-where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of finding a particle center of mass at $\textbf{x}$. 
-Thus, $\pnnavg{q_\alpha}$ is the conditional average of $q_\alpha$ on the set of particle. 
-
+where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of finding a particle center of mass at $\textbf{x}$
+and $\pnnavg{q_\alpha}$ is the conditional average of $q_\alpha$ on the set of particles. 
+We also define the fluctuation of a particle-averaged and phase-averaged quantity by,
+\begin{equation}
+    q_\alpha' = q_\alpha - \pnnavg{q_\alpha}
+    \;\;\;\;\;\;\text{and}
+    \;\;\;\;\;\;
+    f_k' = f_k - \kavg{f_k},
+    \label{eq:def_fluctu}
+\end{equation}
+respectively. 
+These definitions lead to the following properties, $\oneavg{f'} = 0$ and $\pnnavg{q_\alpha'} =0$. 
+Consequently, the mean of a product $\kavg{fg}$ can be decomposed as $\kavg{fg}=\kavg{f}\kavg{g} + \kavg{f'g'}$. 
+These decompositions will play a crucial role in the upcoming section. 
 
 The ensemble average method is one among others, such as the volume average method\citep{jackson1997locally} or the time average
-\citep{ishii2010thermo} and ensemble average \citep{zhang1994averaged}. 
-However, all of these averaging technics remains equivalent \citep{jackson1997locally}. 
+\citep{ishii2010thermo}.
+It is shown that all of these averaging technics remains equivalent \citep{jackson1997locally}. 
 
 \subsection{Phase average and particle averaged equations}
 
@@ -73,7 +85,7 @@ Applying \ref{eq:avg} on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and c
     \label{eq:avg_dt_delta_f}
 \end{align}
 Together \ref{eq:avg_dt_chi_f}  and \ref{eq:avg_dt_delta_f} form the \textit{two-fluid} formulation of averaged multiphase flows problem. 
-One can derive the so-called averaged \textit{single-fluid} formulation by applying \ref{eq:avg} on \ref{eq:dt_f} which directly gives us, 
+One can derive the so-called averaged \textit{single-fluid} formulation by applying \ref{eq:avg} on \ref{eq:dt_f} which directly gives, 
 \begin{equation}
     \pddt \avg{f}
     = \nablab \cdot \avg{\mathbf{\Phi} - f \textbf{u}}
@@ -110,4 +122,5 @@ Correspondingly, we take the average of the particle fields equations by using \
     \right]\cdot \textbf{n}_2  d\Sigma}.
     \label{eq:avg_dt_dQ_alpha_tot}
 \end{multline}
-From \ref{ap:Moments_equations} the derivation of the higher moment particle-average equations is straightforward. 
+In \ref{ap:Moments_equations} the derivation of the higher moment particle-averaged equations is provided. 
+In this study,\ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} are refereed to as the phase-averaged equations, while \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot} are denoted as the particle-averaged equation. 

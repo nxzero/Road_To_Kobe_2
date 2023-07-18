@@ -1,7 +1,8 @@
 We consider a system consisting of two phases, separated by a sharp interface $\Sigma(t)$ which evolves over time. 
 Each phase subdomain is denoted $\Omega_1(t)$ and $\Omega_2(t)$ for the continuous phase ($1$) and the dispersed phase ($2$) respectively (see \ref{fig:Scheme}). 
 The mathematical and physical definition of $\Sigma(t)$ is by no means straightforward, therefore, the interested reader is refereed to \cite{bothe2022sharp} to have a deeper understanding of sharp interface modeling. 
-To track the position of the phase indexed $k$, we introduce the Phase Indicator Function (PIF), 
+The entire domain, denoted as $\Omega$, is defined as the union of $\Omega_1$, $\Omega_2$, and $\Sigma$.
+To track the position of the phase indexed $k$, we introduce the phase indicator function, 
 \begin{equation}
     \chi_k(\textbf{y},t) =  \left\{
       \begin{tabular}{cc}
@@ -13,6 +14,7 @@ To track the position of the phase indexed $k$, we introduce the Phase Indicator
       \label{eq:PIF}
 \end{equation}
 which is null everywhere except inside the phase $k$. 
+In the following, we omit the time and position arguments of $\chi_k$. 
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}
@@ -44,10 +46,9 @@ which is null everywhere except inside the phase $k$.
         \draw(2,3)node{$\Omega_1$};
         \draw(0.8,1.3)node{$\Omega_\alpha$};
     \end{tikzpicture}
-    \caption{Scheme of the topology of dispersed two phase flows.}
+    \caption{Domain definitions and scheme of the topology of dispersed two-phase flows.}
     \label{fig:Scheme}
 \end{figure}
-In the following we drop the time and position arguments for the PIF. 
 
 \subsection{Topological equations}
 Using the distribution formalism, one may show that the transport equation of $\chi_k$ reads\citep{drew1983mathematical} 
@@ -64,7 +65,7 @@ Additionally, it can be shown  \citep{drew1983mathematical} that,
     = - \delta_I \textbf{n}_k
     \label{eq:grad_chi_k}
 \end{equation}
-where we introduced the Interface Indicator Function (IIF) defined as $\delta_I = \delta(\textbf{y}-\textbf{y}_I)$ where $\delta$ is the Dirac-delta function and $\textbf{y}_I$ the position of the interface. 
+where we introduced the interface indicator function defined as $\delta_I = \delta(\textbf{y}-\textbf{y}_I)$ where $\delta$ is the Dirac-delta function and $\textbf{y}_I$ the position of the interface. 
 Furthermore, we introduced $\textbf{n}_k$ as being the outward normal vector associated with the domain $\Omega_k$ (see \ref{fig:Scheme}).
 To describe the evolution of $\delta_I$ we take the gradient of \ref{eq:dt_chi_k} which yields \citep{morel2015mathematical},
 \begin{equation}
@@ -81,8 +82,6 @@ As pointed out by \citet{morel2007surface}, it is more convenient to rewrite thi
     \label{eq:dt_delta_I}
 \end{equation}
 where we introduced the surface divergence operator defined as $\nablabhI \cdot ()= (\textbf{I}-\textbf{nn})\cdot \nablabh \cdot ()$, which correspond to the divergence operator projected on $\Sigma(t)$. 
-\JL{la notation $\nablabhI$ n’est pas res heureuse, pq ne pas utiliser $\nabla _s$ comme tout le monde}
-\tb{A voir car je voulais distinguer les qte projeté sur la surface noté avec ||et celles qui sont propre a la surface notée $_I$} 
 Throughout this work we use the subscript  $_{||}$ to indicate the projection of a quantity onto the plane tangential to the surface $\Sigma(t)$. 
 Specifically, for an arbitrary quantity $\textbf{f}$ defined on $\Sigma(t)$, we denote its tangential projection as $\textbf{f}_{||} = (\textbf{I}-\textbf{nn})\cdot \textbf{f}$. 
 We also employ the subscript $_I$ to indicate any quantity inherently defined on the interface. 
@@ -97,7 +96,7 @@ Then, \ref{eq:dt_chi_k}, \ref{eq:dt_delta_I}, \ref{eq:grad_delta_I} and \ref{eq:
 \subsection{Local conservation equations}
 
 Let $f_k(\textbf{y},t)$ denote a volumetric quantity of arbitrary tensorial order defined in $\Omega_k(t)$.
-Likewise, let $f_I(\textbf{y}_I,I)$ represent an arbitrary surface property of arbitrary tensorial order defined on $\Sigma(t)$.
+Likewise, let $f_I(\textbf{y}_I,I)$ represent an arbitrary surface property defined on $\Sigma(t)$.
 Using the strategy outlined in \citep{bothe2022sharp,morel2015mathematical,slattery2007interfacial}, we can derive the local conservation equations for both $f_k(\textbf{y},t)$ and $f_I(\textbf{y}_I,t)$.
 They read,  
 \begin{align}
@@ -122,29 +121,29 @@ They read,
 \end{align}
 for respectively, $f_k$ and $f_I$.
 The tensors $\mathbf{\Phi}_k$ and $\mathbf{\Phi}_{I||}$ represent the diffusive fluxes corresponding to $f_k$ and $f_I$. 
-Notice that $\mathbf{\Phi}_{I||}$ carries the $_{||}$ subscript which implies that only the tangential projection of this tensor act on the surface balance, this property arise during the derivation of \ref{eq:dt_f_I}. 
+Notice that $\mathbf{\Phi}_{I||}$ carries the $_{||}$ subscript which implies that only the tangential projection of this tensor remain in the surface balance equation. 
 The demonstration can be shown in \citet[Chapter 2]{slattery2007interfacial} for the momentum equation. 
 Similarly, $\textbf{S}_k$ and $\textbf{S}_I$ represent the source terms for $f_k$ and $f_I$ respectively.
 Lastly, $\textbf{u}_k$ corresponds to the velocity field defined in $\Omega_k(t)$, while $\textbf{u}_I$ corresponds to the velocity field defined on $\Sigma(t)$.
 In \ref{eq:dt_f_I} we also introduced the notation $\Jump{\ldots}$, which is defined as $\Jump{\ldots} = \sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$.
-This term account for the discontinuity of the flux $\left[f_k (\textbf{u}_I - \textbf{u}_k)+ \mathbf{\Phi}_k\right]\cdot\textbf{n}_k$ in each phases across the interface.
+This term account for the discontinuity of the flux $\left[f_k (\textbf{u}_I - \textbf{u}_k)+ \mathbf{\Phi}_k\right]\cdot\textbf{n}_k$ in each phases across the interfaces.
 
-For the purpose of clarity, we will now consider the specific case of volumetric and surface momentum conservation.
+For the purpose of clarity, we will now consider the specific case of volumetric and surface momentum conservation without mass transfer.
 Within phase $k$, we define $f_k$ as the product of density $\rho_k$ and velocity $\textbf{u}_k$, such that $f_k = \rho_k \textbf{u}_k$ is the momentum within $\Omega_k$.
 Furthermore, if we assume that the only body force acting on the system is the acceleration of gravity, denoted as $\textbf{g}$, then the source term $\textbf{S}_k$ can be expressed as $\textbf{S}_k = \rho_k \textbf{g}$.
 The, diffusive flux $\mathbf{\Phi}_k$ is the stress tensor, denoted as $\textbf{T}_k$ in this study. 
 Substituting these terms into \ref{eq:dt_f_k} yields the well-established equations of momentum conservation valid in the phase $k$. 
 It reads, 
-\begin{equation*}
+\begin{equation}
     \pddt (\rho_k\textbf{u}_k)  
     = 
-    \nablabhI \cdot (\textbf{T}_k - \rho_k\textbf{u}_k)
+    \nablabh \cdot (\textbf{T}_k - \rho_k\textbf{u}_k)
     + \rho_k \textbf{g}
      \;\;\; \text{on} \;\;\;\Omega_k(t).
-\end{equation*} 
-
+     \label{eq:dt_rhou_k}
+\end{equation} 
 The interface momentum conservation equation is less familiar, it is derived using $f_I = \rho_I \textbf{u}_I$ \citep{morel2015mathematical} where $\rho_I$ is the area density of the interface. 
-Similarly to the momentum conservation in the phase $k$, we set $\textbf{S}_I = \rho_I \textbf{g}$, which represents the body force acting on the interface. 
+Similarly to the momentum conservation in the bulk, we set $\textbf{S}_I = \rho_I \textbf{g}$, which represents the gravity contribution to the body force acting on the interface. 
 Then, we assume that the diffusive flux of the surface is solely due to surface tension, therefore $\mathbf{\Phi}_I  = \sigma (\textbf{I} - \textbf{nn}) = \sigma \textbf{I}_{||}$ where $\sigma$ is the surface tension coefficient \citep[Chapter 2]{tryggvason2011direct}.  
 Note that in a more general case, interfacial viscous stress could be included \citep{brenner2013interfacial,slattery2007interfacial} due to contamination of the interface, but it will not be addressed in this study. 
 Then, substituting the expressions of $f_I$,$\mathbf{\Phi}_I$ and $\textbf{S}_I$ in \ref{eq:dt_f_I} yields the momentum conservation equation for the interface, namely,
@@ -154,8 +153,8 @@ Then, substituting the expressions of $f_I$,$\mathbf{\Phi}_I$ and $\textbf{S}_I$
     \nablabhI \cdot (\sigma \textbf{I}_{||} - \rho_I\textbf{u}_I)
     + \rho_I \textbf{g}
     - \Jump{
-        \rho_k \textbf{u}_k (\textbf{u}_I - \textbf{u}_k)
-        + \mathbf{T}_k
+        % \rho_k \textbf{u}_k (\textbf{u}_I - \textbf{u}_k)
+        \mathbf{T}_k
     } \;\;\; \text{on} \;\;\;\Sigma(t),
 \end{equation*} 
 in agreement with \citet{manikantan2020surfactant}. 
@@ -167,16 +166,17 @@ In practice, we make the assumption $\rho_I = 0$, which simplifies the equation 
     + \nablabhI\sigma 
     \label{eq:surface_tension}
 \end{equation}
-where $\kappa = - \nablabh\cdot\textbf{n}$ is the curvature of the surface \citet[Chapter 2]{tryggvason2011direct}. 
-In this expression, we can clearly identify two contributions : the first one related to the curvature, and the second one from the non-constant surface tension coefficient along the surface. 
-The latter contribution is responsible for the Marangonie effect. 
+where $\kappa = - \nablabh\cdot\textbf{n}$ is the curvature of the surface.
+In \ref{eq:surface_tension}, we can clearly identify two contributions : the first one related to the curvature, and the second one from the non-constant surface tension coefficient along the surface. 
+The latter contribution is responsible for the Marangonie effect.
+
 
 It is important to note that \ref{eq:dt_f_k} and \ref{eq:dt_f_I} are solely defined within $\Omega_k(t)$ and $\Sigma(t)$ respectively.
 Consequently, these equations are referred to as local conservation equations.
 
 \subsection{Global conservation equations}
 
-To extend the domain of definition of \ref{eq:dt_f_k} and \ref{eq:dt_f_I} to $\Omega$, we adopt the methodology introduced by \citet{drew1983mathematical} and \citet{kataoka1986local} for \ref{eq:dt_f_k}, and by \citet{marle1982macroscopic} for \ref{eq:dt_f_I}.
+To extend the domain of definition of \ref{eq:dt_f_k} and \ref{eq:dt_f_I} to $\Omega$, we adopt the methodology introduced by \citet{drew1983mathematical} and \citet{kataoka1986local} for \ref{eq:dt_f_k}, and by \citet[Appendix 2]{marle1982macroscopic} for \ref{eq:dt_f_I}.
 
 For any local quantities $f_k$ defined in $\Omega_k(t)$, we assign the field $\chi_k f_k$, which is defined over the entire domain $\Omega$. 
 Likewise, for any surface property $f_I$ defined on $\Sigma(t)$, we assign the field $\delta_I f_I$, which is also defined all over $\Omega$. 
@@ -186,12 +186,12 @@ Then, multiplying \ref{eq:dt_f_k} and \ref{eq:dt_f_I} by respectively $\chi_k$ a
     &= \nablabh \cdot (\chi_k \mathbf{\Phi}_k - \chi_k f_k \textbf{u}_k)
     + \chi_k \textbf{S}_k
     + \delta_I\left[
-        \mathbf{\Phi}_k
-        + f_k
+        f_k
         \left(
             \textbf{u}_I
             - \textbf{u}_k
         \right)
+        + \mathbf{\Phi}_k
     \right]
     \cdot \textbf{n}_k ,
     \label{eq:dt_chi_k_f_k}\\
@@ -218,4 +218,4 @@ Then by summing \ref{eq:dt_chi_k_f_k} for $k=1,2$ and \ref{eq:dt_delta_I_f_I}, o
     \label{eq:dt_f}
 \end{equation}
 It should be noted that in the literature we rather define the \textit{bulk} quantities as $f = \sum_k \chi_k f_k$, while the interfacial component is treated as a source term in \ref{eq:dt_f} \citep{morel2015mathematical,tryggvason2011direct,drew1983mathematical}. 
-Nevertheless, in our case, it is more convenient to consider \textit{bulk} quantities made of three phases as we have made no assumptions regarding the interfacial conservation equation. 
+Nevertheless, in our case, it is more convenient to consider \textit{bulk} quantities made of three phases. 

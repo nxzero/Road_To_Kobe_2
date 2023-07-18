@@ -163,11 +163,6 @@ As a consequence this equation reduce to $\int_{\Omega_\alpha}\mathbf{T}_2d\Omeg
 From \ref{eq:T_definition} we deduce that if one aim to compute the bulk stress at first order one must find closure for all terms of \ref{eq:T_definition}. 
 By expressing each closure in terms of the bulk strain rate one could obtain a more general expression of the bulk viscosity. \tb{a develloper}
 
-As remarked by \citet{jackson1997locally} for solid spherical particle, and here in a more general case :\ref{eq:hybrid_avg_dt_rhou} and \ref{eq:hybrid_avg_dt_dp_alpha}may seem to be not coupled with the moment of momentum and the moment of volume equations since $\mathcal{P}_\alpha$ and $\mathcal{V}_\alpha$ do not appear in \ref{eq:hybrid_avg_dt_rhou} and \ref{eq:hybrid_avg_dt_dp_alpha}.
-However, the closure terms $\textbf{f}_\alpha$ and $\textbf{M}_\alpha$ appearing in \ref{eq:hybrid_avg_dt_rhou} and \ref{eq:hybrid_avg_dt_dp_alpha} are function of the geometry and kinematic properties of the particle. 
-Therefore,  \ref{eq:hybrid_avg_dt_dV_alpha} and \ref{eq:hybrid_avg_dt_dP_alpha} are linked to \ref{eq:hybrid_avg_dt_rhou} and \ref{eq:hybrid_avg_dt_dp_alpha} solely through the dependence of $\mathcal{P}_\alpha$ and $\mathcal{V}_\alpha$ on the closure terms  $\textbf{f}_\alpha$ and $\textbf{M}_\alpha$. 
-Consequently, the usefulness of of teh higher moments equations can be judged by the dependency that have the closure terms in \ref{eq:hybrid_avg_dt_rhou} with the moments,  $\mathcal{P}_\alpha$ and $\mathcal{V}_\alpha$ and maybe higher order moments of the particle. 
-This reasoning can be applied to arbitrary higher moments. 
 
 
 \subsection{First order equations for monodisperse axisymmetric particles with fore-aft symmetry}
@@ -420,7 +415,11 @@ Anyhow, if we neglect this last term and if the solid motion hypothesis remain t
     - \phi_1\oneavg{p}\textbf{I} 
     + \mu_1 \avg{\textbf{E}} 
     + \frac{1}{2}\frac{\pnavg{\textbf{S}_\alpha}}{\rho_2}
-    - \pnavg{\ddt \mathcal{S}_\alpha}\\
+    - (M_\alpha^{||} - M_\alpha^\bot) \pnavg{\ddt \left(
+        \omega_\alpha \times
+        \textbf{pp}
+        + \textbf{pp} \times \omega_\alpha
+    \right)}\\
     - (M_\alpha^{||} - M_\alpha^\bot) \pnavg{
         (\omega_\alpha \times \textbf{p}) (\omega_\alpha \times \textbf{p}) } 
     -M_\alpha^\bot \pnavg{\textbf{I} \omega_\alpha^2 -\omega_\alpha\omega_\alpha }
@@ -428,3 +427,82 @@ Anyhow, if we neglect this last term and if the solid motion hypothesis remain t
 Each term on the RHS can be for one part factorized by \textbf{I} yieldings the equivalent pressure of the suspension, and an other part by $\avg{\textbf{E}}$ yielding the equivalent viscosity. 
 
 
+
+\tb{
+\subsubsection*{Oblate bubbles}
+
+As it has already mentioned the trace of the moment of momentum equation can be used to derive the Reyl
+It is also possible to derive from the second moment of mass equation an equation for the mean aspect ratio $\pnnavg{\xi}$ of the particles.
+Indeed, let's consider obalte particles, such as droplets or bubble, in this case the second moment of mass can be written, $\mathcal{M}_\alpha =  \textbf{pp} [M_\alpha^{||}(t) - M_\alpha^\bot(t)] +  \textbf{I} M_\alpha^\bot(t)$
+\tb{As in tomiyama example they state that the shape of the particle is of particular importance here the moment of volume matter }
+
+
+\subsubsection*{Spherical compressible bubbles}
+As mentioned in the \ref{sec:Lagrangian} from teh trace of the moment of momentum equation we can recover the Rayleigh-Lamb-Plesset equation.
+Thus, by using the averaged moment of momentum equation we can falll back on \citet{zhang1994ensemble} model.
+
+\subsubsection*{Slightly deformable elastic particle}
+
+Now let consider the momentum conservation of slightly deformable particles.
+First, the velocity field inside the particles, is assumed linear and incompressible, such that $\textbf{u}(\textbf{y}_\alpha) = \textbf{u}_\alpha + \mathcal{L}_\alpha \cdot \textbf{r}$ where the second order tensor  $\mathcal{L}_\alpha= \textbf{e}_\alpha+ \boldsymbol{\omega}$, with $\textbf{e}$ and $\boldsymbol{\omega}$ are symmetric and skew-symmetric tensors, respectively.
+It directly follows from the expression of the velocity : $\mathcal{P}_\alpha = \int_{\Omega_\alpha} \textbf{r}\textbf{u} d\Omega = \mathcal{L}_\alpha\cdot \mathcal{M}$
+
+The constitutive equation of the stress, $\textbf{T}_2$, within the particle phase can be written such as $\textbf{T}_2 = \mathbb{C} : \textbf{e}_2$ for elastic materials, with $\mathbb{C}$ the fourth order stiffness tensor and $ \textbf{e}_2 = \frac{1}{2}\left(\nablab\textbf{u}_2+(\nablab\textbf{u}_2)^T\right)$ is the rate of strain symmetric tensor.
+Making use of the internal velocity expression yield directly the relation, $\textbf{e}_2=\textbf{e}_\alpha\cdot$ in $\Omega_\alpha$.
+
+We know that the deformation of the particles will not have an explicit impact on the linear conservation equations.
+Thus, we will be interested into the first and second order momentum and mass conservation equations respectively.
+Making use of the average of \ref{eq:dt_P_alpha} over every configuration of the flow, and using the previous properties yield an equation for the average stress tensor within the suspension, namely,
+\begin{equation}
+    \pnnavg{\int_{\Omega_\alpha}\textbf{T}_\alpha d\Omega}
+    = n_p\mathbb{C} : \pnnavg{(\mathcal{L}_\alpha+ \mathcal{L}_\alpha^T) v_\alpha}
+    % = - \mathcal{L}_\alpha\cdot \mathcal{L}_\alpha\cdot \mathcal{M}_\alpha
+    % - \mathcal{M}_\alpha \cdot\ddt \mathcal{L}_\alpha
+    % - \textbf{M}_\alpha
+    \label{eq:hybrid_avg_dt_P_alpha}
+\end{equation}
+\begin{equation}
+    \mathcal{M}_\alpha \cdot\ddt \mathcal{L}_\alpha
+    = - \mathcal{L}_\alpha\cdot \mathcal{L}_\alpha\cdot \mathcal{M}_\alpha
+    - \mathbb{C} : (\mathcal{L}_\alpha+ \mathcal{L}_\alpha^T) v_\alpha
+    - \textbf{M}_\alpha
+    \label{eq:hybrid_avg_dt_P_alpha}
+\end{equation}
+Besed on that kind of argument \citet{lhuillier1987phenomenology}
+}
+
+
+One last remark is in order. 
+With \ref{eq:dt_S_alpha} it is possible to compute the integral of the undefined internal stress $\int_{\Omega_\alpha} 
+\mathbf{T}_2
+d\Omega$ within the particle phase.
+But first,  for a prolate spheroid the $\textbf{S}_\alpha$ may be written with this quite lenthly expression : 
+\begin{multline}
+    \textbf{S}_\alpha 
+    = \frac{20}{3}\pi \mu a^3 \left[
+    \left(
+        X^M \mathbf{p}^{(0)}+Y^M \mathbf{p}^{(1)}+Z^M \mathbf{p}^{(2)}
+    \right) : \textbf{E}\right.\\ \left.
+    + \frac{3}{5} Y^H ((\mathbf{\Omega} - \omega_\alpha) \times \textbf{pp} + \textbf{pp} \times (\mathbf{\Omega} - \omega_\alpha) )
+    \right]
+    \label{eq:S_def}
+\end{multline}
+where, $X^M$, $Y^M$,  $Z^M$ and $Y^H$ are scalar resistance function related to the shape of the particles, and the $\mathbf{p}^{(i)}$ are fourth order orientation tensor solely express in terms of $\textbf{p}$, all of which are given in \citet[p 62.]{kim2013microhydrodynamics}. 
+theerfore, by rearranging the term for the integrated stress, \ref{eq:dt_S_alpha}, can be written for axissymmetric particles such as, 
+\begin{multline}
+    \pnavg{\int_{\Omega_\alpha} 
+        \mathbf{T}_2
+    d\Omega}
+    =  
+      \pnavg{\textbf{S}_\alpha}
+    - (M_\alpha^{||} - M_\alpha^\bot)\pnavg{\ddt  \left(
+        \omega_\alpha \times
+        \textbf{pp}
+        + \textbf{pp} \times \omega_\alpha
+    \right) }\\
+    - (M_\alpha^{||} - M_\alpha^\bot) \pnavg{
+        (\omega_\alpha \times \textbf{p}) (\omega_\alpha \times \textbf{p}) } 
+    -M_\alpha^\bot \pnavg{\textbf{I} \omega_\alpha^2 -\omega_\alpha\omega_\alpha }
+\end{multline}
+which is a constitutive expression of the stress. 
+In stokes flow condition one may argue that all product of $\omega_\alpha$ and time derivative of $\omega$ are negligible, leavening with the stresslet. 

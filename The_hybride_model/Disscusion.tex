@@ -1,256 +1,321 @@
 
 
-The application of the zeroth order equation have been dealt in numerous article in the fields therefore it won't be more detailed in this study. 
-\tb{interesting to notice that it has the same shape regardless of the nature of the partcle EXCEPT WHEN CHANGES OF MASS APPEAR}
+The conservation equations of mass and momentum, derived using \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:hybrid_avg_dt_chif} yield the same as the classical hybrid models derived in previous studies such as \citet{jackson1997locally} and \citet{zhang1997momentum} among others.
+Therefore, it will not be discussed further as it does not contribute any relevant information to the current study.
+Instead, in the subsequent analysis, we consider as known quantities : the fluid phase fraction $\phi_1$;
+the particle number density $n_p$; the continuous phase-averaged velocity $\oneavg{\textbf{u}}$; and particle-average velocity $\pnnavg{\textbf{u}_\alpha}$. 
+Which implies that the equations of conservation of mass and momentum for both the continuous and dispersed phase have been solved a priori, providing the values of these variables as known quantities.
+Additionally, it also implies that the closure terms in the momentum equation, such as the mean interphase drag force $\pnnavg{\textbf{f}_\alpha}$ and others terms must be closed. 
+However, those terms might depend on the higher moments of the particle phase, in which case it is crucial to provide a first-order moment equation. 
+Therefore, the primary objective of this section is to emphasize the significance of the first-moment equations derived from \ref{eq:avg_dt_dQ_alpha_tot}, as they are often overlooked and underutilized in the literature.
+In this section we stay succinct while providing the minimum level of understanding of the problem at hand.
+Hence, we will not entirely deal with the closure problem of these first-order moments equations, but rather we focus on their derivation and interpretation. 
 
-Regarding, the first order moments equations may seem useless. 
-That is why we would like to revisit the ideas and to show how they are in fact already  used in numerous cases. 
+\subsection{Solid axis symmetric particle suspension}
 
-\subsubsection*{Solid axis symmetric particles}
+% Let's start by the second moment of mass averaged equation.
+Let's examine the scenario of a mono-disperse axissymmetric suspension of solid particles, such as ellipsoid or cylinders.
+Let the vector $\textbf{p}$ denote the unit vector representing the orientation of the particle along its main axis of inertia. 
+Then, the second moment of mass can be written as $\mathcal{M}_\alpha =  \textbf{pp} (M_\alpha^{||} - M_\alpha^\bot) +  \textbf{I} M_\alpha^\bot$, where $M_{\bot}$ and $M_{||}$ represent the coefficients corresponding to the principal directions of the particles' mass distribution.
+It is well-established that $\pnnavg{\textbf{f}_\alpha}$ exhibits a significant dependence on the orientation of the particle \citep{kim2013microhydrodynamics}.
+Therefore, despite being a second-order moment, the particle field $\mathcal{M}_\alpha$ is indispensable to solve the mono-disperse axissymmetric suspension problem.
 
-Let's start by the second moment of mass averaged equation. 
-Even through if it is a second order equation we quickly recognize that it is of a major important in the case of elongated particle suspension for example. 
-Indeed, Let the vector $\textbf{p}$ be the orientation of the particle along its axe.
-Then the second moment of mass can be written as $\mathcal{M}_\alpha =  \textbf{pp} (M_\alpha^{||} - M_\alpha^\bot) +  \textbf{I} M_\alpha^\bot$, with $M_{\bot}$ and $M_{||}$ coefficient equivalent to the principal direction of the mass distribution.
-It is then possible to demonstrate that the second moment of mass correspond to the transport equation of the orientation tensor $\textbf{A}=\avg{\delta_\alpha\textbf{pp}} = \pnavg{\textbf{pp}}$. 
-In this situation, $\pnnavg{\mathcal{M}_\alpha} =  \textbf{A} (M_\alpha^{||} - M_\alpha^\bot) +  \textbf{I} M_\alpha^\bot$. 
-Then, assuming torque free rigid particle in to Stokes flow regime, we obtain by averaging  \ref{eq:dt_M_alpha} the following equation :
+Averaging the second-order moment of mass yields, $\pnavg{\mathcal{M}_\alpha} =  \textbf{A} (M_\alpha^{||} - M_\alpha^\bot) +  \textbf{I} M_\alpha^\bot$ where $\textbf{A}$ is the orientation tensor defined as $\textbf{A} = \avg{\delta_\alpha\textbf{pp}} = \pnavg{\textbf{pp}}$.
+Then, let's express the internal motion of a solid particle by : $\textbf{u}_2(\textbf{x}_\alpha) = \textbf{u}_\alpha + \textbf{r}\times \omega_\alpha$ where $\omega_\alpha$ represents the angular velocity of the particle.
+It follows the expression of the stretching of momentum : $\mathcal{S}_\alpha = (M_\alpha^{||} - M_\alpha^\bot) \left(
+    \omega_\alpha \times
+    \textbf{pp}
+    + \textbf{pp} \times \omega_\alpha
+\right)$. 
+Subsequently,  we can easily derive the transport equation for $\textbf{A}$ by averaging \ref{eq:dt_M_alpha} and using the previous expressions for $\mathcal{M}_\alpha$ and $\mathcal{S}_\alpha$.
+The resulting equation is given by~:
+\begin{equation}
+    \pddt (n_p\textbf{A})
+    + \nablab \cdot (
+        \pnnavg{\textbf{u}_\alpha}\textbf{A}
+        + \mathbf{\Sigma}
+        )
+    =
+    \pnavg{\textbf{pp} \times \omega_\alpha}
+    + \pnavg{\omega_\alpha \times \textbf{pp}},
+    % + \pnavg{\textbf{pp}' \times \omega_\alpha'}
+    % +\pnavg{\omega_\alpha' \times \textbf{pp}'}
+    \label{eq:avg_dt_M_alpha}
+\end{equation}
+where $\mathbf{\Sigma} = \pnavg{\textbf{u}'_\alpha(\textbf{pp})'}$ is the covariance term between the fluctuation of the velocity and the orientation tensor.
+We recall that the definition of the fluctuation notation is provided by the expression from \ref{eq:def_fluctu}.
+At this stage we need to find closure for both terms on the RHS of \ref{eq:avg_dt_M_alpha}. 
+Therefore, we assume torque free rigid particle in to Stokes flow, where we can utilize Jeffery's equation \citep{guazzelli2011}.
+It reads,
+\begin{equation}
+    \omega_\alpha \times \textbf{p}
+    = \mathbf{\Omega}\cdot\textbf{p}
+    + \beta\left(
+        \textbf{E}\cdot \textbf{p}
+        - \textbf{E} : \textbf{ppp}
+    \right),
+    \label{eq:jefferey}
+\end{equation}
+with $\textbf{E}$ and $\mathbf{\Omega}$ being the symmetric and antisymmetric parts of the bulk velocity gradient, respectively, such that $\nablab\avg{\textbf{u}}=\textbf{E}+\mathbf{\Omega}$.
+The coefficient $\beta$  is a constant related to the aspect ratio of the particle.
+Finally, by substituting the RHS terms of \ref{eq:avg_dt_M_alpha}, by using \ref{eq:jefferey}, we arrive at the closed form of the second moment of mass equation~:
 \begin{equation}
     \pddt \textbf{A}
     + \nablab \cdot (
         \pnnavg{\textbf{u}_\alpha}\textbf{A}
     )
-    = 
+    =
     \mathbf{\Omega} \cdot \textbf{A}
-    - \textbf{A} \cdot \mathbf{\Omega} 
+    - \textbf{A} \cdot \mathbf{\Omega}
     + \beta\left[
         \textbf{E} \cdot \textbf{A}
-        -\textbf{A} \cdot \textbf{E} 
+        -\textbf{A} \cdot \textbf{E}
         - \textbf{E} : \mathbb{A}
     \right]
     - \nablab \cdot \mathbf{\Sigma}
     \label{eq:hybrid_avg_dt_pp}
 \end{equation}
-where $\textbf{D}$ and $\mathbf{\Omega}$ are the symmetric and antisymmetric parts of the bulk velocity gradient, $\nablab\avg{\textbf{u}}$, the fourth-order $\mathbb{A}$ is defined such as $\mathbb{A} = \pnavg{\textbf{pppp}}$ and $\mathbf{\Sigma} = \pnavg{\textbf{u}'_\alpha(\textbf{pp})'}$ is the diffusive term due to fluctuation. 
-The coefficient $\beta$  is related to the aspect ratio of the particle. 
-It appears while using Jeffery equations \citep{guazzelli2011}, 
-\begin{equation}
-    \ddt \textbf{p} 
-    = \mathbf{\Omega}\cdot\textbf{p}
-    + \beta\left(
-        \textbf{E}\cdot \textbf{p}
-        - \textbf{E} : \textbf{ppp}
-    \right).
-    \label{eq:jefferey}
-\end{equation}
-In \citet{wang2008objective} they derive \ref{eq:hybrid_avg_dt_pp} by the means of ensemble average technics based on \ref{eq:jefferey} (Equation (3) of their article). 
-Their equation is similar to \ref{eq:hybrid_avg_dt_pp} except that their use a phenomenological closure for the terms $\nablab \cdot \mathbf{\Sigma}$ which account for particle interaction. 
-Anyhow, we showed that the orientation tensor equation is actually equivalent to the second moments of mass equation, or the inertia tensor. 
+where the fourth-order tensor $\mathbb{A}$, is defined as $\mathbb{A} = \pnavg{\textbf{pppp}}$.
+In \citet{wang2008objective} they derive \ref{eq:hybrid_avg_dt_pp} by the means of kinetic theory, based on \ref{eq:jefferey} and the fact that $\ddt \textbf{p} = \omega_\alpha \times \textbf{p}$ (Equation (3) of their article).
+Their equation is similar to \ref{eq:hybrid_avg_dt_pp} except that their employ a phenomenological closure for the term, $\nablab \cdot \mathbf{\Sigma}$, which account for particles interactions.
+Anyhow, we showed how it is possible to derive the orientation tensor conservation equation, commonly used in fiber field theory, from the second-order moments of mass's equation. 
 
+\subsection{Contaminated bubbly flows}
 
-\subsubsection*{Surfactant dynamic}
-
-As it has been shown by numerous experiments and numerical investigation that the influence of surfactant were important when it comes to mass transfer and global hydrodynamic of droplets \citep{pesci2018computational}. 
-
-Indeed, let $C_1$ be the molar concentration of surfactant in the continuous phase, and $C_I$ be the surface molar concentration of surfactant on the interface. 
-Then, following the Langmuir model, it can be shown that, 
+Let's consider a mono-disperse rising bubbly flow without phase transfer made of spherical particles of radius $a$, that is contaminated by soluble surfactants.
+We denote $c_1$ as the molar concentration of surfactant in the continuous phase, and $c_I$ as the surface molar concentration of surfactant on the bubbles' interface.
+Additionally, we make the assumption that there is no transport of surfactant inside the dispersed phase. 
+This assumption is reasonable in the case of air bubbles.
+According to the Langmuir model \citep{pesci2018computational}, we have the relationship:
 \begin{equation}
     \sigma
     = \sigma_0
-    + RT C_I^\infty
-    \ln\left(1-\frac{C_I}{C_I^\infty}\right)
+    + RT c_I^\infty
+    \ln\left(1-\frac{c_I}{c_I^\infty}\right)
     \label{eq:sigma_def}
 \end{equation}
-where $R$ is the universal gas constant, $T$ the absolute temperature and $C_I^\infty$ the saturated surfactant concentration.
-Here $\sigma$ refer to the local surface tension coefficient and $\sigma_0$ to the surface tension coefficient of the same surface if it were completely clean. 
-As represented on \ref{fig:contaminated_bubbles} the surfactants get advected along the droplets surface which in turns create a cap in the opposite direction of the droplet velocity. 
-Due to the inhomogeneous concentration of $c_I$ and the relation \ref{eq:sigma_def} it generates a gradient in the surface tension coefficient. 
-Besides, remember that from \ref{eq:surface_tension} gradient of the surface tension generates additional Marangoni forces as represented in \ref{fig:contaminated_bubbles}. 
-These additional surface tension forces change the flow behavior in the vincity of the droplets surface and therefor the global surface tension coefficient. 
-Once the averaged concentration of  $c_I$ is determinate it is possible form correlation found in the literature to determine the drag forces as proposed by \citet{kentheswaran2022direct}. 
-Additionally, it is shown in \citet{kentheswaran2022direct} and numerous other studies that the mean concentration of surfactant also impact mass transfer rate between both phases. 
-However, the problematic of mass transfer will not be treated here. 
-Therefore, in this example we present an averaged hybrid model which aim to predict the evolution of the averaged surfactant concentration defined by, $C_{\alpha}= \frac{1}{s_\alpha}\int c_I d\Sigma$.
-Additionally, we would like to predict center of the distribution of surfactant on the particles surfaces, which can be defined such as $\textbf{r}_C = \frac{1}{s_\alpha C_\alpha}\int_{\Sigma_\alpha} \textbf{r}c_Id\Sigma$. 
-
-Due to the complexity of the problem some simplifications are in order. 
-We consider a mono-disperse bubbly flow of spherical particle of radius $a$. 
-Another assumption in this model is that we consider no transport of surfactant $C_2$ inside the dispersed phase, indeed it is negligible for the case of bubbly flows \citep{kentheswaran2022direct}. 
-Consequently, $C_2 =0$ on $\Omega_2$.
-
-
+where $R$ is the universal gas constant, $T$ the absolute temperature, $c_I^\infty$ the saturated surfactant concentration, and $\sigma_0$ to the surface tension coefficient when the surfaces are completely clean.
+On the other hand, as represented on \ref{fig:contaminated_bubbles}, during the rise of a bubble in the flow, the surfactants are transported along the droplets surface, which in turns create a stagnant cap in the opposite direction of the droplet velocity.
+According to \ref{eq:sigma_def} the possibly inhomogeneous concentration field, $c_I$, generates a spatially non-constant surface tension coefficient $\sigma$.
+Additionally, remark that the gradient of the surface tension generates additional Marangoni forces as represented in \ref{fig:contaminated_bubbles} and expressed by \ref{eq:surface_tension}.
+These additional surface tension forces alter the flow behavior in the vicinity of the droplet's surface.
+Therefore, this alteration in surface tension impacts the local hydrodynamic, but also induce a change in the shape of the particle through both, \ref{eq:dt_S_alpha} and \ref{eq:dt_M_alpha}.
+As a result, the drag force and drift velocity experienced by a rising bubble or droplet are directly influenced by the surfactant concentration and its distribution over the surface \citep{pesci2018computational}.
+Moreover, a recent study by \citet{kentheswaran2022direct} have demonstrated that the mean concentration and distribution of surfactants on the bubbles' surface also have a significant impact on the mass transfer rate between the dispersed and continuous phases.
+Therefore, in this example we present an averaged hybrid model that aims to predict the evolution of the averaged surfactant concentration in the bulk $\oneavg{c}$, and the averaged surfactant on the surface of the particle, defined by, $C_{\alpha}= \frac{1}{s_\alpha}\int c_I d\Sigma$.
+Additionally, we also provide the moment equation for the center of the distribution of $c_I$, which is defined as $\textbf{r}_\alpha = \frac{1}{s_\alpha C_\alpha}\int_{\Sigma_\alpha} \textbf{r}c_Id\Sigma$.
+Notice that $\int_{\Sigma_\alpha} \textbf{r}c_Id\Sigma =  \frac{s_\alpha}{4 \pi}\int_{\Sigma_\alpha} \nablabhI (c_I) d\Sigma$, thus $\textbf{r}_\alpha$ can also be interpreted as the mean gradient of surfactant on a particle's surface.
+Consequently, by the mean of \ref{eq:sigma_def}, $\textbf{r}_\alpha$ is also related to the resultant of Marangonie forces on a particle's surface.  
+A graphical representation of $\textbf{r}_\alpha$ is given \ref{fig:contaminated_bubbles}.
 
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}[scale =1.3]
         \draw[fill=lightgray](0,0) circle (1);
-        \draw[very thin,gray](230:1)--(0,0)--(310:1);
+        \draw[very thin,gray](230:1)--(0,0)node[midway,above left]{$a$}--(310:1);
         \draw[very thin,gray](0,0)++(310:0.3) arc (-50:90:0.3)node[right,black]{$\theta_\text{cap}$};
         \draw[very thin,blue,->](0,0)++(100:1.1) arc (100:170:1.1)node[midway,above]{$\textbf{w}_I$};
         \draw[very thick,red!40!black](0,0)++(200:1) arc (200:340:1);
-        \draw[very thick,red](0,0)++(230:1) arc (230:310:1)node[below]{$\Gamma$};
-        \draw[very thick,blue,->](1.5,-0.5)--++(0,1)node[right]{$\textbf{u}_\alpha$};
+        \draw[very thick,red](0,0)++(230:1) arc (230:310:1)node[below]{$c_I$};
+        \draw[very thick,dashed](0,0)++(0,-0.7)node{$+$}node[right]{$\textbf{r}_\alpha$};
+        \draw[very thick,blue,->](1.2,-0.5)--++(0,1)node[right]{$\textbf{u}_\alpha$};
         \draw[dashed,gray](0,1.5)--++(0,-2);
         \draw[red,->,green!50!black](230:1)--++(-1,1)node[midway,left]{$F = \nablab_{||} \sigma$};
+        \foreach \t in {110,100,90,80,60}{
+            \draw[red!70!black, ->](\t:1.4)--++(\t:-0.2);
+            \draw[red!70!black, ->](\t:-1.2)--++(\t:-0.2);
+        }
+        \draw[red!70!black, ->](70:1.4)--++(70:-0.2)node[above right]{\small adsorption};
+        \draw[red!70!black, ->](70:-1.2)--++(70:-0.2)node[below left]{\small desorption};
+        \draw[red!70!black, ->](110:-1.2)--++(110:-0.2)node[below]{$\textbf{n}_2 \cdot \nablabh c_1$};
     \end{tikzpicture}
-    \caption{Schematization of the stagnant-cap regime for a
-    spherical rising bubble in a quiescent liquid.}
+    \hspace{2em}
+    \begin{tikzpicture}[scale =1.2]
+        \draw[very thick,<->](0,2)--(0,0)--(2.5,0)node[right]{$\theta$};
+        \draw(1,0)node{$+$}node[below]{$\theta_{cap}$};
+        \draw(1,2)node[above]{$c_I(\theta) = H(\theta- \theta_{cap}) c_0$};
+        \draw[very thin,dashed](2.3,1.7)--(2.3,0);
+        \draw[thin,red](0,0)--++(1,0)--++(0,1.7)--++(1.3,0);
+        \draw(2.3,0)node{$+$}node[below]{$\pi$};
+        \draw(0,1.7)node{$+$}node[left]{$c_0$};
+    \end{tikzpicture}
+    \caption{ (left) Scheme of the stagnant-cap regime of a rising contaminated bubble in a quiescent liquid. 
+    (right) Hypothetical profile of the surface concentration $c_I$ in terms of the azimuthal coordinate $\theta$. }
     \label{fig:contaminated_bubbles}
 \end{figure}
 
 
-It can be shown that at the microscale level $C_I$ and $C_k$ follows these conservation laws \citep{pesci2018computational,manikantan2020surfactant}, 
-\begin{align*}
-    \pddt C_1
-    + \nablabh \cdot (\textbf{u}_1 C_1)
-    &= D \Delta C_1
-    \;\;\; \text{on} \;\;\; \Omega_1\\
-    \pddt C_I
-    + \nablabhI \cdot (\textbf{u}_I C_I)
-    &= D_I \Delta_{||} C_I
+To derive the microscopic scale conservation equation of $c_I$ and $c_1$ we set $f_1 = c_1$ and $f_I = c_I$ in \ref{eq:dt_f_k} and \ref{eq:dt_f_I}, respectively.
+Additionally, we assume that the  diffusive flux follow a Fick's law model, i.e.  $\mathbf{\Phi}_1 = D\nablab c_1$ and $\mathbf{\Phi}_I = D_I\nablabhI c_I$,
+where the constant,  $D$ and $D_I$ are the volumetric and surface diffusion coefficient, respectively.
+Note that this diffusive model remains true under the assumption of dilute species concentration in both the liquid and at the interface.
+\tb{The diffusive terms change in function of the regime : dilute concentration / saturated concentration, in which case $D\nablab c_1 = f(c_I)$, it is worth going into that mush details ? no.}
+Moreoverer, We do not consider chemical reaction or any other source term, i.e. $\textbf{S}_k = 0$ and $\textbf{S}_I=0$. 
+Then, by injecting these terms in \ref{eq:dt_f_k} and \ref{eq:dt_f_I} we obtain these conservation equations : 
+\begin{align}
+    \pddt c_1
+    + \nablabh \cdot (\textbf{u}_1 c_1)
+    &= \nablabh \cdot (D \nablabh c_1)
+    \;\;\; \text{in} \;\;\; \Omega_1,\\
+    \pddt c_I
+    + \nablabhI \cdot (\textbf{u}_I c_I)
+    &= \nablabhI \cdot (D_I \nablabhI c_I)
+    - (D \nablabh c_1)\cdot \textbf{n}_2
     \;\;\; \text{on} \;\;\; \Sigma,
-\end{align*}
-where $D$ and $D_I$ are the volume and surface diffusion coefficient, respectively. 
-The operator $\Delta = \nablabh \cdot (\nablabh\ldots)$ and $\Delta_{||}= \nablabhI \cdot (\nablabhI\ldots)$ are the volume and surface Laplacian operator, respectively.
+    \label{eq:dt_c_I}
+\end{align}
+In agreement with \citet{pesci2018computational,manikantan2020surfactant}.
+We recognize that the last term of \ref{eq:dt_c_I}, namely $D(\nablabh c_1 ) \cdot \textbf{n}_2$, turns out to be the \textit{Kinetically controlled sorption} boundary condition \citet{pesci2018computational,manikantan2020surfactant} which arise naturally in our model.
+Specifically, it represents the adsorption and desorption flux between the bulk and the surface, as represented in \ref{fig:contaminated_bubbles}.
+% For clarity remark that for exemple Equation (3.9) of \citet{manikantan2020surfactant} corresponds to the \textit{two-fluid} formulation of \ref{eq:dt_c_I} with a Fick's law model. 
+Notice that this exchange term is reduced to a contribution from the continuous phase since we assume no surfactant into the dispersed phase. 
+Now that we clearly derived the microscale equation in both phases, we can easily derive the averaged equations of conservation using the hybrid model presented \ref{sec:averaged_eq}.
 
-Now that the microscale equations are well posed we can easily derive the averaged equations for $C_1$ in the continuous phase based on \ref{eq:avg_dt_chi_f}. 
-From these considerations the averaged conservation law of $C_1$ the continuous reads, 
+For a better understanding of the following equations, we now describe the steady-state kinetics that can be reached for an isolated bubble in a contaminated flow, as illustrated on \ref{fig:contaminated_bubbles}.
+This will serve as a reference for the subsequent discussion.
+We first assume that the transport of surfactants on the surface, represented  by the term  $\textbf{w}_I c_I$, is much greater than the other diffusive processes, such as $D\nablabh c_1$ and $D_I\nablabhI c_I$ as well as the adsorption-desorption effects. 
+In this regime, the concentration of surfactant that enters from the forward-surface, due to adsorption, is advected almost instantaneously to the downward region of the particle where some of it evaporates due to desorption. 
+This form an accumulation of surfactant on the downward region of the particle's surface.
+At a certain point of equilibrium, the adsorption and desorption flux balance each other, leading to the steady-state kinetic of $c_I$, and the stagnant cap is stabilized to a concentration $c_0$. 
+In this situation, we can consider that $c_I$ follows a constant sharp distribution along the azimuthal coordinate of the particle's surface.
+Specifically, we model $c_I(\theta) = H(\theta - \theta_{cap}) c_0$ where $H$ is the Heaviside function and $\theta_{cap}$ is the angle at which the stagnant cap is formed, see \ref{fig:contaminated_bubbles}.
+This assumption might seem unrealistic, nevertheless in the steady-state regime, it is approximately consistent with the observations \citep{kentheswaran2022direct}.
+% In these condition the physical meaning of the first moment, $\textbf{r}_\alpha$, becomes clearer. 
+From the expression of $c_I$ we deduce : $C_\alpha = \frac{c_0}{2}(1+\cos\theta_{cap})$ and $\textbf{r}_\alpha = \frac{a}{2} (\cos\theta_{cap} -1)\textbf{e}$ where $\textbf{e}$ is the unit vector in the direction of the relative velocity between the particle and the continuous phase velocity.
+Thus, the knowing $\textbf{r}_\alpha$ can leads use to $\theta_{cap}$. 
+This is crucial information, since the drag forces term and mass transfer closure terms are usually derived in terms of $\theta_{cap}$, such as in the following studies : \citet{sadhal1983stokes} and \citet{kentheswaran2022direct}. 
+
+Now that the problem has been properly formulated, we can begin the derivation of the averaged equations.
+The phase-averaged conservation equation for the mean concentration of surfactant in the bulk $\oneavg{c}$, is derived using \ref{eq:avg_dt_chi_f}.
+It reads as,
 \begin{equation}
-    \pddt (\phi_1 \oneavg{C_1})
-    + \nablab \cdot (\phi_1 \oneavg{C_1} \oneavg{\textbf{u}_1})
-    = D \Delta (\phi_1\oneavg{C_1}) 
-    - \pnavg{b_\alpha}
-    +  \nablab \cdot \textbf{B}
-    \label{eq:hybrid_avg_dt_C}
+    \pddt (\phi_1 \oneavg{c})
+    + \nablab \cdot (\phi_1 \oneavg{c} \oneavg{\textbf{u}_1})
+    = D \nablab^2 (\phi_1\oneavg{c})
+    - \pnavg{j_\alpha}
+    +  \nablab \cdot \mathbf{\Sigma}_c,
+    \label{eq:hybrid_avg_dt_c_1}
 \end{equation}
-where $b_\alpha$ is the exchange term with the dispersed phase given by, 
+where $j_\alpha$ is the exchange term with the dispersed phase given by,
 \begin{equation*}
-    b_\alpha
-    = \int_{\Sigma_\alpha}
-    D(\nablabh C_1 ) 
-\cdot \textbf{n}_2d\Sigma.
+    j_\alpha
+    =\int_{\Sigma_\alpha}
+    (D\nablabh c_1 )
+\cdot \textbf{n}_2d\Sigma,
 \end{equation*}
-The interagrand of $b_\alpha$ is equivalent to the Kinetically controlled sorption boundary condition\citet{pesci2018computational}. 
-We recover as in \citet{manikantan2020surfactant} that the term $D(\nablabh C_1) \cdot \textbf{n}_2$ acts as an exchange terms in the surface surfactant concentration equation. 
-In \citet{manikantan2020surfactant} it is modeled as a source, denoted $j_n$ in their article.
-In fact, it can b shown that Equation (3.9) of \citet{manikantan2020surfactant} correspond to \ref{eq:dt_delta_I_f_I} with $f_I = \Gamma$. 
-\tb{disscus the possible closure found by \citet{kentheswaran2022direct}}
-Nevertheless, due to the dispersed phase averaging process an additional term arise in the transport of the concentration $C_1$. 
-Indeed, the dissipative term $B_\alpha$ can be expressed by, 
-\begin{equation*}
-    B_\alpha
-    =     
-    \frac{s_\alpha n_p}{a}\pnnavg{C_\alpha\textbf{r}_c}
-    + \oneavg{C'_1\textbf{u}_1'}
-    - aD\pnavg{\int_{\Sigma_\alpha} \textbf{n}_2
-    (\nablabh C_1)
-\cdot \textbf{n}_2d\Sigma}
-\end{equation*}
-The last term represent the first moment of the Kinetically controlled sorption boundary condition, together with the integrated value of $C_1$ on the surface of the particle. 
+which corresponds to the resultant of the surfactant exchange including adsorption and desorption flux.  
+In the steady-state regime, when the adsorption flux balance the desorption flux,  the surfactant on the surface of the bubble can be considered as globally insoluble since $j_\alpha=0$ even through $D(\nablabh c_1 ) \cdot \textbf{n}_2$ may not be locally zero. 
+This \textit{globally insoluble} assumption has been used in numerous studies to neglect the adsorption-desorption fluxes. 
+The vector $\mathbf{\Sigma}_c$ in \ref{eq:hybrid_avg_dt_c_1}, has the following expression,
+\begin{equation}
+    \mathbf{\Sigma}_c
+    =
+     \pnavg{\textbf{J}_\alpha}
+    - \pnavg{\frac{D}{a}\int_{\Sigma_\alpha}  c_1 \textbf{r} d\Sigma}
+    - \phi_1\oneavg{c'_1\textbf{u}_1'},
+    \label{eq:B_def}
+\end{equation}
+where the higher order terms have been neglected. 
+The first term on the RHS of \ref{eq:B_def} corresponds to the first moment of the surfactant flux, namely $\textbf{J}_\alpha = \int_{\Sigma_\alpha} \textbf{r}
+(D\nablabh c_1)\cdot \textbf{n}_2d\Sigma$.
+It can be interpreted as the vector representing the mean direction and magnitude of the surfactant flux going in and out the surface of the droplets.
+In the stagnant cap regime, this term is therefore non-zero since a mean flux is still present even through its resultant is null, i.e. $j_\alpha=0$.
+In the reference frame of the particles, $\textbf{J}_\alpha$ account for the mean flux of species concentration induced by the presence of the particles, due to adsorption and desorption phenomena. 
+The second term of \ref{eq:B_def} comes from the inclusion of $\phi_1$ inside the Laplacian operator in \ref{eq:hybrid_avg_dt_c_1}.
+It is the first moment of $c_1$ over the droplets surface, thus it is the mean position of the continuous phase surfactant concentration over the droplet surface.
+For a constant distribution $c_1$ at the bubbles interface, this vector would be zero. 
+Finally, The last term of \ref{eq:B_def}, $\phi_1\oneavg{c'_1\textbf{u}_1'}$, represents the diffusive term due to the correlation of $c'_1$ with $\textbf{u}_1'$.
+Overall, $\mathbf{\Sigma}_c$ is a balance between the first moment of the fluxes and the first moment of the bulk concentration, minus a contribution from the fluctuations.
+Notice that $\mathbf{\Sigma}_c$ appear under the divergence operator in \ref{eq:hybrid_avg_dt_c_1}, thus it will be relevant only in highly inhomogeneous cases. 
+% At this stage of the research it is hard to predict the form of these closure terms. 
+% Nevertheless, we know that the closure for $j_\alpha$ and $\mathbf{\Sigma}_c$ are function of the mean surface concentration $C_\alpha$ and its center of distribution $\textbf{r}_\alpha$.
+% Indeed, the exchange term $\nablabh c_1$ which is function of the local concentration $c_I$ at surfactant saturation \citep{manikantan2020surfactant}. 
+% Thus, an equation for $C_\alpha$ and a moment equation for $\textbf{r}_\alpha$ are needed. 
 
-
-For the dispersed phase we first wish to solve an equation for the mean surface surfactant concentration $C_\alpha$. 
-From \ref{eq:avg_dt_dq_alpha_tot} the averaged linear conservation equation of $C_\alpha$ reads as, 
+Regarding the equations dispersed phase, we start by the transport equation of the mean surface surfactant concentration $C_\alpha$.
+From \ref{eq:avg_dt_dq_alpha_tot} the averaged conservation equation of $C_\alpha$ is straightforward to obtain and reads as,
 \begin{equation}
     \pddt (\pnavg{C_\alpha})
-    + \nablabh \cdot (\pnavg{\textbf{u}_\alpha} \pnnavg{C_\alpha} + \pnavg{\textbf{u}_\alpha' C'_\alpha})
-    = 
-    \frac{\pnavg{b_\alpha}}{s_\alpha}
-    \label{eq:avg_dt_dC_alpha_tot}
-\end{equation}
-The fluctuation terms in \ref{eq:avg_dt_dC_alpha_tot} has great chances to be non-negligible as the rising velocity of a bubble is greatly correlated with $C_\alpha$. 
-Additionally, one can notice that the diffusive term $D_I \nablabhI \Gamma$ plays no role in the resultant of surfactant. 
-
-By making use of \ref{eq:avg_dt_dG_alpha_tot} together with \ref{eq:avg_dt_dQ_alpha_tot} we can also derive an equation for the mean position of the surfactant, $\textbf{r}_c$, along the surface. 
-It has the form :
-\begin{multline}
-    \pddt (\pnavg{\textbf{r}_\Gamma})
-    + \nablabh \cdot (\pnavg{\textbf{u}_\alpha\textbf{r}_\Gamma})
+    + \nablabh \cdot (\pnavg{\textbf{u}_\alpha} \pnnavg{C_\alpha})
     =
-    - \frac{n_p}{s_\alpha}\pnnavg{\frac{\textbf{r}_c}{C_\alpha}b_\alpha}
+    \frac{\pnavg{j_\alpha}}{s_\alpha}
+    - \nablabh \cdot (\pnavg{\textbf{u}_\alpha' C'_\alpha}).
+    \label{eq:avg_dt_dC_alpha}
+\end{equation}
+As shown by this equation, the evolution of the mean concentration of surfactant on the particles' surface is driven by the exchange term $j_\alpha$ and the fluctuation term $\pnnavg{\textbf{u}_\alpha' C_\alpha'}$. 
+The latter term is the covariance between the velocity of the particles and their mean surfactant concentration. 
+It is known that the rising velocity of a bubble is greatly correlated with its mean surfactant concentration \citet{kentheswaran2022direct} thus it might be of a certain importance. 
+Again, this term is under the divergence operator it will be therefore important only in non-homogeneous cases. 
+Anyhow, this term must be further investigated.
+
+We now derive an equation for the mean position of the surfactant, $\pnnavg{\textbf{r}_\alpha}$.
+This is done by deriving the equation of the first moment, $s_\alpha C_\alpha \textbf{r}_\alpha$ using \ref{eq:dt_Q_alpha_tot}. 
+Then, we reformulate the equation using  the relation, $\ddt (s_\alpha C_\alpha \textbf{r}_\alpha) = s_\alpha C_\alpha\ddt \textbf{r}_\alpha+ s_\alpha \textbf{r}_\alpha\ddt C_\alpha $ and  $\ddt C_\alpha = j_\alpha$. 
+Finally,  we apply the average process which leads us to~:
+\begin{multline}
+    \pddt (\pnavg{\textbf{r}_\alpha})
+    + \nablabh \cdot (\pnavg{\textbf{u}_\alpha}\pnnavg{\textbf{r}_\alpha})
+    =
+    - \nablabh \cdot (\pnavg{\textbf{u}'_\alpha\textbf{r}'_c})\\
     + \frac{n_p}{s_\alpha}\pnnavg{
-        \frac{1}{C_\alpha}
-        \int_{\Sigma_\alpha} \left[
-        \Gamma \textbf{w}_I
-        - D_I (\nablabhI \Gamma)
-    \right] d\Sigma}\\
-    + \frac{n_p}{s_\alpha}\pnnavg{
-    \frac{1}{C_\alpha}
-    \int_{\Sigma_\alpha} \textbf{r} \left[
-        D(\nablabh C_1)
-    \right]\cdot \textbf{n}_2  d\Sigma}.
-    \label{eq:avg_dt_dG_alpha_tot}
+        \frac{1}{C_\alpha}\left[
+            \int_{\Sigma_\alpha} 
+            \left[
+                c_I \textbf{w}_I
+                - D_I (\nablabhI c_I)
+            \right] d\Sigma
+            +\textbf{J}_\alpha
+            - \textbf{r}_\alpha j_\alpha
+        \right]
+    }.
+    \label{eq:avg_dt_dr_alpha_tot}
 \end{multline}
-Let examine each source terms. 
-The first term on the RHS represent the change in center of surfactant due to the isotropic exchange with the bulk phase. 
-The other exchange term account for the anisotropic apport of surfactant over the surface of the particle.
-This term might be of great importance since the bubble's surface will absorbed more surfactant in low concentrated zone.  
-The second term account for the surfactants diffusion and advection over the droplet surface. 
-The latter being probably neglectable as in \citet{kentheswaran2022direct}. 
-In the high area density 
-In a steady state regime it be shown that $C_I \textbf{w}_I = 0$ also 
+The diffusive term $\pnavg{\textbf{u}'_\alpha\textbf{r}'_c}$ which represents the flux generated by the correlation between the mean surfactant distribution on the particles' surface and the velocity of the particles. 
+Again, this term might be relevant since, as mentioned previously, the rising velocity is highly dependent on $\theta_{cap}$.
+Then, the first term on the second line is the contribution of the averaged surface advection of $c_I$ along the particles' surface. 
+The second term accounts for the diffusion of surfactants over the droplet surface, which acts against the formation of a sharp distribution of surfactants.
+However, the contribution of this term is likely negligible based on the values of the diffusive surface coefficient, as discussed in \citet{valkovska2000determination}.
+The third term of the second line, is the exchange term $\textbf{J}_\alpha$ which clearly impacts $\textbf{r}_\alpha$.
+Indeed, this term accounts for the inward adsorption of concentration and downward desorption fluxes of surfactant, creating a significant disequilibrium. 
+The last term, $\textbf{r}_\alpha j_\alpha$, is the contribution from the accumulation of species adsorption and desorption on the particle surface during the process driven by the three previous terms, i.e. adsorption, advection, diffusion and desorption. 
+We may recognize that the latter fourth terms are being responsible for the equilibrium or not of the cap angle. 
+Indeed, when all these terms are balanced, the system reaches a steady-state equilibrium for the surfactant distribution.
+It is evident that in the closure of \ref{eq:avg_dt_dr_alpha_tot} one can include all properties linked to the physics of the bubbles' surface, which in turn creates a model for the surfactant distribution at first order. 
+
+\tb{Dans cette partie il faut encore que je lise la bibliography qui existe peut etre sur ces dernière equaiton pour voir i le tout est bien coherent}
+
+% \tb{Start : in the SSR the stagnat can is funciton of Re anfd Ma}
+% Let assume that the timescale to reach the steady-state kinetic regime is much shorter than the variation of $\oneavg{c}$ seen by the particles. 
+% In this situation the advection flux compensate the diffusive flux and adsorption-desorption source terms for all particles at all times.
+% This equilibrium can be written :
+% \begin{equation}
+%     \int_{\Sigma_\alpha} 
+%         c_I \textbf{w}_I
+%         d\Sigma
+%         - \int_{\Sigma_\alpha} 
+%         D_I (\nablabhI c_I)
+%          d\Sigma
+%         +\textbf{J}_\alpha
+%         = 0 
+%         % - \textbf{r}_\alpha j_\alpha
+%         \label{eq:steady_state_kinetic_regime}
+% \end{equation}
+% Nevertheless, due to a change of environment, $\oneavg{c}$ can change slowy inducing a non-zero $j_\alpha$, after what the particles reache instantaneously another steady-state kinetic regime. 
+% In this situations the mean position of the surfactant is fully determined with the local concentration $\oneavg{c}$ or the local source $j_n$.
+% Using the hypothesis \ref{eq:steady_state_kinetic_regime} in \ref{eq:avg_dt_dr_alpha_tot} gives the quasy steady conservation equaiton of $\textbf{r}_c$ with :
+% \begin{equation}
+%     \pddt (\pnavg{\textbf{r}_\alpha})
+%     + \nablabh \cdot (\pnavg{\textbf{u}_\alpha}\pnnavg{\textbf{r}_\alpha})
+%     =
+%     - \frac{n_p}{s_\alpha}\pnnavg{
+%          \frac{\textbf{r}_\alpha j_\alpha}{C_\alpha}
+%     }
+%     - \nablabh \cdot (\pnavg{\textbf{u}'_\alpha\textbf{r}'_c})
+% \end{equation}
+% where $\textbf{r}_\alpha$ is solely function on the local flux on the a the diffusive fluctuation term. 
 
 
-
-This vector directly gives a relation on the $\theta_\text{cap}$ which is correlated by the drag. 
-According to the scheme
-\begin{align*}
-    |\textbf{r}_c| s_\alpha
-    &=a^2 C_I \int_{0}^{2\pi} \int_{0}^{\theta_\text{cap}}  \sin\theta \textbf{r}_z d\phi d\theta\\
-    &=a^2 C_I \int_{0}^{2\pi} \int_{0}^{\theta_\text{cap}}  \sin\theta a \cos\theta d\phi d\theta\\
-    &=a^3 C_I \pi \cos^2{\theta_\text{cap}}
-\end{align*}
-so $r_z = \frac{1}{2}a C_I \cos^2{\theta_\text{cap}}$
-Due to the complexity of the problem we won't develop further in this work. 
-The main takeaway here is to understand that these first and higher order moment equation are tools to describe the dispersed phase at any order of accuracy regardless of the problem treated. 
-
-\tb{Add "surfactant dynamic" }
-\tb{with the exchange with the bulk}
-\tb{Open on surfactant bubbbly flow with the JFM review and bothe}
-\tb{Open non fore-after axissymmetric particle}
-
-
-\tb{Extends to solid mechanics with deformable particle and composite}
-
-\tb{
-\subsubsection*{Oblate bubbles}
-
-As it has already mentioned the trace of the moment of momentum equation can be used to derive the Reyl
-It is also possible to derive from the second moment of mass equation an equation for the mean aspect ratio $\pnnavg{\xi}$ of the particles. 
-Indeed, let's consider obalte particles, such as droplets or bubble, in this case the second moment of mass can be written, $\mathcal{M}_\alpha =  \textbf{pp} [M_\alpha^{||}(t) - M_\alpha^\bot(t)] +  \textbf{I} M_\alpha^\bot(t)$
-\tb{As in tomiyama example they state that the shape of the particle is of particular importance here the moment of volume matter }
-
-
-\subsubsection*{Spherical compressible bubbles}
-As mentioned in the \ref{sec:Lagrangian} from teh trace of the moment of momentum equation we can recover the Rayleigh-Lamb-Plesset equation. 
-Thus, by using the averaged moment of momentum equation we can falll back on \citet{zhang1994ensemble} model. 
-
-\subsubsection*{Slightly deformable elastic particle}
-
-Now let consider the momentum conservation of slightly deformable particles. 
-First, the velocity field inside the particles, is assumed linear and incompressible, such that $\textbf{u}(\textbf{y}_\alpha) = \textbf{u}_\alpha + \mathcal{L}_\alpha \cdot \textbf{r}$ where the second order tensor  $\mathcal{L}_\alpha= \textbf{e}_\alpha+ \boldsymbol{\omega}$, with $\textbf{e}$ and $\boldsymbol{\omega}$ are symmetric and skew-symmetric tensors, respectively.
-It directly follows from the expression of the velocity : $\mathcal{P}_\alpha = \int_{\Omega_\alpha} \textbf{r}\textbf{u} d\Omega = \mathcal{L}_\alpha\cdot \mathcal{M}$
- 
-The constitutive equation of the stress, $\textbf{T}_2$, within the particle phase can be written such as $\textbf{T}_2 = \mathbb{C} : \textbf{e}_2$ for elastic materials, with $\mathbb{C}$ the fourth order stiffness tensor and $ \textbf{e}_2 = \frac{1}{2}\left(\nablab\textbf{u}_2+(\nablab\textbf{u}_2)^T\right)$ is the rate of strain symmetric tensor. 
-Making use of the internal velocity expression yield directly the relation, $\textbf{e}_2=\textbf{e}_\alpha\cdot$ in $\Omega_\alpha$. 
-
-We know that the deformation of the particles will not have an explicit impact on the linear conservation equations.
-Thus, we will be interested into the first and second order momentum and mass conservation equations respectively.   
-Making use of the average of \ref{eq:dt_P_alpha} over every configuration of the flow, and using the previous properties yield an equation for the average stress tensor within the suspension, namely, 
-\begin{equation}
-    \pnnavg{\int_{\Omega_\alpha}\textbf{T}_\alpha d\Omega}
-    = n_p\mathbb{C} : \pnnavg{(\mathcal{L}_\alpha+ \mathcal{L}_\alpha^T) v_\alpha}
-    % = - \mathcal{L}_\alpha\cdot \mathcal{L}_\alpha\cdot \mathcal{M}_\alpha
-    % - \mathcal{M}_\alpha \cdot\ddt \mathcal{L}_\alpha
-    % - \textbf{M}_\alpha
-    \label{eq:hybrid_avg_dt_P_alpha}
-\end{equation}
-\begin{equation}
-    \mathcal{M}_\alpha \cdot\ddt \mathcal{L}_\alpha
-    = - \mathcal{L}_\alpha\cdot \mathcal{L}_\alpha\cdot \mathcal{M}_\alpha
-    - \mathbb{C} : (\mathcal{L}_\alpha+ \mathcal{L}_\alpha^T) v_\alpha
-    - \textbf{M}_\alpha
-    \label{eq:hybrid_avg_dt_P_alpha}
-\end{equation}
-Besed on that kind of argument \citet{lhuillier1987phenomenology}
-}
+As the objective of this study is not to provide a fully closed system, we will conclude the discussion on this point.
+In short, this new system of equations can be used to determine the macroscopic variables $\pnnavg{C_\alpha}$ and $\pnnavg{\textbf{r}_\alpha}$, which are crucial for the closure of drag force and mass transfer in the macroscopic models.
+Unfortunately, at the current state of the art, it is still challenging to derive exact closure terms for these equations, even in simplified regimes. 
+However, we provided a clear methodology to derive a hybrid model tailored to the problem at hand, using the examples of surfactant transport and fiber suspension. 
