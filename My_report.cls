@@ -78,7 +78,7 @@
 \clubpenalty10000
 \hbadness=999999
 \vbadness=999999
-
+\RequirePackage{stmaryrd}
 %Packages
 \RequirePackage{import} %use of \import functions
 \RequirePackage{kantlipsum}

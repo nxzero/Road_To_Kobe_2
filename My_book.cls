@@ -33,7 +33,7 @@
 \RequirePackage{tikz-3dplot}
 
 
-
+\RequirePackage{stmaryrd}
 \RequirePackage{nomencl}
 \immediate\write18{makeindex -s nomencl.ist -o "\jobname.nls" "\jobname.nlo"}
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
