@@ -1,0 +1,190 @@
+\documentclass[12pt]{My_preprint}
+\usetikzlibrary{arrows.meta,
+                chains,
+                positioning,
+                shapes.geometric}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\size}{0.22\textwidth}
+\newcommand{\avg}[1]{\left<#1\right>}
+\renewcommand{\avg}[1]{\left<#1\right>}
+\newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
+\newcommand{\Exp}[1]{\overline{\overline{#1}}}
+\newcommand{\davg}[1]{\left<#1\right>_d}
+\newcommand{\cavg}[1]{\left<#1\right>_c}
+\newcommand{\Iavg}[1]{\left<#1\right>_I}
+\newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
+% \newcommand{\pnavg}[1]{n\left<#1\right>_p}
+
+\newcommand{\avgcond}[1]{\left<#1\right>}
+\renewcommand{\avgcond}[1]{\overline{#1}}
+\newcommand{\kavg}[1]{\avgcond{#1}^k}
+\newcommand{\pnnavg}[1]{\avgcond{#1}^{p}}
+\newcommand{\pnavg}[1]{n_p\pnnavg{#1}}
+\newcommand{\oneavg}[1]{\avgcond{#1}^1}
+\newcommand{\smallavg}[2]{\avgcond{#1}^{#2}}
+\newcommand{\sym}[1]{\left(#1\right)^{\text{Sym}}}
+
+\newcommand{\nstavg}[1]{\overline{#1}_{nst}}
+\newcommand{\nstrelavg}[1]{\overline{#1}_{nst}^{rel}}
+\newcommand{\mavg}[1]{\left<#1\right>_m}
+\newcommand{\gavg}[2][\gamma]{\left<#2\right>_{#1}}
+\newcommand{\partials}[1]{\partial_{i_1}\partial_{i_2}\ldots\partial{i_{#1}}}
+\newcommand{\partialp}[2]{ \prod_{m=#1}^{#2} \partial_{i_m}}
+\newcommand{\hatpartialp}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{j_m}}
+\newcommand{\hatpartialpi}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{i_m}}
+\newcommand{\pri}[2]{ \prod_{m=#1}^{#2} r_{i_m}}
+\newcommand{\prj}[2]{ \prod_{m=#1}^{#2} r_{j_m}}
+\newcommand{\nablab}{\mathbf{\nabla}}
+\newcommand{\nablabh}{\nablab}
+\newcommand{\nablabhI}{\nablab_{||}}
+\newcommand{\ddt}{\frac{d}{d t}}
+\newcommand{\pddt}{\frac{\partial}{\partial t}}
+\renewcommand{\pddt}{\partial_t}
+\newcommand{\norm}[1]{\hat{#1}}
+\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
+
+\newcommand{\CC}{\mathscr{C}}
+\newcommand{\PP}{\mathscr{P}}
+
+%%% Utiliser pour les commentaires
+\newcommand{\JL}[1]{\color{red}#1\color{black}}
+\newcommand{\DL}[1]{\color{green}#1\color{black}}
+\newcommand{\tb}[1]{\color{blue}#1\color{black}}
+% \renewcommand{\alpha}{}
+\renewcommand{\JL}[1]{}
+% \renewcommand{\tb}[1]{}
+
+\renewcommand{\size}[1]{0.3\textwidth}
+\newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Sigma_\alpha} \pri{1}{#1}#2 d\Sigma}}
+
+% \newcommand{\numref}[1]{\ref{#1}}
+\renewcommand{\ref}[1]{\autoref{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{Inter-particle scale averaged equations describing relative particle state in disperse two-phase flows}
+
+\author[1,2]{Nicolas Fintzi}
+\affil[1]{IFP Energies Nouvelles, Rond-point de l’changeur de Solaize, 69360 Solaize}
+\affil[2]{Sorbonne Université, Institut Jean le Rond ∂’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    We use the nearest particle statistic recently introduced by \citet{zhang2021stress} to derive macroscopic equation describing the mesoscal, i.e. mean inter particle distance, velocity or forces. 
+    These equations are shown to be related to the classic particle averaged evolution equation through an expansion series around the inter particle scale distance noted $\textbf{r}$. 
+    Additionally, we demonstrate how the relative motion between the particles are link with the particle-fluid-particle stress also introduced in \citet{nott2011suspension} and latter in \citet{zhang2021stress}. 
+\end{abstract}
+\section{Introduction}
+\section{Preliminaries}
+\subsection{Generic Eulerian and Lagrangian balance equation}
+\begin{equation}
+    \label{eq:dt_f_k}
+    \pddt f_k
+    = \nablabh \cdot \left(
+        \mathbf{\Phi}_k
+        - f_k\textbf{u}_k
+        \right)
+    + \textbf{S}_k
+\end{equation}
+\begin{align}
+    \pddt (\chi_k f_k)
+    &= \nablabh \cdot (\chi_k \mathbf{\Phi}_k - \chi_k f_k \textbf{u}_k)
+    + \chi_k \textbf{S}_k
+    + \delta_I\left[
+        f_k
+        \left(
+            \textbf{u}_I
+            - \textbf{u}_k
+        \right)
+        + \mathbf{\Phi}_k
+    \right]
+    \cdot \textbf{n}_k ,
+    \label{eq:dt_chi_k_f_k}\\
+    \pddt (\delta_If_I)  
+    &= 
+    \nablabh \cdot (\delta_I \mathbf{\Phi}_{I||} - \delta_I f_I \textbf{u}_I)
+    +\delta_I\textbf{S}_I 
+    - \delta_I \Jump{
+    f_k (\textbf{u}_I - \textbf{u}_k)
+    + \mathbf{\Phi}_k
+    },
+    \label{eq:dt_delta_I_f_I}
+\end{align}
+
+\begin{equation}
+   \ddt q_\alpha
+    = \int_{\Omega_\alpha} \textbf{S}_2 d\Omega
+    + \int_{\Sigma_\alpha} \left[\mathbf{\Phi}_1 + f_1 (\textbf{u}_I-\textbf{u}_1) \right] \cdot \textbf{n}_2 d\Sigma,
+    \label{eq:dt_dq_alpha_tot}
+\end{equation}
+\subsection{Ensemble average}
+
+\tb{Let, $X(\mathscr{C},t)$ be the value of the variable $X$ for a realization of the flow $\mathscr{C}$ the the random variable $X$ can be described by the PDF $P(x = X(\mathscr{C})) = \int \delta(x-X(\mathscr{C})) d\mathscr{C}$ }
+Let, $P(\mathscr{C},t)$ be the probability density function that describe the probability of finding the flow in the configuration $\mathscr{C}$ at time $t$, were $\mathscr{C} = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a finite set of all the parameters describing the flow configuration. 
+Then, we define $d\mathscr{P} = P(\mathscr{C},t)d\mathscr{C}$ as the probable number of particles in the incremental region of the particles' phase space $d\mathscr{C}$ around $\mathscr{C}$ at time $t$. 
+It follows from this definition, that the ensemble average of an arbitrary Eulerian property $f$ defined on $\Omega$, yields,
+\begin{equation}
+    \avg{f}(\textbf{x},t)
+    =\int f(\textbf{x},\mathscr{C},t) d\mathscr{P}. 
+    \label{eq:avg}
+\end{equation}  
+This definition can be applied to Lagrangian properties as well by using the previous formulation, namely $\pavg{q_\alpha} = \int \delta(\textbf{x} - \textbf{x}_\alpha) q_\alpha(\mathscr{C}) d\mathscr{P}. $
+It is interesting to mention some mathematical properties of the ensemble average operators. 
+For two arbitrary Eulerian fields $f$ and $h$ we have,
+\begin{align}
+    &\avg{f+h} = \avg{f}+\avg{h}, 
+    &\avg{\avg{f}h} = \avg{f}\avg{h}, \nonumber \\
+    &\avg{\pddt f} 
+    = \pddt\avg{f}, 
+    &\avg{\nablabh f}
+    = \nablab \avg{f}. 
+    \label{eq:avg_properties}
+\end{align}
+The two first relations are called the Reynolds' rules, the $3^{th}$ one is the Leibniz' 
+rule and the last one, the Gauss' rule \citep{drew1983mathematical}.
+Additionally, for any phase quantity defined in $\Omega_k$ we introduce the definition, 
+\begin{equation}
+    \phi_k\kavg{f}(\textbf{x},t) = \avg{\chi_k f_k}
+    \label{eq:1_avg}
+\end{equation}
+where, $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$
+and $\kavg{f}$ the conditional average of the field $\chi_k f_k$ on the phase $k$.
+Similarly, for the particle fields, we can introduce the particle phase average by,
+\begin{equation}
+     \pnavg{q_\alpha}(\textbf{x},t) = \avg{\delta_\alpha f_\alpha}
+     \label{eq:p_avg}
+\end{equation}
+where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of finding a particle center of mass at $\textbf{x}$
+and $\pnnavg{q_\alpha}$ is the conditional average of $q_\alpha$ on the set of particles. 
+\subsection{Nearest particle statistics}
+
+\section{Evolution of the nearest pdf}
+The whole derivaiton should start with Louisville's equation. 
+Which whoul add a border terms that doesn't cancel for h ? 
+
+\input{Inter_particle_scale_eq/Topology.tex}
+
+\section{Averaged moments equations}
+
+\subsection{Kinematics between particles}
+voinoid cells here
+\subsection{Dynamic between particles}
+particle stress here
+\subsection{Energy}
+Compute the inter particle energy and the link of $ww$ with $<u'u'>$ 
+
+\section{Conclusion}
+\bibliography{Bib/bib_bulles.bib}
+
+
+
+\appendix
+
+\end{document}

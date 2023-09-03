@@ -1,0 +1,44 @@
+\subsection{Simulation set-up and The no-coalescence algorithm}
+
+\begin{itemize}
+    \item Tag function 
+    \item No coalescence function
+\end{itemize}
+
+
+\begin{tikzpicture}[
+    node distance = 8mm and 12mm,
+      start chain = going below,
+      base/.style = {draw, thick, fill=gray!10, align=center, 
+                     inner xsep=3mm, inner ysep=2mm},
+      rect/.style = {base},
+      elli/.style = {ellipse, base},
+      circ/.style = {circle, fill=graye!10, minimum size=12pt},
+      diam/.style = {diamond, base, aspect=1.5},
+      line/.style = {draw, rounded corners, -Stealth, semithick},
+                        ]
+    % Place nodes
+        \begin{scope}[nodes = {on chain, join=by line}]
+    \node [rect, rounded corners=10pt] (step1) {start};
+    \node [rect] (step2) {Measure\\ 
+                          $i_{dq}(k),\theta(k)$};
+    \node [rect] (step3) {n$=$0};
+    \node [rect] (step4) {n$=$n$+$1};
+\node [rect] (step5) {Calculate $i_{dq}^p(k+1)$\\
+                      from Eqns 3.13, 3.14};
+\node [rect] (step6) {Calculate cost function\\
+                      $\begin{multlined}
+                      g = (i_d^*-i_d^p(k+1))^2 \\
+                            +(i_q^*-i_q^p(k+1))^2
+                      \end{multlined}$};
+\node [diam] (step7) {n$>$7};
+\node [rect] (step8) {Apply switching state};
+    \end{scope}
+\node [rect, left=of step5] (step9) {Next sampling period};
+% Draw edges
+\path[line] (step8) -| (step9);
+\path[line] (step9) |- (step2);
+%
+\path       (step7) -- node [right,near start]{True}    (step8);
+\draw[line] (step7) --++ (3,0) node [above,near start]{False} |-(step4);
+    \end{tikzpicture}

@@ -1,0 +1,178 @@
+\documentclass[12pt]{My_preprint}
+
+\usetikzlibrary{arrows.meta,
+                chains,
+                positioning,
+                shapes.geometric}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\size}{0.22\textwidth}
+\newcommand{\avg}[1]{\left<#1\right>}
+\renewcommand{\avg}[1]{\left<#1\right>}
+\newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
+\newcommand{\Exp}[1]{\overline{\overline{#1}}}
+\newcommand{\davg}[1]{\left<#1\right>_d}
+\newcommand{\cavg}[1]{\left<#1\right>_c}
+\newcommand{\Iavg}[1]{\left<#1\right>_I}
+\newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
+% \newcommand{\pnavg}[1]{n\left<#1\right>_p}
+
+\newcommand{\avgcond}[1]{\left<#1\right>}
+\renewcommand{\avgcond}[1]{\overline{#1}}
+\newcommand{\kavg}[1]{\avgcond{#1}^k}
+\newcommand{\pnnavg}[1]{\avgcond{#1}^{p}}
+\newcommand{\pnavg}[1]{n_p\pnnavg{#1}}
+\newcommand{\oneavg}[1]{\avgcond{#1}^1}
+\newcommand{\twoavg}[1]{\avgcond{#1}^2}
+\newcommand{\smallavg}[2]{\avgcond{#1}^{#2}}
+\newcommand{\sym}[1]{\left(#1\right)^{\text{Sym}}}
+
+\newcommand{\nstavg}[1]{\overline{#1}_{nst}}
+\newcommand{\nstrelavg}[1]{\overline{#1}_{nst}^{rel}}
+\newcommand{\mavg}[1]{\left<#1\right>_m}
+\newcommand{\gavg}[2][\gamma]{\left<#2\right>_{#1}}
+\newcommand{\partials}[1]{\partial_{i_1}\partial_{i_2}\ldots\partial{i_{#1}}}
+\newcommand{\partialp}[2]{ \prod_{m=#1}^{#2} \partial_{i_m}}
+\newcommand{\hatpartialp}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{j_m}}
+\newcommand{\hatpartialpi}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{i_m}}
+\newcommand{\pri}[2]{ \prod_{m=#1}^{#2} r_{i_m}}
+\newcommand{\prj}[2]{ \prod_{m=#1}^{#2} r_{j_m}}
+\newcommand{\nablab}{\mathbf{\nabla}}
+\newcommand{\nablabh}{\nablab}
+\newcommand{\nablabhI}{\nablab_{||}}
+\newcommand{\ddt}{\frac{d}{d t}}
+\newcommand{\pddt}{\frac{\partial}{\partial t}}
+\renewcommand{\pddt}{\partial_t}
+\newcommand{\norm}[1]{\hat{#1}}
+\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
+
+%%% Utiliser pour les commentaires
+\newcommand{\JL}[1]{\color{red}#1\color{black}}
+\newcommand{\DL}[1]{\color{green}#1\color{black}}
+\newcommand{\tb}[1]{\color{blue}#1\color{black}}
+% \renewcommand{\alpha}{}
+\renewcommand{\JL}[1]{}
+% \renewcommand{\tb}[1]{}
+
+\renewcommand{\size}[1]{0.3\textwidth}
+\newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Sigma_\alpha} \pri{1}{#1}#2 d\Sigma}}
+
+% \newcommand{\numref}[1]{\ref{#1}}
+\renewcommand{\ref}[1]{\autoref{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{On the ensemble averaged stress in buoyant mono-disperse emulsion.}
+
+
+\author[1,2]{Nicolas Fintzi}
+\author[1]{Jean-Lou Pierson}
+\author[2]{Stephane Popinet}
+\affil[1]{IFP Energies Nouvelles, Rond-point de l’changeur de Solaize, 69360 Solaize}
+\affil[2]{Sorbonne Université, Institut Jean le Rond ∂’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    We performed direct numerical simulation (DNS) of mono disperse rising droplets. 
+    This article present a numerical analysis of the pseudo turbulence Reynolds stress and interphase drag force in water / oil emulsion. 
+    Indeed, in the view of feeding averaged model it is crucial to obtain course terms. 
+    Until now, it wasn't possible due to the non statistically steadiness of VOF simulations because of the numerical coalescence. 
+    In this work we make use of a new kind of algorithm to prevent coalescence to happen. 
+    Therefor we are able to reach a statistically steady simulation and to compute the averaged closure terms. 
+\end{abstract}
+
+
+\section{Introduction}
+\input{Pseudo_turb/Introduction.tex}
+
+% \section{Modeling of dispersed two-phase flows}
+% \input{Pseudo_turb/Local_scale_equation.tex}
+% \section{Theoretical formulation  }
+
+% \input{Pseudo_turb/Averaged_equation.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Numerical methodology}
+How the NS equations are solved (color function etc)
+\begin{itemize}
+    \item Transport of the phase indicator function
+    \item Single fluid formulation of momentum 
+\end{itemize}
+\input{Pseudo_turb/no_coalesence.tex}
+\input{Pseudo_turb/Simulation_Setup.tex}
+\input{Pseudo_turb/validation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+Maybe some world on the global notation of the presented results ?
+\input{Pseudo_turb/rising_velocity.tex}
+\input{Pseudo_turb/Reynolds_stress.tex}
+\input{Pseudo_turb/PFP.tex}
+\subsection{Higher moments closure : Stresslet ? ? }
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fPA/Sxx.pdf}
+    \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fPA/Syy.pdf}
+\end{figure}
+Lire le papier que JL review 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion and conclusion}
+\input{Pseudo_turb/Conclusion.tex}
+
+\section*{Acknowledgement}
+
+\appendix
+\section{Space convergence}
+
+
+Now, let's investigate the required number of droplets per domain, $N_b$, and the minimum definition of cells per diameter of droplets $\delta$.  
+\tb{Include bibliography and expectation here \ldots}
+For this investigation we kept the physical parameters presented in the same section and made a double parametric analysis over $N$ and $\delta$. 
+We carried out simulations for $N = 2, 3, 4, 5, 6, 7$, and for a number of cells $10 <\delta < 40$. 
+In Basilisk the mesh definition is defined by a power of two, consequently depending on the size of the domain (which is fixed to keep a $\phi$ constant) the $\delta$ parameter is fixed at a power of 2 close. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height= 0.3\textwidth]{image/VALIDATION/N_and_delta/DUd.pdf}
+    \includegraphics[height= 0.3\textwidth]{image/VALIDATION/N_and_delta/PHI.pdf}
+    \caption{(left) Averaged relative velocities for both phases.
+            (right) Dispersed phase volume fraction at the end of each simulation.
+            The text on the side of the points is $\delta$. }
+    \label{fig:VALIDATION_Nd_1}
+\end{figure}
+\ref{fig:VALIDATION_Nd_1}(left), illustrate clearly that the drift velocity is independent of the parameters $N_b$ and $\delta$, for $N >4$. 
+On the other hand, \ref{fig:VALIDATION_Nd_1}(right), show that the volume fraction of the dispersed phase is lower for the low defined grid (red dots), due to a loss of volume during the simulation.
+This doesn't mean that the solver isn't volume conservative. 
+In fact, it is fund to be due to the \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspension/no-coalescence.h}{no-coalescence.h} which generate fragment into the numerical domain, fragment which are deleted in the long run. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height= 0.3\textwidth]{image/VALIDATION/N_and_delta/PA_UpUp.pdf}
+    \includegraphics[height= 0.3\textwidth]{image/VALIDATION/N_and_delta/Mh.pdf}
+    \caption{(left) Fluids phase averaged fluctuation tensor.
+            (right) Particular average of the first moment tensor, where $F_g$ is the buoyancy force applied on one droplet. 
+            The numerical values displayed alongside the dots are the number of cells per diameter.}
+    \label{fig:VALIDATION_Nd_2}
+\end{figure}
+Now, let's look at the behavior of more \textit{complicated} closure terms. 
+\ref{fig:VALIDATION_Nd_2}(left) demonstrate that the vertical component of the pseudo turbulent tensor is parameter independent rather early, independently of the grid definition. 
+This fact is rather surprising but notice that the standard deviation is quite high for small domain. 
+On \ref{fig:VALIDATION_Nd_2}(right), we can examine the vertical component of the first moment closure term. 
+It is found to be constant for all $N$, but rather inaccurate for coarse grids. 
+Which makes sens since the first moment results from a local calculation of the stress over a droplet volume, unlike the other quantities which results from the averaged center of mass velocity of a droplet. 
+
+As we have shown, the quantities presented converge for a number of droplets equivalent to $N = 4$ and $\delta = 25$. 
+Thus, we validate our simulation in space, i.e. we made sure that our domain were wide enough to minimize the influence of the periodicity on our results, and in mesh definition. 
+Nevertheless, at it is the number of realization that matter when carrying a particular average, it is interesting to look at the duration of the simulation.
+
+
+
+\bibliography{Bib/bib_bulles.bib}
+
+
+
+\end{document}
