@@ -40,15 +40,18 @@
 \AtBeginDocument{\newcommand{\refn}[1]{\ref{#1}}}
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
 \numberwithin{equation}{section}
-\RequirePackage[
-    a4paper,
-    left=20mm,
-    right=20mm,
-    top=20mm
-]{geometry}
-\RequirePackage{ragged2e}
+% \RequirePackage[
+%     a4paper,
+%     left=20mm,
+%     right=20mm,
+%     top=20mm
+% ]{geometry}
+% \RequirePackage{ragged2e}
 \RequirePackage{times}
+
 % \RequirePackage{newtxtext}
 \RequirePackage{float}
 \RequirePackage{mathtools}% it load amsmath 
 \RequirePackage{tikz}
+\RequirePackage{todonotes}
+\setlength{\marginparwidth}{3.5cm}

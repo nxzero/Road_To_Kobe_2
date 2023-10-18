@@ -1,0 +1,139 @@
+
+\subsection{Evolution of the nearest PDF eulerian. }
+% In this section we wish to derive the evolution equation of the state funciton $\Pi(\textbf{x},t,\textbf{r}) = \chi_k(\textbf{x},t,\CC) \delta(\textbf{x} + \textbf{r}- \textbf{x}_i(t,\CC))h_i(\textbf{x},t,\CC)$ where $\chi_k(\textbf{x},t,\CC)$ is the phase indicator function of teh phase $k$. 
+% Second option 
+% \begin{align*}
+%     \pddt \delta^i + \pddr \cdot (\textbf{u}_i \delta^i) &= \pddt \delta^i + \pddx \cdot (\textbf{u}_i \delta^i)  = 0\\
+%     \pddt \chi_k +  \textbf{u}_I^0 \cdot \partial_\textbf{x}  \chi_k &= 0 \\
+%     \pddt (\delta^i h_i) + \pddr \cdot (h_i \textbf{u}_i \delta^i) &= \delta_i \pddt h_i  \\
+%     \pddt (\Pi) + \textbf{u}_i  \cdot \pddr\Pi &= \delta_i \pddt h_i  \\
+%     \pddt (\Pi) + \textbf{u}_i  \cdot \pddx\Pi &= \delta_i (\pddt h_i + \textbf{u}_i \cdot \pddx h^i)  \\
+%     \textbf{u}_i \cdot \pddx \Pi &= \textbf{u}_i \cdot (\delta_i \pddx h_i + \pddr \Pi)
+% \end{align*}
+In this section we wish to derive the evolution equation of the state funciton $\Pi(\textbf{x},t,\textbf{r},a) =  \delta(\textbf{x} + \textbf{r}- \textbf{x}_i(t,\CC))h_i(\textbf{x},t,\CC)\delta(t - a-t^i(\CC))$. 
+Second option 
+\begin{align*}
+    \pddt \delta^i + \textbf{u}_i \cdot \pddr \delta^i &= \pddt \delta^i + \textbf{u}_i \cdot \pddx \delta^i  = 0\\
+    \pddt (h_i \delta^i) + \textbf{u}_i \cdot \pddr (h_i \delta^i) 
+    &= \delta_i \pddt h_i\\
+    \pddt (h_i \delta^i) + \textbf{u}_i \cdot \pddx (h_i \delta^i) 
+    &= \delta_i (\pddt h_i + \textbf{u}_i \cdot \pddx h_i)\\
+\end{align*}
+using the fact that $\pddt \delta_a = \pdda \delta_a$ we obtain 
+\begin{align*}
+    \pddt (h_i \delta^i \delta_a) + \pdda ( h_i \delta^i \delta_a) + \textbf{u}_i \cdot \pddx (h_i \delta^i\delta_a) 
+    &=  \delta_a \delta_i (\pddt h_i + \textbf{u}_i \cdot \pddx h_i)\\
+\end{align*}
+alternatively we could have, 
+\begin{align*}
+    \pddt (h_i \delta^i \delta_a) 
+    + \pdda (h_i \delta^i \delta_a) 
+    + \pddr\cdot  ( \textbf{u}_i h_i \delta^i\delta_a) 
+    &= \delta_a \delta_i \pddt h_i\\
+\end{align*}
+\begin{align*}
+    \pddt \Pi
+    + \pdda \Pi
+    + \pddr\cdot  ( \textbf{u}_i \Pi) 
+    &= \delta_a \delta_i \pddt h_i\\
+\end{align*}
+which seems easier. 
+From the definition of $h_i$,
+\begin{equation*}
+    h_{i}(\textbf{x},t) 
+    = \frac{1}{N_\textbf{x}}
+    \prod_{j \neq i}
+    H(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)
+    = \frac{1}{N_\textbf{x}}
+    \prod_{j \neq i}
+    H(r_{ij})
+\end{equation*}
+\begin{equation*}
+    N_\textbf{x}
+    = 
+    \sum_{i}
+    \prod_{j\neq i}
+    H(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)
+    = 
+    \sum_{i}
+    \prod_{j\neq i}
+    H(r_{ij})
+\end{equation*}
+ we can demonstrate that : 
+\begin{align*}
+    \pddt h_i
+    &=
+    \sum_{e \neq i} (\textbf{u}_e \cdot \hat{\textbf{r}}_e - \textbf{u}_i \cdot \hat{\textbf{r}}_i)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) h_i\\
+    \pddx h_i
+    &= \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) h_i
+\end{align*}
+
+By Applying the ensemble average on the previous transport equaiton and defining $P_{nst}(\textbf{x},\textbf{r},t,a) = \int \Pi \PP$ we obtain,
+\begin{align*}
+    \pddt P_{nst}
+    + \pdda P_{nst}
+    + \pddr\cdot  ( \nstavg{\textbf{u}_i} P_{nst}) 
+    &= \delta(a)P_{nst}(\textbf{x},\textbf{r},t,a) - \frac{P_{nst}(\textbf{x},\textbf{r},t,a)}
+    {\tau_d(\textbf{x},\textbf{r},t,a)}\\
+\end{align*} 
+with, 
+\begin{equation}
+    \delta(a)P_{nst}(\textbf{x},\textbf{r},t,a)
+    = 
+    \int
+    \sum_i \delta_i \delta_a \sum_{e \neq i} (\textbf{u}_e \cdot \hat{\textbf{r}}_e - \textbf{u}_i \cdot \hat{\textbf{r}}_i)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)^+ h_i
+    \PP
+\end{equation}
+\begin{equation}
+    \frac{P_{nst}(\textbf{x},\textbf{r},t,a)}
+    {\tau_d(\textbf{x},\textbf{r},t,a)}
+    = 
+    -\int
+    \sum_i \delta_i \delta_a \sum_{e \neq i} (\textbf{u}_e \cdot \hat{\textbf{r}}_e - \textbf{u}_i \cdot \hat{\textbf{r}}_i)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)^- h_i
+    \PP
+\end{equation}
+\subsubsection{Age distribution}
+The aim of this section is to find the form of $\tau_d$
+The random destruction here isn't a hypothesis anymore since we regard the particle relative to eulerian points. 
+But still here we assume homogeneity such as the macro scale gradients are negligible. 
+\begin{align*}
+    \pdda P_{nst}
+    + \pddr\cdot  ( \nstavg{\textbf{u}_i} P_{nst}) 
+    &= \delta(a)P_{nst}(\textbf{x},\textbf{r},t,a)
+    - \frac{P_{nst}(\textbf{x},\textbf{r},t,a)}
+    {\tau_d(\textbf{x},\textbf{r},t,a)}\\
+\end{align*} 
+Now we integrate this equation over \textbf{r} yielding the following equation, 
+\begin{align*}
+    \pdda P_{a}
+    &= \delta(a)P_{a}(\textbf{x},t,a)
+    - \frac{P_{a}(\textbf{x},t,a)}
+    {\ravg{\tau_d}(\textbf{x},t,a)}\\
+\end{align*} 
+Assuming a constant rate of destruction we obtain, 
+\begin{align*}
+    P_a(\textbf{x},t, a)  
+    =\frac{e^{-a/\avgcond{\tau_d}(\textbf{x},t)}}{\avgcond{\tau_d}(\textbf{x},t)}
+\end{align*} 
+\subsubsection{Position distribution}
+The probability density of having a particle center of mass at \textbf{x} is the number density $n_p(\textbf{y})$. 
+From \citet{zhang2021ensemble}, 
+\begin{equation}
+    P_{nst}(\textbf{x},\textbf{r})
+    = n_p e^{-4\pi n_p (r^3- r_b^3)/3}
+\;\;\;
+\text{for}
+\;\;\;
+|\textbf{r}| > a
+\end{equation}
+Assuming that the age distribution isn't correlated with \textbf{r} we have, 
+\begin{equation}
+    P_{nst}(\textbf{x},\textbf{r},t,a)
+    = n_p(\textbf{x},t) 
+    \frac{e^{-a/\avgcond{\tau_d}(\textbf{x},t) -4\pi n_p(\textbf{x},t) (|\textbf{r}|^3- r_b^3)/3}}{\avgcond{\tau_d}(\textbf{x},t)}
+\end{equation}
+
+From these arguments we only needs to solve $P_{nst}$ in the global phase space $\textbf{x},t$. 

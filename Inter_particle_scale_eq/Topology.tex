@@ -5,9 +5,9 @@ In the following we drop the argument $\CC$ and $t$.
 Then, $\delta^i(\textbf{x}) = \delta(\textbf{x}- \textbf{x}^i(\CC,t))$ is the indicator function of having a particle $i$ at  $\textbf{x}$.
 Similarly, we introduce $\delta^j(\textbf{x},\textbf{r}) = \delta(\textbf{x} + \textbf{r} - \textbf{x}^j)$ which is the indicator function of having the particle indexed $j$ at $\textbf{x}+\textbf{r}$. 
 The aim is to derive a transport equation for the indicator function of the following state : a particle $i$ is at \textbf{x} with its nearest neighbor located at $\textbf{x}+\textbf{r}$. 
-Lastly, $\delta^a(a - a^{ij}(\CC,t))$ will be use as the indicator function for the age of the interaction. 
-Such a function can be written $\Pi(\textbf{x},\textbf{r}) = \delta^a(a)\delta^i(\textbf{x}) \delta^j(\textbf{x},\textbf{r}) h^{ij}$. 
-Using the distribution formalism and taking the partial time derivative on these indicators functions, leads us to, 
+Lastly, $\delta^a(t - a - t_c^{ij}(\CC,t))$ will be use as the indicator function indicating the age of the interaction for a particle pair created at time $t^{ij}_c$. 
+Such a function can be written $\Pi(\textbf{x},\textbf{r},t,a) = \delta^a(a)\delta^i(\textbf{x}) \delta^j(\textbf{x},\textbf{r}) h^{ij}$. 
+Using the distribution formalism and taking the partial time derivative on these indicators functions, leads us to these relations, 
 \begin{equation*}
     \pddt \delta^i(\textbf{x})
     + \textbf{u}^i  \cdot \partial_{\textbf{x}} \delta(\textbf{x} - \textbf{x}^i)
@@ -23,9 +23,9 @@ Using the distribution formalism and taking the partial time derivative on these
     = 0 
 \end{equation*}
 \begin{equation*}
-    \pddt \delta(a - a^{ij})
+    \pddt \delta^a(t - a - t_c^{ij})
     + 
-    \partial_a \delta(a - a^{ij})
+    \partial_a \delta^a(t - a - t_c^{ij})
     = 0 
 \end{equation*}
 where we added and subtracted $\textbf{u}^i \cdot \partial_{\textbf{x}}  \delta(\textbf{x} + \textbf{r} - \textbf{x}^j)$ in the second equation to make appear the $\partial_{\textbf{x}}$ derivative. 
@@ -51,14 +51,269 @@ Noticing that the Lagrangian quantities $\textbf{u}^i$ and $\textbf{u}^j$ are so
 where $\textbf{w}^{ij} = (\textbf{u}^j - \textbf{u}^i)$ is teh relative velocity between nearest neighboring particles. 
 Multiplying, this second equation by $\delta^a\delta^ih^{ij}$ and using \ref{eq:dt_delta_i} yields a transport equaiton for $\Pi(\textbf{x},\textbf{r},a,t)$, namely,
 \begin{equation}
-    \pddt \Pi(\textbf{x},\textbf{r},a,t)
-    + \partial_a \Pi(\textbf{x},\textbf{r},a,t)
-    + \partial_{\textbf{x}} \cdot (\textbf{u}^i \Pi(\textbf{x},\textbf{r},a,t))
-    + \partial_{\textbf{r}}  \cdot (\textbf{w}^{ij} \Pi(\textbf{x},\textbf{r},a,t))
-    = \delta^i\delta^j\delta^a \pddt h^{ij}
+    \pddt \Pi
+    + \partial_a \Pi
+    + \partial_{\textbf{x}} \cdot (\textbf{u}^i \Pi)
+    + \partial_{\textbf{r}}  \cdot (\textbf{w}^{ij} \Pi)
+    = G_{ijl}+D_{ijl}
+    \label{eq:dt_Pi}
 \end{equation}
-The source term $\delta^a\delta^i\delta^j \pddt h^{ij}$ account for the creation and destruction of nearest particle pairs. 
+The source term $\delta^a\delta^i\delta^j \pddt h^{ij} = G_{ijl}+D_{ijl}$ account for the creation and destruction of nearest particle pairs. 
 The starting point to derive the evolution equation of the indicator function $\Pi$ is the Louisville equation
+\tb{we could do the same using Louivill eq and $\pddt \delta = 0$ but in this case the age cannot be defined }
 
-The starting point to derive the evolution equation of the indicator function $\Pi$ is the Louisville equation \citep{cercignani1988boltzmann}
+The source term on the RHS of \ref{eq:dt_Pi} can be computed by carrying out the algebra and yields, 
+\begin{equation*}
+    \pddt h_{ij} 
+    = 
+    \sum_{l \neq i,j} 
+    (\hat{\textbf{r}}_{li}\cdot \textbf{w}_{li}
+    - 
+    \hat{\textbf{r}}_{ji}\cdot\textbf{w}_{ji})
+    \delta(r_{li} - r_{ji})
+        h_{ij}
+\end{equation*}
+Where $r$ refer to $|\textbf{r}|$ and $\hat{\textbf{r}}$ being the normal unit vector corresponding to $\textbf{r}$. 
+We refer the reader too \citet[Appendix A.]{zhang2023evolution} for more detail about the computation of this term.
+When a nearest pair of particles is created $(\hat{\textbf{r}}_{li}\cdot \textbf{w}_{li} - \hat{\textbf{r}}_{ji}\cdot\textbf{w}_{ji}) > 0$, when a nearest pair is destroyed $(\hat{\textbf{r}}_{li}\cdot \textbf{w}_{li} - \hat{\textbf{r}}_{ji}\cdot\textbf{w}_{ji}) < 0$ since the particle $j$ must go faster. 
+Thus,
+\begin{equation*}
+    \pddt h_{ij} 
+    = 
+    \sum_{l \neq i,j} 
+    (\hat{\textbf{r}}_{li}\cdot \textbf{w}_{li}
+    - 
+    \hat{\textbf{r}}_{ji}\cdot\textbf{w}_{ji})^+
+    \delta(r_{li} - r_{ji})
+        h_{ij}
+    + \sum_{l \neq i,j} 
+    (\hat{\textbf{r}}_{li}\cdot \textbf{w}_{li}
+    - 
+    \hat{\textbf{r}}_{ji}\cdot\textbf{w}_{ji})^-
+    \delta(r_{li} - r_{ji})
+        h_{ij}
+\end{equation*}
 
+\subsection{Evolution of the nearest PDF and particle properties.}
+
+Now that the transport equation of $\Pi(\textbf{x},\textbf{r},a,t,\CC)$ is well set we can derive an equation for evolution of the nearest pair using the nearest average procedure defined in \ref{eq:P_nst}, such that : 
+\begin{equation}
+    \pddt P_{nst} 
+    + \partial_a P_{nst} 
+    + \partial_\textbf{x} \cdot \left(\nstavg{\textbf{u}} P_{nst}\right) 
+    + \partial_\textbf{r} \cdot \left( \nstavg{\textbf{w}} P_{nst} \right) 
+    =   P_{nst}(\textbf{x},\textbf{r},0,t)\delta(a)
+    - \frac{P_{nst}(\textbf{x},\textbf{r},a,t)}{\tau_d(\textbf{x},\textbf{r},a,t)}
+    \label{eq:dt_P_nst}
+\end{equation}
+where $P_{nst}(\textbf{x},\textbf{r},0,t)\delta(a)$ is the number of the nearest created pair and,
+ $\tau(\textbf{x},\textbf{r},a,t)$ is the rate of destruction of the nearest particles, knowing the the nearest particle is at $\textbf{r}$ with age $a$.
+Since for any new nearest pair of particles a pair is destroyed we have the following equallity :
+ \begin{equation}
+    \int P_{nst}(\textbf{x},\textbf{r},0,t)\delta(a) dS(r)
+    =\iint \frac{P_{nst}(\textbf{x},\textbf{r},a,t)}{\tau_d(\textbf{x},\textbf{r},a,t)}
+    dadS(r)
+ \end{equation}
+where we integrate on any sphere surface of radius $r$ around the particles. 
+
+\subsubsection{Random destruction assumption}
+
+Following \citet{zhang2023evolution} we assume that the mesoscal gradient are lower higher than the particle-fluid-particle scales gradients. 
+In this case \ref{eq:dt_P_nst} reads, 
+\begin{equation}
+    \partial_a P_{nst} 
+    + \partial_\textbf{r} \cdot \left( \nstavg{\textbf{w}} P_{nst} \right) 
+    = P_{nst}(\textbf{x},\textbf{r},0,t)\delta(a)
+    - \frac{P_{nst}(\textbf{x},\textbf{r},a,t)}{\tau_d(\textbf{x},\textbf{r},a,t)}
+\end{equation}
+integrating over all $\textbf{r}$ this equation gives, 
+\begin{equation}
+    \partial_a P_{a} (\textbf{x},a,t)
+    = P_{a}(\textbf{x},0,t)\delta(a)
+    - \frac{P_{a}(\textbf{x},a,t)}{\condavg{\tau_d}{\textbf{r}}(\textbf{x},a,t)}
+    \label{eq:dt_P_a}
+\end{equation}
+where, 
+\begin{equation}
+    P_a(\textbf{x},a,t)n_p(\textbf{x},t)
+    = \int P_{nst}(\textbf{x},\textbf{r},a,t) d\textbf{r}
+\end{equation}
+and,
+\begin{equation}
+    \frac{P_{a}(\textbf{x},a,t) n_p(\textbf{x},t)}{\condavg{\tau_d}{\textbf{r}}(\textbf{x},a,t)}
+    = \int 
+    \frac{P_{nst}(\textbf{x},\textbf{r},a,t)}{\tau_d(\textbf{x},\textbf{r},a,t)}
+    d\textbf{r}.
+\end{equation}
+If we assume that the rate of destruction of the nearest pair isn't function of the relative position nor the age of interaction, it is possible to write $1/\avgcond{\tau_d}(\textbf{x},t) = 1/ \condavg{\tau_d}{r}(\textbf{x},a,t)$.
+Then  \ref{eq:dt_P_a} can be written :
+\begin{equation}
+    \partial_a P_{a} (\textbf{x},a,t)
+    = \delta(a) P_{a}(\textbf{x},0,t)
+    - \frac{P_{a}(\textbf{x},a,t)}{\condavg{\tau_d}{}(\textbf{x},t)}
+\end{equation}
+Using the distribution formalism and the normalization condition $\int P_a(\textbf{x},t,a) da = 1$ we obtain : 
+\begin{equation}
+    P_a(\textbf{x},t,a)
+    =\frac{e^{- a/\condavg{\tau_d}{}}(\textbf{x},t)}{\condavg{\tau_d}{}(\textbf{x},t)}
+\end{equation}
+
+
+
+
+\subsubsection{Flow induced anisotropy}
+
+As we have shown in our resent paper the particle-fluid-particle stress in the vertical direction is manly caused by flow anisotropy. 
+This flow anisotropy is measure by, 
+\begin{equation}
+    \condavg{\textbf{r}}{\textbf{r}}(\textbf{x},t,a)P_a(\textbf{x},a,t)n_p(\textbf{x},t)
+    = \int \textbf{r} P_{nst}(\textbf{x},\textbf{r},a,t) d\textbf{r}
+\end{equation}
+\paragraph{Relative position equaiton :}
+To derive an equation for $\textbf{r}$ we multiply \ref{eq:dt_Pi} and use this definition which gives in the first place :
+\begin{multline}
+    \pddt (\textbf{r} P_{nst})
+    + \partial_a (\textbf{r} P_{nst})
+    + \partial_{\textbf{x}} \cdot (\nstavg{\textbf{r}\textbf{u} } P_{nst})
+    + \partial_{\textbf{r}}  \cdot (\nstavg{\textbf{r}\textbf{w}} P_{nst})
+    =  \\
+    \textbf{r} P_{nst}(\textbf{x},\textbf{r},0,t)\delta(a)
+    - \textbf{r} \frac{P_{nst}(\textbf{x},\textbf{r},a,t)}{\tau_d(\textbf{x},t)}
+    + \nstavg{\textbf{w}}P_{nst}
+    \label{eq:dt_r_nst}
+\end{multline}
+Since we are actually interested in the average of $\textbf{r}$ over all \textbf{r}, namely, $\condavg{\textbf{r}}{\textbf{r}}$ we integrate this equation over all \textbf{r} and as before we assume no significant macroscopic changes. 
+\begin{multline*}
+    \partial_a (\condavg{\textbf{r}}{\textbf{r}}(\textbf{x},t,a)P_a(\textbf{x},a,t))
+    =  
+    \condavg{\textbf{r}}{\textbf{r}}(\textbf{x},t,a)P_a(\textbf{x},a,t)\delta(a)
+     - \frac{\condavg{\textbf{r}}{\textbf{r}}(\textbf{x},t,a)P_a(\textbf{x},a,t)}{\tau_d(\textbf{x},t)} 
+    + \condavg{\textbf{w}}{\textbf{r}}(\textbf{x},t,a)P_a(\textbf{x},a,t)
+\end{multline*}
+Noticing that the first term can be decomposed in $\partial_a (\condavg{\textbf{r}}{\textbf{r}}(\textbf{x},t,a)P_a(\textbf{x},a,t)) = \partial_a (\condavg{\textbf{r}}{\textbf{r}}(\textbf{x},t,a))P_a(\textbf{x},a,t) + \condavg{\textbf{r}}{\textbf{r}}(\textbf{x},t,a) \partial_a (P_a(\textbf{x},a,t))$ the previous expression simplify to : 
+\begin{equation*}
+    \partial_a (\condavg{\textbf{r}}{\textbf{r}}(\textbf{x},t,a))
+    =  
+    \condavg{\textbf{r}}{\textbf{r}}(\textbf{x},t,a)\delta(a)
+    + \condavg{\textbf{w}}{\textbf{r}}(\textbf{x},t,a)
+    \label{eq:da_r}
+\end{equation*}
+This equation holds for components of $\textbf{r}$ not its norm. 
+
+\paragraph{Relative distance correlation :}
+Now let's derive the first moment of this equation by multiplying \ref{eq:dt_P_nst} by $\textbf{rr}$. 
+It reads, 
+\begin{multline}
+    \pddt (\nstavg{\textbf{rr}} P_{nst})
+    + \partial_a (\nstavg{\textbf{rr}} P_{nst})
+    + \partial_{\textbf{x}} \cdot (\nstavg{\textbf{rr}\textbf{u} } P_{nst})
+    + \partial_{\textbf{r}}  \cdot (\nstavg{\textbf{rr}\textbf{w}} P_{nst})
+    =  \\
+    \nstavg{\textbf{rr}} P_{nst}(\textbf{x},\textbf{r},0,t)\delta(a)
+    -  \frac{\nstavg{\textbf{rr}} P_{nst}(\textbf{x},\textbf{r},a,t)}{\tau_d(\textbf{x},t)}
+    + \nstavg{\textbf{rw}}P_{nst}
+    + \nstavg{\textbf{wr}}P_{nst}
+\end{multline}
+averaging over all \textbf{r} and considering homogeneous medium gives,
+\begin{multline}
+    \pddt (\condavg{\textbf{rr}}{\textbf{r}} P_{a}n_p)
+    + \partial_a (\condavg{\textbf{rr}}{\textbf{r}} P_{a}n_p)
+    + \partial_{\textbf{x}} \cdot (\condavg{\textbf{rr}\textbf{u} }{\textbf{r}} P_{a}n_p)
+    =  
+    \condavg{\textbf{rr}}{\textbf{r}} P_{a}n_p\delta(a)
+    -  \frac{\condavg{\textbf{rr}}{\textbf{r}} P_{a}n_p}{\tau_d(\textbf{x},t)}
+    + \condavg{\textbf{rw}}{\textbf{r}} P_{a}n_p
+    + \condavg{\textbf{wr}}{\textbf{r}} P_{a}n_p
+\end{multline}
+
+
+
+
+\subsubsection{Dynamical description for particle without mass transfer}
+First we define the Lagrangian balance equation for a particle $i$ such that 
+\begin{equation}
+    \ddt \textbf{u}_i
+     = \frac{
+        \textbf{b}_i
+        + \textbf{f}_i
+     }{m_i},
+     \label{eq:dt_u_i}
+ \end{equation}
+From this equation we can also define an equation for the evolution of the relative velocity $\textbf{w}$ :
+\begin{equation}
+    \ddt \textbf{w}
+    = \frac{
+        \textbf{b}_i
+        + \textbf{f}_i
+    }{m_i}
+    -\frac{
+        \textbf{b}_j
+        + \textbf{f}_j
+    }{m_j}
+    =\frac{
+        \textbf{f}_i
+    }{m_i}
+    -\frac{
+        \textbf{f}_j
+    }{m_j}
+    = 
+    \textbf{a}_i
+    - \textbf{a}_j,
+    = \textbf{z}
+    \label{eq:dt_w}
+\end{equation}
+\paragraph[short]{Relative velocity equation :}
+Proceeding as before we derive the evolution equation of the averaged relative velocity fields, 
+namely, 
+\begin{multline}
+    \pddt (\nstavg{\textbf{w}} P_{nst})
+    + \partial_a (\nstavg{\textbf{w}} P_{nst})
+    + \partial_{\textbf{x}} \cdot (\nstavg{\textbf{w}\textbf{u} } P_{nst})
+    + \partial_{\textbf{r}}  \cdot (\nstavg{\textbf{w}\textbf{w}} P_{nst})
+    =  \\
+    \nstavg{\textbf{w}} P_{nst}(\textbf{x},\textbf{r},a,t)\delta(a)
+    - \nstavg{\textbf{w}}  \frac{P_{nst}(\textbf{x},\textbf{r},a,t)}{\tau_d(\textbf{x},t)}
+    + \nstavg{\textbf{z}}P_{nst}(\textbf{x},\textbf{r},a,t)
+\end{multline}
+Applying the hypothesis of slow varying macroscopic variables : 
+\begin{equation}
+    \partial_a (\nstavg{\textbf{w}} P_{nst})
+    +\partial_{\textbf{r}}  \cdot (\nstavg{\textbf{w}\textbf{w}} P_{nst})
+    =  
+    \nstavg{\textbf{w}} P_{nst}(\textbf{x},\textbf{r},a,t)\delta(a)
+    - \nstavg{\textbf{w}}  \frac{P_{nst}(\textbf{x},\textbf{r},a,t)}{\tau_d(\textbf{x},t)}
+    + \nstavg{\textbf{z}}P_{nst}(\textbf{x},\textbf{r},a,t)
+\end{equation}
+Integrating over all $\textbf{r}$ :
+\begin{equation}
+    \partial_a (\condavg{\textbf{w}}{\textbf{r}}(\textbf{x},t,a))
+    =  
+    \condavg{\textbf{w}}{\textbf{r}}(\textbf{x},t,a)\delta(a)
+    + \condavg{\textbf{z}}{\textbf{r}}(\textbf{x},t,a)
+    \label{eq:da_w}
+\end{equation}
+ 
+\paragraph{Relative velocity correlation :}
+By multiplying \ref{eq:dt_Pi} by $\textbf{wr} (\CC,t)$ and integrating over $\CC$ gives,
+\begin{multline}
+    \pddt (\nstavg{\textbf{rw}} P_{nst})
+    + \partial_a (\nstavg{\textbf{rw}} P_{nst})
+    + \partial_{\textbf{x}} \cdot (\nstavg{\textbf{rw}\textbf{u} } P_{nst})
+    + \partial_{\textbf{r}}  \cdot (\nstavg{\textbf{rw}\textbf{w}} P_{nst})
+    =  \\
+    \nstavg{\textbf{rw}} P_{nst}\delta(a)
+    -  \frac{\nstavg{\textbf{rw}} P_{nst}}{\tau_d(\textbf{x},t)}
+    + \nstavg{\textbf{ww}}P_{nst}
+    + \nstavg{\textbf{rz}}P_{nst}
+\end{multline}
+Again we average over all $a$ : 
+\begin{multline}
+    \pddt (\condavg{\textbf{rw}}{\textbf{r}} P_{a}n_p)
+    + \partial_a (\condavg{\textbf{rw}}{\textbf{r}} P_{a}n_p)
+    + \partial_{\textbf{x}} \cdot (\condavg{\textbf{rw}\textbf{u} }{\textbf{r}} P_{a}n_p)
+    =  
+    \condavg{\textbf{rw}}{\textbf{r}} P_{a}n_p\delta(a)
+    -  \frac{\condavg{\textbf{rw}}{\textbf{r}} P_{a}n_p}{\tau_d(\textbf{x},t)}
+    + \condavg{\textbf{ww}}{\textbf{r}}P_{a}n_p
+    + \condavg{\textbf{rz}}{\textbf{r}}P_{a}n_p
+\end{multline}

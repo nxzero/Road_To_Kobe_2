@@ -1,4 +1,4 @@
-\section{Mesoscale equations}
+
 
 Let $\delta_i(\textbf{x},t) = \delta(\textbf{x} - \textbf{x}_i(t))$ with $\delta$ the Dirac function and $\textbf{x}_i$ the position of the particle $i$.  
 Similarly, we define $\delta_j(\textbf{y},t) =\delta(\textbf{y} - \textbf{x}_j(t)) $ for the particle label $j$. 
@@ -75,6 +75,7 @@ defining $\nstavg{\textbf{u}_i} P_{nst}= \int\textbf{u}_i \delta_i\delta_j h_{ij
     + \partial_\textbf{y} \cdot \left( \nstavg{\textbf{u}_j} P_{nst} \right) 
     =\int \delta_j\delta_i\pddt h_{ij} \mathscr{P}
 \end{equation}
+
 
 \subsection*{Computation of the kernel }
 We now want to find the expression of $\pddt h$. 
@@ -248,7 +249,7 @@ Since $r_{li} = r_{ji}$ we drop the restriction on $k$ yielding,
 \end{equation*}
 
 
-\section{Transport of relative properties}
+\section*{Transport of relative properties}
 
 We start from 
 \begin{equation}
@@ -551,7 +552,7 @@ Besides assuming $\textbf{w}_{ij} = \textbf{u}_j - \textbf{u}_i$,
     - \int{\textbf{r}\nstavg{\textbf{w}_{ij}}} P_{nst}d\textbf{r}
 \end{equation}
 If we decompose, $\textbf{r}\nstavg{\textbf{u}_{i}} = \nstavg{\textbf{u}_{i}}$
-\subsection{Conditional particular shape}
+\subsection*{Conditional particular shape}
 \begin{multline*}
     \pddt (\nstavg{\mathcal{M}_{i}} P_{nst}) 
     + \partial_\textbf{x} \cdot ( \nstavg{\mathcal{M}_{i}\textbf{u}_i} P_{nst})\\
@@ -560,7 +561,7 @@ If we decompose, $\textbf{r}\nstavg{\textbf{u}_{i}} = \nstavg{\textbf{u}_{i}}$
     \condavg{\mathcal{M}_{i}\pddt h_{ij}}{2}P_2
     + \nstavg{\mathcal{S}_i}P_{nst}
 \end{multline*}
-\subsection{Conditional particular stress}
+\subsection*{Conditional particular stress}
 
 Evolution of the stresslet of an arbitratry dispersed phase without mass transfer. 
 For a signgle partile, 
@@ -638,7 +639,7 @@ By making use of the particle stress definition,
 \end{equation*}
 
 
-\section{Expansion fo diameter distribution}
+\section*{Expansion fo diameter distribution}
 
 \begin{equation}
     P(\textbf{x},d) 
@@ -732,3 +733,227 @@ Then,
     - \pddt N_\textbf{x} N_\textbf{x}^{-2} \prod_{j\neq i} H_{ij}
     + N_\textbf{x}^{-1} \sum_{e \neq i} \pddt H_{ie} \prod_{j\neq e,i} H_{ij}
 \end{align*}
+
+\begin{equation*}
+    h_{i}(\textbf{x},t) 
+    = \frac{1}{N_\textbf{x}}
+    \prod_{j \neq i}
+    H(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)
+    = \frac{1}{N_\textbf{x}}
+    \prod_{j \neq i}
+    H(r_{ij})
+\end{equation*}
+\begin{equation*}
+    N_\textbf{x}
+    = 
+    \sum_{i}
+    \prod_{j\neq i}
+    H(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)
+    = 
+    \sum_{i}
+    \prod_{j\neq i}
+    H(r_{ij})
+\end{equation*}
+Then, 
+\begin{align*}
+    \pddt h_i
+    &= 
+    \pddt N_\textbf{x}^{-1} \prod_{j\neq i} H_{ij}
+    + N_\textbf{x}^{-1} \pddt \prod_{j\neq i} H_{ij}\\
+    &= 
+    - \pddt N_\textbf{x} N_\textbf{x}^{-2} \prod_{j\neq i} H_{ij}
+    + N_\textbf{x}^{-1} \sum_{e \neq i} \pddt H_{ie} \prod_{j\neq e,i} H_{ij}
+\end{align*}
+\begin{align*}
+    \pddt N_\textbf{x}
+    = \sum_{i}
+    \pddt 
+    \prod_{j\neq i}
+    H_{ij}
+    = \sum_{i}
+    \sum_{e\neq i}
+    \pddt 
+    H_{ie}
+    \prod_{j\neq e,i}
+    H_{ij}
+\end{align*}
+we thus need to evaluate $\pddt H_{ij}$. 
+\begin{align*}
+    \pddt H(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)
+    &= \pddt (|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) 
+    \delta(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)\\
+    &= (\textbf{u}_j \cdot \hat{\textbf{r}}_j - \textbf{u}_i \cdot \hat{\textbf{r}}_i)
+    \delta(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)
+\end{align*}
+Since, 
+\begin{equation*}
+    \pddt |\textbf{x}_j - \textbf{x}| 
+    = \pddt |\textbf{r}_j|
+    = \frac{\textbf{u}_j \cdot  \pddt \textbf{r}_j}{|\textbf{r}_j|}
+    = \textbf{u}_j \cdot \hat{\textbf{r}}_j
+\end{equation*}
+Injecting these relations into the previous one yields
+\begin{align*}
+    \pddt N_\textbf{x}
+    = \sum_{i}
+    \sum_{e\neq i}
+    (\textbf{u}_e \cdot \hat{\textbf{r}}_e - \textbf{u}_i \cdot \hat{\textbf{r}}_i)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)
+    \prod_{j\neq e,i}
+    H_{ij}
+    = 0 
+\end{align*}
+and thereore, 
+\begin{align*}
+    \pddt h_i
+    &=
+    N_\textbf{x}^{-1} \sum_{e \neq i} (\textbf{u}_e \cdot \hat{\textbf{r}}_e - \textbf{u}_i \cdot \hat{\textbf{r}}_i)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) \prod_{j\neq e,i} H_{ij}\\
+    &=
+    \sum_{e \neq i} (\textbf{u}_e \cdot \hat{\textbf{r}}_e - \textbf{u}_i \cdot \hat{\textbf{r}}_i)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) h_i
+\end{align*}
+
+
+
+Now we need to compute the space derivative $\pddx h_i(\textbf{x},\CC)$ 
+\begin{align*}
+    \pddx h_i
+    &= 
+    \pddx N_\textbf{x}^{-1} \prod_{j\neq i} H_{ij}
+    + N_\textbf{x}^{-1} \pddx \prod_{j\neq i} H_{ij}\\
+    &= 
+    - \pddx N_\textbf{x} N_\textbf{x}^{-2} \prod_{j\neq i} H_{ij}
+    + N_\textbf{x}^{-1} \sum_{e \neq i} \pddx H_{ie} \prod_{j\neq e,i} H_{ij}
+\end{align*}
+\begin{align*}
+    \pddx N_\textbf{x}
+    = \sum_{i}
+    \pddx 
+    \prod_{j\neq i}
+    H_{ij}
+    = \sum_{i}
+    \sum_{e\neq i}
+    \pddx 
+    H_{ie}
+    \prod_{j\neq e,i}
+    H_{ij}
+\end{align*}
+Then , 
+\begin{align*}
+    \pddx H(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)
+    &= \pddx (|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) 
+    \delta(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)\\
+    &= (\hat{\textbf{r}}_i - \hat{\textbf{r}}_j)
+    \delta(|\textbf{x}_j - \textbf{x}| - |\textbf{x}_i - \textbf{x}|)
+\end{align*}
+Since 
+\begin{equation*}
+    \pddx |\textbf{x}_j - \textbf{x}| 
+    = \pddx |\textbf{r}_j|
+    = \frac{- \textbf{r}_j}{|\textbf{r}_j|}
+    = \hat{\textbf{r}_j}
+\end{equation*}
+Thus the final results is , 
+\begin{align*}
+    \pddx h_i
+    &=
+    N_\textbf{x}^{-1} \sum_{e \neq i} (\hat{\textbf{r}}_i - \hat{\textbf{r}}_e)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) \prod_{j\neq e,i} H_{ij}\\
+    &=
+    \sum_{e \neq i} (\hat{\textbf{r}}_i - \hat{\textbf{r}}_e)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) h_i
+\end{align*}
+
+
+Now let's compute that 
+\begin{align*}
+    \pddt \delta^i +\textbf{u}_i  \cdot \pddx  ( \delta^i) &= 0 \\
+    \pddt (\delta^i h_i) +\textbf{u}_i  \cdot \pddx  (h_i  \delta^i) &
+    = \delta_i (\pddt h_i  + \textbf{u}_i \cdot \pddx h_i)\\
+\end{align*}
+The second term actually gives :
+\begin{align*}
+    \pddt h_i  + \textbf{u}_i \cdot \pddx h_i
+    &= 
+    \sum_{e \neq i} (\textbf{u}_e \cdot \hat{\textbf{r}}_e - \textbf{u}_i \cdot \hat{\textbf{r}}_i)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) h_i\\
+    &+ \textbf{u}_i \cdot 
+    \sum_{e \neq i} (\hat{\textbf{r}}_i - \hat{\textbf{r}}_e)
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) h_i \\
+    &= 
+    \sum_{e \neq i} (\textbf{u}_e -\textbf{u}_i)\cdot \hat{\textbf{r}}_e 
+    \delta(|\textbf{x}_e - \textbf{x}| - |\textbf{x}_i - \textbf{x}|) h_i\\
+    &= s_i\\
+\end{align*}
+Thus the last ed reads 
+Now let's compute that 
+\begin{align*}
+    \pddt \Pi +\textbf{u}_i  \cdot \pddx \Pi &
+    = \delta_i s_i\\
+\end{align*}
+
+Let's assume 
+\begin{equation}
+    \pddt f^0
+    + \pddx \cdot (
+        f^0\textbf{u}^0
+        - \mathbf{\Phi}^0
+    )
+    = 
+    \textbf{S}^0
+    \label{eq:dt_f}
+\end{equation}
+multiplying by $\Pi$ gives, 
+\begin{equation}
+    \pddt (f^0\Pi)
+    + \pddx \cdot [(
+        f^0\textbf{u}^0
+        - \mathbf{\Phi}^0
+    )\Pi]
+    = 
+    f^0 \pddt \Pi
+    + (
+        f^0\textbf{u}^0
+        - \mathbf{\Phi}^0
+    )\cdot \pddx \Pi
+    + \Pi\textbf{S}^0
+\end{equation}
+which gives, 
+\begin{equation}
+    \pddt (f^0\Pi)
+    + \pddx \cdot [(
+        f^0\textbf{u}^0
+        - \mathbf{\Phi}^0
+    )\Pi]
+    = 
+    f^0 \delta_i s_i
+    + [f^0 (\textbf{u}^0 - \textbf{u}^i)
+    - \mathbf{\Phi}^0]
+    \cdot \pddx \Pi
+    + \Pi\textbf{S}^0
+\end{equation}
+Applying the ensemble average gives, 
+\begin{multline}
+    \pddt (P_\text{nst}f^\text{nst})
+    + \pddx \cdot (
+        P_\text{nst}f^\text{nst}\textbf{u}^\text{nst}
+        + P_\text{nst}\nstavg{f'\textbf{u}'}
+        - P_\text{nst}\mathbf{\Phi}^\text{nst}
+    )
+    = \\
+    P_\text{nst}\textbf{s}^\text{nst}
+    + \avg{f^0 \delta_i s_i}
+    + \avg{[f^0 (\textbf{u}^0 - \textbf{u}^i)
+    - \mathbf{\Phi}^0]
+    \cdot \pddx \Pi}
+\end{multline}
+The last terms reads, 
+\begin{equation}
+    \avg{\mathbf{\Phi}^0
+    \cdot \pddx \Pi}
+    = 
+    \int 
+     \mathbf{\Phi}^0
+    \cdot \pddx (\delta_i h_i )d\PP
+\end{equation}

@@ -170,21 +170,28 @@ Therefore, the particle-averaged formalism encompasses more information since it
 
 Now that we reached a clear understanding of the averaged models, we introduce the Hybrid model for dispersed two phase flows. 
 
-We first introduce the equation used to model the continuous phase. 
-It is derived by setting $k = 1$ in \ref{eq:avg_dt_chi_f}, and by using the phase average definition from \ref{eq:1_avg}.
-This yields the following expression~:
+\subsubsection{First decomposition of the flux term}
+As it has been shown in earlier studies \citep{jackson2000dynamics} it is more physical to express the non-convective flux appearing in \ref{eq:avg_dt_chi_f} with the volume fraction outside the divergence operator. 
+Therefor we use the following relation, 
+\begin{align*}
+    \nablabh \cdot \avg{\chi_1 \mathbf{\Phi}_1}
+    &= \nablabh \cdot (\phi_1 \oneavg{ \mathbf{\Phi}_1})
+    = \phi_1 \nablabh \cdot  \oneavg{ \mathbf{\Phi}_1}
+    +  \oneavg{ \mathbf{\Phi}_1} \cdot \nablabh \avg{\chi_1}\\
+    &= \phi_1 \nablabh \cdot  \oneavg{ \mathbf{\Phi}_1}
+    +  \oneavg{ \mathbf{\Phi}_1} \cdot \avg{\delta_I \textbf{n}_2}\\
+\end{align*}
+upon using \ref{eq:f_exp} and on the last term we find, 
 \begin{equation}
-    \pddt (\phi_1\oneavg{ f_1})
-    + \nablabh \cdot (\phi_1\oneavg{ f_1 \textbf{u}_1})
-    = \phi_1 \nablabh \cdot \oneavg{ \mathbf{\Phi}_1}
-    +  \nablab \cdot (\pnavg{\textbf{M}_\alpha} - \phi_1 \oneavg{\textbf{u}'f'})
-    - \pnavg{\textbf{F}_\alpha} 
-    + \phi_1\oneavg{ \textbf{S}_1}
-    \label{eq:hybrid_avg_dt_chif}
+    \nablabh \cdot \avg{\chi_1 \mathbf{\Phi}_1}
+    =  \phi_1 \nablabh \cdot  \oneavg{ \mathbf{\Phi}_1}
+    + \pnavg{\int_{\Sigma} \oneavg{ \mathbf{\Phi}_1} \cdot  \textbf{n}_2 d\Sigma}
+    +\nablabh\cdot \left[
+        \pnavg{\int_{\Sigma} \textbf{r}\oneavg{ \mathbf{\Phi}_1} \cdot  \textbf{n}_2 d\Sigma}
+    \right] 
+    +\ldots
 \end{equation}
-\tb{describe the terms}
-Notice that we switched the normal vector from $\textbf{n}_1$ to $-\textbf{n}_2$ in the second and the last integral on the RHS, which is the conventional way to express these couplings terms. 
-Moreover, it should be noted that we neglected the second and higher order moments of the coupling term between the two phases.
+This decomposition motivates us to re-write the exchange terms in \ref{eq:avg_dt_chi_f} as, 
 \begin{equation*}
     \textbf{F}_\alpha = 
     \int_{\Sigma_\alpha}
@@ -212,27 +219,99 @@ and
         \right)
     \cdot \textbf{n}_2d\Sigma
 \end{equation*}
+These considerations finally leads us to the general form of the continuous phase equation : 
+\begin{equation}
+    \pddt (\phi_1\oneavg{ f_1})
+    + \nablabh \cdot (\phi_1\oneavg{ f_1}\oneavg{ \textbf{u}_1}
+    + \phi_1 \oneavg{\textbf{u}_1'f_1'}
+    - \pnavg{\textbf{M}_\alpha} )
+    = 
+    \phi_1(\oneavg{ \textbf{S}_1}  +\nablabh \cdot \oneavg{ \mathbf{\Phi}_1})
+    - \pnavg{\textbf{F}_\alpha} 
+    \label{eq:hybrid_avg_dt_chif}
+\end{equation}
 
 Regarding the dispersed phase, we consider the zeroth and first moment equation (\ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}) as  a part of the hybrid model.
 Under this form the couplings terms in \ref{eq:hybrid_avg_dt_chif} do not correspond to the ones appearing in both, \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot} which is essential for ensuring a consistent model. 
-To fix this problem we reformulated both exchange terms following \citet{zhang1997momentum} such that it correspond to $\mathbf{F}_f$ and $\textbf{M}_\alpha$. 
+To fix this problem we reformulated both exchange terms following \citet{zhang1997momentum} such that it correspond to $\mathbf{F}_\alpha$ and $\textbf{M}_\alpha$. 
+Formally we use the relation,
+\begin{align*}
+    \int_{\Sigma_\alpha}
+        \mathbf{\Phi}_1 
+    \cdot \textbf{n}_2d\Sigma 
+    &= 
+    \int_{\Sigma_\alpha}
+    \left(
+        \mathbf{\Phi}_1 
+        - \oneavg{\mathbf{\Phi}}
+    \right)  
+    \cdot \textbf{n}_2d\Sigma
+    + \int_{\Sigma_\alpha}
+    \oneavg{\mathbf{\Phi}}
+    \cdot \textbf{n}_2d\Sigma
+    d\Sigma\\
+    \int_{\Sigma_\alpha}
+        \textbf{r}\mathbf{\Phi}_1 
+    \cdot \textbf{n}_2d\Sigma 
+    &= 
+    \int_{\Sigma_\alpha}
+    \textbf{r}\left(
+        \mathbf{\Phi}_1 
+        - \oneavg{\mathbf{\Phi}}
+    \right)  
+    \cdot \textbf{n}_2d\Sigma
+    + \int_{\Omega_\alpha}
+    \textbf{r}  \oneavg{\mathbf{\Phi}}
+    \cdot \textbf{n}_2d\Sigma
+    d\Omega
+\end{align*}
+If we assume that $\nablabh \cdot \oneavg{\mathbf{\Phi}}$ vary slowly within the volume of the drop then we can take it out of the integration.
+Or we can take the series expansion of this term, such that  
+\begin{align*}
+    \int_{\Sigma_\alpha}
+    \oneavg{\mathbf{\Phi}}(\textbf{x})
+    \cdot \textbf{n}_2d\Sigma
+    d\Sigma
+    &= 
+    \int_{\Sigma_\alpha}
+    \textbf{r} \cdot \nablab\oneavg{\mathbf{\Phi}}|_{\textbf{x}_\alpha}
+    \cdot \textbf{n}_2d\Sigma
+    d\Sigma
+    + \int_{\Sigma_\alpha}
+    \textbf{rrr} : \nablab^3\oneavg{\mathbf{\Phi}}|_{\textbf{x}_\alpha}
+    \cdot \textbf{n}_2d\Sigma
+d\Sigma
+\\
+&= 
+v_\alpha
+\nablab\cdot\oneavg{\mathbf{\Phi}}|_{\textbf{x}_\alpha}
++ \mathcal{M}_\alpha/\rho_2 :  
+\nablabh\nablabh(\nablab\cdot\oneavg{\mathbf{\Phi}})|_{\textbf{x}_\alpha}\\
+\int_{\Sigma_\alpha}
+    \textbf{r}  \oneavg{\mathbf{\Phi}}
+    \cdot \textbf{n}_2d\Sigma
+    d\Sigma
+    &= v_\alpha \oneavg{\mathbf{\Phi}} + \ldots
+\end{align*}
+Since $(\nablab\cdot\oneavg{\mathbf{\Phi}})|_{\textbf{x}_\alpha}$ do not change with the particles it can be considered as constant or that $\pavg{\nablab\cdot\oneavg{\mathbf{\Phi}}|_{\textbf{x}_\alpha}}= n_p \nablab\cdot\oneavg{\mathbf{\Phi}}(\textbf{x})$. 
 Then we may rewrite the momentum and moment of momentum equations (\ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}) as : 
 \begin{multline}
     \pddt \left[\pnavg{ (q_\alpha+q_{I_\alpha})}\right]
     + \nablabh \cdot \left[\pnavg{\textbf{u}_\alpha}\pnnavg{(q_\alpha+q_{I_\alpha})}\right]
     = 
     \pnavg{v_\alpha}  \nablabh \cdot\oneavg{\mathbf{\Phi}}
-    - \nablabh \cdot (\pnavg{\textbf{u}_\alpha'(q_\alpha+q_{I_\alpha})'})\\
+    - \nablabh \cdot \left[\pnavg{\textbf{u}_\alpha'(q_\alpha+q_{I_\alpha})'}\right]\\
     + \pnavg{\int_{\Omega_\alpha} \textbf{S}_2 d\Omega}
     + \pnavg{\int_{\Sigma_\alpha} \textbf{S}_I d\Sigma}
     + \pnavg{\textbf{F}_\alpha},
+    \label{eq:hybrid_avg_dt_q_alpha}
 \end{multline}
 and, 
 \begin{multline}
     \pddt \left[\pnavg{ (\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})}\right]
     + \nablabh \cdot \left[\pnavg{\textbf{u}_\alpha}\pnnavg{(\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})}\right]
     =
-    - \nablabh \cdot \pnavg{\textbf{u}_\alpha'(\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})'}
+    - \nablabh \cdot \left[\pnavg{\textbf{u}_\alpha'(\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})'}\right]
     +\pnavg{v_\alpha}\oneavg{\mathbf{\Phi}}
     + \pnavg{\textbf{M}_\alpha}\\
     \pnavg{\int_{\Omega_\alpha} \left(
@@ -245,10 +324,111 @@ and,
         + f_I \textbf{w}_I
         - \mathbf{\Phi}_{||}^I
     \right) d\Sigma},
+    \label{eq:hybrid_avg_dt_Q_alpha}
 \end{multline}
 respectively. 
+\subsubsection{Second decomposition of the flux term}
+In the same spirit as \citet{chu2016flux} we wish to make appear the ensemble averaged bulk stress into the continuous and dispersed phase equations instead of the fluid averaged bulk stress. 
+Thus, for the dispersed phase eq, we first use the expression :
+\begin{align*}
+    \nablabh \cdot  (\phi_1 \mathbf{\Phi}_1)
+    + \avg{\delta_I \mathbf{\Phi}_1^0 \cdot \textbf{n}_1}
+    &=
+    \nablabh \cdot  (\phi_1 \mathbf{\Phi}_1)
+    + \avg{\delta_I \mathbf{\Phi}_1' \cdot \textbf{n}_1}
+    + \mathbf{\Phi} \cdot  \avg{\delta_I \textbf{n}_1}\\
+    &=
+    \nablabh \cdot  (\phi_1 \mathbf{\Phi}_1)
+    + \avg{\delta_I \mathbf{\Phi}_1' \cdot \textbf{n}_1}
+    - \mathbf{\Phi} \cdot  \avg{\nablab\chi_1}\\
+    &=
+    \nablabh \cdot  \avg{\chi_1 \mathbf{\Phi}_1'}
+    + \avg{\delta_I \mathbf{\Phi}_1' \cdot \textbf{n}_1}
+    + \phi_1 \nablab \cdot \bm{\Phi}\\
+\end{align*}
+If we introduce the decomposition  $\mathbf{\Phi}_1^0 =  \mathbf{\Phi} + \mathbf{\Phi}_1'$.
+Thus, $\avg{\chi_1\mathbf{\Phi}_1'} 
+= \avg{\chi_1 \mathbf{\Phi}_1^0} - \avg{\chi_1\mathbf{\Phi}}
+= \phi_1 (\mathbf{\Phi}_1 - \mathbf{\Phi})
+= \phi_1 ( \phi_2 (\mathbf{\Phi}_1  -  \mathbf{\Phi}_2)  - \phi_I \mathbf{\Phi}_I )$
 
-Then, \ref{eq:hybrid_avg_dt_chif}, \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}, are the most general form of a first-order accurate hybrid model for arbitrary particle. 
+
+\subsubsection{Accurate description of the dispersed phase}
+
+
+By adding \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} we obtain 
+\begin{align*}
+    \pddt \avg{\chi_2 f_2^0 +\delta_If_I^0}
+    &= \nablabh \cdot \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0 - \chi_2 f_2^0 \textbf{u}_2^0 - \delta_I f_I^0 \textbf{u}_I^0}
+    + \avg{\chi_2 \textbf{S}_2^0 }\\
+    &+ \avg{\delta_I\textbf{S}_I^0} 
+    + \avg{\delta_I\left[
+        \mathbf{\Phi}_1^0
+        + f_1^0
+        \left(
+            \textbf{u}_I^0
+            - \textbf{u}_1^0
+        \right)
+    \right]
+    \cdot \textbf{n}_2},
+\end{align*}
+To be consistent with \ref{eq:hybrid_avg_dt_chif} we must add and substract $\oneavg{\mathbf{\Phi}}\cdot\nablab \avg{\chi_1} = \nablab \cdot  (\phi_1 \oneavg{\mathbf{\Phi}}) - \phi_1 \nablab \cdot \oneavg{\mathbf{\Phi}}$ the remaining terms must be added to the stress which gives,
+\begin{align*}
+    \nablabh \cdot \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0}
+    & + \avg{\delta_I \bm{\Phi}_1 \cdot \textbf{n}_2}
+    =
+    \nablabh \cdot \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0}
+    + \nablab \cdot \avg{\bm{\Phi}_1 \chi_1} 
+     - \phi_1 \nablab \cdot \bm{\Phi}_1\\
+    &= \nablabh \cdot \bm{\Phi}
+     - \phi_1 \nablab \cdot \bm{\Phi}_1
+     =  \nablabh \cdot (\bm{\Phi} - \bm{\Phi}_1)
+     + \phi_2 \nablab \cdot \bm{\Phi}_1\\
+\end{align*}
+Under this form the dispersed phase equation reads, 
+\begin{multline*}
+    \pddt (\phi_2 f_2 +a_If_I)
+    + \nablabh \cdot (
+        \phi_2 f_2 \textbf{u}_2
+        + \phi_I f_I \textbf{u}_I
+        + \phi_2 \twoavg{f_2'\textbf{u}_2'} 
+        + \phi_I \Iavg{f_I'\textbf{u}_I'}
+        + n_p \textbf{M}_p 
+        )\\
+    = 
+    \nablabh \cdot (\mathbf{\Phi}  - \mathbf{\Phi}_1 )
+    + \phi_2 \nablab \cdot \mathbf{\Phi}_1 
+    + \phi_2 \textbf{S}_2
+    + \phi_I \textbf{S}_I
+    + n_p\textbf{F}_p
+\end{multline*}
+It must be noted that $\mathbf{\Phi}  - \mathbf{\Phi}_1 
+= \phi_I\mathbf{\Phi}_I+\phi_2(\mathbf{\Phi}_2  - \mathbf{\Phi}_1) $
+
+If we try with the second form we must subtract and add $\avg{\delta_I \bm{\Phi} \cdot \textbf{n}_2}$, 
+\begin{align*}
+    \nablabh \cdot \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0}
+    & + \avg{\delta_I \bm{\Phi} \cdot \textbf{n}_2}
+    =
+    \nablabh \cdot \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0 + \bm{\Phi} \chi_1} 
+     - \phi_1 \nablab \cdot \bm{\Phi}\\
+    &=
+    \nablabh \cdot \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0 - \bm{\Phi} \chi_2} 
+     + \phi_2 \nablab \cdot \bm{\Phi}\\
+    &=
+    \nablabh \cdot \left(\phi_2 \mathbf{\Phi}_2 + \phi_I \mathbf{\Phi}_{I||} - (\bm{\Phi}_1 \phi_1 + \bm{\Phi}_2 \phi_2  + \bm{\Phi}_I \phi_I   ) \phi_2 \right) 
+     + \phi_2 \nablab \cdot \bm{\Phi}\\
+    &=
+    \nablabh \cdot \left(\phi_2 \mathbf{\Phi}_2 \phi_1 + \phi_I \mathbf{\Phi}_{I||} \phi_1 - \bm{\Phi}_1 \phi_1 \phi_2 \right) 
+     + \phi_2 \nablab \cdot \bm{\Phi}\\
+    &=
+    \nablabh \cdot \left(\phi_1 \mathbf{\Phi} - \bm{\Phi}_1 \phi_1 \right) 
+     + \phi_2 \nablab \cdot \bm{\Phi}\\
+\end{align*}
+
+
+
+Then, \ref{eq:hybrid_avg_dt_chif}, \ref{eq:hybrid_avg_dt_q_alpha} and \ref{eq:hybrid_avg_dt_Q_alpha}, are the most general form of a first-order accurate hybrid model for arbitrary particle. 
 Lastly, it is worth noting that by incorporating more terms in the expansion of \ref{eq:avg_dt_chi_f} and higher order moments equations, one can reach an arbitrary order of accuracy, as stated by \citet{zhang1997momentum}. 
 
 As remarked by \citet{jackson1997locally} for the angular momentum equations of solid spherical particles, and here in a more general case :\ref{eq:hybrid_avg_dt_chif} and \ref{eq:avg_dt_dq_alpha_tot} may seem to be not coupled with the higher order moments equations, i.e. \ref{eq:avg_dt_dQ_alpha_tot}. 

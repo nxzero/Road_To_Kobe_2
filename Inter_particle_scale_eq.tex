@@ -8,7 +8,7 @@
 \newcommand{\size}{0.22\textwidth}
 \newcommand{\avg}[1]{\left<#1\right>}
 \renewcommand{\avg}[1]{\left<#1\right>}
-\newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
+% \newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
 \newcommand{\Exp}[1]{\overline{\overline{#1}}}
 \newcommand{\davg}[1]{\left<#1\right>_d}
 \newcommand{\cavg}[1]{\left<#1\right>_c}
@@ -18,15 +18,17 @@
 
 \newcommand{\avgcond}[1]{\left<#1\right>}
 \renewcommand{\avgcond}[1]{\overline{#1}}
-\newcommand{\kavg}[1]{\avgcond{#1}^k}
-\newcommand{\pnnavg}[1]{\avgcond{#1}^{p}}
+\newcommand{\condavg}[2]{\overline{#1}^{#2}}
+\newcommand{\kavg}[1]{\avgcond{#1}^\text{k}}
+\newcommand{\pnnavg}[1]{\avgcond{#1}}
 \newcommand{\pnavg}[1]{n_p\pnnavg{#1}}
 \newcommand{\oneavg}[1]{\avgcond{#1}^1}
 \newcommand{\smallavg}[2]{\avgcond{#1}^{#2}}
 \newcommand{\sym}[1]{\left(#1\right)^{\text{Sym}}}
 
-\newcommand{\nstavg}[1]{\overline{#1}_{nst}}
-\newcommand{\nstrelavg}[1]{\overline{#1}_{nst}^{rel}}
+\newcommand{\nstavg}[1]{\overline{#1}^\text{nst}}
+\newcommand{\ravg}[1]{\overline{#1}^\textbf{r}}
+\newcommand{\nstrelavg}[1]{\nstavg{#1}_{rel}}
 \newcommand{\mavg}[1]{\left<#1\right>_m}
 \newcommand{\gavg}[2][\gamma]{\left<#2\right>_{#1}}
 \newcommand{\partials}[1]{\partial_{i_1}\partial_{i_2}\ldots\partial{i_{#1}}}
@@ -41,6 +43,9 @@
 \newcommand{\ddt}{\frac{d}{d t}}
 \newcommand{\pddt}{\frac{\partial}{\partial t}}
 \renewcommand{\pddt}{\partial_t}
+\newcommand{\pdda}{\partial_a}
+\newcommand{\pddx}{\partial_\textbf{x}}
+\newcommand{\pddr}{\partial_\textbf{r}}
 \newcommand{\norm}[1]{\hat{#1}}
 \newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
 
@@ -83,44 +88,49 @@
 \end{abstract}
 \section{Introduction}
 \section{Preliminaries}
+\subsection{notation}
+$^0$ local qte,
+$_k$ phase
+$^{nst}$ phase averaged 
+Tensor in capital letters 
 \subsection{Generic Eulerian and Lagrangian balance equation}
 \begin{equation}
     \label{eq:dt_f_k}
-    \pddt f_k
+    \pddt f_k^0
     = \nablabh \cdot \left(
-        \mathbf{\Phi}_k
-        - f_k\textbf{u}_k
+        \mathbf{\Phi}_k^0
+        - f_k^0\textbf{u}_k^0
         \right)
-    + \textbf{S}_k
+    + \textbf{s}_k^0
 \end{equation}
 \begin{align}
-    \pddt (\chi_k f_k)
-    &= \nablabh \cdot (\chi_k \mathbf{\Phi}_k - \chi_k f_k \textbf{u}_k)
-    + \chi_k \textbf{S}_k
+    \pddt (\chi_k f_k^0)
+    &= \nablabh \cdot (\chi_k \mathbf{\Phi}_k^0 - \chi_k f_k^0 \textbf{u}_k^0)
+    + \chi_k \textbf{s}_k^0
     + \delta_I\left[
-        f_k
+        f_k^0
         \left(
             \textbf{u}_I
-            - \textbf{u}_k
+            - \textbf{u}_k^0
         \right)
-        + \mathbf{\Phi}_k
+        + \mathbf{\Phi}_k^0
     \right]
     \cdot \textbf{n}_k ,
     \label{eq:dt_chi_k_f_k}\\
-    \pddt (\delta_If_I)  
+    \pddt (\delta_If_I^0)  
     &= 
-    \nablabh \cdot (\delta_I \mathbf{\Phi}_{I||} - \delta_I f_I \textbf{u}_I)
-    +\delta_I\textbf{S}_I 
+    \nablabh \cdot (\delta_I \mathbf{\Phi}_{I||} - \delta_I f_I^0 \textbf{u}_I^0)
+    +\delta_I\textbf{s}_I^0 
     - \delta_I \Jump{
-    f_k (\textbf{u}_I - \textbf{u}_k)
-    + \mathbf{\Phi}_k
+    f_k (\textbf{u}_I^0 - \textbf{u}_k^0)
+    + \mathbf{\Phi}_k^0
     },
     \label{eq:dt_delta_I_f_I}
 \end{align}
 
 \begin{equation}
    \ddt q_\alpha
-    = \int_{\Omega_\alpha} \textbf{S}_2 d\Omega
+    = \int_{\Omega_\alpha} \textbf{s}_2 d\Omega
     + \int_{\Sigma_\alpha} \left[\mathbf{\Phi}_1 + f_1 (\textbf{u}_I-\textbf{u}_1) \right] \cdot \textbf{n}_2 d\Sigma,
     \label{eq:dt_dq_alpha_tot}
 \end{equation}
@@ -135,6 +145,8 @@ It follows from this definition, that the ensemble average of an arbitrary Euler
     =\int f(\textbf{x},\mathscr{C},t) d\mathscr{P}. 
     \label{eq:avg}
 \end{equation}  
+\tb{Either $P$ or $\Pi$ depend on time acctually. on my whole work i havn't done that}
+
 This definition can be applied to Lagrangian properties as well by using the previous formulation, namely $\pavg{q_\alpha} = \int \delta(\textbf{x} - \textbf{x}_\alpha) q_\alpha(\mathscr{C}) d\mathscr{P}. $
 It is interesting to mention some mathematical properties of the ensemble average operators. 
 For two arbitrary Eulerian fields $f$ and $h$ we have,
@@ -165,13 +177,40 @@ where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of findi
 and $\pnnavg{q_\alpha}$ is the conditional average of $q_\alpha$ on the set of particles. 
 \subsection{Nearest particle statistics}
 
+\begin{equation}
+    P_{nst}(\textbf{x},\textbf{y},t,a)= 
+    \int \sum_{i}\delta(\textbf{x}-\textbf{x}^i(\CC,t))
+    \sum_{j\neq i}\delta(\textbf{x}+\textbf{r}-\textbf{x}^j(\CC,t)) 
+    \delta(t+a-t_c^{ij}(\CC,t)) 
+    h_{ij}(\CC,t) d\mathscr{P} 
+    \label{eq:P_nst}
+\end{equation}
+\begin{equation}
+    \nstavg{q^{ij}}P_{nst}(\textbf{x},\textbf{y},t,a)= \int \sum_{i}\delta_i(\textbf{x}-\textbf{x}^i(\CC,t))
+    \sum_{j\neq i}\delta_j(\textbf{x}+\textbf{r}-\textbf{x}^j(\CC,t)) h_{ij}(\CC,t) q^{ij}(\CC,t) d\mathscr{P} 
+    \label{eq:q_nst_avg}
+\end{equation}
+We can further reduce this PDF by integrating on all \textbf{r} : 
+\begin{equation}
+    \condavg{q}{\textbf{r}}(\textbf{x},t,a)P_a(\textbf{x},a,t)n_p(\textbf{x},t)
+    = \int q(\CC,t) P_{nst}(\textbf{x},\textbf{r},a,t) d\textbf{r}
+\end{equation}
+and on all $a$, 
+\begin{equation}
+    \avgcond{q}(\textbf{x},t)n_p(\textbf{x},t)
+    = \iint q(\CC,t) P_{nst}(\textbf{x},\textbf{r},a,t) d\textbf{r}da
+\end{equation}
+
+
 \section{Evolution of the nearest pdf}
 The whole derivaiton should start with Louisville's equation. 
 Which whoul add a border terms that doesn't cancel for h ? 
 
 \input{Inter_particle_scale_eq/Topology.tex}
 
-\section{Averaged moments equations}
+\input{Inter_particle_scale_eq/Topology_eulerr.tex}
+
+\input{Inter_particle_scale_eq/Averaged_equation.tex}
 
 \subsection{Kinematics between particles}
 voinoid cells here
@@ -179,6 +218,124 @@ voinoid cells here
 particle stress here
 \subsection{Energy}
 Compute the inter particle energy and the link of $ww$ with $<u'u'>$ 
+
+\section{Dispersed phase fluctuations}
+\todo[inline]{Explain how the dispersed phase fluctuation are related to the particles relative motions ?????}
+\begin{equation}
+    \textbf{u}_k
+    = \int \nstavg{\chi_k \textbf{u}_k^0} P_{nst}(\textbf{x},\textbf{r},a,t)d\textbf{r}
+\end{equation}
+So does, 
+\begin{equation}
+    \textbf{u}'(\textbf{x},\CC,t)
+    =\nstavg{ \textbf{u}^0}(\textbf{x},\textbf{r},t,a)' 
+    = \nstavg{ \textbf{u}^0}(\textbf{x},\textbf{r},t,a) - \textbf{u}_k
+\end{equation}
+There is strong evidence that it is not true but show that :
+\begin{equation}
+    \avg{\textbf{u}'\textbf{u}'}(\textbf{x},\CC,t)
+    =\int{ (\nstavg{ \textbf{u}^0} )'(\nstavg{ \textbf{u}^0})' }d\textbf{r}
+    = \nstavg{ \textbf{u}^0} - \textbf{u}_k
+\end{equation}
+\subsubsection*{Continuous}
+\begin{equation*}
+    \textbf{u}(\textbf{x},t)
+    = \int \nstavg{ \textbf{u}^0}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    = \int  \textbf{u}^0(\textbf{x},t,\CC) d\PP 
+\end{equation*}
+Thus, 
+\begin{equation*}
+    \avg{\textbf{u}'\textbf{u}'}(\textbf{x},t)
+    = \int \nstavg{ \textbf{u}^0 \textbf{u}^0}  
+    P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    - \textbf{uu}
+    = \int  \textbf{u}^0\textbf{u}^0(\textbf{x},t,\CC) d\PP 
+    - \textbf{uu}
+\end{equation*}
+Besides, if we note $\textbf{v}^0  =  \textbf{u}^0  - \nstavg{\textbf{u}}$
+\begin{equation*}
+    \avg{\textbf{u}'\textbf{u}'}(\textbf{x},t)
+    + \textbf{uu}
+    = \int 
+    \nstavg{\textbf{u}^0} \nstavg{\textbf{u}^0} 
+    P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    +\int 
+    \nstavg{ \textbf{v}^0\textbf{v}^0}  
+    P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+\end{equation*}
+
+For a phase averaged quantity it reads, 
+\begin{equation*}
+    \phi_k \textbf{u}_k(\textbf{x},t)
+    = \int \nstavg{\chi_k \textbf{u}_k^0}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    = \int  \chi_k \textbf{u}^0_k(\textbf{x},t,\CC) d\PP 
+\end{equation*}
+Thus similarly we have, 
+\begin{equation*}
+    \avg{\chi_k \textbf{u}'_k\textbf{u}'_k}(\textbf{x},t)
+    = \int \nstavg{\chi_k \textbf{u}_k^0\textbf{u}_k^0}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    - \phi_k \textbf{u}_k\textbf{u}_k
+    = \int  \chi_k \textbf{u}^0_k\textbf{u}^0_k(\textbf{x},t,\CC) d\PP 
+    - \phi_k \textbf{u}_k\textbf{u}_k
+\end{equation*}
+Introducing, $\textbf{v}_k^0  = \textbf{u}_k^0 - \nstavg{\chi_k \textbf{u}^0_k} / \nstavg{\chi_k}$
+\begin{align*}
+    \nstavg{\chi_k \textbf{u}_k^0\textbf{u}_k^0} 
+    &= 
+    \nstavg{\chi_k (\nstavg{\chi_k \textbf{u}^0_k} / \nstavg{\chi_k} + \textbf{v}_k^0)(\nstavg{\chi_k \textbf{u}^0_k} / \nstavg{\chi_k} + \textbf{v}_k^0)} \\
+    &= 
+    \nstavg{\chi_k} (\nstavg{\chi_k \textbf{u}^0_k}  \nstavg{\chi_k \textbf{u}^0_k} / (\nstavg{\chi_k})^2 
+    + \nstavg{\chi_k \textbf{u}^0_k} \nstavg{\chi_k\textbf{v}_k^0}/ \nstavg{\chi_k}
+    + \nstavg{\chi_k\textbf{v}_k^0} \nstavg{\chi_k \textbf{u}^0_k} / \nstavg{\chi_k}
+    + \nstavg{\chi_k \textbf{v}_k^0\textbf{v}_k^0}
+    )\\
+    &= 
+     (\nstavg{\chi_k \textbf{u}^0_k}  \nstavg{\chi_k \textbf{u}^0_k} / (\nstavg{\chi_k})
+    + \nstavg{\chi_k \textbf{v}_k^0\textbf{v}_k^0}
+    )\\
+\end{align*}
+Consequently, 
+\begin{equation*}
+    \avg{\chi_k \textbf{u}'_k\textbf{u}'_k}(\textbf{x},t)
+    + \phi_k \textbf{u}_k\textbf{u}_k
+    = 
+    \int (\nstavg{\chi_k \textbf{u}^0_k}  \nstavg{\chi_k \textbf{u}^0_k} / (\nstavg{\chi_k})  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    +\int \nstavg{\chi_k \textbf{v}_k^0\textbf{v}_k^0}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+\end{equation*}
+
+\subsubsection*{Particular}
+Now we assume a pairwise nearest averaging process. 
+On thing for sure : 
+\begin{equation*}
+    n_p \textbf{u}_p(\textbf{x},t)
+    = \int \nstavg{ \textbf{u}^\alpha}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    = \int  \textbf{u}_\alpha \delta_\alpha (\textbf{x},t,\CC) d\PP 
+\end{equation*}
+But also, 
+\begin{equation*}
+    n_p \textbf{u}_p \textbf{u}_p
+    + \pavg{\textbf{u}_\alpha' \textbf{u}_\alpha'}
+    =
+    \int \nstavg{ \textbf{u}^\alpha\textbf{u}^\alpha}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    = \int  \textbf{u}^\alpha\textbf{u}^\alpha \delta^\alpha (\textbf{x},t,\CC) d\PP 
+\end{equation*}
+If we introduce $\textbf{v}^\alpha = \textbf{u}^\alpha - \nstavg{\textbf{u}^\alpha}(\textbf{x},\textbf{r})$ 
+\begin{equation*}
+    \nstavg{ \textbf{u}^\alpha\textbf{u}^\alpha}
+    = \nstavg{ (\textbf{v}^\alpha + \nstavg{\textbf{u}^\alpha})(\textbf{v}^\alpha + \nstavg{\textbf{u}^\alpha})}
+    = \nstavg{ \textbf{u}^\alpha}\nstavg{\textbf{u}^\alpha} + \nstavg{ \textbf{v}^\alpha \textbf{v}^\alpha }(\textbf{x},\textbf{r})
+\end{equation*}
+The conclusion is that 
+\begin{align*}
+    n_p \textbf{u}_p \textbf{u}_p
+    + \pavg{\textbf{u}_\alpha' \textbf{u}_\alpha'}
+    =\int \nstavg{ \textbf{u}^\alpha}\nstavg{\textbf{u}^\alpha} P_{nst} d\textbf{r}
+    + \int \nstavg{ \textbf{v}^\alpha \textbf{v}^\alpha }  P_{nst} d\textbf{r}\\
+\end{align*}
+thus the global fluctuation is the mean fluctuation plus the fluctuation at the position $(\textbf{x},\textbf{r})$. 
+
+If we make the  good hypothesis the second integral might be negligible. 
+Anyhow 
 
 \section{Conclusion}
 \bibliography{Bib/bib_bulles.bib}
