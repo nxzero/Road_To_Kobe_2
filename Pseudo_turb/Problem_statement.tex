@@ -47,11 +47,12 @@ In summary, we investigated $6$ \textit{Galileo} number $Ga = 5,10,25,50,75,100$
 This makes a total of $60$ representative simulations of $125$ droplets which is expensive. 
 Therefore, in the next sections we develop on our numerical strategy to make efficient multi VOF simulations. 
 
+\tb{It is clear that at $\phi>0.1$ the mono disperse simulation aren't physicaly realistic since coalesence should arise at those volume fraction.}
 
 
 
 
-\subsection{Theoretical framework}
+\subsection{The closure problem}
 Objectives
 \begin{itemize}
     \item Introduce the closure problem and the form of the closure terms. 
@@ -86,13 +87,14 @@ Using the statistical average formalism on all configuration of the flow termed 
 \begin{align}
     \textbf{f}_p (\textbf{x},t) &= \
     \frac{1}{n_p}\int \sum_i \delta(\textbf{x} - \textbf{x}_\alpha(t,\CC)) \textbf{f}_\alpha d\PP\\
-    \textbf{f}_\alpha(t,\CC) &= \int_{S_\alpha} \bm{\sigma}_c'(\textbf{x},t,\CC) \cdot \textbf{n} dS \\
+    \label{eq:f_alpha}
+    \text{with} \;\;\; &\textbf{f}_\alpha(t,\CC) = \int_{S_\alpha} \bm{\sigma}_c'(\textbf{x},t,\CC) \cdot \textbf{n} dS \\
     \bm{\sigma}^{\text{Re}}_p(\textbf{x},t) &=\frac{1}{n_p} \int \sum_i \delta(\textbf{x} - \textbf{x}_\alpha(t,\CC)) \rho_d \textbf{u}_\alpha'\textbf{u}_\alpha' d\PP\\
     \label{eq:def_uuc}
     \bm{\sigma}^{\text{Re}}_c(\textbf{x},t) &= \frac{1}{\phi_c}\int \rho_c\chi_c \textbf{u}_c' \textbf{u}_c'd\PP
 \end{align}
 where $d\PP$ is a probability measure. 
-$\textbf{x}_\alpha$ is the particles center of mass potion and $\delta$ the Dirac delta function. 
+$\textbf{x}_\alpha$ is the center of mass of a particle labeled $\alpha$, $\chi_c(\textbf{x},t\CC)$ is teh phase indicator function of the continuous phase, and $\delta$ the Dirac delta function. 
 The superscript $'$ indicate the relative values of a quantity with respect to its phasic mean values, specifically $\bm{\sigma}_c' = \bm{\sigma}_c^0(\textbf{x},t, \CC)  - \bm{\sigma}_c(\textbf{x},t)$, $\textbf{u}_\alpha' = \textbf{u}_\alpha(t,\CC) - \textbf{u}_p(\textbf{x},t)$ and $\textbf{u}_c' = \textbf{u}_c^0(\textbf{x},t, \CC)  -\textbf{u}_c(\textbf{x},t)$, with $\bm{\sigma}_c^0 $, $\textbf{u}_c^0$ and $\textbf{u}_\alpha$ being the local stress of the fluid phase, the local velocity of the fluid phase and the velocity of the center of mass of the particle $\alpha$, respectively. 
 
 

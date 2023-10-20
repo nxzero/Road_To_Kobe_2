@@ -2,28 +2,46 @@
 Objectives : 
 \begin{itemize}
     \item Present the decomposition of the fluid reynolds stress according to isotropic and deviatoric part.
-    \item Show the relation between the flowlines graphs and the actual values of the velocity fluctuation.
-    \item Compare our case with \citet{almeras2019fluctuations}
+    \item Show the relation between the flowlines graphs and the actual values of the fluid velocity fluctuation.
+    \item Compare our case with the fits of  \citet{almeras2019fluctuations} 
+    \item Compare the fluctuation with theoretical dev \citet{lance1991turbulence,zhang1994ensemble}. 
+    \item Find out that the potential flow solution 
+    \item Conclusion : " In low inertia regime $B_{xx} = - 0.2$ and $B_{yy} = 0.4$ for all simulations, find out why" (This is also true for the theoretical solution\citep{lance1991turbulence} this is thus due to the form of teh wake)
 \end{itemize}
 
 
-
-We decompose both Reynolds stress into an isotropic part and deviatoric part such that, 
+In this section we analyze the velocity fluctuation within the suspension for both phases. 
+We decompose both Reynolds stresses into an isotropic part and deviatoric part such that, 
 \begin{align}
-    \bm{\sigma}^{\text{Re}}_p &=  \rho_d \phi_d K^*_p
-    \left[
-        \textbf{I}(\textbf{u}_p - \textbf{u}_c)\cdot (\textbf{u}_p - \textbf{u}_c) 
-        +\textbf{B}_c \cdot (\textbf{u}_p - \textbf{u}_c)(\textbf{u}_p - \textbf{u}_c)
-    \right]\\
-    \bm{\sigma}^{\text{Re}}_c &=  \rho_c \phi_c K_c^*
-    \left[
-        \textbf{I}(\textbf{u}_p - \textbf{u}_c)\cdot (\textbf{u}_p - \textbf{u}_c) 
-        +\textbf{B}_p \cdot (\textbf{u}_p - \textbf{u}_c)(\textbf{u}_p - \textbf{u}_c)
-    \right]
+    \bm{\sigma}^{\text{Re}}_p &=  \rho_d \phi_d K^*_p(\textbf{u}_p - \textbf{u}_c)\cdot (\textbf{u}_p - \textbf{u}_c) 
+    \left(
+        \textbf{I}
+        +\textbf{B}_p 
+    \right)\\
+    \bm{\sigma}^{\text{Re}}_c &=  \rho_c \phi_d K_c^*(\textbf{u}_p - \textbf{u}_c)\cdot (\textbf{u}_p - \textbf{u}_c) 
+    \left(
+        \textbf{I}
+        +\textbf{B}_c
+    \right)
 \end{align}
 where the $K^*$ is the dimensionless pseudo-turbulent  kinetic energy, $\textbf{I}$ a unit tensor and $\textbf{B}$ a tensor accounting for the deviation of the Reynolds stress left to determine. 
+In the following subsection we present our numerical results for $K^*$ and $\textbf{B}$ for the dispersed and continuous phase. 
+\tb{In this section the results are presenetd in terms of Ga because it is easier to show the tendency}
 
-\subsection{The continuous phase Reynolds stress}
+Alternatively we can use the decomposition,
+\begin{align}
+    \phi_c\bm{\sigma}^{\text{Re}}_c &=  \rho_c \phi_d 
+    \left[
+        B_1\textbf{I}(\textbf{u}_p - \textbf{u}_c)\cdot (\textbf{u}_p - \textbf{u}_c) 
+        +B_2 (\textbf{u}_p - \textbf{u}_c) (\textbf{u}_p - \textbf{u}_c) 
+    \right]\\
+\end{align}
+for which $B_1$ and $B_2$ are scalar coefficient. 
+This decomposition has the advantage that in the potential flow limit theoretical solution are known such that  $B_1 = -0.15$ and  $B_2 = 0.05$ \citet{zhang1994averaged,wang2021numerical}. 
+Lastly, \citet{lance1991turbulence} give also a theoretical solution for $\bm{\sigma}^{Re}_c$ based on the potential flow solution around a spherical particle in translation. 
+
+
+\subsection{Continuous phase}
 \todo{try \citet{almeras2021statistics} fits}
 \todo{also check \citet{almeras2019fluctuations} results}
 \tb{might be good to plot the velocity field to examine where does the fluctuation arise (pseudo-turbe or turbe)}
@@ -32,6 +50,8 @@ Look at \citep{wang2021numerical} and Mahra.. 2015
 
 
 The fluid averaged kinetic energy can be easily scaled on the numerical results shown \ref{fig:Tf_Bf}(left).
+It is shown that for $\lambda= 1$ we observe non monotonic behavior while at $\lambda= 10$ it is decreasing.
+Except for the cases $\phi = 0.01$ where we cannot be sure if it is due to statistical error or real physics. 
 \begin{figure}[h!]
     \centering
     \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fCA/Tf_l_1.pdf}
@@ -44,11 +64,12 @@ The fluid averaged kinetic energy can be easily scaled on the numerical results 
     (right) deviatoric part of the Reynolds stress, ($- \cdot -$)  vertical components, $B_{yy}$, ($- -$)  horizontal components, $B_{xx} = B_{zz}$.}
     \label{fig:Tf_Bf}
 \end{figure}
-\subsection{The particles phase Reynolds stress}
+\subsection{Dispersed phase}
 
 \tb{Maybe include velocity fluctuation and compare to : Lingxin2021 }
 
 \tb{Include Gaussian distribution of bubbles !!! ! ! ! }
+
 Now let's focus on the particular averaged Reynolds stress tensor.
 \ref{fig:Talpha_Balpha} shows that the granular temperature behavior is quite similar from the continuous averaged turbulent kinetic energy.
 \begin{figure}[h!]
@@ -58,17 +79,8 @@ Now let's focus on the particular averaged Reynolds stress tensor.
 
     \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fPA/Talpha_l_10.pdf}
     \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fPA/Balpha_l_10.pdf}
-    \caption{(left) Dimensionless turbulent kinetic energy in terms of the \textit{Galileo} number for different $\phi$. (dots) Numerical simulations, (dashed line) empirical formula \ref{eq:Talpha_scaling}.
-    (right) deviatoric part of the Reynolds stress, ($\bullet$) are the vertical components, $B_{yy}$, ($\blacktriangle$) are the horizontal components, $B_{xx} = B_{zz}$.}
+    \caption{(left) Dimensionless turbulent kinetic energy $K_p$ in terms of the \textit{Galileo} number for different $\phi$. 
+    The symbols correspond to different volume fraction ($\bullet$) $\phi = 1\%$, ($\blacktriangle$) $\phi = 5\%$, ($\blacksquare$) $\phi = 10\%$, ($\blacklozenge$) $\phi = 15\%$ and ($\blacktriangleright$) $\phi = 20\%$.
+    (right) deviatoric part of the Reynolds stress, ($- \cdot -$)  vertical components, $B_{yy}$, ($- -$)  horizontal components, $B_{xx} = B_{zz}$.}
     \label{fig:Talpha_Balpha}
 \end{figure}
-We can also provide a scaling for the granular temperature, it reads as,  
-\begin{equation}
-    \frac{\pnavg{T_\alpha}}{U^2}  \approx \frac{\phi}{Ga^2} 2.86\cdot10^{4} 
-    \label{eq:Talpha_scaling}
-\end{equation}
-From \ref{fig:Talpha_Balpha} we observe that this scaling is valid for the lowest \textit{Galileo}. 
-The deviatoric part of $\pnavg{T_\alpha}$ is displayed on \ref{fig:Talpha_Balpha}.
-It tells us that the Reynolds stress for the particular phase tends to be isotropic in the same way as $\cavg{T}$. 
-Indeed, the components of $\pnavg{\textbf{B}}$ go to zero with increasing $Ga$ and $\phi$. 
-This behavior is explained by the higher rate of collision present for higher volume fraction and inertia \citep[chapter 1]{jackson2000dynamics}
