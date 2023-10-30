@@ -1,0 +1,100 @@
+\subsection{Microscale description}
+
+In this section we propose to describe the Microscale thought the use of the tensor $\mathcal{R}_p  = \pavg{ \textbf{rr}}$. 
+This tensor represents the mean rapprochement between particles. 
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[scale =1.5]
+      
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*0.7}
+    \pgfmathsetmacro{\y}{rnd*0.3}
+    \draw[fill=gray] ($(\x,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*0.7}
+    \pgfmathsetmacro{\y}{rnd*0.3}
+    \draw[fill=gray] ($(\x+2,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*0.6}
+    \pgfmathsetmacro{\y}{rnd*0.4}
+    \draw[fill=gray] ($(\x+1,\y-1)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*0.6}
+    \pgfmathsetmacro{\y}{rnd*0.4}
+    \draw[fill=gray] ($(\x-1,\y-1)$) circle (0.1);
+    }
+    \draw (1,-1)node[below]{$\mathbb{R}/r_m^2 \ll 1$};
+  
+      \foreach \i in {1,...,20} {
+        \pgfmathsetmacro{\x}{rnd*4}
+        \pgfmathsetmacro{\y}{rnd*2}
+        \draw[fill=gray] ($(\x+5,\y-1)$) circle (0.1);
+        }
+        \draw (6.5,-1)node[below]{$\mathbb{R}/r_m^2 < 1$};
+      \end{tikzpicture}
+      \hfill
+  \end{figure}
+Let $\mathcal{R}_p^* = r_m^2 \textbf{I}$ being the isotropic microscale representation at random. 
+It can be computed from the random distribution funciton $P_{nst}(\textbf{r}) =     P_{nst}(\textbf{x},\textbf{r})
+= n_p e^{-4\pi n_p [r^3- (d)^3]/3}$ \citep{zhang2021ensemble}. 
+Therefore, we have, 
+\begin{equation}
+    r_m^2 \textbf{I}
+    = \int_{|\textbf{r}| > d}
+    n_p(\textbf{x},t) \textbf{rr} e^{-4\pi n_p(\textbf{x},t) [|\textbf{r}|^3- (d)^3]/3}
+    d\textbf{r}
+\end{equation}
+Since this quantity is isotropic let's focus on the $zz$ components using the change of variable : 
+\begin{equation*}
+    \textbf{r} = 
+    \left\{
+        \begin{tabular}{cc}
+            $x =$&$ r \sin\theta \cos\phi$\\
+            $y =$&$ r \sin\theta \sin\phi$\\
+            $z =$&$ r \cos\theta$
+        \end{tabular}
+    \right.
+\end{equation*}
+Thus, the previous integral reads, 
+\begin{align*}
+    r_m^2 
+    &= n_p \int_{0}^{2\pi}\int_{0}^{\pi}\int_{d}^{\infty}
+     r^4 \cos^2\theta\sin\theta e^{-4\pi n_p [r^3- (d)^3]/3}
+    drd\theta d\phi\\
+    &= n_p \int_{0}^{2\pi}d\phi 
+    \int_{0}^{\pi} \cos^2\theta\sin\theta d\theta 
+    \int_{d}^{\infty}
+     r^4  e^{-4\pi n_p [r^3- (d)^3]/3} dr\\
+    &= n_p \pi
+    \frac{4}{3} 
+    e^{-4\pi n_p d^3 /3}
+    \int_{d}^{\infty}
+     r^4  e^{-4\pi n_p r^3 /3}
+      dr\\
+\end{align*}
+Since this last integral isn't computable we will use $u = r^3$ thus $du = 3 r^2 dr$ or $dr = \frac{u^{-2/3}}{3} du$
+\begin{equation*}
+    \int_{d}^{\infty}
+     r^4  e^{-4\pi n_p r^3 /3}
+      dr
+      = \frac{1}{3} 
+      \int_{d^{1/3}}^{\infty}
+        u^{2/3}  e^{-4\pi n_p u /3}
+      du
+      = \frac{1}{3}\left.
+        -\frac{\Gamma(\frac{5}{2}, 4\pi n_p/3 u )}{(4\pi n_p/3)^{5/3}}
+        \right|_{d^{1/3}}^\infty
+      = 
+        \frac{\Gamma(\frac{5}{2}, 4\pi n_p/3 d^{1/3} )}{3(4\pi n_p/3)^{5/3}}
+\end{equation*}
+The final results reads as,
+\begin{equation*}
+    r_m^2 =
+    \frac{4n_p \pi e^{-4\pi n_p d^3 /3}}{9(4\pi n_p / 3)^{5/3}}
+    \Gamma\left(\frac{5}{2}, 4\pi n_p d^{1/3} / 3 \right)
+\end{equation*}
+However this results is true if and only if we are in a dilute regime since it is under this assumption that $P_{nst}$ is defined. 
+In practice for $\lambda = 1$ we recover this behavior. 
