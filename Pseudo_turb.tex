@@ -67,14 +67,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\title{Reynolds stress and inertial interphase force in buoyant emulsion.}
+%\title{Reynolds stress and inertial interphase force in buoyant emulsion.}
+\title{Buoyancy-driven motion of inertial monodisperse suspension of drops}
 
 
 \author[1,2]{Nicolas Fintzi}
-\author[1]{Jean-Lou Pierson}
 \author[2]{Stephane Popinet}
+\author[1]{Jean-Lou Pierson}
 \affil[1]{IFP Energies Nouvelles, Rond-point de l’changeur de Solaize, 69360 Solaize}
-\affil[2]{Sorbonne Université, Institut Jean le Rond ∂’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
+\affil[2]{Sorbonne Université, Institut Jean le Rond d’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
 \normalmarginpar
 \begin{document}
 
@@ -103,28 +104,146 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Theoretical context}
-\input{Pseudo_turb/Problem_statement.tex}
+%\section{Theoretical context}
+%\input{Pseudo_turb/Problem_statement.tex}
 
-\section{Numerical methodology}
+%\section{Numerical methodology}
+%\input{Pseudo_turb/Simulation_Setup.tex}
+%\input{Pseudo_turb/no_coalesence.tex}
+
+\section{Computational methodology}
+%\section{Numerical procedure and problem statement}
 \input{Pseudo_turb/Simulation_Setup.tex}
 \input{Pseudo_turb/no_coalesence.tex}
-
-\section{Preliminary tests}
-\label{sec:preliminary}
+%\section{Preliminary tests}
+%\label{sec:preliminary}
 \input{Pseudo_turb/validation.tex}
+
+\input{Pseudo_turb/Problem_statement.tex}
+
+\subsection{Statistics computations}
+
+Objectives : 
+\begin{itemize}
+    \item Present How we compute the particle properties. 
+    \item Explain How we approximate the ensemble average in the numerical calculations
+    \item Focus on the drag force term and on the velocity fluctuation. 
+\end{itemize}
+
+Following \citet{du2022analysis} we consider ergodicity at all time of the numerical experiment.
+Thus, the ensemble average of a quantity $X$ can be approximated by a spatial average $\Xavg{X}$ and a time average $\Tavg{X}$ such that $\int X d\PP = \avg{X} \approx \Xavg{\Tavg{X}} = \Tavg{\Xavg{X}}$.
+Consequently, the ensemble average of a numerical field, $X$, is taken through space and time such that,
+\begin{equation}
+    \avg{X}
+    = \Tavg{\Xavg{X}}
+    = \frac{1}{ t_{end} - t_0}\int_{t_0}^{t_{end}} 
+    \Xavg{X}(t) dt
+\end{equation}
+where, 
+\begin{equation}
+    \Xavg{X}(t)
+    = \frac{1}{L^3}\int 
+    X(\textbf{x},t) d\textbf{x}
+\end{equation}
+where $L$ is the length of the cubic domain.
+$t_0$ and $t_{end}$ is the starting time of sampling and the time duration of the simulation, respectively.
+In practice, we take $t_0$ such that the simulation reach a statistically steady regime for $t>t_0$.  
+Both $t_{end} $ and $t_0$ are given in \ref{ap:A} after several validations studies. 
+
+To compute the continuous phase averaged quantities such as \ref{eq:def_uuc} we proceed as such,
+\begin{equation}
+    \phi_c \bm{\sigma}^{\text{Re}}_c /\rho_c
+    % = \Tavg{\Xavg{\chi_c \textbf{u}_c' \textbf{u}_c'}}
+    = \Tavg{\Xavg{\chi_c (\textbf{u}_c^0 -\textbf{u}_c ) (\textbf{u}_c^0 -\textbf{u}_c)}}
+    = \Tavg{\Xavg{\chi_c \textbf{u}_c^0 \textbf{u}_c^0}}
+    -  \phi_c  \textbf{u}_c \textbf{u}_c.
+    \label{eq:def_uuc_num} 
+\end{equation}
+where the indicator funciton $\chi_c$ must be understood as its approximation in the DNS, i.e the color function $1 - \alpha_d$. 
+Consequently, \ref{eq:def_uuc_num} indicate that we must take the average of the product of the velocities, and then we retrieve the mean velocities' product. 
+Additionally,  note that the Reynolds stress can be decomposed by such as : 
+\begin{align*}
+    \phi_c \bm{\sigma}^{\text{Re}}_c /\rho_c
+    &= 
+    \Tavg{\Xavg{\chi_c (\textbf{u}_c^0 -\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} ) (\textbf{u}_c^0 -\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} )}}\\
+    &+ \Tavg{\Xavg{\chi_c} (\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} - \textbf{u}_c ) (\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} - \textbf{u}_c)}\\
+\end{align*}
+where the first term is the space fluctuation relative to the instantaneous mean velocity of the fluid $\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c}$, and the second is the time fluctuation of the instantaneous mean velocity of the fluid. 
+
+Similar expression can be derived for the particular phase by integrating the property over the volume of the particle which is done throught the use of the \texttt{tag.h} function, then we average on each particle at all time.
+
+\JL{ajouter comment sont calculees les "nearest statistics"}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Droplets configurations flowlines and deformations }
+
+%\section{Results}
+
+\section{Mean and fluctuating velocities}
+
+\input{Pseudo_turb/rising_velocity.tex}
+%\subsection{Interphase drag force}
+%\subsection{Droplets configurations flowlines and deformations }
+
+\subsection{The Reynolds stress}
+\input{Pseudo_turb/Reynolds_stress.tex}
+
+\subsection{Shape of the particles}
+\begin{itemize}
+    \item Problematic : "What is teh mean shape of our particles ? "
+    \item Present the definition of the aspect ratio.
+    \item Show how it behaves in terms of $\phi,\lambda$ and $Ga$
+    \item Overall, show that the particles are rather spherical which were also demonstrated by the previous plots regarding the flow lines. 
+    \item Besides the deformation increase with increasing $Ga$ and small $\phi$ which agree with \citet{loisy2017buoyancy}. 
+\end{itemize}
+
+
+It is known since \todo{biblio} \citet{bunner2003effect} that droplets or bubbles mean rising velocity is mainly dependent on their shapes. 
+For spherical bubbles it was observed that the rising velocity $Re$ were proportional to $\sim Re_{\phi=0}(1 - \phi^{1/3})$, where $Re_{\phi=0}$ is the isolated rising Reynolds number. 
+Whereas deformable bubbles a $\sim Re_{\phi=0}(1 - \phi)^{3}$ dependency is observed \todo{biblio}. 
+This is n=in fact due to the different arrangement taken by the particles as a consequence of their deformations. 
+Therefore, in order to develop a coherent model we first investigate the droplets mean shapes. 
+After what we present the dependency of the rising velocity and drag force with the main parameters of the problems.  
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height = 0.35\textwidth]{image/HOMOGENEOUS/fPA/chi_mu_r_1-0.pdf}
+    \includegraphics[height = 0.35\textwidth]{image/HOMOGENEOUS/fPA/chi_mu_r_0-1.pdf}
+    \caption{Mean aspect ratio of the droplets $\avg{\chi}$ in terms of the \textit{Galileo} number, and the volume faction $\phi$,  for two different viscosity ratio.  
+    The symbols correspond to different volume fraction ($\bullet$) $\phi = 1\%$, ($\blacktriangle$) $\phi = 5\%$, ($\blacksquare$) $\phi = 10\%$, ($\blacklozenge$) $\phi = 15\%$ and ($\blacktriangleright$) $\phi = 20$\%.
+    }
+    \label{fig:chi}
+\end{figure}
+\todo{compart with bubbly flow especially with \citet{loisy2017buoyancy} and show that it is way weaker deformation for bubbles }
+\todo{also with \citet{dandy1989buoyancy}}
+\ref{fig:chi} display the averaged aspect ratio of the droplets.
+It is defined using the conventional manner \citep{bunner2003effect}, namely,
+\begin{equation}
+    \chi = \pavg{\sqrt{\mathcal{I}_{max}^\alpha /\mathcal{I}_{min}^\alpha} }
+\end{equation} 
+where, $\mathcal{I}_{max}^\alpha$ and $\mathcal{I}_{min}^\alpha$ are the maximum and minimum eigenvalues value of the particle inertia tensor, which is defined as, 
+\begin{equation*}
+    \mathcal{I}^\alpha
+    = \int_{V_\alpha} \left[
+        (\textbf{r}\cdot \textbf{r}) \textbf{I}  - \textbf{rr}
+        \right]
+    dV.
+\end{equation*}
+where, \textbf{I} is the identity tensor and $\textbf{r} = \textbf{x} - \textbf{x}_\alpha$. 
+From the plots \ref{fig:chi} we clearly see that the droplets flatten with increasing \textit{Galileo} numbers and decreasing drop volume fraction. 
+Also, it seems that for low viscosity ratio the aspect ratio of the droplets is lower. 
+At small $Ga$ the averaged aspect ratio $\chi$ tends to $1$, implying that in this regime droplets are mainly spherical. 
+
+Overall we reach a maximum of $\chi = 1.1$ which implies a deviation from a spherical shape of $10 \%$. 
+
+\tb{If we defined $\chi = \avg{s_\alpha} / \avg{v_\alpha}  a/3$ where $s_\alpha$  is the surface $v_\alpha$ the volume and $a$ the radius of the particles we would obtain approximately the same plots} 
+
+
+\section{Nearest particle statistics}
 \input{Pseudo_turb/configuration.tex}
 
 
-\section{Interphase drag force}
-\input{Pseudo_turb/rising_velocity.tex}
-
-
-\section{The Reynolds stress}
-\input{Pseudo_turb/Reynolds_stress.tex}
 % \input{Pseudo_turb/PFP.tex}
 % \input{Pseudo_turb/Stresslet.tex}
 

@@ -1,4 +1,4 @@
-\subsection{The no-coalescence algorithm}
+\subsection{The multi-VoF methodology and the no-coalescence algorithm}
 Objectives 
 \begin{itemize}
     \item Presents the bibliography. 
@@ -18,10 +18,10 @@ When using a level set method to track the  phase indicator function some author
 Similarly, for VOF tracer some author used a multi-vof approach. 
 In a recent study \citet{zhang2021direct} used one VOF tracer per bubble in his simulation which prevent coalesence and allows to track bubbles independently. 
 However, this approach is quite expensive as it requires solving \ref{eq:dt_alpha} for each drop. 
-Instead, we adopt the methodology of \citet{karnakov2022computing} which consider a constant number of VOF tracer with respect to the number of dorplets. 
+Instead, we adopt the methodology of \citet{karnakov2022computing} which consider a constant number of VOF tracer with respect to the number of dorplets. \JL{pr moi le nombre de Traceur VoF change aucours du temps ? par ailleurs Karnakov utilise une couleur (un champs VoF) par goutte ? non ?}
 We then adoped another methodology to track bubbles independently that we adapted inside the \texttt{Basilisk} code. 
 
-The adaptation of  \citet{karnakov2022computing} within the basilisk code has been carried out by \citet{mani2021numerical}, which developed an algorithm to prevents the adjacent droplets to have similar VOF tracers using the least VOF tracer as possible by allowing different drops to be included within the same VOF tracer.
+The adaptation of \citet{karnakov2022computing} within the basilisk code has been carried out by \citet{mani2021numerical} \JL{on ne peut pas vraiment dire que Mani a adapte l'algo de Karnakov. Deja car ila soutenu avant meme que cette algo soit publie et d'autre part les méthodos semblent bien differentes. En particulier, a ma connaissance le no-coalescence est unique chez nous.}, which developed an algorithm to prevents the adjacent droplets to have similar VOF tracers using the least VOF tracer as possible by allowing different drops to be included within the same VOF tracer.
 Specifically we define $N(t)$ VOF tracer labeled as $\alpha_d^i$ for $i =0,\ldots,N$ where $N(t)$ is dependent on time since it is function of the particles positions.  
 The only requirement is that the adjacent droplets at a given time $t$, have different VOF tracer to prevent coalescence. 
 
@@ -89,62 +89,13 @@ But also, we compute the surface tension force as the sum of the contribution fr
 where $\kappa_i$ is the approximate curvature of $\alpha_d^i$. 
 In the 2D simulations (not presented here) we do not used more than 4 VOF tracers for hundreds of droplets during a simulation. 
 This is a consequence  of the four color map theorem derived from topological arguments.
-In the three-dimensional were we simulated hundreds of droplets we observed the creation of $6$ VOF tracer in the long run of the simulations.
+In the three-dimensional were we simulated hundreds of droplets we observed the creation of $6$ VOF tracer in the long run of the simulations \JL{aurais tu une evolution en fonction du temps du nombre de traceur VoF en fonction de la fraction volumique. Je pense que c'est un element interessant.}.
 A picture of the colored VOF is shown \ref{fig:diagram} (b) where only 3 VOF tracer is needed.
 Indeed, the four color map theorem isn't valid anymore therefore the increase of VOF tracer isn't surprising anymore. 
 
 Overall, we used an optimized multi-VOF method which allows us to compute massive DNS with approximately $6$ VOF tracers. 
 
-\subsection{Ensemble average approximation}
 
-Objectives : 
-\begin{itemize}
-    \item Present How we compute the particle properties. 
-    \item Explain How we approximate the ensemble average in the numerical calculations
-    \item Focus on the drag force term and on the velocity fluctuation. 
-\end{itemize}
-
-Following \citet{du2022analysis} we consider ergodicity at all time of the numerical experiment.
-Thus, the ensemble average of a quantity $X$ can be approximated by a spatial average $\Xavg{X}$ and a time average $\Tavg{X}$ such that $\int X d\PP = \avg{X} \approx \Xavg{\Tavg{X}} = \Tavg{\Xavg{X}}$.
-Consequently, the ensemble average of a numerical field, $X$, is taken through space and time such that,
-\begin{equation}
-    \avg{X}
-    = \Tavg{\Xavg{X}}
-    = \frac{1}{ t_{end} - t_0}\int_{t_0}^{t_{end}} 
-    \Xavg{X}(t) dt
-\end{equation}
-where, 
-\begin{equation}
-    \Xavg{X}(t)
-    = \frac{1}{L^3}\int 
-    X(\textbf{x},t) d\textbf{x}
-\end{equation}
-where $L$ is the length of the cubic domain.
-$t_0$ and $t_{end}$ is the starting time of sampling and the time duration of the simulation, respectively.
-In practice, we take $t_0$ such that the simulation reach a statistically steady regime for $t>t_0$.  
-Both $t_{end} $ and $t_0$ are given in \ref{ap:A} after several validations studies. 
-
-To compute the continuous phase averaged quantities such as \ref{eq:def_uuc} we proceed as such,
-\begin{equation}
-    \phi_c \bm{\sigma}^{\text{Re}}_c /\rho_c
-    % = \Tavg{\Xavg{\chi_c \textbf{u}_c' \textbf{u}_c'}}
-    = \Tavg{\Xavg{\chi_c (\textbf{u}_c^0 -\textbf{u}_c ) (\textbf{u}_c^0 -\textbf{u}_c)}}
-    = \Tavg{\Xavg{\chi_c \textbf{u}_c^0 \textbf{u}_c^0}}
-    -  \phi_c  \textbf{u}_c \textbf{u}_c.
-    \label{eq:def_uuc_num} 
-\end{equation}
-where the indicator funciton $\chi_c$ must be understood as its approximation in the DNS, i.e the color function $1 - \alpha_d$. 
-Consequently, \ref{eq:def_uuc_num} indicate that we must take the average of the product of the velocities, and then we retrieve the mean velocities' product. 
-Additionally,  note that the Reynolds stress can be decomposed by such as : 
-\begin{align*}
-    \phi_c \bm{\sigma}^{\text{Re}}_c /\rho_c
-    &= 
-    \Tavg{\Xavg{\chi_c (\textbf{u}_c^0 -\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} ) (\textbf{u}_c^0 -\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} )}}\\
-    &+ \Tavg{\Xavg{\chi_c} (\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} - \textbf{u}_c ) (\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} - \textbf{u}_c)}\\
-\end{align*}
-where the first term is the space fluctuation relative to the instantaneous mean velocity of the fluid $\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c}$, and the second is the time fluctuation of the instantaneous mean velocity of the fluid. 
-
-Similar expression can be derived for the particular phase by integrating the property over the volume of the particle which is done throught the use of the \texttt{tag.h} function, then we average on each particle at all time.
 
 
 

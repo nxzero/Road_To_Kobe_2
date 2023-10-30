@@ -1,11 +1,12 @@
 
 
-\subsection{Problem statement}
+\subsection{Simulations setup}
 Objective of this section :
 \begin{itemize}
     \item Introduce the dimensionless parameters.
     \item Present the physical parameters of some industrial processes to locate our problematic. 
     \item Introduce the dimensionless parameters range investigated in this study.
+    \item Present the tri-periodic box within which we add droplets in vof 
 \end{itemize}
 We investigate the dynamic of homogeneous mono-disperse emulsion subject to buoyancy forces. 
 Both the dispersed (resp. continuous) phase is considered as Newtonian fluid defined by viscosity $\mu_d$ (resp. $\mu_c$), and density $\rho_d$ ($\mu_c$).
@@ -38,7 +39,9 @@ In addition to these $4$ parameters we introduce the number of particles, $N_b$,
     \end{tabular}
     \label{tab:parameters}
 \end{table}
-We wish to investigate the moderate inertial emulsion regime with quasi spherical droplets. \todo{gives real parameters values compared to experiment}
+\JL{il faut choisir entre $\mu_r$ et $\lambda$... Pr ailleurs je pense qu'l y a une coquille dans ta definition de $\mu_r$.}
+
+We wish to investigate the moderate inertial emulsion regime with quasi spherical droplets. \todo{gives real parameters values compared to experiment ? Yes. tu peux le faire facilement en prenant par exmeple des gouttes allant de 500 microns a 2 mm. Cela ajoutera un peu de poids au choix des parametres. Par ailleurs se pose la question de lancer quelques cas à plus bas nombre de Bond (car experimentalement ils le seront) voir si cela change les resultats. De meme, pq ne pas lancer quelques cas ou les gouttes sont moins visqueuses que le fluide environnant ?}
 Thus, the \textit{Bond} number must be low enough to obtain nearly spherical drops, and the viscosity and density ratio must approach the oil/water situation. 
 It will be shown in the next few sections that a $Bo =1$ gives reasonable results. 
 Additionally, for a statistical convergence reason explained in \ref{sec:preliminary} we choose $N_b = 125$. 
@@ -49,55 +52,5 @@ Therefore, in the next sections we develop on our numerical strategy to make eff
 
 \tb{It is clear that at $\phi>0.1$ the mono disperse simulation aren't physicaly realistic since coalesence should arise at those volume fraction.}
 
-
-
-
-\subsection{The closure problem}
-Objectives
-\begin{itemize}
-    \item Introduce the closure problem and the form of the closure terms. 
-    \item Focus only on the drag force and velocity fluctuations. 
-\end{itemize}
-To clarify the role of the different forces and stresses in a multiphase flow model we start by listing the averaged momentum equations for dispersed two-phase flows obtained by an ensemble averaging procedure.
-For mono disperse fluid particles they read as \citep{zhang1997momentum,jackson1997locally}\todo{citer le papier with Daniel},
-\begin{align}
-    \pddt (\phi_c\rho_c \textbf{u}_c)
-    + \nablabh \cdot \left(\phi_c\rho_c \textbf{u}_c\textbf{u}_c + \phi_c  \bm{\sigma}_c^{\text{Re}} - n_p\textbf{M}_p \right)
-    &= \phi_c 
-    \left(\nablabh \cdot \bm{\sigma}_c
-    + \rho_c \textbf{g}\right)
-    - n_p \textbf{f}_p 
-    \label{eq:dt_uc}
-    \\
-    \pddt (\phi_d\rho_d \textbf{u}_p)
-    + \nablabh \cdot \left(\phi_d\rho_d \textbf{u}_p\textbf{u}_p+ \phi_d \bm{\sigma}_p^{\text{Re}}\right)
-    &= 
-    \phi_d \left(\nablabh \cdot \bm{\sigma}_c
-    + \rho_d \textbf{g}\right)
-    + n_p \textbf{f}_p 
-    \label{eq:dy_up}
-\end{align}
-where the subscript $c$ and $p$ denote continuous and particle phase averaged quantities, respectively.
-$\phi$ is the volume fraction, $n_p$ the particle number density, \textbf{u} the averaged velocity, $\bm{\sigma}$ the averaged stress tensor, $\bm{\sigma}^{\text{Re}}$ the stress due to velocity fluctuation or pseudo turbulent stress.
-Additionally, due to the presence of the particles we have the interphase drag force term : $\textbf{f}_p$, and the interphase stress or first moment : $\textbf{M}_p$. 
-
-
-In this study we focus on three of these closure terms, namely the interphase drag force : $\textbf{f}_p$, and the Reynolds stresses : $\bm{\sigma}^{\text{Re}}_c$ and $\bm{\sigma}^{\text{Re}}_p$. 
-Using the statistical average formalism on all configuration of the flow termed by $\CC$, we can define these quantities as,  
-\begin{align}
-    \textbf{f}_p (\textbf{x},t) &= \
-    \frac{1}{n_p}\int \sum_i \delta(\textbf{x} - \textbf{x}_\alpha(t,\CC)) \textbf{f}_\alpha d\PP\\
-    \label{eq:f_alpha}
-    \text{with} \;\;\; &\textbf{f}_\alpha(t,\CC) = \int_{S_\alpha} \bm{\sigma}_c'(\textbf{x},t,\CC) \cdot \textbf{n} dS \\
-    \bm{\sigma}^{\text{Re}}_p(\textbf{x},t) &=\frac{1}{n_p} \int \sum_i \delta(\textbf{x} - \textbf{x}_\alpha(t,\CC)) \rho_d \textbf{u}_\alpha'\textbf{u}_\alpha' d\PP\\
-    \label{eq:def_uuc}
-    \bm{\sigma}^{\text{Re}}_c(\textbf{x},t) &= \frac{1}{\phi_c}\int \rho_c\chi_c \textbf{u}_c' \textbf{u}_c'd\PP
-\end{align}
-where $d\PP$ is a probability measure. 
-$\textbf{x}_\alpha$ is the center of mass of a particle labeled $\alpha$, $\chi_c(\textbf{x},t\CC)$ is teh phase indicator function of the continuous phase, and $\delta$ the Dirac delta function. 
-The superscript $'$ indicate the relative values of a quantity with respect to its phasic mean values, specifically $\bm{\sigma}_c' = \bm{\sigma}_c^0(\textbf{x},t, \CC)  - \bm{\sigma}_c(\textbf{x},t)$, $\textbf{u}_\alpha' = \textbf{u}_\alpha(t,\CC) - \textbf{u}_p(\textbf{x},t)$ and $\textbf{u}_c' = \textbf{u}_c^0(\textbf{x},t, \CC)  -\textbf{u}_c(\textbf{x},t)$, with $\bm{\sigma}_c^0 $, $\textbf{u}_c^0$ and $\textbf{u}_\alpha$ being the local stress of the fluid phase, the local velocity of the fluid phase and the velocity of the center of mass of the particle $\alpha$, respectively. 
-
-
-
-
+To mimic infinitely large homogeneous emulsions we consider a tri periodic cubic domain of length $L$, within which, both phases are subject to the incompressible Navier Stokes equations with the corresponding boundaries conditions. 
 

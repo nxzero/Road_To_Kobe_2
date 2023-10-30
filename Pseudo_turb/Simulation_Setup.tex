@@ -1,21 +1,18 @@
 
 
 
-\subsection{Simulation set-up}
+%\subsection{Simulation set-up}
+\subsection{The Basilisk flow solver}
 Objective : 
 \begin{itemize}
-    \item Present the tri-periodic box within which we add droplets in vof 
+    %\item Present the tri-periodic box within which we add droplets in vof 
     \item Present : Governing equations under single fluid formulation 
     \item Present in details the numerical scheme. 
     \item Finally, present why the numerical coalescence is a problem
 \end{itemize}
 
-To mimic infinitely large homogeneous emulsions we consider a tri periodic cubic domain of length $L$, within which, both phases are subject to the incompressible Navier Stokes equations with the corresponding boundaries conditions. 
-The equations are discretized with a centered scheme on a Staggered multigrid solver from \url{http://basilisk.fr}. 
-The two-phase flow solver use the volume of fluid method. 
-The reconstruction of the interfaces is computed using Piecewise Linear Interface Calculation. 
-For a more detailed description of the solver we refer the reader to \citet{popinet2018numerical}. \todo{Make a more precise description such as in \cite{hidman2023assessing}}
-The single phase formulation of the mass and momentum conservation equation reads as,
+
+The one fluid formulation of the mass and momentum conservation equation reads as,
 \begin{align}
     \label{eq:dt_rho}
     \pddt \rho
@@ -29,16 +26,21 @@ The single phase formulation of the mass and momentum conservation equation read
     \label{eq:dt_urho}
 \end{align}
 respectively.  
-\todo{mettre sous forme adim \citep{hidman2023assessing}}
+\todo{mettre sous forme adim \citep{hidman2023assessing} ? pas besoin}
 In \ref{eq:dt_urho} we introduced : the velocity of the fluid $\textbf{u}$,  the Newtonian stress  tensor $\bm{\sigma} = -p \textbf{I} + 2\mu \textbf{S}$ with $p$ the pressure fields and $\textbf{S}$ the symmetrical part of the velocity gradient.
 The mean averaged density is defined as $\avg{\rho} = \rho_d\phi + (1-\phi) \rho_f$. 
-Then, $\avg{\rho} \textbf{g}$ act as an additional body forces in \ref{eq:dt_urho}  to enforce a net-zero momentum source over the computational domain \citep{bunner2002dynamics}. 
+Then, $\avg{\rho} \textbf{g}$ act as an additional body forces in \ref{eq:dt_urho}  to enforce a net-zero momentum source over the computational domain \citep{bunner2002dynamics} \JL{a presenter apres dans problem statement}. 
 The last term of \ref{eq:dt_urho} account for surface tension force  times the Dirac delta function $\delta(\textbf{x}-\textbf{x}_I)$ since it acts at the interface position $\textbf{x}_I$. 
 Additionally, we solve a transport equation for the approximation of the phase indicator function, i.e. the color function $\alpha_d$, it reads,
 \begin{equation}
     \pddt \alpha_d + \textbf{u} \cdot \nablab \alpha_d =0.
     \label{eq:dt_alpha}
 \end{equation}
+The equations are discretized with a centered scheme on a Staggered multigrid solver from \url{http://basilisk.fr}. 
+The two-phase flow solver use the volume of fluid method. 
+The reconstruction of the interfaces is computed using Piecewise Linear Interface Calculation. 
+For a more detailed description of the solver we refer the reader to \citet{popinet2018numerical}. \todo{Make a more precise description such as in \cite{hidman2023assessing} ? Oui et je ne suis pas sur que la reference de Stephane soit la bonne. Tu peux aussi t'inspirer des papiers de Luc Deike and Co}
+
 In the next section we will see that this equation will be sightly be modified to avoid coalesce.
 
 It is known that with the VOF method, we experience premature coalesce events between droplets \citet[Appendix B]{innocenti2020direct}.

@@ -55,3 +55,4 @@
 \RequirePackage{tikz}
 \RequirePackage{todonotes}
 \setlength{\marginparwidth}{3.5cm}
+\usepackage[bmargin=2.cm,tmargin=2.cm,lmargin=2cm,rmargin=2cm]{geometry}
