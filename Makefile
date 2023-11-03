@@ -15,6 +15,7 @@ proper: clean
 	-rm rapport_bib.pdf
 	-rm Prabu_Nott_notes.pdf
 	-rm IFP_pres.pdf
+	-rm IFP_these.pdf
 	-rm Kobabstract.pdf
 	-rm note_de_calcul.pdf
 	-rm study_on_surface_tension.pdf

@@ -6,53 +6,54 @@ In the following we recall some properties of the ensemble average operator.
 
 Let, $P(\mathscr{C},t)$ be the probability density function that describe the probability of finding the flow in the configuration $\mathscr{C}$ at time $t$, were $\mathscr{C} = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a finite set of all the parameters describing the flow configuration. 
 Then, we define $d\mathscr{P} = P(\mathscr{C},t)d\mathscr{C}$ as the probable number of particles in the incremental region of the particles' phase space $d\mathscr{C}$ around $\mathscr{C}$ at time $t$. 
-It follows from this definition, that the ensemble average of an arbitrary Eulerian property $f$ defined on $\Omega$, yields,
+It follows from this definition, that the ensemble average of an arbitrary local property $f^0$ defined on $\Omega$, yields,
 \begin{equation}
-    \avg{f}(\textbf{x},t)
-    =\int f(\textbf{x},\mathscr{C},t) d\mathscr{P}. 
+    f(\textbf{x},t)
+    = \avg{f^0}(\textbf{x},t)
+    =\int f^0(\textbf{x},\mathscr{C},t) d\mathscr{P}. 
     \label{eq:avg}
 \end{equation}  
-This definition can be applied to Lagrangian properties as well by using the previous formulation, namely $\pavg{q_\alpha} = \int \delta(\textbf{x} - \textbf{x}_\alpha) q_\alpha(\mathscr{C}) d\mathscr{P}. $
+This definition can be applied to Lagrangian properties as well by using the previous formulation, namely $\pavg{q_\alpha}(\textbf{x},t) = \int \delta(\textbf{x} - \textbf{x}_\alpha) q_\alpha(\mathscr{C}) d\mathscr{P}. $
 It is interesting to mention some mathematical properties of the ensemble average operators. 
 For two arbitrary Eulerian fields $f$ and $h$ we have,
 \begin{align}
-    &\avg{f+h} = \avg{f}+\avg{h}, 
-    &\avg{\avg{f}h} = \avg{f}\avg{h}, \nonumber \\
-    &\avg{\pddt f} 
-    = \pddt\avg{f}, 
-    &\avg{\nablabh f}
-    = \nablab \avg{f}. 
+    &\avg{f^0+h^0} = f+h, 
+    &\avg{\avg{f^0}h^0} = gh, \nonumber \\
+    &\avg{\pddt f^0} 
+    = \pddt f, 
+    &\avg{\grad f^0}
+    = \grad f. 
     \label{eq:avg_properties}
 \end{align}
-\todo{Either $P$ or $\Pi$ depend on time acctually. on my whole work i havn't done that}
+\todo{Either $P$ or $\Pi$ depend on time actually. on my whole work i haven't done that}
 
 The two first relations are called the Reynolds' rules, the $3^{th}$ one is the Leibniz' 
 rule and the last one, the Gauss' rule \citep{drew1983mathematical}.
 Additionally, for any phase quantity defined in $\Omega_k$ we introduce the definition, 
 \begin{equation}
-    \phi_k\kavg{f}(\textbf{x},t) = \avg{\chi_k f_k}
+    \phi_k f_k (\textbf{x},t) = \avg{\chi_k f_k^0}
     \label{eq:1_avg}
 \end{equation}
 where, $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$
-and $\kavg{f}$ the conditional average of the field $\chi_k f_k$ on the phase $k$.
+and $f_k$ the conditional average of the field $\chi_k f_k^0$ on the phase $k$.
 Similarly, for the particle fields, we can introduce the particle phase average by,
 \begin{equation}
-     \pnavg{q_\alpha}(\textbf{x},t) = \avg{\delta_\alpha f_\alpha}
+     n_p q_p(\textbf{x},t) = \avg{\delta_\alpha q_\alpha}
      \label{eq:p_avg}
 \end{equation}
 where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of finding a particle center of mass at $\textbf{x}$
-and $\pnnavg{q_\alpha}$ is the conditional average of $q_\alpha$ on the set of particles. 
+and $q_p$ is the conditional average of $q_\alpha$ on the set of particles. 
 We also define the fluctuation of a particle-averaged and phase-averaged quantity by,
 \begin{equation}
-    q_\alpha' = q_\alpha - \pnnavg{q_\alpha}
+    q_\alpha' = q_\alpha - q_p
     \;\;\;\;\;\;\text{and}
     \;\;\;\;\;\;
-    f_k' = f_k - \kavg{f_k},
+    f_k' = f_k^0 - f_k,
     \label{eq:def_fluctu}
 \end{equation}
 respectively. 
-These definitions lead to the following properties, $\oneavg{f'} = 0$ and $\pnnavg{q_\alpha'} =0$. 
-Consequently, the product $\kavg{fg}$ can be decomposed as $\kavg{fg}=\kavg{f}\kavg{g} + \kavg{f'g'}$. 
+These definitions lead to the following properties, $\avg{\chi_1 f'_k} = 0$ and $\avg{\delta_\alpha q_\alpha'} =0$. 
+Consequently, the product $\avg{\chi_k f^0_kg^0_k}$ can be decomposed as $\avg{\chi_k f_k^0g_k^0}=\phi_k f_kg_k + \avg{\chi_k f'_kg'_k}$. 
 These decompositions will play a crucial role in the upcoming section. 
 \todo{more statistical / mathematical comments about covarience }
 
@@ -64,35 +65,35 @@ It is shown that all of these averaging technics remains equivalent \citep{jacks
 
 Applying \ref{eq:avg} on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and considering the properties from \ref{eq:avg_properties} yields the general form of the averaged equations of multiphase flows, namely,
 \begin{align}
-    \pddt \avg{\chi_k f_k}
-    &= \nablabh \cdot \avg{\chi_k \mathbf{\Phi}_k - \chi_k f_k \textbf{u}_k}
-    + \avg{\chi_k \textbf{S}_k}
+    \pddt \avg{\chi_k f_k^0}
+    &= \div \avg{\chi_k \mathbf{\Phi}_k^0 - \chi_k f_k^0 \textbf{u}_k^0}
+    + \avg{\chi_k s_k^0}
     + \avg{\delta_I\left[
-        \mathbf{\Phi}_k
-        + f_k
+        \mathbf{\Phi}_k^0
+        + f_k^0
         \left(
-            \textbf{u}_I
-            - \textbf{u}_k
+            \textbf{u}_I^0
+            - \textbf{u}_k^0
         \right)
     \right]
     \cdot \textbf{n}_k} ,
     \label{eq:avg_dt_chi_f}\\
-    \pddt \avg{\delta_If_I}
+    \pddt \avg{\delta_If_I^0}
     &= 
-    \nablabh \cdot \avg{\delta_I \mathbf{\Phi}_{I||} - \delta_I f_I \textbf{u}_I}
-    +\avg{\delta_I\textbf{S}_I} 
+    \div \avg{\delta_I \mathbf{\Phi}_{I||}^0 - \delta_I f_I^0 \textbf{u}_I^0}
+    +\avg{\delta_Is_I^0} 
     - \avg{\delta_I \Jump{
-    f_k (\textbf{u}_I - \textbf{u}_k)
-    + \mathbf{\Phi}_k
+    f_k^0 (\textbf{u}_I^0 - \textbf{u}_k^0)
+    + \mathbf{\Phi}_k^0
     } }.
     \label{eq:avg_dt_delta_f}
 \end{align}
 Together \ref{eq:avg_dt_chi_f}  and \ref{eq:avg_dt_delta_f} form the \textit{two-fluid} formulation of averaged multiphase flows problem. 
 One can derive the so-called averaged \textit{single-fluid} formulation by applying \ref{eq:avg} on \ref{eq:dt_f} which directly gives, 
 \begin{equation}
-    \pddt \avg{f}
-    = \nablab \cdot \avg{\mathbf{\Phi} - f \textbf{u}}
-    + \avg{\textbf{S}}.
+    \pddt f
+    = \div (\mathbf{\Phi}^0 - f \textbf{u} - \avg{f'\textbf{u}'})
+    + s.
     \label{eq:avg_dt_f}
 \end{equation}
 It is interesting to notice that in Volume Of Fluid method we solve for the fields averaged on a cell volume, thus we actually discretize \ref{eq:avg_dt_f} and solve for the averaged quantities \citep{popinet2018numerical,tryggvason2011direct} instead of directly solving the local transport equations \ref{eq:dt_f}.
@@ -100,28 +101,28 @@ It is interesting to notice that in Volume Of Fluid method we solve for the fiel
 Correspondingly, we take the average of the particle fields equations by using \ref{eq:avg} on \ref{eq:dt_dq_alpha_tot} and \ref{eq:dt_dQ_alpha_tot}, which gives, 
 \begin{multline}
     \pddt \avg{\delta_\alpha (q_\alpha+q_{I_\alpha})}
-    + \nablabh \cdot \avg{\delta_\alpha\textbf{u}_\alpha(q_\alpha+q_{I_\alpha})}
-    = \avg{\delta_\alpha\int_{\Omega_\alpha} \textbf{S}_2 d\Omega}\\
-    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \textbf{S}_I d\Sigma}
-    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left[\mathbf{\Phi}_1 + f_1 (\textbf{u}_I-\textbf{u}_1) \right] \cdot \textbf{n}_2 d\Sigma,}
+    + \div \avg{\delta_\alpha\textbf{u}_\alpha(q_\alpha+q_{I_\alpha})}
+    = \avg{\delta_\alpha\int_{\Omega_\alpha} s_2^0 d\Omega}\\
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} s_I^0 d\Sigma}
+    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left[\mathbf{\Phi}_1^0 + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0) \right] \cdot \textbf{n}_2 d\Sigma,}
     \label{eq:avg_dt_dq_alpha_tot}
 \end{multline}
 \begin{multline}
     \pddt \avg{\delta_\alpha (\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})}
-    + \nablabh \cdot \avg{\delta_\alpha\textbf{u}_\alpha(\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})}
+    + \div \avg{\delta_\alpha\textbf{u}_\alpha(\mathcal{Q}_\alpha+\mathcal{Q}_{I_\alpha})}
     =\\ \avg{\delta_\alpha\int_{\Omega_\alpha} \left(
-        \textbf{r} \textbf{S}_2         
-        + f_2  \textbf{w}_2 
-        - \mathbf{\Phi}_2
+        \textbf{r} s_2^0         
+        + f_2^0  \textbf{w}_2^0 
+        - \mathbf{\Phi}_2^0
     \right) d\Omega}
     + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left(
-        \textbf{r}\textbf{S}_I
-        + f_I \textbf{w}_I
-        - \mathbf{\Phi}_{||}^I
+        \textbf{r}s_I^0
+        + f_I^0 \textbf{w}_I^0
+        - \mathbf{\Phi}_{I||}^0
     \right) d\Sigma}\\
     + \avg{\delta_\alpha\int_{\Sigma_\alpha} \textbf{r} \left[
-        \mathbf{\Phi}_1
-        + f_1 (\textbf{u}_I-\textbf{u}_1)
+        \mathbf{\Phi}_1^0
+        + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0)
     \right]\cdot \textbf{n}_2  d\Sigma}.
     \label{eq:avg_dt_dQ_alpha_tot}
 \end{multline}

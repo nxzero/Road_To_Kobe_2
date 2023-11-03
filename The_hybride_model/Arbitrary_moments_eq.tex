@@ -28,15 +28,15 @@ Proceeding with a similar manner than for the first moment conservation equation
 \begin{multline*}
     \ddt \mathcal{Q}_{i_1\ldots i_n}
     = \sum_{e=1}^{n} \int_{\Omega_\alpha} f  \prod^{n}_{\substack{ m=1 \\   m \neq e}} r_{i_m} w_{i_e}d\Omega
-    +\int_{\Omega_\alpha} \pri{1}{n} \nablabh\cdot\mathbf{\Phi} d\Omega\\
+    +\int_{\Omega_\alpha} \pri{1}{n} \div\mathbf{\Phi} d\Omega\\
     + \int_{\Omega_\alpha} \pri{1}{n} \textbf{S} d\Omega
     +\int_{\Sigma_\alpha} \pri{1}{n} f \left(u^I_k - u_k\right) n_k d\Sigma.
 \end{multline*}
 The second term of this equation can be written,
 \begin{align*}
-    \int_{\Omega_\alpha} \pri{1}{n} \nablabh\cdot\mathbf{\Phi} d\Omega
-    &= \int_{\Sigma_\alpha} \nablabh \cdot \left(\pri{1}{n} \mathbf{\Phi} \right)d\Omega
-    - \int_{\Omega_\alpha} \mathbf{\Phi} \cdot \nablabh \left(\pri{1}{n} \right)d\Omega\\
+    \int_{\Omega_\alpha} \pri{1}{n} \div\mathbf{\Phi} d\Omega
+    &= \int_{\Sigma_\alpha} \div \left(\pri{1}{n} \mathbf{\Phi} \right)d\Omega
+    - \int_{\Omega_\alpha} \mathbf{\Phi} \cdot \grad \left(\pri{1}{n} \right)d\Omega\\
     &= \int_{\Sigma_\alpha} \pri{1}{n} \mathbf{\Phi} \cdot \textbf{n}d\Sigma
     -\sum_{e=1}^{n} \int_{\Omega_\alpha} \mathbf{\Phi}  \prod^{n}_{\substack{ m=1 \\m \neq e}} r_{i_m}  d\Omega
 \end{align*}
@@ -105,7 +105,7 @@ In this appendix we provide a general proof of \ref{eq:scheme_equivalence} betwe
 Let's begin by re-writing the phase averaged equation
 \begin{equation}
         \pddt \avg{\chi_k f_k}
-        = \nablabh \cdot \avg{\chi_k \mathbf{\Phi}_k - \chi_k f_k \textbf{u}_k}
+        = \div \avg{\chi_k \mathbf{\Phi}_k - \chi_k f_k \textbf{u}_k}
         + \avg{\chi_k \textbf{S}_k}
         + \avg{\delta_I\left[
             \mathbf{\Phi}_k
@@ -121,7 +121,7 @@ expanding each term using the relations \ref{eq:f_exp} directly gives,
 \begin{align*}
         0 &=
         - \pddt \expo{f_k} \\
-        &+\nablabh \cdot \expo{(\mathbf{\Phi}_k - f_k \textbf{u}_k)}\\
+        &+\div \expo{(\mathbf{\Phi}_k - f_k \textbf{u}_k)}\\
         &+ \expo{ \textbf{S}_k}\\
         &+ \expoS{\left[
             \mathbf{\Phi}_k
@@ -142,8 +142,8 @@ The third term can be reformulated using the decomposition : $\textbf{u}_2 = \te
 Injecting this formulation in the former equation yields,
 \begin{align}
     & \pddt \expo{f_k} \\
-    &+ \nablabh \cdot \expoU{f_k}\\
-    &= \nablabh \cdot \expo{(\mathbf{\Phi}_k - f_k \textbf{w}_k)}\\
+    &+ \div \expoU{f_k}\\
+    &= \div \expo{(\mathbf{\Phi}_k - f_k \textbf{w}_k)}\\
     &+ \expo{ \textbf{S}_k}\\
     &+ \expoS{\left[
         \mathbf{\Phi}_k
@@ -162,7 +162,7 @@ Finlay we can factor out the gradient operator which gives,
     \left[
         - \partial_t
         \pavg{\int_{\Omega_\alpha} \pri{1}{n}f_k d\Omega}
-        - \nablab \cdot \pavg{\textbf{u}_\alpha \int_{\Omega_\alpha} \pri{1}{n}f_k d\Omega}
+        - \div \pavg{\textbf{u}_\alpha \int_{\Omega_\alpha} \pri{1}{n}f_k d\Omega}
     \right.\\\left.
         +n\pavg{\int_{\Omega_\alpha} \pri{1}{n-1} (\mathbf{\Phi}_k - f_k \textbf{w}_k) d\Omega}
         +\pavg{\int_{\Omega_\alpha} \pri{1}{n} \textbf{S}_k d\Omega}

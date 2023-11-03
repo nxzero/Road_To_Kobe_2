@@ -2,24 +2,230 @@
 We consider a multiphase flow with no-mass transfer, i.e. $\textbf{u}_k=\textbf{u}_I$.
 The interfaces have negligible weight and no interfacial viscosity. 
 
+
+
+\subsubsection{Second decomposition of the flux term}
+In the same spirit as \citet{chu2016flux} we wish to make appear the ensemble averaged bulk stress into the continuous and dispersed phase equations instead of the fluid averaged bulk stress. 
+Thus, for the dispersed phase eq, we first use the expression :
+\begin{align*}
+    \div  (\phi_1 \mathbf{\Phi}_1)
+    + \avg{\delta_I \mathbf{\Phi}_1^0 \cdot \textbf{n}_1}
+    &=
+    \div  (\phi_1 \mathbf{\Phi}_1)
+    + \avg{\delta_I \mathbf{\Phi}_1' \cdot \textbf{n}_1}
+    + \mathbf{\Phi} \cdot  \avg{\delta_I \textbf{n}_1}\\
+    &=
+    \div  (\phi_1 \mathbf{\Phi}_1)
+    + \avg{\delta_I \mathbf{\Phi}_1' \cdot \textbf{n}_1}
+    - \mathbf{\Phi} \cdot  \avg{\grad\chi_1}\\
+    &=
+    \div  \avg{\chi_1 \mathbf{\Phi}_1'}
+    + \avg{\delta_I \mathbf{\Phi}_1' \cdot \textbf{n}_1}
+    + \phi_1 \div \bm{\Phi}\\
+\end{align*}
+If we introduce the decomposition  $\mathbf{\Phi}_1^0 =  \mathbf{\Phi} + \mathbf{\Phi}_1'$.
+Thus, $\avg{\chi_1\mathbf{\Phi}_1'} 
+= \avg{\chi_1 \mathbf{\Phi}_1^0} - \avg{\chi_1\mathbf{\Phi}}
+= \phi_1 (\mathbf{\Phi}_1 - \mathbf{\Phi})
+= \phi_1 ( \phi_2 (\mathbf{\Phi}_1  -  \mathbf{\Phi}_2)  - \phi_I \mathbf{\Phi}_I )$
+\subsection{Chu et al derivation is not good}
+We first have $\bm{\Phi} = \phi_2 \bm{\Phi}_2+\phi_1 \bm{\Phi}_1 + \phi_I \bm{\Phi}_I$. 
+Besides,
+\begin{align*}
+    \div  (\phi_1 \mathbf{\Phi}_1)
+    - \avg{\delta_I \mathbf{\Phi}_1^0 \cdot \textbf{n}_2}
+    &=
+    \div  \mathbf{\Phi}
+    - \div  (\phi_2\mathbf{\Phi}_2)
+    - \div  (\phi_I\mathbf{\Phi}_I)
+    - \avg{\delta_I \mathbf{\Phi}_1^0 \cdot \textbf{n}_2}\\
+    &=
+    \div  \mathbf{\Phi}
+    + \avg{ [(\mathbf{\Phi}_2^0 - \mathbf{\Phi}_1^0) \cdot \textbf{n}_2 - \div \mathbf{\Phi}_I^0]\delta_I}
+    - \avg{ \chi_2 \div \mathbf{\Phi}_2^0  }\\
+    &- \avg{ \mathbf{\Phi}_I^0  \cdot \grad\delta_I}
+    \\
+    &=
+    \div  \mathbf{\Phi}
+    - \avg{ \chi_2 \div \mathbf{\Phi}_2^0  }
+    - \avg{ \mathbf{\Phi}_I^0  \cdot \grad\delta_I}
+    \\
+    &=
+    \phi_1 \div  \mathbf{\Phi}
+    - \avg{ \chi_2 \div \mathbf{\Phi}_2'  }
+    - \avg{ \mathbf{\Phi}_I^0  \cdot \grad\delta_I}
+    \\
+\end{align*}
+Where we have assume a jump conditioon of the form $\sum_k \Jump{\mathbf{\Phi}_k^0} = \nabla\cdot \bm{\Phi}_I^0$ and the definition $\bm{\Phi}'_2 = \bm{\Phi}_2^0 - \bm{\Phi}$.
+
+
+The second term can be reformulated as a series expansion such that 
+$\avg{ \chi_2 \div \mathbf{\Phi}_2^0  } = \pavg{\int_{\Omega_\alpha} \div \mathbf{\Phi}_2^0 d\Omega} - \div\pavg{\int_{\Omega_\alpha} \textbf{r} \div \mathbf{\Phi}_2^0 d\Omega} \ldots $
+Upon using the divergence theorem on these terms we obtain :
+\begin{align*}
+    \div  (\phi_1 \mathbf{\Phi}_1)
+    - \avg{\delta_I \mathbf{\Phi}_1^0 \cdot \textbf{n}_2}
+    &=
+    \div  \mathbf{\Phi}
+    - \avg{ \mathbf{\Phi}_I^0  \cdot \textbf{n}\cdot\grad(\textbf{n} \delta_I)}\\
+    &- \pavg{\int_{\Omega_\Sigma} \textbf{n}_2 \cdot \mathbf{\Phi}_2^0 d\Sigma} 
+    + \div\pavg{\int_{\Sigma_\alpha}  \textbf{n}_2 \cdot \textbf{r}\mathbf{\Phi}_2^0 d\Sigma} 
+    + \div\pavg{\int_{\Omega_\alpha}  \mathbf{\Phi}_2^0 d\Omega} \ldots
+    \\
+\end{align*}
+Again we assumed a relation of the form $\sum_k \Jump{\mathbf{\Phi}_k^0} = \nabla\cdot \bm{\Phi}_I^0$. 
+
+\subsection{Momentum $2^\text{nd}$ decomposition}
+In this formulation the stress of reference is $\bm{\sigma}$.
+Thus, the momentum equaiton takes the form,
+\begin{align*}
+    \pddt (\rho_1\phi_1 \textbf{u}_1 )
+    + \div (\rho_1\phi_1 \textbf{u}_1  \textbf{u}_1
+    + \bm{\sigma}^\text{eff}_1 )
+    &= 
+    \phi_1( \textbf{b}_1  +\div  \bm{\sigma})
+    - n_p\textbf{F}_p \\
+    % \pddt (\phi_2  \rho_2\textbf{u}_2)
+    % + \div (
+    %     \rho_2\phi_2 \textbf{u}_2\textbf{u}_2
+    %     + \bm{\sigma}^\text{eff}_2
+    %     )
+    % &= 
+    %  \phi_2 (
+    %   \textbf{b}_2
+    % + \div \bm{\sigma}_1 )
+    % + n_p\textbf{F}_p ,
+\end{align*}
+With the following definition, 
+\begin{align*}
+    \bm{\sigma}^\text{eff}_1
+    &=\rho_1 \phi_1 \oneavg{\textbf{u}_1'\textbf{u}_1'}
+    - \phi_1 \oneavg{\bm{\sigma}_1'}
+    - n_p\textbf{M}_p 
+    \\
+    \bm{\sigma}^\text{eff}_2
+    &= \rho_2\phi_2 \twoavg{ \textbf{u}_2'\textbf{u}_2'} 
+    + n_p\textbf{M}_p 
+    +\bm{\sigma}_1 - \bm{\sigma},
+\end{align*}
+What is the form of 
+$\phi_1 \oneavg{\bm{\sigma}_1'}
+ = \avg{\chi_1 \bm{\sigma}_1^0}
+ - \phi_1\bm{\sigma}
+$. 
+By considering $\bm{\sigma}_k^0 = -p_k^0 \textbf{I} + \mu_k \textbf{e}_k^0$
+\begin{align*}
+    \phi_1 \oneavg{\bm{\sigma}_1'}
+ &= \avg{\chi_1 (-p_1^0 \textbf{I} + \mu_1 \textbf{e}_1^0)}
+ - \phi_1\avg{-p^0 \textbf{I} + \mu \textbf{e}^0}\\
+ &=  - \phi_1 p_1 \textbf{I} + \phi_1 \mu_1 \textbf{e}_1
+ + \phi_1 p \textbf{I} + \phi_1 \avg{\mu^0 \textbf{e}^0}\\
+ &=  - \phi_1 (p_1 - p) \textbf{I} 
+ + \phi_1 \mu_1 \textbf{e}_1 
+ - \phi_1 \avg{\mu^0 \textbf{e}^0}
+\end{align*}
+The last term is actually, 
+
+Also, 
+\begin{align*}
+    \bm{\sigma}
+    &= -\avg{\sum_k \chi_k p_k} I + \sum_k\mu_k \avg{\chi_k  (\grad\textbf{u}_k^0+(\grad\textbf{u}_k^0)^T)}\\
+    &= -\avg{\sum_k \chi_k p_k} I + \sum_k\mu_k [\nabla (\phi_k\textbf{u}_k)+ \grad (\phi_k\textbf{u}_k)^T
+    + \avg{(\textbf{u}_k^0  \textbf{n}_k +  \textbf{n}_k\textbf{u}_k^0)\delta_I}]
+\end{align*}
+
+\subsubsection{Accurate description of the dispersed phase}
+
+
+By adding \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} we obtain 
+\begin{align*}
+    \pddt \avg{\chi_2 f_2^0 +\delta_If_I^0}
+    &= \div \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0 - \chi_2 f_2^0 \textbf{u}_2^0 - \delta_I f_I^0 \textbf{u}_I^0}
+    + \avg{\chi_2 \textbf{S}_2^0 }\\
+    &+ \avg{\delta_I\textbf{S}_I^0} 
+    + \avg{\delta_I\left[
+        \mathbf{\Phi}_1^0
+        + f_1^0
+        \left(
+            \textbf{u}_I^0
+            - \textbf{u}_1^0
+        \right)
+    \right]
+    \cdot \textbf{n}_2},
+\end{align*}
+To be consistent with \ref{eq:hybrid_avg_dt_chif} we must add and substract $\oneavg{\mathbf{\Phi}}\cdot\grad \avg{\chi_1} = \div  (\phi_1 \oneavg{\mathbf{\Phi}}) - \phi_1 \div \oneavg{\mathbf{\Phi}}$ the remaining terms must be added to the stress which gives,
+\begin{align*}
+    \div \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0}
+    & + \avg{\delta_I \bm{\Phi}_1 \cdot \textbf{n}_2}
+    =
+    \div \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0}
+    + \div \avg{\bm{\Phi}_1 \chi_1} 
+     - \phi_1 \div \bm{\Phi}_1\\
+    &= \div \bm{\Phi}
+     - \phi_1 \div \bm{\Phi}_1
+     =  \div (\bm{\Phi} - \bm{\Phi}_1)
+     + \phi_2 \div \bm{\Phi}_1\\
+\end{align*}
+Under this form the dispersed phase equation reads, 
+\begin{multline*}
+    \pddt (\phi_2 f_2 +a_If_I)
+    + \div (
+        \phi_2 f_2 \textbf{u}_2
+        + \phi_I f_I \textbf{u}_I
+        + \phi_2 \twoavg{f_2'\textbf{u}_2'} 
+        + \phi_I \Iavg{f_I'\textbf{u}_I'}
+        + n_p \textbf{M}_p 
+        )\\
+    = 
+    \div (\mathbf{\Phi}  - \mathbf{\Phi}_1 )
+    + \phi_2 \div \mathbf{\Phi}_1 
+    + \phi_2 \textbf{S}_2
+    + \phi_I \textbf{S}_I
+    + n_p\textbf{F}_p
+\end{multline*}
+It must be noted that $\mathbf{\Phi}  - \mathbf{\Phi}_1 
+= \phi_I\mathbf{\Phi}_I+\phi_2(\mathbf{\Phi}_2  - \mathbf{\Phi}_1) $
+
+If we try with the second form we must subtract and add $\avg{\delta_I \bm{\Phi} \cdot \textbf{n}_2}$, 
+\begin{align*}
+    \div \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0}
+    & + \avg{\delta_I \bm{\Phi} \cdot \textbf{n}_2}
+    =
+    \div \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0 + \bm{\Phi} \chi_1} 
+     - \phi_1 \div \bm{\Phi}\\
+    &=
+    \div \avg{\chi_2 \mathbf{\Phi}_2^0 + \delta_I \mathbf{\Phi}_{I||}^0 - \bm{\Phi} \chi_2} 
+     + \phi_2 \div \bm{\Phi}\\
+    &=
+    \div \left(\phi_2 \mathbf{\Phi}_2 + \phi_I \mathbf{\Phi}_{I||} - (\bm{\Phi}_1 \phi_1 + \bm{\Phi}_2 \phi_2  + \bm{\Phi}_I \phi_I   ) \phi_2 \right) 
+     + \phi_2 \div \bm{\Phi}\\
+    &=
+    \div \left(\phi_2 \mathbf{\Phi}_2 \phi_1 + \phi_I \mathbf{\Phi}_{I||} \phi_1 - \bm{\Phi}_1 \phi_1 \phi_2 \right) 
+     + \phi_2 \div \bm{\Phi}\\
+    &=
+    \div \left(\phi_1 \mathbf{\Phi} - \bm{\Phi}_1 \phi_1 \right) 
+     + \phi_2 \div \bm{\Phi}\\
+\end{align*}
+
+
 \subsection{Momentum equation}
 The momentum equation of the continuous and dispersed phase now reads as, 
 \begin{align*}
     \pddt (\rho_1\phi_1 \textbf{u}_1 )
-    + \nablabh \cdot (\rho_1\phi_1 \textbf{u}_1  \textbf{u}_1
+    + \div (\rho_1\phi_1 \textbf{u}_1  \textbf{u}_1
     + \bm{\sigma}^\text{eff}_1 )
     &= 
-    \phi_1( \textbf{b}_1  +\nablabh \cdot  \bm{\sigma}_1)
+    \phi_1( \textbf{b}_1  +\div  \bm{\sigma}_1)
     - n_p\textbf{F}_p \\
     \pddt (\phi_2  \rho_2\textbf{u}_2)
-    + \nablabh \cdot (
+    + \div (
         \rho_2\phi_2 \textbf{u}_2\textbf{u}_2
         + \bm{\sigma}^\text{eff}_2
         )
     &= 
      \phi_2 (
       \textbf{b}_2
-    + \nablab \cdot \bm{\sigma}_1 )
+    + \div \bm{\sigma}_1 )
     + n_p\textbf{F}_p ,
 \end{align*}
 With the following definition, 
@@ -27,12 +233,12 @@ With the following definition,
     \bm{\sigma}^\text{eff}_1
     &=\rho_1 \phi_1 \oneavg{\textbf{u}_1'\textbf{u}_1'}
     - n_p\textbf{M}_p 
-    + \frac{1}{2}\nablab (n_p \textbf{M}_p^2)
+    + \frac{1}{2}\grad (n_p \textbf{M}_p^2)
     \\
     \bm{\sigma}^\text{eff}_2
     &= \rho_2\phi_2 \twoavg{ \textbf{u}_2'\textbf{u}_2'} 
     + n_p\textbf{M}_p 
-    - \frac{1}{2}\nablab (n_p \textbf{M}_p^2)
+    - \frac{1}{2}\grad (n_p \textbf{M}_p^2)
     +\bm{\sigma}_1 - \bm{\sigma},
 \end{align*}
 \todo{\citep{prosperetti2004average} included teh higher moment of traction}
@@ -72,39 +278,39 @@ The first model is then,
 \begin{align*}
     \phi_1 \textbf{e}_1
     &= \avg{\chi_1 (\nabla \textbf{u}_1^0+(\nabla \textbf{u}_1^0)^T)}\\
-    &= \nabla (\phi_1\textbf{u}_1)+ \nablab (\phi_1\textbf{u}_1)^T
+    &= \nabla (\phi_1\textbf{u}_1)+ \grad (\phi_1\textbf{u}_1)^T
     + \avg{(\textbf{u}_1^0  \textbf{n}_1 +  \textbf{n}_1\textbf{u}_1^0)\delta_I}\\
-    &= \phi_1 (\nabla \textbf{u}_1+ (\nablab \textbf{u}_1)^T)
+    &= \phi_1 (\nabla \textbf{u}_1+ (\grad \textbf{u}_1)^T)
     + \avg{[(\textbf{u}_1^0 - \textbf{u}_1)  \textbf{n}_1 +  \textbf{n}_1(\textbf{u}_1^0 - \textbf{u}_1 )]\delta_I}\\
-    &= \phi_1 (\nabla \textbf{u}_1+ (\nablab \textbf{u}_1)^T)
+    &= \phi_1 (\nabla \textbf{u}_1+ (\grad \textbf{u}_1)^T)
     + \avg{(\textbf{u}_1' \textbf{n}_1 +  \textbf{n}_1\textbf{u}_1')\delta_I}\\
 \end{align*}
 In \citet[chap 9]{ishii2010thermo} they assume,
 \begin{equation}
     \avg{[(\textbf{u}_1^0 - \textbf{u}_1)  \textbf{n}_1 +  \textbf{n}_1(\textbf{u}_1^0 - \textbf{u}_1 )]\delta_I}\\
     = 
-    (\textbf{u}_2 - \textbf{u}_1)  \nablab \phi_1 +  \nablab \phi_1(\textbf{u}_2 - \textbf{u}_1 )\\
+    (\textbf{u}_2 - \textbf{u}_1)  \grad \phi_1 +  \grad \phi_1(\textbf{u}_2 - \textbf{u}_1 )\\
 \end{equation}
 In our case 
 \begin{equation}
     \sym{\avg{(\textbf{u}_1^0 - \textbf{u}_1)  \textbf{n}_1\delta_I } }\\
     = 
     \sym{\avg{\textbf{u}_1^0  \textbf{n}_1\delta_I  } }\\
-    - \sym{\textbf{u}_1 \nablab \phi_1 }\\
+    - \sym{\textbf{u}_1 \grad \phi_1 }\\
 \end{equation}
 the first term can be written, 
 \begin{align}
     \avg{\textbf{u}_1^0  \textbf{n}_1\delta_I  }
     &=
     \pavg{\int_{\Sigma_\alpha} \textbf{u}_1^0  \textbf{n}_1 d\Sigma  }
-    -\nablab \cdot \pavg{\int_{\Sigma_\alpha} \textbf{r}\textbf{u}_1^0  \textbf{n}_1 d\Sigma  }\\
+    -\div \pavg{\int_{\Sigma_\alpha} \textbf{r}\textbf{u}_1^0  \textbf{n}_1 d\Sigma  }\\
     &=
-    - \pavg{\int_{\Omega\alpha} \nablab \textbf{u}_2^0   d\Omega   }
-    + \nablab \cdot \pavg{\int_{\Omega\alpha} \nablab (\textbf{ru}_2^0 )  d\Omega   }\\
+    - \pavg{\int_{\Omega\alpha} \grad \textbf{u}_2^0   d\Omega   }
+    + \div \pavg{\int_{\Omega\alpha} \grad (\textbf{ru}_2^0 )  d\Omega   }\\
     &=
-    - \pavg{\int_{\Omega\alpha} \nablab \textbf{u}_2^0   d\Omega   }
-    + \nablab \cdot\pavg{\int_{\Omega\alpha} \textbf{u}_2^0   d\Omega   }
-    + \nablab \cdot\pavg{\int_{\Omega\alpha} \textbf{r} \nablab (\textbf{u}_2^0 )  d\Omega   }
+    - \pavg{\int_{\Omega\alpha} \grad \textbf{u}_2^0   d\Omega   }
+    + \div\pavg{\int_{\Omega\alpha} \textbf{u}_2^0   d\Omega   }
+    + \div\pavg{\int_{\Omega\alpha} \textbf{r} \grad (\textbf{u}_2^0 )  d\Omega   }
 \end{align}
 where we used the velocity continuity at the interface. 
 
@@ -114,14 +320,14 @@ In fact, it is better to write,
 Also,
 \begin{align}
     \avg{(\textbf{u}_1^0 \textbf{n}_1 +  \textbf{n}_1\textbf{u}_1^0)\delta_I}
-    = \avg{\nablab(\textbf{u}_2^0 \chi_2) +  \nablab(\chi_2\textbf{u}_2^0)^T}
-    - \avg{\chi_2 (\nablab\textbf{u}_2^0 + \nablab(\textbf{u}_2^0 )^T)}
+    = \avg{\grad(\textbf{u}_2^0 \chi_2) +  \grad(\chi_2\textbf{u}_2^0)^T}
+    - \avg{\chi_2 (\grad\textbf{u}_2^0 + \grad(\textbf{u}_2^0 )^T)}
 \end{align}
 thus,
 \begin{align*}
     \phi_1 \textbf{e}_1
-    = \nabla \textbf{u}+ (\nablab \textbf{u})^T
-    - \avg{\chi_2 (\nablab\textbf{u}_2^0 + \nablab(\textbf{u}_2^0 )^T)}
+    = \nabla \textbf{u}+ (\grad \textbf{u})^T
+    - \avg{\chi_2 (\grad\textbf{u}_2^0 + \grad(\textbf{u}_2^0 )^T)}
     = \textbf{e}
     - \phi_2 \textbf{e}_2
 \end{align*}
@@ -143,7 +349,7 @@ Therefore,
     + \mu_1 \textbf{e}
     - \lambda \phi_2 \bm{\sigma}_2\\
 \end{align*}
-with $\textbf{e} = [\nabla \textbf{u}+ (\nablab \textbf{u})^T]$ and 
+with $\textbf{e} = [\nabla \textbf{u}+ (\grad \textbf{u})^T]$ and 
 and $\lambda \mu_2 = \mu_1$.
 Alternatively  this can be written, 
 \begin{align*}
@@ -179,6 +385,11 @@ Finally the bulk stress expression,
     + \bm{\sigma}_2 \phi_2 (1 - \lambda)
     +\phi_I \bm{\sigma}_I \\
 \end{align*}
+
+$
+= \phi_1 (\mathbf{\Phi}_1 - \mathbf{\Phi})
+= \phi_1 ( \phi_2 (\mathbf{\Phi}_1  -  \mathbf{\Phi}_2)  - \phi_I \mathbf{\Phi}_I )$
+
 
 To summary we have, 
 \begin{align*}
@@ -347,7 +558,7 @@ It is caused by buoyancy forces.
 \subsection{Closure for solid Stokes particles. }
 We assume the local equation, 
 \begin{equation*}
-    \nablab \cdot \bm{\sigma}^0_2 = \textbf{b}_2^0
+    \div \bm{\sigma}^0_2 = \textbf{b}_2^0
 \end{equation*}
 valid in the particle phase for which we consider stokes regime. (in agreement with solid mechanics).
 In the case of Stokes particles the closure remaining to find are, 
@@ -394,9 +605,9 @@ and,
 
 For a homogeneous suspension of spherical particle subject to buoyancy force of radius $a$ this last term reads as,
 \begin{equation*}
-    \nablab_j (\pnavg{\mathcal{M}_{kj}  \rho_2  g_i})
-    = \rho_2 4 a^5/9 \delta_{kj} g_i \nablab_j n_p
-    = \rho_2 4 a^5/9 g_i \nablab_k n_p
+    \grad_j (\pnavg{\mathcal{M}_{kj}  \rho_2  g_i})
+    = \rho_2 4 a^5/9 \delta_{kj} g_i \div_j n_p
+    = \rho_2 4 a^5/9 g_i \div_k n_p
     = \mathcal{M}_p  (\textbf{g} \nabla n_p)_{ik}
 \end{equation*}
 Consequently, the bulk stress can be found anti-symmetric solely due to buoyancy force and gradient of the number density of particles. 
@@ -407,7 +618,7 @@ The bluk stress equation now reads,
     \pddt (\rho u_i)
     + \partial_k \cdot (\rho u_i u_k)
     = 
-    \nablab_k\cdot
+    \div_k\cdot
     \left\{
     - \phi_1 p_1 \delta_{ik} 
     + \mu_1 \textbf{e}_{ik}
@@ -424,9 +635,9 @@ Alternatively this equatoin can takes the form,
     \pddt (\rho u_i)
     + \partial_k \cdot (\rho u_i u_k)
     = 
-    - \phi_1 \nablab_k p_1\cdot
-    + \mu_1 \nablab_k \textbf{e}_{ik}
-    + \nablab_k (n_p (\textbf{M}_p )'_{ik})\\
+    - \phi_1 \div_k p_1\cdot
+    + \mu_1 \div_k \textbf{e}_{ik}
+    + \div_k (n_p (\textbf{M}_p )'_{ik})\\
     - \frac{1}{2}\nabla_k\nabla_j (n_p (\textbf{M}_p^2)'_{ijk})
     - \frac{1}{2}\mathcal{M}_p  \textbf{g}_i \Delta n_p 
     + (\phi_1 \rho_1 + \phi_2 \rho_2 )\textbf{g}. 
@@ -442,7 +653,7 @@ To derive the volume conservation equations for the continuous pahse we set $f_{
 Applying this into \ref{eq:hybrid_avg_dt_chif} and using the conditional average definition from \ref{eq:1_avg} gives us,
 \begin{equation}
     \pddt \phi_1
-    + \nablabh \cdot (\phi_1 \oneavg{\textbf{u}})
+    + \div (\phi_1 \oneavg{\textbf{u}})
     = 0.
     \label{eq:hybrid_avg_dt_chi}
 \end{equation}
@@ -454,28 +665,28 @@ Instead,  we study the zeroth order moment of surface $s_{I\alpha} = \int_{\Sigm
 Injecting, $q_\alpha = 1$,$v_\alpha, s_{I\alpha}$ in \ref{eq:avg_dt_dq_alpha_tot} and making use of \ref{eq:p_avg} gives the number density, surface and volume particle-averaged equation, respectively,
 \begin{align}
     \pddt n_p
-    + \nablabh \cdot (\pnavg{\textbf{u}_\alpha})
+    + \div (\pnavg{\textbf{u}_\alpha})
     &= 
     0,
     \label{eq:hybrid_avg_dt_n}\\
     \pddt (\pnavg{s_{I\alpha}})
-    + \nablabh \cdot (\pnavg{s_{I\alpha}\textbf{u}_\alpha})
+    + \div (\pnavg{s_{I\alpha}\textbf{u}_\alpha})
     &= \pnavg{\dot{s}_{I\alpha}},
     \label{eq:hybrid_avg_dt_ds_alpha}\\
     \pddt (\pnavg{v_\alpha})
-    + \nablabh \cdot (\pnavg{v_\alpha\textbf{u}_\alpha})
+    + \div (\pnavg{v_\alpha\textbf{u}_\alpha})
     &= 0,
     \label{eq:hybrid_avg_dt_dv_alpha}\\
 \end{align}
 It is important to understand that the RHS of both \ref{eq:hybrid_avg_dt_n} and \ref{eq:hybrid_avg_dt_dv_alpha} is zeroth due to the consideration of no mass transfer and no changes in topology such as coalesce ad break up.
-However, in the surface equation we must consider a source term of the form $\dot{s}_{I\alpha} = \int_{\Sigma_\alpha} \textbf{u}_I \cdot \textbf{n}(\nablabh \cdot \textbf{n}) d\Sigma$ since the surface of a particle isn't constant under deformation \citep{morel2007surface}. 
+However, in the surface equation we must consider a source term of the form $\dot{s}_{I\alpha} = \int_{\Sigma_\alpha} \textbf{u}_I \cdot \textbf{n}(\div \textbf{n}) d\Sigma$ since the surface of a particle isn't constant under deformation \citep{morel2007surface}. 
 Remark that the system of equation formed by \ref{eq:hybrid_avg_dt_n} to \ref{eq:hybrid_avg_dt_dv_alpha} share some similarities with the moment equations derived using Population Balance Equations (PBE)\citet{KAMP20011363,marchisio2013computational}.
 The last equation is less common, it could also be considered as part of the PBE framework but as it will be presented in the next section it is rather usefull to predict the orientation of the particles. 
 
 To reach a higher description of the dispersed phase we average \ref{eq:dt_M_alpha}, 
 \begin{equation*}
     \pddt (\pnavg{\mathcal{M}^2_\alpha})
-    + \nablab \cdot (
+    + \div (
         \pnavg{\mathcal{M}^2_\alpha\textbf{u}_\alpha}
         )
     = 2\mathcal{S}_\alpha,
@@ -488,18 +699,18 @@ This equation will be useful to capture the particle shape or mass distribution 
 Applying the averaged technics on \ref{eq:dt_p_alpha}, we easily derive the averaged momentum  equation of the phase $1$, namely,
 \begin{equation}
     \pddt (\rho_1\phi_1\oneavg{\textbf{u}})
-    +  \nablabh \cdot (\rho_1\phi_1\oneavg{\textbf{u}} \oneavg{\textbf{u}})
+    +  \div (\rho_1\phi_1\oneavg{\textbf{u}} \oneavg{\textbf{u}})
     = 
      \phi_1 \rho_1 \textbf{g}
     - n_p\textbf{f}_p
-    +  \nablab \cdot \left[
+    +  \div \left[
         \phi_1\oneavg{ \textbf{T}}
         + \mathbf{\Sigma}_P
     \right]
     \label{eq:hybrid_avg_dt_rhou}
 \end{equation}
 with $\textbf{f}_\alpha = \int_{\Sigma_\alpha} \mathbf{T}_1 \cdot \textbf{n}_2d\Sigma$ is the sum of the hydrodynamic forces applied on the particle. 
-Following the method outlined in \citet{chu2016flux} we decompose the force into a large-scale stress contribution $\avg{\textbf{T}}$ and fluctuation stresses $\textbf{T}'_1$, which yields $\textbf{f}_\alpha = v_\alpha \nablab \cdot\avg{\textbf{T}}+ \int_{\Sigma_\alpha} \mathbf{T}'_1 \cdot \textbf{n}_2d\Sigma$ where we assumed $\nablab\cdot\avg{\textbf{T}}$ constant. 
+Following the method outlined in \citet{chu2016flux} we decompose the force into a large-scale stress contribution $\avg{\textbf{T}}$ and fluctuation stresses $\textbf{T}'_1$, which yields $\textbf{f}_\alpha = v_\alpha \div\avg{\textbf{T}}+ \int_{\Sigma_\alpha} \mathbf{T}'_1 \cdot \textbf{n}_2d\Sigma$ where we assumed $\div\avg{\textbf{T}}$ constant. 
 \JL{surement pas que la "drag force". The sum of hydrodynamics forces on the particles. D'ailleurs je pense qu'il manque une etape. Ce terme ne peut pas etre interprete comme une force. Il faut lui soustraire la partie moyennee des contraintes. Cf bouquin de Jackson (section 2.2), Cours de Lhuillier equation (122) (qui fait quelque chose de legerement different) et papier de Zhang et Prosperretti (1997). Car sinon tu peux creer de la contrainte "juste" par effet d'inhomogeneite de fraction volumique. }
 \tb{dans ce cas il faut retrancher aux premier moments hydro le gradient de pression, cela va devenir lourd en notation}
 \tb{LIRE CHU ET Prosperetti et Quan et Prosperetti}
@@ -512,7 +723,7 @@ we obtain the following equation,
 
 \begin{equation}
     \pddt (\pnavg{\rho_2 v_\alpha\textbf{u}_\alpha})
-    + \nablabh \cdot(\pnavg{\rho_2 v_\alpha \textbf{u}_\alpha \textbf{u}_\alpha })
+    + \div(\pnavg{\rho_2 v_\alpha \textbf{u}_\alpha \textbf{u}_\alpha })
     = \pnavg{\rho_2 v_\alpha}\textbf{g}
     + n_p\textbf{f}_p.
     \label{eq:hybrid_avg_dt_dp_alpha}\\
@@ -525,11 +736,11 @@ In order to solve this equation for the averaged velocity, we suggest dividing t
 Then, by applying the particle phase average on this acceleration balance gives, 
 \begin{equation}
     \pddt (\pnavg{\textbf{u}_\alpha})
-    + \nablabh \cdot(\pnavg{\textbf{u}_\alpha}\pnnavg{ \textbf{u}_\alpha })
+    + \div(\pnavg{\textbf{u}_\alpha}\pnnavg{ \textbf{u}_\alpha })
     = 
     \pnavg{\frac{1}{v_\alpha\rho_2}\textbf{f}_\alpha}
     + n_p \textbf{g}
-    - \nablabh \cdot(\pnavg{\textbf{u}'_\alpha \textbf{u}'_\alpha })
+    - \div(\pnavg{\textbf{u}'_\alpha \textbf{u}'_\alpha })
     \label{eq:hybrid_avg_dt_dp2_alpha}
 \end{equation}
 where $\pnavg{\textbf{u}'_\alpha \textbf{u}'_\alpha }$ and $\pnavg{(v_\alpha\rho_2)^{-1} \textbf{f}_\alpha }$, correspond respectively to the Reynolds stress tensor and the inverse mass weighted drag force term \citep{jackson1997locally}. 
@@ -547,14 +758,14 @@ Then, the averaged conservation equation for $\mu_\alpha$, $\mathcal{S}_\alpha$ 
 It reads,
 \begin{equation}
     \pddt (\pnavg{\mu_\alpha})
-    + \nablabh\cdot (\pnavg{  \textbf{u}_\alpha \mu_\alpha})
+    + \div (\pnavg{  \textbf{u}_\alpha \mu_\alpha})
     =  
     \pnavg{\textbf{t}_\alpha},
     \label{eq:hybrid_avg_dt_dmu_alpha}
 \end{equation}
 \begin{multline}    
     \pddt (\pnavg{\mathcal{S}_\alpha})
-    + \nablabh\cdot (\pnavg{  \textbf{u}_\alpha \mathcal{S}_\alpha})
+    + \div (\pnavg{  \textbf{u}_\alpha \mathcal{S}_\alpha})
     =  \pnavg{\int_{\Omega_\alpha} \left(
         \rho_2\textbf{w}_2 \textbf{w}_2
         - \mathbf{T}_2
@@ -565,7 +776,7 @@ It reads,
 \end{multline}
 \begin{multline}
     \pddt (\pnavg{D_\alpha})
-    + \nablabh\cdot (\pnavg{  \textbf{u}_\alpha D_\alpha})
+    + \div (\pnavg{  \textbf{u}_\alpha D_\alpha})
     = \pnavg{\int_{\Omega_\alpha} \left(
         \rho_2 \textbf{w}_2 \cdot \textbf{w}_2
         - \mathbf{T}_2 : \textbf{I}
@@ -626,7 +837,7 @@ The closure for the averaged stress tensor appearing in \ref{eq:hybrid_avg_dt_rh
 
 
 
-Notice that the bulk velocity appearing in the above expression is in fact, $\avg{\textbf{u}} = \phi_1\oneavg{u} + \pnavg{\textbf{u}_\alpha} + \nablab\cdot (\pnavg{\mathcal{P}_\alpha})$.
+Notice that the bulk velocity appearing in the above expression is in fact, $\avg{\textbf{u}} = \phi_1\oneavg{u} + \pnavg{\textbf{u}_\alpha} + \div (\pnavg{\mathcal{P}_\alpha})$.
 Thus, the moment of momentum appear explicitly in the closure of the stress in agreement with \citet{zhang1997momentum}.  
 Regarding the drag force, in  \citet{brenner1963resistance} they demonstrate that in low but finite inertia for an arbitrary shaped particle it could be expressed as,
 \begin{equation}
@@ -700,7 +911,7 @@ Remark that  using the definition of $\mathcal{I}_\alpha$ yields a much simpler 
 It is then straightforward to show that from \ref{eq:hybrid_avg_dt_dM_alpha},\ref{eq:S_definition} and \ref{eq:M_definition} we obtain the second order moment of volume conservation,
 \begin{equation}
     \pddt (\pnavg{\textbf{pp}})
-    + \nablab \cdot (
+    + \div (
         \pnavg{\textbf{pp}\textbf{u}_\alpha}
         )
     = 
@@ -721,7 +932,7 @@ Here $\avg{\textbf{E}}$ and $\avg{\Omega}$ are the symmetric and antisymmetric p
 Injecting \ref{eq:stokes_closure} into \ref{eq:hybrid_avg_dt_pp} directly gives,
 \begin{multline}
     \pddt (\pnavg{\textbf{pp}})
-    + \nablab \cdot (
+    + \div (
         \pnavg{\textbf{pp}\textbf{u}_\alpha}
         )
     = 
@@ -744,7 +955,7 @@ An equation for the rotation rate $\pnnavg{\omega_\alpha}$ can be obtained by, m
         - \textbf{I}\frac{M_\alpha^{||} + M_\alpha^\bot}{M_\alpha^{||} - M_\alpha^\bot}
     \right)\left[
         \pddt (\pnavg{\omega_\alpha})
-        + \nablab \cdot (
+        + \div (
             \pnavg{\omega_\alpha}\pnnavg{\textbf{u}_\alpha}
             + \pnavg{\omega_\alpha'\textbf{u}_\alpha'})
         \right]\\
@@ -797,7 +1008,7 @@ In a pure rigorous manner the equivalent bulk stress of the suspension yield,
     \avg{\textbf{T}} = 
     \phi_1 \oneavg{\textbf{T}} 
     + \pnavg{\int_{\Omega_\alpha} \mathbf{T}_2 d\Omega}
-    -\nablab\cdot \pnavg{\int_{\Omega_\alpha} \textbf{r}\mathbf{T}_2 d\Omega}
+    -\div \pnavg{\int_{\Omega_\alpha} \textbf{r}\mathbf{T}_2 d\Omega}
     + \ldots
 \end{equation*}
 Where the first and second terms on the RHS are given by \ref{eq:T_definition} and \ref{eq:T2_definition}, and the last one can be obtained with the third order moment of momentum equations. 
@@ -840,7 +1051,7 @@ Now let consider the momentum conservation of slightly deformable particles.
 First, the velocity field inside the particles, is assumed linear and incompressible, such that $\textbf{u}(\textbf{y}_\alpha) = \textbf{u}_\alpha + \mathcal{L}_\alpha \cdot \textbf{r}$ where the second order tensor  $\mathcal{L}_\alpha= \textbf{e}_\alpha+ \boldsymbol{\omega}$, with $\textbf{e}$ and $\boldsymbol{\omega}$ are symmetric and skew-symmetric tensors, respectively.
 It directly follows from the expression of the velocity : $\mathcal{P}_\alpha = \int_{\Omega_\alpha} \textbf{r}\textbf{u} d\Omega = \mathcal{L}_\alpha\cdot \mathcal{M}$
 
-The constitutive equation of the stress, $\textbf{T}_2$, within the particle phase can be written such as $\textbf{T}_2 = \mathbb{C} : \textbf{e}_2$ for elastic materials, with $\mathbb{C}$ the fourth order stiffness tensor and $ \textbf{e}_2 = \frac{1}{2}\left(\nablab\textbf{u}_2+(\nablab\textbf{u}_2)^T\right)$ is the rate of strain symmetric tensor.
+The constitutive equation of the stress, $\textbf{T}_2$, within the particle phase can be written such as $\textbf{T}_2 = \mathbb{C} : \textbf{e}_2$ for elastic materials, with $\mathbb{C}$ the fourth order stiffness tensor and $ \textbf{e}_2 = \frac{1}{2}\left(\grad\textbf{u}_2+(\grad\textbf{u}_2)^T\right)$ is the rate of strain symmetric tensor.
 Making use of the internal velocity expression yield directly the relation, $\textbf{e}_2=\textbf{e}_\alpha\cdot$ in $\Omega_\alpha$.
 
 We know that the deformation of the particles will not have an explicit impact on the linear conservation equations.
