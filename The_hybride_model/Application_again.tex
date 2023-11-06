@@ -1,0 +1,112 @@
+
+Finally, we now expose the hybrid model for fluid particles. 
+As stated before we do not consider mass transfer nor energy accumulation at the interface. 
+
+\subsection{The averaged model}
+
+Using the generic formulation \ref{eq:hybrid_avg_dt_chif} and the local expression of the mass, momentum and total energy expression, i.e. : \ref{eq:dt_rho},\ref{eq:dt_rhou_k} and \ref{eq:dt_rhoE_k} we easily find the averaged form of these equations as, 
+
+\begin{align}
+    \label{eq:dt_&vg_rho}
+    \pddt (\phi_k \rho_k)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_k
+    )
+    &= 
+    0\\
+    \label{eq:dt_&vg_rhou_k}
+    \pddt (\phi_k \rho_k\textbf{u}_k)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_k\textbf{u}_k
+        - \bm{\sigma}_k^\text{eq}
+    )
+    &= 
+    \phi_k \rho_k \textbf{g} 
+    +  \avg{\delta_I \bm{\sigma}_k^0 \cdot \textbf{n}_k}\\
+    \label{eq:dt_&vg_rhoE_k}
+    \pddt (\phi_k\rho_kE_k)  
+    + \div (
+        \phi_k\rho_kE_k\textbf{u}_k
+        + \bm{q}_k^\text{eq}
+        - \textbf{u}_k \cdot \bm{\sigma}_k^\text{eq}
+        % - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0 
+        % + \textbf{q}_k^0
+        )
+    &= 
+    \phi_k \rho_k\textbf{u}_k \cdot \textbf{g} 
+    + \avg{\delta_I (\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0)\cdot \textbf{n}_k}
+\end{align} 
+\todo{Is this formulation usefull for the NRJ equaiton ? }
+where we have defined, 
+\begin{align*}
+    &\bm{\sigma}_k^\text{eq}
+    = \phi_k\rho_k (
+        \bm{\sigma}_k%- n_p \textbf{M}_p
+        - \kavg{\textbf{u}_k'\textbf{u}_k'})  
+    &\textbf{q}_k^\text{eq}
+    = \phi_k\rho_k \kavg{\textbf{u}_k' e_k' + \textbf{u}_k' k_k} - \phi_k\kavg{\textbf{u}_k' \cdot \bm{\sigma}_k^0}
+    + \phi_k\textbf{q}_k \\
+\end{align*}
+Note that the phase averaged energy equation can be further decompose following, 
+\begin{align*}
+    E_1 = e_1 + k_1 + u_k^2/2\\
+    % E_1'= e^0_1 + (u_1^0)^2 - (e_1 + k_1 + u_k^2/2) = 
+    % e_1' + (u_1^0)^2/2 - (k_1 + u_k^2/2)\\
+    % \oneavg{E_1'\textbf{u}_1'}
+    % = 
+    % \oneavg{\textbf{u}_1' e_1'}
+    % + \oneavg{u_1'[(u_1^0)^2/2 - u_k^2/2] }
+    % - \oneavg{u_1' k_1} \\
+    % \oneavg{E_1'\textbf{u}_1'}
+    % = 
+    % \oneavg{\textbf{u}_1' e_1'}
+    % + \oneavg{\textbf{u}_1' \textbf{u}_1'} \cdot \textbf{u}_1 
+    % + \oneavg{u_1'(u_1^0)^2/2 }
+    % - \oneavg{u_1' k_1} \\
+    \oneavg{E_1^0\textbf{u}_1'}
+    = 
+    E_1\oneavg{\textbf{u}_1'}
+    + \oneavg{E_1'\textbf{u}_1'}
+    = 
+    \oneavg{\textbf{u}_1' e_1^0}
+    + \textbf{u}_1 \cdot \oneavg{\textbf{u}_1'  \textbf{u}_1'}
+    +\oneavg{\textbf{u}_1' k_1 }\\
+    - \avg{\chi_k(\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0)}
+    =- \phi_k (\textbf{u}_k \cdot \bm{\sigma}_k - \textbf{q}_k) 
+    - \phi_k \kavg{\textbf{u}_k' \cdot \bm{\sigma}_k^0}
+\end{align*}
+where $K_1$ is the pseudo-turbulent kinetic energy defined such as, $\phi_1 k_1 = \avg{\chi_1 (u_1')^2/2}$. 
+The Macroscopic kinetic energy equation can be obtain by taking the dot product with $\textbf{u}_k$. 
+\begin{align}
+    \pddt (\phi_k \rho_ku_k^2/2)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_ku_k^2/2
+        - \textbf{u}_k \cdot \bm{\sigma}_k^\text{eq}
+    )
+    &= 
+    - \bm{\sigma}_k^\text{eq} : \grad \textbf{u}_k
+    + \phi_k \rho_k \textbf{u}_k\cdot \textbf{g} 
+    +  \textbf{u}_k\cdot \avg{\delta_I \bm{\sigma}_k^0 \cdot \textbf{n}_k}\\
+    \pddt (\phi_k\rho_kk_k)  
+    + \div (
+        \phi_k\rho_kk_k\textbf{u}_k
+        + \phi_k\rho_k \kavg{\textbf{u}_k' k_k} 
+        - \phi_k\kavg{\textbf{u}_k' \cdot \bm{\sigma}_k^0}
+        )
+    &= 
+    - \avg{\chi_k\bm{\sigma}_k^0 : \grad \textbf{u}_k^0}
+    + \bm{\sigma}_k^\text{eq} : \grad \textbf{u}_k
+    + \avg{\delta_I \textbf{u}_k' \cdot \bm{\sigma}_k^0 \cdot \textbf{n}_k}\\
+    \pddt (\phi_k\rho_ke_k)  
+    + \div (
+        \phi_k \rho_ke_k\textbf{u}_k
+        +
+        \phi_k \rho_k\oneavg{e_k'\textbf{u}_k'}
+        + \phi_k\rho_k\textbf{q}_k
+        )
+    &= 
+    \avg{\chi_k\bm{\sigma}_k^0 : \grad \textbf{u}_k^0}
+    - \avg{\delta_I \textbf{q}_k^0 \cdot \textbf{n}_k} 
+\end{align}
+
+
