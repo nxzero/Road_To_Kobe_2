@@ -1,0 +1,130 @@
+\documentclass[12pt]{My_preprint}
+
+\usetikzlibrary{arrows.meta,
+                chains,
+                positioning,
+                shapes.geometric}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\size}{0.22\textwidth}
+\newcommand{\avg}[1]{\left<#1\right>}
+\renewcommand{\avg}[1]{\left<#1\right>}
+\newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
+\newcommand{\Exp}[1]{\overline{\overline{#1}}}
+\newcommand{\davg}[1]{\left<#1\right>_d}
+\newcommand{\Iavg}[1]{\left<#1\right>_I}
+\newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
+% \newcommand{\pnavg}[1]{n\left<#1\right>_p}
+
+\newcommand{\avgcond}[1]{\overline{#1}}
+% \renewcommand{\avgcond}[1]{\left{#1}}
+\newcommand{\kavg}[1]{\avgcond{#1}^k}
+\newcommand{\cavg}[1]{\avgcond{#1}^c}
+\newcommand{\Tavg}[1]{\avgcond{#1}^T}
+\newcommand{\Xavg}[1]{\avgcond{#1}^X}
+\newcommand{\TXavg}[1]{\Tavg{\Xavg{#1}}}
+\newcommand{\pnnavg}[1]{\avgcond{#1}^{p}}
+\newcommand{\pnavg}[1]{n_p\pnnavg{#1}}
+\newcommand{\oneavg}[1]{\avgcond{#1}^1}
+\newcommand{\twoavg}[1]{\avgcond{#1}^2}
+\newcommand{\smallavg}[2]{\avgcond{#1}^{#2}}
+\newcommand{\sym}[1]{\left(#1\right)^{\text{Sym}}}
+\newcommand{\CC}{\mathscr{C}}
+\newcommand{\PP}{\mathscr{P}}
+\newcommand{\nstavg}[1]{\overline{#1}^\text{nst}}
+\newcommand{\nstrelavg}[1]{\nstavg{#1}_\text{rel}}
+\newcommand{\mavg}[1]{\left<#1\right>_m}
+\newcommand{\gavg}[2][\gamma]{\left<#2\right>_{#1}}
+\newcommand{\partials}[1]{\partial_{i_1}\partial_{i_2}\ldots\partial{i_{#1}}}
+\newcommand{\partialp}[2]{ \prod_{m=#1}^{#2} \partial_{i_m}}
+\newcommand{\hatpartialp}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{j_m}}
+\newcommand{\hatpartialpi}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{i_m}}
+\newcommand{\pri}[2]{ \prod_{m=#1}^{#2} r_{i_m}}
+\newcommand{\prj}[2]{ \prod_{m=#1}^{#2} r_{j_m}}
+\newcommand{\nablab}{\mathbf{\nabla}}
+\newcommand{\nablabh}{\nablab}
+\newcommand{\nablabhI}{\nablab_{||}}
+\newcommand{\ddt}{\frac{d}{d t}}
+\newcommand{\pddt}{\frac{\partial}{\partial t}}
+\renewcommand{\pddt}{\partial_t}
+\newcommand{\norm}[1]{\hat{#1}}
+\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
+
+%%% Utiliser pour les commentaires
+\newcommand{\JL}[1]{\color{red}#1\color{black}}
+\newcommand{\SP}[1]{\color{green}#1\color{black}}
+\newcommand{\tb}[1]{\color{blue}#1\color{black}}
+\newcommand{\NF}[1]{\tb{#1}}
+
+\renewcommand{\size}[1]{0.3\textwidth}
+\newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Sigma_\alpha} \pri{1}{#1}#2 d\Sigma}}
+
+
+% \newcommand{\numref}[1]{\ref{#1}}
+\renewcommand{\ref}[1]{\autoref{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\title{Reynolds stress and inertial interphase force in buoyant emulsion.}
+%\title{Buoyancy-driven motion of inertial monodisperse suspension of drops}
+%\title{Velocity and nearest particle statistics %Buoyancy-driven motion of inertial monodisperse suspension of drops}
+\title{Microstucture in a rising monodisperse suspension of drops}
+
+\author[1,2]{Nicolas Fintzi}
+\author[2]{Stephane Popinet}
+\author[1]{Jean-Lou Pierson}
+\affil[1]{IFP Energies Nouvelles, Rond-point de l’changeur de Solaize, 69360 Solaize}
+\affil[2]{Sorbonne Université, Institut Jean le Rond d’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
+\normalmarginpar
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+
+
+
+\section{Introduction}
+
+Even in the Stokes flow regime and in the limit of very dilute flows the calculation of the the sedimentation velocity of spherical inclusion is still a matter of research.  Batchelor in this seminal work showed by assuming that the particle where randomly distributed that the velocity of the particle was $U/U_0=1-\phi$, by making use oa re normalization technique to avoid the effect of non-convergin integral. This results has been extended to drops by wachollder and ... finding ... Over the past decades many experimental works have tried to find he relative motion between the particle and
+the fluid phases result in microstructures affecting the sedimentation
+velocity. En fiat cichocky en utilisant n-body formulation montre visiblement qu'il ya une vrai micro-strucutre. This question was raise first by Saffman whco by using the formalism of distribution showed the dramatic difference between the thrrre different configurations..."
+Fait par wachholder etc As a result most of the study make use of the empirical correlation given by Richardson Zaki
+
+
+
+
+
+
+\section{Nearest particle statistics}
+\input{Pseudo_turb/configuration.tex}
+
+
+
+% \input{Pseudo_turb/PFP.tex}
+% \input{Pseudo_turb/Stresslet.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusion}
+%\input{Pseudo_turb/Conclusion.tex}
+
+\section*{Acknowledgement}
+
+\appendix
+
+
+
+
+
+\bibliography{Bib/bib_bulles.bib}
+
+
+
+\end{document}
