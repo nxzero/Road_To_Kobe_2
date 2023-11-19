@@ -1,0 +1,193 @@
+In this study we use the statistical approach to derive the averaged equations of conservation. 
+Specifically, we use the method described in \citet{zhang2021ensemble} which extended the ensemble average definition of \citet{batchelor1972sedimentation}. 
+In the following we recall some properties of the ensemble average operator. 
+
+\subsection{Ensemble average}
+
+Let, $P(\mathscr{C},t)$ be the probability density function that describe the probability of finding the flow in the configuration $\mathscr{C}$ at time $t$, were $\mathscr{C} = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a finite set of all the parameters describing the flow configuration. 
+Then, we define $d\mathscr{P} = P(\mathscr{C},t)d\mathscr{C}$ as the probable number of particles in the incremental region of the particles' phase space $d\mathscr{C}$ around $\mathscr{C}$ at time $t$. 
+It follows from this definition, that the ensemble average of an arbitrary local property $f^0$ defined on $\Omega$, yields,
+\begin{equation}
+    f(\textbf{x},t)
+    = \avg{f^0}(\textbf{x},t)
+    =\int f^0(\textbf{x},\mathscr{C},t) d\mathscr{P}. 
+    \label{eq:avg}
+\end{equation}  
+This definition can be applied to Lagrangian properties as well by using the previous formulation, namely $\pavg{q_\alpha}(\textbf{x},t) = \int \delta(\textbf{x} - \textbf{x}_\alpha) q_\alpha(\mathscr{C}) d\mathscr{P}. $
+It is interesting to mention some mathematical properties of the ensemble average operators. 
+For two arbitrary Eulerian fields $f$ and $h$ we have,
+\begin{align}
+    &\avg{f^0+h^0} = f+h, 
+    &\avg{\avg{f^0}h^0} = gh, \nonumber \\
+    &\avg{\pddt f^0} 
+    = \pddt f, 
+    &\avg{\grad f^0}
+    = \grad f. 
+    \label{eq:avg_properties}
+\end{align}
+\todo{Either $P$ or $\Pi$ depend on time actually. on my whole work i haven't done that}
+
+The two first relations are called the Reynolds' rules, the $3^{th}$ one is the Leibniz' 
+rule and the last one, the Gauss' rule \citep{drew1983mathematical}.
+Additionally, for any phase quantity defined in $\Omega_k$ we introduce the definition, 
+\begin{equation}
+    \phi_k f_k (\textbf{x},t) = \avg{\chi_k f_k^0}
+    \label{eq:1_avg}
+\end{equation}
+where, $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$
+and $f_k$ the conditional average of the field $\chi_k f_k^0$ on the phase $k$.
+Similarly, for the particle fields, we can introduce the particle phase average by,
+\begin{equation}
+     n_p q_p(\textbf{x},t) = \avg{\delta_\alpha q_\alpha}
+     \label{eq:p_avg}
+\end{equation}
+where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of finding a particle center of mass at $\textbf{x}$
+and $q_p$ is the conditional average of $q_\alpha$ on the set of particles. 
+We also define the fluctuation of a particle-averaged and phase-averaged quantity by,
+\begin{equation}
+    q_\alpha' = q_\alpha - q_p
+    \;\;\;\;\;\;\text{and}
+    \;\;\;\;\;\;
+    f_k' = f_k^0 - f_k,
+    \label{eq:def_fluctu}
+\end{equation}
+respectively. 
+These definitions lead to the following properties, $\avg{\chi_1 f'_k} = 0$ and $\avg{\delta_\alpha q_\alpha'} =0$. 
+Consequently, the product $\avg{\chi_k f^0_kg^0_k}$ can be decomposed as $\avg{\chi_k f_k^0g_k^0}=\phi_k f_kg_k + \avg{\chi_k f'_kg'_k}$. 
+These decompositions will play a crucial role in the upcoming section. 
+\todo{more statistical / mathematical comments about covarience }
+
+The ensemble average method is one among others, such as the volume average method\citep{jackson1997locally} or the time average
+\citep{ishii2010thermo}.
+It is shown that all of these averaging technics remains equivalent \citep{jackson1997locally}. 
+
+
+\subsection{The averaged model}
+
+Using the generic formulation \ref{eq:hybrid_avg_dt_chif} and the local expression of the mass, momentum and total energy expression, i.e. : \ref{eq:dt_rho},\ref{eq:dt_rhou_k} and \ref{eq:dt_rhoE_k} we easily find the averaged form of these equations as, 
+
+\begin{align}
+    \label{eq:dt_&vg_rho}
+    \pddt (\phi_k \rho_k)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_k
+    )
+    &= 
+    0\\
+    \label{eq:dt_&vg_rhou_k}
+    \pddt (\phi_k \rho_k\textbf{u}_k)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_k\textbf{u}_k
+        - \bm{\sigma}_k^\text{eq}
+    )
+    &= 
+    \phi_k \rho_k \textbf{g} 
+    +  \avg{\delta_I \bm{\sigma}_k^0 \cdot \textbf{n}_k}\\
+    \label{eq:dt_&vg_rhoE_k}
+    \pddt (\phi_k\rho_kE_k)  
+    + \div (
+        \phi_k\rho_kE_k\textbf{u}_k
+        + \bm{q}_k^\text{eq}
+        - \textbf{u}_k \cdot \bm{\sigma}_k^\text{eq}
+        % - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0 
+        % + \textbf{q}_k^0
+        )
+    &= 
+    \phi_k \rho_k\textbf{u}_k \cdot \textbf{g} 
+    + \avg{\delta_I (\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0)\cdot \textbf{n}_k}
+\end{align} 
+\todo{Is this formulation usefull for the NRJ equaiton ? }
+where we have defined, 
+\begin{align*}
+    &\bm{\sigma}_k^\text{eq}
+    = \phi_k (
+        \bm{\sigma}_k%- n_p \textbf{M}_p
+        - \rho_k\kavg{\textbf{u}_k'\textbf{u}_k'})  
+    &\textbf{q}_k^\text{eq}
+    =\textbf{q}_k^\text{e} +\textbf{q}_k^\text{k}  \\
+    &\textbf{q}_k^\text{e}
+    = \phi_k\rho_k \kavg{\textbf{u}_k' e_k'} 
+    + \phi_k\textbf{q}_k 
+    &\textbf{q}_k^\text{k}
+    = \phi_k\rho_k \kavg{\textbf{u}_k' k_k} 
+    - \phi_k\kavg{\textbf{u}_k' \cdot \bm{\sigma}_k^0}
+\end{align*}
+Note that the phase averaged energy equation can be further decompose following, 
+\begin{align*}
+    E_1 = e_1 + k_1 + u_k^2/2
+\end{align*}
+where $K_1$ is the pseudo-turbulent kinetic energy defined such as, $\phi_1 k_1 = \avg{\chi_1 (u_1')^2/2}$. 
+The Macroscopic kinetic energy equation can be obtain by taking the dot product with $\textbf{u}_k$. 
+\begin{align}
+    \pddt (\phi_k \rho_ku_k^2/2)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_ku_k^2/2
+        - \textbf{u}_k \cdot \bm{\sigma}_k^\text{eq}
+    )
+    &= 
+    - \bm{\sigma}_k^\text{eq} : \grad \textbf{u}_k
+    + \phi_k \rho_k \textbf{u}_k\cdot \textbf{g} 
+    +  \textbf{u}_k\cdot \avg{\delta_I \bm{\sigma}_k^0 \cdot \textbf{n}_k}\\
+    \pddt (\phi_k\rho_kk_k)  
+    + \div (
+        \phi_k\rho_kk_k\textbf{u}_k
+        + \textbf{q}_k^\text{k} 
+        )
+    &= 
+    - \avg{\chi_k\bm{\sigma}_k^0 : \grad \textbf{u}_k^0}
+    + \bm{\sigma}_k^\text{eq} : \grad \textbf{u}_k
+    + \avg{\delta_I \textbf{u}_k' \cdot \bm{\sigma}_k^0 \cdot \textbf{n}_k}\\
+    \pddt (\phi_k\rho_ke_k)  
+    + \div (
+        \phi_k \rho_ke_k\textbf{u}_k
+        +
+        \textbf{q}_k^\text{e} 
+        )
+    &= 
+    \avg{\chi_k\bm{\sigma}_k^0 : \grad \textbf{u}_k^0}
+    - \avg{\delta_I \textbf{q}_k^0 \cdot \textbf{n}_k} 
+\end{align}
+
+
+make appear the PFP and first order moment.  
+Transport equation for $e_{ij}e_{ij}$ regarder pope turbulent flow section (1.4) chapter 6 Aussi le livre de morel + le cluzeau. 
+
+These equations must be completed by the averaged interfacial transport equations, namely,
+\begin{align}
+    \label{eq:dt_uI}
+    - \div \avg{\delta_I \textbf{I}_{||} \gamma}
+    = \avg{\delta_I \Jump{\bm{\sigma}^0_k}}\\
+    \label{eq:dt_gamma}
+    \pddt \avg{\delta_I \gamma}
+    - \div \avg{\delta_I \gamma (\textbf{u}_{I}^0 \cdot \textbf{n})\textbf{n} }
+    = \avg{\delta_I \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}^0_k + \textbf{q}_k^0}}\\
+\end{align}
+multiplying \ref{eq:dt_uI} by $\textbf{u}_I$ gives, 
+\begin{align}
+    - \textbf{u}_I \cdot \avg{\delta_I  \gamma \textbf{n} (\div \textbf{n})}
+    = \avg{\delta_I \Jump{\textbf{u}_I \cdot \bm{\sigma}^0_k}}\\
+\end{align}
+Therefore, taking the difference of this equation wit the previous one yields a fluctuation term thus both equation cannot be isolated  ??? 
+\tb{must be isolated before but it works}
+
+
+
+\tb{\subsection{Some comments on the two-fluid model}
+
+At the coarse-grained level, the two-fluid model is made of four main equations
+(one mass, one momentum and two energy equations) for each of the two phases
+(or the two components) of the mixture. To be operational that 8-equations
+model must be presented in closed form, i.e. it must involve not more (and
+not less) than eight unknowns. We will not insist on that closure issue and
+instead will focus on some weaknesses of the two-fluid model concerning the
+description of the particulate phase. At first it must be noted that the two-fluid
+model does not really distinguish between the two phases, as witnessed by the
+”symmetry” k = 1 vs k = 2 of the equations presented above. That symmetry
+is not physically tenable and some questions arise : is the particulate phase
+able to sustain a heat flux q 2 throughout the suspension without collisions or
+permanent contacts between the particles ? Is the stress σ 2 really able to have
+a role in the momentum balance of the particles ? One can also wonder why the
+two-fluid model has no consideration for the angular momentum of the particles
+? For all these reasons we will develop in the following section a kinetic model
+specially devoted to the particulate phase of the mixture.
+}

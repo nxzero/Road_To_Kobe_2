@@ -1,11 +1,4 @@
-
-Finally, we now expose the hybrid model for fluid particles. 
-As stated before we do not consider mass transfer nor energy accumulation at the interface. 
-
-\subsection{The averaged model}
-
-Using the generic formulation \ref{eq:hybrid_avg_dt_chif} and the local expression of the mass, momentum and total energy expression, i.e. : \ref{eq:dt_rho},\ref{eq:dt_rhou_k} and \ref{eq:dt_rhoE_k} we easily find the averaged form of these equations as, 
-
+\subsection{Continuous phase}
 \begin{align}
     \label{eq:dt_&vg_rho}
     \pddt (\phi_k \rho_k)  
@@ -21,8 +14,8 @@ Using the generic formulation \ref{eq:hybrid_avg_dt_chif} and the local expressi
         - \bm{\sigma}_k^\text{eq}
     )
     &= 
-    \phi_k \rho_k \textbf{g} 
-    +  \avg{\delta_I \bm{\sigma}_k^0 \cdot \textbf{n}_k}\\
+    \phi_k \rho_k (\textbf{g} + \div \bm{\sigma}_k )
+    +  \avg{\delta_I \bm{\sigma}_k' \cdot \textbf{n}_k}\\
     \label{eq:dt_&vg_rhoE_k}
     \pddt (\phi_k\rho_kE_k)  
     + \div (
@@ -33,80 +26,578 @@ Using the generic formulation \ref{eq:hybrid_avg_dt_chif} and the local expressi
         % + \textbf{q}_k^0
         )
     &= 
-    \phi_k \rho_k\textbf{u}_k \cdot \textbf{g} 
-    + \avg{\delta_I (\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0)\cdot \textbf{n}_k}
+    \phi_k \rho_k[\textbf{u}_k \cdot \textbf{g} 
+    + \div (\textbf{u}_k\cdot \bm{\sigma}_k - \textbf{q}_k)]\\
+    &+ \avg{\delta_I (\textbf{u}_k' \cdot \bm{\sigma}_k^0 + \textbf{u}_k \cdot \bm{\sigma}_k' - \textbf{q}_k')\cdot \textbf{n}_k}
+\end{align} 
+\begin{align*}
+    &\bm{\sigma}_k^\text{eq}
+    = \phi_k\rho_k (
+        % \bm{\sigma}_k%- n_p \textbf{M}_p
+        - \kavg{\textbf{u}_k'\textbf{u}_k'})  
+    &\textbf{q}_k^\text{eq}
+    =\textbf{q}_k^\text{e} 
+    +\textbf{q}_k^\text{k}  \\
+    &\textbf{q}_k^\text{e}
+    = \phi_k\rho_k \kavg{\textbf{u}_k' e_k'} 
+    % + \phi_k\textbf{q}_k 
+    &\textbf{q}_k^\text{k}
+    = \phi_k\rho_k \kavg{\textbf{u}_k' k_k} 
+    - \phi_k\kavg{\textbf{u}_k' \cdot \bm{\sigma}_k^0}
+\end{align*}
+
+
+Both transfer term can be reformulated using an expansion within the particle volume and inter particles distances. 
+First of all, 
+\begin{align*}
+    \avg{\delta_I \bm{\sigma}_k' \cdot \textbf{n}_k}
+    = n_p \textbf{f}_p - \div (n_p \mathcal{F}_p)
+\end{align*}
+Additionally $n_p \textbf{f}_p$ can be further decomposed using the nearest particle statistic decomposition, 
+\begin{align*}
+    \avg{\delta_I \bm{\sigma}_k' \cdot \textbf{n}_k}
+    = n_p \textbf{f}_\text{pm} + \div (n_p \mathcal{F}_\text{pfp} - n_p \mathcal{F}_p)
+\end{align*}
+with the definition,
+\begin{align*}
+    n_p \mathcal{F}_p 
+    = \pavg{\int_{\Sigma_\alpha}  \textbf{r} \bm{\sigma}_k' \cdot \textbf{n}_k d\Sigma }
+    &&
+    n_p \mathcal{F}_\text{pfp} 
+    = \int \textbf{r} \pavg{ \delta_\beta  h_{\alpha\beta}\int_{\Sigma_\alpha} \bm{\sigma}_k' \cdot \textbf{n}_k d\Sigma } d\textbf{r}
+\end{align*} 
+
+using the same formalism we can show equally that, 
+\begin{align*}
+    \avg{\delta_I (\textbf{u}_k' \cdot \bm{\sigma}_k^0 + \textbf{u}_k \cdot \bm{\sigma}_k' - \textbf{q}_k')\cdot \textbf{n}_k}
+    &= n_p \textbf{c}_\text{pm}^\text{tot} 
+    + \div (n_p \mathcal{C}_\text{pfp}^\text{tot} - n_p \mathcal{C}_p^\text{tot})\\
+    &=
+    n_p \textbf{c}_\text{pm} 
+    + n_p \textbf{e}_\text{pm} 
+    + n_p \textbf{u}_k \cdot \textbf{f}_\text{pm}\\
+    &+ \div [n_p \mathcal{C}_\text{pfp} - n_p \mathcal{C}_p + n_p \mathcal{E}_\text{pfp} - n_p \mathcal{E}_p + n_p \textbf{u}_k \cdot (\mathcal{F}_\text{pfp} - \mathcal{F}_p) ]
+\end{align*}
+with the following definitions
+\begin{align*}
+    n_p \mathcal{C}_p^\text{tot}
+    &= \pavg{\int_{\Sigma_\alpha}  \textbf{r} (\textbf{u}_k' \cdot \bm{\sigma}_k^0 + \textbf{u}_k \cdot \bm{\sigma}_k' - \textbf{q}_k')\cdot \textbf{n}_k d\Sigma }\\
+    &= n_p \mathcal{C}_p 
+    + n_p \mathcal{E}_p 
+    + n_p \textbf{u}_k \cdot \mathcal{F}_p 
+    \\
+    n_p \mathcal{C}_\text{pfp}^\text{tot} 
+    &= \int \textbf{r} \pavg{ \delta_\beta  h_{\alpha\beta}\int_{\Sigma_\alpha} (\textbf{u}_k' \cdot \bm{\sigma}_k^0 + \textbf{u}_k \cdot \bm{\sigma}_k' - \textbf{q}_k')\cdot \textbf{n}_k d\Sigma } d\textbf{r} \\
+    &= n_p \mathcal{C}_\text{pfp} 
+    +n_p \mathcal{E}_\text{pfp} 
+    + n_p \textbf{u}_k \cdot \mathcal{F}_\text{pfp} \\
+\end{align*} 
+But, we could have shown that,
+\begin{align*}
+    \avg{\delta_I (\textbf{u}_k' \cdot \bm{\sigma}_k^0 + \textbf{u}_k \cdot \bm{\sigma}_k' - \textbf{q}_k')\cdot \textbf{n}_k}
+    &= 
+    \avg{\delta_I (\textbf{u}_k' \cdot \bm{\sigma}_k^0 - \textbf{q}_k')\cdot \textbf{n}_k}
+    + \avg{\delta_I \textbf{u}_k \cdot \bm{\sigma}_k'\cdot \textbf{n}_k}\\
+    &=
+    n_p \textbf{c}_\text{pm} 
+    + \div [n_p \mathcal{C}_\text{pfp} - n_p \mathcal{C}_p]
+    + \textbf{u}_k \cdot 
+    [n_p \textbf{f}_\text{pm} + \div (n_p \mathcal{F}_\text{pfp} - n_p \mathcal{F}_p)]\\
+\end{align*}
+Consequently, we must deduce that, 
+\begin{equation*}
+    + \textbf{u}_k \cdot \div (n_p \mathcal{F}_\text{pfp} - n_p \mathcal{F}_p)
+    = 
+    + \div [ n_p \textbf{u}_k \cdot (\mathcal{F}_\text{pfp} - \mathcal{F}_p) ]
+\end{equation*}
+Meaning, $(n_p \mathcal{F}_\text{pfp} - n_p \mathcal{F}_p)\cdot \div \textbf{u}_k = 0$
+Using the generic formulation \ref{eq:hybrid_avg_dt_chif} and the local expression of the mass, momentum and total energy expression, i.e. : \ref{eq:dt_rho},\ref{eq:dt_rhou_1} and \ref{eq:dt_rhoE_1} we easily find the averaged form of these equations as, 
+
+\begin{align}
+    \pddt (\phi_k \rho_k)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_k
+    )
+    &= 
+    0\\
+    \pddt (\phi_k \rho_k\textbf{u}_k)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_k\textbf{u}_k
+        - \bm{\sigma}_k^\text{eq}
+    )
+    &= 
+    \phi_k  (\rho_k\textbf{g} + \div \bm{\sigma}_k )
+    - n_p \textbf{f}_\text{pm}\\
+    \pddt (\phi_k\rho_kE_k)  
+    + \div (
+        \phi_k\rho_kE_k\textbf{u}_k
+        + \bm{q}_k^\text{eq}
+        - \textbf{u}_k \cdot \bm{\sigma}_k^\text{eq}
+        % - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0 
+        % + \textbf{q}_k^0
+        )
+    &= 
+    \phi_k \textbf{u}_k\cdot (\rho_k\textbf{g} 
+    + \div \bm{\sigma}_k) 
+    + \phi_k \bm{\sigma}_k \div\textbf{u}_k
+    - \div\textbf{q}_k\\
+    & - n_p (\textbf{c}_\text{pm}
+    + \textbf{e}_\text{pm})
+    - n_p \textbf{u}_k \cdot \textbf{f}_\text{pm}
 \end{align} 
 \todo{Is this formulation usefull for the NRJ equaiton ? }
 where we have defined, 
 \begin{align*}
-    &\bm{\sigma}_k^\text{eq}
-    = \phi_k\rho_k (
-        \bm{\sigma}_k%- n_p \textbf{M}_p
-        - \kavg{\textbf{u}_k'\textbf{u}_k'})  
-    &\textbf{q}_k^\text{eq}
-    = \phi_k\rho_k \kavg{\textbf{u}_k' e_k' + \textbf{u}_k' k_k} - \phi_k\kavg{\textbf{u}_k' \cdot \bm{\sigma}_k^0}
-    + \phi_k\textbf{q}_k \\
+    &\bm{\sigma}_1^\text{eq}
+    = - \phi_1\rho_1 
+        % \bm{\sigma}_1%- n_p \textbf{M}_p
+        \kavg{\textbf{u}_1'\textbf{u}_1'}
+        - n_p \mathcal{F}_\text{pfp} + n_p \mathcal{F}_p
+    &\textbf{q}_1^\text{eq}
+    =\textbf{q}_1^\text{e} 
+    +\textbf{q}_1^\text{k}  
+    \\
+    &\textbf{q}_1^\text{e}
+    = \phi_1\rho_1 \kavg{\textbf{u}_1' e_1'} 
+    + n_p \mathcal{E}_\text{pfp} 
+    - n_p \mathcal{E}_p 
+    &\textbf{q}_1^\text{k}
+    = \phi_1\rho_1 \kavg{\textbf{u}_1' k_1} 
+    - \phi_1\kavg{\textbf{u}_1' \cdot \bm{\sigma}_1^0} 
+    + n_p \mathcal{C}_\text{pfp} 
+    - n_p \mathcal{C}_p 
 \end{align*}
 Note that the phase averaged energy equation can be further decompose following, 
 \begin{align*}
-    E_1 = e_1 + k_1 + u_k^2/2\\
-    % E_1'= e^0_1 + (u_1^0)^2 - (e_1 + k_1 + u_k^2/2) = 
-    % e_1' + (u_1^0)^2/2 - (k_1 + u_k^2/2)\\
-    % \oneavg{E_1'\textbf{u}_1'}
-    % = 
-    % \oneavg{\textbf{u}_1' e_1'}
-    % + \oneavg{u_1'[(u_1^0)^2/2 - u_k^2/2] }
-    % - \oneavg{u_1' k_1} \\
-    % \oneavg{E_1'\textbf{u}_1'}
-    % = 
-    % \oneavg{\textbf{u}_1' e_1'}
-    % + \oneavg{\textbf{u}_1' \textbf{u}_1'} \cdot \textbf{u}_1 
-    % + \oneavg{u_1'(u_1^0)^2/2 }
-    % - \oneavg{u_1' k_1} \\
-    \oneavg{E_1^0\textbf{u}_1'}
-    = 
-    E_1\oneavg{\textbf{u}_1'}
-    + \oneavg{E_1'\textbf{u}_1'}
-    = 
-    \oneavg{\textbf{u}_1' e_1^0}
-    + \textbf{u}_1 \cdot \oneavg{\textbf{u}_1'  \textbf{u}_1'}
-    +\oneavg{\textbf{u}_1' k_1 }\\
-    - \avg{\chi_k(\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0)}
-    =- \phi_k (\textbf{u}_k \cdot \bm{\sigma}_k - \textbf{q}_k) 
-    - \phi_k \kavg{\textbf{u}_k' \cdot \bm{\sigma}_k^0}
+    E_1 = e_1 + k_1 + u_1^2/2
 \end{align*}
 where $K_1$ is the pseudo-turbulent kinetic energy defined such as, $\phi_1 k_1 = \avg{\chi_1 (u_1')^2/2}$. 
-The Macroscopic kinetic energy equation can be obtain by taking the dot product with $\textbf{u}_k$. 
+The Macroscopic kinetic energy equation can be obtain by taking the dot product with $\textbf{u}_1$. 
 \begin{align}
-    \pddt (\phi_k \rho_ku_k^2/2)  
+    \pddt (\phi_1 \rho_1u_1^2/2)  
     + \div (
-        \phi_k \rho_k\textbf{u}_ku_k^2/2
-        - \textbf{u}_k \cdot \bm{\sigma}_k^\text{eq}
+        \phi_1 \rho_1\textbf{u}_1u_1^2/2
+        - \textbf{u}_1 \cdot \bm{\sigma}_1^\text{eq}
     )
     &= 
-    - \bm{\sigma}_k^\text{eq} : \grad \textbf{u}_k
-    + \phi_k \rho_k \textbf{u}_k\cdot \textbf{g} 
-    +  \textbf{u}_k\cdot \avg{\delta_I \bm{\sigma}_k^0 \cdot \textbf{n}_k}\\
-    \pddt (\phi_k\rho_kk_k)  
+    - \bm{\sigma}_1^\text{eq} : \grad \textbf{u}_1
+    + \phi_k \textbf{u}_1 \cdot 
+    (\textbf{g} \rho_k
+    + \div \bm{\sigma}_1
+    )
+    -  n_p \textbf{u}_1\cdot \textbf{f}_\text{pm}\\
+    \pddt (\phi_1\rho_1k_1)  
     + \div (
-        \phi_k\rho_kk_k\textbf{u}_k
-        + \phi_k\rho_k \kavg{\textbf{u}_k' k_k} 
-        - \phi_k\kavg{\textbf{u}_k' \cdot \bm{\sigma}_k^0}
+        \phi_1\rho_1k_1\textbf{u}_1
+        + \textbf{q}_1^\text{k} 
         )
     &= 
-    - \avg{\chi_k\bm{\sigma}_k^0 : \grad \textbf{u}_k^0}
-    + \bm{\sigma}_k^\text{eq} : \grad \textbf{u}_k
-    + \avg{\delta_I \textbf{u}_k' \cdot \bm{\sigma}_k^0 \cdot \textbf{n}_k}\\
-    \pddt (\phi_k\rho_ke_k)  
+    - \phi_1 \textbf{d}_1 
+    + \bm{\sigma}_1^\text{eq}  : \grad \textbf{u}_1
+    + \phi_k \bm{\sigma}_k \div\textbf{u}_k
+    -n_p  \textbf{c}_\text{pm}\\
+    \pddt (\phi_1\rho_1e_1)  
     + \div (
-        \phi_k \rho_ke_k\textbf{u}_k
+        \phi_1 \rho_1e_1\textbf{u}_1
         +
-        \phi_k \rho_k\oneavg{e_k'\textbf{u}_k'}
-        + \phi_k\rho_k\textbf{q}_k
+        \textbf{q}_1^\text{e} 
         )
     &= 
-    \avg{\chi_k\bm{\sigma}_k^0 : \grad \textbf{u}_k^0}
-    - \avg{\delta_I \textbf{q}_k^0 \cdot \textbf{n}_k} 
+    \phi_1 (\textbf{d}_1 
+    - \div \textbf{q}_k)
+    - n_p \textbf{e}_\text{pm}
 \end{align}
+where $\textbf{d}_1 = \oneavg{\bm{\sigma}_1^0 : \grad \textbf{u}_1^0}$ is the averaged local dissipation tensor. 
 
 
+\subsection{The dispersed phase equations}
+
+Regarding the dispersed phase, we found the mass, momentum and total energy balance equations, 
+\begin{align*}
+    \pddt \left(n_p m_p\right)
+    + \div \left(n_pm_p\textbf{u}_p
+    \right)
+    = 
+    0\\
+    \pddt \left(n_p m_p \textbf{u}_p\right)
+    + \div \left(n_p
+    m_p \textbf{u}_p \textbf{u}_p 
+    - \bm{\sigma}_p^\text{eq}
+    \right)
+    = 
+    n_p v_p  (\div \bm{\sigma}_1 
+    + \rho_2 \textbf{g})
+    + n_p \textbf{f}_{pm},\\
+    \pddt(m_p E_p^\text{tot})
+    + \div(m_p E_p^\text{tot} \textbf{u}_p 
+    + \textbf{q}_p^\text{eq} - \textbf{u}_p \cdot \bm{\sigma}_p^\text{eq})
+    = 
+    n_pv_p \div (
+        \textbf{u}_1 \cdot \bm{\sigma}_1 - \textbf{q}_1
+    )
+    + \pnavg{\int_{\Omega_\alpha} \textbf{u}_2^0 \cdot \textbf{g} \rho_2 d\Omega}
+    + n_p \textbf{c}_\text{pm}
+    % + n_p \textbf{e}_\text{pm}
+    % + n_p \textbf{u}_1 \textbf{f}_\text{pm}
+\end{align*}
+where we have defined, 
+\begin{align*}
+    \bm{\sigma}_p^\text{eq}
+    = - \pnavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    + n_p \mathcal{F}_\text{pfp}
+\end{align*}
+
+
+
+The averaged particle energy $n_p E_p$ can be split into five components,
+\begin{equation*}
+    n_p m_p E_p(t) 
+    = m_p n_p e_p 
+    + \pnavg{\int_{\Omega_\alpha(t)} \rho_2  (w_2^0)^2/2 d\Omega}
+    + m_p n_p k_p
+    + m_p n_p (u_p)^2/2
+    + n_p s_p \gamma
+    % + \textbf{u}_\alpha \cdot \int_{\Omega_\alpha(t)} \rho_2  \textbf{w}_2^0 d\Omega
+\end{equation*}
+where $k_p = \pavg{(u_\alpha')^2/2}$.
+one equation for each is riquiered 
+Using the mass balance and the momentum balance dotted with $\textbf{u}_p$ we obtain the particle kinetic energy balance, 
+\begin{equation*}
+    \pddt \left(n_p m_p u_p^2/ 2\right)
+    + \div \left(n_p
+    m_p u_p^2/ 2 \textbf{u}_p 
+    - \textbf{u}_p \cdot \bm{\sigma}_p^\text{eq}
+    \right)
+    = 
+    - (\bm{\sigma}_p^\text{eq} + n_p v_p \bm{\sigma}_1) :\grad \textbf{u}_p
+    +  n_p v_p  (\div (\textbf{u}_p \cdot \bm{\sigma}_1 )
+    + \rho_2 \textbf{g})
+    + n_p \textbf{u}_p \cdot \textbf{f}_{pm},\\
+\end{equation*}
+
+Additionally, we can add an equation for the first moment of momentum, 
+\begin{multline}
+    \pddt \left(n_p \mathcal{P}_p\right)
+    + \div \left(
+        n_p \textbf{u}_p \mathcal{P}_p
+    + \Sigma_p^\text{eq}
+    \right)
+    =
+    n_p v_p \bm{\sigma}_1 
+    + n_p \mathcal{F}_p\\
+    +\pnavg{\int_{\Omega_\alpha} \left(
+        \rho_2 \textbf{w}_2^0  \textbf{w}_2^0 
+        - \bm{\sigma}_2^0
+        \right) d\Omega}
+        - \gamma  \pnavg{\int_{\Sigma_\alpha} \textbf{I}_{||} d\Sigma},
+\end{multline}
+
+\subsection*{The drag force term}
+
+The drag force term is easily closed by numerical method and some theoretical developments in the limiting case. 
+Let now study the stokes 
+
+\subsection*{Stress tensor for the continuous phase }
+Regarding the fluid stress it can be reformulated considering Newtonian fluid,
+\begin{equation}
+    \phi_1 \bm{\sigma}_1 
+    = - \phi_1 p_1 \textbf{I}
+    + \mu_1 \phi_1 \textbf{e}_1
+\end{equation}
+with $\textbf{e}_1$ being the averaged shear rate. 
+The first model is then, 
+\begin{align*}
+    \phi_1 \textbf{e}_1
+    = \phi_1 (\nabla \textbf{u}_1+ (\grad \textbf{u}_1)^T)
+    + \avg{[(\textbf{u}_1^0 - \textbf{u}_1)  \textbf{n}_1 +  \textbf{n}_1(\textbf{u}_1^0 - \textbf{u}_1 )]\delta_I}
+\end{align*}
+In \citet[chap 9]{ishii1975thermo} they assume,
+\begin{equation}
+    \avg{[(\textbf{u}_1^0 - \textbf{u}_1)  \textbf{n}_1 +  \textbf{n}_1(\textbf{u}_1^0 - \textbf{u}_1 )]\delta_I}\\
+    = 
+    (\textbf{u}_2 - \textbf{u}_1)  \grad \phi_1 +  \grad \phi_1(\textbf{u}_2 - \textbf{u}_1 )\\
+\end{equation}
+But I didn't find out where the derivation came from. 
+Alternatively we can say that, 
+\begin{align*}
+    \phi_1 \textbf{e}_1
+    = \nabla \textbf{u}+ (\grad \textbf{u})^T
+    - \avg{\chi_2 (\grad\textbf{u}_2^0 + \grad(\textbf{u}_2^0 )^T)}
+    = \textbf{e}
+    - \phi_2 \textbf{e}_2
+\end{align*}
+
+More generally the stress within a suspension can be written,
+\begin{align*}
+    \bm{\sigma}_1 \phi_1
+    &=- \phi_1 p_1 \textbf{I}
+    + \mu_1 \textbf{e}
+    - \lambda \phi_2 \bm{\tau}_2\\
+    \bm{\sigma}_1 
+    &= - \left(p_1 + \frac{\lambda \phi_2}{\phi_1} p_2\right) \textbf{I}
+    + \frac{\mu_1}{\phi_1} \textbf{e}
+    - \frac{\lambda \phi_2}{\phi_1} \bm{\sigma}_2\\
+    \bm{\sigma}
+    &= - \phi_1 p_1  \textbf{I}
+    + \mu_1 \textbf{e}
+    + \bm{\sigma}_2 \phi_2 
+    +\phi_I \bm{\sigma}_I 
+    - \lambda \phi_2 \bm{\tau}_2
+\end{align*}
+We can reformulate the last expression in the usual way using the first moment of momentum eq, 
+\begin{equation}
+    -  \dot{\mathcal{P}_p}
+    +  \mathscr{S}_p^*
+    +  \mathscr{L}_p
+    + \frac{1}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})_p^\Sigma \textbf{I}
+    + n_p (\rho_2 \textbf{w}_2^0  \textbf{w}_2^0 )^\Omega
+    =   (\bm{\sigma}_2^0)^\Omega
+    + (\bm{\sigma}_I)^\Sigma,
+\end{equation}
+Or in stokes condition, 
+\begin{equation}
+    n_p \mathscr{S}_p^*
++ n_p \mathscr{L}_p
++ n_p\frac{1}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})_p^\Sigma \textbf{I}
+    = n_p \left(
+        \bm{\sigma}_2^0
+    \right)_p^\Omega
+    +n_p (\bm{\sigma}_I)^\Sigma_p
+\end{equation}
+where we defined, 
+\begin{align*}
+    \mathscr{S}_p^* =\frac{1}{2} \pnavg{\int_{\Sigma_\alpha} \left(
+        \textbf{r} \bm{\sigma}_1^0 \cdot \textbf{n}_2
+        +  \bm{\sigma}_1^0 \cdot \textbf{n}_2\textbf{r}
+        -
+          \frac{2}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})\textbf{I}
+        \right)  d\Sigma}\\
+    \mathscr{L}_p =\frac{1}{2} \pnavg{\int_{\Sigma_\alpha} \left(
+        \textbf{r} \bm{\sigma}_1^0 \cdot \textbf{n}_2
+        - \bm{\sigma}_1^0 \cdot \textbf{n}_2\textbf{r}
+        \right) d\Sigma}
+\end{align*}
+Thus in homogeneous suspension without inertia we have, 
+\begin{align*}
+    \bm{\sigma}
+    &= [- \phi_1 p_1 
+    + n_p (\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})^\Sigma_p] \textbf{I}
+    + \mu_1 \textbf{e}
+    + n_p \mathscr{S}
+    + n_p \mathscr{L}
+\end{align*}
+where the stress let is defined as $\mathscr{S} = \mathscr{S}_p^* - \lambda \phi_2 \bm{\tau}_2$
+
+This, is definitely not trivial but if one wish to compute the first moment dynamical contribution to the suspension the formulas is given by 
+\begin{align*}
+    n_p \mathscr{S}_p
++ n_p \mathscr{L}_p
++ n_p\frac{1}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})_p^\Sigma \textbf{I}
+    &= 
+    n_p \left(
+        \bm{\sigma}_2^0
+    \right)_p^\Omega
+    +n_p (\bm{\sigma}_I)^\Sigma_p
+    - \lambda \phi_2 \bm{\tau}_2\\
+    &= 
+    - n_p \left(
+        p_2^0
+    \right)_p^\Omega \textbf{I}
+    +n_p (\bm{\sigma}_I)^\Sigma_p
+    + n_p (1 - \lambda)\left(
+        \mu_2 \textbf{e}_2^0
+    \right)_p^\Omega 
+\end{align*}
+Let take the trace times $\frac{1}{3}$ of this equation, 
+\begin{align*}
+    \frac{1}{3} n_p(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})_p^\Sigma 
+    = 
+    - n_p \left(
+        p_2^0
+    \right)_p^\Omega 
+    +n_p \frac{1}{3}(\bm{\sigma}_I)^\Sigma_p : \textbf{I}
+\end{align*}
+Now let's substitute this equation into the former one, 
+\begin{align*}
+    n_p \mathscr{S}_p
++ n_p \mathscr{L}_p
+=
+    +n_p (\bm{\sigma}_I - \frac{1}{3}(\bm{\sigma}_I : \textbf{I})\text{I})^\Sigma_p
+    + n_p (1 - \lambda)\left(
+        \mu_2 \textbf{e}_2^0
+    \right)_p^\Omega 
+\end{align*}
+
+If the particle is spherical, and that we remove the isotropic part on both sides of the equation we obtain 
+
+In the spherical particle case the symmetric part reads, 
+\begin{align*}
+    n_p \mathscr{S}_p
+    &= 
+    + n_p (1 - \lambda)\left(
+        \mu_2 \textbf{e}_2^0
+    \right)_p^\Omega 
+\end{align*}
+which is false. 
+
+\subsubsection{A translating sphere}
+In the dilute stokes regime the disturbance velocity around a droplet can be written, 
+\begin{align*}
+    u_i^\text{Ext}(\textbf{r})
+    = \left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right)  g_k
+    + \left(-\frac{\delta_{ik}}{r^3} + \frac{3r_ir_k}{r^5}\right)  d_k\\
+    u_i^\text{In}(\textbf{r})
+    = c_i
+    + \left(2 r^2 \delta_{ik} - r_ir_k\right) d_k\\
+    e_{ik}
+    = \mu(
+        3 \delta_{ij} r_k 
+        + 3 \delta_{kj} r_i
+        -2 r_j \delta_{ki}
+    )e_j 
+\end{align*}
+Applying the non deformation at the interface and other shear free condition we find the constant to be, 
+\begin{align*}
+    &\textbf{g} = \frac{1}{4}\left(\frac{3\lambda + 3}{\lambda +1}\right) a \textbf{U}
+    &\textbf{d} = -\frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right) a \textbf{U}\\
+    &\textbf{c} = \frac{1}{2}\left(\frac{3\lambda + 3}{\lambda +1}\right) \textbf{U}
+    &\textbf{e} = -\frac{1}{2}\left(\frac{\lambda}{\lambda +1}\right) \frac{1}{a^2} \textbf{U}\\
+\end{align*}
+Let consider isolated particles immersed in a viscous flow in the case $\textbf{u}_1' = \textbf{u}^{Ext}$.
+
+The averaged internal shear rate $\phi_2 \textbf{e}_2$ can be thus estimated through the integral, 
+\begin{align*}
+    \avg{\chi_2 (\textbf{e}_2^0)_{ik}}
+    &= \pavg{\int_{\Omega} \mu(
+        3 \delta_{ij} r_k 
+        + 3 \delta_{kj} r_i
+        -2 r_j \delta_{ki}
+    )e_j d\Omega}
+    = 0\\
+    &+ \div \pavg{\int_{\Omega} \textbf{r}\mu(
+        3 \delta_{ij} r_k 
+        + 3 \delta_{kj} r_i
+        -2 r_j \delta_{ki}
+    )e_j d\Omega}
+\end{align*}
+\subsubsection{A drop in shear flow}
+
+The functional form of the internal velocity fields for a droplet immersed in a shear flow is,
+\begin{align*}
+    u_i^\text{Ext}(\textbf{r})
+    = \left(\frac{\delta_{ij} r_l - \delta_{il} r_j - \delta_{jl} r_i}{r^3} 
+    + \frac{r_ir_jr_l}{r^5}\right)  d_{jl}\\
+    + \left(-3 \frac{\delta_{ij} r_l + \delta_{il} r_j + \delta_{jl} r_i}{r^5} 
+    + 15\frac{r_ir_jr_l}{r^7}\right)  p_{jl}\\
+    u_i^\text{In}(\textbf{r})
+    = \left(- 4 \delta_{ij} r_l  + \delta_{il} r_j + \delta_{jl} r_i\right) f_{jl}\\
+    e_{ik}
+    = \mu [
+        \partial_i \left(- 4 \delta_{kj} r_l  + \delta_{kl} r_j + \delta_{jl} r_k\right) f_{jl} + \partial_k \left(- 4 \delta_{ij} r_l  + \delta_{il} r_j + \delta_{jl} r_i\right) f_{jl} 
+    ]\\
+    = \mu [
+        \left(- 4 \delta_{kj} \delta_{li}  + \delta_{kl} \delta_{ji} + \delta_{jl} \delta_{ki}\right) f_{jl} + \left(- 4 \delta_{ij} \delta_{lk}  + \delta_{il} \delta_{kj} + \delta_{jl} \delta_{ki}\right) f_{jl} 
+    ]\\
+    = \mu [
+        \left(- 4 f_{ki}  + f_{ik} + f_{jj}\delta_{ki}\right)  + \left(- 4 f_{ik}  + f_{ki} + f_{jj} \delta_{ki}\right)  
+    ]\\
+    = \mu [
+        \left(- 3 f_{ki}  - 3 f_{ik} +2 f_{jj}\delta_{ki}\right) 
+    ]
+\end{align*}
+Here i know that, 
+\begin{align*}
+    \textbf{d}
+    = - \frac{1}{6} \left(
+        \frac{2+5\lambda}{1+\lambda}a^3 \textbf{E}
+    \right)
+    &&
+    \textbf{p}
+    = - \frac{1}{6} \left(
+        \frac{\lambda(2+5\lambda)}{(1+\lambda)(5\lambda+2)}a^3 \textbf{E}
+    \right)
+\end{align*}
+Integrating this functional over the volume of a droplet yields, 
+\begin{equation}
+    \avg{\chi_2 (\textbf{e}_2^0)_{ik}}
+    = \pavg{\int_{\Omega} 
+        \mu [
+        \left(- 3 f_{ki}  - 3 f_{ik} +2 f_{jj}\delta_{ki}\right) 
+    ] d\Omega}
+    = n_pv_p(-3 (f_{ki}+ f_{ik}) + 2 f_{jj} \delta_{ki})
+\end{equation}
+The only remaining thing is to do determine the form of $f_{ik}$. 
+
+
+\subsection*{Continuous phase fluctuation term}
+
+The Reynolds stress $\oneavg{\textbf{u}_1'\textbf{u}_1'}$ can be described in the limit of dilute non interaction particles by the wake. 
+Therefore, by direct integration of $\textbf{u}^\text{Ext}$ we should be able to find a first correction of the velocity correlation. 
+In a homogeneous flow of isolated particle ensemble average is equivalent to volume average thus, 
+\begin{align*}
+    \oneavg{\textbf{u}_1' \textbf{u}_1' }
+    = \int u_i^\text{Ext} u_j^\text{Ext} d\textbf{r}\\
+    = \int [\left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right)  g_k
+    + \left(-\frac{\delta_{ik}}{r^3} + \frac{3r_ir_k}{r^5}\right)  d_k]
+    [ \left(\frac{\delta_{jl}}{r} + \frac{r_jr_l}{r^3}\right)  g_l
+    + \left(-\frac{\delta_{jl}}{r^3} + \frac{3r_jr_l}{r^5}\right)  d_l] d\textbf{r}\\
+    = \int [\left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right)
+    \left(\frac{\delta_{jl}}{r} + \frac{r_jr_l}{r^3}\right)  g_l  g_k
+    + \left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right) \left(-\frac{\delta_{jl}}{r^3} + \frac{3r_jr_l}{r^5}\right)  d_l g_k\\
+    + \left(-\frac{\delta_{ik}}{r^3} + \frac{3r_ir_k}{r^5}\right) \left(\frac{\delta_{jl}}{r} + \frac{r_jr_l}{r^3}\right)  g_l d_k
+    + \left(-\frac{\delta_{ik}}{r^3} + \frac{3r_ir_k}{r^5}\right) \left(-\frac{\delta_{jl}}{r^3} + \frac{3r_jr_l}{r^5}\right)  d_l d_k]
+    d\textbf{r}\\
+\end{align*}
+Since all terms seems identical let's focus on the first one it reads, 
+\begin{equation*}
+    \int \left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right)
+    \left(\frac{\delta_{jl}}{r} + \frac{r_jr_l}{r^3}\right)  g_l  g_kd\textbf{r}
+    = 
+    g_l  g_k
+    \int \left(
+    \frac{\delta_{ik}\delta_{jl}}{r^2} 
+    + \frac{\delta_{ik} r_jr_l}{r^4} 
+    + \frac{\delta_{jl} r_ir_k}{r^4} 
+    + \frac{r_ir_kr_jr_l}{r^6} 
+    \right)d\textbf{r}
+\end{equation*}
+In spherical coordinate $d\textbf{r} = r^2 \sin\theta dr d\theta d\phi$. 
+Therefore, the first integration reads, 
+\begin{equation*}
+    g_l  g_k\delta_{ik}\delta_{jl}
+    \int_0^{2\pi} 
+    \int_0^{\pi} 
+    \int_1^{\infty} 
+    \frac{1}{r^2} 
+    r^2 \sin\theta dr d\theta d\phi
+    = g_l  g_k\delta_{ik}\delta_{jl}
+    4\pi 
+    \int_1^\infty dr
+\end{equation*}
+The second terms can be re-written using the Gauss divergence theorem, 
+\begin{equation}    
+g_l  g_k
+\int 
+\frac{\delta_{ik} r_jr_l}{r^4} 
+d\textbf{r}
+\end{equation}
+This integral diverges thus it is not possibly feasible to compute such thing,
+however : 
+\begin{multline*}
+    \avg{\chi_k \textbf{u}'_k\textbf{u}'_k}(\textbf{x},t)
+    + \phi_k \textbf{u}_k\textbf{u}_k
+    = \\
+    \underbrace{\int (\nstavg{\chi_k \textbf{u}^0_k}  \nstavg{\chi_k \textbf{u}^0_k} / (\nstavg{\chi_k})  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r} }_\text{PWFs}
+    +\underbrace{\int \nstavg{\chi_k \textbf{v}_k^0\textbf{v}_k^0}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}}_\text{WIA}
+    \label{eq:def_uu}
+\end{multline*}
+where, $\textbf{v}_k^0  = \textbf{u}_k^0 - \nstavg{\chi_k \textbf{u}^0_k} / \nstavg{\chi_k}$ 
+for a dillute random distribution, $P_\text{nst}^\text{th}(\textbf{y}|\textbf{x}) = n_p e^{-4 \pi n_p (r^3 - a^3)/3}$,
+Now the first integral reads, 
+\begin{equation}
+    g_lg_k \delta_{ik} \delta_{jl} 
+    4\pi    
+    \int_a^{\infty} 
+    \sin\theta e^{-4 \pi n_p (r^3 - a^3)/3} dr 
+    = 
+\end{equation}

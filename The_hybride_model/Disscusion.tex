@@ -31,7 +31,7 @@ Subsequently,  we can easily derive the transport equation for $\textbf{A}$ by a
 The resulting equation is given by~:
 \begin{equation}
     \pddt (n_p\textbf{A})
-    + \nablab \cdot (
+    + \div (
         \pnnavg{\textbf{u}_\alpha}\textbf{A}
         + \mathbf{\Sigma}
         )
@@ -56,12 +56,12 @@ It reads,
     \right),
     \label{eq:jefferey}
 \end{equation}
-with $\textbf{E}$ and $\mathbf{\Omega}$ being the symmetric and antisymmetric parts of the bulk velocity gradient, respectively, such that $\nablab\avg{\textbf{u}}=\textbf{E}+\mathbf{\Omega}$.
+with $\textbf{E}$ and $\mathbf{\Omega}$ being the symmetric and antisymmetric parts of the bulk velocity gradient, respectively, such that $\grad\avg{\textbf{u}}=\textbf{E}+\mathbf{\Omega}$.
 The coefficient $\beta$  is a constant related to the aspect ratio of the particle.
 Finally, by substituting the RHS terms of \ref{eq:avg_dt_M_alpha}, by using \ref{eq:jefferey}, we arrive at the closed form of the second moment of mass equation~:
 \begin{equation}
     \pddt \textbf{A}
-    + \nablab \cdot (
+    + \div (
         \pnnavg{\textbf{u}_\alpha}\textbf{A}
     )
     =
@@ -72,12 +72,12 @@ Finally, by substituting the RHS terms of \ref{eq:avg_dt_M_alpha}, by using \ref
         -\textbf{A} \cdot \textbf{E}
         - \textbf{E} : \mathbb{A}
     \right]
-    - \nablab \cdot \mathbf{\Sigma}
+    - \div \mathbf{\Sigma}
     \label{eq:hybrid_avg_dt_pp}
 \end{equation}
 where the fourth-order tensor $\mathbb{A}$, is defined as $\mathbb{A} = \pnavg{\textbf{pppp}}$.
 In \citet{wang2008objective} they derive \ref{eq:hybrid_avg_dt_pp} by the means of kinetic theory, based on \ref{eq:jefferey} and the fact that $\ddt \textbf{p} = \omega_\alpha \times \textbf{p}$ (Equation (3) of their article).
-Their equation is similar to \ref{eq:hybrid_avg_dt_pp} except that their employ a phenomenological closure for the term, $\nablab \cdot \mathbf{\Sigma}$, which account for particles interactions.
+Their equation is similar to \ref{eq:hybrid_avg_dt_pp} except that their employ a phenomenological closure for the term, $\div \mathbf{\Sigma}$, which account for particles interactions.
 Anyhow, we showed how it is possible to derive the orientation tensor conservation equation, commonly used in fiber field theory, from the second-order moments of mass's equation. 
 
 \subsection{Contaminated bubbly flows}
@@ -104,7 +104,7 @@ As a result, the drag force and drift velocity experienced by a rising bubble or
 Moreover, a recent study by \citet{kentheswaran2022direct} have demonstrated that the mean concentration and distribution of surfactants on the bubbles' surface also have a significant impact on the mass transfer rate between the dispersed and continuous phases.
 Therefore, in this example we present an averaged hybrid model that aims to predict the evolution of the averaged surfactant concentration in the bulk $\oneavg{c}$, and the averaged surfactant on the surface of the particle, defined by, $C_{\alpha}= \frac{1}{s_\alpha}\int c_I d\Sigma$.
 Additionally, we also provide the moment equation for the center of the distribution of $c_I$, which is defined as $\textbf{r}_\alpha = \frac{1}{s_\alpha C_\alpha}\int_{\Sigma_\alpha} \textbf{r}c_Id\Sigma$.
-Notice that $\int_{\Sigma_\alpha} \textbf{r}c_Id\Sigma =  \frac{s_\alpha}{4 \pi}\int_{\Sigma_\alpha} \nablabhI (c_I) d\Sigma$, thus $\textbf{r}_\alpha$ can also be interpreted as the mean gradient of surfactant on a particle's surface.
+Notice that $\int_{\Sigma_\alpha} \textbf{r}c_Id\Sigma =  \frac{s_\alpha}{4 \pi}\int_{\Sigma_\alpha} \gradI (c_I) d\Sigma$, thus $\textbf{r}_\alpha$ can also be interpreted as the mean gradient of surfactant on a particle's surface.
 Consequently, by the mean of \ref{eq:sigma_def}, $\textbf{r}_\alpha$ is also related to the resultant of Marangonie forces on a particle's surface.  
 A graphical representation of $\textbf{r}_\alpha$ is given \ref{fig:contaminated_bubbles}.
 
@@ -120,14 +120,14 @@ A graphical representation of $\textbf{r}_\alpha$ is given \ref{fig:contaminated
         \draw[very thick,dashed](0,0)++(0,-0.7)node{$+$}node[right]{$\textbf{r}_\alpha$};
         \draw[very thick,blue,->](1.2,-0.5)--++(0,1)node[right]{$\textbf{u}_\alpha$};
         \draw[dashed,gray](0,1.5)--++(0,-2);
-        \draw[red,->,green!50!black](230:1)--++(-1,1)node[midway,left]{$F = \nablab_{||} \sigma$};
+        \draw[red,->,green!50!black](230:1)--++(-1,1)node[midway,left]{$F = \grad_{||} \sigma$};
         \foreach \t in {110,100,90,80,60}{
             \draw[red!70!black, ->](\t:1.4)--++(\t:-0.2);
             \draw[red!70!black, ->](\t:-1.2)--++(\t:-0.2);
         }
         \draw[red!70!black, ->](70:1.4)--++(70:-0.2)node[above right]{\small adsorption};
         \draw[red!70!black, ->](70:-1.2)--++(70:-0.2)node[below left]{\small desorption};
-        \draw[red!70!black, ->](110:-1.2)--++(110:-0.2)node[below]{$\textbf{n}_2 \cdot \nablabh c_1$};
+        \draw[red!70!black, ->](110:-1.2)--++(110:-0.2)node[below]{$\textbf{n}_2 \cdot \grad c_1$};
     \end{tikzpicture}
     \hspace{2em}
     \begin{tikzpicture}[scale =1.2]
@@ -146,26 +146,26 @@ A graphical representation of $\textbf{r}_\alpha$ is given \ref{fig:contaminated
 
 
 To derive the microscopic scale conservation equation of $c_I$ and $c_1$ we set $f_1 = c_1$ and $f_I = c_I$ in \ref{eq:dt_f_k} and \ref{eq:dt_f_I}, respectively.
-Additionally, we assume that the  diffusive flux follow a Fick's law model, i.e.  $\mathbf{\Phi}_1 = D\nablab c_1$ and $\mathbf{\Phi}_I = D_I\nablabhI c_I$,
+Additionally, we assume that the  diffusive flux follow a Fick's law model, i.e.  $\mathbf{\Phi}_1 = D\grad c_1$ and $\mathbf{\Phi}_I = D_I\gradI c_I$,
 where the constant,  $D$ and $D_I$ are the volumetric and surface diffusion coefficient, respectively.
 Note that this diffusive model remains true under the assumption of dilute species concentration in both the liquid and at the interface.
-\tb{The diffusive terms change in function of the regime : dilute concentration / saturated concentration, in which case $D\nablab c_1 = f(c_I)$, it is worth going into that mush details ? no.}
+\tb{The diffusive terms change in function of the regime : dilute concentration / saturated concentration, in which case $D\grad c_1 = f(c_I)$, it is worth going into that mush details ? no.}
 Moreoverer, We do not consider chemical reaction or any other source term, i.e. $\textbf{S}_k = 0$ and $\textbf{S}_I=0$. 
 Then, by injecting these terms in \ref{eq:dt_f_k} and \ref{eq:dt_f_I} we obtain these conservation equations : 
 \begin{align}
     \pddt c_1
-    + \nablabh \cdot (\textbf{u}_1 c_1)
-    &= \nablabh \cdot (D \nablabh c_1)
+    + \div (\textbf{u}_1 c_1)
+    &= \div (D \grad c_1)
     \;\;\; \text{in} \;\;\; \Omega_1,\\
     \pddt c_I
-    + \nablabhI \cdot (\textbf{u}_I c_I)
-    &= \nablabhI \cdot (D_I \nablabhI c_I)
-    - (D \nablabh c_1)\cdot \textbf{n}_2
+    + \divI (\textbf{u}_I c_I)
+    &= \divI (D_I \gradI c_I)
+    - (D \grad c_1)\cdot \textbf{n}_2
     \;\;\; \text{on} \;\;\; \Sigma,
     \label{eq:dt_c_I}
 \end{align}
 In agreement with \citet{pesci2018computational,manikantan2020surfactant}.
-We recognize that the last term of \ref{eq:dt_c_I}, namely $D(\nablabh c_1 ) \cdot \textbf{n}_2$, turns out to be the \textit{Kinetically controlled sorption} boundary condition \citet{pesci2018computational,manikantan2020surfactant} which arise naturally in our model.
+We recognize that the last term of \ref{eq:dt_c_I}, namely $D(\grad c_1 ) \cdot \textbf{n}_2$, turns out to be the \textit{Kinetically controlled sorption} boundary condition \citet{pesci2018computational,manikantan2020surfactant} which arise naturally in our model.
 Specifically, it represents the adsorption and desorption flux between the bulk and the surface, as represented in \ref{fig:contaminated_bubbles}.
 % For clarity remark that for exemple Equation (3.9) of \citet{manikantan2020surfactant} corresponds to the \textit{two-fluid} formulation of \ref{eq:dt_c_I} with a Fick's law model. 
 Notice that this exchange term is reduced to a contribution from the continuous phase since we assume no surfactant into the dispersed phase. 
@@ -173,7 +173,7 @@ Now that we clearly derived the microscale equation in both phases, we can easil
 
 For a better understanding of the following equations, we now describe the steady-state kinetics that can be reached for an isolated bubble in a contaminated flow, as illustrated on \ref{fig:contaminated_bubbles}.
 This will serve as a reference for the subsequent discussion.
-We first assume that the transport of surfactants on the surface, represented  by the term  $\textbf{w}_I c_I$, is much greater than the other diffusive processes, such as $D\nablabh c_1$ and $D_I\nablabhI c_I$ as well as the adsorption-desorption effects. 
+We first assume that the transport of surfactants on the surface, represented  by the term  $\textbf{w}_I c_I$, is much greater than the other diffusive processes, such as $D\grad c_1$ and $D_I\gradI c_I$ as well as the adsorption-desorption effects. 
 In this regime, the concentration of surfactant that enters from the forward-surface, due to adsorption, is advected almost instantaneously to the downward region of the particle where some of it evaporates due to desorption. 
 This form an accumulation of surfactant on the downward region of the particle's surface.
 At a certain point of equilibrium, the adsorption and desorption flux balance each other, leading to the steady-state kinetic of $c_I$, and the stagnant cap is stabilized to a concentration $c_0$. 
@@ -190,21 +190,21 @@ The phase-averaged conservation equation for the mean concentration of surfactan
 It reads as,
 \begin{equation}
     \pddt (\phi_1 \oneavg{c})
-    + \nablab \cdot (\phi_1 \oneavg{c} \oneavg{\textbf{u}_1})
-    = D \nablab^2 (\phi_1\oneavg{c})
+    + \div (\phi_1 \oneavg{c} \oneavg{\textbf{u}_1})
+    = D \grad^2 (\phi_1\oneavg{c})
     - \pnavg{j_\alpha}
-    +  \nablab \cdot \mathbf{\Sigma}_c,
+    +  \div \mathbf{\Sigma}_c,
     \label{eq:hybrid_avg_dt_c_1}
 \end{equation}
 where $j_\alpha$ is the exchange term with the dispersed phase given by,
 \begin{equation*}
     j_\alpha
     =\int_{\Sigma_\alpha}
-    (D\nablabh c_1 )
+    (D\grad c_1 )
 \cdot \textbf{n}_2d\Sigma,
 \end{equation*}
 which corresponds to the resultant of the surfactant exchange including adsorption and desorption flux.  
-In the steady-state regime, when the adsorption flux balance the desorption flux,  the surfactant on the surface of the bubble can be considered as globally insoluble since $j_\alpha=0$ even through $D(\nablabh c_1 ) \cdot \textbf{n}_2$ may not be locally zero. 
+In the steady-state regime, when the adsorption flux balance the desorption flux,  the surfactant on the surface of the bubble can be considered as globally insoluble since $j_\alpha=0$ even through $D(\grad c_1 ) \cdot \textbf{n}_2$ may not be locally zero. 
 This \textit{globally insoluble} assumption has been used in numerous studies to neglect the adsorption-desorption fluxes. 
 The vector $\mathbf{\Sigma}_c$ in \ref{eq:hybrid_avg_dt_c_1}, has the following expression,
 \begin{equation}
@@ -217,7 +217,7 @@ The vector $\mathbf{\Sigma}_c$ in \ref{eq:hybrid_avg_dt_c_1}, has the following 
 \end{equation}
 where the higher order terms have been neglected. 
 The first term on the RHS of \ref{eq:B_def} corresponds to the first moment of the surfactant flux, namely $\textbf{J}_\alpha = \int_{\Sigma_\alpha} \textbf{r}
-(D\nablabh c_1)\cdot \textbf{n}_2d\Sigma$.
+(D\grad c_1)\cdot \textbf{n}_2d\Sigma$.
 It can be interpreted as the vector representing the mean direction and magnitude of the surfactant flux going in and out the surface of the droplets.
 In the stagnant cap regime, this term is therefore non-zero since a mean flux is still present even through its resultant is null, i.e. $j_\alpha=0$.
 In the reference frame of the particles, $\textbf{J}_\alpha$ account for the mean flux of species concentration induced by the presence of the particles, due to adsorption and desorption phenomena. 
@@ -229,17 +229,17 @@ Overall, $\mathbf{\Sigma}_c$ is a balance between the first moment of the fluxes
 Notice that $\mathbf{\Sigma}_c$ appear under the divergence operator in \ref{eq:hybrid_avg_dt_c_1}, thus it will be relevant only in highly inhomogeneous cases. 
 % At this stage of the research it is hard to predict the form of these closure terms. 
 % Nevertheless, we know that the closure for $j_\alpha$ and $\mathbf{\Sigma}_c$ are function of the mean surface concentration $C_\alpha$ and its center of distribution $\textbf{r}_\alpha$.
-% Indeed, the exchange term $\nablabh c_1$ which is function of the local concentration $c_I$ at surfactant saturation \citep{manikantan2020surfactant}. 
+% Indeed, the exchange term $\grad c_1$ which is function of the local concentration $c_I$ at surfactant saturation \citep{manikantan2020surfactant}. 
 % Thus, an equation for $C_\alpha$ and a moment equation for $\textbf{r}_\alpha$ are needed. 
 
 Regarding the equations dispersed phase, we start by the transport equation of the mean surface surfactant concentration $C_\alpha$.
 From \ref{eq:avg_dt_dq_alpha_tot} the averaged conservation equation of $C_\alpha$ is straightforward to obtain and reads as,
 \begin{equation}
     \pddt (\pnavg{C_\alpha})
-    + \nablabh \cdot (\pnavg{\textbf{u}_\alpha} \pnnavg{C_\alpha})
+    + \div (\pnavg{\textbf{u}_\alpha} \pnnavg{C_\alpha})
     =
     \frac{\pnavg{j_\alpha}}{s_\alpha}
-    - \nablabh \cdot (\pnavg{\textbf{u}_\alpha' C'_\alpha}).
+    - \div (\pnavg{\textbf{u}_\alpha' C'_\alpha}).
     \label{eq:avg_dt_dC_alpha}
 \end{equation}
 As shown by this equation, the evolution of the mean concentration of surfactant on the particles' surface is driven by the exchange term $j_\alpha$ and the fluctuation term $\pnnavg{\textbf{u}_\alpha' C_\alpha'}$. 
@@ -254,15 +254,15 @@ Then, we reformulate the equation using  the relation, $\ddt (s_\alpha C_\alpha 
 Finally,  we apply the average process which leads us to~:
 \begin{multline}
     \pddt (\pnavg{\textbf{r}_\alpha})
-    + \nablabh \cdot (\pnavg{\textbf{u}_\alpha}\pnnavg{\textbf{r}_\alpha})
+    + \div (\pnavg{\textbf{u}_\alpha}\pnnavg{\textbf{r}_\alpha})
     =
-    - \nablabh \cdot (\pnavg{\textbf{u}'_\alpha\textbf{r}'_c})\\
+    - \div (\pnavg{\textbf{u}'_\alpha\textbf{r}'_c})\\
     + \frac{n_p}{s_\alpha}\pnnavg{
         \frac{1}{C_\alpha}\left[
             \int_{\Sigma_\alpha} 
             \left[
                 c_I \textbf{w}_I
-                - D_I (\nablabhI c_I)
+                - D_I (\gradI c_I)
             \right] d\Sigma
             +\textbf{J}_\alpha
             - \textbf{r}_\alpha j_\alpha
@@ -293,7 +293,7 @@ It is evident that in the closure of \ref{eq:avg_dt_dr_alpha_tot} one can includ
 %         c_I \textbf{w}_I
 %         d\Sigma
 %         - \int_{\Sigma_\alpha} 
-%         D_I (\nablabhI c_I)
+%         D_I (\gradI c_I)
 %          d\Sigma
 %         +\textbf{J}_\alpha
 %         = 0 
@@ -305,12 +305,12 @@ It is evident that in the closure of \ref{eq:avg_dt_dr_alpha_tot} one can includ
 % Using the hypothesis \ref{eq:steady_state_kinetic_regime} in \ref{eq:avg_dt_dr_alpha_tot} gives the quasy steady conservation equaiton of $\textbf{r}_c$ with :
 % \begin{equation}
 %     \pddt (\pnavg{\textbf{r}_\alpha})
-%     + \nablabh \cdot (\pnavg{\textbf{u}_\alpha}\pnnavg{\textbf{r}_\alpha})
+%     + \div (\pnavg{\textbf{u}_\alpha}\pnnavg{\textbf{r}_\alpha})
 %     =
 %     - \frac{n_p}{s_\alpha}\pnnavg{
 %          \frac{\textbf{r}_\alpha j_\alpha}{C_\alpha}
 %     }
-%     - \nablabh \cdot (\pnavg{\textbf{u}'_\alpha\textbf{r}'_c})
+%     - \div (\pnavg{\textbf{u}'_\alpha\textbf{r}'_c})
 % \end{equation}
 % where $\textbf{r}_\alpha$ is solely function on the local flux on the a the diffusive fluctuation term. 
 

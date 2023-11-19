@@ -7,6 +7,10 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
 \ProcessOptions\relax
 \LoadClass{beamer}
+\logo{
+\includegraphics[width=.1
+\textwidth]{image/Logo_IFPEN.png}
+\vspace{-1cm}}
 
 \ClassWarningNoLine{sintefbeamer}{You should use the SINTEF theme for Beamer 
 directly; sintefbeamer is only a wrapper around it and will be removed in the 

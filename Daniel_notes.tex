@@ -1,0 +1,367 @@
+\documentclass[12pt]{My_preprint}
+\usetikzlibrary{arrows.meta,
+                chains,
+                positioning,
+                shapes.geometric}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\size}{0.22\textwidth}
+\newcommand{\avg}[1]{\left<#1\right>}
+\renewcommand{\avg}[1]{\left<#1\right>}
+\newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
+\newcommand{\Exp}[1]{\overline{\overline{#1}}}
+\newcommand{\davg}[1]{\left<#1\right>_d}
+\newcommand{\cavg}[1]{\left<#1\right>_c}
+\newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
+% \newcommand{\pnavg}[1]{n\left<#1\right>_p}
+
+\newcommand{\avgcond}[1]{\left<#1\right>}
+\renewcommand{\avgcond}[1]{\overline{#1}}
+\newcommand{\kavg}[1]{\avgcond{#1}^k}
+\newcommand{\Iavg}[1]{\avgcond{#1}^I}
+\newcommand{\pnnavg}[1]{\avgcond{#1}^{p}}
+\newcommand{\pnavg}[1]{n_p\pnnavg{#1}}
+\newcommand{\oneavg}[1]{\avgcond{#1}^1}
+\newcommand{\twoavg}[1]{\avgcond{#1}^2}
+\newcommand{\smallavg}[2]{\avgcond{#1}^{#2}}
+\newcommand{\sym}[1]{\text{Sym}\left[#1\right]}
+
+\newcommand{\nstavg}[1]{\overline{#1}_{nst}}
+\newcommand{\nstrelavg}[1]{\overline{#1}_{nst}^{rel}}
+\newcommand{\mavg}[1]{\left<#1\right>_m}
+\newcommand{\gavg}[2][\gamma]{\left<#2\right>_{#1}}
+\newcommand{\partials}[1]{\partial_{i_1}\partial_{i_2}\ldots\partial{i_{#1}}}
+\newcommand{\partialp}[2]{ \prod_{m=#1}^{#2} \partial_{i_m}}
+\newcommand{\hatpartialp}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{j_m}}
+\newcommand{\hatpartialpi}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{i_m}}
+\newcommand{\pri}[2]{ \prod_{m=#1}^{#2} r_{i_m}}
+\newcommand{\prj}[2]{ \prod_{m=#1}^{#2} r_{j_m}}
+
+\newcommand{\grad}{\mathbf{\nabla}}
+\renewcommand{\div}{\mathbf{\nabla}\cdot}
+\newcommand{\gradI}{\mathbf{\nabla}_{||}}
+\newcommand{\divI}{\mathbf{\nabla}_{||}\cdot}
+
+\newcommand{\ddt}{\frac{d}{d t}}
+\newcommand{\pddt}{\frac{\partial}{\partial t}}
+\renewcommand{\pddt}{\partial_t}
+\newcommand{\norm}[1]{\hat{#1}}
+\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
+
+\newcommand{\CC}{\mathscr{C}}
+\newcommand{\PP}{\mathscr{P}}
+
+%%% Utiliser pour les commentaires
+\newcommand{\JL}[1]{\color{red}#1\color{black}}
+\newcommand{\DL}[1]{\color{green}#1\color{black}}
+\newcommand{\tb}[1]{\color{blue}#1\color{black}}
+% \renewcommand{\alpha}{}
+\renewcommand{\JL}[1]{}
+% \renewcommand{\tb}[1]{}
+
+\renewcommand{\size}[1]{0.3\textwidth}
+\newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Sigma_\alpha} \pri{1}{#1}#2 d\Sigma}}
+
+% \newcommand{\numref}[1]{\ref{#1}}
+\renewcommand{\ref}[1]{\autoref{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{Notes}
+
+\author[1,2]{Nicolas Fintzi}
+\affil[1]{IFP Energies Nouvelles, Rond-point de l’changeur de Solaize, 69360 Solaize}
+\affil[2]{Sorbonne Université, Institut Jean le Rond ∂’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
+
+\begin{document}
+\section{Incoherence dans le bilan energetique du modèle hybrid ?}
+We consider a Newtonian fluid for both phase such that, $\bm{\sigma}_k = -p_k \textbf{I} + \bm{\tau}_k = -p_k \textbf{I} + \mu_k\textbf{e}_k$.
+In this situation the fluid phase equations for mass, momentum and energy reads as,  
+\begin{align}
+    \pddt (\phi_1 \rho_1)  
+    + \div (
+        \phi_1 \rho_1\textbf{u}_1
+    )
+    &= 
+    0\\
+    \pddt (\phi_1 \rho_1\textbf{u}_1)  
+    + \div (
+        \phi_1 \rho_1\textbf{u}_1\textbf{u}_1
+        - \bm{\sigma}_1^\text{eq}
+    )
+    &= 
+    \phi_1  (\rho_1\textbf{g} - \grad p_1 )
+    -  \textbf{f}_\text{p}\\
+    \pddt (\phi_1\rho_1E_1)  
+    + \div (
+        \phi_1\rho_1E_1\textbf{u}_1
+        + \bm{q}_1^\text{eq}
+        - \textbf{u}_1 \cdot \bm{\sigma}_1^\text{eq}
+        % - \textbf{u}_1^0 \cdot \bm{\sigma}_1^0 
+        % + \textbf{q}_1^0
+        )
+    &= 
+    n_p \mathcal{F}_p:\grad \textbf{u}_1
+    + \phi_1 \textbf{u}_1 \cdot (\rho_1\textbf{g}
+    - \grad p_1 
+    )\\
+    &- \phi_1 p_1 \div \textbf{u}_1
+    - n_p \textbf{c}_\text{p}
+    + n_p \textbf{e}_\text{p}
+    - \textbf{u}_1 \cdot \textbf{f}_\text{p}
+\end{align} 
+\begin{align*}
+    &\bm{\sigma}_1^\text{eq}
+    = \phi_1 (
+        \bm{\tau}_1%- n_p \textbf{M}_p
+        - \rho_1\kavg{\textbf{u}_1'\textbf{u}_1'}) 
+        + n_p \mathcal{F}_\text{p}
+    &\textbf{q}_1^\text{eq}
+    =\textbf{q}_1^\text{e} 
+    +\textbf{q}_1^\text{k}  \\
+    &\textbf{q}_1^\text{e}
+    = \phi_1\rho_1 \kavg{\textbf{u}_1' e_1'} 
+    + \phi_1\textbf{q}_1 
+    + n_p \mathcal{E}_p
+    &\textbf{q}_1^\text{k}
+    = \phi_1\rho_1 \kavg{\textbf{u}_1' k_1} 
+    - \phi_1\kavg{\textbf{u}_1' \cdot \bm{\sigma}_1^0}
+    - n_p \mathcal{C}_p
+\end{align*}
+where $\mathcal{F}_\text{p},\mathcal{E}_p$ and $\mathcal{C}_p$ are the first moment of $\textbf{f}_\text{p}$, $\textbf{e}_\text{p}$ and $\textbf{c}_\text{p}$, respectively. 
+
+\subsection{The mean Fluid stress}
+
+Regarding the fluid stress it can be reformulated considering Newtonian fluid,
+\begin{equation}
+    \phi_1 \bm{\sigma}_1 
+    = - \phi_1 p_1 \textbf{I}
+    + \mu_1 \phi_1 \textbf{e}_1
+\end{equation}
+with $\textbf{e}_1$ being the averaged shear rate. 
+The first model is then, 
+\begin{align*}
+    \phi_1 \textbf{e}_1
+    = \phi_1 (\nabla \textbf{u}_1+ (\grad \textbf{u}_1)^T)
+    + \avg{[(\textbf{u}_1^0 - \textbf{u}_1)  \textbf{n}_1 
+    +  \textbf{n}_1(\textbf{u}_1^0 - \textbf{u}_1 )]\delta_I}
+\end{align*}
+Where the second term is the extra stress tensor. 
+In \citet[chap 9]{ishii2010thermo} they assume,
+\begin{equation}
+    \avg{[(\textbf{u}_1^0 - \textbf{u}_1)  \textbf{n}_1 +  \textbf{n}_1(\textbf{u}_1^0 - \textbf{u}_1 )]\delta_I}\\
+    = 
+    (\textbf{u}_2 - \textbf{u}_1)  \grad \phi_1 +  \grad \phi_1(\textbf{u}_2 - \textbf{u}_1 )\\
+\end{equation}
+But I didn't find out where the derivation came from the reference article is too old there is no access.  
+
+% \subsection*{Second approach}
+Alternatively we can say that, 
+\begin{align*}
+    \phi_1 \textbf{e}_1
+    = \nabla \textbf{u}+ (\grad \textbf{u})^T
+    - \avg{\chi_2 (\grad\textbf{u}_2^0 + \grad(\textbf{u}_2^0 )^T)}
+    = \textbf{e}
+    - \phi_2 \textbf{e}_2
+\end{align*}
+Thus, the stress in the fluid phase of a suspension can be written,
+\begin{equation}
+    \bm{\sigma}_1 \phi_1
+    =- \phi_1 p_1 \textbf{I}
+    + \mu_1 \textbf{e}
+    - \lambda \phi_2 \bm{\tau}_2
+    % \bm{\sigma}_1 
+    % &= - \left(p_1 + \frac{\lambda \phi_2}{\phi_1} p_2\right) \textbf{I}
+    % + \frac{\mu_1}{\phi_1} \textbf{e}
+    % - \frac{\lambda \phi_2}{\phi_1} \bm{\sigma}_2\\
+    % \bm{\sigma}
+    % &= - \phi_1 p_1  \textbf{I}
+    % + \mu_1 \textbf{e}
+    % + \bm{\sigma}_2 \phi_2 
+    % +\phi_I \bm{\sigma}_I 
+    % - \lambda \phi_2 \bm{\tau}_2
+    \label{eq:sigma1}
+\end{equation}
+where $\lambda$ is the viscosity ratio vanishing for solid particles. 
+% \subsection*{The fluid equivalent stress}
+
+% As mentioned above the fluid equivalent stress can be written, 
+% \begin{equation}
+%     \bm{\sigma}_1^\text{eq}
+%     = \phi_1 (
+%         \bm{\tau}_1%- n_p \textbf{M}_p
+%         - \rho_1\kavg{\textbf{u}_1'\textbf{u}_1'}) 
+%         + n_p \mathcal{F}_\text{p}
+% \end{equation}
+% Using the developement below we can show that 
+% \begin{equation}
+%     \bm{\sigma}_1^\text{eq}
+%     = - \phi_1\rho_1\kavg{\textbf{u}_1'\textbf{u}_1'}
+%         + n_p \mathcal{F}_\text{p}
+%         + \mu_1 \textbf{e}
+%         - \lambda \phi_2 \bm{\tau}_2
+% \end{equation}
+\subsection*{Mixture stress}
+
+Let's derive a geenral expression for the mixture stress $\bm{\sigma}$.
+According to \ref{eq:sigma1}  the stress in the mixture phase of a suspension can be written,
+\begin{equation}
+    \bm{\sigma}
+    = - \phi_1 p_1  \textbf{I}
+    + \mu_1 \textbf{e}
+    - \lambda \phi_2 \bm{\tau}_2
+    + \bm{\sigma}_2 \phi_2 
+    +\phi_I \bm{\sigma}_I 
+    \label{eq:sigma}
+\end{equation}
+where $\phi_I \bm{\sigma}_I$ is the averaged surface stress $\bm{\sigma}_I^0 = \gamma (\textbf{I}  -  \textbf{nn})$.
+We can reformulate the last two terms using the first moment of momentum balance equation, 
+\begin{equation}
+    -  \dot{\mathcal{P}_p}
+    +  \mathscr{S}_p^*
+    +  \mathscr{L}_p
+    + \frac{1}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})_p^\Sigma \textbf{I}
+    + (\rho_2 \textbf{w}_2^0  \textbf{w}_2^0 )^\Omega
+    =   (\bm{\sigma}_2^0)^\Omega
+    + (\bm{\sigma}_I)^\Sigma,
+\end{equation}
+where we used the notation $n_p(\ldots)^\Sigma_p$ and $n_p(\ldots)^\Omega_p$ to denote the particle average of surface and volume integrated quantities. 
+% Or in stokes condition, 
+% \begin{equation}
+%     n_p \mathscr{S}_p^*
+% + n_p \mathscr{L}_p
+% + n_p\frac{1}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})_p^\Sigma \textbf{I}
+%     = n_p \left(
+%         \bm{\sigma}_2^0
+%     \right)_p^\Omega
+%     +n_p (\bm{\sigma}_I)^\Sigma_p
+% \end{equation}
+And we defined, 
+\begin{align*}
+    \mathscr{S}_p^* =\frac{1}{2}  (
+        \textbf{r} \bm{\sigma}_1^0 \cdot \textbf{n}_2
+        +  \bm{\sigma}_1^0 \cdot \textbf{n}_2\textbf{r}
+        -
+          \frac{2}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})\textbf{I}
+        )_p^\Sigma\\
+    \mathscr{L}_p =\frac{1}{2} (
+        \textbf{r} \bm{\sigma}_1^0 \cdot \textbf{n}_2
+        - \bm{\sigma}_1^0 \cdot \textbf{n}_2\textbf{r}
+        )_p^\Sigma\\
+    \mathcal{\dot{P}}_p = \left(\ddt ( \textbf{r} \textbf{u}_2^0)^\Omega\right)_p
+\end{align*}
+which are the symmetric and anti-symmetric part of the first moment of momentum, respectively. 
+
+Considering a homogeneous suspension (or neglecting higher moments in \ref{eq:sigma}), and using the first moment of momentum balance in \ref{eq:sigma1} we can write :
+\begin{align*}
+    \bm{\sigma}
+    &= [- \phi_1 p_1 
+    + n_p \frac{1}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})^\Sigma_p] \textbf{I}
+    + \mu_1 \textbf{e}
+    + n_p \mathscr{S}^*
+    - \lambda \phi_2 \bm{\tau}_2
+    + n_p \mathscr{L}
+    -  \dot{\mathcal{P}_p}
+    + (\rho_2 \textbf{w}_2^0  \textbf{w}_2^0 )^\Omega
+\end{align*}
+which is the Bluk stress expression for dispersed two phase flow. 
+
+In stokes flow condition the expression reduce to 
+\begin{align*}
+    \bm{\sigma}
+    &= [- \phi_1 p_1 
+    + n_p \frac{1}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})^\Sigma_p] \textbf{I}
+    + \mu_1 \textbf{e}
+    + n_p \mathscr{S}
+    + n_p \mathscr{L}
+\end{align*}
+where we introduced $\mathscr{S} = n_p \mathscr{S}_p^* - \lambda \phi_2 \bm{\tau}_2 \approx   \mathscr{S}_p^* - \lambda n_p (\bm{\tau}_2^0)^\Omega_p$  as being the Stresslet. 
+Indeed, the original expression include internal the term $- \lambda \phi_2 \bm{\tau}_2 = $ within the stress let as it is demonstrated in some reference books \citep{kim2013microhydrodynamics,pozrikidis1992boundary}. 
+From this expression and the calculation of $\mathscr{S} $ we can determine the equivalent Einstein viscosity etc\ldots 
+
+
+\subsubsection{Calculation of the stresslet in stokes condition}
+
+In VOF simulation it is often more accurate to compute the quantity with volume integral rather than surface integration.
+Thus, we seek for a volume integral formulation of the Stresslet $\mathscr{S}$. 
+From the first momentum equation we can deduce by neglecting the inertia that :
+\begin{align*}
+    n_p \mathscr{S}_p
++ n_p \mathscr{L}_p
++ n_p\frac{1}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})_p^\Sigma \textbf{I}
+    &= 
+    n_p \left(
+        \bm{\sigma}_2^0
+    \right)_p^\Omega
+    +n_p (\bm{\sigma}_I)^\Sigma_p
+    - \lambda \phi_2 \bm{\tau}_2\\
+    &= 
+    - n_p \left(
+        p_2^0
+    \right)_p^\Omega \textbf{I}
+    +n_p (\bm{\sigma}_I)^\Sigma_p
+    + n_p (1 - \lambda)\left(
+        \mu_2 \textbf{e}_2^0
+    \right)_p^\Omega 
+\end{align*}
+Now if we isolated the symmetric part we get : 
+\begin{equation}
+    n_p \mathscr{S}_p
+% + n_p \mathscr{L}_p\textsc{}
+=
+    +n_p (\bm{\sigma}_I - \frac{1}{3}(\bm{\sigma}_I : \textbf{I})\text{I})^\Sigma_p
+    + n_p (1 - \lambda)\left(
+        \mu_2 \textbf{e}_2^0
+    \right)_p^\Omega 
+    \label{eq:stresslet}
+\end{equation}
+Isolating the antisymmetric part gives
+\begin{align*}
++ n_p \mathscr{L}_p\textsc{}
+=
+0
+\end{align*}
+Meaning that in stokes flow condition torque is only related to body force or inertial terms that we neglected here. 
+
+In a more general manner the Stresslet can be given by : 
+\begin{align*}
+    n_p \mathscr{S}_p
+% + n_p \mathscr{L}_p
+% + n_p\frac{1}{3}(\bm{\sigma}_1^0 \cdot \textbf{n}_2 \cdot \textbf{r})_p^\Sigma \textbf{I}
+    &= 
+    % - n_p \left(
+    %     p_2^0
+    % \right)_p^\Omega \textbf{I}
+    +n_p (\bm{\sigma}_I^\text{dev})^\Sigma_p
+    + n_p (1 - \lambda)\left(
+        \mu_2 \textbf{e}_2^0
+    \right)_p^\Omega 
+    + n_p \dot{\mathcal{S}_p}
+    - n_p \rho_2 (\textbf{w}_2^0\textbf{w}_2^0 - \textbf{w}_2^0\cdot \textbf{w}_2^0)_p^\Sigma
+\end{align*}
+
+\section*{QUESTION ?}
+
+If the particle is spherical ($Bond numebr \ll 1$ and therefore $(\bm{\sigma}_I - \frac{1}{3}(\bm{\sigma}_I : \textbf{I})\text{I})^\Sigma_p =  0$) the \ref{eq:stresslet} reads, 
+\begin{align*}
+    n_p \mathscr{S}_p
+    &= 
+    + n_p (1 - \lambda)\left(
+        \mu_2 \textbf{e}_2^0
+    \right)_p^\Omega 
+\end{align*}
+Which implies that a droplet with the same viscosity as the fluid $\lambda = 1$ will generate no stresslet. 
+Which is of course wrong since the famous formula from \citet{rallison1978note} predict a non null $\mathscr{S}$ due to the non deformability of the drops. 
+
+So the question is : 
+\begin{itemize}
+    \item 
+    Where is the contribution of the droplet surface tension to $\mathscr{S}$ in \ref{eq:stresslet} when the droplet is spherical ? 
+\end{itemize}
+
+
+\bibliography{Bib/bib_bulles.bib}
+\end{document}

@@ -80,6 +80,7 @@
 
 \usepackage{amsmath}
 
+
 \begin{document}
 \maketitle
 
@@ -109,15 +110,15 @@
 
   \vfill
 
-  Therefore, in this work focuses on the study of \textbf{pair interactions} in oil/water \textbf{emulsions}.
 \end{frame}
 
 \begin{frame}
   {A multiscale problem}
   \begin{tikzpicture}
-    \node (img1) at (-0.1\textwidth,-0.35\textwidth) {\includegraphics[height=0.1\textwidth]{image/logo.png} \href{http://basilisk.fr}};
+    \node (img0) at (-0.1\textwidth,-0.35\textwidth) {\includegraphics[height=0.1\textwidth]{image/logo.png}};
     \node (img1) at (0,0) {\includegraphics[height=0.25\textwidth]{image/film_drainage.png}};
     \node (img2) at (0.35\textwidth,-0.1\textwidth) {\includegraphics[height=0.25\textwidth]{image/700drop.png}};
+    \node (ttx) at (0.35\textwidth,0.1\textwidth){Coalescence closure};
     \node (img3) at (0.7\textwidth,0) {\includegraphics[height=0.25\textwidth]{image/Euler_Euler.png}};
     \node[below,text width=0.3\textwidth] (imgC) at (img1.south) {Film scale : 
     \begin{itemize}
@@ -132,8 +133,9 @@
       \item Processes optimization (Landal Kamel PhD. ) 
     \end{itemize}
     };
-    \draw[->,very thick] (img1) to[bend left] (img3);
-    \draw[->,very thick] (img2.east) -- (img3);
+    \draw[->,very thick] (img1) -- (ttx.west);
+    \draw[->,very thick] (img2.north) -- (ttx);
+    \draw[->,very thick] (ttx.east) -- (img3);
     \draw[red,very thick] (img2.south west) rectangle(img2.north east);
   \end{tikzpicture}
 \end{frame}
@@ -152,127 +154,19 @@
     % \begin{itemize}
     %   \item Provide closure terms for the averaged Navier Stokes equations such as the Drag force, Reynolds Stresss, Particle-fluid-Particle stress \ldots 
     % \end{itemize}
-    \item We use DNS to explain qualitatively and quantitatively the average interaction behavior between a pair of droplets within a buoyant emulsion. 
+    \item We use the nearest particle statistic to explain qualitatively and quantitatively the \textbf{average interaction behavior} between droplets pairs within a buoyant emulsion. 
     % \begin{itemize}
       % \item How to model theoretically the pair properties ? 
       % \item How to define an interaction within space and time ? 
     % \end{itemize} 
   \end{enumerate}
+  This presentation focus on \textcolor{red}{3.}
 \end{frame}
 
 
-\section{Theoretical modeling of mesoscale equations to describe relative interactions}
+\section{Direct Numerical Simulaiton (DNS) of buoyant emulsion}
 \section*{}
 
-\begin{frame}{General form of the kinetic theory.}
-  \begin{definition}
-    \begin{itemize}
-      \item Let $\mathscr{C} =\left\{\textbf{x}_1,\textbf{u}_1, \textbf{q}_1\ldots\textbf{x}_N,\textbf{u}_N, \textbf{q}_N\right\}$ be the vector containing all the particles' internal coordinates such as their velocities and positions vectors and any other arbitrary particles' quantities $\textbf{q}$. 
-      \item Then $P(\mathscr{C},t)$ is the probability density function of finding the flow in the state $\mathscr{C}$, at time $t$. 
-    \end{itemize}
-  \end{definition}
-  Transport equation of the Probability Density Function (PDF) is defined as,
-  \begin{equation}
-    \pddt P(\mathscr{C},t)
-    + \frac{\partial}{\partial \mathscr{C}} \cdot
-    \left[
-        \frac{d\mathscr{C}}{dt}  
-        P(\mathscr{C},t)
-    \right]
-    = \Psi(\mathscr{C})
-    \label{eq:dt_P}
-\end{equation}
-
-  \begin{itemize}
-    \item $\Psi(\mathscr{C})$ is the source term due to the particles' interactions, such as break-up coalesce and collisions phenomenons. 
-  \end{itemize}
-  \begin{equation*}
-    \Psi(\mathscr{C}) =
-    \underbrace{B(\mathscr{C})}_{\text{Break-up}}
-    +\underbrace{S(\mathscr{C})}_{\text{Coalescence}}
-  \end{equation*}
-\end{frame}
-
-\begin{frame}{The point PDF for Population Balance Equations.}
-  \begin{definition}
-    \begin{itemize}
-      \item Let $\mathscr{C} =\left\{\textbf{x}_1,\textbf{u}_1,d_1\right\}$ be the vector containing a  particles' velocity, position vectors and diameters. 
-      \item Then $P_1(\textbf{x},\textbf{u},d,t)$ is the probability density function of finding this particle at the position $\textbf{x} = \textbf{x}_1$, $d = d_1$ and $\textbf{u} = \textbf{u}_1$.  
-    \end{itemize}
-  \end{definition}
-  Transport equation of the one point PDF reads as,
-  \begin{equation}
-    \pddt P_1
-    + \partial_{\textbf{x}} \cdot
-    (\textbf{u}P_1)
-    + \partial_{\textbf{u}} \cdot
-    (\textbf{f}P_1)
-    + \partial_{d} \cdot
-    (\dot{d} P_1)
-    = \Psi(\textbf{x},\textbf{u},d,t)
-    \label{eq:dt_P_1}
-\end{equation}
-
-  \begin{itemize}
-    \item $\textbf{f} = \ddt \textbf{u}$ is the forces per unit of mass applied on the particle test. 
-    \item By Multiplying Eq. (\ref{eq:dt_P_1}) by the momentum or the mass and integrating on all \textbf{u} we would recover the conservation equation for respectively the momentum or the mass. 
-  \end{itemize}
-\end{frame}
-
-
-\begin{frame}{The nearest particle PDF to derive relative interactions equations (DZ Zhang, PoF, 2023)}
-  \begin{definition}
-    \begin{itemize}
-      \item Let $\mathscr{C} =\left\{\textbf{x}_1, \textbf{r}, \textbf{w},a\right\}$ be the vector containing the position of a particle $\textbf{x}_1$, its nearest neighboring particle relative position $\textbf{r}$, the relative velocity \textbf{w} and the age of the pair time interaction $a$.
-      \item Then, $P_{nst}(\textbf{x},\textbf{r},\textbf{w},a) $ is the probability of finding a particle at \textbf{x} with its nearest neighboring particle at \textbf{r} with a relative velocity of \textbf{w}. 
-    \end{itemize}
-  \end{definition}
-  Transport equation of the reduced PDF,
-  \begin{equation*}
-    \underbrace{
-      \pddt P_{nst}
-      +  \partial_{\textbf{x}} \cdot
-      \left(
-        \nstavg{\textbf{u}}
-        P_{nst}
-      \right)
-      % +  \partial_{textbf{u}} \cdot
-      % \left(
-      %   \nstavg{\textbf{a}}
-      %   P_{nst}
-      % \right)
-    }_{\text{Macroscopic scale}}
-    + 
-    \underbrace{
-       \partial_a 
-        P_{nst}
-      + \partial_{\textbf{r}} \cdot
-    \left(
-        \nstavg{\textbf{w}}
-        P_{nst}
-    \right)
-      +  \partial_{\textbf{w}} \cdot
-    \left(
-        \nstavg{\textbf{a}}
-        P_{nst}
-    \right)
-    }_{\text{inter-particle scale}}
-    = \Psi
-    \label{eq:dt_P_nst}
-\end{equation*}
-
-  \begin{itemize}
-    \item $\nstavg{\textbf{u}}(\textbf{x},\textbf{r}) = \ddt \textbf{x}_1$ is the particle velocity at \textbf{x} knowing a particle at \textbf{r}. 
-    \item $\nstavg{\textbf{w}}(\textbf{x},\textbf{r}) = \ddt \textbf{r}$ is the nearest particle \textbf{relative} velocity. 
-    \item $\nstavg{\textbf{a}}(\textbf{x},\textbf{r}) = \ddt \textbf{w}$ is the averaged relative acceleration.
-  \end{itemize}
-  \underline{In this work we will be interested in the \textbf{nearest particle statistic} $P_{nst}$}
-\end{frame}
-
-
-\section{Numerical investigation of drops interactions}
-
-\section*{}
 \begin{frame}
 \frametitle{Direct Numerical Simulation of buoyant emulsions}
 \begin{columns}
@@ -280,7 +174,7 @@
 \underline{Simulation set up :} 
 \begin{itemize}
   \item Tri -periodic boundary conditions. 
-  \item Mono-disperse distribution of droplets size.
+  \item \textbf{Mono-disperse} distribution of droplets size.
   \item We prevent coalesce by the use of a special algorithm 
   (\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspension/no-coalescence.h}{no-coalescence.h})
   \item Free software : \url{https://basilisk.fr}
@@ -314,10 +208,65 @@
   \end{figure}
   \column{0.5\textwidth}
   \centering
-  \href{file:///work/fintzin/BUBLLES_PROJECT/movies/cut.gif}{\beamergotobutton{Play}}
+  \href{file:///work/fintzin/BUBLLES_PROJECT/movies/layers.mp4}{\beamergotobutton{Play}}
   \includegraphics[width =  1.1\textwidth]{image/PHI_01_Ga_75.png}
   \end{columns}
 \end{frame}
+
+
+\begin{frame}
+  \frametitle{Drag coefficient model}
+  \begin{figure}[h!]
+    \centering    
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS/fCA/Cp_N_5_l_1.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS/fCA/Cp_N_5_l_10.pdf}
+    \caption{
+        Drag coefficient $C_p$ in term of the Reynolds number $Re$.  
+        The symbols correspond to different volume fraction ($\blacktriangleleft$) $\phi = 0.1$\%, ($\bullet$) $\phi = 1\%$, ($\blacktriangle$) $\phi = 5\%$, ($\blacksquare$) $\phi = 10\%$, ($\blacklozenge$) $\phi = 15\%$, and ($\blacktriangleright$) $\phi = 20$\%.
+    }
+    \label{fig:Cp}
+\end{figure}
+  
+\begin{equation*}
+  C_d(Re,\phi,\textcolor{red}{\lambda})
+  = \frac{(C_D)_\text{Solid} + \textcolor{red}{\lambda} (C_D)_\text{Bubbles}}
+  {1+\textcolor{red}{\lambda}}
+\end{equation*}
+\begin{itemize}
+  \item Creation of a new model which takes in account the viscosity ratio : \textcolor{red}{$\lambda$}. 
+\end{itemize}
+
+\end{frame}
+
+\section{Description of the interactions}
+\section*{}
+
+
+\begin{frame}
+  \frametitle{How to describe pair interactions and microstructure ?}
+  % To better model the film drainage problem we need a clear understanding of How the interactions between droplets works. 
+  
+  \textbf{The nearest particle statistics (Zhang JFM 2020): }
+  \begin{definition}
+    \begin{itemize}
+      \item Let $\mathscr{C} =\left\{\textbf{x}_1, \textbf{r}, \textbf{w},a\right\}$ be the vector containing the position of a particle $\textbf{x}_1$, its nearest neighboring particle relative position $\textbf{r}$, the relative velocity \textbf{w} and the age of the pair time interaction $a$.
+      \item Then, $P_{nst}(\textbf{x},\textbf{r},\textbf{w},a) $ is the probability of finding a particle at \textbf{x} with its nearest neighboring particle at \textbf{r} with a relative velocity of \textbf{w} and an age $a$. 
+    \end{itemize}
+  \end{definition}
+
+  \begin{align*}
+    P_{nst}(\textbf{x},\textbf{r},\textbf{w},a)
+    &= \int \Pi(\textbf{x},\textbf{r},\textbf{w},a) d\CC\\
+    \nstavg{\textbf{f}} P_{nst}(\textbf{x},\textbf{r},\textbf{w},a)
+    &= \int \textbf{f} \Pi(\textbf{x},\textbf{r},\textbf{w},a) d\CC
+  \end{align*}
+  \begin{itemize}
+    \item 
+    where $\Pi = 1$ if and only if a particle is present at \textbf{x} with its nearest neighbor at \textbf{r} = $\textbf{y}-\textbf{x}$, having an age of $a$ with relative velocity \textbf{w}. 
+    \item $\textbf{f}$ can be a particle property as well as an Eulerian property of the continuous phase. 
+  \end{itemize}
+\end{frame}
+
 
 \begin{frame}
   \frametitle{Nearest pair probability density function}
@@ -339,9 +288,9 @@
         \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_1_0_Ga_75_PHI_0_05.pdf} 
         \\
          &
-          \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_5_PHI_0_05.pdf} &
-        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_25_PHI_0_05.pdf}&
-        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_0_1_Ga_75_PHI_0_05.pdf}\\
+          \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_1_0_Ga_5_PHI_0_15.pdf} &
+        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_1_0_Ga_25_PHI_0_15.pdf}&
+        \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fDrop/Pnst_mu_r_1_0_Ga_75_PHI_0_15.pdf}\\
       \end{tabular}
 
       \column{0.3\textwidth}
@@ -350,7 +299,7 @@
       \end{figure}
     
     \begin{itemize}
-      \item Drafting -Kissing tumbling mechanism for low $\phi$ and high $Ga$. 
+      \item Drafting -Kissing Tumbling mechanism for low $\phi$ and high $Ga$. 
     \end{itemize}
   \end{columns}
 \end{frame}
@@ -360,124 +309,60 @@
 
   \begin{figure}
     
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_10_PHI_0_05.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_25_PHI_0_05.pdf}
-    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fDrop/U_mu_r_0_1_Ga_75_PHI_0_05.pdf}
+    \includegraphics[height=0.35\textwidth]{image/HOMOGENEOUS/fDrop/U_rel_l_1_Ga_10_PHI_5.pdf}
+    \includegraphics[height=0.35\textwidth]{image/HOMOGENEOUS/fDrop/U_rel_l_10_Ga_10_PHI_5.pdf}
+    \includegraphics[height=0.35\textwidth]{image/HOMOGENEOUS/fDrop/U_rel_l_1_Ga_75_PHI_5.pdf}
     
-    \caption{Nearest averaged velocity fields, $\nstavg{\textbf{w}} (\textbf{r},a)$ for different $Ga$ and $\phi$. 
+    \caption{Nearest averaged relative center of mass velocity fields, $\nstavg{\textbf{w}} (\textbf{r},a)$ for different $Ga$ and $\phi$. 
     Colormap : dimensionless age of interaction $a$. }
   \end{figure}
 
 \begin{itemize}
-  \item In average particles approach from the top and leave through the sides. 
-  % \item How to quantify this phenomenon ? 
-  \item Representation of the Drafting -Kissing tumbling mechanism since the velocity fields converge toward high density zone. 
+  \item In average particles approach from the verticals and leave through the sides. 
+  \item Representation of Drafting -Kissing Tumbling. 
 \end{itemize}
-$\rightarrow$ How to quantify these fields ?
 \end{frame}
+
 
 \begin{frame}
-  \frametitle{Computation of the correlation tensor $\mathbb{S}$ }
-  \begin{figure}
-    \begin{centering}
-      \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fPA/URxx.pdf}
-      \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/fPA/URyy.pdf}
-      % \includegraphics[height=0.2\textwidth]{image/HOMOGENEOUS/fPA/UR.pdf}
-      \caption{Dimensionless correlation tensor $\mathbb{S} =  \int \textbf{r}\nstavg{\textbf{w}} P_{nst}(\textbf{x},\textbf{r})d\textbf{r}$}
-    \end{centering}
-  \end{figure}
-
-  \begin{itemize}
-    \item $\mathbb{S}_{xx} = \int r_x\nstrelavg{u_x} > 0$ \textbf{outward} particle flux.  
-    \item $\mathbb{S}_{yy} = \int r_y\nstrelavg{u_y} < 0$ \textbf{inward} particle flux. 
-    \item $\text{tr}\left(\mathbb{S}\right) = 0$ conservation of the number of the nearest particle flux. 
-  \end{itemize} 
-\end{frame}
-
-
-\begin{frame}{The averaged nearest relative velocity equation}
-  \begin{equation}
-      \pddt P_{nst}
-      +  \partial_{\textbf{x}} \cdot
-      \left(
-        \nstavg{\textbf{u}}
-        P_{nst}
-      \right)
-      % +  \partial_{textbf{u}} \cdot
-      % \left(
-      %   \nstavg{\textbf{a}}
-      %   P_{nst}
-      % \right)
-    + 
-       \partial_{\textbf{r}} \cdot
-    \left(
-        \nstavg{\textbf{w}}
-        P_{nst}
-    \right)
-    = \Psi
-    \label{eq:dt_P_nst1}
-\end{equation}
-Multiplying Eq. (\ref{eq:dt_P_nst1}) by \textbf{rr}, yields :
-%  the \textbf{Mean square particles distance conservation equation  :}
-\begin{equation*}
-  \pddt \mathbb{R} 
-+ \partial_{\textbf{x}} \cdot (\mathbb{R} \condavg{\textbf{u}_i}{1}
-% + \avg{\delta_i\textbf{u}_i' (\textbf{r} \textbf{r})'}
-)
-= 
- \mathbb{S}
-+ \avg{\textbf{r}\textbf{r}\Psi}
-\end{equation*}
-
-\begin{itemize}
-  \item $\mathbb{R} = \int \textbf{rr} P_{nst} d\textbf{r}$ Mean square distance to the nearest particle. 
-  \item $\mathbb{S} = \int \textbf{r} \nstavg{\textbf{w}}P_{nst} d\textbf{r}$ is the  correlation between $\nstavg{\textbf{w}}$ and $\textbf{r}$. 
-  % \item $\int \textbf{rr} \dot{P_{nst}} d\textbf{r}$  source term tensor, still accounting for coalesces and breakup. 
-\end{itemize}
-
-$\rightarrow$ Consequently, the tensor $\mathbb{R}$ is plan isotropic due to the form of $\mathbb{S}$.
-
-$\rightarrow $ $\mathbb{R}$ is the mathematical representation of the mesoscale structures (cluster \ldots)
-\vfill
-\begin{figure}
+  \frametitle{Nearest averaged flow fields around a particle}
+\begin{figure}[h!]
   \centering
   \begin{tikzpicture}
-    
-  \foreach \i in {1,...,5} {
-  \pgfmathsetmacro{\x}{rnd*0.7}
-  \pgfmathsetmacro{\y}{rnd*0.3}
-  \draw[fill=gray] ($(\x,\y)$) circle (0.1);
-  }
-  \foreach \i in {1,...,5} {
-  \pgfmathsetmacro{\x}{rnd*0.7}
-  \pgfmathsetmacro{\y}{rnd*0.3}
-  \draw[fill=gray] ($(\x+2,\y)$) circle (0.1);
-  }
-  \foreach \i in {1,...,5} {
-  \pgfmathsetmacro{\x}{rnd*0.6}
-  \pgfmathsetmacro{\y}{rnd*0.4}
-  \draw[fill=gray] ($(\x+1,\y-1)$) circle (0.1);
-  }
-  \foreach \i in {1,...,5} {
-  \pgfmathsetmacro{\x}{rnd*0.6}
-  \pgfmathsetmacro{\y}{rnd*0.4}
-  \draw[fill=gray] ($(\x-1,\y-1)$) circle (0.1);
-  }
-  \draw (1,-1)node[below]{$\mathbb{R}/r_m^2 \ll 1$};
-
-    \foreach \i in {1,...,20} {
-      \pgfmathsetmacro{\x}{rnd*4}
-      \pgfmathsetmacro{\y}{rnd*2}
-      \draw[fill=gray] ($(\x+5,\y-1)$) circle (0.1);
-      }
-      \draw (6.5,-1)node[below]{$\mathbb{R}/r_m^2 < 1$};
-    \end{tikzpicture}
-    \hfill
+      \node (img) at (0,0)  {\includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/Stream/Stream_PHI_5_Ga_10_l_1.pdf}};
+      \node (img) at (0.25\textwidth,0)  {\includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/Stream/Stream_PHI_5_Ga_100_l_1.pdf}};
+      \node (img) at (0.5\textwidth,0)  {\includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/Stream/Stream_PHI_5_Ga_10_l_10.pdf}};
+      \node (img) at (0.75\textwidth,0)  {\includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS/Stream/Stream_PHI_5_Ga_100_l_10.pdf}};
+  \end{tikzpicture}
+  \caption{Nearest particle averaged velocity $\nstavg{\textbf{u}}(\textbf{r})$ for  $\phi = 5\%$ and $20\%$.
+  Green lines : contour plots of the nearest averaged indicator function $\nstavg{\chi_d}(\textbf{r})$ (it represent the mean shape of the particles)}
+  \label{fig:Stream}
 \end{figure}
 
-
+\begin{itemize}
+  \item Hill vortex inside the particle = closure for mathematical model
+  \item $\lambda = 1 \rightarrow$ bubbles wake condition.
+  ; $\lambda = 10 \rightarrow$ solid particle wake condition. 
+\end{itemize}
 \end{frame}
 
+
+\begin{frame}
+  \frametitle{Reconstruction of the nearest relative velocity fields}
+  \begin{figure}
+    
+    \includegraphics[height=0.35\textwidth]{image/HOMOGENEOUS/fDrop/U_l_1_Ga_10_PHI_5.pdf}
+    \includegraphics[height=0.35\textwidth]{image/HOMOGENEOUS/fDrop/U_l_10_Ga_10_PHI_5.pdf}
+    \includegraphics[height=0.35\textwidth]{image/HOMOGENEOUS/fDrop/U_l_1_Ga_75_PHI_5.pdf}
+    \caption{ Nearest averaged particle center of mass velocity fields, $\nstavg{\textbf{u}_i} (\textbf{r},a) - \textbf{u}_p$
+    Colormap : dimensionless age of interaction $a$. }
+  \end{figure}
+
+\begin{itemize}
+  \item Isolated particles are slower than the mean velocity of the dispersed phase $\textbf{u}_p$.
+\end{itemize}
+
+\end{frame}
 
 
 \begin{frame}
@@ -508,33 +393,6 @@ $\rightarrow$ How to quantify these fields ?
 
 
 
-\begin{frame}{The averaged nearest relative momentum equation}
-  
-  Multiplying the transport equation of $P_{nst}$ by \textbf{rw}, yields, 
-  % and integrating  over  all  \textbf{r} and \textbf{w} yields the \textbf{Mean relative momentum correlation equation :}
-  
-  \begin{equation*}
-    \pddt \mathbb{S} 
-  + \partial_{\textbf{x}} \cdot (
-    \condavg{\textbf{u}}{1} 
-    \mathbb{S})
-  % + P_1\condavg{\textbf{u}_i' (\textbf{r}\textbf{w}_{ij})'}{1})
-  = \avg{\textbf{w}\textbf{w}}
-  + \Sigma_{B}
-  + \Sigma_{PFP}
-  + \avg{\textbf{w}\textbf{r}\Psi}
-\end{equation*}
-  
-  \begin{itemize}
-      \item Fluctuation of the velocity $\avg{\textbf{w}\textbf{w}} \approx \avg{\textbf{u}_i'\textbf{u}_i'}$ (related to the Reynolds stress)
-    \item $\mathbf{\Sigma}_{PFP} = \int \textbf{r} \nstavg{\textbf{F}} P_{nst} d\textbf{r}d\textbf{w}$ correlation between \textbf{r} and the hydrodynamic  drag force on the particle $\nstavg{\textbf{F}}$\footnote{(DZ Zhang, JFM, 2021 : \textbf{particle fluid particle stress})}. 
-    \item $\mathbf{\Sigma}_{B} = \int \textbf{r} \nstrelavg{\textbf{b}} P_{nst} d\textbf{r}d\textbf{w} = 0$, correlation between \textbf{r} and the \textbf{relative body} forces applied on the pair of nearest particles.
-  \end{itemize}
-  
-  $\rightarrow$  The relative motion between particles are driven by $\avg{\textbf{w}\textbf{w}}$ and $\Sigma_{PFP}$.
-  
-  \end{frame}
-  
 
 \begin{frame}
   \frametitle{Computation of the Particle Fluid Particle (PFP) stress}
@@ -557,38 +415,42 @@ $\rightarrow$ How to quantify these fields ?
 \end{itemize}
 
 \end{frame}
+
+
 \begin{frame}
-  \frametitle{Computation of $\avg{\textbf{ww}}$}
-  \begin{figure}
-    \includegraphics[height=0.23\textwidth]{image/HOMOGENEOUS/fPA/RR.pdf}
-    \includegraphics[height=0.23\textwidth]{image/HOMOGENEOUS/fPA/trWW.pdf}
-    \caption{ 
-      (left) Dimensionless  mean square distance to the nearest neighbor ($\textbf{R}^* =0$ particle in contact). 
-      (right) Relative velocity correlation  $\avg{\textbf{ww}}$.
-      }
-  \end{figure}
+  \frametitle{Distribution of the interaction time between a pair of the nearest particle}
+    \begin{figure}
+        \includegraphics[height=0.23\textwidth]{image/HOMOGENEOUS/fDrop/P_a_Ga_25.pdf}
+        \includegraphics[height=0.23\textwidth]{image/HOMOGENEOUS/fPA/ageGa.pdf}
+        \caption{ (left) PDF of the dimensionless age of interaction for fixed $Ga = 25$.
+      (right) Mean time of interaction $\tau(\textbf{x})$.}
+    \end{figure}
   \begin{equation*}
-    \frac{D^2 \mathbb{R}}{Dt^2}
-  %   \pddt \mathbb{S} 
-  % + \partial_{\textbf{x}} \cdot (
-  %   \condavg{\textbf{u}}{1} 
-  %   \mathbb{S})
-  % + P_1\condavg{\textbf{u}_i' (\textbf{r}\textbf{w}_{ij})'}{1})
-  = \avg{\textbf{w}\textbf{w}}
-  + \Sigma_{PFP}
-  + \avg{\textbf{w}\textbf{r}\Psi}
-\end{equation*}
-  
-  
+    P_{nst}(\textbf{x},a) 
+    = \int P_{nst}(\textbf{x},\textbf{r},\textbf{w},a) d\textbf{w}d\textbf{r}
+    \rightarrow\frac{e^{-a/\tau(\textbf{x})}}{\tau(\textbf{x})}
+  \end{equation*}
 \begin{itemize}
-  \item At low inertia the particle come closer because $\Sigma_{PFP}<0$, at high inertia because $\avg{\textbf{ww}} \searrow$
-  \item At $Ga \approx 25$ we have the most distant situation. 
+  \item $\tau(\textbf{x}) = \int a P_{nst}(\textbf{x},a) da$ is the mean interaction time at $\textbf{x}$. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{On the way to model the coalescence kernel}
+    \begin{figure}
+        \includegraphics[height=0.23\textwidth]{image/HOMOGENEOUS/fDrop/P_a_Ga_25.pdf}
+        \includegraphics[height=0.23\textwidth]{image/HOMOGENEOUS/fPA/ageGa.pdf}
+        \caption{ (left) PDF of the dimensionless age of interaction for fixed $Ga = 25$.
+      (right) Mean time of interaction $\tau(\textbf{x})$.}
+    \end{figure}
+  \textbf{For coalescence modeling : }
+\begin{itemize}
+  \item Rate of coalescence : $\int_{a > t_c}^\infty P_{nst}(\textbf{x},t,a) da 
+  = \frac{e^{-t_c/\tau(\textbf{x})}}{\tau(\textbf{x})}$. 
+  \item $t_c$ is the critical time of coalescence determined by the film drainage problem (Paul-Peter Phd)
 \end{itemize}
 
 \end{frame}
-
-
-
 
 \section{Conclusion and perspectives}
 \section*{}
@@ -598,7 +460,7 @@ $\rightarrow$ How to quantify these fields ?
 
   \begin{itemize}
     \item We used the nearest particle statistics to derive relative pair interactions equations. 
-    \item We found out that relative velocity and forces are directly correlated to the relative position \textbf{r} and age of the interaction $a$, with $Ga$ and $\phi$. 
+    \item We found out that relative velocity and forces are directly correlated to the relative position \textbf{r} and age of the interaction $a$, with $Ga$ and $\phi$. and $\lambda$ 
     \item The interaction relaxation time corresponds approximately to the mean age of interaction $\tau =\avg{a}$. 
   \end{itemize}
     \underline{Future projects : }  
@@ -612,43 +474,11 @@ See my work : \url{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/}
 
 \end{frame}
 
-\begin{frame}
-  \frametitle{Closure terms for the averaged Navier Stokes equation.}
-\begin{columns}
-  \begin{column}{0.5\textwidth}
-    \begin{figure}
-      \includegraphics[width=0.7\textwidth]{image/HOMOGENEOUS/fCA/FH_mu_Re.pdf}
-      \caption{Dimensionless drag force in terms $Re$ for $\phi = 0.01, 0.05, 0.1$ and $0.15$.}
-    \end{figure}
-    \begin{equation*}
-      \frac{\avg{f}}{\mu UD} 
-      = 1.18 e^{5.32\phi^{1/3}}  Re^{0.33}  + Re^{0.87} +24.12
-    \end{equation*}
-  \end{column}
-  \begin{column}{0.5\textwidth}
-    \begin{figure}[h!]
-      \centering
-      \includegraphics[width=0.7\textwidth]{image/HOMOGENEOUS/fPA/Talpha.pdf}
-      \caption{Dimensionless granular temperature in terms of $Ga$ and $\phi$}
-  \end{figure}
-  	\begin{equation}
-    \frac{\avg{\textbf{u}'\cdot \textbf{u}'}}{U^2}  
-    \approx \frac{\phi}{Ga^2} 2.86 
-    \label{eq:Talpha_scaling}
-	\end{equation}
-    % \begin{itemize}
-    %   \item $U$ is the relative velocity between the continuous and dispersed phase.
-    %   \item $Re$ is the \textit{Reynolds} number defined as, $Re = \rho D U / \mu$. 
-    % \end{itemize}
-  \end{column}
-\end{columns}
-
-\end{frame}
-
 \begin{frame}[t]
   \frametitle{References}
   \bibliography{Bib/bib_bulles.bib}
 \end{frame}
+
 
  
 \backmatter
@@ -690,6 +520,20 @@ See my work : \url{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/}
 
 \end{frame}
 
+\begin{frame}
+  \frametitle{Velocity fluctuations}
+  \begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \node (img) at (0.3\textwidth,-0.6\textwidth)  {\includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/Stream/P_PHI_5_Ga_50_l_1.pdf}};
+        \node (img) at (0.6\textwidth,-0.6\textwidth)  {\includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/Stream/P_PHI_5_Ga_100_l_1.pdf}};
+    \end{tikzpicture}
+    \caption{Nearest particle averaged pressure $\nstavg{p}(\textbf{r})$ normalized by the Laplace pressure $4 \gamma /d$ for  $\phi = 5\%$ and $20\%$}  
+    \label{fig:Stream}
+\end{figure}
+  
+
+\end{frame}
 
 \begin{frame}
   \frametitle{Kinematic history of the interaction}
