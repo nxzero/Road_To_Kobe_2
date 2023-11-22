@@ -1,6 +1,36 @@
 \Huge{ \tb{Brouillion}}\normalsize
 
-\section{Clear}
+
+\section{The ultimate model ?}
+The main idea is to let the internal viscous term of particles : $\lambda \phi_2 \bm{\tau}_2$ within the divergence of the momentum equation to recover the proper Stresslet term, i.e $\mathscr{S}_p = n_p(\textbf{r} \bm{\sigma}_1^0 \cdot \textbf{n})_p^\Sigma -n_p(\textbf{r} \cdot \bm{\sigma}_1^0 \cdot \textbf{n})_p^\Sigma \textbf{I} - \lambda \phi_2 \bm{\tau}_2$. 
+The trace of the stress let might be removed by the use of the averaged pressure $p_1$ present in the models below. 
+How about the viscosity ratio part ? Well it can be show that, 
+\begin{align*}
+    n_p (\textbf{r} \bm{\sigma}_1'\cdot \textbf{n}_1)_p^\Sigma
+    = 
+    n_p (\textbf{r} \bm{\sigma}_1^0\cdot \textbf{n}_1)_p^\Sigma
+    - n_p v_p \bm{\sigma}_1 
+\end{align*}
+From the formulas, 
+\begin{align*}
+    \bm{\sigma}_1 \phi_1
+    &=- \phi_1 p_1 \textbf{I}
+    + \mu_1 \textbf{e}
+    - \lambda \phi_2 \bm{\tau}_2\\
+    \bm{\sigma}_1 n_p v_p 
+    &=- n_p v_p p_1 \textbf{I}
+    + \frac{n_p v_p}{\phi_1}\mu_1 \textbf{e}
+    - \lambda \frac{n_pv_p\phi_2}{\phi_1} \bm{\tau}_2
+\end{align*}
+we see that we hardly recover the real stresslet, because under this form the term related to the particle shear is lumped into the divergence at the other side of the equations. 
+Therefore, the BEST model is the one were we throw $-p_1$ and $\textbf{q}_1$ on the Others side of the  equaiton. 
+Note that the trace of $n_p(\textbf{r} \cdot (\bm{\sigma}_1^0 - p_1) \cdot \textbf{n})_p^\Sigma \textbf{I}$ is surely null since no pressure force form the normal viscous force is possible. 
+
+In a shearing problem this might be not the best option because the mean shear isn't subtracted to the drag and first moment. 
+
+
+
+\section{Clear ones}
 \subsection{Continuous phase}
 Here we try to make appear only the gradient of pressure. 
 We consider Newtonian fluid such that $\bm{\sigma}_k^0 = -p^0_k \textbf{I} + \bm{\tau}_k^0$. 
@@ -717,9 +747,9 @@ Using the generic formulation \ref{eq:hybrid_avg_dt_chif} and the local expressi
 where we have defined, 
 \begin{align*}
     &\bm{\sigma}_k^\text{eq}
-    = \phi_k\rho_k (
+    = \phi_k (
         \bm{\sigma}_k%- n_p \textbf{M}_p
-        - \kavg{\textbf{u}_k'\textbf{u}_k'})  
+        - \rho_k \kavg{\textbf{u}_k'\textbf{u}_k'})  
     &\textbf{q}_k^\text{eq}
     =\textbf{q}_k^\text{e} +\textbf{q}_k^\text{k}  \\
     &\textbf{q}_k^\text{e}
@@ -906,6 +936,22 @@ Following the energy decomposition :
     = \textbf{u}_1 \cdot \avg{\delta_I \bm{\sigma}_1'\cdot \textbf{n}_2}
     + \avg{\delta_I (\textbf{u}_1' \cdot \bm{\sigma}_1^0 )\cdot \textbf{n}_2}
 \end{align*}
+
+The energy decomposition :
+\begin{align*}
+    E_1 = e_1 + k_1 + u_k^2/2
+\end{align*}
+\begin{equation*}
+    n_p m_p E_p(t) 
+    = m_p n_p e_p 
+    + \pnavg{\int_{\Omega_\alpha(t)} \rho_2  (w_2^0)^2/2 d\Omega}
+    + m_p n_p k_p
+    + m_p n_p (u_p)^2/2
+    + n_p s_p \gamma
+    % + \textbf{u}_\alpha \cdot \int_{\Omega_\alpha(t)} \rho_2  \textbf{w}_2^0 d\Omega
+\end{equation*}
+
+
 we obtain the follwoing system of equaiton 
 \begin{align*}
     &\pddt \left(n_p m_p u_p^2/ 2\right)
@@ -937,9 +983,9 @@ we obtain the follwoing system of equaiton
     +  \textbf{q}_p^\text{w}
     )
     = 
-    - n_p (\bm{\sigma}_2^0 : \grad\textbf{u}_2^0)^\Omega_p\\
-    &+ n_p (\textbf{u}_1^0 \cdot \bm{\sigma}_1^0 \cdot  \textbf{n}_2)^\Sigma_p
-    - n_p (\textbf{u}_\alpha \cdot \bm{\sigma}_1^0 \cdot  \textbf{n}_2)^\Sigma_p\\
+    - n_p (\bm{\sigma}_2^0 : \grad\textbf{u}_2^0)^\Omega_p
+    % + n_p (\textbf{u}_1^0 \cdot \bm{\sigma}_1^0 \cdot  \textbf{n}_2)^\Sigma_p
+    - n_p (\textbf{w}_1^0 \cdot \bm{\sigma}_1^0 \cdot  \textbf{n}_2)^\Sigma_p\\
     &\pddt \left(n_p m_p e_p\right)
     + \div \left(n_p
     m_p e_p \textbf{u}_p 
@@ -972,20 +1018,66 @@ which correspond to the covariance between the force acting on the particle $\al
 
 
 Now that we clearly displayed the equations the link between the fluid phase equation and the particle phase equation must be clearly displayed. 
-
 On the fluid phase we have the exchange term : 
-\begin{equation}
-    \avg{\delta_I \textbf{u}_1' \cdot \bm{\sigma}_1' \cdot \textbf{n}_1}
+\begin{align*}
+    \avg{\delta_I \bm{\sigma}_1'\cdot \textbf{n}_1}
+    = n_p (\bm{\sigma}_1'\cdot \textbf{n}_1)_p^\Sigma
+    + n_p (\textbf{r} \bm{\sigma}_1'\cdot \textbf{n}_1)_p^\Sigma
+\end{align*}
+Note that the last term can be written, 
+\begin{align*}
+    n_p (\textbf{r} \bm{\sigma}_1'\cdot \textbf{n}_1)_p^\Sigma
     = 
+    n_p (\textbf{r} \bm{\sigma}_1^0\cdot \textbf{n}_1)_p^\Sigma
+    - n_p v_p \bm{\sigma}_1 
+\end{align*}
+From the formulas, 
+\begin{align*}
+    \bm{\sigma}_1 \phi_1
+    &=- \phi_1 p_1 \textbf{I}
+    + \mu_1 \textbf{e}
+    - \lambda \phi_2 \bm{\tau}_2\\
+    \bm{\sigma}_1 n_p v_p 
+    &=- n_p v_p p_1 \textbf{I}
+    + \frac{n_p v_p}{\phi_1}\mu_1 \textbf{e}
+    - \lambda \frac{n_pv_p\phi_2}{\phi_1} \bm{\tau}_2
+\end{align*}
+
+\begin{align*}
+    \avg{\delta_I \textbf{u}_1' \cdot \bm{\sigma}_1' \cdot \textbf{n}_1}
+    &= 
     \avg{\delta_I \textbf{u}_1^0 \cdot \bm{\sigma}_1' \cdot \textbf{n}_1}
-    - \textbf{u}_1 \cdot \avg{\delta_I  \bm{\sigma}_1' \cdot \textbf{n}_1}
-    = n_p( \textbf{u}_p \cdot \bm{\sigma}_1' \cdot \textbf{n}_1)^\Sigma_p
-    + n_p( \textbf{u}_\alpha' \cdot (\bm{\sigma}_1' \cdot \textbf{n}_1))^\Sigma_p
-    - \textbf{u}_1 \cdot \avg{\delta_I  \bm{\sigma}_1' \cdot \textbf{n}_1}
-\end{equation}
+    - \textbf{u}_1 \cdot \avg{\delta_I  \bm{\sigma}_1' \cdot \textbf{n}_1}\\
+    &= 
+    n_p( \textbf{u}_\alpha \cdot \bm{\sigma}_1' \cdot \textbf{n}_1)^\Sigma_p
+    + n_p( \textbf{w}_1^0 \cdot \bm{\sigma}_1' \cdot \textbf{n}_1)^\Sigma_p
+    + \div [n_p( \textbf{r}\textbf{u}_1^0 \cdot \bm{\sigma}_1' \cdot \textbf{n}_1)]^\Sigma_p
+    - \textbf{u}_1 \cdot \avg{\delta_I  \bm{\sigma}_1' \cdot \textbf{n}_1} \\
+    &= 
+    n_p( \textbf{u}_\alpha' \cdot \bm{\sigma}_1' \cdot \textbf{n}_1)^\Sigma_p
+    + n_p( \textbf{w}_1^0 \cdot \bm{\sigma}_1' \cdot \textbf{n}_1)^\Sigma_p
+    + \div [n_p( \textbf{r}\textbf{u}_1^0 \cdot \bm{\sigma}_1' \cdot \textbf{n}_1)]^\Sigma_p
+    + (\textbf{u}_p - \textbf{u}_1 )\cdot \avg{\delta_I  \bm{\sigma}_1' \cdot \textbf{n}_1} \\
+\end{align*}
+\tb{This is definitely worth it}
+As we can see the first term exchange with the particle phase the second with the internal fluctuation and the las with the mean momentum phase. 
+
+\subsubsection*{The collisions model for emulsion}
+
+The force term can arise for two distinct reason.
+Particle-fluid interaction can near contact forces. 
+
+
 \subsubsection*{Zeroth attempt to model the fluctuating term}
-
-
+Using the momentum balance of a signle particle we can rewrite the term, $n_p (\textbf{u}_\alpha' \textbf{f}_\alpha)^\Sigma_p$ as,  $n_p (\textbf{u}_\alpha' \ddt \textbf{u}_\alpha)^\Sigma_p$.
+So this term is non-null if the particle is correlated with its own velocity. 
+An other way to express this exchange term is, 
+\begin{multline*}
+    n_p (\textbf{u}_\alpha' \cdot (\bm{\sigma}_1^0 \cdot  \textbf{n}_2)^\Sigma)_p
+    = n_p (\textbf{u}_\alpha \cdot (\bm{\sigma}_1' \cdot  \textbf{n}_2)^\Sigma)_p
+    - n_p\textbf{u}_p \cdot ( (\bm{\sigma}_1' \cdot  \textbf{n}_2)^\Sigma)_p
+    \\
+\end{multline*}
 
 \subsubsection*{First attempt to model the fluctuaiton terme}
 Thus, if we assume that $\textbf{f}_\alpha \sim - C_p m_p  (\textbf{u}_\alpha - \textbf{u}_1)$ with $C_p $ the drag coefficient, both quantities are indeed correlated.
@@ -1026,6 +1118,284 @@ If we reformulate $(\textbf{x}_\alpha - \textbf{x}_\beta) \textbf{n} = r \textbf
 
 is the force contribution due to a particle in $\textbf{r}$ (either solid collision or fluid mediated interaction). 
 In this case the source term can be written ,
+\section{The modeling of contact forces for spherical droplets}
+
+The transfer term $(\bm{\sigma}_1' \cdot \textbf{n}_1)_p^\Sigma$ can be split in two components. 
+Indeed, from \citet{zhang1997momentum}. 
+\begin{equation}
+    n_p (\bm{\sigma}_1' \cdot \textbf{n}_1)_p^\Sigma
+    = \int_{\mathrm{R}^3} (\bm{\sigma}_1' \cdot \textbf{n}_1)_\text{nst}^\Sigma
+    P_\text{nst}(\textbf{x},\textbf{r}) d\textbf{r}
+    = \int_{|\textbf{r}| < a} (\bm{\sigma}_1' \cdot \textbf{n}_1)_\text{nst}^\Sigma
+    P_\text{nst}(\textbf{x},\textbf{r})  d\textbf{r}
+    + \int_{|\textbf{r}| > a} (\bm{\sigma}_1' \cdot \textbf{n}_1)_\text{nst}^\Sigma
+    P_\text{nst}(\textbf{x},\textbf{r})  d\textbf{r}
+\end{equation}
+The first contribution is the averaged close contact forces. 
+The second contribution is the fluide-particle-fluide mediated interaction or just hydrodynamical interaction or just hydrodynamic interaction. 
+This decomposition is possible since the close particle or capillary interaction is just the contribution  from the contact pressure on the drops. 
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+      \draw[lightgray,fill = lightgray] (0,0.7) circle (0.75);
+      \draw[lightgray,fill = lightgray] (0,-0.7) circle (0.75);
+      \draw[white,fill=white] (-0.75,-0.05) rectangle (0.75,0.05);
+      \draw(0,0.05)--++(-0.75,0)--++(-0.1,0.2)--++(-0.2,0);
+      \draw(0,-0.05)--++(-1.1,0);
+      \draw[<->](-1,-0.05) --++ (0,0.3)node[midway,left]{$h$};
+      \draw[<->](-0.75,1.6)--++(1.5,0)node[midway,above]{$D$};
+      \node (para) at (-1.2,0.75){$\mu$,$\rho$};
+      \node (pressure) at (2,0){$p_1^0 = \kappa \sigma$};
+      \draw[->,thick](0,0.5)--++(0,0.5)node[midway,left]{$\textbf{f}_\alpha^\text{c}$};
+      \draw[->,thick](0,-0.5)--++(0,-0.5)node[midway,left]{$-\textbf{f}_\alpha^\text{c}$};
+      \draw[<-,thick](1,0.5)--++(0,0.5)node[midway,right]{$\textbf{u}_1$};
+      \draw[<-,thick](1,-0.5)--++(0,-0.5)node[midway,right]{$\textbf{u}_2$};
+    \end{tikzpicture}
+    \begin{tikzpicture}
+      \draw[lightgray,fill = lightgray] (0,0.7) circle (0.75);
+      \draw[lightgray,fill = lightgray] (0,-0.7) circle (0.75);
+      \draw[white,fill=white] (-0.75,-0.05) rectangle (0.75,0.05);
+      \draw(0,0.05)--++(-0.75,0)--++(-0.1,0.2)--++(-0.2,0);
+      \draw(0,-0.05)--++(-1.1,0);
+      \draw[<->](-0.75,1.6)--++(1.5,0)node[midway,above]{$2 a$};
+      \draw[<->](1.5,0.7)--++(0,-1.4)node[midway,right]{$r$};
+      \node (para) at (-0.7,0.75){$S_c = r_c^2 \pi$};
+    \end{tikzpicture}
+    \caption{Scheme of two colliding droplets at close contact. Notice the null kurvature in the region of the interface close to the film leading to a capilary force $\textbf{f}_\alpha^\text{c} \approx - S_c \kappa \sigma \textbf{r}/|\textbf{r}|$. }
+\end{figure}
+
+Let use the following notation $(\bm{\sigma}_1' \cdot \textbf{n}_1)^\Sigma = \textbf{f}_\alpha = \textbf{f}_\alpha^\text{h}+\textbf{f}_\alpha^\text{c}$. 
+It is clear, since the mean stress contribution $\div \bm{\sigma}_1$ isn't taken in account inside the drag force term, that the contribution $\textbf{f}_\alpha^\text{h}$ vanish or is negligible compared to $\textbf{f}_\alpha^\text{c}$ when the nearest particle is at a distance $|\textbf{r}| < a$ where $a$ is the.  Radius. 
+
+If there is strong inhomogeneous structure in the flow the pure drag force term might be modified to yields the particle fluid particle stress. 
+\begin{align*}
+    n_p (\bm{\sigma}_1' \cdot \textbf{n}_1)_p^\Sigma
+    &= 
+    \int_{\mathrm{R}^3} (\bm{\sigma}_1' \cdot \textbf{n}_1)_\text{nst}^\Sigma
+    P_\text{nst}(\textbf{x}\pm\textbf{r}/2,\mp\textbf{r}) d\textbf{r}
+    +\div \int_{\mathrm{R}^3} \textbf{r} (\bm{\sigma}_1' \cdot \textbf{n}_1)_\text{nst}^\Sigma
+    P_\text{nst}(\textbf{x},\textbf{r}) d\textbf{r}\\
+\end{align*}
+Which can be again decomposed into : 
+\begin{align*}
+    n_p (\bm{\sigma}_1' \cdot \textbf{n}_1)_p^\Sigma
+    &= 
+    \frac{1}{2}\int_{\mathrm{R}^3} \textbf{f}^h_\text{nst}P_\text{nst}(\textbf{x}\pm\textbf{r}/2,\mp\textbf{r}) d\textbf{r}
+    + \frac{1}{2}\int_{\mathrm{R}^3} \textbf{f}^c_\text{nst}P_\text{nst}(\textbf{x}\pm\textbf{r}/2,\mp\textbf{r}) d\textbf{r} \\
+    &
+    +\div \int_{\mathrm{R}^3} \textbf{r} \textbf{f}_\text{nst}^\text{h} P_\text{nst}(\textbf{x},\textbf{r}) d\textbf{r}
+    +\div \int_{\mathrm{R}^3} \textbf{r} \textbf{f}_\text{nst}^\text{c} P_\text{nst}(\textbf{x},\textbf{r}) d\textbf{r}\\
+\end{align*}
+The first term is teh pure drag force components. 
+The second terms is the pure contact force components which we will see to be null in the next section. 
+Then, the third term is the particle-fluid-particle stress. 
+And the last is the particle-film-particle stress. 
+
+
+\subsubsection*{The contact forces}
+In the same spirit as the classical surface force, as it is defined in \citet{jackson1997locally,zhang1997momentum,nott2011suspension} we can argue that the ensemble average of the close contact force cancel out. 
+More precisely, the contact force on a single particle labeled $i$ due to the close contact with particle $j$ can be modeled by, 
+\begin{equation*}
+    \textbf{f}_{ij}^\text{c}
+    = S_c \kappa \sigma \textbf{r}_{ij}/r_{ij}
+    = \pi r_c^2 \kappa \sigma \textbf{r}_{ij}/r_{ij}
+    = \pi (a^2 - r_{ij}^2/4) \kappa \sigma  \textbf{r}_{ij}/r_{ij}
+\end{equation*} 
+The resultants of these forces on the particle $i$ is therefore the sum of the contact with all particles except the $j^\text{th}$ particle, 
+\begin{equation*}
+    \textbf{f}_{i}^\text{c}
+    = \sum_{j \neq i}\textbf{f}_{ij}
+    = - \sum_{j \neq i} \pi (a^2 - r_{ij}^2/4) \kappa \sigma \textbf{r}_{ij}/r_{ij}
+\end{equation*} 
+The ensemble average of this force can be written using the classic point particle average,
+\begin{align}    
+\pavg{\textbf{f}_i^c}
+&=
+\int \sum_{i} \delta_i 
+\textbf{f}_i^c d\PP 
+= \int \sum_{i} \sum_{j \neq i} \delta(\textbf{x} - \textbf{x}_i) 
+\textbf{f}_{ij}^c d\PP 
+\\
+\end{align}
+Not that $\textbf{f}_{ij} = - \textbf{f}_{ji}$ however $\delta_i \textbf{f}_{ij} \neq - \delta_j\textbf{f}_{ji}$ thus the sum dosen't cancel drictly. 
+Thus, following \citet{nott2011suspension,zhang1997momentum} we introduce the sum $\sum_j \delta(\textbf{x}-\textbf{x}_{ij}) \textbf{f}_{ij}^c =0$ where $\textbf{x}_{ij} = \textbf{x}_{ji} = (\textbf{x}_i+\textbf{x}_j)/2$.
+Besides, notice that, 
+\begin{equation*}
+    \delta(\textbf{x} - \textbf{x}_{ij})
+    = 
+    \delta(\textbf{x} - \textbf{x}_i + ( \textbf{x}_{ij} - \textbf{x}_i))
+    =
+    \delta(\textbf{x} - \textbf{x}_i )
+    - ( \textbf{x}_{ij} - \textbf{x}_i)\cdot \grad \delta(\textbf{x}-\textbf{x}_\alpha)
+    +\frac{1}{2} (\textbf{x}_{ij} - \textbf{x}_i)(\textbf{x}_{ij} - \textbf{x}_i) : \grad\grad \delta(\textbf{x}-\textbf{x}_\alpha)
+\end{equation*}
+using both relation yields, 
+\begin{align}    
+    \pavg{\textbf{f}_i^c}
+    &= \int \sum_{i} \sum_{j \neq i} [
+        \delta(\textbf{x} - \textbf{x}_i)
+        -\delta(\textbf{x} - \textbf{x}_{ij})]
+    \textbf{f}_{ij}^c d\PP 
+    \\
+    &= \div \int \sum_{i} \sum_{j \neq i} \delta(\textbf{x}-\textbf{x}_i) (\textbf{x}_{ij} - \textbf{x}_i)
+    \textbf{f}_{ij}^c d\PP 
+    \\
+    &= \frac{1}{2}\div \int \sum_{i} \sum_{j \neq i} \delta(\textbf{x}-\textbf{x}_i) (\textbf{x}_{j} - \textbf{x}_i)
+    \textbf{f}_{ij}^c d\PP 
+\end{align}
+Using the formula for the contact force gives 
+\begin{align}    
+    \pavg{\textbf{f}_i^c}
+    &= \frac{1}{2}\div \int \sum_{i} \sum_{j \neq i} \delta(\textbf{x}-\textbf{x}_i) 
+    \textbf{r}\textbf{r}
+    \pi (r^2/4 - a^2) /r \kappa \sigma d\PP 
+    \\
+\end{align}
+
+
+\subsubsection*{Nearest stats for contacts forces in dilute case}
+In the dilute case we consider only one conatc force so that, 
+\begin{equation}
+    n_p \textbf{f}^c_p = \iint 
+    \sum_i 
+    \delta(\textbf{x} -\textbf{x}_i)
+    \sum_k 
+    \textbf{f}_{k \to i}^\text{c} 
+    \sum_{j\neq i}
+    \delta(\textbf{x} + \textbf{r} -\textbf{x}_j) h_{ij}(t,\CC)
+    d\PP d\textbf{r}\\
+\end{equation}
+Now we make use of a trick to cancel the pair particles forces by notticing that, 
+\begin{equation}
+    n_p \textbf{f}^c_p = \iint 
+    \sum_k 
+    \delta(\textbf{x} -\textbf{x}_k)
+    \sum_i
+    \textbf{f}_{i\to k}^\text{c} 
+    \sum_{j\neq k}
+    \delta(\textbf{x} + \textbf{r} -\textbf{x}_j) h_{kj}(t,\CC)
+    d\PP d\textbf{r}\\
+\end{equation}
+So, we have, 
+\begin{equation}
+    n_p \textbf{f}^c_p = \frac{1}{2}\iint 
+    \sum_i 
+    \sum_k 
+    \left[
+        \sum_{j\neq i}
+        \delta(\textbf{x} -\textbf{x}_i)
+        \delta(\textbf{x} + \textbf{r} -\textbf{x}_j) h_{ij}
+        \textbf{f}_{k \to i}^\text{c} 
+        +
+        \sum_{j\neq k}
+        \delta(\textbf{x} -\textbf{x}_k)
+        \delta(\textbf{x} + \textbf{r} -\textbf{x}_j) h_{kj}
+        \textbf{f}_{i \to k}^\text{c} 
+    \right]
+    d\PP d\textbf{r}\\
+\end{equation}
+Note that the sums do not have the same restrictions. 
+Nevertheless, this can be neglected since, if for example, $j=i$ we obtain $\delta(\textbf{x}-\textbf{x}_i)\delta(\textbf{x}+\textbf{r}-\textbf{x}_i) = 0$ thus the term cancel unless $\textbf{r}=0$ but let neglect that.
+Besides, we must define manually that $h_{ii} = 0$ but it doesn't really matter.   
+Or we get out these specifics case such as,
+\begin{align}
+    n_p \textbf{f}^c_p 
+    &= \frac{1}{2}\iint 
+    \sum_i 
+    \sum_k 
+    \sum_{j\neq k,i}
+    \left[
+        \delta(\textbf{x} -\textbf{x}_i)
+        \delta(\textbf{x} + \textbf{r} -\textbf{x}_j) h_{ij}
+        \textbf{f}_{k \to i}^\text{c} 
+        +
+        \delta(\textbf{x} -\textbf{x}_k)
+        \delta(\textbf{x} + \textbf{r} -\textbf{x}_j) h_{kj}
+        \textbf{f}_{i \to k}^\text{c} 
+    \right]
+    d\PP d\textbf{r}\\
+    &+ \frac{1}{2}\iint 
+    \sum_i 
+    \sum_k 
+    \left[
+        \delta(\textbf{x} -\textbf{x}_i)
+        \delta(\textbf{x} + \textbf{r} -\textbf{x}_k) h_{ik}
+        \textbf{f}_{k \to i}^\text{c} 
+        +
+        \delta(\textbf{x} -\textbf{x}_k)
+        \delta(\textbf{x} + \textbf{r} -\textbf{x}_i) h_{ki}
+        \textbf{f}_{i \to k}^\text{c} 
+    \right]
+    d\PP d\textbf{r}\\
+\end{align}
+
+Now we must verify that this framework is coherent with the nearest particle statistics framework.
+First we recall the definition of the pure drag term of the contact forces according to the neaerst particle statistics. 
+\begin{align*}
+    \pavg{\textbf{f}_i^\text{c}}
+    &= \frac{1}{2}\int \nstavg{\textbf{f}_i^\text{c}} P_\text{nst}(\textbf{x}\pm\textbf{r}/2,\mp \textbf{r}) d\textbf{r}\\
+    &=
+    \frac{1}{2}\iint \sum_i \sum_{j\neq i}
+    \delta(\textbf{x} \pm \textbf{r}/2 -\textbf{x}_i) 
+    \delta(\textbf{x} \mp \textbf{r} -\textbf{x}_j) h_{ij}
+    \textbf{f}_i^\text{c} 
+    d\PP d\textbf{r}\\
+    &=
+    \frac{1}{2}\iint \sum_i \sum_{j\neq i}
+    \delta(\textbf{x} \pm \textbf{r}/2 -\textbf{x}_i)
+    \delta(\textbf{x} \mp \textbf{r} -\textbf{x}_j) h_{ij}
+    \sum_{k \neq i} \textbf{f}_{ik}^\text{c} 
+    d\PP d\textbf{r}\\
+    &=
+    \frac{1}{2}\iint \sum_i \sum_{j\neq i}
+    \delta(\textbf{x} \pm \textbf{r}/2 -\textbf{x}_i)
+    \delta(\textbf{x} \mp \textbf{r} -\textbf{x}_j) h_{ij}
+     (\textbf{f}_{ij}^\text{c} + \sum_{k\neq i,j} \textbf{f}_{ik}^c)
+    d\PP d\textbf{r}
+\end{align*}
+We must verify that both component of this integral cancel out. 
+Changing teh integration sign we get,
+\begin{equation*}
+    \int \nstavg{\textbf{f}_i^\text{c}} P_\text{nst}(\textbf{x}, \textbf{r}) d\textbf{r}
+    = \int \nstavg{\textbf{f}_i^\text{c}} P_\text{nst}(\textbf{x}, - \textbf{r}) d\textbf{r}
+\end{equation*}
+The drag force can alse, be written, 
+\begin{equation*}
+    \int [\textbf{f}^c_\text{eb}(\textbf{x}+\textbf{r}/2,\textbf{x} - \textbf{r}/2)+ \textbf{f}_\text{eb}^c(\textbf{x} -\textbf{r}/2,\textbf{x}+ \textbf{r}/2)]P_2(\textbf{x}\pm\textbf{r}/2,\textbf{x}\mp \textbf{r}/2) d\textbf{r}
+    = \\
+\end{equation*}
+And since the contact force has only an antisymmetric contribution in average it is always true that in an averaged sense we have $\nstavg{\textbf{f}_i^\text{c}} P_\text{nst}(\textbf{x}, \textbf{r})  = - \nstavg{\textbf{f}_i^\text{c}} P_\text{nst}(\textbf{x}, - \textbf{r}) $, 
+Additionally, 
+\begin{align*}
+    \pavg{\textbf{f}_\text{eb}^\text{c}}
+    &=
+    \frac{1}{2}\iint \sum_i \sum_{j\neq i}
+    \delta(\textbf{x} + \textbf{r}/2 -\textbf{x}_i)
+    \delta(\textbf{x} - \textbf{r}/2 -\textbf{x}_j) h_{ij}
+    \sum_{k \neq i} \textbf{f}_{ik}^\text{c} 
+    d\PP d\textbf{r}\\
+    &=
+    \frac{1}{2}\iint \sum_i \sum_{j\neq i}
+    \delta(\textbf{x} + \textbf{r}/2 -\textbf{x}_i)
+    \delta(\textbf{x} - \textbf{r}/2 -\textbf{x}_j) 
+    h_{ij}
+    \sum_{k \neq i} \textbf{f}_{ik}^\text{c} 
+    d\PP d\textbf{r}\\
+\end{align*}
+
+\begin{align}    
+\pavg{\textbf{f}_i^c}
+&= \int_{|\textbf{r}|<a}
+\int \sum_{i \neq j} \delta_i \sum_{j\neq i} \delta_j h_{ij}
+\textbf{f}_i^c d\PP d\textbf{r}
+= \int_{|\textbf{r}|<a}
+\int \sum_{i \neq j} \delta_i \sum_{j\neq i} \delta_j h_{ij}
+\sum_{k\neq i} \pi (r_{ik}^2/4 - a^2) \kappa \sigma \textbf{r}_{ik}/r_{ik} d\PP d\textbf{r}\\
+&= \int_{|\textbf{r}|<a}
+\int \sum_{i \neq j} \delta_i \sum_{j\neq i} \delta_j h_{ij}
+\sum_{k\neq i} \pi (r_{ik}^2/4 - a^2) \kappa \sigma \textbf{r}_{ik}/r_{ik} d\PP d\textbf{r}
+\\
+\end{align}
 
 \section{The dumping model}
 
@@ -1753,7 +2123,7 @@ Where we considered spherical particle with no deformation so it is obviously ze
     -2\mathcal{M}_{kkik}\delta_{jl}
     + \mathcal{M}_{ikjl}) 
 \end{align*}
-\tb{problem on the units }
+\tb{problem on the units ; Re compute those Acknowledging that the inertia tensor is in fact completely isotropic}
 
 \subsubsection{A drop in shear flow}
 
