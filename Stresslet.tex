@@ -1,0 +1,225 @@
+\documentclass[12pt]{My_preprint}
+\usetikzlibrary{arrows.meta,
+                chains,
+                positioning,
+                shapes.geometric}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\size}{0.22\textwidth}
+\newcommand{\avg}[1]{\left<#1\right>}
+\renewcommand{\avg}[1]{\left<#1\right>}
+\newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
+\newcommand{\Exp}[1]{\overline{\overline{#1}}}
+\newcommand{\davg}[1]{\left<#1\right>_d}
+\newcommand{\cavg}[1]{\left<#1\right>_c}
+\newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
+% \newcommand{\pnavg}[1]{n\left<#1\right>_p}
+
+\newcommand{\avgcond}[1]{\left<#1\right>}
+\renewcommand{\avgcond}[1]{\overline{#1}}
+\newcommand{\kavg}[1]{\avgcond{#1}^k}
+\newcommand{\Iavg}[1]{\avgcond{#1}^I}
+\newcommand{\pnnavg}[1]{\avgcond{#1}^{p}}
+\newcommand{\pnavg}[1]{n_p\pnnavg{#1}}
+\newcommand{\oneavg}[1]{\avgcond{#1}^1}
+\newcommand{\twoavg}[1]{\avgcond{#1}^2}
+\newcommand{\smallavg}[2]{\avgcond{#1}^{#2}}
+\newcommand{\sym}[1]{\text{Sym}\left[#1\right]}
+
+\newcommand{\nstavg}[1]{\overline{#1}_{nst}}
+\newcommand{\nstrelavg}[1]{\overline{#1}_{nst}^{rel}}
+\newcommand{\mavg}[1]{\left<#1\right>_m}
+\newcommand{\gavg}[2][\gamma]{\left<#2\right>_{#1}}
+\newcommand{\partials}[1]{\partial_{i_1}\partial_{i_2}\ldots\partial{i_{#1}}}
+\newcommand{\partialp}[2]{ \prod_{m=#1}^{#2} \partial_{i_m}}
+\newcommand{\hatpartialp}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{j_m}}
+\newcommand{\hatpartialpi}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{i_m}}
+\newcommand{\pri}[2]{ \prod_{m=#1}^{#2} r_{i_m}}
+\newcommand{\prj}[2]{ \prod_{m=#1}^{#2} r_{j_m}}
+
+\newcommand{\grad}{\mathbf{\nabla}}
+\renewcommand{\div}{\mathbf{\nabla}\cdot}
+\newcommand{\gradI}{\mathbf{\nabla}_{||}}
+\newcommand{\divI}{\mathbf{\nabla}_{||}\cdot}
+
+\newcommand{\ddt}{\frac{d}{d t}}
+\newcommand{\pddt}{\frac{\partial}{\partial t}}
+\renewcommand{\pddt}{\partial_t}
+\newcommand{\norm}[1]{\hat{#1}}
+\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
+
+\newcommand{\CC}{\mathscr{C}}
+\newcommand{\PP}{\mathscr{P}}
+
+%%% Utiliser pour les commentaires
+\newcommand{\JL}[1]{\color{red}#1\color{black}}
+\newcommand{\DL}[1]{\color{green}#1\color{black}}
+\newcommand{\tb}[1]{\color{blue}#1\color{black}}
+% \renewcommand{\alpha}{}
+\renewcommand{\JL}[1]{}
+% \renewcommand{\tb}[1]{}
+
+\renewcommand{\size}[1]{0.3\textwidth}
+\newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Sigma_\alpha} \pri{1}{#1}#2 d\Sigma}}
+
+% \newcommand{\numref}[1]{\ref{#1}}
+\renewcommand{\ref}[1]{\autoref{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{Incoherence in the stresslet formulation for an emulsion of spherical drops}
+
+\author[1,2]{Nicolas Fintzi}
+\affil[1]{IFP Energies Nouvelles, Rond-point de l’changeur de Solaize, 69360 Solaize}
+\affil[2]{Sorbonne Université, Institut Jean le Rond ∂’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+    % In this note we base our reasoning on the book of \cite{pozrikidis1992boundary}. 
+    In this note we study the stresslet produced by spherical drop of iso viscosity with the ambient fluid.
+    The droplet is immersed in a purely extensional flow defined by the undisturbed field  $ \left(
+        \frac{\partial u^\infty_j}{\partial x_i}
+        + \frac{\partial u^\infty_i}{\partial x_j}
+    \right)$ $x_i$.  
+    The objective it to study the value of the Stresslet coefficient in the case were the viscosity of the drop $\mu_d$ is the same as the viscosity of the continuous phase : $\mu_f$.
+    We show that \ref{eq:stresslet} and \ref{eq:stress} are not coherent for $\lambda = \mu_f/\mu_d = 1$. 
+\end{abstract}
+
+\paragraph{Known formulas :}
+In \citet[chapter 2]{pozrikidis1992boundary} formula (2.5.13) we have the following expression for the coefficient of the stresslet of an arbitrary particle, 
+\begin{equation}
+    \label{eq:stresslet}
+    \mathscr{S}_{ki}
+    = \frac{1}{2}
+    \int_{S_p^+}
+    \left[
+        x_k f_i + x_i f_k 
+        - \delta_{ik}
+        \frac{2}{3}
+        x_l f_l
+        - 2 \mu_f (u_k n_i+u_i n_i)
+    \right]
+    dS
+\end{equation}
+where we integrate over the surface of the spherical drop $S_p$ where the superscript + indicates that the surface force $f$ is evaluated on the external surface of the particle.
+Likewise, the superscript $-$ indicate that it is evaluated at the interior of the surface. 
+
+Using the singularity solutions, we can demonstrate that the coefficient of the stresslet for spherical droplets of viscosity ratio $\lambda = \mu_f/\mu_d$ immersed in an extensional flow is, 
+\begin{equation}
+    \label{eq:stress}
+    \mathscr{S}_{ij}
+    = \frac{2}{3}\pi \mu_f a^3 \left(
+        \frac{2+5\lambda}{1+\lambda}
+    \right)
+    \left[
+        1+\frac{\lambda}{2(5\lambda +2)}\grad^2
+    \right]
+    \left(
+        \frac{\partial u^\infty_j}{\partial x_i}
+        + \frac{\partial u^\infty_i}{\partial x_j}
+    \right)
+\end{equation}
+where $ \left(
+    \frac{\partial u^\infty_j}{\partial x_i}
+    + \frac{\partial u^\infty_i}{\partial x_j}
+\right)$ is the undisturbed extensional flow. 
+$a$ is the radius of the droplet. 
+This formula has been first demonstrated by \citep{rallison1978note}. 
+
+Now, the objective is to reformulate \ref{eq:stresslet} to show that the stresslet is zero for spherical droplet when $\lambda=0$, which is not the case according to \ref{eq:stress}.
+
+
+
+\paragraph*{The stress inside and at the surface of the drop :}
+
+We assume a Newtonian fluid for the droplets phase such that the stress in the interior volume of the droplets $V^-_p$ can be expressed as, $\sigma_{ij} = - p_d \delta_{ij} + \mu_d e_{ij}$ with the rate of strain $e_{ij} = \partial_i u_j + \partial_j u_i$. 
+The surface stress yielding on $S_p$ can be written $\sigma^I_{ij} = \gamma (\delta_{ij} - n_in_j)$, for simplicity we take a constant surface tension. 
+
+
+\paragraph*{Reformulation of the surface terms :}
+Then, using Batchelor’s famous formula :
+\begin{equation*}
+    \int_{V^+_p} \sigma_{ij} dV 
+    = \int_{S^+_p} x_i f_j dS.
+    \label{eq:bachelor}
+\end{equation*}
+ we obtain, 
+\begin{equation}
+    \int_{S^+_p} \left[
+        x_i f_j+ x_j f_i - \frac{1}{3}\delta_{ik}x_lf_l
+    \right]  dS.
+    = \int_{V^+_p} \left[
+        \sigma_{ij} 
+        + \sigma_{ji} 
+        - \frac{1}{3}\delta_{ik}x_lf_l
+        \right]
+    dV.
+\end{equation}
+The surface and viscous stress of the droplet are purely symmetric quantity.
+Additionally, since we consider spherical dorp $\sigma^I_{ji} + \sigma^I_{ij} -\frac{2}{3}\delta_{ij}\sigma_{ll}^I = 0$.
+Therefore we can rewrite \ref{eq:stresslet} such as :
+\begin{equation}
+    \label{eq:stresslet2}
+    \mathscr{S}_{ki}
+    = 
+    \int_{V_p^-}
+        \mu_d e_{ij} 
+    dS
+    - \int_{S_p^+}
+    \left[
+         \mu_f (u_k n_i+u_i n_i)
+    \right]
+    dS
+\end{equation}
+Then, making use of the surface divergence theorem on the second term and the fact that the velocity is continuous at the interface, we have i.e. :
+\begin{equation*}
+    \int_{S_p^+}
+        \mu_f (u_k n_i+u_i n_i)
+    dS
+    = 
+    \int_{V_p^+}
+        \mu_f (\partial_i u_j + \partial_j u_i)
+    dV
+    = 
+    \int_{V_p^+}
+        \mu_f e_{ij}
+    dV
+\end{equation*}
+Injecting this last integral into \ref{eq:stresslet2} gives this formula for the stresslet, 
+\begin{equation}
+    \mathscr{S}_{ki}
+    = 
+    \int_{V_p^-}
+        \mu_d e_{ij} 
+    dV
+    - \int_{V_p^+}
+    \mu_f e_{ij}
+    dV.
+    \label{eq:final_stress}
+\end{equation}
+If no strain is present at the interface which is assumed to be true, and $\lambda =1$, then both terms cancels out and we are left with :  
+$\mathscr{S}_{ki}
+= 0$. 
+
+\paragraph*{Problem : }
+Why does the last expression \ref{eq:final_stress} is null for $\lambda=1$ and \ref{eq:stress} isn't ?
+\begin{equation}
+    \label{eq:stress}
+    \mathscr{S}_{ij}(\lambda=1)
+    =\pi \mu_f a^3 \left(
+        \frac{7}{3}
+    \right)
+    \left[
+        1+\frac{1}{14}\grad^2
+    \right]
+    \left(
+        \frac{\partial u^\infty_j}{\partial x_i}
+        + \frac{\partial u^\infty_i}{\partial x_j}
+    \right)
+\end{equation}
+\bibliography{Bib/bib_bulles.bib}
+\end{document}

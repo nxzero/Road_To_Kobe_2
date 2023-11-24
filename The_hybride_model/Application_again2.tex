@@ -370,7 +370,7 @@ If one need to solve for additional degree of freedom of the particle one can us
     + \Sigma_p^\text{eq}
     \right)
     &=
-    n_p v_p p_1 \textbf{I}
+    -n_p v_p p_1 \textbf{I}
     + n_p \mathcal{F}_p
     + \left(
         \rho_2 \textbf{w}_2^0  \textbf{w}_2^0 
@@ -1186,7 +1186,7 @@ Which can be again decomposed into :
     +\div \int_{\mathrm{R}^3} \textbf{r} \textbf{f}_\text{nst}^\text{h} P_\text{nst}(\textbf{x},\textbf{r}) d\textbf{r}
     +\div \int_{\mathrm{R}^3} \textbf{r} \textbf{f}_\text{nst}^\text{c} P_\text{nst}(\textbf{x},\textbf{r}) d\textbf{r}\\
 \end{align*}
-The first term is teh pure drag force components. 
+The first term is the pure drag force components. 
 The second terms is the pure contact force components which we will see to be null in the next section. 
 Then, the third term is the particle-fluid-particle stress. 
 And the last is the particle-film-particle stress. 
@@ -1344,7 +1344,7 @@ First we recall the definition of the pure drag term of the contact forces accor
     \frac{1}{2}\iint \sum_i \sum_{j\neq i}
     \delta(\textbf{x} \pm \textbf{r}/2 -\textbf{x}_i)
     \delta(\textbf{x} \mp \textbf{r} -\textbf{x}_j) h_{ij}
-    \sum_{k \neq i} \textbf{f}_{ik}^\text{c} 
+    \sum_{k} \textbf{f}_{ik}^\text{c} 
     d\PP d\textbf{r}\\
     &=
     \frac{1}{2}\iint \sum_i \sum_{j\neq i}
@@ -1396,6 +1396,12 @@ Additionally,
 \sum_{k\neq i} \pi (r_{ik}^2/4 - a^2) \kappa \sigma \textbf{r}_{ik}/r_{ik} d\PP d\textbf{r}
 \\
 \end{align}
+
+Anyhow if we lake the assumption that this term indeed cancel we arrive at the expression: 
+\begin{equation*}
+    \int_{\mathrm{R}^3} \textbf{r} \textbf{f}_\text{nst}^\text{c} P_\text{nst}(\textbf{x},\textbf{r}) d\textbf{r}
+    = 
+\end{equation*}
 
 \section{The dumping model}
 
@@ -2125,6 +2131,30 @@ Where we considered spherical particle with no deformation so it is obviously ze
 \end{align*}
 \tb{problem on the units ; Re compute those Acknowledging that the inertia tensor is in fact completely isotropic}
 
+The iternal energy, 
+\begin{align*}
+    (\textbf{w}_2^0 \textbf{w}_2^0)_{ii}^\Omega
+    = \int_{\Omega} 
+    u_i^\text{In}u_i^\text{In}
+    d\Omega
+    = \int_{\Omega} 
+    ( c_i + \left(2 r^2 \delta_{ik} - r_ir_k\right) e_k)
+    ( c_i + \left(2 r^2 \delta_{il} - r_ir_l\right) e_l)
+    d\Omega\\
+    = \int_{\Omega} 
+    (c_i c_i + c_i e_l (2 r^2 \delta_{il} - r_ir_l )
+    + (2 r^2 \delta_{ik} - r_ir_k)c_i e_k
+    +  (2 r^2 \delta_{ik} - r_ir_k)(2 r^2 \delta_{il} - r_ir_l)e_ke_l
+    )
+    d\Omega\\
+    = c_i c_i v_\alpha
+    + e_l c_i (2 \mathcal{M}_{kk} \delta_{il} - \mathcal{M}_{il})
+    + e_k c_i (2 \mathcal{M}_{kk} \delta_{ik} - \mathcal{M}_{ik})\\
+    + e_ke_l (\mathcal{M}_{kkkk}\delta_{ik}\delta_{il}
+    -2\mathcal{M}_{kkil}\delta_{ik}
+    -2\mathcal{M}_{kkik}\delta_{il}
+    + \mathcal{M}_{ikil}) 
+\end{align*}
 \subsubsection{A drop in shear flow}
 
 The functional form of the internal velocity fields for a droplet immersed in a shear flow is,
@@ -2287,6 +2317,20 @@ Acknowledging that :
     = \frac{a E_{2/3}\left(-\frac{4 a^3 \pi}{3}\right)}
     {6^{2/3} a \pi^{1/3}}
 \end{align*}
+According to \texttt{Maxima} it gives, 
+\begin{align*}
+    \int_a^\infty \frac{e^{- \frac{4 \pi r^{3}}{3}}}{r^4} dr
+    = 
+    \frac{4\pi}{9} \Gamma\left(-1,\frac{4a^3\pi}{3}\right)
+    \\
+    \int_a^\infty \frac{e^{- \frac{4 \pi r^{3}}{3}}}{r^2} dr
+    = {{2^{{{2}\over{3}}}\,\pi^{{{1}\over{3}}}\,\Gamma\left(-{{1
+    }\over{3}} , {{4\,\pi\,a^3}\over{3}}\right)}\over{3^{{{4
+    }\over{3}}}}}\\
+    \int_a^\infty e^{- \frac{4 \pi r^{3}}{3}} dr
+    = {{\Gamma\left({{1}\over{3}} , {{4\,\pi\,a^3}\over{3}}\right)}\over{
+        3^{{{2}\over{3}}}\,4^{{{1}\over{3}}}\,\pi^{{{1}\over{3}}}}}
+\end{align*}
 The final results gives, 
 \begin{align*}
     \iint (\textbf{u}_1'\textbf{u}_1')_{00} r^2 \sin\theta d\phi d\theta
@@ -2301,3 +2345,34 @@ The final results gives,
         + \frac{3   d^{2}_0 }{ r^{4}}
     \right)e^{- \frac{4 \pi r^{3}}{3}}
 \end{align*}
+
+\section*{Particle phase fluctuation}
+In the same spirti as before we set, 
+\begin{multline*}
+    \avg{\delta_\alpha \textbf{u}'_\alpha\textbf{u}'_\alpha}(\textbf{x},t)
+    + \phi_\alpha \textbf{u}_\alpha\textbf{u}_\alpha
+    = \
+    \underbrace{\int \nstavg{\delta_\alpha \textbf{u}_\alpha}  \nstavg{\delta_\alpha \textbf{u}_\alpha} / (\nstavg{\delta_\alpha})  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r} }_\text{PWFs}
+    +\underbrace{\int \nstavg{\delta_\alpha \textbf{v}_\alpha^0\textbf{v}_\alpha^0}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}}_\text{WIA}
+\end{multline*}
+where, $\textbf{v}_\alpha = \textbf{u}_\alpha - \nstavg{\delta_\alpha \textbf{u}_\alpha}/\nstavg{\delta_\alpha}$. 
+
+The aim is to predict $\nstavg{\delta_\alpha \textbf{u}_\alpha}$ knowing that the fluid velocity at $\textbf{r}$ is $\nstavg{\chi_1\textbf{u}^0_1}/\nstavg{\chi_1}$.
+
+The velocity of the particle is found from teh momentum equation, 
+\begin{equation*}
+    \ddt \textbf{u}_\alpha
+    = m_\alpha \textbf{g} + \textbf{f}_\alpha
+\end{equation*}
+In a statistical sens $\nstavg{\ddt \textbf{u}_\alpha}$ can be simplified. 
+Then the force can be estimated as,
+\begin{equation*}
+    \nstavg{\textbf{f}_\alpha}
+    = 6\mu \pi a 
+    [\nstavg{\textbf{u}_\alpha} - \nstavg{\textbf{u}^0_1} + \nstavg{\grad^2 \textbf{u}_1^0}]
+\end{equation*}
+\begin{equation*}
+    0
+    = m_\alpha \textbf{g} 
+    [\nstavg{\textbf{u}_\alpha} - \nstavg{\textbf{u}^0_1} + \nstavg{\grad^2 \textbf{u}_1^0}]
+\end{equation*}
