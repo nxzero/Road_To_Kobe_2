@@ -115,6 +115,7 @@ where we have defined,
 Note that the phase averaged energy equation can be further decompose following, 
 \begin{align*}
     E_1 = e_1 + k_1 + u_k^2/2
+    \label{eq:E_def}
 \end{align*}
 where $K_1$ is the pseudo-turbulent kinetic energy defined such as, $\phi_1 k_1 = \avg{\chi_1 (u_1')^2/2}$. 
 The Macroscopic kinetic energy equation can be obtain by taking the dot product with $\textbf{u}_k$. 
@@ -170,6 +171,43 @@ multiplying \ref{eq:dt_uI} by $\textbf{u}_I$ gives,
 Therefore, taking the difference of this equation wit the previous one yields a fluctuation term thus both equation cannot be isolated  ??? 
 \tb{must be isolated before but it works}
 
+
+Applying \ref{eq:avg} on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and considering the properties from \ref{eq:avg_properties} yields the general form of the averaged equations of multiphase flows, namely,
+\begin{align}
+    \pddt \avg{\chi_k f_k^0}
+    +\div \avg{\chi_k f_k^0 \textbf{u}_k^0 - \chi_k \mathbf{\Phi}_k^0}
+    &= 
+    \avg{\chi_k s_k^0}
+    + \avg{\delta_I\left[
+        \mathbf{\Phi}_k^0
+        + f_k^0
+        \left(
+            \textbf{u}_I^0
+            - \textbf{u}_k^0
+        \right)
+    \right]
+    \cdot \textbf{n}_k} ,
+    \label{eq:avg_dt_chi_f}\\
+    \pddt \avg{\delta_If_I^0}
+    +\div \avg{\delta_I f_I^0 \textbf{u}_I^0-\delta_I \mathbf{\Phi}_{I||}^0 }
+    &= 
+    \avg{\delta_Is_I^0} 
+    - \avg{\delta_I \Jump{
+    f_k^0 (\textbf{u}_I^0 - \textbf{u}_k^0)
+    + \mathbf{\Phi}_k^0
+    } }.
+    \label{eq:avg_dt_delta_f}
+\end{align}
+Together \ref{eq:avg_dt_chi_f}  and \ref{eq:avg_dt_delta_f} form the \textit{two-fluid} formulation of averaged multiphase flows problem. 
+One can derive the so-called averaged \textit{single-fluid} formulation by applying \ref{eq:avg} on \ref{eq:dt_f} which directly gives, 
+\begin{equation}
+    \pddt f
+    + \div (f \textbf{u} + \avg{f'\textbf{u}'} - \mathbf{\Phi})
+    = 
+    s.
+    \label{eq:avg_dt_f}
+\end{equation}
+It is interesting to notice that in Volume Of Fluid method we solve for the fields averaged on a cell volume, thus we actually discretize \ref{eq:avg_dt_f} and solve for the averaged quantities \citep{popinet2018numerical,tryggvason2011direct} instead of directly solving the local transport equations \ref{eq:dt_f}.
 
 
 \tb{\subsection{Some comments on the two-fluid model}
