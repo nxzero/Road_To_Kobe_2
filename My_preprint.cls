@@ -47,7 +47,7 @@
 %     top=20mm
 % ]{geometry}
 % \RequirePackage{ragged2e}
-\RequirePackage{times}
+% \RequirePackage{times}
 
 % \RequirePackage{newtxtext}
 \RequirePackage{float}

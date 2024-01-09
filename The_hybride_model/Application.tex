@@ -2,6 +2,259 @@
 We consider a multiphase flow with no-mass transfer, i.e. $\textbf{u}_k=\textbf{u}_I$.
 The interfaces have negligible weight and no interfacial viscosity. 
 
+\subsection{Mixture momentum equation and a constitutive expression for the bulk stress tensor}
+
+As mentioned earlier in this manuscript we  now focus on the global suspension stress as this is a quantity of uppermost importance. 
+Firstly, we expose the mixture or \textit{signle-fluid} formulation of the momentum equation following the procedure to derive \ref{eq:dt_f}.
+It gives, 
+\begin{equation}
+    \pddt (\rho \textbf{u})
+    \div (\rho \textbf{uu} - \bm{\sigma}^\text{eq})
+    = \textbf{b}
+    \label{eq:dt_avg_rho_u}
+\end{equation}
+where $\textbf{b}$ is a generic body force and the equivalent stress is defined as, 
+\begin{equation}
+    \bm{\sigma}^\text{eq}
+    = - \avg{\textbf{u}'\textbf{u}'}
+    + \avg{\chi_2\bm{\sigma}_2^0}
+    + \avg{\chi_1\bm{\sigma}_1^0}
+    + \avg{\delta_I \bm{\sigma}_I^0}. 
+    \label{eq:sigma_eq_def}
+\end{equation}
+Under this form we can already state the trivial results which is that the equivalent stress of a medium is constituted by the averaged fluid stress, particles stress and the stress due to interfaces. 
+As already noticed by \citet{batchelor1970stress} the surface stress presence in the suspension stress makes the mixture having characteristics of an elastic medium. 
+Making the suspension going from a Newtonian fluid to a visco-elastic fluid. 
+
+The expression \ref{eq:sigma_eq_def} is somewhat unpractical, indeed its makes appear the internal particle stress explicitly which we usually try to avoid in order to take apart the dispersed nature of the particle phase. 
+Therefore, we msut seek for an expression of $\avg{\chi_1\bm{\sigma}_1^0}
++ \avg{\delta_I \bm{\sigma}_I^0}$ in terms of the particles Lagrangian properties seen in \ref{sec:Lagrangian}.
+This will be done through the use of the momentum of momentum equations. 
+From now on we will use indices notation to be more clear. 
+The first step is to express these phase averaged fields into particle averaged fields. 
+Actually, these stresses appear under the divergence operator in \ref{eq:dt_avg_rho_u}. 
+Thus, following \ref{eq:f_exp} we express the divergence of the particle phase stress by, 
+\begin{align}
+    \label{eq:exp_sigma2}
+    \partial_k \avg{\chi_2\bm{\sigma}_2^0}_{ik}
+    &=  \partial_k\pOavg{ \bm{\sigma}^0_{2,ik}}
+    - \partial_k\partial_j
+    \pOavg{ r_j\bm{\sigma}^0_{2,ik}}        
+    + \ldots  \\
+    \label{eq:exp_sigmaI}
+    \partial_k \avg{\delta_I \bm{\sigma}_I^0}_{ik} 
+    &=  \partial_k\pSavg{ \bm{\sigma}_{I,ik} }
+        - \partial_k\partial_j \pSavg{ r_j \bm{\sigma}_{I,ik} }
+        + \ldots  
+\end{align}
+Notice that the second terms on the RHS of \ref{eq:exp_sigma2} and \ref{eq:exp_sigmaI} are subject to the double divergence operator $\partial_k\partial_j$. 
+Therefore, only the symmetric part with respect to the index $k$ and $j$ will remain in this expression. 
+Consequently, the particle phase averaged stress can be reformulated by, 
+\begin{align}
+    \label{eq:exp_sigma22}
+    \partial_k \avg{\chi_2\bm{\sigma}_2^0}_{ik}
+    &=  \partial_k\pOavg{ \bm{\sigma}^0_{2,ik}}
+    -\frac{1}{2} \partial_k\partial_j
+    \pOavg{ r_j \bm{\sigma}^0_{2,ik} + r_k\bm{\sigma}^0_{2,ij}}
+    + \ldots  \\
+    \label{eq:exp_sigmaI2}
+    \partial_k \avg{\delta_I \bm{\sigma}_I^0}_{ik} 
+    &=  \partial_k\pSavg{ \bm{\sigma}_{I,ik}^0 }
+        -\frac{1}{2} \partial_k\partial_j \pSavg{ r_j \bm{\sigma}_{I,ik}^0+r_k \bm{\sigma}_{I,ij}^0 }
+        + \ldots  
+\end{align}
+Such decomposition can be done at any order of accuracy, this has also been shown by \citet[Appendix A]{nott2011suspension} in a similar context. 
+Now the challenge will be to replace the particle average of the zeroth and first order moment of the stress tensor. 
+This is done by using the following expressions, 
+\begin{align}
+    \intS{ 
+    (\bm{\sigma}_I)_{ik}
+    }
+    +\intO{ 
+    (\bm{\sigma}_2^0)_{ik}
+    }
+    = 
+    \intO{ \rho_2 
+    (\textbf{w}_2^0\textbf{w}_2^0  )_{ik}
+    }
+    -\ddt \intO{ r_i (\textbf{u}^0_2)_k }
+    +\intS{ 
+        b_{i}
+        r_k 
+    }
+    +\intS{ 
+     r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k}
+    }
+    \label{eq:dt_P_alpha}\\
+    \intO{ r_{j}(\bm{\sigma}^0_2)_{ki}+r_{k}(\bm{\sigma}^0_2)_{ji}}
+    +\intS{ r_{j}(\bm{\sigma}^0_I)_{ki}+r_{k}(\bm{\sigma}_I^0)_{ji}}
+    = 
+    - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_i r_j r_k }\nonumber\\
+    + \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)}
+    +\intS{  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l }
+    + \intO{ r_{k}r_{j}  \rho_2 b_i } 
+    \label{eq:dt_P2_alpha}
+\end{align}
+which are the first and second order moments of momentum equations, respectively. 
+The first order moment of momentum equation has been presented in \ref{sec:Lagrangian}. 
+The second order moment expression has been derived using the generic formula, \ref{eq:dt_Q_n} with $n = 2$.
+Additionally, in light of \ref{eq:dt_Q_n} any $n^\text{th}$ order terms in \ref{eq:exp_sigma22} and \ref{eq:exp_sigma22} can be substitued by the $n^\text{th}$ order moments of momentum equation. 
+Remark that in a recent study of \citet{dolata2020heterogeneous} they derive an equivalent expression of \ref{eq:dt_P_alpha}  but with what they called energy method.  
+Their, Equation (3.15) is in fact the equation of the moment of momentum to which we retrieve the RHS terms of \ref{eq:tau_1_final}, it is derived in the limit of stokes flows.
+
+
+
+
+Substituting : the expression of $\avg{\chi_2\bm{\sigma}_2+ \delta_I\bm{\sigma}_I}$ using \ref{eq:exp_sigma22},\ref{eq:exp_sigmaI2}, \ref{eq:dt_P_alpha} and \ref{eq:dt_P2_alpha}, and the expression of $\avg{\chi_1\bm{\sigma}_1}$ using \ref{eq:sigma_eq1_def} one obtain the following expansion for the suspension stress,
+\begin{multline*}
+    \bm{\sigma}^\text{eq}
+    = 
+    - \rho_1 \avg{\chi_1\textbf{u}'_1\textbf{u}_1'}
+    - m_p \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    - m_p \textbf{u}_\alpha\textbf{u}_\alpha
+    + \phi_2 \textbf{u}_2\textbf{u}_2
+    % + \avg{\chi_1\bm{\sigma}_1^0}
+    - \phi_1 p_1 \textbf{I}
+    + \mu_1 \textbf{e}\\
+    % + \avg{\chi_2\bm{\sigma}_2^0}
+    % + \avg{\delta_I \bm{\sigma}_I^0}. 
+    +\pSavg{r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k}}
+    - \mu_1 \pSavg{(\textbf{u}_1 \textbf{n}_1)_{ik}+(\textbf{n}_1 \textbf{u}_1)_{ik}}
+    % + \pOavg{ \rho_2 (\textbf{w}_2^0\textbf{w}_2^0  )_{ik}}
+    -\pddt(n_p\mathcal{P}_{p,ik})
+    +\pSavg{ b_{i}r_k }\\
+    - \frac{1}{2}\partial_j\left[
+        - \pddt (n_p\mathcal{P}_{p,ijk})
+        % + \pOavg{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)} 
+        + \mu_1 2\pSavg{(\textbf{r}\textbf{w}_2^0 \textbf{n}_1)_{jik}+(\textbf{r}\textbf{n}_1 \textbf{w}_2^0)_{jik}}
+        \right.\\ \left.
+        +\pSavg{ r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l }
+        + \pOavg{ r_{k}r_{j}  \rho_2 b_i } 
+    \right]
+    \label{eq:sigma_eq}
+\end{multline*}
+% \begin{multline*}
+%     \bm{\sigma}^\text{eq}
+%     = - \avg{\textbf{u}'\textbf{u'}}
+%     % + \avg{\chi_1\bm{\sigma}_1^0}
+%     - p_1 \textbf{I}
+%     + \mu_1 \textbf{e}\\
+%     % + \avg{\chi_2\bm{\sigma}_2^0}
+%     % + \avg{\delta_I \bm{\sigma}_I^0}. 
+%     - \mu_1 \pSavg{(\textbf{u}_1 \textbf{n}_1)_{ik}+(\textbf{n}_1 \textbf{u}_1)_{ik}}
+%     + \pOavg{ \rho_2 (\textbf{w}_2^0\textbf{w}_2^0  )_{ik}}
+%     -\pavg{\ddt \intO{ r_i (\textbf{u}^0_2)_k }}
+%     +\pSavg{r_i (\bm{\sigma}_1' \cdot \textbf{n}_2)_{k}}
+%     +\pSavg{ 
+%         b_{i}
+%         r_k 
+%     }\\
+%     - \frac{1}{2}\partial_j\left[
+%         - \pavg{\ddt\intO{ \rho_2 (\textbf{u}_2^0)_i r_j r_k }}
+%         + \pOavg{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)} \right.\\ \left.
+%         + \mu_1 2\pSavg{(\textbf{r}\textbf{w}_2^0 \textbf{n}_1)_{jik}+(\textbf{r}\textbf{n}_1 \textbf{w}_2^0)_{jik}}
+%         +\pSavg{ r_{k}r_{j} (\bm{\sigma}_1')_{il} (\textbf{n}_2)_l }
+%         + \pOavg{ r_{k}r_{j}  \rho_2 b_i } 
+%     \right]
+%     \label{eq:sigma_eq}
+% \end{multline*}
+Notice that according the discussion in the previous section we could add and subtracted $\phi_2 p_1$ to remove the volume fraction factor in front of $p_1$.
+Let's compare this expression to the one obtained by \citet{zhang1997momentum}. 
+Firstly, notice that we recovered the moments of the surface traction term plus the contribution to the surface velocity integral coming from \ref{eq:tau_1_final}. 
+In \citet{zhang1997momentum} the surface traction terms are grouped under the terms $\bm{\Sigma}_1$ and $\bm{\Sigma}_2$.
+In our formulation we did not retrieve the mean contribution from the stress $\bm{\sigma}_1$ to the exchange terms nevertheless it can be recovered easily yielding an equivalent expression for the moments of the surface traction. 
+The surface velocity contribution terms also grouped in $\bm{\Sigma}_1$ and $\bm{\Sigma}_2$ might seem different from the ones derived here. 
+This is due to the facts that in \citet{zhang1997momentum} the surface velocity contribution terms are derived from \citet{eq:tau_1} where we used \ref{eq:tau_1_final}, it is nevertheless equivalent. 
+Where our expression might differ from \citet{zhang1997momentum} is regarding what they called the acceleration term $\bm{\Sigma}_a$ in fact contains all the terms on the RHS of the expression \ref{eq:dt_P_alpha}.
+In our formulation however, we included the second order moment of the particles' acceleration, i.e. the RHS of \ref{eq:dt_P2_alpha}.
+But above all, we reformulated the dispersed phase Reynolds stress tensor $\avg{\chi_2\rho_2 \textbf{u}_2 \textbf{u}_2}$ to show that it in fact canceled some moments of the terms on the RHS of \ref{eq:dt_P_alpha} and \ref{eq:dt_P2_alpha} letting us only with the partial derivative of the moments of momentum of arbitrary order.
+The consequence of this is the apparition of the particle Reynolds stress $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$. 
+This last manipulation is in fact obvious when one consider \ref{eq:scheme_equivalence}, and is the reason why our $\bm{\Sigma}_R$ and $\bm{\Sigma}_a$.
+
+We believe that under the form of \ref{eq:sigma_eq} the contribution of the particle to the suspension stress is more physical. 
+Indeed, it consists into three distinct contribution. 
+The first one is the contribution from the surface traction moments in which we include the surface velocity terms in light of \ref{eq:stresslet_def}. 
+The second contribution comes from the partial time derivative of the first moments. 
+Which we recall represent the acceleration of the first and higher order kinematic of the particles such as angular acceleration, stretching etc\ldots
+And the last contribution coming from the body forces and higher moments of the body force. 
+Notice that on the RHS of \ref{eq:dt_avg_rho_u} we have the continuous averaged body force term, which might be expressed as, 
+$
+    \textbf{b}
+    = \phi_1 \textbf{b}_1 
+    + \pOavg{\textbf{b}}
+    - \div \pOavg{\textbf{r} \textbf{b}}
+    \ldots
+$
+and so on. 
+This implies that the moments of the body force play no dynamical role in \ref{eq:sigma_eq} as the same moments appear twice with opposite sign. 
+This is in agreement with \citet{dolata2020heterogeneous} which reached the same conclusion, limited to stoke flows, however. 
+The only difference wit stokes flow is that in our case the skew part of the stress might come form the angular acceleration of the particles. 
+
+In \citet{dolata2020heterogeneous} they stipulate that the surface tension effect plays no role in the suspension Rheology. 
+This is indeed what we found as witnessed by the absence of surface tension terms in \ref{eq:sigma_eq} however it must be understood that surface tension force will play a role in the evolution equation of the different moment of momentum which appear in \ref{eq:sigma_eq}. 
+Thus, the statement of \citet{dolata2020heterogeneous} might be reformulated as the surface tension effect plays no explicit role in the suspension Rheology. 
+
+The skew-symmetric part of the stress can come form severals contribution. 
+The moment of momentum that can be skew-symmetric if the particles posses angular acceleration. 
+The moments of the body forces, which can also yields skew-symmetric components. 
+And obviously, the torque 
+
+In a recent study \citet{wolgemuth2023continuum} found out that the bulk stress of a stokestain suspension of spherical particles contained an antisymmetric tensor responsible for self torquing. 
+We believe that such stress is found to be, in our formulation related to the terms, $\pOavg{r_{k}r_{j}  \rho_2 b_i }$ which in the case of solid spherical particle can be expressed as $n_p\mathcal{I}_p \textbf{b}_p$ which appear under the divergence operator. 
+In \citet{wolgemuth2023continuum} they obtain the term \ldots
+However, it can be shown that such stress is not present in \ref{eq:dt_avg_rho_u}. 
+\tb{citer jackson}
+\tb{Comparer avec Zhang 1997 it seem similar }
+
+\tb{Additionally, th e cancellation of the higher moments isn't trivial therefore it might be considered to show that no anti symmetric part exist except the torque}
+
+\tb{dire que wolgemouth s'est trompe}
+
+\tb{Faire le lien avec la mixture equaiton de jackson et peut etre de zhang ?}
+
+where the derivative of the surface plays the role of an elastic bahavior \citet[appendix A]{batchelor1970stress}.
+
+Now, let discus the antisymmetric part of the stress tensor. 
+As, it is done in \cite{dolata2020heterogeneous} we start our demonstration from the local angular acceleration principle inside the particle phase, namely \cite[chapter 2]{leal2007advanced},
+\begin{equation}
+    \epsilon_{ijk} : \bm{\sigma}_{2,kj}^0 = 0 
+\end{equation}
+which holds as long as no body torque are present.
+It is assumed true here.  
+Upon taking the appropriate average we obtain the averaged angular momentum equation : 
+\begin{equation*}
+    \epsilon_{ijk} : \avg{\chi_2 \bm{\sigma}_2^0}_{kj} = 0 
+\end{equation*}
+Expanding the averaged stress about the particles center yields the expression,
+\begin{align}
+    \label{eq:exp_sigma2}
+     \epsilon_{ijk}\avg{\chi_2\bm{\sigma}_2^0}_{kj}
+    &=  \epsilon_{ijk}\pOavg{ \bm{\sigma}_2^0}_{kj}
+    - \epsilon_{ijk}\partial_l
+    \pOavg{ r_l(\bm{\sigma}_2^0)_{kj}}        
+    + \ldots  \\
+    &=  \epsilon_{ijk}\pOavg{ \bm{\sigma}_2^0}_{kj}
+    - \epsilon_{ijk}\partial_l\bm{\Sigma}_{kj}\\
+    % \label{eq:exp_sigmaI}
+    %  \avg{\delta_I \bm{\sigma}_I^0}_{ik} 
+    % &=  \pSavg{ (\bm{\sigma}_I)_{ik} }
+    %     - \partial_j \pSavg{ r_j (\bm{\sigma}_I)_{ik} }
+    %     + \ldots  
+\end{align}
+where $\bm{\Sigma}$ contain all the higher order terms. 
+Now, by Substituting the expression of $\pOavg{\sigma_{2,kj}^0}$ with the first moment of momentum equaiton one can show that, 
+\begin{equation*}
+    \ddt \mu_i +  \epsilon_{ijk} \pOavg{b_k r_j}
+    + \pSavg{r_i \sigma_{1,k}^0n_{2,k}}
+    - \epsilon_{ijk}\partial_l\bm{\Sigma}_{kj} = 0 
+\end{equation*}
+where we recall that $\mu_i$ is the angular momentum. 
+It is now evident that if no angular momentum, nor moment of body force, nor torque exist we obtain : $\div \bm{\Sigma} = 0$.
+This indicates that the antisymmetric part of the averaged particle stress exist only in the presence of one of the terms cite above. 
+
+However, these conditions might be relaxed since, as we observed earlier  neither the moments of the body forces nor the moments of momentum, played a dynamical role in the momentum averaged equation. 
+Which let us with the hydrodynamic torque as the only remaining first order term in the stress.
+Therefore, the equivalent stress of a suspension is symmetric unless a couple is exerted by the carrier fluid on the particles. 
 
 
 \subsubsection{Second decomposition of the flux term}
@@ -532,21 +785,17 @@ Consequently, the only anti symmetric part is the last term which is caused by
     \sigma_{ik}^\text{eff}
     = \avg{\chi_1 \bm{\sigma}^0_1}_{ik} 
     - \avg{\textbf{u}'\textbf{u}'}_{ik}
-    + \pnavg{\int_{\Omega_\alpha} \rho_2 
-    (\textbf{w}_2^0\textbf{w}_2^0  )_{ik}
-    d\Omega}
-    -\pnavg{\ddt \int_{\Omega_\alpha} r_i (\textbf{u}^0_2)_k d\Omega}\\
-    +\pnavg{\int_{\Sigma_\alpha} 
-     r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k}
-    d\Sigma}
-    - \frac{1}{2}\partial_j \left[\pnavg{
-        - \ddt\int_{\Omega_\alpha} \rho_2 (\textbf{u}_2^0)_i r_j r_k d\Omega}
-        \right. \\ \left.
-            + \pnavg{\int_{\Omega_\alpha} \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)d\Omega} 
-            + \pnavg{
-                \int_{\Sigma_\alpha}  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l d\Sigma}
+    + \pOavg{ \rho_2 (\textbf{w}_2^0\textbf{w}_2^0  )_{ik}}
+    -\pavg{\ddt \intO{ r_i (\textbf{u}^0_2)_k }}
+    +\pSavg{ r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k}}\\
+    - \frac{1}{2}\partial_j \left[
+        - \pavg{
+        \ddt \intO{ \rho_2 (\textbf{u}_2^0)_i r_j r_k d\Omega}}
+        % \right. \\ \left.
+            + \intO{\rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)} 
+            + \pSavg{ r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l }
                 \right. \\ \left.
-                + \pnavg{\mathcal{M}_{kj}  \rho_2  g_i}
+                + \pavg{\mathcal{M}_{kj}   g_i}
     \right]
 \end{multline*}
 The terms on the first line seem all symmetric. 

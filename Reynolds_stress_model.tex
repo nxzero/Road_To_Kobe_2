@@ -25,7 +25,7 @@
 \author{\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{\underline{N. Fintzi}\footnote{IFP \'Energies Nouvelles, France}$^{,2}$}, JL. Pierson$^1$ and S. Popinet\footnote{Sorbonne Universit\'e, France}}
 % \date{Created on May 22, 2022}
 
-\titlebackground{image/3D/P_PHI_5.png}
+\titlebackground{image/HOMOGENEOUS/Stream/Stream_PHI_20_Ga_25_l_1.pdf}
 
 % document body
 \addtobeamertemplate{navigation symbols}{}{%
@@ -51,7 +51,7 @@
 \newcommand{\Xavg}[1]{\avgcond{#1}^X}
 \newcommand{\TXavg}[1]{\Tavg{\Xavg{#1}}}
 \newcommand{\Iavg}[1]{\left<#1\right>_I}
-\newcommand{\pavg}[1]{n \left<#1\right>}
+\newcommand{\pavg}[1]{\left<\delta_\alpha #1\right>}
 \newcommand{\pnavg}[1]{\left<#1\right>}
 \newcommand{\nstavg}[1]{\overline{#1}^{nst}}
 \newcommand{\condavg}[2]{\overline{#1}^{#2}}
@@ -69,12 +69,21 @@
 \newcommand{\ddt}{\frac{d}{d t}}
 \newcommand{\pddt}{\partial_t}
 % \newcommand{\pddt}{\partial t \;}
-
+\newcommand{\grad}{\mathbf{\nabla}}
+\renewcommand{\div}{\mathbf{\nabla}\cdot}
+\newcommand{\gradI}{\mathbf{\nabla}_{||}}
+\newcommand{\divI}{\mathbf{\nabla}_{||}\cdot}
 \newcommand{\CC}{\mathscr{C}}
 \newcommand{\PP}{\mathscr{P}}
-\newcommand{\tb}[1]{\color{blue}#1\color{black}}
+\newcommand{\tb}[1]{\textcolor{blue}{#1}}
 % \renewcommand{\tb}[1]{}
 
+\newcommand{\intO}[1]{\int_{V_\alpha} #1 dV}
+% \renewcommand{\intO}[1]{ \left( #1 \right)_\Omega}
+\newcommand{\intS}[1]{\int_{S_\alpha} #1 dS}
+% \renewcommand{\intS}[1]{ \left( #1 \right)_\Sigma}
+\newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
+\newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
 % \renewcommand{\ref}[1]{\autoref{#1}}
 \renewcommand{\size}[1]{0.3\textwidth}
 \newcommand{\expo}[1]{\frac{(-1)^n}{n!} \partialp{1}{n} \pavg{\int_{\Omega_\alpha} \pri{1}{n}#1 d\Omega}}
@@ -84,6 +93,276 @@
 
 \begin{document}
 \maketitle
+
+\begin{frame}
+  {Governing equation for the continuous phase}*
+  \small
+  \textbf{Fluid phase :}
+  \begin{align*}
+    &\pddt (\phi_f \rho_f)  
+    + \div (
+        \phi_f \rho_f\textbf{u}_f
+    )
+    = 
+    0\\
+    &\pddt \left(n_p m_p\right)
+    + \div \left(n_pm_p\textbf{u}_p
+    \right)
+    = 
+    0\\
+    &\pddt (\phi_f \rho_f\textbf{u}_f)  
+    + \div (
+        \phi_f \rho_f\textbf{u}_f\textbf{u}_f
+        + \bm{\sigma}_f^\text{eq}
+    )
+    = 
+    \phi_f \rho_f \textbf{g} 
+    - \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}}}\\
+    &\pddt \left(n_p m_p \textbf{u}_p\right)
+    + \div \left(n_p
+    m_p \textbf{u}_p \textbf{u}_p 
+    + \bm{\sigma}_p^\text{eq}
+    \right)
+    = 
+    n_p v_p \rho_2 \textbf{g}
+    + \pSavg{{\bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}},
+\end{align*} 
+where we have defined the equivalent fluid and particle stress tensor $\bm{\sigma}_f^\text{eq}$ and $\bm{\sigma}_p^\text{eq}$ by : 
+\begin{align*}
+    &\bm{\sigma}_1^\text{eq}
+    = 
+    \tb{\avg{\chi_1\rho_1\textbf{u}_1'\textbf{u}_1'}}
+    - \phi_1 \bm{\sigma}_1%- n_p \textbf{M}_p
+    - \pSavg{{\textbf{r}\bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}}\\
+    &\bm{\sigma}_p^\text{eq}
+    =  \tb{m_p\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}
+\end{align*}
+\begin{itemize}
+  \item $\bm{\sigma}_\text{ext} \cdot \textbf{n}$ : momentum flux due to particle-fluid and particles-particles interactions. 
+  \item $\textbf{u}_\alpha$ : center of mass velocity of the particle $\alpha$
+\end{itemize}
+\tb{$\to$ How to model the Reynolds Stresses ? }
+\end{frame}
+
+\begin{frame}
+  {In the case of buoyant suspension}
+
+  Based on the analytical form of potential flow solution we propose :
+  \begin{equation*}
+    \avg{\chi_1 \textbf{u}_1'\textbf{u}_1'}
+    = 
+    \textbf{U}
+    \textbf{U}
+    k^{||}_1
+    + 
+    \left[
+        \textbf{I} (\textbf{U}\cdot \textbf{U})
+    -
+    \textbf{U}
+    \textbf{U}
+    \right]
+    k^{\bot}_1
+\end{equation*}
+\begin{itemize}
+  \item $\textbf{U} = \textbf{u}_p - \textbf{u}_1$ interphase velocity. 
+\end{itemize}
+$\to$ where $k_{||}$ and $k^\bot$ are to coefficient to be determined by the use of DNS. 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Direct Numerical Simulation of buoyant emulsions}
+  \begin{columns}
+    \column{0.6\textwidth}
+  \underline{Dimensionless parameters :} 
+  \begin{itemize}
+    \item \textit{Galileo} number : $Ga =\frac{\sqrt{\rho \Delta\rho gD^3}}{\mu} \in [5, 100]$
+    \item \textit{Bond} number : $Bo = \frac{\Delta \rho g D^2}{\sigma} = 1$ 
+    \item volume fraction of dispersed phase : $\phi = [0.01;0.2]$. 
+    \item Density and viscosity ratio, $\rho_r=1.11$ and $\lambda= 10,1$. 
+  \end{itemize}
+  
+  \begin{figure}
+    \caption{Snapshot of a simulation at $T_g = 300$ for $\phi = 0.01$, $Ga = 75$ $\mu_r = 0.1$ and $N_b = 125$. In white : the interfaces, The background color map correspond to the pressure field. The grid represents the different core ($\le 729$ !).
+    }
+  \end{figure}
+  \column{0.5\textwidth}
+  \centering
+  \href{file:///work/fintzin/BUBLLES_PROJECT/movies/layers.mp4}{\beamergotobutton{Play}}
+  \includegraphics[width =  1.1\textwidth]{image/PHI_01_Ga_75.png}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Numerical results}
+
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fCA/Tf_l_1.pdf}
+    % \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fCA/Bf_l_1.pdf}
+    \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fCA/Tf_l_10.pdf}
+    % \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS/fCA/Bf_l_10.pdf}
+    \caption{(left) Dimensionless turbulent kinetic energy in terms of the \textit{Galileo} number for different $\phi$. (dots) Numerical simulations.
+    The symbols correspond to different volume fraction ($\bullet$) $\phi = 1\%$, ($\blacktriangle$) $\phi = 5\%$, ($\blacksquare$) $\phi = 10\%$, ($\blacklozenge$) $\phi = 15\%$ and ($\blacktriangleright$) $\phi = 20\%$.}
+    \label{fig:Tf_Bf}
+
+    \begin{itemize}
+      \item $\lambda = 1,10 = \mu_d/\mu_f$ is the viscosity ratio. 
+    \end{itemize}
+\end{figure}
+
+\end{frame}
+\begin{frame}
+  {What about the particle velocity variance }
+
+  \begin{equation*}
+    \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    = f(\avg{\chi_1 \textbf{u}_1'\textbf{u}_1'})
+\end{equation*}
+
+\vfill
+
+$\to$ How to link $ \avg{\chi_1 \textbf{u}_1'\textbf{u}_1'}$ and $\pavg{\textbf{u}_\alpha' \textbf{u}_\alpha'}$ ?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Particle Kinetic energy equations }
+  \footnotesize
+  \begin{align*}
+    &\pddt \left(n_p m_p k_p\right)
+    + \div \left(n_p
+    m_p k_p \textbf{u}_p 
+    + \textbf{q}^k_p
+    % + \textbf{u}_p \cdot \bm{\sigma}_p^\text{eq}
+    \right)
+    = 
+    - \bm{\sigma}_p^\text{eq}  :\grad \textbf{u}_p
+    + \pavg{\textbf{u}_\alpha'\cdot\intS{\bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}}\\
+    &\pddt \left(n_p W_p\right)
+    + \div 
+    (n_p W_p
+    \textbf{u}_p 
+    +  \textbf{q}_p^\text{w}
+    )
+    = 
+    - \pOavg{{\bm{\sigma}_2^0 : \grad\textbf{u}_2^0}}
+    + \pSavg{{\textbf{w}_2^0 \cdot \bm{\sigma}_\text{ext}^0 \cdot  \textbf{n}}}
+    - \pavg{\ddt{ s_\alpha}}
+\end{align*}
+where we have defined, 
+\begin{align*}
+    \textbf{q}_p^\text{k}
+    = m_p \pavg{\textbf{u}_\alpha' k_\alpha} \\
+    \textbf{q}_p^\text{W}
+    = m_p \pavg{\textbf{u}_\alpha' W_\alpha} 
+\end{align*}
+
+\begin{itemize}
+  \item $\textbf{w}_2^0 = \textbf{u}_2^0 - \textbf{u}_\alpha$ is the local velocity relative to the particle center of mass. 
+  \item $W_p = \intO{\rho_2\textbf{w}_2^0\cdot \textbf{w}_2^0}$
+  Is the mean internal kinetic energy of the particles (such as rotation and fluid internal motion...)
+  \item $\pavg{\ddt{ s_\alpha}}$ mean time derivative of the particle surface energy. 
+  \item $\pOavg{{\bm{\sigma}_2^0 : \grad\textbf{u}_2^0}}$ energy dissipation due to internal stresses. 
+\end{itemize}
+
+$\to$ \underline{Is there a direct impact of  energy dissipation due to collision in the equation  of  $k_p$ ?
+}
+
+$\to$ \underline{What is the meaning of $\pavg{\textbf{u}_\alpha'\cdot\intS{\bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}}$ when it comes to contact forces  ?}
+\end{frame}
+
+\begin{frame}
+  {Fluid kinetic energy equation :}
+  \small
+  \begin{multline*}
+    \pddt (\phi_1\rho_1k_1)  
+    + \div (
+      \phi_1\rho_1k_1\textbf{u}_1
+      + \textbf{q}_1^\text{k} 
+      )
+      = 
+      - \avg{\chi_1\bm{\sigma}_\text{ext}^0 : \grad \textbf{u}_1^0}
+      - \bm{\sigma}_f^\text{eq} : \grad \textbf{u}_1\\
+      + (\textbf{u}_1 - \textbf{u}_p)
+      \cdot \pSavg{{\bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}}
+      - \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}}
+      - \pavg{ \intS{\textbf{w}_2^0 \cdot \bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}} 
+  \end{multline*}
+  with, 
+  \begin{multline*}
+    \textbf{q}_1^\text{k}
+      = \rho_1 \avg{\chi_1 \textbf{u}_1' k_1} 
+      - \avg{\chi_1 \textbf{u}_1' \cdot \bm{\sigma}_\text{ext}^0}
+      + (\textbf{u}_1 - \textbf{u}_p)\cdot
+      \pSavg{{\textbf{r}\bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}}\\
+      + \pavg{ \textbf{u}_\alpha' \cdot \intS{ \textbf{r} \bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}}
+      + \pavg{ \intS{\textbf{r}\textbf{w}_2^0 \cdot \bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}}
+  \end{multline*}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Internal energies equations}
+\begin{align*}
+  \pddt (\phi_f\rho_fe_f)  
+  + \div (
+      \phi_f \rho_fe_f\textbf{u}_f
+      +
+      \textbf{q}_f^\text{e} 
+      )
+  = 
+  \avg{\chi_f\bm{\sigma}_f^0 : \grad \textbf{u}_f^0}
+  + \pSavg{{\textbf{q}_f^0 \cdot \textbf{n}}} \\
+  \pddt \left(n_p m_p e_p\right)
+  + \div \left(n_p
+  m_p e_p \textbf{u}_p 
+  +  \textbf{q}_p^\text{e}
+  \right)
+  = 
+  + \pOavg{{\bm{\sigma}_2^0 : \grad\textbf{u}_2^0}}
+  - \pSavg{{\textbf{q}_f^0\cdot \textbf{n}}}
+\end{align*}
+  
+\begin{itemize}
+  \item $e_p$ and $e_f$ mean internal energy of the particle  and fluid phase. 
+  \item $\textbf{q}_f^0\cdot \textbf{n}$ Local heat fluxes.
+  \item $\bm{\sigma}_f^0 : \grad \textbf{u}_f^0$ and $\bm{\sigma}_2^0 : \grad \textbf{u}_2^0$ : Dissipation in the fluid and particle phase. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Energy transfer accors phases and scales}
+  \begin{center}
+    \tikzstyle{quadri}=[rectangle,draw]
+    \begin{tikzpicture}
+        \node[quadri] (u2) at (0,0){$(u_p)^2 / 2$};
+        \node[quadri] (kp) at (4,0){$(k_p)$};
+        \node[quadri] (Wp) at (8,0){$(W_p)$};
+        \node[quadri] (ep) at (12,0){$(e_p)$};
+        \node[quadri] (u12) at (2,-3){$\frac{\rho_f}{2}(u_f)^2$};
+        \node[quadri] (k1) at (6,-3){$k_f$};
+        \node[quadri] (e1) at (10,-3){$e_f$};
+        \draw[->] (u2)--(kp)node[midway,above]{\footnotesize $\bm{\sigma}^\text{eq}:\grad \textbf{u}_f$};
+        \draw[<->] (u2)--(u12) node[midway,left]{\footnotesize $\textbf{f}_{p} $};
+        % \draw[<->,text width=2cm] (kp)--(u12) node[midway,left]{\footnotesize $+  n_p v_p \textbf{u}_p \cdot 
+        % (\rho_2 \textbf{g} - \grad p_f)
+        % + n_p \textbf{u}_p \cdot \textbf{f}_{pm} - \textbf{F}_\text{pfp}$};
+        \draw[<->] (k1)--(u12) node[midway,below]{\footnotesize $\bm{\sigma}^\text{eq}_f:\grad \textbf{u}_f$, $\textbf{f}_p$};
+        \draw[<->] (k1)--(e1) node[midway,below]{\footnotesize $\avg{\chi_f \bm{\sigma}_f^0 : \grad\textbf{u}_f^0}$};
+        \draw[<->,sloped] (k1)--(kp) node[midway,below]{\footnotesize $\pavg{\textbf{f}_\alpha \cdot \textbf{u}_\alpha'}$};
+        \draw[<->] (k1)--(u2) node[midway,below]{\footnotesize $\textbf{f}_p$};
+        \draw[<->,sloped] (k1)--(Wp) node[midway,below]{\footnotesize $\intS{{\textbf{w}_2^0\cdot \bm{\sigma}_\text{ext}\cdot \textbf{n}}}$};
+        % \draw[->] (kp)--(Wp)node[midway,above]{$(\textbf{u}_\alpha' \cdot \textbf{f}_\alpha')_p$};
+        \draw[->] (Wp)--(ep)node[midway,above]{\footnotesize $\pOavg{\bm{\sigma}_2^0 : \grad \textbf{u}_2^0}$};
+        \draw[->] (e1)--(ep)node[midway,above,sloped]{\footnotesize $\pSavg{\textbf{q}_f^0 \cdot \textbf{n}}$};
+    \end{tikzpicture}
+\end{center}
+\begin{itemize}
+  \item $\textbf{f}_p =  \pSavg{\bm{\sigma}_\text{ext} \cdot \textbf{n}}$ Interphase force. 
+  \item $u_p^2$, and $u_f^2$ are the macroscopic kinetic energies
+  \item $k_p$, and $k_f$ are the fluctuating kinetic energies.
+  \item $W_p$ is the particles internal kinetic energy.
+  \item $e_p$ and $e_f$ are the internal energies.
+\end{itemize}
+\end{frame}
 
 \begin{frame}
   \frametitle{The ensemble average fluid phase Reynolds stress}
@@ -155,7 +434,7 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
   Let's apply Wijngaarden approach on this solution : 
   \begin{align*}
     \avg{\chi_k \textbf{u}'_k\textbf{u}'_k}(\textbf{x},t)
-    &\approx \int \textbf{u}'_\text{stokes}\textbf{u}'_\text{stokes}  P_1(\textbf{x},t,\textbf{r}) d\textbf{r}
+    &\approx \int_a^\infty \textbf{u}'_\text{stokes}\textbf{u}'_\text{stokes}  P_1(\textbf{x},t,\textbf{r}) d\textbf{r}
     - \phi_k \textbf{u}_k\textbf{u}_k
     =\infty 
   \end{align*}
@@ -228,7 +507,7 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
   \begin{multline}
     \avg{\chi_k \textbf{u}'_k\textbf{u}'_k}(\textbf{x},t)
     = 
-    {\int \textbf{u}_\text{stokes} \textbf{u}_\text{stokes}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r} }
+    {\int_a^\infty \textbf{u}_\text{stokes} \textbf{u}_\text{stokes}  P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r} }
     - \phi_k \textbf{u}_k\textbf{u}_k
     \\=
 -\left({{-\left(9\,\Gamma\left(-1 , \,\phi\right)\,\lambda^2\,\phi
@@ -246,12 +525,13 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
   \frametitle{Comparison with DNS results and experiments}
   \begin{figure}[h!]
     \centering    
-    \includegraphics[height = 0.25\textwidth]{image/upupexp.png}
+    % \includegraphics[height = 0.25\textwidth]{image/upupexp.png}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS/fCA/cartellier.pdf}
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS/fCA/Pseudo_turbe.pdf}
     \caption{
-       Dimensionless \textbf{fluid phase pseudo turbulent kinetic energy} :
-       (left) Comparison with experiment, Empirical fit : $\textit{potential} = \phi^{0.75}/\phi$ and Risso (2016) with $\lambda =0$ and $Re \approx 10$. 
-       (right) $K_c \avg{\chi_k \textbf{u}'_k\textbf{u}'_k} : \textbf{I} \frac{1}{2}$ in terms of the volume fraction $\phi$ for two viscosity ratio $\lambda =1,10$ and $Re \approx 1$ DNS. 
+       Dimensionless \textbf{fluid phase pseudo kinetic energy} :
+       (left) Comparison with the rising bubbles experiment of Cartellier (2009) with $Re \approx 10$. 
+       (right) comparison with DNS for two viscosity ratio $\lambda =1,10$ and $Re \approx 1$ DNS. 
     }
     \label{fig:Cp}
 \end{figure}  
@@ -303,5 +583,13 @@ Where we have defined :
 \end{itemize}
 
 
+\end{frame}
+\begin{frame}
+  {Perspectives}
+  \begin{itemize}
+    \item Takes in account interactions between particle with reflexion method 
+    \item Takes in account inertial effect Using Ossen wake. 
+    \item Can also compute : $\avg{\chi_1 \bm{\sigma}_1^0 : \grad  \textbf{u}_0^1}$ and other closure terms. 
+  \end{itemize}
 \end{frame}
 \end{document}

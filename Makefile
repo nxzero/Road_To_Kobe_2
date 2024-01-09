@@ -22,3 +22,4 @@ proper: clean
 	-rm The_hybride_model_diapo.pdf
 	-rm The_hybride_model_for_fluid_particles.pdf
 	-rm Pseudo_turb.pdf
+	-rm ictam2024_latex_template.pdf

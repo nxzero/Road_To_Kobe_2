@@ -1,38 +1,71 @@
 
 %\subsubsection*{Equivalence between particle and continuous models}
 \subsection{Equivalence between particle-averaged and phase-averaged equations}
-
+\label{sec:equivalence}
 To model the dispersed phase we can either use \ref{eq:avg_dt_chi_f} with $k=2$, or the particle-average \ref{eq:avg_dt_dq_alpha_tot}, \ref{eq:avg_dt_dQ_alpha_tot} and possibly the higher moments equations. 
 As mentioned in \ref{sec:Lagrangian} we notified that \ref{eq:dt_dq_alpha_tot} was already subject to an average over the particles' volume and the surfaces. 
 Meaning that \ref{eq:avg_dt_dq_alpha_tot} is the results of two average processes. 
 Consequently, it is fair to address the question of the compatibility and differences between both formalism, i.e. between \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_dq_alpha_tot}. 
 
 To begin with, it has been demonstrated in various studies \citep{nott2011suspension,jackson1997locally,zhang1994averaged}, that phase-averaged quantities can be expressed as a Taylor series expansion of particle-averaged quantities. 
-The expressions read as follows, 
+Indeed, the dispersed phase indicator function $\chi_2(\textbf{x},t)$ can be expressed as a sum of phase indicator function, $\chi_2(\textbf{x},t) = \sum_\alpha\chi_\alpha(\textbf{x},t)$ where $\chi_\alpha =1$ in the particle domain $\Omega_\alpha(t)$ and $0$ otherwise. 
+Then, notice that any a dispersed phase quantity can be written as, 
+\begin{equation*}
+    f^0_2 \chi_2(\textbf{x},t)
+    = \sum_\alpha f^0_2 \chi_\alpha(\textbf{x},t) 
+    = \sum_\alpha \int_{\mathbb{R}^3} f^0_2 \chi_\alpha(\textbf{x}_\alpha+\textbf{r},t)\delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r}) d\textbf{r} 
+\end{equation*}
+Which upon using the Taylor expansion of the Dirac delta function in the neighborhood of $\textbf{r}=0$ one obtain :  $\delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r}) = \delta(\textbf{x}- \textbf{x}_\alpha) - \textbf{r}\grad \delta(\textbf{x} - \textbf{x}_\alpha) + \frac{\textbf{rr}}{2}\grad\grad\delta(\textbf{x}- \textbf{x}_\alpha)\ldots $.
+% Thus, the dispersed phase quantity $(f_2^0\chi_2)$ can be re-written as, 
+% \begin{equation*}
+%     f^0_2 \chi_2(\textbf{x},t)
+%     = \sum_\alpha \left[
+%         \intO{f^0_2}
+%         - \div\intO{\textbf{r} f^0_2}
+%         + \frac{1}{2}\grad\grad :\intO{\textbf{rr} f^0_2}
+%         \ldots
+%     \right]
+% \end{equation*}
+% where we recognize the zeroth, first and second order moments of $f_2^0$. 
+Applying these considerations to interfaces quantities and averaging over all configurations of the phase space, one obtain a general relation between continuous and particle averaged quantities, namely, 
 \begin{align}
-    \avg{\chi_kf_k^0 + \delta_I f_I^0} 
-    &=  \pavg{q_\alpha^\text{tot}}
+    \avg{\chi_2f_2^0} 
+    &=  \pavg{q_\alpha}
         - \div  
-        \pavg{\mathcal{Q}_\alpha^\text{tot}}        
-        + \frac{1}{2} \grad\grad : \pavg{\mathcal{Q}_{2\alpha}^{\text{tot}}}
+        \pavg{\mathcal{Q}_\alpha}        
+        + \frac{1}{2} \grad\grad : \pavg{\mathcal{Q}_{2\alpha}}
         + \ldots  
-        % \\
-    % \avg{} 
-    % &=  \pavg{q_{I\alpha}}        
-    %     - \div \pavg{\mathcal{Q}_{I\alpha}}
-    %     + \frac{1}{2} \grad\grad : \pavg{\mathcal{Q}_{I\alpha}^{2}}
-    %     + \ldots  
+        \nonumber\\
+    \avg{\delta_I f_I^0} 
+    &=  \pavg{q_{I\alpha}}        
+        - \div \pavg{\mathcal{Q}_{I\alpha}}
+        + \frac{1}{2} \grad\grad : \pavg{\mathcal{Q}_{I\alpha}^{2}}
+        + \ldots  
     \label{eq:f_exp}
 \end{align}
-Then, in order to establish the equivalence between both formalism, we follow the strategy of \citep{lhuillier2000bilan} by taking the Taylor expansion of each terms in \ref{eq:avg_dt_chi_f} with $k=2$. 
+It must be noted that \ref{eq:f_exp} is the bridge between the continuous phase average formalism and the particle formulation. 
+One of the consequences of these relations is that, 
+\begin{align}
+    \phi_2 \rho_2
+    = m_p n_p 
+    + \frac{1}{2}\grad^2 : (n_p\mathcal{M}_p)+\ldots\\
+    \phi_2 \rho_2 \textbf{u}_2
+    = m_p n_p \textbf{u}_p 
+    - \div (n_p\mathcal{P}_p)+\ldots
+    \label{eq:f_exp_exe}
+\end{align}
+meaning that $\phi_2\rho_2$ is in fact related to $\mathcal{M}_p$ and the phase averaged velocity $\textbf{u}_2$ contain the first  moment of momentum $\mathcal{P}_p$, which account for rotational and stretching motions of the particles. 
+
+In order to establish the equivalence between both formalism, we follow the strategy of \citep{lhuillier2000bilan,lhuillier2009rheology} by taking the Taylor expansion of each terms in \ref{eq:avg_dt_chi_f} with $k=2$ using the relation \ref{eq:f_exp}. 
+Since we made use of the surface transport equations in the particles phase equations : \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}, we also need to consider \ref{eq:avg_dt_delta_f}  to prove equivalence. 
 As the resulting expression can become quite cumbersome, we will adopt the following definition. 
-Let $\mathbb{C}$ represent the phase-averaged equation of conservation (\ref{eq:avg_dt_chi_f}), namely, 
-\begin{equation*}
-    \mathbb{C}
-    =
+Let $\mathbb{C}_2$ represent the phase-averaged equation of conservation (\ref{eq:avg_dt_chi_f} with $k=2$) and $\mathbb{C}_I$ the averaged surface transport equation, namely, 
+\begin{align*}
+    \mathbb{C}_2
+    &=
     - \pddt \avg{\chi_2f_2^0}
     - \div \avg{\chi_2 \mathbf{\Phi}_2^0 - \chi_2f_2^0 \textbf{u}_2^0}
-    + \avg{\chi_2 s_2^0}\\
+    + \avg{\chi_2 s_2^0}
     + \avg{\delta_I\left[
         \mathbf{\Phi}_2^0
         + f_2^0
@@ -41,17 +74,28 @@ Let $\mathbb{C}$ represent the phase-averaged equation of conservation (\ref{eq:
             - \textbf{u}_2^0
         \right)
     \right]
-    \cdot \textbf{n}_2}. 
-\end{equation*}
-Therefore, it must be understood from \ref{eq:avg_dt_chi_f} that $\mathbb{C}=0$.
-Then, by taking the Taylor expansion of each terms of $\mathbb{C}$ according to \ref{eq:f_exp}, we can equally show that,
+    \cdot \textbf{n}_2}.\\
+    \mathbb{C}_I
+    &= 
+    -\pddt \avg{\delta_If_I^0}
+    -\div \avg{\delta_I f_I^0 \textbf{u}_I^0-\delta_I \mathbf{\Phi}_{I||}^0 }
+    + \avg{\delta_Is_I^0} 
+    - \avg{\delta_I \Jump{
+    f_k^0 (\textbf{u}_I^0 - \textbf{u}_k^0)
+    + \mathbf{\Phi}_k^0
+    } }. 
+\end{align*}
+It must be understood from \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} that $\mathbb{C}_2=0$ and $\mathbb{C}_I=0$.
+Then, by taking the Taylor expansion of each terms of $\mathbb{C}_2+\mathbb{C}_I$ according to \ref{eq:f_exp}, we can equally show that,
 \begin{equation}
-    \mathbb{C} = \mathbb{M}_0 - \div \mathbb{M}_1 + \frac{1}{2} \grad\grad : \mathbb{M}_2 \ldots = 0,
+    \mathbb{C}_2 
+    + \mathbb{C}_I 
+    = \mathbb{M}_0 - \div \mathbb{M}_1 + \frac{1}{2} \grad\grad : \mathbb{M}_2 \ldots = 0,
     \label{eq:scheme_equivalence}
 \end{equation} 
 where the expression $\mathbb{M}_0$ and $\mathbb{M}_1$ turn out to be, 
-\begin{multline*}
-    \mathbb{M}_0
+\begin{align*}
+    &\mathbb{M}_0
     = 
     - \avg{\delta_\alpha \ddt q_\alpha^\text{tot}}
     % -\avg{\delta_\alpha\textbf{u}_\alpha q_\alpha^\text{tot}}
@@ -59,28 +103,25 @@ where the expression $\mathbb{M}_0$ and $\mathbb{M}_1$ turn out to be,
     + \avg{\delta_\alpha\int_{\Sigma_\alpha} s_I^0 d\Sigma}
     + \avg{\delta_\alpha\int_{\Sigma_\alpha} 
     \left[\mathbf{\Phi}_1^0 
-    + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0) \right] \cdot \textbf{n}_2 d\Sigma},
-\end{multline*}
-and,
-\begin{multline*}
-    \mathbb{M}_1 =
+    + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0) \right] \cdot \textbf{n}_2 d\Sigma},\\
+    &\mathbb{M}_1 =
     -  \avg{\delta_\alpha \ddt \mathcal{Q}_\alpha^\text{tot}}
     % - \avg{\delta_\alpha\textbf{u}_\alpha \mathcal{Q}_\alpha^\text{tot}}
      + \avg{\delta_\alpha\int_{\Omega_\alpha} \left(
         \textbf{r} s_2^0         
         + f_2^0  \textbf{w}_2^0 
         - \mathbf{\Phi}_2^0
-    \right) d\Omega}\\
+    \right) d\Omega}
     + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left(
         \textbf{r}s_I^0
         + f_I^0 \textbf{w}_I^0
         - \mathbf{\Phi}_{I||}^0
-    \right) d\Sigma}
-    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \textbf{r} \left[
+    \right) d\Sigma}\\
+    &+ \avg{\delta_\alpha\int_{\Sigma_\alpha} \textbf{r} \left[
         \mathbf{\Phi}_1^0
         + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0)
     \right]\cdot \textbf{n}_2  d\Sigma},
-\end{multline*}
+\end{align*}
 respectively. 
 In the presence of \ref{eq:scheme_equivalence} we reach the major conclusion of this work. 
 Indeed, we can observe that $\mathbb{M}_0$, $\mathbb{M}_1$ and $\mathbb{M}_2$ represent the zeroth, first and second order moments equations, respectively. 
@@ -89,88 +130,229 @@ As a matter of fact, the phase average applied to the dispersed phase contains a
 In \ref{ap:Moments_equations} we provide the expression for each moment equation $\mathbb{M}_n$ as well as the complete derivation of \ref{eq:scheme_equivalence}. 
 In \cite{lhuillier2000bilan} they reached similar conclusion when comparing the area density phase-averaged and particle-averaged equations of conservation for spherical particles. 
 Thus, from \ref{eq:scheme_equivalence} it is evident that one can use an arbitrary order of moments equations to reach an arbitrary accurate description of the dispersed phase.
-This fact was previously suggested by \citet{zhang1997momentum}, here we provide the detailed derivation.  
 
 Another approach is to notice that $\mathbb{M}_n=0$ for all $n$. Thus, we can rewrite \ref{eq:scheme_equivalence} such that all moments equations vanish, except $\mathbb{M}_0$, which gives, 
 \begin{equation}
-    \mathbb{C} = \mathbb{M}_0 = 0.
+    \mathbb{C}_2 = \mathbb{M}_0 = 0.
 \end{equation}
-This implies that equation \ref{eq:avg_dt_chi_f} is rigorously equivalent to \ref{eq:avg_dt_dq_alpha_tot} as shown by \cite[Appendix A]{nott2011suspension} for the specific case of the momentum conservation equation of solid spherical particle.
-Nevertheless, it is important to note that this conclusion is not entirely objective since following the same procedure we could show equally that $\mathbb{C} = -\div\mathbb{M}_1=0$ and $\mathbb{C} = \frac{1}{2}\grad\grad:\mathbb{M}_2=0$ and so on for the other higher terms. 
+This implies that equation \ref{eq:avg_dt_chi_f} with the surface transport equation \ref{eq:avg_dt_delta_f} is rigorously equivalent to \ref{eq:avg_dt_dq_alpha_tot} which has been shown by \cite[Appendix A]{nott2011suspension} for the specific case of the momentum conservation equation of solid spherical particle.
+In fact, we generalize the conclusion of \citet[Appendix A]{zhang1997momentum} which stipulate that the particle momentum equation is as legitimate as the phase averaged equation. 
+In fact, it is not surprising at all, since the phases and particles averaged equations are all constructed from \ref{eq:dt_f_k}.
+However, if one do not consider a proper derivation as it is done in \ref{sec:Lagrangian} it might not be as obvious, even if it should remain.
+Nevertheless, it is important to note that this conclusion is not entirely objective since following the same procedure we could show equally that $\mathbb{C}_2  = -\div\mathbb{M}_1=0$ and $\mathbb{C}_2  = \frac{1}{2}\grad\grad:\mathbb{M}_2=0$ and so on for the other higher terms. 
 Thus, it is more appropriate to examine the problem from the perspective of \ref{eq:scheme_equivalence}. 
 Namely, the particle-averaged equations constitute a system of equations with one equation for each moment, while the phase-averaged equation contains all the terms of the particle-averaged equations within a single equation.
 Therefore, the particle-averaged formalism encompasses more information since it provide one equation for each moment. 
-As a side note, remarks that in  \citet{jackson1997locally},  the volume averaged momentum balance (equation (38) of \citet{jackson1997locally}) they make appear the higher moment of velocity of the particles as closure terms.
-What we have shown here is that these higher moments cancels out with the development of the advection term. 
+This,  gain in information have been possible through the consideration of the topology of the dispersed phase. 
+
+The major consequence of this finding is that it enable us to better understand the role of the particle phase stresses $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$, in the particle averaged momentum equation such as it is written in a kinetic-like model. 
+Indeed, as shown by the general form \ref{eq:avg_dt_dq_alpha_tot}, $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$ will not play a role on the particle averaged momentum equations, i.e. the equation of : $n_p m_p \textbf{u}_p$. 
+However, as shown in \ref{eq:dt_avg_uk2}, the phase averaged momentum : $\rho_2 \phi_2 \textbf{u}_2$,  will be subject to the particle surface and internal stresses, since $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$ are present in this phase averaged equation.
+This is made consistent if one consider that these stresses act as source terms on the higher moments of momentum equations $\mathbb{M}_1$\ldots, which are related to $\rho_2 \phi_2 \textbf{u}_2$ through \ref{eq:f_exp_exe}. 
+In brief, the non-convective fluxes $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$  have no direct impact on the particle averaged center of mass momentum :$n_pm_p\textbf{u}_p$, regardless of the particles nature and volume fraction. 
+The influence of $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$ on the particles' momentum equation is made through the dependence of the source terms present in \ref{eq:avg_dt_dq_alpha_tot} with the higher moments of the particles, which depend themselves on the non-convective fluxes as suggested by the moments of momentum equations. 
+Similar remarks can be made regrading the non-convective fluxes of the energy equation and all other conservation equation. 
+
+\subsection{The bulk stress in dispersed multiphase flow}
+
+Now that the architecture of the averaged dispersed multiphase flow equation is clarified, we would like to present the expression of the bulk stress tensor in a suspension of inertial particles subject to an arbitrary local body force field, $\textbf{b}^0$.
+Firstly, is important to recall the definition of the \textit{bulk stress}. 
+We define the \textit{bulk stress} tensor as a force applied on the fluid and on the particles phase, having the form $\div \bm{\Sigma}$, which added to the total external force $\textbf{B}$, balance exactly the material derivative of the mixture momentum : $\frac{D \rho \textbf{u}}{Dt}$. 
+In this definition $\textbf{B}$ cannot be decomposed into a vector and a divergence of a tensor, in which case the latter would just contribute to $\bm{\Sigma}$.
+
+We first expose the averaged mixture momentum and angular momentum equation easily derived from \ref{eq:dt_avg_f}, 
+\begin{align}
+    \pddt (\rho u_i)
+    + \partial (\rho u_iu_k
+    + \sigma_{ik}^\text{eq})
+    = b_i\\
+    \epsilon_{ijk} \sigma_{jk}
+    = 0 
+    \label{eq:momentum_bulk}
+\end{align}
+In the momentum equation we have defined, $\sigma_{ik}^\text{eq} = \avg{\rho\textbf{u}'\textbf{u}'}
+- \avg{\chi_1\bm{\sigma}_1^0}-\avg{\chi_2\bm{\sigma}_2^0} - \avg{\delta_I \bm{\sigma}_I^0}$. 
+Additionally, in the averaged angular momentum equation we have assumed that no-body torque exist at the local scale making the second equality equal to $0$ \citet{leal2007advanced} and the averaged mixture stress $\bm{\sigma}$ a symmetric quantity. 
+However, note that $\bm{\sigma}$ is not exactly equal to the \textit{bulk stress} tensor $\bm{\Sigma}$ since $\textbf{b}$ can be expressed as a divergence of a stress.
+Indeed, have defined $\textbf{b} = \textbf{B} + \div  \textbf{T}$ where $\textbf{B} = \phi_1 \textbf{b}_1 +  \pOavg{\textbf{b}_2^0 }$ and \textbf{T} is defined such that $\textbf{b}_2\phi_2 = \pOavg{\textbf{b}_2^0 } + \div \textbf{T}$.
+It follows the definition of the \textit{bulk stress} : 
+\begin{equation}
+    \bm{\Sigma}
+    = 
+    \avg{\rho\textbf{u}'\textbf{u}'}
+    - \avg{\chi_1\bm{\sigma}_1^0}
+    - \avg{\chi_2\bm{\sigma}_2^0} 
+    - \avg{\delta_I \bm{\sigma}_I^0}
+    - \textbf{T}
+\end{equation}
+which proves already, in the absence of particles moments of the body forces \textbf{T}, the antisymmetric part of the suspension stress is null, in agreement with \citet{dolata2020heterogeneous}.
+% This skew symmetric part can be written in vector form as, 
+% \begin{equation*}
+%     \epsilon_{ijk}\textbf{T}_{jk}
+%     = 
+%     -\epsilon_{ijk} \pOavg{r_kb_j}
+%     -\epsilon_{ijk}\frac{1}{2}\partial_l \pOavg{r_lr_kb_j}
+%     = 0  
+% \end{equation*}
+We recall that the carrier fluid is a Newtonian fluid, therefore we may express the fluid phase stress as, 
+\begin{equation}
+    \phi_1 \sigma_{1,jk}
+    = -p_1 \delta_{jk}
+    + \mu_1 e_{jk}
+    - \mu_1 \phi_2 e_{2,jk}. 
+\end{equation} 
+Additionally, we use the methodology of \citep{lhuillier1992volume,lhuillier1996contribution} to re express the averaged particle stress terms. 
+The divergence of the particle phase stress may be expressed using \ref{eq:f_exp}, 
+\begin{align}
+    \label{eq:exp_sigma22}
+    \partial_k \avg{\chi_2 {\sigma}_2^0}_{ik}
+    &=  \partial_k\pOavg{ {\sigma}_{2,ik}^0}
+    -\frac{1}{2} \partial_k\partial_j
+    \pOavg{ r_j{\sigma}^0_{2,ik} + r_k\sigma^0_{2,ij}}
+    + \ldots  \\
+    \label{eq:exp_sigmaI2}
+    \partial_k \avg{\delta_I {\sigma}^0_I}_{ik} 
+    &=  \partial_k\pSavg{ {\sigma}_{I,ik}^0 }
+        -\frac{1}{2} \partial_k\partial_j \pSavg{ r_j {\sigma}_{I,ik}^0+r_k {\sigma}_{I,ij}^0 }
+        + \ldots  
+\end{align}
+Note that the heterogeneous terms must remain symmetric in the index $kj$ due to the double contraction with the operator $\partial_k\partial_j$, thus only the symmetric part in $jk$ remain and the terms such as, $\pOavg{ r_j{\sigma}^0_{2,ik} - r_k\sigma^0_{2,ij}}$ vanish. 
+Upon the use of the moment of momentum equation of the first and second order we can easily derive these expressions, 
+\begin{align}
+    \intS{ (\bm{\sigma}_I)_{ik}}
+    +\intO{ (\bm{\sigma}_2^0)_{ik}}
+    = 
+    \intO{ \rho_2 
+    (\textbf{w}_2^0\textbf{w}_2^0  )_{ik}
+    }
+    -\ddt \intO{ r_i (\textbf{u}^0_2)_k }
+    +\intS{ 
+        b_{i}
+        r_k 
+    }
+    +\intS{ 
+     r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k}
+    }
+    \label{eq:dt_P_alpha}\\
+    \intO{ r_{j}(\bm{\sigma}^0_2)_{ik}+r_{k}(\bm{\sigma}^0_2)_{ji}}
+    +\intS{ r_{j}(\bm{\sigma}^0_I)_{ik}+r_{k}(\bm{\sigma}_I^0)_{ji}}
+    = 
+    - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_i r_j r_k }\nonumber\\
+    + \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)}
+    +\intS{  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l }
+    + \intO{ r_{k}r_{j}  \rho_2 b_i } 
+    \label{eq:dt_P2_alpha}
+\end{align}
+It is evident that by using an arbitrary order of moment of momentum equation one can substitute any volume integral of the particle stress appearing in the expansion \ref{eq:exp_sigma22}. 
+% By consideration of symmetric of the local stress, it is evident that the skew symmetric part of the moment of momentum will not have any dynamical role thus we can retrieve the average of \ref{eq:dt_mu_alpha} to the first relation. 
+% To extract the skew symmetric part we start by writing the permutation of these equations with $ik$ yielding,  
+% \begin{align}
+%     \intS{ 
+%     (\bm{\sigma}_I)_{ki}
+%     }
+%     +\intO{ 
+%     (\bm{\sigma}_2^0)_{ki}
+%     }
+%     = 
+%     \intO{ \rho_2 
+%     (\textbf{w}_2^0\textbf{w}_2^0  )_{ki}
+%     }
+%     -\ddt \intO{ r_k (\textbf{u}^0_2)_i }
+%     +\intS{ b_{k}r_i }
+%     +\intS{ r_k (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{i}}\\
+%     \intO{ r_{j}(\bm{\sigma}^0_2)_{ki}+r_{i}(\bm{\sigma}^0_2)_{jk}}
+%     +\intS{ r_{j}(\bm{\sigma}^0_I)_{ki}+r_{i}(\bm{\sigma}_I^0)_{jk}}
+%     = 
+%     - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_k r_j r_i }\nonumber\\
+%     + \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_i (\textbf{u}^0_2)_k + r_i (\textbf{w}_2^0)_j (\textbf{u}^0_2)_k)}
+%     +\intS{  r_{i}r_{j} (\bm{\sigma}_1^0)_{kl} (\textbf{n}_2)_l }
+%     + \intO{ r_{i}r_{j}  \rho_2 b_k } \\
+%     \intO{ r_{i}(\bm{\sigma}^0_2)_{jk}+r_{k}(\bm{\sigma}^0_2)_{ij}}
+%     +\intS{ r_{i}(\bm{\sigma}^0_I)_{jk}+r_{k}(\bm{\sigma}_I^0)_{ij}}
+%     = 
+%     - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_j r_i r_k }\nonumber\\
+%     + \intO{ \rho_2 (r_{i} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_j 
+%     + r_k (\textbf{w}_2^0)_i (\textbf{u}^0_2)_j)}
+%     +\intS{  r_{k}r_{i} (\bm{\sigma}_1^0)_{jl} (\textbf{n}_2)_l }
+%     + \intO{ r_{k}r_{i}  \rho_2 b_j } 
+% \end{align}
+% Acknowledgement of the symmetrical nature of $\bm{\sigma}_2^0$ and $\bm{\sigma}_I^0$ gives the following antisymmetrical balance equations, 
+% \begin{align}
+%     0
+%     = 
+%     -\ddt \intO{ r_i (\textbf{u}^0_2)_k -r_k (\textbf{u}^0_2)_i }
+%     +\intS{ b_{i}r_k -b_{k}r_i }
+%     +\intS{r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k} - r_k (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{i}}\\
+%     \intO{ r_{j}(\bm{\sigma}^0_2)_{ik}
+%             -r_{i}(\bm{\sigma}^0_2)_{jk}}
+%     +\intS{ r_{j}(\bm{\sigma}^0_I)_{ik}
+%            - r_{i}(\bm{\sigma}_I^0)_{jk}}
+%     = 
+%     - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_i r_j r_k -  \rho_2 (\textbf{u}_2^0)_j r_i r_k }\nonumber\\
+%     + \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)}
+%     - \intO{ \rho_2 (r_{i} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_j + r_k (\textbf{w}_2^0)_i (\textbf{u}^0_2)_j)}\\
+%     +\intS{  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l 
+%     -r_{k}r_{i} (\bm{\sigma}_1^0)_{jl} (\textbf{n}_2)_l }
+%     + \intO{ r_{k}r_{j}  \rho_2 b_i
+%     - r_{k}r_{i}  \rho_2 b_j } 
+% \end{align}
+% The last equation need to be added to the second permutation which gives, 
+% \begin{align*}
+% \intO{ r_{j}(\bm{\sigma}^0_2)_{ik}}
+% +\intS{ r_{j}(\bm{\sigma}^0_I)_{ik}}
+% = 
+% - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_k r_j r_i 
+% + \rho_2 (\textbf{u}_2^0)_i r_j r_k 
+% -  \rho_2 (\textbf{u}_2^0)_j r_i r_k }\nonumber\\
+% + \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)}
+% - \intO{ \rho_2 (r_{i} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_j + r_k (\textbf{w}_2^0)_i (\textbf{u}^0_2)_j)}\\
+% - \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_i (\textbf{u}^0_2)_k + r_i (\textbf{w}_2^0)_j (\textbf{u}^0_2)_k)}\\
+% +\intS{  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l 
+% +r_{j}r_{i} (\bm{\sigma}_1^0)_{kl} (\textbf{n}_2)_l 
+% -r_{k}r_{i} (\bm{\sigma}_1^0)_{jl} (\textbf{n}_2)_l }
+% + \intO{ r_{k}r_{j}  \rho_2 b_i
+% + r_{j}r_{i}  \rho_2 b_k 
+% - r_{k}r_{i}  \rho_2 b_j 
+% } 
+% \end{align*}
+In, addition one must notice that the particle angular momentum balance equation doesn't involve the integral of the particle local stress and has therefore, no dynamical role in the equivalent stress expression. 
+Making use of these remarks we obtain this general formula for the suspension stress,  
+\begin{multline*}
+    \bm{\Sigma}
+    = \avg{\rho\textbf{u}'\textbf{u}'}_{ik}
+    + \phi_1 p_1 \delta_{ik}
+    - \mu_1 e_{ik}
+    % + \mu_1 \phi_2 e_{2,ik}. 
+    - \pOavg{ \rho_2 (\textbf{w}_2^0\textbf{w}_2^0  )_{ik}}
+    + \pavg{\ddt \mathcal{S}_{ik} }\\
+    - \pSavg{ b_{i}r_k - b_{k}r_i }
+    - \pSavg{ r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k}
+    + r_k (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{i}}
+    + \mu_1 \pOavg{e_2^0}_{ik}
+    + \frac{1}{2} \div\bm{\Sigma}_1
+\end{multline*}
+with the inhomogeneous stress gathered in $\bm{\Sigma}_1$, namely,
+\begin{multline}
+    \bm{\Sigma}_1
+    = 
+    - \pavg{\ddt\intO{ \rho_2 (\textbf{u}_2^0)_i r_j r_k }}
+    + \pOavg{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)}\nonumber\\
+    +\pSavg{  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l }
+    - \mu_1 2 \pOavg{\textbf{r} \textbf{e}_2^0}_{jik}
+\end{multline}
+According to \ref{eq:scheme_equivalence}, expanding each component related to the dispersed phase in \ref{eq:momentum_bulk} one would see appear each moment of momentum equations under the divergence operator.
+However, to stay consistent with the definition of the bulk stress tensor $\bm{\Sigma}$, we must keep the advecting term on the LHS of \ref{eq:momentum_bulk} unchanged, this is however not the case of the averaged body force term $\textbf{b}$ which allowed us to cancel all the body forces terms with the expansion of $\textbf{T}$.  
+
+One of the major question in suspension dynamic raised by several authors, is the evaluation of the bulk stress or equivalent stress tensor of a suspension, see \citep{prosperetti2006stress, batchelor1970stress,zhang1997momentum,nadim1996concise} and more recently \citet{dolata2020heterogeneous}. 
+The answer to this question is given in the general case of the generic averaged mixture equation. 
+This, conclusion deserve several comments regarding previous studies. 
+In  \citet{jackson1997locally},  the volume averaged momentum balance (equation (38) of \citet{jackson1997locally}) they make appear the higher moment of velocity of the particles as closure terms, these are hidden in $\pOavg{\textbf{w}_2^0 \textbf{w}_2^0}$.
+However, in \citet{jackson1997locally} they did not remove the angular momentum to the stress yieldings a slightly different term. 
+What we have shown here is that these higher moments of the particles phase such has the particles rotations have no dynamical significance in the mixture equations. 
 Therefore, equation (38) of \citet{jackson1997locally} can be further simplified to the fluid and first order particle averaged equations. 
-
-
-% \subsection{The hybrid model}
-
-% Now that we reached a clear understanding of the averaged models, we introduce the Hybrid model for dispersed two phase flows. 
-
-% We first introduce the equation used to model the continuous phase. 
-% It is derived by setting $k = 1$ in \ref{eq:avg_dt_chi_f}, and by using \ref{eq:f_exp} to expand the exchange term into an expansion serie.
-% This yields the following expression~:
-% \begin{multline}
-%     \pddt \avg{\chi_1 f_1}
-%     = \div \avg{\chi_1 \mathbf{\Phi}_1 - \chi_1 f_1 \textbf{u}_1}
-%     - \pavg{\int_{\Sigma_\alpha}\left[
-%         \mathbf{\Phi}_1  
-%         + f_1
-%         \left(
-%             \textbf{u}_I
-%             - \textbf{u}_1
-%         \right)
-%     \right]
-%     \cdot \textbf{n}_2d\Sigma} \\
-%     + \avg{\chi_1 \textbf{S}_1}
-%     +  \div \pavg{\int_{\Sigma_\alpha} \textbf{r}\left[
-%         \mathbf{\Phi}_1
-%         + f_1
-%         \left(
-%             \textbf{u}_I
-%             - \textbf{u}_1
-%         \right)
-%     \right]
-%     \cdot \textbf{n}_2d\Sigma} 
-%     \label{eq:hybrid_avg_dt_chif}
-% \end{multline}
-% \tb{reformuler ca avec le conditional average et le triks de la div }
-% Notice that we switched the normal vector from $\textbf{n}_1$ to $-\textbf{n}_2$ in the second and the last integral on the RHS, which is the conventional way to express these couplings terms. 
-% Moreover, it should be noted that we neglected the second and higher order moments of the coupling term between the two phases.
-
-% Regarding the dispersed phase, we consider the zeroth and first moment equation (\ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}) as  a part of the hybrid model.
-% Under this form the couplings terms in \ref{eq:hybrid_avg_dt_chif} correspond to the ones appearing in both, \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot} which is essential for ensuring a consistent model. 
-% Then, \ref{eq:hybrid_avg_dt_chif}, \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}, are the most general form of a first-order accurate hybrid model for arbitrary particle. 
-% Lastly, it is worth noting that by incorporating more terms in the expansion of \ref{eq:avg_dt_chi_f} and higher order moments equations, one can reach an arbitrary order of accuracy, as stated by \citet{zhang1997momentum}. 
-
-% As remarked by \citet{jackson1997locally} for the angular momentum equations of solid spherical particles, and here in a more general case :\ref{eq:hybrid_avg_dt_chif} and \ref{eq:avg_dt_dq_alpha_tot} may seem to be not coupled with the higher order moments equations, i.e. \ref{eq:avg_dt_dQ_alpha_tot}. 
-% Indeed, the first order moment $\mathcal{Q}_\alpha$ do not appear explicitly in either \ref{eq:hybrid_avg_dt_chif} or \ref{eq:avg_dt_dq_alpha_tot}.
-% However, the exchange terms 
-% $\int_{\Sigma_\alpha}[
-%     \mathbf{\Phi}_1  
-%     + f_1
-%     (
-%         \textbf{u}_I
-%         - \textbf{u}_1
-%     )
-% ]
-% \cdot \textbf{n}_2d\Sigma$ 
-% and 
-% $\int_{\Sigma_\alpha} \textbf{r}[
-%     \mathbf{\Phi}_1
-%     + f_1
-%     (
-%         \textbf{u}_I
-%         - \textbf{u}_1
-%     )
-% ]
-% \cdot \textbf{n}_2d\Sigma$ 
-% appearing in both \ref{eq:hybrid_avg_dt_chif} and \ref{eq:avg_dt_dq_alpha_tot} might depend on the higher order moments of the particles.
-% As an example, in the momentum equation of the continuous phase, i.e. the ensemble average of \ref{eq:dt_rhou_k}, the exchange term corresponds to the averaged drag force, namely $\pnnavg{\textbf{f}_\alpha}$. 
-% It is clear that $\pnnavg{\textbf{f}_\alpha}$ has a strong dependency with $\textbf{u}_\alpha$ and $\mathcal{M}_\alpha$ since the drag force is a function of both the particle's velocity and its shape. 
-% Therefore, \ref{eq:avg_dt_dQ_alpha_tot} is linked to \ref{eq:hybrid_avg_dt_chif} and \ref{eq:avg_dt_dq_alpha_tot} solely through the dependence between the exchange terms and the properties of the particles, e.g. $q_\alpha$, $\mathcal{Q}^n_\alpha$ and possibly the higher order moments. 
-% Consequently, the significance of the higher moments equations can be evaluated based on the dependency of the exchange terms in \ref{eq:hybrid_avg_dt_chif} with the moments,  $\mathcal{Q}_\alpha$ and potentially the higher-order moments of the particles. 
-
-\tb{The expanion in terms of other variable}
+Equally, in the momentum mixture equation derived by \citet{zhang1997momentum} (equation (8.2)), they make appear explicitly the higher moment of acceleration and the higher moments of velocity in their equivalent stress. 
+These terms must therefore simplify. 
+In fact as, it could be supposed in their appendix these moments equally cancel. 
+In agreement with \citet{dolata2021faxen} which also found that the only remaining part of the stress were solely the fluid phase exchange terms upon the calculation of the body forces moments. 
+Similar, comments can be made on the study of \citet{prosperetti2006stress}. 
+This also explain why \citet{nadim1996concise} found out that the interfacial terms of the surface tension and viscous interfacial forces play no direct role in the equivalent stress of the emulsion.

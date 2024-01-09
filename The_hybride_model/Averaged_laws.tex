@@ -1,33 +1,58 @@
-
-\subsection{Phase average and particle averaged equations}
-
-Correspondingly, we take the average of the particle fields equations by using \ref{eq:avg} on \ref{eq:dt_dq_alpha_tot} and \ref{eq:dt_dQ_alpha_tot}, which gives, 
-\begin{multline}
+% \subsection{Phase average and particle averaged equations}
+% Correspondingly, we take the average of the particle fields equations by using \ref{eq:avg} on \ref{eq:dt_dq_alpha_tot} and \ref{eq:dt_dQ_alpha_tot}, which gives, 
+However, in order to obtain a coarse-grained level equation for the dispersed phase, one must apply the average operator \ref{eq:avg} on \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot} which is made possible since the particle fields $\delta_\alpha \ldots$ are now defined over the whole space $\Omega$ thanks to the Dirac delta function.  
+These equations yiedls,
+\begin{align}
     \pddt \avg{\delta_\alpha  q_\alpha^\text{tot}}
     + \div \avg{\delta_\alpha\textbf{u}_\alpha q_\alpha^\text{tot}}
-    = \avg{\delta_\alpha\int_{\Omega_\alpha} s_2^0 d\Omega}
-    + \avg{\delta_\alpha\int_{\Sigma_\alpha} s_I^0 d\Sigma}\\
-    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left[\mathbf{\Phi}_1^0 + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0) \right] \cdot \textbf{n}_2 d\Sigma,}
-    \label{eq:avg_dt_dq_alpha_tot}
-\end{multline}
-\begin{multline}
+    &= \pOavg{ s_2^0 }
+    + \pSavg{ s_I^0 }
+    + \pSavg{ \left[\mathbf{\Phi}_1^0 + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0) \right] \cdot \textbf{n}_2 ,}
+    \label{eq:avg_dt_dq_alpha_tot}\\
     \pddt \avg{\delta_\alpha \mathcal{Q}_\alpha^\text{tot}}
     + \div \avg{\delta_\alpha\textbf{u}_\alpha\mathcal{Q}_\alpha^\text{tot}}
-    =\avg{\delta_\alpha\int_{\Omega_\alpha} \left(
+    &=\pOavg{ \left(
         \textbf{r} s_2^0         
         + f_2^0  \textbf{w}_2^0 
         - \mathbf{\Phi}_2^0
-    \right) d\Omega}\\
-    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \left(
+    \right) }
+    + \pSavg{ \left(
         \textbf{r}s_I^0
         + f_I^0 \textbf{w}_I^0
         - \mathbf{\Phi}_{I||}^0
-    \right) d\Sigma}
-    + \avg{\delta_\alpha\int_{\Sigma_\alpha} \textbf{r} \left[
+    \right) }\nonumber\\
+    &+ \pSavg{ \textbf{r} \left[
         \mathbf{\Phi}_1^0
         + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0)
-    \right]\cdot \textbf{n}_2  d\Sigma}.
+    \right]\cdot \textbf{n}_2  }.
     \label{eq:avg_dt_dQ_alpha_tot}
-\end{multline}
+\end{align}
 In \ref{ap:Moments_equations} the derivation of the higher moment particle-averaged equations is provided. 
 In this study,\ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} are refereed to as the phase-averaged equations, while \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot} are denoted as the particle-averaged equation. 
+In these expressions we kept a general notation yet. 
+But note that, we can note the particle phase averaged quantity by,
+\begin{equation}
+     n_p q_p(\textbf{x},t) = \avg{\delta_\alpha q_\alpha}
+     \label{eq:p_avg}
+\end{equation}
+where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of finding a particle center of mass at $\textbf{x}$
+and $q_p$ is the conditional average of $q_\alpha$ conditionally on the presence of a particle at \textbf{x}. 
+Additionally, notice that it is possible to define the fluctuating parts of a property by, 
+\begin{equation}
+    q_\alpha' = q_\alpha - q_p
+    % \;\;\;\;\;\;\text{and}
+    % \;\;\;\;\;\;
+\end{equation}
+such that the particle average of a product can be rewritten, $\pavg{q_\alpha\textbf{u}_\alpha} = n_p q_p \textbf{u}_p + \pavg{q_\alpha' \textbf{u}_\alpha'}$. 
+These notations will find their use in \ref{sec:averaged_eq}, but for now we keep the formulation rather generic as in \ref{eq:avg_dt_dQ_alpha_tot} and \ref{eq:avg_dt_dq_alpha_tot}
+
+As remarked by \citet{jackson1997locally} for the angular momentum equations of solid spherical particles, and here in a more general case :\ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_dq_alpha_tot} may seem to be not coupled with the higher order moments equations, i.e. \ref{eq:avg_dt_dQ_alpha_tot}. 
+Indeed, the first order moment $\mathcal{Q}_p^\text{tot}$ do not appear explicitly in either \ref{eq:avg_dt_chi_f} or \ref{eq:avg_dt_dq_alpha_tot}.
+However, the exchange and source terms 
+appearing in both \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_dQ_alpha_tot} might depend on the higher order moments of the particles.
+Indeed, in the momentum equation of the continuous phase, i.e. the ensemble average of \ref{eq:dt_rhou_k}, the exchange term corresponds to the averaged drag force, namely $\pSavg{\bm{\sigma}_1^0\cdot \textbf{n}_2}$. 
+It is clear that $\pSavg{\bm{\sigma}_1^0\cdot \textbf{n}_2}$ has a strong dependency with $\textbf{u}_p$,$\mathcal{P}_p$ and $\mathcal{M}_p$ since the drag force is a function of both the particle's kinematic and its shape. 
+Therefore, \ref{eq:avg_dt_dQ_alpha_tot} is linked to \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_dq_alpha_tot} solely through the dependence of the exchange and source terms with the properties of the particles, e.g. $q_p,\mathcal{Q}_p$ and possibly the higher order moments. 
+This reasoning applies for the energy equation and all kinds of conservation equation. 
+Ultimately, the significance of the higher moments equations can be evaluated based on the dependency of the closure terms present in \ref{eq:avg_dt_chi_f} with the properties of the particle : $q_p, \mathcal{Q}_p$ and potentially the higher-order moments of the particles. 
+
