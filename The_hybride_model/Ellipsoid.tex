@@ -23,6 +23,14 @@ Then, one can create a drag force closure for various particles' aspect ratio.
     \label{fig:scheme2}
 \end{figure}
 We consider in this problem an oblate spheroid with a time dependent aspect ratio $\chi = a(t)/b(t)$ oriented along the unit vector \textbf{p}, see \ref{fig:scheme2}.
+In this context an equation describing the droplets surface can be found in the reference frame of the droplets, namely, 
+\begin{equation}
+    \mathscr{F}
+    = \textbf{r}\cdot \textbf{H}\cdot \textbf{r} - a_0^2 = 0 
+    \label{eq:F_def}
+\end{equation}
+where \textbf{H} is a symmetric traceless tensor such that $\textbf{H} = \textbf{pp} (a_0/a(t))^2 + (\textbf{I}- \textbf{pp})(a_0/b(t))^2$. 
+
 We consider a mono disperse suspension of droplet with constant mass. 
 The objective of this section is to derive constitutive equations to predict the mean orientation, and mean aspect ratio of the droplet. 
 
@@ -35,11 +43,11 @@ In the first place we assume a linear homogeneous particle internal motion, such
     + \textbf{r} \cdot \textbf{D}_\alpha
     = 
     \bm{\omega}_\alpha \times \textbf{r} 
-    + \textbf{r} \cdot \textbf{e}_\alpha
+    + \textbf{r} \cdot \textbf{E}_\alpha
 \end{equation}
-where $\bm{\omega}_\alpha$ is the angular velocity of the particle, $\textbf{e}_\alpha$ is the mean deformation gradient. 
+where $\bm{\omega}_\alpha$ is the angular velocity of the particle, $\textbf{E}_\alpha$ is the mean deformation gradient. 
 % Note that the second rank tensor $\textbf{U}_\alpha = \bm{\}$
-To respect the mass conservation condition, i.e. $\div \textbf{w}_2^0 =0$, The mean gradient deformation $\textbf{e}_\alpha$ has to respect the conditions : $\textbf{e}_\alpha:\textbf{I}=0$. 
+To respect the mass conservation condition, i.e. $\div \textbf{w}_2^0 =0$, The mean gradient deformation $\textbf{E}_\alpha$ has to respect the conditions : $\textbf{E}_\alpha:\textbf{I}=0$. 
 The assumption of linear internal motion is wrong for droplets and bubbles were we are clearly in presence of internal motions. 
 However, for now these motions will be discarded. 
 
@@ -119,6 +127,16 @@ In a more general manner one can define the tensor $\mathcal{M}_\alpha$ in the l
     \label{eq:M_alpha_def}
 \end{equation} 
 In light of \ref{eq:M_alpha_def}we reduced the description of any particle in our flow to four parameters, the 3 components of \textbf{p}, and the radius $a(t)$. 
+It might be useful to make the inertia tensor dimensionless by dividing both sides by $r_0$, which gives, 
+\begin{equation}
+    5 \frac{\mathcal{M}_{\alpha,ij}}{v r_0^2}
+    = p_i p_j 
+    e_{||}^2(t) 
+    + (\delta_{ij} - p_ip_j) 
+    e_\bot^2(t) 
+    \label{eq:M_alpha_def2}
+\end{equation} 
+Notice that since $ab^2 =r_0^3$ the deformation are related through $e_\bot = \frac{b}{a}r e_{||} =\frac{b^3}{r^2} e_{||} $
 
 
 Now let's compute the first moment of momentum $\mathcal{P}_\alpha$, it reads, 
@@ -127,18 +145,18 @@ Now let's compute the first moment of momentum $\mathcal{P}_\alpha$, it reads,
     = \int r_i w_{2,j}^0 d\Omega
     = D_{\alpha,jk} \mathcal{M}_{\alpha,ki}
     = \epsilon_{jkl} \omega_{\alpha,k} \mathcal{M}_{\alpha,il}
-    +  e_{\alpha,jk} \mathcal{M}_{\alpha,ik}
+    +  E_{\alpha,jk} \mathcal{M}_{\alpha,ik}
 \end{align*}
 Taking the double contracted product with $\epsilon_{mij}$ of the moment of momentum yield the angular momentum equation, 
 \begin{align*}
     \mu_{\alpha,m}
     = \epsilon_{mij}\mathcal{P}_{\alpha,ij}
     = \epsilon_{jmi} \epsilon_{jkl} \omega_{\alpha,k} \int r_i r_l  d\Omega
-    +  \epsilon_{mij} e_{\alpha,jk} \int r_i r_k  d\Omega\\
+    +  \epsilon_{mij} E_{\alpha,jk} \int r_i r_k  d\Omega\\
     = (\delta_{mk}\mathcal{M}_{\alpha,ll} - \mathcal{M}_{\alpha,mk}) \omega_{\alpha,k}
-    +  \epsilon_{mij} e_{\alpha,jk} \int r_i r_k  d\Omega\\
+    +  \epsilon_{mij} E_{\alpha,jk} \int r_i r_k  d\Omega\\
     = \mathcal{I}_{\alpha,mk} \omega_{\alpha,k}
-    +  \epsilon_{mij} e_{\alpha,jk} \mathcal{M}_{\alpha,ik}\\
+    +  \epsilon_{mij} E_{\alpha,jk} \mathcal{M}_{\alpha,ik}\\
 \end{align*}
 The second contribution of the angular momentum would vanish if the particles where spherical. 
 Lastly, the symmetric part of the moment of momentum reads, 
@@ -146,8 +164,8 @@ Lastly, the symmetric part of the moment of momentum reads,
     2\mathcal{S}_{\alpha,ij}
     = \epsilon_{jkl} \omega_{\alpha,k} \mathcal{M}_{\alpha,il}
     + \epsilon_{ikl} \omega_{\alpha,k} \mathcal{M}_{\alpha,jl}
-    +  e_{\alpha,jk} \mathcal{M}_{\alpha,ik}
-    +  e_{\alpha,ik}  \mathcal{M}_{\alpha,jk}
+    +  E_{\alpha,jk} \mathcal{M}_{\alpha,ik}
+    +  E_{\alpha,ik}  \mathcal{M}_{\alpha,jk}
 \end{align*}
 
 \subsubsection*{Evolution equation of a single particle shpae.}
@@ -158,8 +176,8 @@ In view of the previous expression the evolution equation of the momentum tensor
     \ddt \mathcal{M}_{\alpha,ij}
     + \epsilon_{jlk} \omega_{\alpha,k} \mathcal{M}_{\alpha,il}
     - \epsilon_{ikl} \omega_{\alpha,k} \mathcal{M}_{\alpha,jl}
-     =  e_{\alpha,jk} \mathcal{M}_{\alpha,ik}
-     +  e_{\alpha,ik}  \mathcal{M}_{\alpha,jk}
+     =  E_{\alpha,jk} \mathcal{M}_{\alpha,ik}
+     +  E_{\alpha,ik}  \mathcal{M}_{\alpha,jk}
      \label{eq:dt_M_alpha_bis}
 \end{equation*}
 On the left-hands-side of \ref{eq:dt_M_alpha_bis} we clearly identify the Jaumann derivative rotating with the vorticity.
@@ -177,59 +195,119 @@ The equivalent stress can be formulated as,
     + \phi_I \bm{\sigma}_I
     \label{eq:sigma_def}
 \end{equation*}
-The particle phase stress can be reduced to its first moment, $\phi_2 \bm{\sigma_2} = \pOavg{\bm{\sigma}_2^0}$ and thus, 
+The particle phase stress can be reduced to its first moment, $\phi_2 \bm{\sigma}_2 = \pOavg{\bm{\sigma}_2^0}$.
+Additionally, we adopt the approximation of homogeneous deformation so that the rate of strain within the particle equal its mean deformation $\textbf{E}_\alpha$.
+Thus, we can write 
 \begin{equation*}
     \phi_2 \bm{\sigma}_2 
     = - \phi_2 p_2
-    + \phi_2 \mu_2 \textbf{e}_p 
+    + \phi_2 \mu_2 \textbf{E}_p
 \end{equation*}
-Using the following expression for $\phi_1 \bm{\sigma}_1 = - \phi_1 p_1 + \mu_1 \phi_1 \textbf{e}_1 =  - \phi_1 p_1 + \mu_1 \textbf{e} - \mu_1 \phi_2 \textbf{e}_2$.
-Likewise since we considered a constant strain within the particle we can write $\phi_2\textbf{e}_2 = \phi_2 \textbf{e}_p$ in homogeneous medium.   
+The fluid phase stress can be formulated as $\phi_1 \bm{\sigma}_1 =  - \phi_1 p_1 + \mu_1 \textbf{e} - \mu_1 \phi_2 \textbf{e}_2$.
+Likewise, since we considered a constant strain within the particles we can write $\phi_2\textbf{e}_2 = \phi_2 \textbf{E}_p$ in homogeneous medium.   
 The previous expression of the averaged stress yields, 
 \begin{equation*}
     \bm{\sigma}
     = 
     - p 
     + \mu_1 \textbf{e} 
-    + (\mu_2 - \mu_1) \phi_2 \textbf{e}_2
+    + (\mu_2 - \mu_1) \phi_2 \textbf{E}_p
     + \phi_I \bm{\sigma}_I
     \label{eq:sigma_def}
 \end{equation*}
-In the above stress equation $\bm{\sigma}_I$ is unknown and must be closed. 
+In the above stress equation $\bm{\sigma}_I$ is still unknown and must be closed. 
 While the others parameters can be easily linked to our problem variable. 
 
-We recall that in homogeneous flows, $\phi_I \bm{\sigma}_I = \gamma\pSavg{\textbf{I}-\textbf{nn}}$. 
+We recall that in homogeneous flows, $\phi_I \bm{\sigma}_I \approx \gamma\pSavg{\textbf{I}-\textbf{nn}}$. 
+Let decompose this tensor into an isotropic tensor i.e. $\gamma\pSavg{\textbf{I}-\textbf{nn}} : \textbf{I} \frac{1}{3}I = \gamma\pSavg{} \frac{2}{3} \textbf{I}$ and an anisotropic tensor which reads, $\phi_I \bm{\sigma}_I \approx \gamma\pSavg{\frac{1}{3}\textbf{I}-\textbf{nn}}$.  
 Therefore, to close this term one must compute the curvature of the particles. 
 The first moment of surface tension stress can be computed analytically following \citep{nadim1996concise} for the curvature computation.
-In this context an equation describing the droplets surface can be found in the reference frame of the droplets, namely, 
-\begin{equation}
-    \mathscr{F}
-    = \textbf{r}\cdot \textbf{H}\cdot \textbf{r} - 1 = 0 
-    \label{eq:F_def}
-\end{equation}
-where \textbf{H} is a symmetric traceless tensor such that $\textbf{H} = \textbf{pp}/a^2(t) + (\textbf{I}- \textbf{pp})/b^2(t)$. 
-This analytical expression will enable us to compute the curvature of each particle.  
+The analytical expression of the ellipse surface will enable us to compute the curvature of each particle.  
 Let $\mathscr{F}(\textbf{x},t) = 0$ be the equality representing the ellipsoidal shape of the particle. 
 First, the normal pointing in the direction of positive $\mathscr{F}$ at the interface, can be computed as, 
 \begin{equation*}
     \textbf{n} = \frac{\grad \mathscr{F}}{(\grad \mathscr{F}\cdot \grad \mathscr{F})^{1/2}} \;\;\text{ on }\;\; \mathscr{F} = 0.  
-\end{equation*}
-It follows that the local surface stress is, 
-\begin{equation*}
-    \bm{\sigma}_I^0 =
-    \gamma \left[\textbf{I} - \frac{\grad \mathscr{F} \grad \mathscr{F}}{\grad \mathscr{F}\cdot \grad \mathscr{F}}\right] \;\;\text{ on }\;\; \mathscr{F} = 0.  
 \end{equation*}
 Noticing that $\grad \mathscr{F} = 2\textbf{H}\cdot \textbf{r}$ one obtain, 
 \begin{equation*}
     \bm{\sigma}_I^0 =\gamma\left[
     \textbf{I} - \frac{ \textbf{HH} :  \textbf{rr}}{ (\textbf{H}\cdot  \textbf{H}\cdot \textbf{rr})} \right]
 \end{equation*}
-In indices notation,  
+We recall that this quantity drives the stress jump at the interface. 
+As it is expected this stress jump is axis symmetric around the particle main axis. 
+Besides, it is maximum at the poles and minimum at the equator of the particle. 
+It is then possible to compute the integral of the stress by direct integration in the reference frame of the ellipsoid principal axes. 
+The exact result yields, 
 \begin{equation*}
-    \sigma_{I,ij}^0 =\gamma\left[
-    \delta_{ij} - \frac{ H_{ik} H_{jl} :  r_kr_l}{  H_{ab}  H_{ac} r_br_c} \right]
+    \gamma\pSavg{\textbf{I}-\textbf{nn}}
+    = \gamma \left[
+        \frac{2}{3} s_\alpha \textbf{I}
+        + S (\textbf{I}-\textbf{pp}) -2S\textbf{pp}
+        \right]
 \end{equation*}
-Integrating this over a surface will eventually leads to an elliptic integral due to the elliptical surface. 
+where the first component correspond to the isotropic part of the surface stress, and the second component to the deviatoric part of the surface stress. 
+Notice that the deviatoric part of this tensor is function of one unique coefficient, $S$ due to the axis symmetrical nature of the droplets. 
+Exact solution can be given in terms of the small deformation parameter $e_\bot = b/r$. 
+Then an approximation can be deduced for the $e -1 \ll 1$, it gives,
+\begin{align*}
+    s_\alpha 
+    = 4\pi r^2 \left[\frac{e_\bot^2}{2} + \frac{\ln\left(\sqrt{{e_\bot^6}-1}+{e_\bot^3}\right)}{2e_\bot\sqrt{e_\bot^6-1}}\right]
+    = 4 \pi r^2 + \frac{24 v }{5 r} (e_\bot-1)^2\\
+    S = \frac{4}{3} \pi r^2 \left[
+    \frac{\left( \frac{1}{4} - e_\bot^6\right)  \log{\left( \sqrt{e_\bot^6-1}+{e_\bot^3}\right) } }
+    { e_\bot  \left( e_\bot^6- 1\right)^{3/2} }
+    +  \frac{e_\bot^2\left( e_\bot^6+  \frac{1}{2}\right)}{2\left( e_\bot^6- 1\right)}  \right]
+    \approx 
+    \frac{8 v}{5 r}(e_\bot-1) + \frac{12 v }{35r}(e_\bot-1)^2 \ldots
+\end{align*}
+Regarding the expression of the surface of the spheroid, it can be noticed that the function within bracket tends to $1$ for $e=1$ leaving us with $s_\alpha = 4\pi r^2$ which is the surface of the sphere. 
+Then, it slowly increases when $e$ is either superior or inferior to $1$. 
+
+Equally, the results can be expressed in terms of the deformation parameter $e_{||} = a/r$ in which case the previous results give at the second order in $e_\bot-1$ the following expression, 
+\begin{align*}
+    s_\alpha 
+    \approx 4 \pi r^2 + \frac{6 v }{5 r} (e_{||}-1)^2 \ldots\\
+    S 
+    \approx 
+    - \frac{4 v}{5 r}(e_{||}-1) + \frac{24 v }{35r}(e_{||}-1)^2 \ldots
+\end{align*}
+Noticing that the Hooke strain tensor $\textbf{C} = (e_{||}-1) \textbf{pp} + (e_\bot-1)(\textbf{I}- \textbf{pp})$, thus one can finally write,
+\begin{align*}
+    \gamma\pSavg{\textbf{I}-\textbf{nn}}
+    = \frac{\gamma v}{r} \left[
+        2  + \frac{6 }{10 } (\textbf{C}:\textbf{pp})^2 + \frac{6 }{10 } [\textbf{C}:(\textbf{I}-\textbf{pp})]^2\right] \textbf{I}\\
+        + \frac{\gamma v}{r} \left[ \frac{8}{5} \textbf{C}
+        + \frac{12}{35}[\textbf{C}\cdot \textbf{C}- 6 (\textbf{C}:\textbf{pp})^2\textbf{pp}]
+        \right]
+\end{align*}
+This gives the surface stress tensor up to the second order terms in accuracy. 
+To our knowledge this has never been proposed. 
+Retaining only the first order terms this expression shows that the drop behave as stressed material. 
+Indeed, at rest the Laplace pressure is still present. 
+
+It might be interesting to relate teh inertia tensor $\mathcal{M}_\alpha$ and \textbf{C}. 
+Indeed, it can be shown that, 
+\begin{equation}
+    \mathcal{M}_\alpha
+     = \frac{v r^2}{5}\left(\textbf{C} + \textbf{I}\right)
+\end{equation}
+Or equally, 
+\begin{equation}
+    \textbf{C}
+     = \frac{5}{vr^2}\mathcal{M}_\alpha - \textbf{I}
+\end{equation}
+It is now trivial to re derive \citet{goddard1967nonlinear} equations of motions. 
+
+
+The only unknown is now the particle strain rate $\textbf{E}_p$ and orientation tensor $\textbf{pp}$ and particle strain tensor \textbf{C} which is only one scalar function. 
+\begin{itemize}
+    \item Give the Laplace law for elongated bubbles 
+    \item \tb{introduce the drop strain from the local strain as it is defined in solid mechanics.}
+    \item \tb{TRY TO GET THE SAME EQ as godard}
+    \item \tb{DERIVE STRESS EQ WITH C}
+    \item The conclusion will be that we could generalize the transport equations or C easli  however we cannot actually close the equaitons for now !! ! 
+\end{itemize}
+
 \subsubsection*{Equation for the particles strain}
 
 Additionally, using the first moment of momentum expression one can obtain an other expression for the particles internal stress, 
@@ -245,7 +323,8 @@ Additionally, using the first moment of momentum expression one can obtain an ot
      r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k}
     }
 \end{equation}
-\subsection{Equation for the particle angular momentum}
+
+\subsubsection*{Equation for the particle angular momentum}
 \begin{equation*}
     \ddt \mu_p = t_p
 \end{equation*}

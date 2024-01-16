@@ -5,7 +5,7 @@
 	pdflatex $@
 
 clean:
-	-rm *.nlo *.nls  *.ilg *.nav *.toc *.snm *.aux *.bbl *.blg *.log *.out *.vrb 
+	-rm *.nlo *.nls  *.ilg *.nav *.toc *.snm *.aux *.bbl *.blg *.log *.out *.vrb *.tdo 
 	-rm Appendix/*.log Appendix/*.blg Appendix/*.bbl Appendix/*.aux 
 	-rm parts/*.log parts/*.blg parts/*.bbl parts/*.aux 
 	-rm section_paper/*.log section_paper/*.blg section_paper/*.bbl section_paper/*.aux *synctex.g *pdf *synctex.gz *.lof *.lot parts/*aux
