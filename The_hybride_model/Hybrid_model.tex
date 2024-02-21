@@ -96,12 +96,12 @@ Indeed, after taking the Taylor expansion of $\avg{\delta_I (\textbf{u}^0_2 \cdo
 \begin{align}
     \label{eq:exergysource}
     \pavg{ \intS{\textbf{u}^0_2 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
-    = 
+    &= 
     \textbf{u}_p \cdot \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
     + \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
     + \pavg{ \intS{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}\\
     \pavg{ \intS{\textbf{r}\textbf{u}^0_2 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
-    = 
+   &= 
     \textbf{u}_p \cdot \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
     + \pavg{ \textbf{u}_\alpha' \cdot \intS{\textbf{r}  \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
     + \pavg{ \intS{\textbf{r}\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
@@ -191,7 +191,7 @@ By applying straight ensemble averaging on \ref{eq:dt_m_alpha}, \ref{eq:dt_p_alp
     % +  n_p ( \textbf{u}'_1 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2)_p^\Sigma
     -  \pSavg{\textbf{q}_1^0 \cdot \textbf{n}_2}\nonumber\\
     + \textbf{u}_p \cdot\pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
-    + \pSavg{{\textbf{u}_\alpha' \cdot\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    + \pavg{\textbf{u}_\alpha' \cdot\intS{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
     + \pSavg{{\textbf{w}_2^0 \cdot\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
 \end{align}
 where we have defined, 
@@ -323,7 +323,7 @@ Consequently, if we Except that the particles-fluid interaction terms are disagr
 Notice that we did not make any hypothesis so far, consequently, \ref{eq:dt_hybrid_kp} itself is valid regardless of the particles nature and concentration.
 The hypothesis made in kinetic theory are in fact needed to derive the closure for the exchange term, $\pavg{\textbf{u}_\alpha'\cdot\intS{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}$. 
 
-
+\subsubsection*{The energy exchange system}
 
 One can verify that summing \ref{eq:dt_hybrid_ep}, \ref{eq:dt_hybrid_Wp} and \ref{eq:dt_hybrid_kp} and \ref{eq:dt_hybrid_up2} makes \ref{eq:dt_hybrid_Ep}.  
 Under this form it is easy to observe the exchange terms which drive the energy transfer between each component of the total energy. 
@@ -371,18 +371,18 @@ However, in light of \ref{fig:energy} the energy gain due to  $\pOavg{\bm{\sigma
 In fact some energy is first transmitted to the fluid phase $k_p$, then some of this energy is transmitted to the internal kinetic energy $W_p$, which will induce viscous dissipation within the particle. 
 In short, the internal kinetic energy is transformed into internal energy but by no means the \textit{dissipation rate} $\pOavg{\bm{\sigma}_2^0:\grad \textbf{u}_2^0}$ makes the link between to the granular temperature $k_p$ and the internal energy of the particle phase $e_p$. 
 
-\subsubsection{The first order momentum and mass equations}
+\subsubsection*{The first order momentum and mass equations}
 
 As it is suggested in the previous section, the needs for higher moments equations arise if one of the closure terms present in the previous set of equation is highly dependent on one of the moments of the particles. 
 In our case we suppose that the second order description of the averaged shape, i.e. $\mathcal{M}_p$, and a first order description of velocity distribution, i.e. $\mathcal{P}_p$,  is enough to express all closure terms. 
 By applying the average operator on \ref{eq:dt_M_alpha},\ref{eq:dt_S_alpha} and \ref{eq:dt_mu_alpha}, one get the second order moment of mass, and first order moment of momentum symmetric and skew symmetric parts, namely, 
 \begin{align}
-    \pddt \left(n_p \mathcal{M}_p\right)
+    &\pddt \left(n_p \mathcal{M}_p\right)
     + \div \left(
         n_p \textbf{u}_p \mathcal{M}_p
-    + \mathcal{M}_p^\text{eq}
+    + \mathcal{M}_p^\text{Re}
     \right)
-    &=
+    =
     n_p2  \mathcal{S}_p
     \label{eq:dt_hybrid_Mp}
     \\
@@ -390,7 +390,7 @@ By applying the average operator on \ref{eq:dt_M_alpha},\ref{eq:dt_S_alpha} and 
     % \pddt \left(n_p \mathcal{P}_p\right)
     % + \div \left(
     %     n_p \textbf{u}_p \mathcal{P}_p
-    % + \mathcal{P}_p^\text{eq}
+    % + \mathcal{P}_p^\text{Re}
     % \right)
     % &=
     % % -n_p v_p p_1 \textbf{I}
@@ -404,14 +404,15 @@ By applying the average operator on \ref{eq:dt_M_alpha},\ref{eq:dt_S_alpha} and 
     % }
     % -  \pSavg{\gamma (\textbf{I} - \textbf{nn})},\\
 \label{eq:dt_hybrid_Sp}
-\pddt \left(n_p \mathcal{S}_p\right)
+&\pddt \left(n_p \mathcal{S}_p\right)
 + \div \left(
     n_p \textbf{u}_p \mathcal{S}_p
-+ \mathcal{S}_p^\text{eq}
++ \mathcal{S}_p^\text{Re}
 \right)
-&=
+=
 % -n_p v_p p_1 \textbf{I}
-n_p  \mathscr{S}_p^*
+\pSavg{(\textbf{r}\bm\sigma_1^0+\bm\sigma_1^0\textbf{r})\cdot \textbf{n}_2}
+% n_p  \mathscr{S}_p^*
 % + \pSavg{
 %     \textbf{r} \bm{\sigma}_1^0 \cdot\textbf{n}_2
 % }
@@ -422,18 +423,19 @@ n_p  \mathscr{S}_p^*
 -  \pSavg{\gamma \textbf{I}_{||}},
 \\
 \label{eq:dt_hybrid_mup}
-\pddt \left(n_p \bm{\mu}_p\right)
+&\pddt \left(n_p \bm{\mu}_p\right)
 + \div \left(
 n_p \textbf{u}_p \bm{\mu}_p
-+ \bm{\mu}_p^\text{eq}
++ \bm{\mu}_p^\text{Re}
 \right)
-&=
-n_p \textbf{t}_p
+=
+% n_p \textbf{t}_p
+\pSavg{\textbf{r}\times(\bm\sigma_1^0\cdot \textbf{n}_2)}
 % \label{eq:dt_hybrid_Dp}
 % \pddt \left(n_p \mathcal{D}_p\right)
 % + \div \left(
 %     n_p \textbf{u}_p \mathcal{D}_p
-% + \mathcal{D}_p^\text{eq}
+% + \mathcal{D}_p^\text{Re}
 % \right)
 % &=
 % + n_p \textbf{D}_p
@@ -451,105 +453,45 @@ respectively, where we have defined the fluctuaiton terms as $
  \bm{\mu}_p^\text{Re}
  = \pavg{\bm{\mu}_\alpha' \textbf{u}_\alpha'}
 $.
+Note many comments can be made about these equations as they have been already treated in \ref{sec:Lagrangian}. 
+However, it is interesting to discuss the case of infinitely rigid particles where the internal velocity is defined by $\textbf{w}_2^0 = \bm\Omega_\alpha \cdot \textbf{r}$ and the particle internal stress is undefined. 
+In this case \ref{eq:dt_hybrid_Mp} and \ref{eq:dt_hybrid_mup} might be used to solve for the orientation and angular velocity of the particles. 
+Therefore, \ref{eq:dt_hybrid_Sp} seems to be redundant and is in practice never used. 
+In fact this equation can be used to determine the averaged stress, $\pOavg{\bm{\sigma}_2}$ in terms of the particles' kinetic properties. 
+Knowing the internal stress of the particles, and the constitutive law of the solid material, one is able to compute the averaged deformation of the particle. 
+Once the deformation is obtained, one is able to validate, or not, the assumption of infinitely rigid particles made at the origin. 
 
-Now that all the equations are properly displayed we can stipulate that the only explicit role of the surface tension coefficient and the particle internal stress is within in the symmetric moment of momentum equations and inside the internal kinetic energy equation. 
-These, equation will be discussed in more detail in \ref{sec:Exemples}. 
 
-
-\subsection{Comments on the general closure problem}
-
-Now that all the equations are exposed we expose the closure problem. 
-Firstly, we find all the closure related to the microscale fluctuation, 
-\begin{equation*}
-    \avg{\chi_1 \rho_1 \textbf{u}_1'\textbf{u}_1'}, \;\;
-    \avg{\chi_1 \rho_1 \textbf{u}_1'e_1'}, \;\;
-    \avg{\chi_1 \rho_1 \textbf{u}_1'k_1'}, \;\;
-    \avg{\chi_1 \rho_1 \textbf{u}_1'\cdot \bm{\sigma}_1^0}, \;\;
-    % \avg{\chi_1 \rho_1 \textbf{u}_1'\textbf{u}_1'}, \;\;
-\end{equation*}
-\begin{equation*}
-    \pavg{\rho_2 \textbf{u}_\alpha'\textbf{u}_\alpha'}, \;\;
-    \pavg{\rho_2 \textbf{u}_\alpha' e_\alpha'} , \;\;
-    \pavg{\rho_2 \textbf{u}_\alpha' W_\alpha'} , \;\;
-    \pavg{\gamma \textbf{u}_\alpha' s_\alpha'} , \;\;
-    \pavg{\rho_2 \textbf{u}_\alpha' k_\alpha} , \;\;
-    \pavg{ \textbf{u}_\alpha' \mathcal{M}_\alpha'} , \;\;
-    \pavg{ \textbf{u}_\alpha' \mathcal{P}_\alpha'} .
-\end{equation*}
-Where the first row represent the closure related to the fluid phase and the second to the particle phase. 
-
-The second type of closure is the terms that makes the exchange between the carrier fluid and the particle. 
-Among the exchange terms we can firstly list the zero order exchange term, namely,
-\begin{equation*}
-    \pSavg{\bm{\sigma}_1^0\cdot \textbf{n}_2} , \;\;
-    \pavg{\textbf{u}_\alpha' \cdot \intS{\bm{\sigma}_1^0\cdot \textbf{n}_2}} , \;\;
-    \pavg{\intS{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0\cdot \textbf{n}_2}} , \;\;
-    \pSavg{\textbf{q}_1^0\cdot \textbf{n}_2} , \;\;
-\end{equation*}
-which correspond to, the drag force, the drag force velocity correlation, the surface velocity surface force correlation and the heat flux. 
-Each of these terms have a first order moment counterpart which appear in the fluid phase equations as, 
-\begin{equation*}
-    \pSavg{\textbf{r}\bm{\sigma}_1^0\cdot \textbf{n}_2} ,\;\;
-    \pavg{\textbf{u}_\alpha' \cdot \intS{\textbf{r}\bm{\sigma}_1^0\cdot \textbf{n}_2}} ,\;\;
-    \pavg{\intS{\textbf{r}\textbf{w}_2^0 \cdot \bm{\sigma}_1^0\cdot \textbf{n}_2}} ,\;\;
-    \pSavg{\textbf{r}\textbf{q}_1^0\cdot \textbf{n}_2} ,\;\;
-\end{equation*}
-which correspond to the first hydrodynamic moments, the correlation between this moment and the center of mass velocity, the first moment of the surface work and the first moment of the heat fluxes. 
-All other kind of closure is volume averaged terms found in the energy and first moment of momentum equations, namely,
-\begin{equation*}
-    \pOavg{{\bm{\sigma}_2^0 : \grad\textbf{u}_2^0}}, \;
-    \pOavg{\rho_2 \textbf{w}_2^0\textbf{w}_2^0}, \;
-    \pOavg{\bm{\sigma}_2^0}, \;
-    \pOavg{\gamma \textbf{I}_{||}}, \;
-    \avg{\chi_1 \bm{\sigma}_1^0 : \grad\textbf{u}_1^0},\;    
-    s_pn_p\gamma, \;
-    \phi_1 \bm{\sigma}_1, \;
-    \phi_1 \textbf{q}_1. 
-\end{equation*}
-A fully closed model must seek for expressions which links every of the closure presented above, to any of the unknown that we solve the averaged equations for.
-In other words, we must formulate each closure terms in terms of : $\phi_1$, $n_p$, $\textbf{u}_1$, $\textbf{u}_p$, $k_1$, $k_p$, $W_p$, $e_1$, $e_p$, $\mathcal{M}_p$, $\mathcal{P}_p$. 
-To conclude, the set of equations formed by \ref{eq:dt_hybrid_rho}, \ref{eq:dt_hybrid_rhou_1}, \ref{eq:dt_hybrid_k1}, \ref{eq:dt_hybrid_e1} for the fluid phase, and \ref{eq:dt_hybrid_mp}, \ref{eq:dt_hybrid_up}, \ref{eq:dt_hybrid_kp}, \ref{eq:dt_hybrid_Wp} and \ref{eq:dt_hybrid_ep} for the particle phase, together a consistent expression of the closure listed above provide us with a first order description of the dispersed phase. 
-Note that the needs for this first order moments is really problem depends, this idea is developed in \ref{sec:Exemples}. 
 
 \subsection{The fluid phase equivalent stress}
-
-% In this section we focus on the formulation of the averaged fluid phase equivalent stress tensor $\bm{\sigma}_1^\text{eq}$. 
+\tb{This section can be shortened a lotsss }
+% In this section we focus on the formulation of the averaged fluid phase equivalent stress tensor $\bm{\sigma}_1^\text{Re}$. 
 For instance the stress appearing on the left hands side of the fluid phase momentum balance is of the form of \ref{eq:sigma_eq_def}. 
+However, it is more convenient to express the equivalent stress as a Newtonian stress, plus a contribution arising due to the presence of the particles. 
 We first reformulate $\bm{\sigma}_1$ by considering that the carrier fluid is Newtonian, therefore $\phi_1 \bm{\sigma}_1 = - \phi_1 p_1 + \phi_1 \mu_1 \textbf{e}_1$ where $\phi_1 \bm{e}_1 = \avg{\chi_1  (\grad \textbf{u}_1^0 + (\grad \textbf{u}_1^0)^T)}$. 
-Additionally, we state that the fluid strain is equal to the bulk strain $\textbf{e} = \grad \textbf{u}+ (\grad \textbf{u})^T$, minus the particle averaged strain, i.e. $\phi_1 \mu_1 \textbf{e}_1 = \mu_1\textbf{e} - \phi_2 \textbf{e}_2$. 
+Additionally, we state that the fluid strain is equal to the bulk strain $\textbf{e} = \grad \textbf{u}+ (\grad \textbf{u})^T$, minus the particle averaged strain, i.e. $\phi_1 \mu_1 \textbf{e}_1 = \mu_1\textbf{e} - \mu_1 \phi_2 \textbf{e}_2$. 
 Under this form we clearly remark that $\phi_2 \textbf{e}_2 = 0$ for solid particles, recovering the expression $\phi_1 \textbf{e}_1 = \textbf{e}$ of \citet{jackson1997locally}. 
-Upon developing $\phi_2 \textbf{e}_2$ multipolar series and making use of teh divergence theorem on the first term, the equivalent stress of the fluid phase can be reformulated as, 
-\begin{equation*}
+Upon developing $\phi_2 \textbf{e}_2$ multipolar series, the equivalent stress of the fluid phase can be reformulated as, 
+\begin{multline}
     \bm{\sigma}^\text{eq}_1 = 
+    \rho_1\avg{\chi_1\textbf{u}_1'\textbf{u}_1'} 
     + \phi_1 p_1 \textbf{I} 
     - \mu_1 \textbf{e} 
-    \rho_1\avg{\chi_1\textbf{u}_1'\textbf{u}_1'} 
-    - \pMSavg{\textbf{r}\bm{\sigma}_1^0\cdot \textbf{n}_2}
-    + \mu_1 \pSavg{\textbf{u}_1^0 \textbf{n}_1 + \textbf{n}_1 \textbf{u}_2^0}
-    - \div \pMOavg{\mu_1 \textbf{r} \textbf{e}_2 }
+    - \pSavg{\textbf{r}\bm{\sigma}_1^0\cdot \textbf{n}_2}
+    + \mu_1 \pOavg{\textbf{e}_2^0}\\
+    + \frac{1}{2} \div \left[
+        \pSavg{\textbf{rr}\bm{\sigma}_1^0\cdot \textbf{n}_2}
+        + 2\pOavg{\mu_1 \textbf{re}_2^0 }
+        + \ldots
+    \right]
     \label{eq:sigma_eq_0}
-\end{equation*} 
+\end{multline} 
 Already, we can see that the equivalent stress of the fluid phase is the made of the average fluid stress represented by the two first terms on the right hands side of \ref{eq:sigma_eq_0}. 
-The particle contribution to the suspension stress is then represented by the multipolar expansion of the traction forces $\pMSavg{\textbf{r}\bm{\sigma}_1^0\cdot \textbf{n}_2}$ minus the internal strain rate multipolar expansion $\mu_1 \pSavg{ \textbf{u}_1^0 \textbf{n}_1 + \textbf{n}_1 \textbf{u}_2^0} - \div \pMOavg{\mu_1 \textbf{e}_2 \textbf{r} }$. 
-
-% By ex $\textbf{e}_1$,  we can express the shear stress as, the continuous phase averaged strain. 
-% \begin{equation*}
-%     \phi_1 \bm{\tau}_1
-%     = \mu_1 \textbf{e} - \mu_1 \phi_2 \textbf{e}_2
-%     = \mu_1 \textbf{e} 
-%     % -\mu_1 \avg{\chi_2 (\grad\textbf{u}_2^0 +  \grad\textbf{u}_2^0)}
-%     - \mu_1\pSavg{\textbf{n}_2 \textbf{u}_2^0 +  \textbf{u}_2^0\textbf{n}_2 }
-%     + \div \pOavg{\mu_1 \textbf{r}\textbf{e}^0_2}
-%     + \ldots
-%     \label{eq:tau_1_final}
-% \end{equation*}
-% where this relation simply state that the fluid strain is equal to the bulk strain $\textbf{e} = \grad \textbf{u}+ (\grad \textbf{u})^T$, minus the particle averaged strain $\textbf{e}_2$ Taylor expansion. 
-% Under this form we clearly see that all terms except the first one in \ref{eq:tau_1_final} vanish for solid particles motion, recovering the expression $\phi_1 \textbf{e}_1 = \textbf{e}$. 
 The first moment $\pSavg{\textbf{r}\bm{\sigma}_1^0 \cdot \textbf{n}_2}$ appearing in \ref{eq:sigma_eq_0} posses a skew-symmetric part and a symmetric part, the latter corresponding to the stresslet (see \ref{eq:stresslet_def}).
 However, for non-solid particles \ref{eq:stresslet_def} is not entirely valid since in stokes theory the quantity referred as the stresslet is defined as \citet{pozrikidis1992boundary,kim2013microhydrodynamics},
 \begin{equation}
     \label{eq:stresslet_def}
-    n_p \mathscr{L}_{p,ki}
+    n_p \mathscr{S}_{p,ki}
     = \frac{1}{2}
     \pSavg{
         x_k \sigma_{il}n_l + x_i \sigma_{kl}n_l 
@@ -591,8 +533,12 @@ These remarks motivate us to rewrite the equivalent fluid phase stress under the
     % + \mu_1  \pSavg{{\textbf{u}_1\textbf{n}_2 + \textbf{n}_2 \textbf{u}_1}}
     % - n_p \textbf{F}_\text{p}
     % + n_p \textbf{F}_\text{pfp} 
-    + \div  \underbrace{\left(\pMSavg{\textbf{rr} \bm{\sigma}_1^0\cdot \textbf{n}_2}
-    -\pMOavg{\mu_1 \textbf{r} \textbf{e}_2 }\right)}_\text{inhomogeneous particles stresses}
+    + \frac{1}{2} \div \underbrace{\left[
+        \pSavg{\textbf{rr}\bm{\sigma}_1^0\cdot \textbf{n}_2}
+        + 2\pOavg{\mu_1 \textbf{re}_2^0 }
+        + \ldots
+        \right]
+        }_\text{inhomogeneous particles stresses}
     \label{eq:sigma_eq1_def}
 \end{multline*}
 % with, 
@@ -616,7 +562,7 @@ Therefore, we propose the following formulas based on \ref{eq:dt_hybrid_Sp} whic
 \begin{equation}
     n_p  \mathscr{S}_p
     =
-    \pavg{\ddt  \mathcal{S}_\alpha}
+    \pavg{\ddt{\mathcal{S}_\alpha}}
 % -n_p v_p p_1 \textbf{I}
 % + \pSavg{
 %     \textbf{r} \bm{\sigma}_1^0 \cdot\textbf{n}_2

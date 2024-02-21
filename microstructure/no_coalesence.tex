@@ -1,11 +1,11 @@
 \subsection{The multi-VoF methodology and the no-coalescence algorithm}
-Objectives 
-\begin{itemize}
-    \item Presents the bibliography. 
-    \item Introduce mani's algorithm
-    \item explain step by step the algorithm
-    \item Color map theorm for 3D 
-\end{itemize}
+% Objectives 
+% \begin{itemize}
+%     \item Presents the bibliography. 
+%     \item Introduce mani's algorithm
+%     \item explain step by step the algorithm
+%     \item Color map theorm for 3D 
+% \end{itemize}
 
 
 The key feature of numerical simulations is the use of a whole new algorithm which prevent numerical coalesce of droplets to occur.
@@ -14,19 +14,49 @@ In the following we describe the global ideas and principles, then we dive into 
 But first some worlds on the already existing algorithm is in order.
 
 In previous studies several methods have been used to avoid coalescence. 
-The first one is to increase artificially the surface tension coefficient locally such as it is done in \citet{hidman2023assessing}.
-When using a level set method to track the  phase indicator function some authors developed a multiple marker level-set method to prevent coalesence, see \citet{balcazar2015multiple}. 
-Similarly, for VOF tracer some author used a multi-vof approach. 
-In a recent study \citet{zhang2021direct} used one VOF tracer per bubble in his simulation which prevent coalesence and allows to track bubbles independently. 
-However, this approach is quite expensive as it requires solving \ref{eq:dt_alpha} for each drop. 
-Instead, we adopt the methodology of \citet{karnakov2022computing} which consider a constant number of VOF tracer with respect to the number of dorplets. \JL{pr moi le nombre de Traceur VoF change aucours du temps ? par ailleurs Karnakov utilise une couleur (un champs VoF) par goutte ? non ?}
-We then adoped another methodology to track bubbles independently that we adapted inside the \texttt{Basilisk} code. 
+The first one is to increase artificially the surface tension coefficient locally such as it is done in the recent study of \citet{hidman2023assessing}.
+Although, this method seems very efficient, it is unclear if physical behavior of the droplets' interaction dynamic is well represented because of the added artificial forces. 
+In  \citet{balcazar2015multiple} they developed a multiple marker level-set method to prevent coalescence. 
+In the recent study of \citet{zhang2021direct} they  used one VOF tracer per bubble in his simulation which prevent coalescence and allows tracking bubbles independently. 
+However, this approach is quite expensive as it requires solving a transport equation for each VoF tracer, meaning each drop. 
+Instead, we adopt the methodology of \citet{karnakov2022computing} which consider a number of VoF tracers not correlated with the number of droplets, such that several non-touching droplets are the same VoF tracer fields.
+This last methodology makes the simulation a lot less expensive since it require only a finite number of VoF tracers for an arbitrary umber of non coalescing droplets.  
+Therefore, in the following we adopt this methodology within the \texttt{Basilisk} code. 
 
-The adaptation of \citet{karnakov2022computing} within the basilisk code has been carried out by \citet{mani2021numerical} \JL{on ne peut pas vraiment dire que Mani a adapte l'algo de Karnakov. Deja car ila soutenu avant meme que cette algo soit publie et d'autre part les méthodos semblent bien differentes. En particulier, a ma connaissance le no-coalescence est unique chez nous.}, which developed an algorithm to prevents the adjacent droplets to have similar VOF tracers using the least VOF tracer as possible by allowing different drops to be included within the same VOF tracer.
-Specifically we define $N(t)$ VOF tracer labeled as $\alpha_d^i$ for $i =0,\ldots,N$ where $N(t)$ is dependent on time since it is function of the particles positions.  
-The only requirement is that the adjacent droplets at a given time $t$, have different VOF tracer to prevent coalescence. 
+The challenge here is to color every adjacent droplets with a VoF tracer, so that they do not numerically merges, but with the least number of VoF tracer as possible. 
+This recall the famous \textit{Four color map theorem} \citep{kempe1879colours} which basically state that : 
+\enquote{every map can be color using only four colors, so that two neighboring region are different colors}. 
+In our case, it means that for any 2D configuration only four VoF tracer might be used to avoid coalesce\footnote{Actually on a bi-periodic domain 7 color is needed since the periodic boundary condition makes the domain having torus-like topology, in which case 7 color is required.  }. 
+Which is far less than one tracer for each droplet. 
+Even if a solution exist in 2D configuration, these problems are theoretically expensive tho solve (NP-complete).  
+In the three-dimensional space it is easy to find counter examples to the \textit{Four color map theorem}. 
+One of them is shown \ref{fig:colors}, where five 3 dimensional objects all touch each other so that five color is needed. 
+This process can be carried out for an infinite number of 3D objects such that they all touch each other requiring an infinite number f colors. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{image/more_than_four.png}
+    \caption{
+    Proof of the non validity of the \textit{Four color map theorem} in three-dimensional spaces. 
+    3 dimensional pictures of five regions all touching each other. 
+    Clearly, in this case 5 color is required. 
+    }
+    \label{fig:colors}
+\end{figure}
+Consequently, there is no way to find an optimal coloring configuration for spheres in the 3 dimensional space. 
+Nevertheless, it is reasonable to believe that the number of tracer required to avoid coalescence is fewer than the number of droplets. 
+In case of maps the optimal coloring is applied to a static graph. 
+In our case droplets may move around over time changing the graph over time. 
+Our problem is thus a time-varying graph coloring problem where the optimal coloring must be recomputed at each time step.
+Consequently, since we can not determine the optimal coloring configuration based on theoretical ground, we choose to assign VoF tracers to each droplet following the strategy detailed below.
 
+The development of the \texttt{no-coalesce.h} algorithm within the basilisk framework was initiated in the PhD. thesis of \citet{mani2021numerical}.
+Indeed, \citet{mani2021numerical} developed an algorithm to prevents the adjacent droplets to have similar VOF tracers, using the least VOF tracer as possible by allowing different drops to be included within the same VOF tracer.
+We now present the methodology of this algorithm extended to 3 dimensional flows.
+As the methodology remain the same for 2D and 3D we redirect the reader to \citet{mani2021numerical} PhD for a precise description of the algorithm, we refer the reader to.... 
 
+We define the $i^\text{th}$ VoF tracer as $C_i$ for $i =0,\ldots,N(t)$, where $N(t)$ is the total number of VoF tracer used in a simulation at time $t$.
+Notice that $N(t)$ is time dependent since it might increase along the simulaiton time as the droplets get in contact. 
+Indeed, the adjacent droplets at a given time $t$ must have different VoF tracer to prevent coalescence. 
 \begin{figure}[h!]
     \centering
     % \begin{tikzpicture}[scale=0.1,
@@ -43,58 +73,72 @@ The only requirement is that the adjacent droplets at a given time $t$, have dif
     % % Place nodes
     % \begin{scope}[nodes = {on chain, join=by line}]
     % \node [rect, rounded corners=10pt] (step1) {start};
-    % \node [rect] (step2) {(1) Apply tag function \\ on vof field $\alpha_d^i$};
-    % \node [base] (step3) {(2) Check for any adjacent drops \\ that have the same $\alpha_d^i$};
-    % \node [rect] (step5) {(3) Change drops vof tracers for all\\ adjacent drops.};
+    % \node [rect] (step15) {(1) \texttt{bubbles\_are\_close}($C_i$)};
+    % \node [rect] (step2) {(2) Apply tag function \\ on VoF field $C_i$};
+    % \node [base] (step3) {(3) Check for any cells adjacent drops \\ that have the same $C_i$};
+    % \node [rect] (step5) {(4) Change drops VoF tracers for all\\ adjacent drops.};
     % \node [diam] (step7) {$i < N(t)$};
     % \node [rect, rounded corners=10pt] (step8) {stop};
     % \end{scope}
-    % % \node [rect, left=of step3] (step9) {$i = i+1$};
-    % % Draw edges
-    % % \path[line] (step7) -| (step9);
-    % % \path[line] (step9) |- (step2);
+    % \node [rect, left=of step3] (step9) {$i = i+1$};
+    % Draw edges
+    % \path[line] (step7) -| (step9);
+    % \path[line] (step9) |- (step15);
     % %
     % \path       (step7) -- node [right,near start]{False}    (step8);
-    % \node [right=of step5] {
-        % };
-        % \end{tikzpicture}
-    \includegraphics[width = 0.6\textwidth]{image/VOF2.png}
+    % \path       (step15) -| (step7); % node [right,near start]{False}    (step7);
+    % \node [right=of step5] {lala};
+    % \end{tikzpicture}
+    \begin{tikzpicture}
+    \node (img) at (0,0) {\includegraphics[width = 0.4\textwidth]{image/VOF2.png}};
+    \node (img) at (0.4\textwidth,-0.01\textwidth) {\includegraphics[width = 0.35\textwidth]{image/HOMOGENEOUS_NEW/CA/NVOF_vs_t_Ga_50_l_1.pdf}};
+    \end{tikzpicture}
     \caption{
-    %     Simplified flowchar of the \texttt{no-coalescence.h} algorithm.
-    % $\{\alpha_d^i;i\in\mathbb{N}^{*+}\}$ represent the list of VOF tracer currently used. 
-    % $N(t)$ is the total number of tracer at time $t$. 
-    (b) Interface of the droplets colored by the value of $\alpha_d^i$ at $t_g =100$.
+    (left) Snapshot of a DNS with $\phi = 0.05$ with the interface of the droplets colored by the index of the VOF tracer.
+    (right) Number of VOF tracer versus dimensionless time  at $t^*$.
+    Four different volume fractions are displayed : (dotted line) $\phi = 0.01$, (dashed line) $\phi = 0.05$ (dash dotted line) $\phi = 0.1$ (solid line) $\phi = 0.2$ at $Ga = 50$ and $\lambda = 1$. 
     }
     \label{fig:diagram}
 \end{figure}
-
-
 The simplified workflow of the algorithm follows these three steps : 
 \begin{enumerate}
-    \item We first identify the different topologies, i.e. the droplets, within a single tracer $\alpha_d^i$. 
-    This is done by using another Basilisk feature which assign to a scalar field a different value to each topological object such as a drop (see \href{http://basilisk.fr/src/tag.h}{tag.h})\todo{biblio ?}
-    \item Then we identify the droplets/tag which are different and too close to one another.
-    The distance criterion is fixed to a cube of 5 mesh cells length.  
-    \item Lastly we assign a new VOF tracer for each required droplets among the VOF tracer that are not already adjacent to the droplets. 
-    If no VOF tracer is available we create a new one for the droplets.
-    \todo{Maybe more details ?}
+    \item[Step 1.] We first check if within the tracer $C_i$ VoF fields are close to each other. 
+    The distance criterion is defined such that we search for interfaces that are separated by two cells, in which case it is too close. 
+    \item[Step 2.] If yes, we identify the different topologies, i.e. the droplets, within a single tracer $C_i$. 
+    This is done by using another Basilisk feature which assign to a scalar field a different value to each topological object such as a droplet (see \href{http://basilisk.fr/src/tag.h}{tag.h}) \tb{??}
+    \item[Step 3.] Then we identify the droplets/tag which are different among a single VoF field $C_i$ and too close to one another.
+    Equally, the distance criterion is fixed to 5 mesh cells length.  
+    \item[Step 4.] Lastly we assign a new VoF tracer for each droplet are too close to another droplet. 
+    If the droplet is not adjacent to another tracer, let's say the VoF tracer $C_j$ with $j \in [0,N]$, we assign to the droplet the tracer $C_j$. 
+    If the droplet is adjacent to every tracer $C_j$ for $j = 1,2\ldots N$, we then create a new VoF tracer $C_j$  with $j = N+1$ and assign it to the droplet. 
 \end{enumerate}
 This algorithm is executed at each simulation time step. 
-Besides having $N$ VOF tracer require some modifications to the previously mentioned governing equations. 
-Especially, instead of solving \ref{eq:dt_alpha}  we solve $N$ transport equation for each $\alpha_d^i$\todo{Is it true ?}.
-But also, we compute the surface tension force as the sum of the contribution from each VOF tracer, namely, 
+Having $N$ VOF tracer require some modifications to the previously mentioned governing equations. 
+Especially, instead of solving \ref{eq:dt_alpha}  we solve $N$ transport equation for each $C_i$.
+But also, we compute the surface tension force as the sum of the contribution from each VOF tracer independently, namely,
 \begin{equation}
     \textbf{f}_\sigma \delta(\textbf{x}-\textbf{x}_I)
-    = \sum_{i=0}^{N(t)} \sigma \kappa \nablab \alpha_d^i
+    = \sum_{i=0}^{N(t)} \gamma \kappa_i \grad C_i
 \end{equation} 
-where $\kappa_i$ is the approximate curvature of $\alpha_d^i$. 
-In the 2D simulations (not presented here) we do not used more than 4 VOF tracers for hundreds of droplets during a simulation. 
-This is a consequence  of the four color map theorem derived from topological arguments.
-In the three-dimensional were we simulated hundreds of droplets we observed the creation of $6$ VOF tracer in the long run of the simulations \JL{aurais tu une evolution en fonction du temps du nombre de traceur VoF en fonction de la fraction volumique. Je pense que c'est un element interessant.}.
-A picture of the colored VOF is shown \ref{fig:diagram} (b) where only 3 VOF tracer is needed.
-Indeed, the four color map theorem isn't valid anymore therefore the increase of VOF tracer isn't surprising anymore. 
+where $\kappa_i$ is the approximate curvature of a single $C_i$. 
+That being said 
+\ref{fig:diagram} (left) shows a Snapshot of a DNS at an arbitrary time $t^* = 100$ within which we can observe the droplets' interface colored by their VoF tracer. 
+It is clear that in this simulation no more than 3 color was needed to avoid coalesce, at that time.
+\ref{fig:diagram} (right) display the number of VoF $N(t)$ in terms of the dimensionless simulation time and volume fraction $\phi$. 
+We observe that for an entire simulation no more than 3 VoF tracer were used for $\phi = 0.01$ up to $7$ for the denser case $\phi = 0.2$. 
+Although our algorithm is far from being theoretically optimal, we believe that it brings sufficient efficiency for our need. 
 
-Overall, we used an optimized multi-VOF method which allows us to compute massive DNS with approximately $6$ VOF tracers. 
+At this stage one might wounder : is the physics of droplets interaction well captured due to the use of the multi VoF method ?
+Indeed, with a grid definition of $\Delta = d/30$ the film between the drops is not accurately solved, so how accurate is are interaction between droplets ?
+Answer is  provided in \ref{ap:validation} (\textit{Case 2.}) where we validate our multi-VoF method to \citet{mohamed2003drop} experiments.
+In \citet{mohamed2003drop} they study experimentally the impact of a single drop on a flat interface, while recording the position of the interfaces. 
+It is found that the mult-VoF method capture well the dynamic of interfaces with a poor description of the liquid film between these interfaces ($\Delta = d/30$). 
+However,  \citet{mohamed2003drop} experiment were carried at $Bo = 6$ which is significantly higher than our range of \textit{Bond} number. 
+It is possible than at lower \textit{Bond} number we obtain poorer agreements with reality due to a different flow behavior present in the film inducing more viscous dissipation.
+The viscous dissipation might require more grid point in the film. 
+Nevertheless, we argue that the mesh definition independence study conducted in \ref{ap:validation} substantiates the accuracy of the DNS since dynamic of interaction does converge for a grid definition of $\Delta = d/30$. 
+Overall, we used an optimized multi-VOF method which allows us to compute massive DNS with a maximun of $7$ VoF tracers for dense emulsion.
+ 
 
 
 

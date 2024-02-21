@@ -1,70 +1,83 @@
 
 
-\subsection{Simulations setup}
-Objective of this section :
-\begin{itemize}
-    \item Introduce the dimensionless parameters.
-    \item Present the physical parameters of some industrial processes to locate our problematic. 
-    \item Introduce the dimensionless parameters range investigated in this study.
-    \item Present the tri-periodic box within which we add droplets in vof 
-\end{itemize}
-We investigate the dynamic of homogeneous mono-disperse emulsion subject to buoyancy forces. 
-Both the dispersed (resp. continuous) phase is considered as Newtonian fluid defined by viscosity $\mu_d$ (resp. $\mu_c$), and density $\rho_d$ ($\mu_c$).
+\subsection{Problem statement}
+% Objective of this section :
+% \begin{itemize}
+    % \item Introduce the dimensionless parameters.
+    % \item Present the physical parameters of some industrial processes to locate our problematic. 
+    % \item Introduce the dimensionless parameters range investigated in this study.
+    % \item Present the tri-periodic box within which we add droplets in vof 
+% \end{itemize}
+We investigate numerically the dynamic of homogeneous mono-disperse emulsion subject to buoyancy forces in a fully periodic domain. 
+Both, the dispersed (resp. continuous) phase is considered as Newtonian fluid defined by viscosity $\mu_d$ (resp. $\mu_c$), and density $\rho_d$ (resp. $\mu_c$).
 Throughout this work, the indices $d$ and $c$ indicate properties belonging to the dispersed and continuous phase, respectively. 
-The interface between both fluid is considered as infinitely thin and deprived of any impurities so that it can only be described with the surface tension coefficient $\sigma$. 
-In this work the density, viscosity of each phase, and surface tension coefficient, will be considered constant during  the time of a numerical experiment.
-In dimensionless form the physics of the flow is described by $4$ dimensionless parameters: 
-The viscosity and density ratio, $\mu_r = \mu_d / \mu_c$ and $\rho_r = \rho_d / \rho_c$, respectively. 
-The \textit{Galileo} number, 
-\begin{equation*}
+The interface between both fluid is considered as infinitely thin and deprived of any impurities so that it can only be described with the surface tension coefficient $\gamma$. 
+In this work the density, viscosity, and surface tension coefficient, will be considered constant in each phase.
+In dimensionless form this problem is completely determined by $6$ dimensionless parameters;  the viscosity and density ratio, $\lambda = \mu_d / \mu_c$ and $\zeta = \rho_d / \rho_c$,  
+the \textit{Galileo} number, 
+$
     Ga =\sqrt{\rho_c(\rho_c - \rho_d) g d^3} / \mu_c
-\end{equation*}
-where $a$ is the equivalent radius of the droplets.
-And the \textit{Bond} number, 
-\begin{equation*}
-    Bo =\frac{(\rho_c - \rho_d) g d^2}{\sigma}
-\end{equation*}
-with $g$ the gravity constant. 
+$
+the \textit{Bond} number, 
+$
+    Bo =\frac{(\rho_c - \rho_d) g d^2}{\gamma}
+$
+the number of droplets per domain $N_b$ and the dispersed phase volume fraction $\phi$. 
+Here, $d$ is the diameter of the sphere of same volume as the droplets and $g$ the gravitational acceleration.
 The \textit{Galileo} number measure the influence of the buoyancy forces against the viscous forces.
 Whereas the \textit{Bond} number evaluate the ratio between buoyancy and capillary forces. 
-In addition to these $4$ parameters we introduce the number of particles, $N_b$, and the dispersed phase volume fraction $\phi_d$ which fully describe the topology of a finite domain of the flow. 
+
+To give a brief idea about the range of interest of those numbers in the industrial context, we take the example of a vegetal oil/water system.
+In most liquid-liquid system encountered in industrial processes the diameter of the droplets lies in the range $d = [50 \mu \text{m}, 3 \text{mm}]$.
+The density and viscosity of water are approximately $\rho_c = 1000 \text{kg/m}^3$ and $\mu_c = 10^{-3}$.
+The density and viscosity of oil are close to $\rho_d = 900 \text{kg/m}^3$ and $\mu_d = 10^{-2}$.
+We consider the gravity acceleration on earth, $g= 9.81 \text{kg.m.s}^{-2}$.
+The surface tension of the system oil/water is known to be approximately $\sigma = 50 \text{mJ/m}^2$ \citep{de2015gouttes}. 
+We display the values of dimensionless parameters computed with those physical parameters in \ref{tab:parameters_exp}.
+\begin{table}[h!]
+    \centering
+    \caption{Dimensionless parameters in a water/oil emulsion.}
+    \begin{tabular}{|c||c|c|c|c|c|}
+        \hline&$Ga$&$Bo$&$\phi$&$\lambda$&$\zeta$\\ \hline
+        \hline Oil/Water&$[0.35,160]$&$[10^{-5};10^{-1}]$&$<0.2$&$10$&$0.9$\\ \hline
+    \end{tabular}
+    \label{tab:parameters_exp}
+\end{table}
+We can notice that the \textit{Galileo number} is rather low therefore can already state that it will be necessary to investigate the stokes flow limit. 
+Likewise, The \textit{Bond number} is very low, meaning that the droplets are nearly spherical.
+Additionally, a maximum volume fraction has been set empirically to $0.2$, not because higher volume fraction flow exist, but rather because above this limit particles highly coalesce and the topology of the flow cannot be considered as dispersed anymore. 
 
 
+To approach real life applications we carried out DNS for four volume fractions, namely $\phi = 0.01,0.05,0.1,0.2$.
+In opposition to most of the previous studies, we choose to keep the number of droplets constant while changing the volume fraction $\phi$. 
+Instead, we modify the domain size $\mathcal{L}$ accordingly. 
+As mentioned the \textit{Bond} numbers of our targeted application is extremely low (see \ref{tab:parameters_exp}).
+However, below a certain limit the \textit{Bond} number has no impact on the physics. 
+% This threshold value has been fixed empirically at $Bo = 0.2$, below which we observed no modification in the drop dynamic. 
+Therefore, and it will stay constant throughout this study, the \textit{Bond} number is set to $Bo = 0.2$.
+Lower \textit{Bond} number cases could not be archived due to the capillary time step restriction which becomes excessively costly, nevertheless we consider that under $Bo = 0.2$ the \textit{Bond} number has no notable impact since the droplet shape remain essentially spherical. 
+Density and viscosity ratio of droplets in real life applications are reported in \citet[Figure 1.]{balla2020effect}.
+It is clear from their \textit{Figure 1}, that the viscosity and density ratio of fluid-fluid systems, range between the intervals : $\lambda = [10^{-4} : 10^4]$ and $\zeta = [10^{-1} : 10^1]$, respectively. 
+In this study we restrict our attention to a single density ratio of $\zeta = 0.9$, corresponding to a water-oil emulsion.
+However, regarding the viscosity ratio, we accomplished DNS for 3 different values, namely $\lambda = 0.1,1,0.1$.
+The \textit{Galileo} number will range from $Ga = 1$ to $Ga = 100$ to study the influence of inertial effects.
+
+As the purpose of the study is to investigate particle pair distribution function it is primordial to obtain a representative number of DNS samples. 
+Therefore, we use a number of particles per domain of $N_b = 125$, which roughly what \citet{hidman2023assessing} uses for tri-periodic buoyant rising bubbly flow. 
+Additionally, each DNS lasts for a time : $t^*_\text{end} = 500 \sqrt{d/g}$, which is sufficient to obtain well converged statistics (see \ref{ap:validation}).  
 \begin{table}[h!]
     \centering
     \caption{Dimensionless parameter range investigated in this work.}
     \begin{tabular}{ccccccc}\hline
-        $Ga$&$Bo$&$\phi$&$\mu_r$&$\rho_r$&$N_b$&$t^*_{end}$\\ \hline\hline
-        $5\rightarrow 100$&$1$&$1\% \rightarrow 20\%$&$0.1 \& 1$&$1.111$&$125$&$500$\\ \hline
+        $Ga$&$Bo$&$\phi$&$\lambda$&$\zeta$&$N_b$&$t^*_\text{end}$\\ \hline\hline
+        $1\rightarrow 100$&$0.2$&$1\% \rightarrow 20\%$&$10$ \& $1$&$0.9$&$125$&$500$\\ \hline
     \end{tabular}
-    \label{tab:parameters}
+    \label{tab:simulations}
 \end{table}
-\JL{il faut choisir entre $\mu_r$ et $\lambda$... Pr ailleurs je pense qu'l y a une coquille dans ta definition de $\mu_r$.}
-
-We wish to investigate the moderate inertial emulsion regime with quasi spherical droplets. \todo{gives real parameters values compared to experiment ? Yes. tu peux le faire facilement en prenant par exmeple des gouttes allant de 500 microns a 2 mm. Cela ajoutera un peu de poids au choix des parametres. Par ailleurs se pose la question de lancer quelques cas à plus bas nombre de Bond (car experimentalement ils le seront) voir si cela change les resultats. De meme, pq ne pas lancer quelques cas ou les gouttes sont moins visqueuses que le fluide environnant ?}
-Thus, the \textit{Bond} number must be low enough to obtain nearly spherical drops, and the viscosity and density ratio must approach the oil/water situation. 
-It will be shown in the next few sections that a $Bo =1$ gives reasonable results. 
-Additionally, for a statistical convergence reason explained in \ref{sec:preliminary} we choose $N_b = 125$. 
-Therefore, in the following we will keep the dimensionless parameters within the ranges depicted in \ref{tab:parameters}.
-In summary, we investigated $6$ \textit{Galileo} number $Ga = 5,10,25,50,75,100$, four volume fractions $\phi = 0.01,0.05,0.1,0.15,0.2$, and two viscosity ratios $\mu_r =0.1,1$. 
-This makes a total of $60$ representative simulations of $125$ droplets which is expensive. 
-Therefore, in the next sections we develop on our numerical strategy to make efficient multi VOF simulations. 
-
-\tb{It is clear that at $\phi>0.1$ the mono disperse simulation aren't physicaly realistic since coalesence should arise at those volume fraction.}
-
-To mimic infinitely large homogeneous emulsions we consider a tri periodic cubic domain of length $L$, within which, both phases are subject to the incompressible Navier Stokes equations with the corresponding boundaries conditions. To prevent an uniform acceleration of the fluids phase one need to impose a pressure gradient (or equivalently a body force) to the momentum equation. This body force may be straightforwadly obtained from the dispersed phase momentum equations. In particular in the present configurations the momentum balance simplifies to
-\begin{align}
-0 &= -\epsilon\frac{\partial p}{\partial z} - \rho_c \epsilon g - n_p \textbf{f}_p \label{eq:uf_triperio}
-    \\
-0 &= -\phi\frac{\partial p}{\partial z}     - \rho_d \phi g + n_p \textbf{f}_p \label{eq:up_triperio}
-\end{align}
-
-Adding those two equations together we obtain
-\begin{equation}
--\frac{\partial p}{\partial z} = \rho_c (1-\phi) g + \rho_d \phi g 
-\end{equation}
-
-
+In this study we present DNS with dimensionless parameters lying in ranges display \ref{tab:parameters}.
+In summary, we investigated $6$ \textit{Galileo} number $Ga = 1,5,10,25,50,100$, $4$ different volume fractions $\phi = 0.01,0.05,0.1,0.2$, and two viscosity ratios $\lambda =1,10$ with $Bo = 0.2$ and $\zeta = 0.9$. 
+This makes a total of $60$ representative simulations of $N_b = 125$ droplets. 
+Therefore, in the next sections we develop our numerical strategy to make efficient multi VOF simulations. 
 
 
 

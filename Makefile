@@ -23,3 +23,4 @@ proper: clean
 	-rm The_hybride_model_for_fluid_particles.pdf
 	-rm Pseudo_turb.pdf
 	-rm ictam2024_latex_template.pdf
+	-rm Energy_balance_equaitons.pdf
