@@ -1,4 +1,4 @@
- \ProvidesClass{My_article}[2022/07/02 My_article]
+ \ProvidesClass{My_preprint}[2022/07/02 My_preprint]
 \NeedsTeXFormat{LaTeX2e}
 % \DeclareOption{print}{\def\@cv@print{}}
 \DeclareOption*{
@@ -40,12 +40,12 @@
 \AtBeginDocument{\newcommand{\refn}[1]{\ref{#1}}}
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
 \numberwithin{equation}{section}
-% \RequirePackage[
-%     a4paper,
-%     left=20mm,
-%     right=20mm,
-%     top=20mm
-% ]{geometry}
+  \RequirePackage[
+      a4paper,
+      left=20mm,
+      right=20mm,
+      top=20mm
+  ]{geometry}
 % \RequirePackage{ragged2e}
 % \RequirePackage{times}
 
@@ -54,8 +54,8 @@
 \RequirePackage{mathtools}% it load amsmath 
 \RequirePackage{tikz}
 \RequirePackage{todonotes}
-\setlength{\marginparwidth}{3.5cm}
-\usepackage[bmargin=2.cm,tmargin=2.cm,lmargin=2cm,rmargin=2cm]{geometry}
+% \setlength{\marginparwidth}{3.5cm}
+% \usepackage[bmargin=2.cm,tmargin=2.cm,lmargin=2cm,rmargin=2cm]{geometry}
 \RequirePackage{csquotes}
 % \RequirePackage{titlesec}
 % \RequirePackage{fontspec}
@@ -85,10 +85,10 @@
 \RequirePackage{graphicx}
 % \RequirePackage{gnuplot-lua-tikz}
 
+
 \newcommand{\size}{0.22\textwidth}
 \newcommand{\avg}[1]{\left<#1\right>}
 \renewcommand{\avg}[1]{\left<#1\right>}
-\newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
 \newcommand{\Exp}[1]{\overline{\overline{#1}}}
 \newcommand{\davg}[1]{\left<#1\right>_d}
 \newcommand{\cavg}[1]{\left<#1\right>_c}
@@ -97,6 +97,7 @@
 
 \newcommand{\avgcond}[1]{\left<#1\right>}
 \renewcommand{\avgcond}[1]{\overline{#1}}
+\newcommand{\condavg}[2]{\overline{#1}^{#2}}
 \newcommand{\ravg}[1]{\avgcond{#1}^\textbf{r}}
 \newcommand{\Tavg}[1]{\avgcond{#1}^T}
 \newcommand{\Xavg}[1]{\avgcond{#1}^X}
@@ -132,7 +133,10 @@
 \newcommand{\pddx}{\frac{\partial}{\partial \textbf{x}}}
 \newcommand{\pddr}{\frac{\partial}{\partial \textbf{r}}}
 \newcommand{\pddu}{\frac{\partial}{\partial \textbf{u}}}
-\newcommand{\pdda}{\frac{\partial}{\partial a}}
+\renewcommand{\pddx}{\partial_\textbf{x}}
+\renewcommand{\pddr}{\partial_\textbf{r}}
+\renewcommand{\pddu}{\partial_\textbf{u}}
+\newcommand{\pdda}{\partial_a}
 \renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
 \newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
@@ -166,3 +170,16 @@
 % \newcommand{\numref}[1]{\ref{#1}}
 \renewcommand{\ref}[1]{\autoref{#1}}
 \newtheorem{remark}{Remark}
+\usetikzlibrary{calc}
+
+
+
+%%%%%%%%%% colors 
+
+\definecolor{col1}{HTML}{0C5DA5}
+\definecolor{col2}{HTML}{00B945}
+\definecolor{col3}{HTML}{FF9500}
+\definecolor{col4}{HTML}{FF2C00}
+\definecolor{col5}{HTML}{845B97}
+\definecolor{col6}{HTML}{474747}
+\definecolor{col7}{HTML}{9e9e9e}

@@ -1,9 +1,5 @@
-\documentclass[12pt]{My_preprint}
+\documentclass[11pt]{My_preprint}
 
-\usetikzlibrary{arrows.meta,
-                chains,
-                positioning,
-                shapes.geometric}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -17,10 +13,8 @@
 \author[1]{Jean-Lou Pierson}
 \author[2]{Stephane Popinet}
 \affil[1]{IFP Energies Nouvelles, Rond-point de l’echangeur de Solaize, 69360 Solaize}
-\affil[2]{Sorbonne Université, Institut Jean le Rond d’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
+\affil[2]{Sorbonne Universit\'e, Institut Jean le Rond d’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
 \normalmarginpar
-
-\usepackage{svg}
 
 
 \begin{document}
@@ -28,19 +22,27 @@
 \maketitle
 
 \begin{abstract}
-We have developed an algorithm capable of avoiding numerical coalesce. 
-This enables study the statistically steady state evolution of a buoyant mono disperse suspension of nearly spherical droplets. 
-We performed parametric simulations over a wide range of \textit{Galileo} number as well as particle volume fraction and viscosity ratio. 
-Overall, our study provide a string evidence on the impact of the latter dimensionless parameters on the  microstructure of a buoyant emulsion. 
-Especially, we show that for low viscosity ratio (bubbles-like) droplets the emulsion is more likely to form cluster and layers.
+    The aim of this work is to introduce a general method, both on the numerical and the theoretical aspect, that enable us to quantify the microstructure geometry in buoyant emulsion. 
+    To this end, we first have developed a novel algorithm capable of avoiding numerical coalesce for reasonable cost with volume of fluid method. 
+    This enables study the statistically steady state evolution of a buoyant mono disperse suspension of nearly spherical droplets. 
+    We performed parametric Direct Numerical Simulations (DNS) over a wide range of \textit{Galileo} number as well as particle volume fraction and viscosity ratio. 
+    By making use of the recent \textit{nearest particle statistic} framework  \citep{zhang2021ensemble,zhang2023evolution} we show that the microstructure can be described by a single tensor quantity, noted \textbf{R}, which is the second moment of the nearest particle pair distribution with respect to the relative position. 
+    Then, by deriving the transport equation of \textbf{R}, we demonstrate that it is subject to a relaxation time related to the mean particles pair interaction time, noted $\tau_p$, which we could measure for all our DNS.
+    Then, we make observation of the relative particle velocity fields to classify the different regime of interactions. \tb{HERE}
+    Overall, our study provide a strong evidence on the impact of the latter dimensionless parameters on the  microstructure of a buoyant emulsion. 
+    Especially, we show that for low viscosity ratio (bubbles-like) droplets the emulsion is more likely to form cluster and layers, and that it is more prononce with high \textit{Galileo} numbers.
+    Additionally, the timescale of such interaction.
 \end{abstract}
 
 \input{microstructure/Introduction.tex}
 
 \section{Methodology}
 
-In this section we explain meticulously the strategy adopted to carry out a statistically steady state simulation of rising mono-disperse suspension of droplets. 
-We start by introducing the physical parameter, then the numerical method and lastly the methodology adopted to build statistics.
+In this section we explain the strategy adopted to carry out a statistically steady state simulation of rising mono-disperse suspension of droplets. 
+We start by introducing the physical parameter, then we describe the numerical methods and lastly the methodology adopted to gather statistics is exposed.
+The reader must know that the source code used to perform the DNS is entirely open source.
+It is running within the \texttt{Basilisk C} framework, see \href{http://basilisk.fr}{basilisk.fr}, which is a domain-specific language of C programming language adapted for the solution of partial differential equations on adaptative Cartesian meshes. 
+This section is accompanied by the wiki page : \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/README.md}{README.md}, were the reader can find the source code used to carry out the simulations presented in this work, as well as comments and notes to help comprehension. 
 
 \input{microstructure/Problem_statement.tex}
 \input{microstructure/Simulation_Setup.tex}
@@ -48,18 +50,27 @@ We start by introducing the physical parameter, then the numerical method and la
 
 
 
+
 \subsection{The nearest particle statistics}
 
 \input{microstructure/The_nearest_particle_statistics.tex}
 
-\section{Results}
 
-\subsection{The microstructure}
+\section{The microstructure}
+\label{sec:microstructure}
 \input{microstructure/Non_Inertial.tex}
 \input{microstructure/Inertial.tex}
 
+\section{Relaxation time of the microstructure}
+\label{sec:time}
 \input{microstructure/Time_of_interaction.tex}
+
+
+\section{Inter-particle scale relative kinematic}
+\label{sec:velocity}
 \input{microstructure/Velocity.tex}
+
+% \input{microstructure/Velocity2.tex}
 % \input{microstructure/configuration.tex}o
 
 \section{Conclusion}
@@ -69,10 +80,9 @@ We start by introducing the physical parameter, then the numerical method and la
 %\section{Statistical convergence and mesh independence studies}
 \section{Numerical validations}
 \label{ap:validation}
-\subsection{Validation test cases}
 \input{microstructure/validation.tex}
-\subsection{Statistical convergence and mesh independence studies}
-\input{microstructure/Appendix1.tex}
+% \input{microstructure/Appendix1.tex}
+
 \input{microstructure/AgeAP.tex}
 
 \bibliography{Bib/bib_bulles.bib}

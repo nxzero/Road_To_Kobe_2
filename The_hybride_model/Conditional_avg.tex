@@ -946,6 +946,12 @@ To introduce the procedure we first consider spherical particle of radius $a$.
     \int_{|\textbf{x}-\textbf{x}^1|=a}
     \avg{\delta_\alpha  \bm\sigma_1^0\cdot \textbf{n}_2}
     [\textbf{x},t;\textbf{x}^1]
+    d\textbf{x}\\
+    &=
+    \int_{|\textbf{x}-\textbf{x}^1|=a}
+    \bm\sigma_1^1\cdot \textbf{n}_2
+    [\textbf{x},t;\textbf{x}^1]
+    P(\textbf{x}^1)
     d\textbf{x}
     \label{eq:conditional_sphere}
 \end{align}
@@ -1287,6 +1293,9 @@ This term is therefore proportional to $n_p^2$.
 
 \section*{Particle property conditional average. This is the only good way to fully close the problem. }
 
+Let $\CC_1$ be the configuration of a particle, with its Lagrangian counterpart $\CC_\alpha$. 
+The configuration is decomposed into $\CC_1 = (\textbf{x}_1, \bm\Lambda_1)$, equally $\CC_\alpha = (\textbf{x}_\alpha,\bm\Lambda_\alpha)$.
+
 In fact, the only conditionally fields that we are able to close is the $f^1$ defined such that, 
 \begin{equation}
     f[\textbf{x},t]
@@ -1310,6 +1319,80 @@ with,
 \end{equation*}
 where $\CC^1$ is the vector which contain all the particle properties needed to compute the drag in a certain scenario. 
 Note that $\CC^1$ contain only the particles properties not those of his neighbors since it would require another definition for the average. 
+To prove the first equality one has to show that, 
+\begin{align*}
+    f[\textbf{x},t]
+    = \frac{1}{N}\sum_\alpha^N\int_{\CC} \delta(\CC_1 - \CC_\alpha) d\CC_1
+    \int
+    f^0[\textbf{x},t;\FF]
+    d\PP\\
+    = 
+    \int_{\CC} 
+    \int
+    \frac{1}{N}\sum_\alpha^N
+    \delta(\CC_1 - \CC_\alpha) 
+    f^0[\textbf{x},t;\FF]
+    d\PP
+    d\CC_1
+    \\
+    = 
+    \int_{\CC} 
+    f^1[\textbf{x},t;\CC_1]
+    d\CC_1
+\end{align*}
+Regarding the particle averaged properties we can also derive, for spherical particle we have shown that,
+\begin{align}
+    \pSavg{\bm\sigma_1^0\cdot\textbf{n}_2}[\textbf{x}^1,t]
+    = 
+    \int_{\mathbb{R}^3}
+    \int
+     \sum_{\alpha=1}^N \delta(\textbf{x}^1-\textbf{x}_\alpha)
+    \delta(|\textbf{x} - \textbf{x}_{\alpha}|-a)
+    (\bm\sigma_1^0\cdot\textbf{n}_2)[\textbf{x},t;\FF]
+    d\PP
+    d\textbf{x}\\
+    = 
+    \int_{\mathbb{R}^3}
+    \int
+     \sum_{\alpha=1}^N \delta(\textbf{x}^1-\textbf{x}_\alpha)
+    \delta(|\textbf{x} - \textbf{x}_{\alpha}|-a)
+    (\bm\sigma_1^0\cdot\textbf{n}_2)[\textbf{x},t;\FF]
+    d\PP
+    d\textbf{x}\\
+\end{align}
+In the classic way this terms will be non-null only for $\textbf{x}_\alpha = \textbf{x}^1 = \textbf{x} + a$ therefore the domain of integration might be changed, but let add a condition. 
+Noticing that $\int_{\bm\Lambda} \delta(\bm\Lambda_1 - \bm\Lambda_\alpha) d\bm\Lambda_1 = 1$ because at some point $\bm\Lambda_\alpha=\bm\Lambda_1$, therefore, 
+\begin{align*}
+    \pSavg{\bm\sigma_1^0\cdot\textbf{n}_2}[\textbf{x}^1,t]
+    = 
+    \int_{\mathbb{R}^3,\bm\Lambda}
+    \int
+    \sum_{\alpha=1}^N 
+    \delta(\bm\Lambda_1 - \Lambda_\alpha) 
+    \delta(\textbf{x}^1-\textbf{x}_\alpha)
+    \delta(|\textbf{x} - \textbf{x}_{\alpha}|-a)
+    (\bm\sigma_1^0\cdot\textbf{n}_2)[\textbf{x},t;\FF]
+    d\PP
+    d\Lambda_1
+    d\textbf{x}\\
+\end{align*}
+The term in the integral is the local stress force evaluated at $\textbf{x},t$ knowing a particle is at $\textbf{x}^1$ with property $\bm\Lambda_1$, with the last condition that the point \textbf{x} is at a distance $a$ from $\textbf{x}_\alpha$. 
+\tb{The problem is that we do not have the $1/N$ pre factor, and also the surface condition might include a factor as well  ???} 
+Thus, we must integrate on all point \textbf{x} at the surface of the particles conditionally on $\CC_1$, yielding,   
+\begin{align*}
+    \pSavg{\bm\sigma_1^0\cdot\textbf{n}_2}[\textbf{x}^1,t]
+    = 
+    \int_{|\textbf{x}-\textbf{x}^1| = a,\bm\Lambda}
+    \avg{\delta_1\bm\sigma_1^0\cdot\textbf{n}_2}[\textbf{x},t;\CC_1]
+    d\Lambda_1
+    d\textbf{x}\\
+    = 
+    \int_{|\textbf{x}-\textbf{x}^1| = a,\bm\Lambda}
+    \bm\sigma_1^1[\textbf{x},t;\CC_1]\cdot\textbf{n}_2P(\CC_1)
+    d\Lambda_1
+    d\textbf{x}\\
+\end{align*}
+
 That said it is easy to generalize \ref{eq:dt_delta_alpha} to, 
 \begin{equation*}
     \pddt \delta(\CC^1 - \CC_\alpha(\FF,t))

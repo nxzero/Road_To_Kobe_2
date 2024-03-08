@@ -13,7 +13,7 @@
 \title{Inter-particle scale averaged equations describing relative particle state in disperse two-phase flows}
 
 \author[1,2]{Nicolas Fintzi}
-\affil[1]{IFP Energies Nouvelles, Rond-point de l’changeur de Solaize, 69360 Solaize}
+\affil[1]{IFP Energies Nouvelles, Rond-point de l’\'echangeur de Solaize, 69360 Solaize}
 \affil[2]{Sorbonne Université, Institut Jean le Rond ∂’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
 
 \begin{document}
@@ -304,6 +304,216 @@ thus the global fluctuation is the mean fluctuation plus the fluctuation at the 
 
 If we make the  good hypothesis the second integral might be negligible. 
 Anyhow 
+
+\section{Closure problem with the nearest particle average}
+
+Let's say we want to find $\pSavg{\bm\sigma_1^0 \cdot \textbf{n}_2 }$ by mean of nearest averaged statistics we might reformulate the ensemble average.
+First we expose the classic method assuming all spherical particles such that $\delta(\textbf{x}-\textbf{x}_I) = \sum_i \delta(|\textbf{x}- \textbf{x}_i| - a))$
+\begin{align*}
+    \pSavg{\bm\sigma_1^0 \cdot \textbf{n}_2 }[\textbf{x},t]\\
+    = \int\sum_i \delta(\textbf{x}-\textbf{x}_i)\int_{\Sigma_i} \bm\sigma_1^0 \cdot \textbf{n}_2 [\textbf{x}',t]d\Sigma(\textbf{x}')  d\PP\\
+    = 
+    \int
+    \int
+    \sum_i  
+    \delta(\textbf{x}-\textbf{x}_i)
+    \delta(|\textbf{x}' - \textbf{x}_i| - a)
+    \bm\sigma_1^0 \cdot \textbf{n}_2 [\textbf{x}',t;\FF]
+    d\PP
+    d\textbf{x}'
+\end{align*}
+If one wish to include the nearest neighboring statistic to this he might do
+\begin{align*}
+    \pSavg{\bm\sigma_1^0 \cdot \textbf{n}_2 }[\textbf{x},t]\\
+    = 
+    \int
+    \int
+    \sum_i  
+    \delta(\textbf{x}-\textbf{x}_i)
+    \delta(|\textbf{x}' - \textbf{x}_i| - a)
+    \bm\sigma_1^0 \cdot \textbf{n}_2 [\textbf{x}',t;\FF]
+    \int\sum_{j\neq i} \delta(\textbf{x}+\textbf{r}-\textbf{x}_j)h_{ij} d\textbf{r}
+    d\PP
+    d\textbf{x}'\\
+    = 
+    \iiint
+    \sum_i  
+    \sum_{j\neq i}
+    \delta(\textbf{x}-\textbf{x}_i)
+    \delta(|\textbf{x}' - \textbf{x}_i| - a)
+    \delta(\textbf{x}+\textbf{r}-\textbf{x}_j)h_{ij} 
+    \bm\sigma_1^0 \cdot \textbf{n}_2 [\textbf{x}',t;\FF]
+    d\PP
+    d\textbf{r}
+    d\textbf{x}'\\
+    = 
+    \int
+    \delta(|\textbf{x}' - \textbf{x}| - a)
+    \iint
+    \sum_i  
+    \sum_{j\neq i}
+    \delta(\textbf{x}-\textbf{x}_i)
+    \delta(\textbf{x}+\textbf{r}-\textbf{x}_j)h_{ij} 
+    \bm\sigma_1^0 \cdot \textbf{n}_2 [\textbf{x}',t;\FF]
+    d\PP
+    d\textbf{r}
+    d\textbf{x}'\\
+    = 
+    \int_{|\textbf{x}' - \textbf{x}| - a = 0}
+    \int
+    \avg{\delta_i\delta_j h_{ij} \bm\sigma_1^0 \cdot \textbf{n}_2 }[\textbf{x}',t;\textbf{x},\textbf{r}]
+    d\textbf{r}
+    d\textbf{x}'\\
+\end{align*}
+This, might be a hay to take in account multi particle interaction. 
+If one ant to express this stress fields we directly must obtain $\avg{\delta_i\delta_j h_{ij} \textbf u_1 }[\textbf{x}',t;\textbf{x},\textbf{r}]$ since the gradient operator is permute with the $\grad$ operator. 
+
+Another way to introduce these average is to use the nearest eularian operator, since, 
+\begin{equation*}
+    \int \sum_i \delta(\textbf{x}-\textbf{x}_i)h_i d\textbf{x} = 1
+\end{equation*}
+Nevertheless, it must be used i a slight different way, 
+Indeed, if we consider that the point $\textbf{x}'$ is always the nearest point to the particle center $\textbf{x}_i$ which might be true since the particles are deformable and 
+\begin{align*}
+    \pSavg{\bm\sigma_1^0 \cdot \textbf{n}_2 }[\textbf{x},t]
+    = \int\sum_i \delta(\textbf{x}-\textbf{x}_i)\int_{\Sigma_i} \bm\sigma_1^0 \cdot \textbf{n}_2 [\textbf{x}',t]d\Sigma(\textbf{x}')  d\PP\\
+    = 
+    \int_{|\textbf{x}' - \textbf{x}| - a = 0}
+    \int
+    \bm\sigma_1^0 \cdot \textbf{n}_2 [\textbf{x}',t;\FF]
+    \sum_i  
+    \delta(\textbf{x}-\textbf{x}_i)
+    d\PP
+    d\textbf{x}'\\
+    \approx 
+    \int_{|\textbf{x}' - \textbf{x}| - a = 0}
+    \int
+    \bm\sigma_1^0 \cdot \textbf{n}_2 [\textbf{x}',t;\FF]
+    \sum_i  
+    \delta(\textbf{x}-\textbf{x}_i) h_i
+    d\PP
+    d\textbf{x}'
+\end{align*}
+if $i$ isn't the only nearest then $h_i =1/2...$, thus it is not valid, worse if $i$ isn't the nearest then it is $0$ while it should be one. 
+And indeed, in principle there is a factor $1/N$ in the one particle average which would not be tehre with the nearest. 
+
+Maybe another way would be to use the continuous interface force, 
+\begin{align}
+    \avg{f_2^0 \chi_2}[\textbf{x},t;\FF]
+    &= \int \int f_2^0 \delta_I  \sum_i \delta(\textbf{x}_1-\textbf{x}_i)h_i d\PP d\textbf{x}_1\\
+    &= \int \int f_2^0 \sum_j \delta(|\textbf{x}-\textbf{x}_j| - a)  \sum_i \delta(\textbf{x}_1-\textbf{x}_i)h_i d\PP d\textbf{x}_1\\
+\end{align} 
+Here the variable aren't the same we have the nearest on $\textbf{x}$ and $\textbf{x}_i$ and the interfaces on $\textbf{x}$ and $\textbf{x}_j$. 
+Anyhow, it doesn't seem that the one particle a
+verge is possible, ? ?
+The conclusion is that we must perform the average procedure, 
+\begin{equation*}
+    \int
+    \sum_i \sum_{i\neq j} 
+    \delta(\textbf{x}-\textbf{x}_i)
+    \delta(\textbf{x}+ \textbf{r}-\textbf{x}_j)
+    h_{ij}
+    \ldots 
+    d\PP,
+\end{equation*}
+On the Navier-Stokes equations. 
+First the transport equation of $\Pi(\textbf{x},\textbf{r},t) = \delta(\textbf{x}-\textbf{x}_i)\delta(\textbf{x}+ \textbf{r}-\textbf{x}_j)h_{ij}$ reads, 
+\begin{equation}
+    \pddt \Pi
+    % + \partial_a \Pi
+    + \partial_{\textbf{x}} \cdot (\textbf{u}^i \Pi)
+    + \partial_{\textbf{r}}  \cdot (\textbf{w}^{ij} \Pi)
+    = G_{ijl}+D_{ijl}
+\end{equation}
+the source terms has been detailed above. 
+
+Now let développé the closure terms,
+\begin{align*}
+    \iint
+    \sum_i  
+    \sum_{j\neq i}
+    \delta(\textbf{x}_1-\textbf{x}_i)
+    \delta(\textbf{x}_1+\textbf{r}-\textbf{x}_j)h_{ij} 
+    \bm\sigma_1^0 \cdot \textbf{n}_2 [\textbf{x},t,\FF]
+    d\PP
+    = \\
+    \iint
+    \sum_i  
+    \sum_{j\neq i}
+    \delta(\textbf{x}_1-\textbf{x}_i)
+    \delta(\textbf{x}_1+\textbf{r}-\textbf{x}_j)h_{ij} 
+    \bm \sigma_1^0 [\textbf{x},t,\FF]
+    d\PP\cdot \textbf{n}_2
+\end{align*} 
+assuming the stress at the surface of the particle is  $\sigma_1^0  = -p_1^0 \textbf{I} + \mu_1 (\grad \textbf{u}_2^0+  (\grad \textbf{u}_2^0)^\dagger)$ gives, 
+\begin{align*}
+    \avg{\delta_i \delta_j h_{ij} (-p_1^0) \textbf{I} + \mu_1 (\grad \textbf{u}_2^0+  (\grad \textbf{u}_2^0)^\dagger)}
+    = 
+    - \avg{\delta_i \delta_j h_{ij} p_1^0} \textbf{I} 
+    + \mu_1 (\grad  \avg{\delta_i \delta_j h_{ij}\textbf{u}_2^0}+  (\grad  \avg{\delta_i \delta_j h_{ij}\textbf{u}_2^0})^\dagger)\\
+    = 
+    - P_\text{nst} p_1^\text{nst} \textbf{I} 
+    + \mu_1 P_\text{nst}(\grad  \textbf{u}_2^\text{nst}+  (\grad  \textbf{u}_2^\text{nst})^\dagger)\\
+\end{align*}
+where we have noticed that $P_\text{nst}(\textbf{x}_1,\textbf{r},t)$ but not \textbf{x}. 
+
+Therefore, to close this drag force term one must use the nearest particle conditionally averaged equations.
+But we must use the two-fluid formulation as we are looking for $\textbf{u}_1^\text{nst}$ and not the total velocity. 
+Let average the momentum equation, 
+\begin{equation*}
+    \pddt (\Pi \rho_k \chi_k \textbf{u}_k^0)
+    + \div(\Pi \rho_k \chi_k \textbf{u}_k^0 \textbf{u}^0_k 
+    - \Pi\chi_k\bm\sigma^0_k)
+    =  \Pi\rho_k \chi_k \textbf{g} 
+    + \Pi\delta_I \bm\sigma_k^0 \cdot \textbf{n}_k
+    + \rho_k \chi_k \textbf{u}_k^0 \pddt \Pi
+\end{equation*}
+Using the transport equation for $\Pi$ gives,
+\begin{align*}
+    \pddt (\Pi \rho_k \chi_k \textbf{u}_k^0)
+    + \div(\Pi \rho_k \chi_k \textbf{u}_k^0 \textbf{u}^0_k 
+    - \Pi\chi_k\bm\sigma^0_k)
+    + \rho_k \chi_k \textbf{u}_k^0 \left[
+        \textbf{u}_i\cdot \pddx^1  \Pi
+        + \textbf{w}_{ij}\cdot \pddr \Pi
+    \right]\\
+    =  \Pi\rho_k \chi_k \textbf{g} 
+    + \Pi\delta_I \bm\sigma_k^0 \cdot \textbf{n}_k
+    + \rho_k \chi_k \textbf{u}_k^0 (G + B )
+\end{align*}
+Applying the average, 
+\begin{align*}
+    \pddt \avg{\Pi \rho_k \chi_k \textbf{u}_k^0}
+    + \div\avg{\Pi \rho_k \chi_k \textbf{u}_k^0 \textbf{u}^0_k 
+    - \Pi\chi_k\bm\sigma^0_k}
+    + \pddx^1 \cdot \avg{\Pi  \rho_k \chi_k \textbf{u}_k^0 \textbf{u}_i}
+    + \pddr \cdot \avg{\Pi\rho_k \chi_k \textbf{u}_k^0\textbf{w}_{ij}}\\
+    =  \avg{\Pi\rho_k \chi_k \textbf{g} }
+    + \avg{\Pi \delta_I \bm\sigma_k^0 \cdot \textbf{n}_k}
+    + \avg{\rho_k \chi_k \textbf{u}_k^0 (G + B )}
+\end{align*}
+It is clear at this stage that if $\textbf{x}\in \mathbb{R}^3 ; |\textbf{x}-\textbf{x}_1| < a \vee   |\textbf{x}-(\textbf{x}_1+\textbf{r})| < a $ then we are located in the particle, in which case $\chi_2 = 1$, if not we are in the fluid for the points, 
+$\textbf{x}\in \mathbb{R}^3 ; |\textbf{x}-\textbf{x}_1| > a \wedge \textbf{x}-(\textbf{x}_1+\textbf{r})| > a \wedge |\textbf{x}_1 + \textbf{r} -\textbf{x}_1| > |\textbf{x} -\textbf{x}_1| $, if the point is located at  $|\textbf{x}_1 + \textbf{r} -\textbf{x}_1| > |\textbf{x} -\textbf{x}_1| $ we don't know for sure that we are in a fluid phase or particle phase. 
+
+Let now inspect the mass equation, 
+\begin{align*}
+    \pddt \avg{\Pi \rho_k }
+    + \div\avg{\Pi \rho_k  \textbf{u}^0_k}
+    + \pddx^1 \cdot \avg{\Pi  \rho_k \chi_k \textbf{u}_i}
+    + \pddr \cdot \avg{\Pi\rho_k \chi_k \textbf{u}_k^0\textbf{w}_{ij}}
+    = \avg{\rho_k \chi_k (G + B )}
+\end{align*}
+The question is $\avg{\Pi  \rho_k \chi_k \textbf{u}_i}[\textbf{x},\textbf{x}_1,\textbf{r},t]$ is really function of $\textbf{x}_1$ ? 
+It is literally, the gradient along the particle position of the  phase indicator function time the velocity of the particle $1$ averaged at \textbf{x} knowing a particle is at $\textbf{x}_1$ with its nearest neighbor at $\textbf{x}_1+\textbf{r}$. 
+
+I think the most dominating hypothesis it is time independence of $\Pi$ that is what \citet{hinch1977averaged} did.
+Note that the terms on the right hands side might be written as, $P_\text{nst}\delta(a) - \frac{P_\text{nst}}{\tau}$. 
+Neglecting $\pddx^1$ and $\pddr$ get us to the two particle problem which might be solved, then averaged etc. 
+
+Anyhow, we can write the mass and momentum nearest particles averaged equation by,
+
+In conclusion one must read \citet{zhang2021ensemble} appendix were he sole these equations. 
+
 
 \section{Conclusion}
 \bibliography{Bib/bib_bulles.bib}
