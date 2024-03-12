@@ -1,106 +1,79 @@
 
-In order to study the microstructure of our suspension we choose to adopt the \textit{nearest-particle-statistics} framework recently revisited by \citet{zhang2021ensemble}.
-Within this framework we are able to study pair interaction based on the nearest neighbor only. 
-It must be understood that it is by no mean restricted to pair interaction in dilute suspension. 
-Indeed, even through our statistics focus on a particle and its nearest neighbor, the properties are averaged on all flow configuration therefore the nearest pair probability is still representative even in dense flows \citet{zhang2021ensemble}. 
+To study the emulsions' microstructure, we chose to adopt the \textit{nearest particle statistics} framework recently revisited by \citet{zhang2021ensemble}.
+We now recall some definitions of the \textit{nearest particle statistics} averaging procedure. 
+For further details, readers are encouraged to refer to \citet{zhang2023evolution} on which this work mostly relies.
 
-
-\paragraph*{Theory :}
-Let, $P(\FF)$ be the probability density function that describe the probability of finding the flow in the configuration $\FF$, were $\FF = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a finite set of all the parameters describing the initial flow configuration.
+\subsubsection*{Theoretical framework}
+Let $P(\FF)$ be the probability density function that describes the probability of finding the flow in the configuration $\FF$, where $\FF = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a finite set of all the parameters describing the initial flow configuration.
 % \footnote{We assume that the flow can be described by a finite number of parameters related to both phase.}. 
-Then, we define $d\mathscr{P} = P(\FF)d\FF$ as the probable number of flow in the incremental region of the particles' phase space $d\FF$ around $\FF$. 
-In the following sections we wish to investigate the particle arrangements and clustering effects as well as the history of interactions. 
-In this objective We introduce the probability density function defined such that $P_{nst}(\textbf{r},a)d\textbf{r}da$ is the probable number of having  a nearest neighboring particle at a disatnce $\textbf{r}$ from a test particle at $\textbf{r} = 0$ having an age of interaction of $a$. 
-Let $\textbf{x}_i(t,\FF)$ and $\textbf{x}_j(\FF,t)$ be the Lagrangian position vector of the particle $i$ and $j$ function of the initial configuration of the flow $\FF$ and the time $t$. 
-Then, the nearest pair probability density function is defined such as, 
+Then, we define $d\mathscr{P} = P(\FF)d\FF$ as the probable number of realizations in the incremental region of the flow' phase space, $d\FF$ around $\FF$.
+Additionally,  $\textbf{x}_i(t,\FF)$ and $\textbf{x}_j(\FF,t)$ refers to the Lagrangian position vectors of the particles $i$ and $j$, respectively. 
+We also introduce the age of the interaction, denoted as $a$, which represents the time elapsed since two particles became nearest neighbors.
+Then, the nearest pair probability density function is given by,
 \begin{equation}
     P_{nst}(\textbf{x},\textbf{r},a,t)= 
-    \int \sum_{i}^{N_b}\delta(\textbf{x}-\textbf{x}_i(\FF,t))
-    \sum_{j\neq i}^{N_b}\delta(\textbf{x}+\textbf{r}-\textbf{x}_j(\FF,t)) 
-    \delta(t+a-t_c^{ij}(\FF,t)) 
-    h_{ij}(\FF,t) d\mathscr{P} 
+    \int \sum_{i}^{N_b}\delta(\textbf{x}-\textbf{x}_i)
+    \sum_{j\neq i}^{N_b}\delta(\textbf{x}+\textbf{r}-\textbf{x}_j) 
+    \delta(t+a-t_c^{ij}) 
+    h_{ij} d\mathscr{P},
     \label{eq:P_nstij}
 \end{equation}
-where we introduced the function : $h_{ij}$, which is equal to $1$ if the particle $j$ is one of the nearest neighbor from the particle $i$, and $h_{ij} = 0$ if it is not \citet{zhang2021ensemble}. 
-We also introduced the age of the interaction $a$, which is the time from which the particles started to be nearest neighbor $t_c^{ij}(\FF,t)$ to the current time $t$, namely, $a = t - t^{ij}_c$. 
-Then, $P_{nst}(\textbf{x},\textbf{r},a,t)$ is the probability of having a particle center of mass located at $\textbf{x}$ with it nearest neighbor at $\textbf{y}$ knowing the pair of particles have been nearest neighbor for $a$ time. 
-This pair probability density function is related to the number density $n_p(\textbf{x},t)$ such that, 
+where we introduced the function $h_{ij}$, which equals $1$ if and only if particle $j$ is one of the nearest neighbors of particle $i$, and $h_{ij} = 0$ otherwise. 
+$t_c^{ij}(\FF,t)$ represents the time at which particles $i$ and $j$ became nearest neighbors. 
+Formally, we have $a = t - t^{ij}_c(\FF,t)$.
+Consequently, $P_{nst}(\textbf{x},\textbf{r},t,a)$ is the probability of having a particle center of mass located at $\textbf{x}$ at time $t$ with it nearest neighbor at $\textbf{x}+\textbf{r}$ given that the pair of particles have been nearest neighbors since $a$ time.
+Note that $P_\text{nst}(\textbf{x},\textbf{r},t,a)$ is related to the number density $n_p(\textbf{x},t)$ through the relationship, 
 \begin{equation*}
     \int_0^\infty 
     \int_{\mathbb{R}^3}
-    P_\text{nst}(\textbf{x},\textbf{r},t,a) d\textbf{r} da = n_p(\textbf{x},t). 
+     P_\text{nst}(\textbf{x},\textbf{r},t,a) d\textbf{r} da = n_p(\textbf{x},t). 
     \label{eq:Pnst}
 \end{equation*}
-The probable number of nearest neighbor ultimately decrease when $\textbf{r}\to\infty$ while the probable number  of neighbor doesn't. 
-Which makes the second integral of \ref{eq:Pnst} convergent. 
-% Therefore, the main difference of the \textit{nearest particle statistics} with classic pair statistics, is that the latter is not convergent when carrying out such an integration over the second space variable $\textbf{r}$. 
+This establishes consistency between the nearest particle statistic and kinetic theory. 
 
 
-It will be useful in this work to investigate relative properties between two nearest neighboring particles. 
-To this end we introduce the relative Lagrangian property : $q_{ij}(t,\FF)$ defined for the nearest pair of particle $i$, $j$. 
-An example of such a quantity is the relative velocity between the particle $i$ and $j$ which is noted : $\textbf{w}_{ij}(t,\FF) = \textbf{u}_j(t,\FF) - \textbf{u}_i(t,\FF)$ where $\textbf{u}_j(t,\FF) - \textbf{u}_i(t,\FF)$ are the Lagrangian center of mass velocity of the particle $i$ and $j$ respectively. 
-The ensemble average of such quantity can be written formally as, 
+Furthermore, $\textbf{w}_{ij}(t,\FF) = \textbf{u}_j(t,\FF) - \textbf{u}_i(t,\FF)$ represents the relative velocity between the particles $i$ and $j$, at time $t$ in the configuration $\FF$. 
+With, $\textbf{u}_i(t,\FF)$ and $\textbf{u}_j(t,\FF)$, the Lagrangian center of mass velocities of the particles $i$ and $j$, respectively. 
+The formal expression of the ensemble average of such a quantity is given by,
 \begin{equation*}
-    \textbf{w}^\text{nst}_p P_{nst}(\textbf{x},\textbf{r},t,a)= 
-    \int \sum_{i}^{N_b}\delta(\textbf{x}-\textbf{x}_i(\FF,t))
-    \sum_{j\neq i}^{N_b}\delta(\textbf{x}+\textbf{r}-\textbf{x}_j(\FF,t)) 
-    \delta(t+a-t_c^{ij}(\FF,t)) 
-    \textbf{w}_{ij}(t,\FF)
-    h_{ij}(\FF,t) 
-    d\mathscr{P} 
+    \textbf{w}^\text{nst}_p P_{nst}(\textbf{x},\textbf{r},t,a)
+    = 
+    \int \sum_{i}^{N_b}\delta(\textbf{x}-\textbf{x}_i)
+    \sum_{j\neq i}^{N_b}\delta(\textbf{x}+\textbf{r}-\textbf{x}_j) 
+    \delta(t+a-t_c^{ij}) 
+    \textbf{w}_{ij}
+    h_{ij} 
+    d\mathscr{P}.
     \label{eq:q_nstij}
 \end{equation*}
-With this definition, $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ is the averaged relative velocity between a particle and its nearest neighbor, conditionally on the event : a particle center have its center of mass at \textbf{x} with its nearest neighboring particle center of mass at \textbf{y}, with age $a$, at time $t$. 
-% The superscript $^\text{nst}$ indicate that $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ is conditioned on $\textbf{r}$ and $a$.
-The velocity can be replaced by any particle properties $q_{i}(t,\FF)$ such as the resultant of the force on a particle, or any relative properties $q_{ij}(t,\FF)$. 
-In this study is limited to the relative kinematic statistic, therefore we consider only the quantity $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$. 
-The physical meaning of such a field will be described latter. 
+Following this definition, $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ is the averaged relative velocity between the nearest pairs, conditioned on the presence of a particle at $\textbf{x}$ and time $t$, with its nearest neighbor at $\textbf{x}+\textbf{r}$ with age $a$. 
+The physical meaning of such a field will be further investigated in \ref{sec:velocity}. 
+The superscript $^\text{nst}$ indicates that $\textbf{w}_{ij}(\FF,t)$ is ensemble-averaged conditionally on the presence of the nearest neighbor, and the subscript $_p$ indicates that it is at the origin a Lagrangian property. 
+More generally, $\textbf{w}_{ij}(t,\FF)$ can be replaced by any particle properties, an example used in this work is $\textbf{u}_i(\FF,t)$.
+In this case, $\textbf{u}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ represents the conditionally-averaged particle phase velocity, given the presence of a particle at \textbf{x} and time $t$, with its nearest neighbor position at $\textbf{x}+\textbf{r}$ with age $a$. 
 
-% In the next few sections we also consider fields averaged over all age or over all relative position \textbf{r}.
-% In this case we note, 
-% \begin{align*}
-%     q^\text{r}_p P_{r}(\textbf{x},\textbf{r},t)
-%     = \int_0^\infty
-%     q^\text{nst}_p P_{nst}(\textbf{x},\textbf{r},t,a)
-%     da,\\
-%     q^\text{a}_p P_{a}(\textbf{x},t,a)
-%     = \int_{\mathbb{R}^3}
-%     q^\text{nst}_p P_{nst}(\textbf{x},\textbf{r},t,a)
-%     da,\\
-%     q_p n_p(\textbf{x},t)
-%     = 
-%     \int_0^\infty
-%     \int_{\mathbb{R}^3}
-%     q^\text{nst}_p P_{nst}(\textbf{x},\textbf{r},t,a)
-%     d\textbf{r}
-%     da,
-% \end{align*}
-% where the superscript indicate the phase space on which the quantity is conditioned, such that : $^\text{nst}$ means that the variable depends on $\textbf{r}$ and $a$; $^a$ indicate a dependence solely on the age, and $^\text{r}$ uniquely on the relative position.
-% The probability function $P_a$, $P_\text{nst}$ and $P_r$ follow the same pattern. 
-% When there is no superscript, such as for $q_p$, the variable is ensemble averaged. 
-% \tb{remove that and explain in the next section}
+Since, we model a statistically steady and homogeneous configuration, the variables $\mathbf{x}$ and $t$ seem to have no interest. 
+Nevertheless, we argue that $\mathbf{x}$ and $t$ indicate the dependence of the averaged quantities on the global flow parameters, $Ga$, $\phi$, $Bo$, $\zeta$, and $\lambda$.
+Therefore, it is essential to retain $\mathbf{x}$ and $t$ in our notation. 
 
 
-Since we model a statistically homogeneous configuration within space and time, the variable \textbf{x} and $t$ are of no interest.
-In fact the dependence of $P_\text{nst}$ and $\textbf{w}_p^\text{nst}$ on $\textbf{x}$ and $t$ can be viewed as the dependence on the global flow parameters such as,  $Ga$, $\phi$ and $\lambda$. 
 
+\subsubsection*{Numerical sampling}
 
-\paragraph*{Numerical samples :}
-In order to re-construct all these functions and PDF from the DNS we consider that each time step can be considered as flow configuration, $\FF$. 
-Based on this assumption the ensemble average operators might be re-written as, 
+To reconstruct all these statistics from the DNS, we treat each simulation time step  as an independent flow configuration, denoted as, $\FF$. 
+Under this assumption, the ensemble average operators can be rewritten as :
 \begin{equation}
     \int  d\PP\ldots
     = \frac{1}{E}\sum_\FF^\text{E} \ldots 
     \label{eq:discrete_ensemble_average}
 \end{equation}
-where $E$ is the total number of events $\FF$ gathered from one simulation.  
-In this way we are able to compute every of these PDFs from the Lagrangian properties of the particles within the DNS. 
-When performing conditional average on the position of the neighboring particle or the age of the interaction, the methodology is slightly different. 
-In fact, to reconstruct numerically a quantity such as $\textbf{w}^\text{nst}_p(\textbf{r},a)$ we gather all the relative velocity $\textbf{w}_{ij}(t;\FF)$ from the simulation, and store it into $n$ intervals of ages $\Delta a_k$, and relative positions $\Delta \textbf{r}_k$ for $k = 1,\ldots, n$.
+where $E$ is the total number of events, which, in our case, corresponds to the total number of time steps simulated.  
+When performing conditional average based on the position of the nearest neighboring particle, the methodology is slightly different. 
+To reconstruct a quantity such as $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ we gather all the relative velocity $\textbf{w}_{ij}(t;\FF)$ from the simulation and store them in $n$ intervals of ages $\Delta a_k$, and relative positions $\Delta \textbf{r}_k$ for $k = 1,\ldots, n$.
 Then, we apply the discrete ensemble average on $\textbf{w}_{ij}(t;\FF)$ for each group independently.
 Formally, we write, 
 \begin{equation}
-    \textbf{w}^\text{nst}_p(\Delta\textbf{r}_k,\Delta a_k)
+    \textbf{w}^\text{nst}_p(\textbf{x},t,\Delta\textbf{r}_k,\Delta a_k)
     = \frac{1}{E_k} 
     \sum^{E_k}_{\FF_k} 
     % \sum_i^{N_b}
@@ -111,15 +84,14 @@ Formally, we write,
     % \FF_k = \{\FF; \textbf{r}(\FF)\in\Delta \textbf{r}_k, a(\FF)\in  \Delta a_k\}
     \label{eq:vec_cond}
 \end{equation}
-where $\FF_k$ correspond to an event with $i$, $j$ being the indices of a nearest pair of particles for which $\textbf{r},a \in \Delta \textbf{r}_k ,\Delta a_k$ and $E_k$ is the total number of events filling these constrain. 
-Finally, we obtained an approximation of $\textbf{w}^\text{nst}(\textbf{r},a)$ which takes discrete arguments $(\Delta\textbf{r}_i,\Delta a_i)$ as input.
-Basically, we carried average by groups of events.  
-This method is applied to all conditionally averaged quantity in this work, the special case of $\textbf{w}^\text{nst}(\Delta\textbf{r}_k,\Delta a_k)$ will be exposed in the last section. 
-At some point, it will be useful to study age conditionally averaged quantity or radial distance conditionally averaged quantity, or other specific properties with a scalar field as a condition. 
-Therefore, if $p$ is a scalar property with $\Delta p_k$ its $n$ intervals, we can define the $p$-conditionally averaged relative velocity as, 
+where $\FF_k$ correspond to the events were the nearest particle pair $i$ and $j$ respects $\textbf{r},a \in \Delta \textbf{r}_k ,\Delta a_k$.
+$E_k$ is the total number of events fulfilling these constraints. 
+Finally, we obtained an approximation of $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ which takes the intervals, $(\Delta\textbf{r}_i,\Delta a_i)$ as input.
+At some point, it will be useful to study the averaged relative velocity, conditioned on the age or on the radial distance, independently. 
+Therefore, in a more general way if $p$ is a scalar property with $\Delta p_k$ its $n$ intervals, we can define the $p$-conditionally averaged relative velocity as, 
 \begin{equation}
-    \textbf{w}^\text{nst}(\Delta p_k)
-    = \frac{1}{E_{k}N_b} 
+    \textbf{w}^\text{nst}_p(\textbf{x},t,\Delta p_k)
+    = \frac{1}{E_{k}} 
     \sum^{E_{k}}_{\FF_{k}}  
     % \sum_i^{N_b} 
     % \sum_{j\neq i}^{N_b}
@@ -129,14 +101,13 @@ Therefore, if $p$ is a scalar property with $\Delta p_k$ its $n$ intervals, we c
     % \FF_k = \{\FF; p(\FF)\in\Delta p_k\}
     \label{eq:scalar_cond}
 \end{equation}
-In this definition $\FF_{k}$ corresponds to the events where a nearest pair of particles $i$ and $j$ follows $p \in \Delta p_k$, and $E_{p}$ corresponds to the total number of events where $p\in\Delta p_k$. 
+In this definition, $\FF_{k}$ corresponds to all the events where the nearest pair $i$ and $j$ respect the condition, $p \in \Delta p_k$, and $E_{k}$ represents the total number of events where $p\in\Delta p_k$. 
 
-It is clear that to obtain a representative averaged quantities the number of events $E_k$ per bins must be consequent. 
-For 2D-conditioned quantity such as \ref{eq:vec_cond} we estimated that $100$ samples per bins were sufficient to obtain a qualitative mean. 
-Therefore, the graphics exposed in the following section (\ref{fig:Pnst_low_Ga},\ref{fig:Pnst_high_Ga}, \ref{fig:Why_Ga_matter}\ldots) have been constructed by averaging the quantity of interest (velocity fields, probability density, age of interaction \ldots) with $E_k = 100$ samples per bins. 
-Regarding the scalar-conditioned fields  such as in \ref{eq:scalar_cond}, we can allow our self for a higher quality, therefore we gathered $E_k = 1000$ sample per bins to obtain an accurate and quantitative average. 
-These studies are performed in \ref{ap:A}.
-
-
-
+It is clear that to obtain representative averaged quantities, the number of events $E_k$ per intervals must be consequent. 
+For 2D-conditioned quantity such as \ref{eq:vec_cond}, we estimated that $100$ samples per bins were sufficient to obtain qualitative results. 
+Consequently, the plots exposed in \ref{sec:velocity} have been generated by averaging the quantity of interest (velocity fields, age of interaction) with a minimum threshold of $E_k = 100$ samples for each bin.
+Regarding the scalar-conditioned fields such as in \ref{eq:scalar_cond}, we gathered $E_k = 1000$ sample per bins to obtain an accurate and quantitative results. 
+Lastly, regarding the sampling, we collected data for each Lagrangian quantity every $10$ simulation time steps. 
+The simulation time step is determined either by a Courant Friedrichs Lewy (CFL) condition or by the capillary time step, depending on the dimensionless numbers involved.
+On average, $200,000$ time steps are performed during a simulation with $N_b = 125$ droplets. This results in a total number of $E = 2,500,000$ samples. In \ref{ap:validation} (\textit{Case 3}), we demonstrate that our statistics are well-converged.
 

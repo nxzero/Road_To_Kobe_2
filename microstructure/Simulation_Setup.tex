@@ -1,50 +1,44 @@
 \subsection{The Basilisk flow solver}
-% Objective : 
-% \begin{itemize}
-%     %\item Present the tri-periodic box within which we add droplets in vof 
-%     \item Present : Governing equations under single fluid formulation 
-%     \item Present in details the numerical scheme. 
-%     \item Finally, present why the numerical coalescence is a problem
-% \end{itemize}
 
-
-In this problem, the governing equations are the one-fluid formulation of the mass and momentum equation, with an additional transport equation for the dispersed phase indicator function noted $C$. 
+In this problem, the governing equations consist of the one-fluid formulation of the mass and momentum equation, with an additional transport equation for the dispersed phase indicator function. 
 We recall their form here, 
 \begin{align}
     \pddt \rho+ \div(\rho\textbf{u})
-    = 0,\\
+    &= 0,\\
     \label{eq:dt_urho}
     \pddt (\rho \textbf{u})
     + \div (\rho  \textbf{u} \textbf{u} - \bm\sigma)
-    = (\avg{\rho} - \rho)\textbf{g}
+    &= (\avg{\rho} - \rho)\textbf{g}
     + \textbf{f}_\gamma,\\
     \label{eq:dt_C}
-    \pddt C + \textbf{u}\cdot\grad C = 0,
+    \pddt C + \textbf{u}\cdot\grad C  
+    &= 0,
 \end{align}
 % \tb{mettre le link navier stokes solver et faire ca pour le reste }
-for the mass, momentum and colors function transport equation, respectively. 
-Were we introduced : the velocity vector $\textbf{u}$,  the Newtonian stress  tensor $\bm{\sigma} = -p \textbf{I} + 2\mu (\grad \textbf{u}+\grad \textbf{u}^T)$ with $p$ the pressure fields and $^T$ the transpose operator.
-Note that the material properties, $\rho$ and $\mu$, take the value of the phases in presence according the arithmetic mean : $\rho = (1-C)\rho_c + C \rho_d$. 
-Indeed, in our case the arithmetic mean turns out to perform better compared to the harmonic mean, which is often used for the viscosity in bubbly flows \citet{hidman2023assessing,innocenti2020direct}, for more details see \ref{ap:validation} (\textit{Case 1.}). 
+which are the mass, momentum and colors function transport equation, respectively. 
+The scalar fields $C$, represents the color function, which range between $0$ and $1$ to indicate the proportion of fluid and dispersed phase, respectively. 
+We introduced the fluid velocity vector $\textbf{u}$ and the Newtonian stress tensor $\bm{\sigma} = -p \textbf{I} + \mu (\grad \textbf{u}+ \grad \textbf{u}^\dagger)$ where $p$ is the pressure fields and $^\dagger$ represents the transpose operator.
+Note that the material properties, $\rho$ and $\mu$, take the value of the phases in presence, following the arithmetic average : $\rho = (1-C)\rho_f + C \rho_d$ and $\mu = (1-C)\mu_f + C \mu_d$. 
+In our case the arithmetic mean turns out to perform better compared to the harmonic mean, which is often used to interpolate the viscosity for bubbly flows \citet{hidman2023assessing,innocenti2020direct}.
+More details about this choice is provided in \ref{ap:validation} (\textit{Case 1.}). 
 The capillary force is defined as, $\textbf{f}_\gamma =\textbf{n} \gamma \div \textbf{n} $, where \textbf{n} is the normal at the interface.
-Following  \citep{bunner2002dynamics}, we added the artificial body force term : $\avg{\rho}\textbf{g}$, on the right-hand side of \ref{eq:dt_urho}, to keep a null averaged velocity throughout the whole numerical domain.  
+Following  \citep{bunner2002dynamics}, we incorporated the artificial body force term, $\avg{\rho}\textbf{g}$, on the right-hand side of \ref{eq:dt_urho}, to maintain a zero-averaged velocity throughout the entire numerical domain.  
 
-To solve these equations we first initialized $125$ spherical droplets within a square domain with periodic boundary condition on all sides. 
-We used the open source code \url{http///basilisk.fr} to discretize the governing equations in a multigrid. 
+To solve these equations we first initialized $125$ spherical droplets within a cubic domain with fully periodic boundary condition. 
+We used the open source code \url{http///basilisk.fr} to discretize the governing equations in a multigrid solver. 
 The Navier-Stokes equations are discretized with a centered scheme.
-The two-phase flow solver use the Volume Of Fluid (VOF) method. 
-The interfaces between the droplets and the carrier fluid is reconstructed using the Piece wise Linear Inter-face Calculation or PLIC method \citet[Chapter 5.]{tryggvason2011direct}.
-Regarding the treatment of the surface tension force term we refer the reader to \citet{popinet2018numerical}. 
+The two-phase flow solver uses the Volume Of Fluid (VOF) method. 
+The interfaces between the droplets and the carrier fluid is reconstructed using the Piecewise Linear Inter-face Calculation or PLIC method \citet[Chapter 5.]{tryggvason2011direct}.
+Regarding the treatment of the surface tension force term we refer the reader to \citet{popinet2018numerical} for more details. 
 The Basilisk solver has been validated extensively, in the framework of bubbly flow. 
-Most of the previous studies such as \citep{hidman2023assessing} and \citet{innocenti2020direct} recommend a grid definition of $\Delta \le d/30$. 
-In \ref{ap:validation} we carried an independence study on the grid definition and demonstrate that a grid spacing of $\Delta = d/30$ is indeed valid in our context to obtain a physically representative simulations.
-If the reader seek for more precise information about the solvers used here, we recommend to look directly at the wiki pages : \href{http://basilisk.fr/src/navier-stokes/centered.h}{centered.h}, \href{http://basilisk.fr/src/tension.h}{tension.h} and \href{http://basilisk.fr/src/grid/multigrid.h}{multigrid.h} where he can find the source code of the Navier-Stokes, surface tension and multigrid solver, respectively. 
+Most of the previous studies \citep{hidman2023assessing,innocenti2020direct} recommend a grid definition of $\Delta/d \ge  30$, where $\Delta$ is the grid spacing. 
+In \ref{ap:validation} we carried a mesh independence study and demonstrate that a grid spacing of $\Delta = d/30$ is also suitable in our context.
+For readers seeking more detailed information about the solvers, we recommend the wiki pages : \href{http://basilisk.fr/src/navier-stokes/centered.h}{centered.h}, \href{http://basilisk.fr/src/tension.h}{tension.h} and \href{http://basilisk.fr/src/grid/multigrid.h}{multigrid.h} where he can find the source code of the Navier-Stokes, surface tension and multigrid solver used in this work, respectively. 
 
-It is known that with the VoF method, we experience premature coalesce events between droplets, see  \citet[Appendix B]{innocenti2020direct}.
-However, in this work we must be able to conserve a specific population of droplets within time to gather statistics.
-In our case  we are interested in a mono-disperse configuration, to study the statistically steady state of the microstructure. 
-To tackle this issue we developed a specific algorithm which prevent coalescence between droplets, while keeping a reasonable cost. 
-This is the subject of the next section. 
+With the VoF method droplets and bubbles may experience premature coalesce.
+For a detailed discussion on this issue, see  \citet[Appendix B]{innocenti2020direct}.
+However, in this work, it is imperative to conserve a specific (mono-disperse) population of droplets over time to accumulate sufficient statistics about the microstructure.
+To tackle this issue we present in the next section a novel algorithm which prevent coalescence between droplets, while maintaining a reasonable cost. 
 
 
 

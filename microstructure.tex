@@ -1,4 +1,4 @@
-\documentclass[11pt]{My_preprint}
+\documentclass{My_preprint}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -7,7 +7,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\title{Nearest particle statistics in rising monodisperse suspensions of drops}
+\title{
+    Microstructure modeling with
+    nearest particle statistics : application to mono-disperse emulsion.
+    }
 
 \author[1,2]{Nicolas Fintzi}
 \author[1]{Jean-Lou Pierson}
@@ -22,27 +25,36 @@
 \maketitle
 
 \begin{abstract}
-    The aim of this work is to introduce a general method, both on the numerical and the theoretical aspect, that enable us to quantify the microstructure geometry in buoyant emulsion. 
-    To this end, we first have developed a novel algorithm capable of avoiding numerical coalesce for reasonable cost with volume of fluid method. 
-    This enables study the statistically steady state evolution of a buoyant mono disperse suspension of nearly spherical droplets. 
-    We performed parametric Direct Numerical Simulations (DNS) over a wide range of \textit{Galileo} number as well as particle volume fraction and viscosity ratio. 
-    By making use of the recent \textit{nearest particle statistic} framework  \citep{zhang2021ensemble,zhang2023evolution} we show that the microstructure can be described by a single tensor quantity, noted \textbf{R}, which is the second moment of the nearest particle pair distribution with respect to the relative position. 
-    Then, by deriving the transport equation of \textbf{R}, we demonstrate that it is subject to a relaxation time related to the mean particles pair interaction time, noted $\tau_p$, which we could measure for all our DNS.
-    Then, we make observation of the relative particle velocity fields to classify the different regime of interactions. \tb{HERE}
-    Overall, our study provide a strong evidence on the impact of the latter dimensionless parameters on the  microstructure of a buoyant emulsion. 
-    Especially, we show that for low viscosity ratio (bubbles-like) droplets the emulsion is more likely to form cluster and layers, and that it is more prononce with high \textit{Galileo} numbers.
-    Additionally, the timescale of such interaction.
+    In this work we present a general analysis of the microstructure of dispersed buoyant emulsion, both on the numerical and theoretical aspects.
+    % in a kinetic-theory-like framework.
+    To this end, we have developed a novel algorithm capable of effectively prevents numerical coalesce between drops at reasonable computational cost.
+    This algorithm is implemented within the Volume of Fluid (VoF) method, utilizing the \href{http://basilisk.fr}{http://basilisk.fr} code. 
+    Subsequently, we conducted Direct Numerical Simulations (DNS) of statistically steady state mono-disperse buoyant emulsion, over a broad range of \textit{Galileo} number ($Ga$), particle volume fraction ($\phi$), and viscosity ratio ($\lambda$). 
+    The density ratio and the \textit{Bond} number are kept constant, $\zeta = 1.11$,  $Bo = 0.2$, respectively. 
+    % In \citet{zhang2023evolution}, it is demonstrated that the microstructure can be characterized effectively using the nearest particle statistic.
+    % This approach relies solely on the tensor quantity, \textbf{R}, which represents the second moment of the nearest particle pair distribution.
+    Then, we revisit the concept of \citet{zhang2023evolution} and show that the second moment of the nearest particle pair distribution, noted \textbf{R}, has the capability to quantify microstructure's features such as clusters and layers of particles.
+    Following this, it is  demonstrated that \textbf{R} follow a kinetic theory-like conservation equation and is subject to a relaxation time $\tau_p$, which is also the average time of interaction between particles pairs. 
+    After, a meticulous analysis of the averaged relative velocity fields between nearest neighbors, we could infer that mechanism such as \textit{Drafting Kissing Tumbling} \citep{fortes1987nonlinear} were present in buoyant emulsion, and that it contribute partly to the formation of the microstructure.
+    % Additionally, other behavior are identified in these systems. 
+    Overall, our study provide strong evidences regarding the influence of $Ga$, $\phi$ and $\lambda$ on the formation of the microstructure and on the relative kinematic of particles in buoyant emulsion. 
+    In particular, our findings reveal that for low viscosity ratio ($\lambda = 1$), the emulsion is more likely to form clusters and layers with long time pairs interaction.
+    In opposition to viscous particles ($\lambda = 10$), which possesses short interaction time, with a more evenly dispersed microstructure.
+    The cluster and layers are amplified with high $Ga$ and moderate $\phi$. 
 \end{abstract}
 
 \input{microstructure/Introduction.tex}
 
 \section{Methodology}
+\label{sec:methodo}
+In this section we expose the strategy employed to conduct statistically steady state simulations of rising mono-disperse suspension of droplets in a fully periodic domain. 
+We start by introducing the physical parameter, followed by a description of the numerical methods.
+Lastly, we detail the methodology adopted to collect statistics about microstructure, which are presented in the next sections.
 
-In this section we explain the strategy adopted to carry out a statistically steady state simulation of rising mono-disperse suspension of droplets. 
-We start by introducing the physical parameter, then we describe the numerical methods and lastly the methodology adopted to gather statistics is exposed.
-The reader must know that the source code used to perform the DNS is entirely open source.
-It is running within the \texttt{Basilisk C} framework, see \href{http://basilisk.fr}{basilisk.fr}, which is a domain-specific language of C programming language adapted for the solution of partial differential equations on adaptative Cartesian meshes. 
-This section is accompanied by the wiki page : \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/README.md}{README.md}, were the reader can find the source code used to carry out the simulations presented in this work, as well as comments and notes to help comprehension. 
+The source code used to perform the DNS is entirely open source.
+The simulations are running within the \texttt{Basilisk C} framework, (see \href{http://basilisk.fr}{basilisk.fr}), which is a domain-specific language of the C programming language, adapted for the solution of partial differential equations on Cartesian meshes. 
+Note that this section is complemented by the wiki page, \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{RS.c}, where the reader can access the source code used to conduct the DNS, as well as comments and notes to help comprehension. 
+\tb{la page wiki n'est pas à jour}
 
 \input{microstructure/Problem_statement.tex}
 \input{microstructure/Simulation_Setup.tex}

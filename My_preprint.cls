@@ -40,12 +40,12 @@
 \AtBeginDocument{\newcommand{\refn}[1]{\ref{#1}}}
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
 \numberwithin{equation}{section}
-  \RequirePackage[
-      a4paper,
-      left=20mm,
-      right=20mm,
-      top=20mm
-  ]{geometry}
+  % \RequirePackage[
+  %     a4paper,
+  %     left=20mm,
+  %     right=20mm,
+  %     top=20mm
+  % ]{geometry}
 % \RequirePackage{ragged2e}
 % \RequirePackage{times}
 
