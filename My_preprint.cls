@@ -55,7 +55,7 @@
 \RequirePackage{tikz}
 \RequirePackage{todonotes}
 % \setlength{\marginparwidth}{3.5cm}
-% \usepackage[bmargin=2.cm,tmargin=2.cm,lmargin=2cm,rmargin=2cm]{geometry}
+\usepackage[bmargin=2cm,tmargin=2cm,lmargin=2cm,rmargin=2cm]{geometry}
 \RequirePackage{csquotes}
 % \RequirePackage{titlesec}
 % \RequirePackage{fontspec}
@@ -133,18 +133,18 @@
 \newcommand{\pddx}{\frac{\partial}{\partial \textbf{x}}}
 \newcommand{\pddr}{\frac{\partial}{\partial \textbf{r}}}
 \newcommand{\pddu}{\frac{\partial}{\partial \textbf{u}}}
-\renewcommand{\pddx}{\partial_\textbf{x}}
-\renewcommand{\pddr}{\partial_\textbf{r}}
-\renewcommand{\pddu}{\partial_\textbf{u}}
+\renewcommand{\pddx}{{\partial_\textbf{x}}}
+\renewcommand{\pddr}{{\partial_\textbf{r}}}
+\renewcommand{\pddu}{{\partial_\textbf{u}}}
 \newcommand{\pdda}{\partial_a}
 \renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
 \newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
 
 \newcommand{\intO}[1]{\int_{\Omega_\alpha} #1 d\Omega}
-\renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
+% \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
 \newcommand{\intS}[1]{\int_{\Omega_\alpha} #1 d\Sigma}
-\renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
+% \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
 \newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
 \newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
 \newcommand{\pMavg}[1]{\mathscr{M}\!\!\left[#1\right]}

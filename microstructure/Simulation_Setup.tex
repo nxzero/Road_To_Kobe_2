@@ -1,4 +1,4 @@
-\subsection{The Basilisk flow solver}
+\subsection{Numerical method}
 
 In this problem, the governing equations consist of the one-fluid formulation of the mass and momentum equation, with an additional transport equation for the dispersed phase indicator function. 
 We recall their form here, 
@@ -27,13 +27,13 @@ Following  \citep{bunner2002dynamics}, we incorporated the artificial body force
 To solve these equations we first initialized $125$ spherical droplets within a cubic domain with fully periodic boundary condition. 
 We used the open source code \url{http///basilisk.fr} to discretize the governing equations in a multigrid solver. 
 The Navier-Stokes equations are discretized with a centered scheme.
-The two-phase flow solver uses the Volume Of Fluid (VOF) method. 
+The two-phase flow solver uses the Volume of Fluid (VoF) method. 
 The interfaces between the droplets and the carrier fluid is reconstructed using the Piecewise Linear Inter-face Calculation or PLIC method \citet[Chapter 5.]{tryggvason2011direct}.
 Regarding the treatment of the surface tension force term we refer the reader to \citet{popinet2018numerical} for more details. 
 The Basilisk solver has been validated extensively, in the framework of bubbly flow. 
 Most of the previous studies \citep{hidman2023assessing,innocenti2020direct} recommend a grid definition of $\Delta/d \ge  30$, where $\Delta$ is the grid spacing. 
 In \ref{ap:validation} we carried a mesh independence study and demonstrate that a grid spacing of $\Delta = d/30$ is also suitable in our context.
-For readers seeking more detailed information about the solvers, we recommend the wiki pages : \href{http://basilisk.fr/src/navier-stokes/centered.h}{centered.h}, \href{http://basilisk.fr/src/tension.h}{tension.h} and \href{http://basilisk.fr/src/grid/multigrid.h}{multigrid.h} where he can find the source code of the Navier-Stokes, surface tension and multigrid solver used in this work, respectively. 
+For readers seeking more detailed information about the solvers, we recommend the wiki pages : \href{http://basilisk.fr/src/navier-stokes/centered.h}{centered.h}, \href{http://basilisk.fr/src/tension.h}{tension.h} and \href{http://basilisk.fr/src/poissson.h}{poissson.h} where he can find the source code of the Navier-Stokes, surface tension and multigrid solver used in this work, respectively. 
 
 With the VoF method droplets and bubbles may experience premature coalesce.
 For a detailed discussion on this issue, see  \citet[Appendix B]{innocenti2020direct}.

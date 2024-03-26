@@ -24,3 +24,4 @@ proper: clean
 	-rm Pseudo_turb.pdf
 	-rm ictam2024_latex_template.pdf
 	-rm Energy_balance_equaitons.pdf
+	-rm Anisotropic_particles.pdf

@@ -177,7 +177,7 @@ Nevertheless, we still now need to find additional closure related to the angula
 
 \subsubsection*{Stokes flow averaged equaitons.}
 
-Averaging the second-order moment of mass yields, $\pnavg{\mathcal{M}_\alpha} =  \textbf{A} (M_\alpha^{||} - M_\alpha^\bot) +  \textbf{I} M_\alpha^\bot$ where $\textbf{A}$ is the orientation tensor defined as $\textbf{A} = \avg{\delta_\alpha\textbf{pp}} = \pnavg{\textbf{pp}}$.
+Averaging the second-order moment of mass yields, $n_p \mathcal{M}_p =  \textbf{A}_p (M_p^{||} - M_p^\bot) +  \textbf{I} M_p^\bot$ where $\textbf{A}_p$ is the orientation tensor defined as $\textbf{A}_p = \avg{\delta_\alpha\textbf{pp}}$.
 Then, let's express the internal motion of a solid particle by : $\textbf{u}_2(\textbf{x}_\alpha) = \textbf{u}_\alpha + \textbf{r}\times \omega_\alpha$ where $\omega_\alpha$ represents the angular velocity of the particle.
 It follows the expression of the stretching of momentum : $\mathcal{S}_\alpha = (M_\alpha^{||} - M_\alpha^\bot) \left(
     \omega_\alpha \times
@@ -189,17 +189,17 @@ The resulting equation is given by~:
 \begin{equation}
     \pddt (n_p\textbf{A})
     + \div (
-        \pnnavg{\textbf{u}_\alpha}\textbf{A}
+        n_p\textbf{u}_p\textbf{A}_p
         + \mathbf{\Sigma}
         )
     =
-    \pnavg{\textbf{pp} \times \omega_\alpha}
-    + \pnavg{\omega_\alpha \times \textbf{pp}},
+    \pavg{\textbf{pp} \times \omega_\alpha}
+    + \pavg{\omega_\alpha \times \textbf{pp}},
     % + \pnavg{\textbf{pp}' \times \omega_\alpha'}
     % +\pnavg{\omega_\alpha' \times \textbf{pp}'}
     \label{eq:avg_dt_M_alpha}
 \end{equation}
-where $\mathbf{\Sigma} = \pnavg{\textbf{u}'_\alpha(\textbf{pp})'}$ is the covariance term between the fluctuation of the velocity and the orientation tensor.
+where $\mathbf{\Sigma} = \pavg{\textbf{u}'_\alpha(\textbf{pp})'}$ is the covariance term between the fluctuation of the velocity and the orientation tensor.
 We recall that the definition of the fluctuation notation is provided by the expression from \ref{eq:def_fluctu}.
 At this stage we need to find closure for both terms on the RHS of \ref{eq:avg_dt_M_alpha}. 
 Therefore, we assume torque free rigid particle in to Stokes flow, where we can utilize Jeffery's equation \citep{guazzelli2011}.
@@ -232,9 +232,10 @@ Finally, by substituting the RHS terms of \ref{eq:avg_dt_M_alpha}, by using \ref
     - \div \mathbf{\Sigma}
     \label{eq:hybrid_avg_dt_pp}
 \end{equation}
-where the fourth-order tensor $\mathbb{A}$, is defined as $\mathbb{A} = \pnavg{\textbf{pppp}}$.
+where the fourth-order tensor $\mathbb{A}$, is defined as $\mathbb{A} = \pavg{\textbf{pppp}}$.
+In this expression we removed the fluctuation terms, but they must appear and they are surly not negligible. 
 In \citet{wang2008objective} they derive \ref{eq:hybrid_avg_dt_pp} by the means of kinetic theory, based on \ref{eq:jefferey} and the fact that $\ddt \textbf{p} = \omega_\alpha \times \textbf{p}$ (Equation (3) of their article).
-Their equation is similar to \ref{eq:hybrid_avg_dt_pp} except that their employ a phenomenological closure for the term, $\div \mathbf{\Sigma}$, which account for particles interactions.
+Their equation is similar to \ref{eq:hybrid_avg_dt_pp} except that their employ a phenomenological closure for the term, $\div \mathbf{\Sigma}$, which account for particles interactions \tb{je pense que c'est ca mais pas sur}.
 Anyhow, we showed how it is possible to derive the orientation tensor conservation equation, commonly used in fiber field theory, from the second-order moments of mass's equation. 
 However, \ref{eq:jefferey} is valid in low inertial regime only. 
 Therefore, it is indispensable to consider a more general framework when working with inertial particles. 
@@ -348,15 +349,15 @@ In a more general context, to close the inertia tensor equation and compute the 
 This is done by first taking the dot product of $\bm{\omega}_{p}$ with \ref{eq:dt_avg_Ip} on the index $j$, then subtracting this expression to \ref{eq:dt_avg_mup}.
 This gives rise to an equation for the mean angular velocity and mean fluctuating part of the angular momentum, namely, 
 \begin{align}
-    % \label{eq:dt_avg_kIp}
-    % \pddt (n_p\mathcal{I}_{p,ij}\omega_{p,j})
-    % + \div (n_p\mathcal{I}_{p,ij}\omega_{p,j} u_{p,k}
-    % + \omega_{p,j}\mathcal{I}^\text{flux}_{p,ijk})
-    % &= 
-    % n_p \mathcal{S}_{p,ij}\omega_{p,j}
-    % + \mathcal{I}_{p,ijk}^\text{flux}\grad \omega_{p,j}
-    % + \mathcal{I}_{p,ij}\pavg{\dot{\omega}^\alpha_j}
-    % \\
+    \label{eq:dt_avg_kIp}
+    \pddt (n_p\mathcal{I}_{p,ij}\omega_{p,j})
+    + \div (n_p\mathcal{I}_{p,ij}\omega_{p,j} u_{p,k}
+    + \omega_{p,j}\mathcal{I}^\text{flux}_{p,ijk})
+    &= 
+    n_p \mathcal{S}_{p,ij}\omega_{p,j}
+    + \mathcal{I}_{p,ijk}^\text{flux}\grad \omega_{p,j}
+    + \mathcal{I}_{p,ij}\pavg{\dot{\omega}^\alpha_j}
+    \\
     \label{eq:dt_avg_kIp}
     \mathcal{I}_{p,ij}\left[
         \pddt (n_p\omega_{p,j})

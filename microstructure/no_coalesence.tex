@@ -9,17 +9,19 @@ The latter method consists in assigning to each droplet a different color functi
 In turns, droplets in contact never coalesce.  
 The latter method may be suitable for our objectives. 
 However, it can be quite expensive as it requires solving a transport equation for each tracer, with one tracer assigned per droplet, meaning $125$ tracer in our case. 
-Instead, we adopt the methodology proposed by \citet{karnakov2022computing} which consider a number of tracers independent of the number of droplets.
-This approach allows multiple non-touching droplets to belong to the same tracer field.
-Therefore, in the following we implement a similar methodology into the \texttt{Basilisk} code. 
+In \citet{karnakov2022computing} they developed a Multi-VoF method which requires a fixed number of tracers for an arbitrary number of droplets.
+% Instead, we adopt the methodology proposed by \citet{karnakov2022computing} which consider a number of tracers independent of the number of droplets.
+This approach allows multiple non-touching droplets to belong to the same field, which makes it more efficient than the previous study.
+Although this approach shares the same basic principle with the one used here, i.e. we color adjacent droplets with different colors to avoid coalescence, it differs in terms of computational methods. 
+Therefore, in the following we present our methodology that is implemented in the \texttt{Basilisk} code. 
 
 The challenge here is to assign a tracer to every adjacent droplets to prevent numerical coalesce, while minimizing the number of tracers to reduce computational costs. 
-This recall the famous \textit{Four color map theorem} \citep{kempe1879colours} which essentially states that : 
+This recall the famous \textit{Four color map theorem} \citep{appel1977solution} which essentially states that : 
 \enquote{every map can be color using only four colors, so that two neighboring region are different colors}. 
-In our case, this theorem implies that for any 2D configuration only four VoF tracer may be used to avoid coalescence\footnote{It's worth noting that on a bi-periodic domain, seven colors are required due to the periodic boundary condition, which gives the domain a torus-like topology  }. 
-Therefore, leveraging \textit{Four color map theorem}, one might be able to significantly reduce the number of VoF tracers required. 
-Nevertheless, for 2D maps the optimal coloring problem is equivalent to a static planar graph problem. 
-However, in our case, droplets may move around over time, transforming the static problem into a time-dependent planar graph problem. 
+In our case, this theorem implies that for any 2D configuration only four VoF tracer are necessary to avoid coalescence\footnote{It's worth noting that on a bi-periodic domain, seven colors are required due to the periodic boundary condition, which gives the domain a torus-like topology  }. 
+Therefore, leveraging \textit{Four color map theorem}, one might be able to significantly reduce the number of VoF tracers required.
+Nevertheless, the optimal coloring problem is originally a static planar coloring problem that need to be solved once. 
+However, in our case, droplets may move around over time, transforming the static problem into a time-dependent planar problem. 
 Thus, even if a solution exists in 2D configuration, these problems are theoretically expensive to solve (NP-complete), and even more so if they must be solved at each time step.  
 In the three-dimensional space the \textit{Four color map theorem} has no equivalent. 
 % One of them is shown \ref{fig:colors}, where five 3 dimensional objects all touch each other so that five color is needed. 
@@ -41,7 +43,7 @@ Consequently, since we cannot determine the optimal coloring configuration based
 The development of the \texttt{no-coalesce.h} algorithm was initiated in the PhD. thesis of \citet{mani2021numerical}.
 The latest version of this algorithm (as of the current date), can be found on the basilisk wiki page : \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/no-coalescence.h}{no-coalescence.h}.
 Before  diving into a step-by-step description of this algorithm we need to introduce another key feature used in these simulations, which is the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm. 
-It is an adaptation of the \textit{scanline fill} algorithm, but optimized using the multigrid solver. 
+It is an adaptation of the \textit{painter’s} algorithm, but optimized using the multigrid solver. 
 Its purpose is to assign different scalars values to each cell belonging to different regions, with the regions being delimited by the different droplets' interfaces. 
 For instance, on \ref{fig:images} (left) we can observe two blue regions corresponding to two different drops.
 We can notice that both are assigned with two different values, $1$ and $2$, which are identified using the \texttt{tag.h} algorithm. 
@@ -54,7 +56,7 @@ Notice that $N(t)$ is time dependent since the number of tracer might increase a
 The simplified workflow of the algorithm follows these four steps : 
 \begin{enumerate}
     \item[\textit{Step 1}.] Check if within a tracer field $C_i$, the droplets are possibly too close to each other. 
-    The \textit{near contact} criterion that determine if the droplets are too close, is defined such that we iterate a $5 \times 5$ cells stencil which verifies the following condition : 
+    The \textit{near contact} criterion that determine if the droplets are too close, is defined such that we iterate a $5$ by $5$ cells stencil which verifies the following condition : 
     (1) If the color function $C_i = 0$ at the center of the stencil. 
     (2) And if $C_i > 1$ for two opposite cells in the stencil. 
     In which case two different regions might be in close contact.
@@ -69,13 +71,13 @@ The simplified workflow of the algorithm follows these four steps :
     \item[\textit{Step 4}.] 
     Find a new tracer field $C_n$, in which we could set the region/droplets that are in near contact. 
     At this stage, it's essential to identify the list of tracer $C_j$ already in contact with the region to be replaced. 
-    For example, in Figure \ref{fig:criterion} (left), the droplet on the right is clearly adjacent to a region with tracer $C_j$, in which case $C_n$ must satisfy $n \neq i,j$. 
+    For example, in \ref{fig:criterion} (left), the droplet on the right is clearly adjacent to a region with tracer $C_j$, in which case $C_n$ must satisfy $n \neq i,j$. 
     Therefore, any $n$ in $1, 2, \ldots, N(t)$ are suitable candidates as long as this situation is avoided. 
     If the droplet is already adjacent to every tracer $C_j$ in the simulation, for $j = 1, 2, \ldots, N(t)$, we create a new tracer $C_n$ with $n = N(t)+1$ and assign the drop to this tracer field.
 \end{enumerate}
 \begin{figure}
     \centering
-    \begin{tikzpicture}[scale=0.35,ultra thick]
+    \begin{tikzpicture}[scale=0.5,ultra thick]
         % Define grid dimensions
         \def\nRows{10}
         \def\nCols{20}
@@ -131,7 +133,7 @@ The simplified workflow of the algorithm follows these four steps :
         \draw[red] (8,2)node[below right]{stencil} rectangle +(5,5); % Draw the rectangular base
         \filldraw[gray] (10,4) rectangle +(1,1);
     \end{tikzpicture}    
-    \begin{tikzpicture}[scale=0.35,ultra thick]
+    \begin{tikzpicture}[scale=0.5,ultra thick]
         % Define grid dimensions
         \def\nRows{10}
         \def\nCols{10}
@@ -202,7 +204,7 @@ The simplified workflow of the algorithm follows these four steps :
     The dark blue area represents the cells where $C_i > 0$.
     The yellow area represents the cells where the tracer $C_j > 0$ for $j\neq i$. 
     The numbers represent the value of the $Tag$ scalar fields within each tracer.
-    The $5\times 5$cells red rectangle represent the stencil zone which iterate over all cells of the domain.  
+    The $5$ by $5$ cells red rectangle represent the stencil zone which iterate over all cells of the domain.  
     %  where the center of the stencil (gray square) must respect $C_i = 0$. 
     (left) Two droplets in contact since we have two opposite cells in the stencil with $C_i > 0$ and $C_i=0$ at the center.
     And, the mentioned cells belong to two different regions so that (\textit{Step 3}) is also validated.  
@@ -231,7 +233,12 @@ In this simulation at that time, no more than 3 colors are needed to avoid coale
 On \ref{fig:diagram} (right) we display the value of $N(t)$ in terms of the dimensionless simulation time for various volume fraction $\phi$ at $Ga = 50$ and  $\lambda = 1$. 
 We observe that for the entire simulation, no more than 3 tracers were needed for the dilute emulsion ($\phi = 0.01$), up to 7 for the denser regime ($\phi = 0.2$). 
 Although our algorithm might not be optimized, it brings sufficient efficiency for our needs. 
-Nevertheless, we believe that further developments, which are referenced at \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/no-coalescence.h}{no-coalescence.h}, might be useful for future studies.\tb{mettre latodo list}
+Indeed, \ref{tab:performance} report all the time spent by each functions during a simulation. 
+It is observed that the \texttt{no-coalesce.h} algorithm accounts for approximately $4\%$ of the total computational time of a simulation. 
+As for the \texttt{tag.h} algorithm, its cost is around $2\%$, which is also considered reasonable.
+In comparison, the \texttt{poisson.h} solver is about $13\%$ of the simulation time. 
+Regarding, the advection of VoF tracers it is about $7\%$, due to the presence of several VoF tracer. 
+Anyhow, we believe that further developments, which are referenced at \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/no-coalescence.h}{no-coalescence.h}, might be useful for future studies.\tb{mettre latodo list}
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}
@@ -246,18 +253,19 @@ Nevertheless, we believe that further developments, which are referenced at \hre
     \label{fig:diagram}
 \end{figure}
 
-\tb{mettre le cout de calcul associé au VoF N(t) : dtrace=-2 et plus generalement plus de details sur le cout de calculs }
-
 With a grid resolution of $\Delta/d = 30$, the film between the droplets that are in close contact is not resolved. 
 Therefore, the question arises: How accurate is the dynamic of interaction at the droplet scale?
 Answers are  provided in \ref{ap:validation} (\textit{Case 2.}) where we compare our DNS to \citet{mohamed2003drop} experiments.
 In \citet{mohamed2003drop} they experimentally study the impact of a single drop on a flat interface of the same fluid, while recording the positions of the interfaces.
-It is found that the multi-VoF method captures remarkably well the position of interfaces, even with a poor description of the liquid film between these interfaces.
-However, these experiments were performed at $Bo = 6$, which is significantly higher than $Bo=0.2$ used in this work. 
-It is likely that at $Bo = 0.2$, more viscous dissipation are present within the film.
-This might lead to a larger error in our simulation since we do not resolve the flow in the film, and neglect this larger viscous dissipation.
+It is found that the Multi-VoF method captures remarkably well the position of interfaces, even with a poor description of the liquid film between these interfaces.
+Nevertheless, these experiments were performed at $Bo = 6$, which is significantly higher than $Bo=0.2$ used in this work. 
+When two droplets approach each other, viscous dissipation is generated within the liquid film present between two droplets' interfaces.
+This dissipation occurs until that the droplets' interfaces deform.
+Thus, for rigid interfaces, meaning low \textit{Bond} number, we expect more viscous dissipation within the film compared to deformable interfaces. 
+Therefore, it is likely that at $Bo = 0.2$, more viscous dissipation are present within the film during a collision.
+This might lead to a larger error in our simulations since we do not solve the flow in the film, and neglect this larger viscous dissipation.
 Nevertheless, we argue that the mesh independence study conducted in \ref{ap:validation} (Case 3) substantiates the accuracy of the DNS, as the dynamics of interaction do converge with  reasonable errors for a grid resolution of $\Delta/d = 30$.
-Overall, we used an optimized multi-VoF method, enabling us to perform extensive DNS with a maximum of 7 tracers in the densest scenario.
+Overall, we used an optimized Multi-VoF method, enabling us to perform DNS with a maximum of 7 tracers in the densest scenario.
  
 
 
