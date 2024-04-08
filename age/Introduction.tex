@@ -1,0 +1,233 @@
+\section{Introduction}
+
+% \paragraph*{Intro :}
+Buoyancy-driven droplet flows are encountered in many chemical engineering processes such as gravity separators and liquid-liquid extractors. 
+The usual engineering practice to model such facilities is to make use of the averaged Navier-Stokes equations and Population Balance Equations (PBE). 
+
+% \paragraph*{Why microstructure is interesting :}
+However, these methods necessitate closure laws and a deep understanding of particle pair statistics.
+Especially, these closures laws dependent highly on the physical properties of the fluids and of the statistically steady state particles' arrangement, that is called in this context : the microstructure. 
+A simple example is given in \citet{yin2008lattice}, where they demonstrate that the mean rise velocity of buoyant mono disperse bubbly flows can be express with a power-law of $(1-\phi)$ for random particles' arrangement.
+While when the microstructure exhibits anisotropic particles' structures this power-law doesn't fit the results anymore.
+Consequently, the mean drag force or mean drift velocity of suspensions, which are crucial closures in two-phase flow problems, depend on the microstructure geometry.  
+A second example, which is relevant for our industrial applications, is the one of poly-disperse flows.
+In this case we might use PBE to model droplets' size distribution \citep{randolph2012theory}.
+In this case PBE heavily rely on the coalescence kernel, which act as a source term describing the rate of coalescence of droplets.   
+Ultimately, this kernel is microstructure dependent, and also depends on the relative kinematic between particles pairs \citep{chesters1991modelling}. 
+Consequently, pair particles statistics which describe the relative particles' kinematic as well as the microstructure geometry are of utmost importance in the averaged models. 
+Therefore, in this study we propose to characterize the microstructure of an emulsion as well as the relative particles pairs kinematic over a wide range of dimensionless parameters in the perspective of building more accurate models for averaged two phases flows equations and more generally for a better understanding of droplets flows.
+
+% \paragraph*{Biblio physics :}
+Computational methods have become increasingly valuable tools for investigating particle interactions and spatial distributions. 
+One of the pioneering studies that investigated bubbly flows' microstructure using DNS is \citet{bunner2002dynamics}. 
+They conducted tri-periodic simulations of nearly spherical rising bubbles in the low but finite inertial regime, with a Reynolds number of about 15. 
+For about $30$ bubbles in a tri-periodic domain they observed a preference for the bubbles to be aligned in pairs horizontally and identified horizontal rafts of particles. 
+An example of this kind of microstructure is sketched in \ref{fig:scheme_clusters} (\textit{Case 3}).
+Numerous others studies investigated bubbly flows microstructures with DNS, such as \citet{yin2008lattice,roghair2011drag,zhang2023evolution}.
+At slightly higher inertial effects, \citet{shajahan2023inertial} investigated sedimentation of solid spherical particles. 
+In the dilute regime, they observed vertical rafts of particles, and as the particle volume fraction increased, side-by-side particle formations started to appear. 
+From an experimental perspective, \citet{almeras2021statistics} examined the microstructure of solid spherical particles within fluidized beds.
+They observed the presence of horizontal rafts of particles when the particle volume fraction approached $\phi = 0.14$.
+The aforementioned studies solely focused on spherical particles.
+However, it is known that the deformability of bubbles or more generally, the particles shape  greatly influence the microstructure geometry \citet{bunner2003effect,seyed2021sedimentation}. 
+Therefore, in this study restrict our attention on emulsions of spherical droplets. 
+
+In short all these studies reported formation of particles structures which are dependent on the dimensionless parameters of the problem. 
+These structures can be classified into $3$ classes : The homogeneous microstructure (\ref{fig:scheme_clusters} (\textit{Case 1})); the non-homogeneous but isotropic microstructure \ref{fig:scheme_clusters} (\textit{Case 2}); and the non-homogeneous and non-isotropic microstructure \ref{fig:scheme_clusters} (\textit{Case 3}). 
+Despite these studies, investigations into the microstructure of emulsions remains limited, and in general there is a notable absence of closure models for emulsions in the literature.  
+However, understanding the microstructure and the physics of emulsions is crucial for the modeling closure terms which in turns allows us to model the industrial processes. 
+
+
+% \paragraph*{Biblio no-coalesce : }
+
+
+% In addition to providing data for closure terms in averaged models, these simulations are of great interest for understanding and describing the microstructure of suspensions, which is the focus of this work.
+
+% \paragraph*{Biblio meusure :}
+Ultimately, whether clusters and layers such as those depicted in \ref{fig:scheme_clusters} are present or not, depends on the dimensionless parameters of the problem. 
+Equally, one can conceive that such structures may not simply exist or be absent. 
+Instead, there might be a continuous spectrum of microstructures geometry with more or less clustered or layered arrangements. 
+Therefore, it is useful to have a proper metric that quantifies the geometry of the microstructure. 
+Few of the aforementioned studies have made use of such a metric apart from the classic particle pair distribution which is widely used.
+Although pair distributions provide a wealth of information, modeling them based on dimensionless parameters is challenging due to their infinite degree of freedom. 
+Therefore, in this study, we follow \citet{zhang2023evolution} and describe the microstructure's geometry with a single second order tensor quantity. 
+This tensor corresponds to the second moment of the nearest particles pair distribution.  
+Additionally, within this framework we are able to characterize pair kinematics and particles time of interaction, which makes it particularly useful for our purpose. 
+Indeed, the former aspect has often been overlooked in multiphase flows studies, although the time of interaction is crucial for coalescence kernel modeling.
+
+Now let's turn our attention to the numerical methods.
+If one wishes to build relevant statistics, they may need to conduct DNS of droplet flows for a sufficient amount of time to reach a statistically steady state regime. 
+However, depending on the numerical method used, one may encounter difficulties in preventing coalescence between droplets which is necessary to reach a steady state regime. 
+Indeed, The Volume-of-Fluid (VoF) method, which is the method used in this work, is known to experience premature coalescence between droplets or bubbles \citep{innocenti2020direct}.
+Several methods have been proposed to address this issue, including those by \citet{roghair2011drag}, \citet{hidman2023assessing}, \citet{balcazar2015multiple}, \citet{zhang2023evolution}, and \citet{karnakov2022computing}. 
+However, none of these methods are ideal for our purpose, either because they may lead to non-physical behavior or because they are computationally expensive. Therefore, an algorithm to prevent coalescence would enable us to perform DNS for arbitrarily long times with a fixed population of droplets within a VoF framework.
+
+% \paragraph*{Plan: }
+Therefore, within a multiscale strategy, we conduct tri-periodic DNS of mono-disperse buoyancy-driven suspensions of drops. 
+We begin in \ref{sec:methodo} by outlining the simulations' methodology, and describe our whole new algorithm which permits us to prevent numerical coalescence between droplets. 
+Following that, we briefly introduce the \textit{Nearest Particle Statistics} framework. 
+In \ref{sec:microstructure}, we delve into an analysis of the microstructure geometry and identify structures such as it is depicted \ref{fig:scheme_clusters} with respect to the dimensionless parameters of the present problem. 
+Then, in \ref{sec:time}, we discuss the relevant timescale of the particles pair interaction, once again using the \textit{Nearest Particle Statistics}. 
+We conclude this study in \ref{sec:velocity}, with a thorough analysis of the particles' pair relative velocity and draw conclusions on their implications for the averaged models.
+ 
+\begin{figure}
+    \hfill
+\begin{tikzpicture}
+    \draw[->] (-1,2.5)--++(0,-2)node[midway, left]{$\textbf{g}$};
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd}
+    \pgfmathsetmacro{\y}{rnd}
+    \draw[fill=gray] ($(\x,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd}
+    \pgfmathsetmacro{\y}{rnd}
+    \draw[fill=gray] ($(\x+1,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd}
+    \pgfmathsetmacro{\y}{rnd}
+    \draw[fill=gray] ($(\x+2,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd}
+        \pgfmathsetmacro{\y}{rnd}
+        \draw[fill=gray] ($(\x+1,\y+1)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd}
+    \pgfmathsetmacro{\y}{rnd}
+    \draw[fill=gray] ($(\x+2,\y+1)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd}
+    \pgfmathsetmacro{\y}{rnd}
+    \draw[fill=gray] ($(\x,\y+1)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd}
+        \pgfmathsetmacro{\y}{rnd}
+        \draw[fill=gray] ($(\x+1,\y+2)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd}
+    \pgfmathsetmacro{\y}{rnd}
+    \draw[fill=gray] ($(\x+2,\y+2)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd}
+    \pgfmathsetmacro{\y}{rnd}
+    \draw[fill=gray] ($(\x,\y+2)$) circle (0.1);
+    }
+    \draw (1.5,3.4)node[below]{\textit{Case 1}};
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*0.4}
+    \pgfmathsetmacro{\y}{rnd*0.4}
+    \draw[fill=gray] ($(\x,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*0.3}
+    \pgfmathsetmacro{\y}{rnd*0.3}
+    \draw[fill=gray] ($(\x+1,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*0.3}
+    \pgfmathsetmacro{\y}{rnd*0.3}
+    \draw[fill=gray] ($(\x+2,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd*0.5}
+        \pgfmathsetmacro{\y}{rnd*0.5}
+        \draw[fill=gray] ($(\x+0.5,\y+1)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd*0.4}
+        \pgfmathsetmacro{\y}{rnd*0.4}
+        \draw[fill=gray] ($(\x+2.5,\y+1)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd*0.4}
+        \pgfmathsetmacro{\y}{rnd*0.4}
+        \draw[fill=gray] ($(\x+1.5,\y+1)$) circle (0.1);
+        }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd*0.5}
+        \pgfmathsetmacro{\y}{rnd*0.5}
+        \draw[fill=gray] ($(\x,\y+2)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd*0.4}
+        \pgfmathsetmacro{\y}{rnd*0.4}
+        \draw[fill=gray] ($(\x+2,\y+2)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd*0.4}
+        \pgfmathsetmacro{\y}{rnd*0.4}
+        \draw[fill=gray] ($(\x+1,\y+2)$) circle (0.1);
+        }
+    \draw (1.5,3.4)node[below]{\textit{Case 2}};
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*1.5}
+    \pgfmathsetmacro{\y}{rnd*0.2}
+    \draw[fill=gray] ($(\x,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*1.5}
+    \pgfmathsetmacro{\y}{rnd*0.3}
+    \draw[fill=gray] ($(\x+1,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*1.5}
+    \pgfmathsetmacro{\y}{rnd*0.3}
+    \draw[fill=gray] ($(\x+2,\y)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd*1.5}
+        \pgfmathsetmacro{\y}{rnd*0.2}
+        \draw[fill=gray] ($(\x+1+0.5,\y+1)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*1.5}
+    \pgfmathsetmacro{\y}{rnd*0.2}
+    \draw[fill=gray] ($(\x+2+0.5,\y+1)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*1.5}
+    \pgfmathsetmacro{\y}{rnd*0.1}
+    \draw[fill=gray] ($(\x+0.5,\y+1)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+        \pgfmathsetmacro{\x}{rnd*1.5}
+        \pgfmathsetmacro{\y}{rnd*0.2}
+        \draw[fill=gray] ($(\x+1,\y+2)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*1.5}
+    \pgfmathsetmacro{\y}{rnd*0.2}
+    \draw[fill=gray] ($(\x+2,\y+2)$) circle (0.1);
+    }
+    \foreach \i in {1,...,5} {
+    \pgfmathsetmacro{\x}{rnd*1.5}
+    \pgfmathsetmacro{\y}{rnd*0.1}
+    \draw[fill=gray] ($(\x,\y+2)$) circle (0.1);
+    }
+    \draw (1.5,3.4)node[below right]{\textit{Case 3}};
+\end{tikzpicture}
+\hfill
+\caption{Scheme of three different particles arrangements identified in this study.
+The gray disk represent droplets in a three-dimensional space. 
+The vertical direction is the one of the gravity. 
+(\textit{Case 1}) Homogeneous arrangement of droplets, referred as homogeneous microstructure.
+(\textit{Case 2}) The isotropic non-homogeneous microstructure where we  observe the presence of clusters.
+This type of microstructure is refereed as clustered microstructure. 
+(\textit{Case 3}) The non-isotropic non-homogeneous microstructure where we observe the presence of stratified arrangements.
+This type of microstructure is refereed as layered microstructure. 
+}
+\label{fig:scheme_clusters}
+\end{figure}
