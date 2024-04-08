@@ -143,7 +143,7 @@
 
 \newcommand{\intO}[1]{\int_{\Omega_\alpha} #1 d\Omega}
 % \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
-\newcommand{\intS}[1]{\int_{\Omega_\alpha} #1 d\Sigma}
+\newcommand{\intS}[1]{\int_{\Sigma_\alpha} #1 d\Sigma}
 % \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
 \newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
 \newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
@@ -159,7 +159,6 @@
 \newcommand{\DL}[1]{\color{green}#1\color{black}}
 \newcommand{\tb}[1]{\color{blue}#1\color{black}}
 % \renewcommand{\alpha}{}
-% \renewcommand{\JL}[1]{}
 % \renewcommand{\tb}[1]{}
 
 \renewcommand{\size}[1]{0.3\textwidth}

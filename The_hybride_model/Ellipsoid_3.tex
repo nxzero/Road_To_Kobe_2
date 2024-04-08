@@ -17,27 +17,29 @@ Nevertheless, we want to be clear on the facts that of mean shear are present it
 
 \subsubsection*{Determination of the shape and strain based on \citet{taylor1964deformation} theoretical results}
 
+\begin{itemize}
+    \item In the capillary dominant regime stresslet = shape and this is it 
+    \item Iso-viscous low density bubbles (that might not existe) permitt to neglect these
+    \item (1) In the prvious section we proposed an equation for shape and rate of strain of the particles
+    \item (2) In taylor they provide direct closure for the shape in steady state regime, no need for an equation anymore
+    \item (3) considering this relation we can in fact re formulate the  bulk stress in term of this shape direct closure
+    \item (4) Also the fluid phase stress can be written as ww -p etc... In any case we now that the functional form of the stress will be proportional to $u u $ 
+    \item (5) In inertial regime the stresslet will also be present 
+    \item (6) Major  conclusion is that the stesslet is also function of uu and that is far from being negligible. 
+\end{itemize}
 
-In \ref{sec:Lagrangian} we proposed an expression of the shape of the particle derived from the moment of momentum equation. 
-We now use this equation to determine the shape of a rising droplet in a uniform rising flow in the quasi steady regime $\beta = 0$. 
-Averaging \ref{eq:dt2_C} and removing the trace of this equation, gives in the quasi steady regime, 
-\begin{equation} 
-    - \frac{1}{Ca}
-    [\frac{4}{5} n_p \textbf{C}_{p,ij} +2 \textbf{I}_{ij}]
-    =  
-    \pSavg{(\textbf{r}\bm\sigma_2^0+ \bm\sigma_2^0\textbf{r})\cdot \textbf{n}}^*
-    \label{eq:Stresslet_quasi_steay}
-\end{equation}
-Therefore, in this regime $\textbf{C}_p$ entirely determined by the instantaneous value of the stresslet. 
+
+
+
 In \citet{taylor1964deformation} they derive the shape and the drag force of a translating droplet at $\textbf{O}(Re^2)$ in a steady state situation. 
-Although they did not directly derive the stress let they provide a formula for the shape, which is equivalent in this situation.  
+The derivation is done in the low but finite $Re$ and $Ca$. 
 The dimensionless radius of the droplets can be express in the polar coordinate reference frame of the drop as, 
 \begin{equation*}
     \frac{R_\text{taylor}(\theta)}{a} = 1 - \beta \textit{We} P_2(\cos\theta)
     + \mathcal{O}(We^2)
     \label{eq:taylor_solution}
 \end{equation*}
-where $Re = |\textbf{u}_{pf}| a /\nu_1$, $P_2(\cos\theta)$ is the Legendre polynomial of degree two and $\kappa$ is a coefficient related to physical parameters given in \citet{taylor1964deformation}.  
+where $Re = |\textbf{u}_{pf}| a /\nu_1$ with $|\textbf{u}_{pf}|$ the phase relative velocity, $P_2(\cos\theta)$ is the Legendre polynomial of degree two and $\kappa$ is a coefficient related to physical parameters given in \citet{taylor1964deformation}.  
 This solution need to satisfy $\kappa Re \ll 1$ and $Re \ll 1$ to be valid. 
 It is then possible to reformulate $\textbf{C}_\alpha$ in terms of the relative velocity $\textbf{u}_{pf}$, it yields, 
 \begin{equation}
@@ -118,14 +120,13 @@ The expression for equivalent bulk stress might be written in the most general w
     + \mu_1 \phi_2 \textbf{e}_2 (\lambda - 1)
     +\phi_I \bm{\sigma}_I 
 \end{align*}
-Assuming, a nearly homogeneous suspension such that $n_p v_p \approx \phi_2$, and a description of the particles internal stress such as in \ref{eq:sigma_2_def} and \ref{eq:sigma_I_def} we obtain, 
+The integral of the internal stress is quite complicated. 
+If we discard internal stresses we found, 
 \begin{align*}
     \bm{\sigma}^\text{eq}
     = \avg{\textbf{u}'\textbf{u}'} 
-    - \phi_1 p_1 \textbf{I}
+    - p_1 \textbf{I}
     + \mu_1 \textbf{e}
-    + \mu_1 \phi_2  (\lambda - 1) (\bm\Gamma_{p,ij} + \bm\Gamma_{p,ji})
-    + f_{\bm \sigma}(\textbf{u}_p - \textbf{u}_1)
     + \frac{\phi_2 \gamma}{a} \left[
         2 \textbf{I}_{ij} - \frac{4}{5} \textbf{C}_{p,ij}^*
     \right]
@@ -146,15 +147,46 @@ The only difference with the former is that in the carrier fluid phase stress th
     \rho_1\avg{\chi_1\textbf{u}_1'\textbf{u}_1'} 
     + \phi_1 p_1 \textbf{I} 
     - \mu_1 \textbf{e} 
-    + \mu_1 \phi_2 (\bm\Gamma_{p,ij} + \bm\Gamma_{p,ji})
-    + \mu_1 \phi_2 f_{\textbf{e}}
-    + \frac{\phi_2 \gamma}{a} \left[
-        2 \textbf{I}_{ij} - \frac{4}{5} \textbf{C}_{p,ij}^*
-    \right]
+    + \frac{1}{2}\ddt^2 \textbf{M}_{\alpha,ij}
+    -  \bm\Gamma_{\alpha,jl}\bm\Gamma_{\alpha,ik} \textbf{M}_{\alpha,kl}  
+    + \mu_2 v_\alpha 2\textbf{E}_{\alpha,ij}\\
+    + \frac{\gamma v_\alpha }{a} \left[
+    2\textbf{I}_{ij} 
+    - \frac{4 }{5} (\textbf{M}_{\alpha,ij}^* - \textbf{I}_{\alpha,ij})
+    \right]\\
+    - \intO{\rho_2 \textbf{w}_{2,i}^s\textbf{w}_{2,j}^s}
+    - \intO{p_2^0} \textbf{I}_{ij}
+    + (\mu_2 - \mu_1)\intS{(\textbf{n}_i \textbf{w}_{2,j}^s + \textbf{n}_j \textbf{w}_{2,i}^s)}
     \label{eq:Steady_state_bubble}
 \end{multline*} 
 % where $f_{\textbf{e}}$ is the integral of the strain rate within the drop from the solution of \citet{taylor1964deformation}. 
-
+As mentioned for small particle deformation and quasi steady state we have,  
+\begin{multline*}
+    \bm{\sigma}^\text{eq}_1 = 
+    \rho_1\avg{\chi_1\textbf{u}_1'\textbf{u}_1'} 
+    + \phi_1 p_1 \textbf{I} 
+    - \mu_1 \textbf{e} 
+    + \frac{\gamma v_\alpha }{a} \left[
+    2\textbf{I}_{ij} 
+    - \frac{4 }{5} (\textbf{M}_{\alpha,ij}^* - \textbf{I}_{\alpha,ij})
+    \right]\\
+    - \intO{\rho_2 \textbf{w}_{2,i}^s\textbf{w}_{2,j}^s}
+    - \intO{p_2^0} \textbf{I}_{ij}
+    + (\mu_2 - \mu_1)\intS{(\textbf{n}_i \textbf{w}_{2,j}^s + \textbf{n}_j \textbf{w}_{2,i}^s)}
+\end{multline*} 
+Note that in quasi steady state 
+\begin{equation*}
+    + \frac{\gamma v_\alpha }{a} 
+    \left[
+    2
+    % - \frac{4 }{5 } (\textbf{M}_{\alpha,mm}^* - \textbf{I}_{\alpha,mm})
+    \right]
+    = 
+    \frac{1}{3}\intS{\textbf{r}_m\cdot\bm\sigma_{1,mk}^0\cdot \textbf{n}_k} 
+    + \frac{1}{3}\intO{\rho_2 \textbf{w}_{2,m}^s\cdot \textbf{w}_{2,m}^s}
+    + \intO{p_2^0} \textbf{I}_{mm}
+\end{equation*}
+\tb{bulk pressure with laplace on the side why not, the problem is that all closure are related to $p_1$... That is not evident}
 In summary the effect of relative motion on the bulk stress appear to be anisotropic due to the imbalance of the stresses at the surface of the droplet caused by inertial effect. 
 The bulk stress can be determined by averaging the particle internal and surface stresses in terms of the relative drop velocity. 
 The surface stress brings quadratic terms with respect to the relative phase velocity. 
