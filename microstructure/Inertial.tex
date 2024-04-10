@@ -136,89 +136,99 @@ Up to now, we have presented visualizations of the microstructure with 2D or 1D 
 However, for a more concise description, we would like to adopt a different approach. 
 Following \citet{zhang2023evolution}, we opt to describe the microstructure using the second moment of $P_\text{nst}$ with respect to \textbf{r}, it reads,
 \begin{equation}
-    \textbf{R}(\textbf{x},t) =\frac{1}{n_p(\textbf{x},t)} 
+    \textbf{R} =\frac{1}{n_p} 
     \int_0^\infty 
-    \int_{\mathbb{R}^3} \textbf{rr} P_\text{nst}(\textbf{x},\textbf{r},t,a) d\textbf{r} da.
+    \int_{\mathbb{R}^3} \textbf{rr} P_\text{nst}(\textbf{r}) d\textbf{r}.
     \label{eq:R}
 \end{equation}
-This second-rank tensor measures the spread of the nearest neighbor distribution in a given direction. 
-It's worth noting that such a quantity is computable only because $\lim_{|\textbf{r}|\to \infty} P(\textbf{x},\textbf{r},t,a) = 0$, which enables the integral of \ref{eq:R} to converge. 
+This tensor $\textbf{R}(\textbf{x},t)$ allows us to measure the mean square distance between a particle and its nearest neighbor in the three dimension of space.
+%This second-rank tensor measures the spread of the nearest neighbor distribution in a given direction. 
+It's worth noting that such a quantity is computable only because $\lim_{|\textbf{r}|\to \infty} P_\text{nst}(\textbf{r}) = 0$, which enables the integral of \ref{eq:R} to converge. 
 This wouldn't be the case for classic pair distributions, which is the primary reason why we use the \textit{nearest particle statistics} framework. 
 
 Since our objective is to measure the anisotropy of the microstructure, we are particularly interested in the deviatoric part of this tensor, namely,
 \begin{equation*}
-    \textbf{A}(\textbf{x},t) = \textbf{R}(\textbf{x},t) - \frac{1}{3} [\textbf{R}(\textbf{x},t) : \textbf{I}] \textbf{I}.
+    \textbf{A}(\textbf{x},t) = \textbf{R}(\textbf{x},t) - \frac{1}{3}  \text{tr}(\textbf{R}) \textbf{I}.
 \end{equation*}
-The tensor $\textbf{R}(\textbf{x},t)$ permits us to measure the mean square distance between a particle and its nearest neighbor, in average and in the three dimension of space. 
-Therefore, $\textbf{A}(\textbf{x},t)$ represents likelihood of having a particle in a given direction compared to the mean radial square distance. 
-Thus, for an isotropic suspension $A_{xx} = A_{xx} = 0$. 
-In a scenario such as the one in \ref{fig:images} (left), it's evident that $A_{yy} < 0 < A_{xx} \approx A_{zz}$, as a particle is more likely to have its nearest neighbor situated on the sides, rather than on the verticals.
-For a better interpretation of the following results it is of interest to compute the distance $r_m$, which is the mean distance to the nearest neighboring particle in a random distribution of hard sphere. 
-By direct integration of \ref{eq:Pnst_dilute} we find, 
-\begin{equation*}
-    r_m^2 /d^2
-    = \frac{1}{d^2n_p} 
-    \int_{\mathbb{R}^3} r^2 P_\text{r}^\text{th}(r) d\textbf{r} 
-    = {{4^{{{2}\over{3}}}\,\Gamma\left({{5}\over{3}} , 8\,\phi\right)
-    \,e^{8\,\phi}}\over{2^{{{10}\over{3}}}\,\phi^{{{2}\over{3}}}}}
-\end{equation*}
-where $\Gamma(z,a) = \int_a^\infty t^{z-1} e^{-t} dt$ is the upper incomplete gamma function. 
+$\textbf{A}(\textbf{x},t)$ represents the likelihood of having a particle in a given direction compared to the mean radial square distance. Therefore, in an isotropic suspension, we have $A_{xx} = A_{yy} = 0$, where $y$ represents the coordinate aligned with gravity. %Thus, for an isotropic suspension $A_{xx} = A_{yy} = 0$ where we recall that $y$ is the coordinate along gravity. 
+In a situation like the depicted one in Figure \ref{fig:images} (left) particles are more inclined to have closer neighbors on the lateral sides rather than vertically positioned. Hence  $A_{yy} < 0$ and $0 < A_{xx}$. %\approx A_{zz}$,
+%In a scenario such as the one in \ref{fig:images} (left), $A_{yy} < 0 < A_{xx} \approx A_{zz}$, as a particle is more likely to have its nearest neighbor situated on the sides, rather than vertically.
+%For a better interpretation of the following results it is of interest to compute the distance $r_m$, which is the mean distance to the nearest neighboring particle in a random distribution of hard sphere. 
+%By direct integration of \ref{eq:Pnst_dilute} we find, 
+To facilitate the understanding of the subsequent findings, it is valuable to calculate the distance $r_m$. This distance represents the average distance to the closest neighboring particle within a random arrangement of dilute hard spheres. Through direct integration of equation \ref{eq:Pnst_dilute}, we get
+\begin{align}
+    r_m^2
+    &= \frac{1}{n_p}, 
+    \int_{\mathbb{R}^3} r^2 P_\text{r}^\text{th}(\textbf{r}) d\textbf{r} \\
+    &=  \frac{d^2}{8^{2/3}}\frac{\Gamma\left({{5}\over{3}} , 8\,\phi\right)e^{8\phi}}{\phi^{2/3}},
+    %= d^2{{4^{{{2}\over{3}}}\,\Gamma\left({{5}\over{3}} , 8\,\phi\right)
+    %\,e^{8\,\phi}}\over{2^{{{10}\over{3}}}\,\phi^{{{2}\over{3}}}}}
+\end{align}
+where $\Gamma(z,a) = \int_a^\infty t^{z-1} e^{-t} dt$ is the upper incomplete gamma function. \color{blue} tracer $r_m$ en fonction de phi car l'expression est non triviale. \color{black}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS_NEW/PA/trR.pdf}
     \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS_NEW/PA/Axx.pdf}
     \caption{
-        (left) Trace of the second moment of the probability density function $P_\text{r}(\textbf{r})$ divided by the square diameter of the particles $d^2$. 
-        (right) horizontal components of the anisotropy tensor divided by the trace of the second moment of the probability density function.
+        (left) Dimensionless trace of $\textbf{R}$ as a function of the volume fraction.%Trace of the second moment of the probability density function $P_\text{r}(\textbf{r})$ divided by the square diameter of the particles $d^2$. 
+        (right) Horizontal components of the anisotropy tensor divided by the trace of $\textbf{R}$.%the second moment of the probability density function.
     ($\pmb\bigcirc$) $\phi = 0.01$; ($\pmb\triangle$) $ \phi = 0.05$; ($\pmb\square$) $\phi = 0.1$ ($\pmb\lozenge$) $\phi = 0.2$.
     The hollow symbols correspond to $\lambda = 1$, the filled symbols to $\lambda = 10$.
     For $r<d$ we arbitrarily set $P_\text{r}^\text{th} = 1$ so that the distribution can be visualized.
-    Black symbols represent the results of \citet{zhang2023evolution} for hard sphere suspension with $\phi = 0.016,0.056,0.134,0.262$  %$\phi = 0.0168,0.0565,0.1341,0.2622$ 
+    Black symbols represent the results of \citet{zhang2023evolution} for sedimenting spherical particles with $\phi = 0.016,0.056,0.134,0.262$ and $\zeta = 2.56$. %$\phi = 0.0168,0.0565,0.1341,0.2622$ 
     corresponding to $\pmb\times,\pmb +, \pmb\star , \pmb\triangledown$, respectively.
     }
     \label{fig:A}
 \end{figure}
-\ref{fig:A} (left) displays the value of the dimensionless mean square distance : $\textbf{I}:\textbf{R}/r_m^2$, between nearest neighbors for all our numerical cases. 
-To help comprehension, first notice that the simulation denoted by the symbol \textcolor{col1}{$\pmb\circ$} in \ref{fig:A} (left), corresponding to $\lambda = 1$, $Ga = 100$ and $\phi = 0.01$, has a value of $\textbf{I}:\textbf{R}/r_m^2 \approx 1$. Which is consistent with the quasi hard sphere distribution reported for this case in \ref{fig:Pr} (left). 
-It is clear from the graph that the mean square distance is mainly dependent on the volume fraction. 
-We observe that $\textbf{I}:\textbf{R}/r_m^2$  decrease for increasing $\phi$, which means that particles get in average closer to one another compared to a hard sphere random distribution. 
-As noted by \citet{zhang2023evolution} this implies the apparition of clusters as the particles get packed. 
-Regarding the dependence on the \textit{Galileo} number, it is non-monotonic. 
-Indeed, $\textbf{I}:\textbf{R}/r_m^2$ increase until $Ga = 25$ and then decrease until $Ga = 100$.  
+In Figure \ref{fig:A} (left), the dimensionless mean square distance between nearest neighbors, represented as $\text{tr}(\textbf{R})/r_m^2$, is illustrated for all configurations explored in this study. The simulation marked by the symbol \textcolor{col1}{$\pmb\circ$} in Figure \ref{fig:A} (left), corresponding to parameters $\lambda = 1$, $Ga = 100$, and $\phi = 0.01$, yields a value of $\text{tr}(\textbf{R})/r_m^2 \approx 1$. This observation agrees with the quasi hard sphere distribution previously reported for this particular case in Figure \ref{fig:Pr} (left).
+%\ref{fig:A} (left) displays the value of the dimensionless mean square distance between nearest neighbors $\text{tr}(\textbf{R})/r_m^2$ for all our the configurations investigated here. 
+%The simulation denoted by the symbol \textcolor{col1}{$\pmb\circ$} in \ref{fig:A} (left), corresponding to $\lambda = 1$, $Ga = 100$ and $\phi = 0.01$, has a value of $\text{tr}(\textbf{R})/r_m^2 \approx 1$. This is consistent with the quasi hard sphere distribution reported for this case in \ref{fig:Pr} (left). 
+%It is clear from Figure \ref{fig:A} (left) that the mean square distance is mainly dependent on the volume fraction. 
+%We observe that $\text{tr}(\textbf{R})/r_m^2$  decrease for increasing $\phi$, which means that particles get in average closer to one another compared to a dilute hard sphere random distribution. 
+%As noted by \citet{zhang2023evolution} this implies the apperance of clusters as the partcile volume fraction increases.
+The dependence of the mean square distance on the volume fraction is displays on Figure \ref{fig:A} (left). We observe a decrease in $\text{tr}(\textbf{R})/r_m^2$ as $\phi$ increases, indicating that particles tend to come closer to each other on average compared to a dilute random distribution of hard spheres. This observation, as highlighted by \citet{zhang2023evolution}, suggests the emergence of clusters with increasing particle volume fraction. 
+The dependence on the \textit{Galileo} number, it is non-monotonic. 
+Indeed, $\text{tr}(\textbf{R})/r_m^2$ increase until $Ga = 25$ and then decrease until $Ga = 100$. We also note that the distance to the nearest neighbor is not significantly affected by the viscosity ratio, particularly when dealing with high volume fractions.%We also observe that the distance to the nearest neighbor is not much influence by the viscosity ratio especillay for large volume fraction. 
+%is on average greater for $\lambda = 10$ than for $\lambda = 1$, which is consistent with the distributions displayed in \ref{fig:Pr} and the picture from \ref{fig:images}.   
 % At rather high $Ga$ one might notice that the mean square distance for $\lambda = 1$ (hollow symbols) is lower. 
-For most of our DNS we observe that the distance to the nearest neighbor for iso-viscous emulsions is on average greater for $\lambda = 10$, which is consistent with the distributions displayed in \ref{fig:Pr} and the picture from \ref{fig:images}.  
-On \ref{fig:A} (left) the symbols : $\pmb\star, \pmb\times,\pmb +, \pmb\triangledown$, represent the results of \citet{zhang2023evolution} for hard sphere sedimentation. 
+%For most of the DNS results we observe that the distance to the nearest neighbor is on average greater for $\lambda = 10$ than for $\lambda = 1$, which is consistent with the distributions displayed in \ref{fig:Pr} and the picture from \ref{fig:images}.  
+In Figure \ref{fig:A} (left), the symbols $\pmb\star$, $\pmb\times$, $\pmb +$, and $\pmb\triangledown$ depict the findings from the study conducted by \citet{zhang2023evolution} on the sedimentation of solid spheres in a liquid.
+%On \ref{fig:A} (left) the symbols $\pmb\star, \pmb\times,\pmb +, \pmb\triangledown$, represent the results of \citet{zhang2023evolution} obtained when computing solid sphere sedimentating in gravity. 
 As observed, the value of $\textbf{R}:\textbf{I}$ is on average closer to the mean $r_m^2$ than our simulations, but it maintains the same trend, i.e., clusters appear as the volume fraction increases.
 
  
-Regarding the anisotropy measure we can see on \ref{fig:A} (right) that we have $A_{xx} \ge 0$ for nearly all our cases, meaning that globally, the emulsion is either isotropic ($A_{xx} = 0$), or with particles that are in average more aligned horizontally ($A_{xx} >0$). 
-Then, we can see that $A_{xx}$ increase until $Ga = 50$ where we reach a maximum, and then decrease until $Ga =100$  but still remains consequent. 
-Consistently with the cases from \ref{fig:images}, the value of $A_{xx}$ is greater for $\lambda = 1$ lower for  $\lambda = 10$.
-Although, it is not quite obvious we observe a non-monotonic trend with the volume fraction, $A_{xx}$ first increases up to a maximum value for $\phi =0.1$ (represented by \textcolor{col3}{$\pmb\square$} on \ref{fig:A} (right)) and then decreases for $\phi=0.2$ (represented by the \textcolor{col4}{$\pmb\lozenge$} symbols). 
+Figure \ref{fig:A} (right) illustrates the anisotropy of the microstucture. We can see on \ref{fig:A} (right) that we have $A_{xx} \ge 0$ for nearly all our cases, meaning that the emulsion is either isotropic ($A_{xx} = 0$),or exhibits a tendency towards horizontal alignment of particles on average ($A_{xx} >0$).% or with particles that are in average more aligned horizontally ($A_{xx} >0$). 
+%Moreover $A_{xx}$ increases with $Ga$ until $Ga = 50$ where we reach a maximum, and then decrease until $Ga =100$  but still remains consequent. 
+Additionally, $A_{xx}$ rises with $Ga$ up to $Ga = 50$, reaching a peak, and subsequently decreases until $Ga = 100$, although it remains significant.
+In agreement with the remarks of the previous section, the value of $A_{xx}$ is greater for $\lambda = 1$ and lower for  $\lambda = 10$.
+Although, not obvious at first we observe a non-monotonic trend with the volume fraction. $A_{xx}$ increases up to a peak value at $\phi = 0.1$ (indicated by \textcolor{col3}{$\pmb\square$} on \ref{fig:A} (right)), but then decreases for $\phi=0.2$ (shown by the \textcolor{col4}{$\pmb\lozenge$} symbols).%$A_{xx}$ first increases up to a maximum value for $\phi =0.1$ (represented by \textcolor{col3}{$\pmb\square$} on \ref{fig:A} (right)) and then decreases for $\phi=0.2$ (represented by the \textcolor{col4}{$\pmb\lozenge$} symbols).
+%Although, it is not quite obvious we observe a non-monotonic trend with the volume fraction, $A_{xx}$ first increases up to a maximum value for $\phi =0.1$ (represented by \textcolor{col3}{$\pmb\square$} on \ref{fig:A} (right)) and then decreases for $\phi=0.2$ (represented by the \textcolor{col4}{$\pmb\lozenge$} symbols). 
 This implies that at a certain volume fraction, around $\phi \approx 0.1$, higher $\phi$ makes the microstructure more isotropic, while at low volume fraction ($\phi < 0.1$) increasing $\phi$ favors the side-by-side configuration.
 This phenomenon of isotropization at high $\phi$ has been reported in other studies such as in \citet{seyed2021sedimentation} for sedimentation of solid particles. 
 However, at high \textit{Galileo} number it seems that this effect is less pronounced. 
 
 
-We conclude that the microstructure can be classified into three classes :
-(1) The homogeneous microstructure. 
-(2) The non-homogeneous but isotropic microstructure. 
-(3) The non-homogeneous and non-isotropic microstructure. 
-Each of these types are characterized with specific values of $\textbf{R}(\textbf{x},t)$, they are reported in \ref{tab:microstructure}. 
-Additionally, to better visualize the dependence of $\textbf{R}(\textbf{x},t)$ on $\phi$ and $Ga$, we display the values of $A_{xx}/tr(\textbf{R})$ and $\textbf{R}:\textbf{I}/r_m^2$ in phase diagrams on \ref{fig:phase}.
-In short, we observe that the mean square particle distance compared to a random case is decreasing with the volume fraction, and is globally higher for viscous particles ($\lambda = 10$).
-Meanwhile, the likelihood of finding the nearest neighboring particle on the horizontal is greater for $\lambda=1$ than $\lambda = 10$, and it is globally increasing with higher $Ga$ and non-monotonic with $\phi$. 
-It is seen that at $Ga \approx 50$ and $\phi \approx 0.1$ we reach the configuration with the maximum anisotropy for both $\lambda$. 
+We conclude that the microstructure can be classified into four classes :
+(1) The homogeneous microstructure .
+(2) The non-homogeneous but isotropic microstructure for ($\textbf{R} > 1$) or dispersed arrangement. %ordered array.
+(3) The non-homogeneous but isotropic microstructure for ($\textbf{R} < 1$) or clustering. 
+(4) The non-homogeneous and non-isotropic microstructure or layering. 
+Each of these types are characterized with specific values of $\textbf{R}$, they are reported in \ref{tab:microstructure}. 
+Additionally, to highlight the dependence of $\textbf{R}$ on $\phi$ and $Ga$, we display the values of $A_{xx}/tr(\textbf{R})$ and $\text{tr}(\textbf{R})/r_m^2$ in phase diagrams on \ref{fig:phase}.
+We observe that the mean square particle distance compared to a random case is decreasing when increasing the volume fraction, and is globally higher for viscous particles ($\lambda = 10$).
+Meanwhile, the likelihood of finding the nearest neighboring particle on the horizontal is greater for $\lambda=1$ than $\lambda = 10$, and it is globally increasing with  $Ga$ and non-monotonic with $\phi$. 
+It is seen that at $Ga \approx 50$ and $\phi \approx 0.1$ we reach the configuration with the maximum anisotropy for both viscosity ratios. 
 \begin{table}[h!]
     \caption{Microstructure classification}
     \label{tab:microstructure}
     \centering
     \begin{tabular}{|lccccc|} \hline
-        Types & Homogeneous & Isotropic & \ref{fig:scheme_clusters} & $\textbf{R}:\textbf{I}/r_m^2$ & $A_{xx}/tr(\textbf{R})$ \\
-        Homogeneous & Yes & Yes &(\textit{Case 1}) & $\geq 1$ & $\ll 1$ \\
-        Clustering &  No & Yes  &(\textit{Case 2}) & $ < 1$ & $\ll 1$ \\
-        Layering &    No & No  &(\textit{Case 3}) & $ - $ & $< 1$\\ \hline
+        Microstructure types & Homogeneous & Isotropic & \ref{fig:scheme_clusters} & $\textbf{R}:\textbf{I}/r_m^2$ & $A_{xx}/tr(\textbf{R})$ \\
+        Homogeneous & Yes & Yes &(\textit{Case 1}) & $ \approx 1$ & $\ll 1$ \\
+        Dispersed &  No & Yes  &(\textit{Case 2}) & $ > 1$ & $\ll 1$ \\
+        Clustering &  No & Yes  &(\textit{Case 3}) & $ < 1$ & $\ll 1$ \\
+        Layering &    No & No  &(\textit{Case 4}) & $ - $ & $< 1$\\ \hline
     \end{tabular}
 \end{table}
 \begin{figure}[h!]
@@ -227,13 +237,13 @@ It is seen that at $Ga \approx 50$ and $\phi \approx 0.1$ we reach the configura
         \node (img) at (0,0) {\includegraphics[height=5.5cm]{image/HOMOGENEOUS_NEW/PA/phase_Rtr_l_1.pdf}};
         % \draw[dashed] (10cm,-1.6) ellipse (3 and 2);
         \node (txt) at (-2,1) {Clustering};
-        \node (txt) at (-1,-1.6) {Evenly dispersed};
+        \node (txt) at (-1,-1.6) {Dispersed};
         \draw[dashed] ($(-1,-1.6) + (-10:3 and 2)$(P) arc
         (-10:155:3 and 2);
         \node (img) at (10.5,0) {\includegraphics[height=5.5cm]{image/HOMOGENEOUS_NEW/PA/phase_Rtr_l_10.pdf}};
         % \draw[dashed] (10cm,-1.6) ellipse (3 and 2);
         \node (txt) at (8.5,1) {Clustering};
-        \node (txt) at (10,-1.6) {Evenly dispersed};
+        \node (txt) at (10,-1.6) {Dispersed};
         \draw[dashed] ($(10,-2) + (-10:3 and 2)$(P) arc
         (-10:180:3 and 2);
     \end{tikzpicture}
@@ -249,56 +259,57 @@ It is seen that at $Ga \approx 50$ and $\phi \approx 0.1$ we reach the configura
         \node (txt) at (8,1) {Isotropic};
     \end{tikzpicture}
     \caption{
-        (top) Phase diagram of the dimensionless mean square distance to the nearest neighbor, $(\textbf{R}:\textbf{I})/r_m^2$.
+        (top) Phase diagram of the dimensionless mean square distance to the nearest neighbor, $(\text{tr}(\textbf{R})/r_m^2$.
         (bottom) Phase diagram of the dimensionless horizontal components of the anisotropy tensor, $A_{xx}/\text{tr}(\textbf{R})$.  
         (left) Iso-viscous emulsion $\lambda = 1$.
         (right) Viscous droplets $\lambda = 10$ }
     \label{fig:phase}
 \end{figure}
 
-Although, previous studies mainly focused on bubbles or solid particles, it is reasonable to compare the $\lambda = 1$ and $\lambda = 10$ simulations, to the former and the latter cases, respectively. 
-In \citet{bunner2002dynamics} they performed tri-periodic simulation of buoyant bubbles at $Re \approx 10-30$ for various $\phi$.
-They reported a preference for the bubbles to be aligned in pair. 
-Which is consistent with what we observe in \ref{fig:phase} ($\lambda = 1$) since the anisotropy tensor : $A_{xx} \approx 0.15$, for $Ga = 25$ (which correspond roughly to $Re = 25$). 
+\subsubsection*{Discussion}
+%Although, previous studies mainly focused on bubbles or solid particles, it is reasonable to compare the $\lambda = 1$ and $\lambda = 10$ simulations, to the former and the latter cases, respectively. 
+%In \citet{bunner2002dynamics} they performed tri-periodic simulation of buoyant bubbles at $Re \approx 10-30$ for various $\phi$.
+%They reported a preference for the bubbles to be aligned in pair.
+While earlier studies primarily focused on bubbles or solid particles, it is reasonable to draw parallels between simulations with $\lambda = 1$ and $\lambda = 10$, corresponding to the former and latter scenarios, respectively. In \citet{bunner2002dynamics}, buoyant bubbles were simulated in a tri-periodic setup at Reynolds numbers around 10-30 for various volume fractions ($\phi$). The authors noted a tendency for the bubbles to align in pairs.% a finding that aligns with our observations.
+This observation is consistent with what we observe in \ref{fig:phase} ($\lambda = 1$) since the anisotropy tensor : $A_{xx} \approx 0.15$, for $Ga = 25$ (which correspond roughly to $Re = 25$). 
 % Additionally, it is seen that these layers structures are lost at lower volume fraction ($\phi = 0.01$). 
-Furthermore, in \citet{zhang2021direct} they carried out DNS of buoyant bubbly flows in tri-periodic domains.
-Their \textit{Reynolds} numbers range form $Re=22.5\to 18$ for various volume fraction : $\phi = 0.05\to 0.2$ and a fixed \textit{Galileo} number of $Ga = 29$. 
-They observe anisotropic clusters for $\phi >0.1$ as well, and they report that at lower volume fraction these structures are not present. 
-It is consistent with the results reported in \ref{fig:phase} (left) where we can see that the value of $A_{xx}$ clearly decreases for lower $\phi$. 
+Moreover, \citet{zhang2021direct} conducted Direct Numerical Simulations (DNS) of buoyant bubbly flows within tri-periodic domains. The Reynolds numbers varied from $Re=18$ to $22.8$ across different volume fractions, $\phi$, ranging from $0.05$ to $0.2$, with a fixed Galileo number, $Ga$, of $29$. They observed the presence of anisotropic clusters for $\phi > 0.1$, while noting their absence at lower volume fractions. This observation aligns with findings depicted in Figure \ref{fig:phase} (left), where a a small decrease in the value of $A_{xx}$ may be observed for the lowest $\phi$.
+%Furthermore, in \citet{zhang2021direct} they carried out DNS of buoyant bubbly flows in tri-periodic domains.
+%Their \textit{Reynolds} numbers range form $Re=22.5\to 18$ for various volume fraction : $\phi = 0.05\to 0.2$ and a fixed \textit{Galileo} number of $Ga = 29$. 
+%They observe anisotropic clusters for $\phi >0.1$ as well, and they report that at lower volume fraction these structures are not present. 
+%It is consistent with the results reported in \ref{fig:phase} (left) where we can see that the value of $A_{xx}$ clearly decreases for lower $\phi$. 
 
-For solid particles at $Ga = 144$, it is observed in \citet{shajahan2023inertial} that in the dilute regime, ($\phi \approx 0.02$), verticals raft of particles are formed. 
-In our case we could not observe such a phenomenon, meaning that it might arise at even higher viscosity ratio or \textit{Galileo} number. 
-The latter effect is explained by the presence of a more developed wake for dilute solid particles which trap neighboring particles within the wake without repulsing it on the sides. 
-In our case we observe more particles in the verticals directions for $\lambda = 10$ than $\lambda =1$ at $Ga =100$, since $A_{xx}$ is smaller in the former cases.
-Although it is not quite obvious it might be the consequence of the same effects, i.e., the wake of the viscous drop might induce less side-by-side configuration and more vertical nearly stable configuration. 
-DNS at higher $Ga$ and $\lambda$ would be necessary to confirm or not the presence of the wake trapping effect.  
-In the moderately dense regime,  $0.02 < \phi \le 0.1$  \citet{shajahan2023inertial} identified more configuration of particles situated side-by-side. 
-As mentioned above even if it is less pronounce than for $\lambda = 1$ we indeed observe that $A_{xx}$ is higher in these cases, see \ref{fig:phase} (right). 
-Additionally, \citet{almeras2021statistics} carried experiments of liquid-solid fluidized bed with spherical particles. 
+For solid particles at $Ga = 144$, it is observed in \citet{shajahan2023inertial} that in the dilute regime, ($\phi \approx 0.02$), verticals raft of particles are formed. This phenomenon was attributed to the presence of a well-defined wake around individual particles, which effectively traps neighboring particles within the wake without causing repulsion towards the sides.%This effect was explained by the presence of a more developed wake for dilute solid particles which trap neighboring particles within the wake without repulsing it on the sides. 
+In our case, we notice a greater concentration of particles in the vertical directions for $\lambda = 10$ compared to $\lambda = 1$ at $Ga = 100$, as evidenced by the smaller value of $A_{xx}$ in the former case. Although not immediately apparent, this phenomenon could be attributed to similar factors, namely, the wake of the viscous drop potentially inducing fewer instances of particles aligning side-by-side and more instances of vertically stable configurations. DNS at higher $Ga$ and $\lambda$ would be necessary to confirm or not the presence of the wake trapping effect. %To conclusively confirm or refute the presence of this wake trapping effect, it would be necessary to conduct DNS at higher $Ga$ and $\lambda$ values.
+%In our case we observe more particles in the verticals directions for $\lambda = 10$ than $\lambda =1$ at $Ga =100$, since $A_{xx}$ is smaller in the former cases.
+%Although it is not quite obvious it might be the consequence of the same effects, i.e., the wake of the viscous drop might induce less side-by-side configuration and more vertical nearly stable configuration. 
+%DNS at higher $Ga$ and $\lambda$ would be necessary to confirm or not the presence of the wake trapping effect.
+%In our case we could not observe such a phenomenon, meaning that it might arise at larger \textit{Galileo} number or that the approximation of solid particle at for $\lambda = 10$ is too coarse.
+In the moderately dense regime,  $0.02 < \phi \le 0.1$  \citet{shajahan2023inertial} identified more configurations of particles situated side-by-side. 
+As mentioned above even if it is less pronounced than for $\lambda = 1$ we indeed observe that $A_{xx}$ is higher in these cases, see \ref{fig:phase} (right). 
+Additionally, \citet{almeras2021statistics} carried out experiments of liquid-solid fluidized bed with spherical particles. 
 Their Reynolds numbers range between $150\leq Re \leq 360$ depending on the volume fraction $0.14 \leq \phi \leq 0.42$.
-It is observed that particles are most concentrated on the horizontal plane of the test particle when $\phi = 0.14$.
-If the $\lambda = 10$ cases follow the same trend, it is reasonable to expect that the probability of horizontal configurations, already predominant at $Ga =100$, will continue to increase for higher \textit{Galileo} at $\phi  \approx 0.1$. 
+It is observed that particles are most concentrated on the horizontal plane of the reference particle when $\phi = 0.14$.
+If the $\lambda = 10$ cases follow the same trend, it is reasonable to expect that the probability of horizontal configurations, already predominant at $Ga =100$, will continue to increase for higher \textit{Galileo} at $\phi  \approx 0.1$.
 
 
 We would like to end this comparison with the literature with the study of \citet{yin2008lattice} which compares the microstructure of suspensions of rising bubbles with suspensions of sedimenting solid particles.
-They studied two \textit{Reynolds} numbers and two volume fractions : $Re = 5,20$ and  $\phi = 0.05, 0.2$, respectively.
-It is found that : 
+%They studied two \textit{Reynolds} numbers and two volume fractions : $Re = 5,20$ and  $\phi = 0.05, 0.2$, respectively.
+%It is found that :
+The study encompasses two Reynolds numbers ($Re = 5, 20$) and two volume fractions ($\phi = 0.05, 0.2$). Their findings reveal that: 
 \enquote{    
      microstructure in bubble
     suspensions is more anisotropic and inhomogeneous than
     solid particle suspensions of the same volume fraction and
     \textit{Reynolds} number.    
 }. 
-Although we compare emulsions with varying droplets' viscosity rather than bubbles and solid particles' suspension, our conclusion regarding the anisotropy of the flow is consistent with their study.
-Additionally, it is also observed in \citet{yin2008lattice} that the microstructure shape has a clear impact on the mean rising velocity of the dispersed phase.
-Indeed, they observed that a power-law function of $(1-\phi)$ fit perfectly the rising velocity of random and isotropic suspensions, while it is not the case when the microstructure exhibit anisotropic structures. 
-Therefore, as stated in introduction, the knowledge of the microstructure shape (reported in \ref{fig:phase}), is of utmost importance in the objective of building realistic averaged models. 
+%Although we compare emulsions with varying droplets' viscosity rather than bubbles and solid particles' suspension, our conclusion regarding the anisotropy of the flow is consistent with their study.
+%Additionally, it is also observed in \citet{yin2008lattice} that the microstructure shape has a clear impact on the mean rising velocity of the dispersed phase.
+%Indeed, they observed that a power-law function of $(1-\phi)$ fit perfectly the rising velocity of random and isotropic suspensions, while it is not the case when the microstructure exhibit anisotropic structures. 
+%Therefore, as stated in introduction, the knowledge of the microstructure shape (reported in \ref{fig:phase}), is of utmost importance in the objective of building realistic averaged models. 
+While our analysis focuses on emulsions with varying droplet viscosities rather than bubbles and suspended solid particles, our findings regarding the flow's anisotropy align with the study of \citet{yin2008lattice}. 
 
-Ultimately, \ref{fig:A} and \ref{fig:phase} constitutes a significant result of this work as it quantifies the microstructure geometry using only the second rank tensor $\textbf{R}(\textbf{x},t)$.
-Upon a good estimation of the values of $\textbf{I}:\textbf{R}$ and $A_{xx}$ one is able to predict the presence of side-by-side arrangement and clustering effects. 
-For future perspectives, based on the value of $\textbf{R}(\textbf{x},t)$, an approximation of the distribution $P_\text{r}(\textbf{x},\textbf{r},t)$ could be reconstructed by assuming a certain functional form with 2 degrees of freedom.
-Each degree of freedom would correspond to the scalars, $\textbf{R}:\textbf{I}$ and $A_{xx}$.
-This approximated distribution could then be used to take in account of the various microstructure in certain theoretical problems involving the theoretical pair distribution function (\citet{batchelor1972sedimentation}, \citet{hinch1977averaged}, and \citet{zhang2021ensemble}).
+
 
 % In the following we try to explain the origin of the striking difference between $\lambda = 1$ and $\lambda = 10$ on the particle pair distribution.
 % With this objective in mind, we present a meticulous analysis of the particle time of interaction as well as the particles relative averaged velocity fields. 
