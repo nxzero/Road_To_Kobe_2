@@ -39,32 +39,33 @@ We consider a system consisting of two phases, separated by a sharp interface $\
 Each phase subdomain is denoted $\Omega_1(t)$ and $\Omega_2(t)$ for the continuous phase ($1$) and the dispersed phase ($2$) respectively (see \ref{fig:Scheme}). 
 The mathematical and physical definition of $\Sigma(t)$ is by no means straightforward, therefore, the interested reader is refereed to \cite{bothe2022sharp} to have a deeper understanding of sharp interface modeling. 
 The entire domain, denoted as $\Omega$, is defined as the union of $\Omega_1$, $\Omega_2$, and $\Sigma$.
-To track the position of the phase indexed $k$ and the interface, we introduce the phase indicator function and the interface indicator function, 
+To track the position of the phase indexed $k$ and the interfaces, we introduce the phase indicator function and the interface indicator function, 
 \begin{align}
-    \chi_k(\textbf{x},t) &=  \left\{
+    \chi_k(\textbf{x},t) =  \left\{
       \begin{tabular}{cc}
         $1 \;\text{if} \;\textbf{x} \in \Omega_k(t)$\\
         $0 \;\text{if} \;\textbf{x} \notin \Omega_k(t)$
       \end{tabular}
       \right.
       \text{for $k = 1,2$},
-      \label{eq:PIF}\\
-    \delta_I(\textbf{x},t) &=  \left\{
+    %   \label{eq:PIF}
+    && \delta_I(\textbf{x},t) =  \left\{
       \begin{tabular}{cc}
         $1 \;\text{if} \;\textbf{x} \in \Sigma(t)$\\
         $0 \;\text{if} \;\textbf{x} \notin \Sigma(t)$
       \end{tabular}
       \right.,
-      \label{eq:PIF_I}
+      \label{eq:PIF}
 \end{align}
 respectively. 
-In the following, we omit the time and position arguments of $\chi_k$ and $\delta_I$. 
+For clarity, we omit the time and position arguments of $\chi_k(\textbf{x},t)$ and $\delta_I(\textbf{x},t)$ in the following sections. 
 
 \subsection{Local conservation equations}
 \label{sec:local_eq}
 
 For the purpose of clarity, we only consider the specific case of the mass, momentum and energy conservation equations for a buoyant dispersed two phase flow.
-Besides, we restrict the examples to the cases without mass transfer.
+Equally, we consider a constant density and viscosity in each domain as well as a constant surface tension on the interfaces.
+
 
 \subsubsection{Inside the volumes}
 Within phase $k$, we note $\rho_k$ the density, $\textbf{u}_k^0$ the local velocity and $E_k^0$ the local total energy per units of mass.
@@ -97,15 +98,17 @@ All over the domain $\Omega_k(t)$ the mass, momentum and total energy obey these
 \end{align} 
 All along this work the continuous phase will be considered as Newtonian fluid thus, $\bm{\sigma}_1^0 = - p_1^0 \textbf{I} + \bm{\tau}_1^0$ where $\bm{\tau}_1^0$ is the Newtonian stress tensor with $p_1 ^0$ the local pressure and $\bm{\tau}_1^0 = \mu_1[\grad \textbf{u}_1^0+(\grad \textbf{u}_1^0)^T]$ the shear rate. 
 The vector $\textbf{q}_k^0$ represent the thermal energy flux and is often model with a Fourier law : $\textbf{q}_k^0 = -\lambda \grad T_k^0$ where $T_k$ is the temperature and $\textbf{g}$ is the acceleration of gravity which will be the only body force in the present problem. 
-The total energy is decomposed such as, $E_k^0 = e_k^0 + (u_k^0)^2/2$ where  $e_k^0$ is the internal energy which represent the molecular agitation and $(u_k^0)^2/2$ is the kinetic energy per unit of mass.
-This decomposition leads us to two independent equation for $e_k$ and $u_k$, 
+All along this work the superscript $^0$ indicate that the variable is defied at the local or microscopic scale, in opposition to the averaged or macroscopic quantities that will be presented latter. 
+
+The total energy is decomposed in the usual way, i.e. $E_k^0 = e_k^0 + (u_k^0)^2/2$ where  $e_k^0$ is the internal energy which represent the molecular agitation and $(u_k^0)^2/2$ is the kinetic energy per unit of mass.
+This decomposition and the previous set of equations lead us to two independent equations for $e_k$ and $u_k$, namely,
 \begin{align}
     \label{eq:dt_rhou_k2}
     \pddt [\rho_k(u_k^0)^2]  
     + \div [\rho_k(u_k^0)^2\textbf{u}_k^0/2 - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0]
     &=
     \rho_k\textbf{u}_2^0 \cdot \textbf{g}  
-    -  \bm{\sigma}_k^0 : \grad \textbf{u}_k^0 
+    -  \bm{\sigma}_k^0 : \grad \textbf{u}_k^0,
     \\
     \label{eq:dt_rhoe_k}
     \pddt (\rho_ke_k^0)  
@@ -114,17 +117,19 @@ This decomposition leads us to two independent equation for $e_k$ and $u_k$,
         + \textbf{q}_k^0
         )
     &= 
-    \bm{\sigma}_k^0 : \grad \textbf{u}_k^0
+    \bm{\sigma}_k^0 : \grad \textbf{u}_k^0. 
 \end{align} 
-where we can observe that the term $\bm{\sigma}_k^0 : \grad \textbf{u}_k^0$ called the dissipation terms which appears with opposite sign in both conservation equation, which indicate that it plays the role of the transfer term across scales transfer which convert kinetic energy into internal energy. 
+We can observe that the viscous dissipation term, $\bm{\sigma}_k^0 : \grad \textbf{u}_k^0$,  appears with opposite sign in both of the above equations.
+This indicates that $\bm{\sigma}_k^0 : \grad \textbf{u}_k^0$ is the energy that is transformed from kinetic to internal energy. 
 By the use of thermodynamics equilibrium laws one can show that from the internal energy equation one can derive an equation for the local temperature \citet{ishii2010thermo}.
-In this work we display the internal energy equation for completeness, no additional discussion will be given on to quantity. 
-We rather focus on the fluid and particle kinetic energy. 
-Therefore, not much discussion will be provided on the internal energy equation. 
-
+In this work we display the internal energy equation for completeness, no link with the temperature or any other thermodynamic quantity will be given. 
+We will rather focus on the fluid and particle kinetic energy. 
 
 \subsubsection{On interfaces}
-The interface mass and momentum two-dimensional conservation equation which can be viewed as the jump condition at the interface are well established.
+
+On the interface $\Sigma(t)$ the conservation laws take the form of $2d$ conservation laws due to the topology of the interface. 
+They are often viewed as \textit{jump condition} which make the link between the conservation equations in both phases. 
+The interface mass and momentum conservation equation are well established.
 However, the energy conservation law jump condition at the interface is less employed.
 In the most general case the mass, momentum and energy surface equations can be written as, 
 \begin{align}
@@ -149,7 +154,7 @@ In the most general case the mass, momentum and energy surface equations can be 
     \rho_I \textbf{g}
     - \Jump{
         % \rho_k \textbf{u}_k (\textbf{u}_I - \textbf{u}_k)
-        \mathbf{T}_k
+        \bm\sigma^0_k
     }\\
     \label{eq:dt_rhoIE_I}
     \pddt (\rho_I\sigma)  
@@ -171,32 +176,29 @@ Consequently, notice that the diffusive flux $\bm{\sigma}_{I||}^0$ and $\textbf{
 Indeed, it can be shown that only the tangential parts of the diffusive flux plays a role in the surface momentum balance equations, see \citet{slattery2007interfacial}.
 We also introduced the notation $\Jump{\ldots}$, which is defined as $\Jump{\ldots} = \sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$.
 Where $\textbf{n}_k$ is the outward normal vector associated with the domain $\Omega_k$ (see \ref{fig:Scheme}).
-This term account for the discontinuity of the fluxes in each phases across the interfaces.
-The local quantity appearing in are taken as the limit as the bulk quantity on the interface. 
-A mathematical definition is given in \citet{bothe2022sharp}. 
 
-The formulations given by \ref{eq:dt_rho_I},\ref{eq:dt_rhoIu_I}and \ref{eq:dt_rhoI} remain quite general and need some further simplifications. 
-We assume that the momentum diffusive flux of surface is solely due to surface tension, therefore $\bm{\sigma}_I^0  = \gamma (\textbf{I} - \textbf{nn}) = \gamma \textbf{I}_{||}$ where $\gamma$ is the surface tension coefficient which will be assumed constant \citep[Chapter 2]{tryggvason2011direct}.  
+The formulations given by \ref{eq:dt_rho_I},\ref{eq:dt_rhoIu_I}and \ref{eq:dt_rhoI} remains quite general and needs some further simplifications. 
+Indeed, we assume that the momentum diffusive flux of surface is solely due to surface tension, therefore $\bm{\sigma}_I^0  = \gamma (\textbf{I} - \textbf{nn}) = \gamma \textbf{I}_{||}$ where $\gamma$ is the surface tension coefficient which will be assumed constant overall the interfaces \citep[Chapter 2]{tryggvason2011direct}.  
 Note that in a more general case, interfacial viscous stress could be included into $\bm{\sigma}_{I}^0$ \citep{brenner2013interfacial,slattery2007interfacial,nadim1996concise}, nevertheless it will not be addressed in this study. 
 Additionally, we assume the surface density to be negligible thus $\rho_I = 0$ and since we considered no energy accumulation at the interface $\textbf{q}_I=0$. 
 % Assuming no mass exchanges, i.e. the  $\textbf{u}_I^0 = \textbf{u}_k^0$ on $\Sigma(t)$ nor momentum  nor kinetic energy accumulation at the interface
-The surface mass, momentum and total energy balance equations can be rewritten as, 
+Consequently, the interfacial mass, momentum and total energy balance equations reduce to the common expressions :
 \begin{align}
     \label{eq:dt_rho_I}
     \Jump{
         \rho_k (\textbf{u}_I - \textbf{u}_k)
         % \mathbf{T}_k
     }
-    &=0 \\
+    &=0, \\
     \Jump{\bm{\sigma}_k^0} 
     &=
-    \gamma\kappa\textbf{n}
+    \gamma\kappa\textbf{n},
     % + \gradI\sigma 
     \label{eq:surface_tension}\\
     \label{eq:dt_rhoI_EI}
     \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0}
     &= 
-     \gamma\kappa\textbf{n}\cdot \textbf{u}_{I}^0
+     \gamma\kappa\textbf{n}\cdot \textbf{u}_{I}^0,
     % \label{eq:dt_rhoIe_I}
     % \Jump{ \textbf{q}_k^0}eq:dt_rho_I
     % &= 
@@ -208,8 +210,8 @@ Where $\kappa = - \div\textbf{n}$ is the interface curvature.
 % The latter contribution is responsible for the Marangonie effect.
 % This terms 
 \ref{eq:dt_rhoI_EI} is the jump equation for the total energy.
-However, in the following it will be more practical to deal with an equation for the kinetic energy and internal energy. 
-Then, we take the dot product of \ref{eq:surface_tension} with $\textbf{u}_I$ and subtract this new expression to \ref{eq:dt_rhoI_EI} which gives us the following jump condition, 
+However, in the following it will be more practical to deal with an equation for the kinetic and internal energy separately. 
+Thus, we take the dot product of \ref{eq:surface_tension} with $\textbf{u}_I$ and subtract this new expression to \ref{eq:dt_rhoI_EI} which gives us, 
 \begin{align}
     \label{eq:dt_rhoI_uI2}
     \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0}
@@ -221,15 +223,19 @@ Then, we take the dot product of \ref{eq:surface_tension} with $\textbf{u}_I$ an
      0
 \end{align}
 for the interface kinetic energy and the internal interface energy, respectively. 
-The decomposition of the total energy jump condition into \ref{eq:dt_rhoI_uI2} and \ref{eq:dt_rhoIe_I} has been possible thanks to the consideration of no mass transfer in which case $\textbf{u}_I^0=\textbf{u}_k^0$ for $k =1,2$. 
+Notice that this decomposition is possible only under the assumption of no mass transfer in which case $\textbf{u}_I^0=\textbf{u}_k^0$ for $k =1,2$ and a constant surface tension coefficient.
+
 
 \subsubsection{Generic equations}
 
-The following the derivation will be similar for each conservation equation therefor it is useful to define a generic equation.
+Each conservation equation presented above have the same mathematical structure. 
+In the perspective of manipulating these equations it is useful to introduce a generic formulation on which we will carry the derivation.
+For purpose of generality we make no assumption in this general formulation. 
+For example the phase transfer terms will be kept, i.e. $\textbf{u}_I \neq \textbf{u}_k$. 
+
 Let $f_k^0(\textbf{x},t)$ denote a volumetric quantity of arbitrary tensorial order defined in $\Omega_k(t)$.
 Likewise, let $f_I^0(\textbf{x}_I,I)$ represent an arbitrary surface property defined on $\Sigma(t)$.
-Using the strategy outlined in \citep{bothe2022sharp,morel2015mathematical,slattery2007interfacial}, we can derive the local conservation equations for both $f_k^0(\textbf{x},t)$ and $f_I^0(\textbf{x}_I,t)$.
-They read,  
+Using the strategy outlined in \citep{bothe2022sharp,morel2015mathematical,slattery2007interfacial}, we can derive the local conservation equations for both $f_k^0(\textbf{x},t)$ and $f_I^0(\textbf{x}_I,t)$, that is,  
 \begin{align}
     \label{eq:dt_f_k}
     \pddt f_k^0
@@ -255,17 +261,15 @@ They read,
     & \text{ on } \Sigma(t),&
     \label{eq:dt_f_I}
 \end{align}
-for respectively, $f_k^0$ and $f_I^0$.
-The tensors $\mathbf{\Phi}_k^0$ and $\mathbf{\Phi}_{I||}^0$ represent the non-convective fluxes corresponding to $f_k^0$ and $f_I^0$. 
+respectively.
+The tensors $\mathbf{\Phi}_k^0(f_k)$ and $\mathbf{\Phi}_{I||}^0(f_I)$ represent the non-convective fluxes corresponding to $f_k^0$ and $f_I^0$. 
 Notice that $\mathbf{\Phi}_{I||}^0$ also carries the $_{||}$ subscript which implies that only the tangential component of this tensor remain in the surface balance equation. 
-Similarly, $s_k^0$ and $s_I^0$ represent the source terms for $f_k^0$ and $f_I^0$ respectively.
-Lastly, $\textbf{u}_k^0$ corresponds to the velocity field defined in $\Omega_k(t)$, while $\textbf{u}_I^0$ corresponds to the velocity field defined on $\Sigma(t)$.
-
-% \tb{introduce the jump as the lim at each interface, look in math book too}
-
-It is important to note that \ref{eq:dt_f_k} and \ref{eq:dt_f_I} are solely defined within $\Omega_k(t)$ and $\Sigma(t)$ respectively.
+Similarly, $s_k^0(f_k^0)$ and $s_I^0(f_I^0)$ represent the source terms of $f_k^0$ and $f_I^0$, respectively.
+Notice, that in \ref{eq:dt_f_I} we kept the mass transfer term $f_k (\textbf{u}_I^0 - \textbf{u}_k^0)$ for purpose of generality. 
+It is important to note that \ref{eq:dt_f_k} and \ref{eq:dt_f_I} are solely defined within $\Omega_k(t)$ and $\Sigma(t)$, respectively.
+This was also the case for the equations presented in the last two subsections. 
 Consequently, these equations are referred to as local conservation equations.
-The objective of the next two sections is therefore to extend the domain of definition of these two equations to the whole space $\Omega$.
+In the perspective of ensemble averaging the objective of the next two subsections is to extend the domain of definition of these two equations to the whole space $\Omega$.
 
 \subsection{Topological equations}
 
@@ -279,10 +283,9 @@ Using the distribution formalism, one may show that the transport equation of $\
 % \begin{align}
     \label{eq:grad_chi_k}
     \grad \chi_k
-    &= - \delta_I \textbf{n}_k
+    &= - \delta_I \textbf{n}_k. 
 \end{align}
-where we introduced the interface indicator function defined in \ref{eq:PIF_I}. 
-To describe the evolution of $\delta_I$ we take the gradient of \ref{eq:dt_chi_k} and the gradient of \ref{eq:grad_chi_k} which yields two equations of the interface indicator function \citep{morel2007surface},
+Then, to describe the evolution of $\delta_I$ we take the gradient of \ref{eq:dt_chi_k} and the gradient of \ref{eq:grad_chi_k} which yields two equations of the interface indicator function \citep{morel2007surface},
 % \begin{equation}
 %     \pddt \delta_I
 %     + \div \left[(\textbf{u}_I^0\cdot\textbf{n})\textbf{n} \delta_I\right]
@@ -302,7 +305,7 @@ To describe the evolution of $\delta_I$ we take the gradient of \ref{eq:dt_chi_k
     &= \textbf{n} \cdot \grad (\textbf{n} \delta_I).
     \label{eq:grad_delta_I}
 \end{align}
-Then, \ref{eq:dt_chi_k}, \ref{eq:dt_delta_I}, \ref{eq:grad_delta_I} and \ref{eq:grad_chi_k} are commonly referred to as the topological equations for two-phase flows.
+\ref{eq:dt_chi_k}, \ref{eq:dt_delta_I}, \ref{eq:grad_delta_I} and \ref{eq:grad_chi_k} are commonly referred to as the topological equations as it describe the evolution in space and time of the topology.
 
 
 \subsection{Global conservation equations}
@@ -344,12 +347,11 @@ Then, multiplying \ref{eq:dt_f_k} and \ref{eq:dt_f_I} by respectively $\chi_k$ a
     \label{eq:dt_delta_I_f_I}
 \end{align}
 which correspond to the conservation equations for $\chi_kf_k^0$ and $\delta_If_I^0$, respectively.
-The last term on the right hands side of \ref{eq:dt_chi_k_f_k} represent the phase transfer of $f_k$ across the interfaces.
-It will be shown that this term can be related to the drag force and energy fluxes between the continuous and dispersed phase. 
+The last term on the right hands side of \ref{eq:dt_chi_k_f_k} represent the phase transfer of $f_k$ across the interfaces and the non-convective fluxes across phases.
 The set of equations formed by \ref{eq:dt_chi_k_f_k} for $k =1,2$ is commonly known as the \textit{two-fluid} formulation of multiphase flows, to which we add the \textit{jump condition} across the phase given by \ref{eq:dt_delta_I_f_I} \citep{morel2015mathematical,tryggvason2011direct,drew1983mathematical,kataoka1986local}. 
 
 In this work, we prefer to think of those equations as a set of three equations formed by \ref{eq:dt_chi_k_f_k} for $k=1,2$ and \ref{eq:dt_delta_I_f_I}. 
-Therefore, we define the \textit{bulk} property $\textbf{f}$ as $\textbf{f}^0 = \sum_k \chi_k \textbf{f}_k^0 + \delta_I \textbf{f}_I^0$ where $\textbf{f}^0$ represents any property of the flow of arbitrary tensorial order.
+Therefore, we define the \textit{bulk} property $\textbf{f}$ as $\textbf{f}^0 = \sum_k \chi_k \textbf{f}_k^0 + \delta_I \textbf{f}_I^0$ where $\textbf{f}^0$ represents any property of the flow of arbitrary tensorial order at the local scale.
 Then by summing \ref{eq:dt_chi_k_f_k} for $k=1,2$ and \ref{eq:dt_delta_I_f_I}, one obtain the \textit{single-fluid} formulation conservation equation, namely,
 \begin{equation}
     \pddt f^0
@@ -361,7 +363,7 @@ Then by summing \ref{eq:dt_chi_k_f_k} for $k=1,2$ and \ref{eq:dt_delta_I_f_I}, o
     \label{eq:dt_f}
 \end{equation}
 It should be noted that in the literature we rather define the \textit{bulk} quantities as $f^0 = \sum_k \chi_k f_k^0$, while the interfacial component is treated as a source term in \ref{eq:dt_f} \citep{morel2015mathematical,tryggvason2011direct,drew1983mathematical}. 
-Nevertheless, in our case, it is more convenient to consider \textit{bulk} quantities made of three phases. 
+Nevertheless, we want to point out here that with this definition we recover a classic transport equation for the bulk quantity $f^0$ which makes the whole system of equation consistent. 
 
 
 

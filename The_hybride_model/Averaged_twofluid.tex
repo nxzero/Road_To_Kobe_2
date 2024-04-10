@@ -4,17 +4,17 @@ In this study we use the statistical approach to derive the averaged equations o
 Specifically, we use the method described in \citet{zhang2021ensemble} which extended the ensemble average definition of \citet{batchelor1972sedimentation}. 
 In the following we recall some properties of the ensemble average operator. 
 
-Let, $P(\FF)$ be the probability density function that describe the probability of finding the flow in the configuration $\FF$, were $\FF = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a finite set of all the parameters describing the initial flow configuration.
+Let, $P(\FF)$ be the probability density function that describe the probability of finding the flow in the configuration $\FF$, were $\FF = (\lambda_1,\lambda_2,\lambda_3,\ldots)$ is a set of all the parameters describing the initial flow configuration of both phases.
 % \footnote{We assume that the flow can be described by a finite number of parameters related to both phase.}. 
-Then, we define $d\mathscr{P} = P(\FF)d\FF$ as the probable number of flow in the incremental region of the particles' phase space $d\FF$ around $\FF$. 
-It follows from this definition, that the ensemble average of an arbitrary local property $f^0[\textbf{x},t;\FF]$ defined on the whole space $\Omega$, is,
+Then, we define $d\mathscr{P} = P(\FF)d\FF$ as the probable number of flows in the incremental region of the particles' phase space $d\FF$ around $\FF$. 
+It follows from this definition, that the ensemble average of an arbitrary local property $f^0(\textbf{x},t;\FF)$ defined on the whole space $\Omega$, is,
 \begin{equation}
-    f[\textbf{x},t]
-    = \avg{f^0}[\textbf{x},t]
-    =\int f^0[\textbf{x},t;\FF] d\mathscr{P}. 
+    f(\textbf{x},t)
+    = \avg{f^0}(\textbf{x},t)
+    =\int f^0(\textbf{x},t;\FF) d\mathscr{P}. 
     \label{eq:avg}
 \end{equation}  
-Where we dropped the super script $^0$ which referred to the local scale. 
+Note that we dropped the super script $^0$ on $f$ to indicate that this an averaged quantity. 
 % This definition can be applied to Lagrangian properties as well by using the previous formulation, namely $\pavg{q_\alpha}(\textbf{x},t) = \int \delta(\textbf{x} - \textbf{x}_\alpha) q_\alpha(\FF) d\mathscr{P}.$
 It is interesting to mention some mathematical properties of the ensemble average operators. 
 For two arbitrary Eulerian fields $f$ and $h$ we have,
@@ -35,8 +35,13 @@ Additionally, for any phase quantity defined in $\Omega_k$ we introduce the defi
     \label{eq:1_avg}
 \end{equation}
 where, $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$
-and $f_k$ the conditional average of the field $\chi_k f_k^0$ on the phase $k$.
-The fluctuation of a phase-averaged quantity is defined by,
+and $f_k(\textbf{x},t)$ the average of the field $f_k^0$ conditioned on the presence of the phase $k$ at $\textbf{x}$ and time $t$.
+Equally, for interfaces quantities we have 
+\begin{equation}
+    \phi_I f_I (\textbf{x},t) = \avg{\delta_I f_I^0}
+\end{equation}
+with $\phi_I = \avg{\delta_I}$ the interfacial indicator function and $f_I$ the average of $f^0(\textbf{x},t)$ conditioned on the presence of an interface at $\textbf{x}$ and time $t$. 
+The fluctuation of a phase-averaged quantity around its mean is defined by,
 \begin{equation}
     % q_\alpha' = q_\alpha - q_p
     % \;\;\;\;\;\;\text{and}
@@ -45,18 +50,17 @@ The fluctuation of a phase-averaged quantity is defined by,
     \label{eq:def_fluctu}
 \end{equation}
 These definitions lead to the following properties, $\avg{\chi_k f'_k} = 0$. 
-Consequently, the product $\avg{\chi_k f^0_kg^0_k}$ can be decomposed as $\avg{\chi_k f_k^0g_k^0}=\phi_k f_kg_k + \avg{\chi_k f'_kg'_k}$. 
-Note that this decomposition will play a crucial role in the upcoming section. 
+For example, the product $\avg{\chi_k f^0_kg^0_k}$ can be decomposed as $\avg{\chi_k f_k^0g_k^0}=\phi_k f_kg_k + \avg{\chi_k f'_kg'_k}$. 
+This decomposition will play a crucial role in the upcoming section. 
 The ensemble average method is one among others, such as the volume average method\citep{jackson1997locally} or the time average
-\citep{ishii2010thermo}.
-It is shown that all of these averaging technics remains equivalent \citep{jackson1997locally,zhang1997momentum}. 
-
+used in thermodynamic fields \citep{ishii2010thermo}.
+All of these averaging technics remains equivalent \citep{jackson1997locally,zhang1997momentum}. 
 
 \subsection{The averaged conservation equations}
-Now we proceed to the derivation of the averaged equations by first introducing the general formulation of the two-fluid averaged equation, then we expose the mass, momentum and energy equation for the volumetric quantities, and finally we present the averaged jump condition. 
+Now we proceed to the derivation of the averaged equations by first introducing the general formulation of the two-fluid averaged equations, then we expose the mass, momentum and energy equation for the volumetric quantities, and finally we present the averaged jump condition. 
 
 \subsubsection{Generic formulation}
-Applying \ref{eq:avg} on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and considering the properties from \ref{eq:avg_properties} yields the general form of the averaged equations of multiphase flows, namely,
+Applying the ensemble average (\ref{eq:avg}) on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and considering the properties from \ref{eq:avg_properties} yields the general form of the averaged equations of multiphase flows, namely,
 \begin{align}
     \pddt \avg{\chi_k f_k^0}
     +\div \avg{\chi_k f_k^0 \textbf{u}_k^0 - \chi_k \mathbf{\Phi}_k^0}
@@ -83,7 +87,7 @@ Applying \ref{eq:avg} on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and c
     \label{eq:avg_dt_delta_f}
 \end{align}
 Together, \ref{eq:avg_dt_chi_f} for $k=1,2$  and \ref{eq:avg_dt_delta_f}, form the \textit{two-fluid} formulation of averaged multiphase flows problem. 
-One can derive the so-called averaged \textit{single-fluid} formulation by applying \ref{eq:avg} on \ref{eq:dt_f} which directly gives, 
+One can derive the so-called averaged \textit{single-fluid} formulation by applying the average on \ref{eq:dt_f} or summing the above equations, in both cases it gives, 
 \begin{equation}
     \pddt f
     + \div (f \textbf{u} + \avg{f'\textbf{u}'} - \mathbf{\Phi})
@@ -91,11 +95,13 @@ One can derive the so-called averaged \textit{single-fluid} formulation by apply
     s.
     \label{eq:avg_dt_f}
 \end{equation}
-Where we made appear explicitly the fluctuating stress $\avg{f'\textbf{u}'}$. 
+With these definitions it must be understood that $f = \sum_k \phi_k f_k + f_I \phi_I$, $\bm\Phi = \sum_k \phi_k \bm\Phi_k + \bm\Phi_I \phi_I$ and so on. 
 It is interesting to notice that in any volume of fluid method we solve for the fields averaged on a cell volume, thus we actually discretize \ref{eq:avg_dt_f} and solve for the averaged quantities instead of directly solving the local transport equations \ref{eq:dt_f}, which ultimately makes appear the additional stress $\avg{f'\textbf{u}'}$.
 
+
 \subsubsection{Volume equation}
-Using the generic formulation \ref{eq:avg_dt_chi_f} and the local expression of the mass, momentum and total energy equation, i.e. : \ref{eq:dt_rho},\ref{eq:dt_rhou_k} and \ref{eq:dt_rhoE_k} we easily find the averaged form of the mass, momentum and total energy equation~: 
+Using the generic formulation \ref{eq:avg_dt_chi_f} and the local expression of the mass, momentum and total energy equation, i.e. : \ref{eq:dt_rho},\ref{eq:dt_rhou_k} and \ref{eq:dt_rhoE_k} we easily find the averaged form of the mass, momentum and total energy equation.
+They read, 
 \begin{align}
     \label{eq:dt_avg_rho}
     \pddt (\phi_k \rho_k)  
@@ -141,18 +147,22 @@ with the equivalent stress and heat flux are defined as,
     = \rho_k \avg{\chi_k \textbf{u}_k' k_k} 
     - \avg{\chi_k \textbf{u}_k' \cdot \bm{\sigma}_k^0}.
 \end{align*}
-The main differences between these equations and their microscale counterpart, is that we have an additional stress due to fluctuations and a new source term accounting for the exchange across the phases. 
-Especially, the terms $\avg{\chi_k \textbf{u}_k'\textbf{u}_k'}$ will be referred as the Reynolds stress or pseudo turbulent stress. 
-Additionally, the phase averaged total energy equation can be further decompose into three energy components such as,  
+The main differences between these equations and their microscale counterpart, is that : (1) we have introduced a pre factor $\phi_k$ in front of most of the terms
+(2) an additional stress is present, that is the covariance between the quantity to be conserved and the velocity. 
+(3) A new source term appear on the RHS accounting for the exchange across the phases. 
+
+The terms $\avg{\chi_k \textbf{u}_k'\textbf{u}_k'}$ will be referred as the Reynolds stress or pseudo turbulent stress. 
+It has a fundamental importance in the multiphase flow problem and as we see now its trace is related to the mean kinetic energy. 
+Indeed, the phase averaged total energy can be further decompose into three energy components, that is,  
 \begin{align}
     E_k = e_k + k_k + u_k^2/2
     \label{eq:E_def}
 \end{align}
-where $k_1$ is the pseudo-turbulent kinetic energy defined such as, $\phi_k k_k = \avg{\chi_k (u_k')^2/2}$. 
+where $k_1$ is the pseudo-turbulent kinetic energy defined as, $\phi_k k_k = \frac{1}{2}\avg{\chi_k \textbf{u}_k'\cdot \textbf{u}_k'}$. 
 Each of these components represent the averaged agitation at a different scale. 
 From molecular scale for the averaged internal energy $e_k$, to the macroscopic scale with the kinematic energy $u_k^2$, and in between we find the pseudo turbulent energy $k_k$. 
 As a consequence, the total averaged energy equation must be completed by a supplementary equation for $k_k$ or $e_k$. 
-In fact an equation for each of these components can be derived yieldings, 
+In fact an equation for each of these components can be derived using \ref{}, 
 \begin{align}
     \label{eq:dt_avg_uk2}
     &\pddt (\phi_k \rho_ku_k^2/2)  
