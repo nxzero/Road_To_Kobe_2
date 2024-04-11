@@ -60,214 +60,185 @@ To track the position of the phase indexed $k$ and the interfaces, we introduce 
 respectively. 
 For clarity, we omit the time and position arguments of $\chi_k(\textbf{x},t)$ and $\delta_I(\textbf{x},t)$ in the following sections. 
 
-
-\section{General conservation  equations}
-
-\begin{figure}
-    \centering
-    \begin{tikzpicture}
-        \draw (0,0) ellipse (2 and 1);
-        \draw[dashed] (0,0) ellipse (0.5 and 1)node{$A_I$};
-        \draw[->](0,1)--++(0,1)node[right]{\textbf{p}}; 
-        \draw[->](1,0.9)--++(0.2,0.77)node[right]{\textbf{N}}; 
-        \draw[->](0,-0.5)--++(-0.5,0)node[left]{$\textbf{n}_1$}; 
-        \draw[->](0,0.5)--++(0.5,0)node[right]{$\textbf{n}_2$}; 
-        \draw (1,0)node{$V_1$};
-        \draw (-1,0)node{$V_2$};
-    \end{tikzpicture}
-    \caption{Scheme of an arbitrary material control volume.   }
-\end{figure}
-
-Let $f^0$  be an arbitrary quantity to be conserved. 
-Then $\bm\Phi^0$ refer to the non-convective flux of $f^0$. 
-Then $s^0$ refer to source term  related to  $f^0$. 
-Then, for an arbitrary control volume we have, 
-\begin{equation*}
-    \ddt \int_{V} f^0 dV 
-    = 
-    \int_{V} s^0 dV 
-    + \int_{\partial V} \mathbf{\Phi}^0 \cdot \textbf{N} dS,
-\end{equation*}
-where $\textbf{N}$ is the normal of the control volume. 
-Any quantities defined in $V_k$ will be noted with a subscript $_k$ and those who are defined at the interface with $_I$. 
-Therefore, if we decompose any quantity such as $f^0 = \sum_k f_k^0 \chi_k + f_I^0 \delta_I$ we obtain, 
-\begin{multline*}
-    \sum_k\left[\ddt \int_{V_k} f_k^0 dV 
-    - \int_{V_k} s_k^0 dV 
-    - \int_{A_k} \mathbf{\Phi}_k^0 \cdot \textbf{N} dS
-    \right]
-    + \ddt \int_{A_I} f_I^0 dS 
-    - \int_{A_I} s_I^0 dS 
-    - \int_{C} \mathbf{\Phi}_I^0 \cdot \textbf{p} dC 
-    = 0
-\end{multline*}
-Using the Reynolds transport theorem on volume integral yields,
-\begin{align*}
-    \ddt \int_{V_k} f_k^0 dV 
-    &= \int_{V_k} \pddt f_k^0 dV 
-    + \int_{A_I \cup A_k} f_k^0 \textbf{u} \cdot \textbf{n}_k dS\\
-    &= \int_{V_k} \left[
-        \pddt f_k^0  + \div (f_k^0 \textbf{u}_k^0) 
-    \right]dV 
-    + \int_{A_I} f_k^0 (\textbf{u}_I^0 - \textbf{u}_k^0) \cdot \textbf{n}_k dS\\
-\end{align*}
-where $\textbf{n}_k$ is the normal of the interface $A_I$ on the outward direction of the $k$ phase. 
-
-The second term is integrated only over $A_I$ as it is the interface between both phase and not the one of the control volume. 
-Using the Ledbiz rule for integration on surface yields, 
-\begin{align*}
-    \ddt \int_{A_I} f_I^0 dS 
-    &= \int_{A_I} \left[
-        \pddt f_I^0  + \divI (f_I^0 \textbf{u}_I^0) 
-    \right]dS
-\end{align*}
-
-Regarding the non-convective integrals, by using the divergence theorem we can write\citep{nadim1996concise}, 
-\begin{align*}
-    \int_{A_k} \mathbf{\Phi}_k^0\cdot \textbf{n}_k dS
-    = \int_{V_k} \div\mathbf{\Phi}_k^0 dV
-    - \int_{A_I} \mathbf{\Phi}_k^0\cdot \textbf{n}_k dS. 
-\end{align*}
-The last term can also be re-written with the divergence theorem \citet{nadim1996concise},
-\begin{align*}
-    \int_{C} \mathbf{\Phi}_I^0\cdot \textbf{p} dC 
-    = \int_{A_I} \divI \mathbf{\Phi}_I^0 dS
-    - \int_{A_I} \mathbf{\Phi}_I^0 \cdot \textbf{n} \div \textbf{n} dS
-\end{align*}
-Notice that whether it is $\textbf{n}_1$ or $\textbf{n}_2$ the second term on the left conserve the same sign. 
-
-Taking in account these reformulations, we can re-write the integral balance previously exposed by, 
-\begin{align*}
-    \sum_k \int_{V_k}{\left[
-        \pddt f_k^0
-        + \div (f_k^0\textbf{u}_k^0 - \bm\Phi_k^0)
-        - s_k^0
-    \right]}\\
-    + \sum_k\int_{A_I}{\left[
-        f_k^0(\textbf{u}_I^0 - \textbf{u}_k^0)
-        + \bm\Phi_k^0
-    \right]\cdot \textbf{n}_k}
-    + \int_{A_I}{\left[
-        \pddt f_I^0 
-        + \divI (f_I^0 \textbf{u}_I - \bm\Phi_I^0)
-        + \bm\Phi_I^0 \cdot \textbf{n} \div \textbf{n}
-    \right]} =0 
-\end{align*}
-
-Every integral of volume must be balanced independently of the surface integral. 
-This means that we can separate this equation into two, 
-\begin{equation*}
-    \pddt f_k  
-    + \div (f_k \textbf{u}_k - \mathbf{\Phi}_k) 
-    =\textbf{S}_k. 
-\end{equation*}
-\begin{equation}
-    \pddt f_I  
-    + \divI (f_I \textbf{u}_I -\mathbf{\Phi}_I)
-    + \mathbf{\Phi}_I \cdot \textbf{n} \div \textbf{n}
-    = 
-    + \textbf{S}_I
-    - \sum_k \left[
-    f_k (\textbf{u}_I - \textbf{u}_k)
-    + \mathbf{\Phi}_k
-    \right] \cdot \textbf{n}_k. 
-    \label{ap:eq:dt_f_I}
-\end{equation}
-These equations are valid in $\Omega_k(t)$ and $\Sigma(t)$ for volume and surface quantity, respectively. 
-
-Now let's reformulate the third term of the surface balance equation. 
-Let $\textbf{F}$ be an arbitrary surface quantity. 
-It can be split into two part such as, 
-\begin{equation*}
-    \textbf{F} 
-    = \textbf{F} \cdot \textbf{n}\textbf{n}
-    + (\textbf{I} - \textbf{nn})  \cdot \textbf{F}
-    = \textbf{F}_\bot + \textbf{F}_{||}.
-\end{equation*}
-Injecting this decomposition inside the Gauss theorem on an arbitrary control volume it can be shown that, 
-\begin{equation*}
-    \int_{S} \divI \textbf{F}dS
-    = 
-    \int_{S} \left[\divI \textbf{F}_{||} 
-    + \textbf{F} \cdot \textbf{n} \div\textbf{n}
-    \right]dS
-\end{equation*}
-Consequently, we have the following relation,
-\begin{equation*}
-    \int_{A_I} \divI \bm\Phi_I^0dS
-    = 
-    \int_{A_I} \left[\divI \bm\Phi_{I||}^0
-    + \bm\Phi_I^0 \cdot \textbf{n} \div\textbf{n}
-    \right]dS
-\end{equation*}
-
-By taking in account this relation it is easy to take or not the normal components of a vector to the interface within the balance equaitons. 
-For example, we can write either, 
-\begin{equation}
-    \pddt f_I  
-    + \divI (f_I \textbf{u}^I_{||} -\mathbf{\Phi}^I_{||})
-    + f_I \textbf{u}_I \cdot \textbf{n} \div \textbf{n}
-    - \textbf{S}_I
-    = 
-    - \sum_k \left[
-    f_k (\textbf{u}_I - \textbf{u}_k)
-    + \mathbf{\Phi}_k
-    \right] \cdot \textbf{n}_k 
-    \label{ap:eq:dt_f_I2}
-\end{equation}
-Or 
-\begin{equation}
-    \pddt f_I  
-    + \divI (f_I \textbf{u}^I -\mathbf{\Phi}^I_{||})
-    - \textbf{S}_I
-    = 
-    - \sum_k \left[
-    f_k (\textbf{u}_I - \textbf{u}_k)
-    + \mathbf{\Phi}_k
-    \right] \cdot \textbf{n}_k 
-    \label{ap:eq:dt_f_I2}
-\end{equation}
-where we have changed the flux term formulation. 
-\tb{Daniel prefer la formulation 1 car elle fait apparaitre la vitesse normal a l'interface est les fluxs sont des "vrai" fluxs dans le plan 2D}
-
-\tb{
-    Meme si c'est moins physique ici on prefere la 2) car elle est plus compact 
-}
-
-
-% Using the distribution formalisum together with the Reynolds transport theorem we may write that this equation :
-% \begin{equation*}
-%     \ddt \int_{V} f^0 dV 
-%     =
-%     \int_{V} \left[
-%         \pddt f^0  + \div (f^0 \textbf{u}^0) 
-%     \right]dV 
-%     = 
-%     \int_{V} s^0 dV 
-%     + \int_{\partial V} \mathbf{\Phi}^0 \cdot \textbf{N} dS,
-% \end{equation*}
-% In the sens of distribution we know that the derivative of a generalized function $f^0$ can be written \citep{appel2007mathematics}, 
-% \begin{equation}
-%     \grad f^0 = \sum_k \chi_k \grad f^0_k 
-%     + \delta_I (f^0_2 - f^0_1) \textbf{n}_1
-% \end{equation}
-% and in general we can decompose any function with $f^0 = \sum_k \chi_k f^0_k + \delta_I f_I^0$. 
-% Therefore, we can re write the previous equation such that,
-% \begin{equation*}
-%     \int_{V} \pddt(\sum_k \chi_k f^0_k + \delta_I f_I^0) 
-%     + \div(f^0_k \textbf{u}_k^0)
-%     dV 
-%     = 
-%     \int_{V} (\sum_k \chi_k s^0_k + \delta_I s_I^0) dV 
-%     + \int_{\partial V} (\sum_k \chi_k f^0_k + \delta_I f_I^0) \cdot \textbf{N} dS,
-% \end{equation*}
-
-
 \subsection{Local conservation equations}
 \label{sec:local_eq}
 
+For the purpose of clarity, we only consider the specific case of the mass, momentum and energy conservation equations for a buoyant dispersed two phase flow.
+Equally, we consider a constant density and viscosity in each domain as well as a constant surface tension on the interfaces.
 
 
+\subsubsection{Inside the volumes}
+Within phase $k$, we note $\rho_k$ the density, $\textbf{u}_k^0$ the local velocity and $E_k^0$ the local total energy per units of mass.
+All over the domain $\Omega_k(t)$ the mass, momentum and total energy obey these conservation laws :
+\begin{align}
+    \label{eq:dt_rho}
+    \pddt \rho_k  
+    + \div (
+        \rho_k\textbf{u}_k^0
+    )
+    &= 
+    0\\
+    \label{eq:dt_rhou_k}
+    \pddt (\rho_k\textbf{u}_k^0)  
+    + \div (
+        \rho_k\textbf{u}_k^0\textbf{u}_k^0
+        - \bm{\sigma}_k^0 
+    )
+    &= 
+    \rho_k \textbf{g}\\
+    \label{eq:dt_rhoE_k}
+    \pddt (\rho_kE_k^0)  
+    + \div (
+        \rho_kE_k^0\textbf{u}_k^0
+        + \textbf{q}_k^0
+        - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0 
+        )
+    &= 
+    \textbf{u}_k^0 \cdot \textbf{g}  \rho_k
+\end{align} 
+All along this work the continuous phase will be considered as Newtonian fluid thus, $\bm{\sigma}_1^0 = - p_1^0 \textbf{I} + \bm{\tau}_1^0$ where $\bm{\tau}_1^0$ is the Newtonian stress tensor with $p_1 ^0$ the local pressure and $\bm{\tau}_1^0 = \mu_1[\grad \textbf{u}_1^0+(\grad \textbf{u}_1^0)^T]$ the shear rate. 
+The vector $\textbf{q}_k^0$ represent the thermal energy flux and is often model with a Fourier law : $\textbf{q}_k^0 = -\lambda \grad T_k^0$ where $T_k$ is the temperature and $\textbf{g}$ is the acceleration of gravity which will be the only body force in the present problem. 
+All along this work the superscript $^0$ indicate that the variable is defied at the local or microscopic scale, in opposition to the averaged or macroscopic quantities that will be presented latter. 
+
+The total energy is decomposed in the usual way, i.e. $E_k^0 = e_k^0 + (u_k^0)^2/2$ where  $e_k^0$ is the internal energy which represent the molecular agitation and $(u_k^0)^2/2$ is the kinetic energy per unit of mass.
+This decomposition and the previous set of equations lead us to two independent equations for $e_k$ and $u_k$, namely,
+\begin{align}
+    \label{eq:dt_rhou_k2}
+    \pddt [\rho_k(u_k^0)^2]  
+    + \div [\rho_k(u_k^0)^2\textbf{u}_k^0/2 - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0]
+    &=
+    \rho_k\textbf{u}_2^0 \cdot \textbf{g}  
+    -  \bm{\sigma}_k^0 : \grad \textbf{u}_k^0,
+    \\
+    \label{eq:dt_rhoe_k}
+    \pddt (\rho_ke_k^0)  
+    + \div (
+        \rho_ke_k^0\textbf{u}_k^0
+        + \textbf{q}_k^0
+        )
+    &= 
+    \bm{\sigma}_k^0 : \grad \textbf{u}_k^0. 
+\end{align} 
+We can observe that the viscous dissipation term, $\bm{\sigma}_k^0 : \grad \textbf{u}_k^0$,  appears with opposite sign in both of the above equations.
+This indicates that $\bm{\sigma}_k^0 : \grad \textbf{u}_k^0$ is the energy that is transformed from kinetic to internal energy. 
+By the use of thermodynamics equilibrium laws one can show that from the internal energy equation one can derive an equation for the local temperature \citet{ishii2010thermo}.
+In this work we display the internal energy equation for completeness, no link with the temperature or any other thermodynamic quantity will be given. 
+We will rather focus on the fluid and particle kinetic energy. 
+
+\subsubsection{On interfaces}
+
+\tb{
+    dans cette section il y a une petite incoherence sur les equation energetique de surface. 
+    En fait $E_I^0 = e_I^0 + (u_I^0)^2$ avec $e_I$ energie iinerne de surface qui est liée a la tension de surface par $\gamma = e_I − T_I s_I$ avec $T$ la temperature et $s$ l'entropie. bref faut que je mette tout ca au claire. 
+    Pour résoudre le pbl voir\cite{ishii2010thermo}
+}
+
+On the interface $\Sigma(t)$ the conservation laws take the form of $2d$ conservation laws due to the topology of the interface. 
+They are often viewed as \textit{jump condition} which make the link between the conservation equations in both phases. 
+The interface mass and momentum conservation equation are well established.
+However, the energy conservation law jump condition at the interface is less employed.
+In the most general case the mass, momentum and energy surface equations can be written as\citep{morel2015mathematical}, 
+\begin{align}
+    \label{eq:dt_rhoI}
+    \pddt (\rho_I)  
+    + \divI (
+    \rho_I\textbf{u}_I^0
+    -\sigma \textbf{I}_{||} )
+    &= 
+    0
+    % \Jump{
+    %     \rho_k (\textbf{u}_I - \textbf{u}_k)
+        % \mathbf{T}_k
+    % }
+    \\
+    \label{eq:dt_rhoIu_I}
+    \pddt (\rho_I\textbf{u}_I^0)  
+    + \divI (
+    \rho_I\textbf{u}_I^0\textbf{u}_I^0
+    - \bm{\sigma}_{I||}^0)
+    &= 
+    \rho_I \textbf{g}
+    - \Jump{
+        % \rho_k \textbf{u}_k (\textbf{u}_I - \textbf{u}_k)
+        \bm\sigma^0_k
+    }\\
+    \label{eq:dt_rhoIE_I}
+    \pddt (\rho_IE_I^0)  
+    + \divI (
+        \rho_IE_I^0\textbf{u}_I^0
+        - \textbf{u}_I^0 \cdot \bm{\sigma}_I^0 
+        + \textbf{q}_{I||}^0
+        )
+    &= 
+    \textbf{u}_k^0 \cdot \textbf{g}  \rho_I
+    - \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0}
+\end{align} 
+where, $\rho_I$ is the mass per unit of surface of the interface, $\textbf{u}_I^0$ is the local velocity of the interface $\Sigma(t)$, $\bm{\sigma}_I^0$ is the local momentum diffusive flux of surface, $\textbf{q}_I^0$ is the local internal energy diffusive flux of surface and $E_I^0 = e_I^0 + \frac{1}{2}(u_I^0)^2$ is the total energy at the interface, with $e_I^0$ the interface internal energy. 
+We introduced the surface divergence operator defined as $\divI ()= (\textbf{I}-\textbf{nn})\cdot \div ()$, which correspond to the divergence operator projected on $\Sigma(t)$. 
+Throughout this work we use the subscript  $_{||}$ to indicate the projection of a quantity onto the plane tangential to the surface $\Sigma(t)$. 
+Specifically, for an arbitrary quantity $\textbf{f}$ defined on $\Sigma(t)$, we denote its tangential projection as $\textbf{f}_{||}^0 = (\textbf{I}-\textbf{nn})\cdot \textbf{f}^0$. 
+We also employ the subscript $_I$ to indicate any quantity inherently defined on the interface. 
+Consequently, notice that the diffusive flux $\bm{\sigma}_{I||}^0$ and $\textbf{q}_{I||}^0$ appear as quantity projected on the surface tangential plane.
+Indeed, it can be shown that only the tangential parts of the diffusive flux plays a role in the surface momentum balance equations, see \citet{slattery2007interfacial}.
+We also introduced the notation $\Jump{\ldots}$, which is defined as $\Jump{\ldots} = \sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$.
+Where $\textbf{n}_k$ is the outward normal vector associated with the domain $\Omega_k$ (see \ref{fig:Scheme}).
+
+The formulations given by \ref{eq:dt_rho_I},\ref{eq:dt_rhoIu_I}and \ref{eq:dt_rhoI} remains quite general and needs some further simplifications. 
+Indeed, we assume that the momentum diffusive flux of surface is solely due to surface tension, therefore $\bm{\sigma}_I^0  = \gamma (\textbf{I} - \textbf{nn}) = \gamma \textbf{I}_{||}$ where $\gamma$ is the surface tension coefficient which will be assumed constant overall the interfaces \citep[Chapter 2]{tryggvason2011direct}.  
+Note that in a more general case, interfacial viscous stress could be included into $\bm{\sigma}_{I}^0$ \citep{brenner2013interfacial,slattery2007interfacial,nadim1996concise}, nevertheless it will not be addressed in this study. 
+Additionally, we assume the surface density to be negligible thus $\rho_I = 0$ and since we considered no energy accumulation at the interface $\textbf{q}_I=0$.
+\tb{However, the total energy is not null, in fact in these circumstances $E_I^0 \rho_I = \gamma$ for a reason that I can not yet explain. }
+% Assuming no mass exchanges, i.e. the  $\textbf{u}_I^0 = \textbf{u}_k^0$ on $\Sigma(t)$ nor momentum  nor kinetic energy accumulation at the interface
+Consequently, the interfacial mass, momentum and total energy balance equations reduce to the common expressions :
+\begin{align}
+    \label{eq:dt_rho_I}
+    \Jump{
+        \rho_k (\textbf{u}_I - \textbf{u}_k)
+        % \mathbf{T}_k
+    }
+    &=0, \\
+    \Jump{\bm{\sigma}_k^0} 
+    &=
+    \divI\bm\sigma^0_{I||}
+    =
+    \gamma\kappa\textbf{n},
+    % + \gradI\sigma 
+    \label{eq:surface_tension}\\
+    \label{eq:dt_rhoI_EI}
+    \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0}
+    &=
+    -\pddt \gamma - \divI(\gamma \textbf{u}_I - \bm\sigma^0_{I||}\cdot \textbf{u}_I^0 )
+    =
+    \gamma\kappa\textbf{n}\cdot \textbf{u}_{I}^0,
+    % +
+    % \label{eq:dt_rhoIe_I}
+    % \Jump{ \textbf{q}_k^0}eq:dt_rho_I
+    % &= 
+    %  0
+\end{align}
+respectively. 
+Where $\kappa = - \div\textbf{n}$ is the interface curvature.
+% In \ref{eq:surface_tension}, we can clearly identify two contributions : the first one related to the curvature, and the second one from the non-constant surface tension coefficient along the surface. 
+% The latter contribution is responsible for the Marangonie effect.
+% This terms 
+\ref{eq:dt_rhoI_EI} is the jump equation for the total energy.
+However, in the following it will be more practical to deal with an equation for the kinetic and internal energy separately. 
+Thus, we take the dot product of \ref{eq:surface_tension} with $\textbf{u}_I$ and subtract this new expression to \ref{eq:dt_rhoI_EI} which gives us, 
+\begin{align}
+    \label{eq:dt_rhoI_uI2}
+    \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0}
+    &=
+     \gamma\kappa\textbf{n}\cdot \textbf{u}_{I}^0\\
+    \label{eq:dt_rhoIe_I}
+    \Jump{ \textbf{q}_k^0}
+    &= 
+     0
+\end{align}
+for the interface kinetic energy and the internal interface energy, respectively. 
+Notice that this decomposition is possible only under the assumption of no mass transfer in which case $\textbf{u}_I^0=\textbf{u}_k^0$ for $k =1,2$ and a constant surface tension coefficient.
+
+
+\subsubsection{Generic equations}
 
 Each conservation equation presented above have the same mathematical structure. 
 In the perspective of manipulating these equations it is useful to introduce a generic formulation on which we will carry the derivation.
@@ -312,8 +283,6 @@ This was also the case for the equations presented in the last two subsections.
 Consequently, these equations are referred to as local conservation equations.
 In the perspective of ensemble averaging the objective of the next two subsections is to extend the domain of definition of these two equations to the whole space $\Omega$.
 
-
-\tb{Mettre momentum }
 \subsection{Topological equations}
 
 Using the distribution formalism, one may show that the transport equation of $\chi_k$ from \ref{eq:PIF} obey the following relations \citep{drew1983mathematical} 

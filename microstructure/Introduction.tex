@@ -4,13 +4,16 @@ Buoyancy-driven droplet flows are encountered in many chemical engineering proce
 The usual engineering practice to model such facilities is to make use of the averaged Navier-Stokes equations and Population Balance Equations (PBE) \citep{castellano2019}. % \paragraph*{Why microstructure is interesting :}
 These methods necessitate closure laws and a deep understanding of particle pair statistics \citep{simonin1996}.
 Especially, these closures laws dependent highly on the physical properties of the fluids and of the statistically steady state particles' arrangement, that is called in this context : the microstructure. 
-Specifically in the Stokes flow regime for a dilute ordered array consisting of a periodic arrangement of spherical inclusionsthe dimensionless velocity of the suspension experiences a decrease proportional to the cube root of the volume fraction. Conversely, in the case of a random array of freely moving particles, the dimensionless velocities decrease linearly with the volume fraction \citep{saffman1973}.
+Specifically in the Stokes flow regime for a dilute ordered array consisting of a periodic arrangement of spherical inclusions the dimensionless velocity of the suspension experiences a decrease proportional to the cube root of the volume fraction. 
+Conversely, in the case of a random array of freely moving particles, the dimensionless velocities decrease linearly with the volume fraction \citep{saffman1973}.
 %Specifically for a dilute ordered array consisting of a periodic arrangement of spherical inclusions the dimensionless velocity of the suspension decreases with the volcume fraction with a power 1/3 of the volume fraction. in contrast for a random array of freely moving particle the dimensionless velocitys decreases linearly with the volume fraction.
 In inertial regimes, an example is given in \citet{yin2008lattice}, where they demonstrate that the mean rise velocity of buoyant mono disperses bubbly flows can be expressed with a power-law of $(1-\phi)$ (where $\phi$ is the particle volume fraction) for random particles' arrangement.
 In contrast, when the microstructure exhibits anisotropic particles' structures this power-law doesn't fit the results anymore. This feature is also exemplified in \citet{loisy2017}.  
 Consequently, the mean drag force or mean drift velocity of suspensions, which are crucial closures in two-phase flow problems, depend on the microstructure geometry.  
-Another pertinent example involves poly-disperse flows in our industrial contexts. Here, Population Balance Equations (PBE) come into play for modeling droplet size distribution \citep{randolph2012theory}. PBE relies on the coalescence kernel, acting as a source term delineating droplet coalescence rates. This kernel varies with microstructure and the relative kinematics of particle pairs \citep{chesters1991modelling}.
-Hence, statistical data on particle pairs become crucial in averaged models.
+Another pertinent example involves poly-disperse flows in our industrial contexts. Here, PBE come into play for modeling droplet size distribution \citep{randolph2012theory}. 
+PBE relies on the coalescence kernel, acting as a source term delineating droplet coalescence rates. 
+This kernel varies with microstructure and the relative kinematics of particle pairs \citep{chesters1991modelling}.
+Hence, statistical data on particle pairs become crucial in averaged models. 
 Consequently, this study aims to characterize the microstructure of an emulsion and the relative kinematics of particle pairs across a broad spectrum of dimensionless parameters. %This endeavor seeks to enhance the accuracy of averaged two-phase flow equations and, more broadly, to deepen our understanding of droplet flows.
 
 %A second example, which is relevant for our industrial applications, is the one of poly-disperse flows.
@@ -21,7 +24,11 @@ Consequently, this study aims to characterize the microstructure of an emulsion 
 % \paragraph*{Biblio physics :}
 %Computational methods have become increasingly valuable tools for investigating particle interactions and spatial distributions. 
 
-One of the pioneering study dedicated to the microstructure of bubbly flows via Direct Numerical Simulations (DNS) was undertaken by \citet{bunner2002dynamics}. They conducted tri-periodic simulations focusing on the behavior of nearly spherical rising bubbles in the regime of moderate inertia, characterized by a Reynolds number of approximately 15. In their investigation involving around 30 bubbles within a tri-periodic domain, they noted a tendency for the bubbles to align horizontally in pairs, along with the identification of horizontal arrays of particles. An illustration depicting such a microstructure is provided in Figure \ref{fig:scheme_clusters} (Case 3). Numerous other studies have investigated the microstructures of bubbly flows using DNS, including those by \citet{yin2008lattice,roghair2011drag,zhang2023evolution}
+One of the pioneering study dedicated to the microstructure of bubbly flows via Direct Numerical Simulations (DNS) was undertaken by \citet{bunner2002dynamics}. 
+They conducted tri-periodic simulations focusing on the behavior of nearly spherical rising bubbles in the regime of moderate inertia, characterized by a Reynolds number of approximately 15. 
+In their investigation involving around 30 bubbles within a tri-periodic domain, they noted a tendency for the bubbles to align horizontally in pairs, along with the identification of horizontal arrays of particles. 
+An illustration depicting such a microstructure is provided in \ref{fig:scheme_clusters} (Case 4). 
+Numerous other studies have investigated the microstructures of bubbly flows using DNS, including those by \citet{yin2008lattice,roghair2011drag,zhang2023evolution}
 %One of the pioneering studies that investigated bubbly flows' microstructure using DNS is \citet{bunner2002dynamics}. 
 %They conducted tri-periodic simulations of nearly spherical rising bubbles in the low but finite inertial regime, with a Reynolds number of about 15. 
 %For about $30$ bubbles in a tri-periodic domain they observed a preference for the bubbles to be aligned in pairs horizontally and identified horizontal rafts of particles. 
@@ -61,17 +68,20 @@ If one wishes to build relevant statistics, they may need to conduct simulations
 However, depending on the numerical method used, one may encounter difficulties in preventing coalescence between droplets which is necessary to reach a steady state regime. 
 Indeed, The Volume-of-Fluid (VoF) method, which is the method used in this work, is known to experience premature coalescence between droplets or bubbles \citep{innocenti2020direct}.
 Several methods have been proposed to address this issue, including those by \citet{roghair2011drag}, \citet{hidman2023assessing}, \citet{balcazar2015multiple}, \citet{zhang2023evolution}, and \citet{karnakov2022computing}. 
-However, none of these methods are ideal for our purpose, either because they may lead to non-physical behavior or because they are computationally expensive. Therefore, an algorithm to prevent coalescence would enable us to perform DNS for arbitrarily long times with a fixed population of droplets within a VoF framework.
+The methods used by these studies are either based on front-tracking strategy, or by using one volume of fluid tracer per droplet.
+Or even by adding of a non-physical interfacial force to prevent coalescence. 
+As it will discuss in the body of the text none of these methods are ideal for our purpose, either because they may lead to non-physical behavior or because they are computationally expensive. 
+Therefore, an algorithm to prevent coalescence would enable us to perform DNS for arbitrarily long times with a fixed population of droplets within a VoF framework.
 
 % \paragraph*{Plan: }
 %Therefore, within a multiscale strategy, 
 
 In this work, we conduct tri-periodic DNS of mono-disperse buoyancy-driven suspensions of drops. 
 We begin in \ref{sec:methodo} by outlining the simulations' methodology, and describe our whole new algorithm which permits us to prevent numerical coalescence between droplets. 
-Following that, we briefly introduce the \textit{Nearest Particle Statistics} framework. 
+Following that, we briefly introduce the \textit{Nearest Particle Statistics} framework of \citet{zhang2023evolution}. 
 In \ref{sec:microstructure}, we delve into an analysis of the microstructure geometry and identify structures such as it is depicted \ref{fig:scheme_clusters} with respect to the dimensionless parameters of the present problem. 
 %Then, in \ref{sec:time}, we discuss the relevant timescale of the particles pair interaction, once again using the \textit{Nearest Particle Statistics}. 
-We conclude this study in \ref{sec:velocity}. %with a thorough analysis of the particles' pair relative velocity and draw conclusions on their implications for the averaged models.
+ %with a thorough analysis of the particles' pair relative velocity and draw conclusions on their implications for the averaged models.
  
 \begin{figure}
     \hfill
@@ -227,8 +237,9 @@ We conclude this study in \ref{sec:velocity}. %with a thorough analysis of the p
 The gray disk represent droplets in a three-dimensional space. 
 The vertical direction is the one of the gravity. 
 (\textit{Case 1}) Homogeneous arrangement of droplets, referred as homogeneous microstructure.
-(\textit{Case 2}) The isotropic non-homogeneous microstructure where we  observe the presence of clusters.
-This type of microstructure is refereed as clustered microstructure. 
+(\textit{Case 2}) The isotropic non-homogeneous microstructure where we  observe the presence of clusters, meaning that the particles are close to each other in average.
+The opposite scenario where particles are in average far from each other is also identified. 
+It is an Isotropic and non-homogeneous misconstrues as well.  
 (\textit{Case 3}) The non-isotropic non-homogeneous microstructure where we observe the presence of stratified arrangements.
 This type of microstructure is refereed as layered microstructure. 
 }

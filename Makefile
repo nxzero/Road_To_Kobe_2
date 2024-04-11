@@ -20,8 +20,9 @@ proper: clean
 	-rm note_de_calcul.pdf
 	-rm study_on_surface_tension.pdf
 	-rm The_hybride_model_diapo.pdf
-	-rm The_hybride_model_for_fluid_particles.pdf
+	-rm The_hybride_model.pdf
 	-rm Pseudo_turb.pdf
 	-rm ictam2024_latex_template.pdf
 	-rm Energy_balance_equaitons.pdf
 	-rm Anisotropic_particles.pdf
+	-rm Closure_hybrid.pdf
