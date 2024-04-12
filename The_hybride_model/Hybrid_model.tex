@@ -96,3 +96,99 @@ This equation will share the same source terms as the particle phase equations.
 
 In conclusion, to obtain a consistent model, one must have the same number of source terms in the fluid phase equation as the number of equation in the particle phase. 
 Only in that way, one is able to reach an equilibrium between the internal particles'moments and the fluid phase stress. 
+
+
+
+\subsubsection*{Equivalence with PBE equations ?? ?? !!}
+
+The ensemble average of a Lagrangian property is, 
+\begin{equation}
+    \pavg{q_i}(\textbf{x},t)
+    = \int \sum_i \delta(\textbf{x} - \textbf{x}_i(\FF,t)) q_i(\FF,t) d\PP
+\end{equation}
+This ensemble average can in fact be reformulated according to 
+\begin{equation}
+    \pavg{q_\alpha}(\textbf{x},t)
+    = \int_\mathbb{R} \avg{\delta_i q_i}[\textbf{x},t,p] dp
+\end{equation}
+where $p$ is a scalar property such as the volume or diameter of a particle and, 
+\begin{equation}
+    \avg{\delta_i q_i}[\textbf{x},t,p]
+    = \int \sum_i 
+    \delta(\textbf{x} - \textbf{x}_i(\FF,t)) 
+    \delta(p - p_i(\FF,t)) 
+    q_i(\FF,t) d\PP
+\end{equation}
+is the conditional average of the particle property $q_i$ on particle which have a property $p_i$ equal to $p$. 
+ 
+Now let's $p = p_0 + p'$ then we can write, 
+\begin{equation}
+    \delta(p - p_i)
+    = 
+    \delta(p_0 - p_i + p' )
+    = 
+    \delta(p_0 - p_i  )
+    + p' \partial_{p_0} \delta(p_0 - p_i  )
+    + \ldots
+\end{equation}
+Then, 
+\begin{align}
+    \avg{\delta_i q_i}[\textbf{x},t,p]
+    = \int \sum_i 
+    \delta(\textbf{x} - \textbf{x}_i(\FF,t)) 
+    [  \delta(p_0 - p_i  )
+    + p' \partial_{p_0} \delta(p_0 - p_i  )
+    + \ldots]
+    q_i(\FF,t) d\PP\\
+    =
+    \avg{\delta_i q_i}[\textbf{x},t,p_0]
+    + p' \partial_{p_0}\avg{\delta_i q_i}[\textbf{x},t,p_0] 
+    + \ldots\\
+\end{align}
+\begin{align}
+    \avg{\delta_i}[\textbf{x},t,p]
+    = \int \sum_i 
+    \delta(\textbf{x} - \textbf{x}_i(\FF,t)) 
+    [  \delta(p_0 - p_i  )
+    + p' \partial_{p_0} \delta(p_0 - p_i  )
+    + \ldots]
+(\FF,t) d\PP\\
+    =
+    \avg{\delta_i}[\textbf{x},t,p_0]
+    + p' \partial_{p_0}\avg{\delta_i q_i}[\textbf{x},t,p_0] 
+    + \ldots\\
+\end{align}
+
+according to the chnage of variable $dp = dp_0 +dp'$ 
+\begin{equation}
+    \pavg{q_\alpha}(\textbf{x},t)
+    = \int_\mathbb{R} \avg{\delta_i q_i}[\textbf{x},t,p_0] dp
+    + \partial_{p_0} \int_\mathbb{R} (p - p_0)  \avg{\delta_i q_i}[\textbf{x},t,p_0] dp
+\end{equation}
+The only problem is that the first term makes no sens "in terms of unit"
+
+
+If the expansion is made in the limit $p_i \sim 0$ we have, 
+$\delta(p-p_i) = \delta(p) - p_i \grad_p \delta(p_i) + \ldots$,
+which gives, 
+\begin{align}
+    \avg{\delta_i q_i}[\textbf{x},t,p]
+    = \int \sum_i 
+    \delta(\textbf{x} - \textbf{x}_i(\FF,t)) 
+     [\delta(p)
+    + p_i \partial_p \delta(p_i  )
+    + \ldots]
+    q_i(\FF,t) d\PP\\
+    =
+    \avg{\delta_i q_i}[\textbf{x},t]\delta(p)
+    - \partial_{p}(\delta(p))\avg{\delta_i p_i q_i}[\textbf{x},t,p_0] 
+    + \ldots\\
+\end{align}
+which given upon integration on p
+\begin{align}
+    \avg{\delta_i q_i}[\textbf{x},t]
+    =
+    \avg{\delta_i q_i}[\textbf{x},t]
+    - \partial_{p}\avg{\delta_i p_i q_i}[\textbf{x},t,p_0] 
+    + \ldots\\
+\end{align}
