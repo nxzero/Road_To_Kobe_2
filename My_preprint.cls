@@ -53,7 +53,7 @@
 \RequirePackage{float}
 \RequirePackage{mathtools}% it load amsmath 
 \RequirePackage{tikz}
-\RequirePackage{todonotes}
+%\RequirePackage{todonotes}
 % \setlength{\marginparwidth}{3.5cm}
 \usepackage[bmargin=2cm,tmargin=2cm,lmargin=2cm,rmargin=2cm]{geometry}
 \RequirePackage{csquotes}
@@ -78,10 +78,10 @@
                 chains,
                 positioning,
                 shapes.geometric}
-\RequirePackage{pgfplots}
-\RequirePackage{pgf}
-\usepgfplotslibrary{polar}
-\pgfplotsset{compat=newest}
+%\RequirePackage{pgfplots}
+%\RequirePackage{pgf}
+%\usepgfplotslibrary{polar}
+%\pgfplotsset{compat=newest}
 \RequirePackage{graphicx}
 % \RequirePackage{gnuplot-lua-tikz}
 
