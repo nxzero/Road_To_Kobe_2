@@ -1,17 +1,17 @@
-The \texttt{Basilisk} code has been validated numerous time in previous numerical studies. 
-Especially, we can cite the recent studies of \citet{innocenti2020direct} and \citet{hidman2023assessing} which both performed DNS of rising suspension of bubbles. 
-Nevertheless, in this work we investigate specific statistical distribution,
+The \texttt{Basilisk} code has been validated numerous times in previous numerical studies. 
+Especially, we can cite the recent studies of \citet{innocenti2020direct} and \citet{hidman2023assessing} which both performed DNS of rising suspensions of bubbles. 
+Nevertheless, in this work we investigate specific statistical distributions,
 and we make use of a multi-VoF method to avoid droplets coalescence, therefore a meticulous validation of the DNS is in order. 
-We start by presenting a brief comparison with the reference DNS \citet{esmaeeli1999direct}. 
-Afterward we present a study focusing on the interfaces' kinematic, we compare our DNS with the experimental results of \citet{mohamed2003drop} in the objective to show that the Multi-VoF method indeed capture the physics of two colliding interfaces without solving the flows in the film. 
+We start by presenting a brief comparison with the reference DNS of \citet{esmaeeli1999direct}. 
+Afterward we present a study focusing on the interface kinematics where we compare our DNS with the experimental results of \citet{mohamed2003drop} to show that the multi-VoF method indeed captures the physics of two colliding interfaces without resolving the flow within the separating film. 
 Once the mesh and the physics are validated, a study on the convergence of the statistics is presented. 
 
 \subsection*{Ordered array of buoyant bubbles}
 
-From our knowledge, no simulations nor experimental results have been carried out for rising buoyant viscous drop. 
-Therefore, instead we reproduced the ordered array simulation of \citet{esmaeeli1999direct} with \texttt{Basilisk} to validate the mesh definition of our DNS.  
+From our knowledge, no simulations nor experimental results have been carried out for rising buoyant viscous droplets. 
+Therefore, we reproduced instead the ordered array simulation of \citet{esmaeeli1999direct} with \texttt{Basilisk} to validate the mesh resolution of our DNS.  
 It consists in a 3-D buoyant ordered rising array of bubbles. 
-In our notation the flow parameters of the simulation reads, 
+In our notation the flow parameters of the simulation read 
 \begin{align*}
     \lambda = 10,
     && \zeta = 10,
@@ -26,24 +26,25 @@ In our notation the flow parameters of the simulation reads,
     $\textbf{u}_p$ and $\textbf{u}_f$ are the particle and fluid phase volume averaged velocity at time $t$.}
     \label{fig:ordered_array}
 \end{figure}
-\ref{fig:ordered_array} display our numerical simulation against the original result of \citet{esmaeeli1999direct}.
-We observe very good agreements between both studies for all mesh definition.
-Additionally, we displayed the results of \citet{innocenti2020direct} for $d/\Delta = 20$ to point out a divergence with our results at the same mesh definition.  
+\ref{fig:ordered_array} displays our numerical simulation against the original result of \citet{esmaeeli1999direct}.
+We observe very good agreements between both studies for all mesh resolutions.
+Additionally, we displayed the results of \citet{innocenti2020direct} for $d/\Delta = 20$ to point out a divergence with our results at the same mesh resolution.  
 Both our simulations and the one of \citet{innocenti2020direct} have been carried out with the  \texttt{Basilisk} code. 
 The cause of this difference is in fact due to a different method of interpolation used for the viscosity coefficient $\mu$. 
-We used an arithmetic mean, whereas \citet{innocenti2020direct} used a 
+We used an arithmetic mean whereas \citet{innocenti2020direct} used an 
 harmonic mean.
-As a matter of fact in this regime the arithmetic mean, which will be used in this work, permit us to reach a faster convergence. 
+As a matter of fact in this regime the arithmetic mean, which will be used in this work, permits us to reach a faster convergence. 
 Overall these results indicate that the criterion $d/\Delta = 30$ seems sufficient, which is consistent with the aforementioned studies.
 
 
 \subsection*{Drop impact on a liquid-liquid interface}
 
-In section, we investigate in more detail the physics behind the Multi-VoF method. 
-We need to verify if we accurately capture the physics of the droplets interfaces despite the fact that we do not model accurately  the film between two droplets. 
+In this section we investigate in more detail the physics behind the multi-VoF method. 
+We need to verify if we accurately capture the physics of the droplets interfaces despite the fact that we do not resolve accurately the film between two droplets. 
 Following \citet{balcazar2015multiple} we reproduced the experiment of drop impact on a liquid–liquid interface carried by \citet{mohamed2003drop} but with the \texttt{Basilisk} code. 
-This experiment consist in letting a drop fall into a pool of the same fluid as the drop, all along the experiment the interfaces of the droplets and the pool are tracked. 
-In our notation the dimensionless parameters of latter study reads, 
+This experiment consists in letting a drop fall into a pool of the same fluid as the drop. 
+All along the experiment the interfaces of the droplets and the pool are tracked. 
+In our notation the dimensionless parameters read 
 \begin{align*}
     Ga = 71.02 
     && Bo = 6.40
@@ -51,10 +52,11 @@ In our notation the dimensionless parameters of latter study reads,
     && \zeta = 1.189
 \end{align*}
 Following \citet{mohamed2003drop} we defined the dimensionless time $t / t_i = t U_i(t) /d$ where $U_i(t)$ is droplet velocity at $t<0$ and where $t=0$ is the time of impact. 
-Regarding the geometry of the problem we sketched in \ref{fig:schemeLong} a scheme of the initial position of the droplet in the computational domain.
-Additionally, we displayed on \ref{fig:schemeLong} a snapshot of the numerical domain were we see the drop colliding the pool's interface.
-Both, the drop and the pool does not merge since we use the Multi-VoF method, note that in the experiment the drop does not merge with the pool either.
-This enables us to represent with DNS a physical situation where the interfaces do not coalesce, but where we use a grid definition of $d/\Delta = 30$ which is of course not sufficient to model the flow inside the film. 
+Regarding the geometry of the problem we sketched in \ref{fig:schemeLong} the initial position of the droplet in the computational domain.
+Additionally, we display on \ref{fig:schemeLong} a snapshot of the numerical domain were we see the drop colliding the pool interface.
+The drop and the pool do not merge since we use the multi-VoF method. 
+Note that in the experiment the drop does not merge with the pool either.
+This enables us to represent with the DNS a physical situation where the interfaces do not coalesce, but where we use a grid resolution of $d/\Delta = 30$ which is of course not sufficient to resolve the flow inside the film. 
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}[ultra thick]
@@ -76,8 +78,8 @@ This enables us to represent with DNS a physical situation where the interfaces 
         \node (a) at (4,1){$\rho_d, \mu_d$};
     \end{tikzpicture}
     \includegraphics[height = 0.4\textwidth]{image/VALIDATION2.0/Longmire/IMG/image-079.png}
-    \caption{(left) Scheme of the computational set up at the initial time. 
-    (right) Snapshot of the computational domain after the collision time, with the pool interfaces represented in gray.
+    \caption{(left) Sketch of the computational set up at the initial time. 
+    (right) Snapshot of the computational domain after the collision, with the pool interface represented in gray.
     The background color represents the velocity field magnitude, which is undisturbed, indicating a large enough domain. }
     \label{fig:schemeLong}
 \end{figure}
@@ -85,19 +87,19 @@ This enables us to represent with DNS a physical situation where the interfaces 
     \centering
     \includegraphics[height = 0.3\textwidth]{image/VALIDATION2.0/Longmire/Re.pdf}
     \includegraphics[height = 0.3\textwidth]{image/VALIDATION2.0/Longmire/Dist.pdf}
-    \caption{(left) Time evolution of the Reynolds number based on the droplet velocity, $Re(t) = \rho_fU d /\mu_f$ in terms of the dimensionless time, (+) numerical results of  \citet{balcazar2015multiple} (right)  position of the interfaces, ($\bullet$) top droplets surface, ($+$) bot droplet surface, (x) pool surface. (Symbols) experimental result of \citet{mohamed2003drop} (solid line) present numerical simulations with $d/\Delta = 30$. }
+    \caption{(left) Time evolution of the Reynolds number based on the droplet velocity, $Re(t) = \rho_fU d /\mu_f$ as a function of the dimensionless time, (+) numerical results of  \citet{balcazar2015multiple} (right)  position of the interfaces, ($\bullet$) top droplet surface, ($+$) bottom droplet surface, (x) pool surface. (Symbols) Experimental results of \citet{mohamed2003drop} (solid line) present numerical simulations with $d/\Delta = 30$. }
     \label{fig:resultslong}
 \end{figure}
-\ref{fig:resultslong} represent the comparison between our results against the experiment of \citet{mohamed2003drop} (right) and the numerical simulation of \citet{balcazar2015multiple} (left). 
-The time dependent Reynolds number as well as the interfaces positions are shown to match exactly both, the numerical and experiential results of \citet{balcazar2015multiple} and \citet{mohamed2003drop}, respectively. 
-From the very good agreement obtained with the numerical and experimental results we conclude that the kinematic is preserved during the contact time for a mesh definition of $d/\Delta = 30$. 
+\ref{fig:resultslong} represents the comparison between our results and the experiment of \citet{mohamed2003drop} (right) and the numerical simulation of \citet{balcazar2015multiple} (left). 
+The time-dependent Reynolds number as well as the interfaces positions are shown to closely match both the numerical and experiential results. 
+From the very good agreement we conclude that the kinematics are well-represented even during contact for a mesh resolution of $d/\Delta = 30$.
 
 \subsection*{Mesh independence and statistical convergence for random array of drops}
 
-Even through aforementioned studies carried validation of the \texttt{Basilisk} code for rising droplets or bubbles, almost all of them considered isolated droplets or bubbles as the only validation case. 
-As far as the author's knowledge, to this date no published study presented a mesh independence study for random array of droplets nor bubbles of this scale. 
-Nevertheless, as particles interaction and higher \textit{Galileo} numbers may be more challenging to model, it is primordial to investigate the mesh independence of the exact same DNS that are carried in this work. 
-In this objective we performed DNS of random array of $N_b=125$ droplets, with the following parameters,
+Even though the aforementioned studies carried validations of the \texttt{Basilisk} code for rising droplets or bubbles, almost all of them considered isolated droplets or bubbles as the only validation case. 
+To the author's knowledge, to this date no published study has presented a mesh independence study for random arrays of droplets or bubbles of this scale. 
+As particle interactions and higher \textit{Galileo} numbers may be more challenging to model, it is primordial to investigate the mesh independence of the DNS that are carried in this work. 
+In this objective we performed a DNS of a random array of $N_b=125$ droplets, with the following parameters
 \begin{align*}
     \lambda = 10,
     && \zeta = 1.11,
@@ -106,24 +108,24 @@ In this objective we performed DNS of random array of $N_b=125$ droplets, with t
     && \phi = 0.1,
     && N_b =125,
 \end{align*}
-and the mesh definition is, $d/\Delta = 7.37, 14.74, 29.9 58.97$. 
-We expect that the most challenging DNS simulated in this work is for the case, $\lambda = 10$ and $Ga = 100$, since it is in this range of parameters that we induce the most vorticity, which ultimately require good mesh definition. 
-Additionally, in opposition to the ordered array case, this case includes droplets interaction, which ultimately induce more numerical complexities to tackles. 
+with mesh resolutions of $d/\Delta = 7.37, 14.74, 29.9 58.97$. 
+We expect that the most challenging DNS simulated in this work is for the case, $\lambda = 10$ and $Ga = 100$ regarding only the particle wake modeling,  since it is in this range of parameters that we induce the most vorticity in the vicinity of the particles, which ultimately require good mesh resolution. 
+Additionally, in contrast with the ordered array case, this case includes droplets interactions, which ultimately induce more numerical complexities to tackle. 
 Based on this remark we can assume that if this case is mesh independent, then all cases from \ref{tab:simulations} must be since this is the most challenging scenario.   
 
-Let's first verify the independence of the drift velocity on the mesh definition. 
+Let us first verify the independence of the drift velocity on the mesh resolution. 
 \begin{figure}[h!]
     \centering
     \includegraphics[height = 0.3\textwidth]{image/HOMOGENEOUS_NEW/VAL/Re.pdf}
     \caption{
-        Running average of the Reynolds number based on the instantaneous volume averaged drift velocity, $Re(t) = \rho_fU d /\mu_f$, with $U(t) = |\textbf{u}_p - \textbf{u}_f|$ for $\phi = 0.1$, $Ga=100$ and $\lambda =10$.
+        Running average of the Reynolds number based on the instantaneous volume-averaged drift velocity, $Re(t) = \rho_fU d /\mu_f$, with $U(t) = |\textbf{u}_p - \textbf{u}_f|$ for $\phi = 0.1$, $Ga=100$ and $\lambda =10$.
         $\textbf{u}_p$ and $\textbf{u}_f$ are the particle and fluid phase volume averaged velocity at time $t$.
-        In the legend we display the value of the mesh definition. 
+        In the legend we display the value of the mesh resolution. 
     }
     \label{fig:Re}
 \end{figure}
-In \ref{fig:Re} we display the running averaged drift velocity in terms of time, for four mesh definition. 
-The results are not as independent of the mesh definition as the order array validation presented above. 
+In \ref{fig:Re} we display the running-averaged drift velocity as a function of time, for four mesh resolutions. 
+The results are not as independent of the mesh resolution as the ordered array validation presented above. 
 Indeed, we observe a difference of the rising Reynolds number of about $5\%$ between the $d/\Delta = 29.49$ and $d/\Delta = 58.97$ cases which is notable.
 We recall that this $5\%$ error will eventually be lower for all other cases. 
 The good agreement between the case  $d/\Delta = 14.74$ and $d/\Delta = 29.49$ is partially fortuitous.

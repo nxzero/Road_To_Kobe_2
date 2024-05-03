@@ -1,19 +1,11 @@
-
-
 \subsection{Problem statement}
-% Objective of this section :
-% \begin{itemize}
-    % \item Introduce the dimensionless parameters.
-    % \item Present the physical parameters of some industrial processes to locate our problematic. 
-    % \item Introduce the dimensionless parameters range investigated in this study.
-    % \item Present the tri-periodic box within which we add droplets in vof 
-% \end{itemize}
-We investigate numerically the dynamic of homogeneous mono-disperse emulsion subject to buoyancy forces in a fully periodic domain. 
-Both, the dispersed (resp. continuous) phase is considered as Newtonian fluid defined by viscosity $\mu_d$ (resp. $\mu_f$), and density $\rho_d$ (resp. $\mu_f$).
-Throughout this work, the subscript $_d$ and $_f$ indicate properties belonging to the dispersed and continuous phase, respectively. 
-The interface between both fluids is considered as infinitely thin and deprived of any impurities, it is described with the surface tension coefficient $\gamma$. 
-In this work the density, viscosity, and surface tension coefficient, will be considered constant in each phase.
-In dimensionless form this problem is completely characterized by $6$ dimensionless parameters :  the viscosity and density ratio, $\lambda = \mu_d / \mu_f$ and $\zeta = \rho_d / \rho_f$,  
+
+We investigate numerically the dynamics of homogeneous mono-disperse emulsions subject to buoyancy forces in a fully periodic domain. 
+Both the dispersed and continuous phase are considered as Newtonian fluids defined by viscosity $\mu_d$ (resp. $\mu_f$) and density $\rho_d$ (resp. $\mu_f$).
+Throughout this work, the subscript $_d$ and $_f$ indicate properties belonging to the dispersed and continuous phase respectively. 
+The interface between both fluids is considered as infinitely thin and deprived of any impurities and a constant surface tension with a coefficient $\gamma$ is assumed. 
+The density and viscosity will be considered constant in each phase.
+In dimensionless form this problem is completely characterized by six dimensionless parameters :  the viscosity and density ratio, $\lambda = \mu_d / \mu_f$ and $\zeta = \rho_d / \rho_f$,  
 the \textit{Galileo} number, 
 \begin{equation*}
     Ga =\sqrt{\rho_f(\rho_f - \rho_d) g d^3} / \mu_f,
@@ -24,17 +16,14 @@ the \textit{Bond} number,
 \end{equation*}
 the number of droplets per domain $N_b$, and the dispersed phase volume fraction $\phi$. 
 Here, $d$ represents the diameter of a sphere with the same volume as the droplets, and $g$ denotes the gravitational acceleration.
-The \textit{Galileo} number measure the influence of the buoyancy forces against the viscous forces.
-Whereas the \textit{Bond} number evaluate the ratio between buoyancy and capillary forces. 
-% These parameters are the input parameters that we set at the beginning of a simulation
+The \textit{Galileo} number is a measure of the strength of the buoyancy forces relative to the viscous forces, whereas the \textit{Bond} number evaluates the ratio between buoyancy and capillary forces. 
 
-To provide a brief overview of the range of interest for these numbers in an industrial context, let's consider the example of a vegetable oil/water system.
+To provide a brief overview of the range of interest for these numbers in an industrial context, let us consider the example of a vegetable oil/water system.
 In most liquid-liquid system encountered in industrial processes the diameter of the droplets lies in the range $d = [50 \mu \text{m}, 3 \text{mm}]$.
 The density and viscosity of water are approximately $\rho_f = 1000 \text{kg/m}^3$ and $\mu_f = 10^{-3} \text{Pa.s}$, respectively.
 The density and viscosity of oil are close to $\rho_d = 900 \text{kg/m}^3$ and $\mu_d = 10^{-2} \text{Pa.s}$, respectively.
 We consider the gravitational acceleration on earth, thus $g= 9.81 \text{m.s}^{-2}$.
 The surface tension of the oil/water system is approximately $\sigma = 0.05 \text{N/m}^2$ \citep{de2015gouttes}. 
-% \tb{mettre un fluid arbitraire a la place de lhuile ? je ne vois pas trop comment introduire le pbl dans ce cas}
 \begin{table}[h!]
     \centering
     \caption{Dimensionless parameters of a water/oil system.}
@@ -44,30 +33,29 @@ The surface tension of the oil/water system is approximately $\sigma = 0.05 \tex
     \end{tabular}
     \label{tab:parameters_exp}
 \end{table}
-In \ref{tab:parameters_exp} we can observe the values of the corresponding dimensionless parameters.  
+\ref{tab:parameters_exp} gives the corresponding dimensionless parameters.  
 Notice that the \textit{Bond number} is relatively low, indicating that the droplets are nearly spherical in these processes.
-Additionally, the maximum volume fraction is set to $\phi = 0.2$, indeed above such $\phi$ particles highly coalesce and the topology of the flow cannot be considered as dispersed anymore. 
+Additionally, the maximum volume fraction is set to $\phi = 0.2$, indeed above such $\phi$ particles coalesce easily and the topology of the flow cannot be considered as dispersed anymore. 
 
 
-According to \ref{tab:parameters_exp}, to approach real life applications we conducted DNS for four volume fractions, specifically $\phi = 0.01,0.05,0.1,0.2$.
+Following \ref{tab:parameters_exp}, to approach real-life applications we conducted DNS for four volume fractions, specifically $\phi = 0.01,0.05,0.1,0.2$.
 In contrast to most of the previous studies, we choose to keep the number of droplets constant while changing the volume fraction $\phi$. 
-Instead, we modify the domain size $\mathcal{L}$ accordingly. 
-This introduces another dimensionless parameter of interest : $\mathcal{L}/d$, which is the confinement of the particles within the finite numerical domain. 
-This parameter is purely determined by $\phi$ and $N_b$, therefore it will be refereed as a \textit{Secondary parameter}.
+We then modify the domain size $\mathcal{L}$ accordingly. 
+This introduces another dimensionless parameter of interest : $\mathcal{L}/d$, which measures the confinement of the particles within the finite numerical domain. 
+This parameter is purely determined by $\phi$ and $N_b$, and will thus be refereed as a \textit{secondary parameter}.
 
-As mentioned, the \textit{Bond} numbers of our targeted application is extremely low.
-% This threshold value has been fixed empirically at $Bo = 0.2$, below which we observed no modification in the drop dynamic. 
+As mentioned, the \textit{Bond} numbers of our targeted application is very low.
 Therefore, and it will stay constant throughout this study, the \textit{Bond} number is set to $Bo = 0.2$.
-DNS with lower \textit{Bond} number could not be archived due to the restrictive capillary time step constrain, which becomes excessively small. 
+DNS with lower \textit{Bond} numbers become excessively expensive due to the restrictive capillary time step constraint. 
 However, we assert that for $Bo \leq 0.2$ the droplet shape essentially remains spherical at least for small \textit{Galileo} numbers. 
-Additionally, the ratio between inertia and surface tension forces is given by the \textit{Weber} number, this is,
+Additionally, the ratio between inertia and surface tension forces is given by the \textit{Weber} number, 
 \begin{equation*}
     We = \frac{Bo \cdot Re^2}{Ga},
 \end{equation*}
 where $Re = \frac{\rho_f d U}{\mu_f}$ is the Reynolds number based on the phase drift velocity $U$.
 Values of \textit{Reynolds} numbers for each DNS are provided in \ref{ap:age} \ref{fig:Reall}. 
 Extreme values of $We$ reached in these simulations are displayed in \ref{tab:simulations}. 
-It is clear that for at $We=0.6$ we might expect some deformation, nevertheless, for most of the cases $We$ stays below that values. 
+It is clear that for $We=0.6$ we might expect some deformations, nevertheless, for most of the cases $We$ stays below these values. 
 Consequently, whether it is in the viscous regime or inertial regime, the droplets are expected to remain spherical according to the values of $Bo$ and $We$.
 This statement will be verified in \ref{sec:microstructure}. 
 
@@ -78,9 +66,9 @@ Regarding the viscosity ratio, we accomplished DNS for 2 different values, namel
 Lastly, to explore the effect of inertia on the microstructure, the \textit{Galileo} number will vary within the range $Ga \in [5,100]$.
 
 The primary objective of the study is to investigate the microstructure through the nearest particle pair distribution function.
-Thus, it is crucial to obtain a sufficient number of DNS samples to ensure representativeness. 
+Thus it is crucial to obtain a sufficient number of DNS samples to ensure statistical convergence. 
 Also, the physical quantities measured in these DNS must remain independent of the domain size. 
-Therefore, we use a number of particles per domain of $N_b = 125$, which is roughly what \citet{hidman2023assessing} used for DNS of fully periodic buoyant rising bubbles.
+Therefore, we use a number of particles per domain of $N_b = 125$, which is roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
 Moreover, each DNS lasts for a time : $t^*_\text{end} = 1500 \sqrt{d/g}$.
 % It is shown in \ref{ap:validation} that these parameters  are sufficient to obtain well converged statistics.  
 \begin{table}[h!]
@@ -93,6 +81,6 @@ Moreover, each DNS lasts for a time : $t^*_\text{end} = 1500 \sqrt{d/g}$.
     \end{tabular}
     \label{tab:simulations}
 \end{table}
-In this study we present DNS results with dimensionless parameters lying in ranges outlined \ref{tab:simulations}.
+In this study we present DNS results with dimensionless parameters lying in ranges outlined in \ref{tab:simulations}.
 In summary, we investigated $5$ \textit{Galileo} number $Ga = 5,10,25,50,100$, $4$ different volume fractions $\phi = 0.01,0.05,0.1,0.2$, and two viscosity ratios $\lambda =1,10$ with $Bo = 0.2$ and $\zeta = 0.9$. 
 This makes a total of $40$ representative simulations of $N_b = 125$ droplets which last for $t= 1500 \sqrt{d/g}$. 

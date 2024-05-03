@@ -26,3 +26,4 @@ proper: clean
 	-rm Energy_balance_equaitons.pdf
 	-rm Anisotropic_particles.pdf
 	-rm Closure_hybrid.pdf
+	-rm age.pdf
