@@ -27,3 +27,4 @@ proper: clean
 	-rm Anisotropic_particles.pdf
 	-rm Closure_hybrid.pdf
 	-rm age.pdf
+	-rm Asbtract_SHF.pdf
