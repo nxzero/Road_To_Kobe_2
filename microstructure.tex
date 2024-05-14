@@ -1,18 +1,8 @@
 \documentclass[11pt]{My_preprint}
-% \usepackage{listing}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%\title{
-%    Particle resolved simulation of buoyancy driven motion of monodisperse drops: microstructure modeling with Nearest particle statistics.
-%    }
 \title{
-Buoyancy driven motion of non-coalescing inertial drops: microstructure modeling with nearest particle statistics. %nearest particle microstructure.
-    }
+    Buoyancy driven motion of non-coalescing inertial drops: microstructure modeling with nearest particle statistics. 
+}
 
 \author[1,2]{Nicolas Fintzi}
 \author[1]{Jean-Lou Pierson}
@@ -29,78 +19,49 @@ Buoyancy driven motion of non-coalescing inertial drops: microstructure modeling
 \begin{abstract}
     In this study, we provide a comprehensive analysis of the various  arrangements that droplets can adopt within dispersed buoyant emulsions. 
     This is termed the study of the microstructure.
-    % The study treat both the numerical and theoretical aspects.
-    % in a kinetic-theory-like framework.
     To this end, we have developed a novel algorithm capable of effectively prevents numerical coalesce between drops at reasonable computational cost.
     This algorithm is implemented within the Volume of Fluid (VoF) method, utilizing the \href{http://basilisk.fr}{http://basilisk.fr} open source code. 
     Subsequently, we conducted Direct Numerical Simulations (DNS) of statistically steady state mono-disperse buoyant emulsion, over a broad range of \textit{Galileo} number ($Ga$), particle volume fraction ($\phi$), and viscosity ratio ($\lambda$). 
     The density ratio and the \textit{Bond} number are kept constant, $\zeta = 1.11$ and  $Bo = 0.2$, respectively. 
-    % In \citet{zhang2023evolution}, it is demonstrated that the microstructure can be characterized effectively using the nearest particle statistic.
-    % This approach relies solely on the tensor quantity, \textbf{R}, which represents the second moment of the nearest particle pair distribution.
-    % Then, we revisit the \textit{nearest particle statistics} framework of \citet{zhang2023evolution}.
     Then it is shown that, as predicted by \citet{zhang2023evolution}, the second moment of the nearest particle pair distribution, noted \textbf{R}, has the capability to quantify microstructure's features such as clusters and layers of particles.
     In particular, it is found that : 
     (1) At low $Ga$ isotropic clusters appear with increasing $\phi$. 
     (2) Non-isotropic clusters such as layers of particles, are more likely to form for high \textit{Galileo} number.
     (3) The viscosity ratio $\lambda$ has an important impact on the microstructure, clearly more layers are formed for $\lambda = 1$ than $\lambda = 10$. 
-    % Following this, it is  demonstrated that \textbf{R} follow a kinetic theory-like conservation equation and is governed by a relaxation time $\tau_p$, which is also the average time of interaction between nearest particles pairs. 
-    % It is shown that $\tau_p$ is higher for $\lambda = 1$ than 
-    % $\lambda = 10$, and even lower for solid particles at same $Ga$ and $\phi$.
-    % After, a meticulous analysis of the averaged relative velocity fields between nearest neighbors, we could infer that mechanism such as \textit{Drafting Kissing Tumbling} \citep{fortes1987nonlinear} were present in buoyant emulsions, and that it contribute partly to the formation of the microstructure.
-    % Additionally, other behavior are identified in these systems. 
     Overall, our study provides a quantitative measure of the microstructure geometry 
-    % and relaxation time
      in terms of $Ga$, $\phi$ and $\lambda$. 
 \end{abstract}
 
+\section{Introduction}
 \input{microstructure/Introduction.tex}
 
 \section{Numerical methodology}
 \label{sec:methodo}
 
-In this section we expose the strategy employed to conduct statistically steady state simulations of rising mono-disperse suspension of droplets in a fully periodic domain. 
-We start by introducing the physical parameter, followed by a description of the numerical methods.
-Lastly, we detail the methodology adopted to collect statistics about microstructure, which are presented in the next sections.
-
-The source code used to perform the DNS is entirely open source.
-The simulations are running within the \texttt{Basilisk C} framework, (see \href{http://basilisk.fr}{basilisk.fr}), which is an extension of the C programming language, adapted for the solution of partial differential equations on Cartesian meshes. 
-Note that this section is complemented by the wiki page, \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{RS.c}, where the reader can access the source code used to conduct the DNS, as well as comments and notes to help comprehension. 
-\tb{la page wiki n'est pas à jour}
-
 \input{microstructure/Problem_statement.tex}
 \input{microstructure/Simulation_Setup.tex}
 \input{microstructure/no_coalesence.tex}
 
-
-
-
 \section{The nearest particle statistics}
-
 \input{microstructure/The_nearest_particle_statistics.tex}
-
 
 \section{The microstructure}
 \label{sec:microstructure}
 \input{microstructure/Non_Inertial.tex}
 \input{microstructure/Inertial.tex}
 
-
 \section{Conclusion}
 \input{microstructure/conclusion.tex}
 
 \appendix
-%\section{Statistical convergence and mesh independence studies}
+
 \section{Numerical validations}
 \label{ap:validation}
-\input{microstructure/validation.tex}
-% \input{microstructure/Appendix1.tex}
 
+\input{microstructure/validation.tex}
 \input{microstructure/AgeAP.tex}
 
 \bibliography{Bib/bib_bulles.bib}
-
-
-
 
 \end{document}
 

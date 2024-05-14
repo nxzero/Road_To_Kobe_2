@@ -131,6 +131,7 @@
 \newcommand{\ddt}{\frac{d}{d t}}
 % \renewcommand{\ddt}{d_t}
 \newcommand{\pddt}{\frac{\partial}{\partial t}}
+\newcommand{\Dt}{D_t}
 \newcommand{\pddx}{\frac{\partial}{\partial \textbf{x}}}
 \newcommand{\pddr}{\frac{\partial}{\partial \textbf{r}}}
 \newcommand{\pddu}{\frac{\partial}{\partial \textbf{u}}}
@@ -184,3 +185,7 @@
 \definecolor{col5}{HTML}{845B97}
 \definecolor{col6}{HTML}{474747}
 \definecolor{col7}{HTML}{9e9e9e}
+
+\renewcommand\thesubsection{\Alph{subsection}}
+\renewcommand\thesection{\Roman{section}}
+\renewcommand{\theequation}{\arabic{equation}}
