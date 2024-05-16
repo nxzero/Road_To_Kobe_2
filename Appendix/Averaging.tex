@@ -3,94 +3,119 @@
 
 \section{General balance equations}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{tikzpicture}
         \draw (0,0) ellipse (2 and 1);
         \draw[dashed] (0,0) ellipse (0.5 and 1)node{$A_I$};
         \draw[->](0,1)--++(0,1)node[right]{\textbf{p}}; 
-        \draw[->](0,1)--++(0,1)node[right]{\textbf{p}}; 
+        \draw[->](1,0.9)--++(0.2,0.77)node[right]{\textbf{N}}; 
+        \draw[->](0,-0.5)--++(-0.5,0)node[left]{$\textbf{n}_1$}; 
+        \draw[->](0,0.5)--++(0.5,0)node[right]{$\textbf{n}_2$}; 
         \draw (1,0)node{$V_1$};
         \draw (-1,0)node{$V_2$};
     \end{tikzpicture}
-    \caption{Scheme of an arbitrary control volume}
+    \caption{Scheme of an arbitrary material control volume.   }
 \end{figure}
 
-Let $f$  be an arbitrary quantity to which we link $\Phi$ which is the non-convective flux related to this quantity and $\textbf{S}$ the volumetric source of $f$. 
+Let $f^0$  be an arbitrary quantity to be conserved inside the non-material volume $\omega$. 
+Then $\bm\Phi^0$ refer to the non-convective flux of $f^0$. 
+Then $s^0$ refer to source term  related to  $f^0$. 
 Then, for an arbitrary control volume we have, 
 \begin{equation*}
-    \ddt \int_{V} f dV 
+    \ddt \int_{V} f^0 dV 
     = 
-    \int_{V} \textbf{S} dV 
-    + \int_{\partial V} \mathbf{\Phi}\cdot \textbf{N} dS,
+    \int_{V} s^0 dV 
+    + \int_{\partial V} \mathbf{\Phi}^0 \cdot \textbf{N} dS,
 \end{equation*}
 where $\textbf{N}$ is the normal of the control volume. 
 Any quantities defined in $V_k$ will be noted with a subscript $_k$ and those who are defined at the interface with $_I$. 
-Therefore, if we decompose any quantity $f$ by $f = \sum_k f_k \chi_k + f_I \delta_I$ we obtain, 
+Therefore, if we decompose any quantity such as $f^0 = \sum_k f_k^0 \chi_k + f_I^0 \delta_I$ we obtain, 
 \begin{multline*}
-    \sum_k\left[\ddt \int_{V_k} f_k dV 
-    - \int_{V_k} \textbf{S}_k dV 
-    - \int_{A_k} \mathbf{\Phi}_k\cdot \textbf{N} dS
-    \right]\\
-    + \ddt \int_{A_I} f_I dS 
-    - \int_{A_I} \textbf{S}_I dS 
-    - \int_{C} \mathbf{\Phi}_I\cdot \textbf{p} dC 
+    \sum_k\left[\ddt \int_{V_k} f_k^0 dV 
+    - \int_{V_k} s_k^0 dV 
+    - \int_{A_k} \mathbf{\Phi}_k^0 \cdot \textbf{N} dS
+    \right]
+    + \ddt \int_{A_I} f_I^0 dS 
+    - \int_{A_I} s_I^0 dS 
+    - \int_{C} \mathbf{\Phi}_I^0 \cdot \textbf{p} dC 
     = 0
 \end{multline*}
-Using the Reynolds transport theorem on both derivation yields,
+Using the Reynolds transport theorem on volume integral yields,
 \begin{align*}
-    \ddt \int_{V_k} f_k dV 
-    &= \int_{V_k} \pddt f_k dV 
-    + \int_{A_I \cup A_k} f_k \textbf{u} \cdot \textbf{n}_k dS\\
+    \ddt \int_{V_k} f_k^0 dV 
+    &= \int_{V_k} \pddt f_k^0 dV 
+    + \int_{A_I \cup A_k} f_k^0 \textbf{u} \cdot \textbf{n}_k dS\\
     &= \int_{V_k} \left[
-        \pddt f_k  + \nablabh \cdot (f_k \textbf{u}_k) 
+        \pddt f_k^0  + \div (f_k^0 \textbf{u}_k^0) 
     \right]dV 
-    + \int_{A_I} f_k (\textbf{u}_I - \textbf{u}_k) \cdot \textbf{n}_k dS\\
+    + \int_{A_I} f_k^0 (\textbf{u}_I^0 - \textbf{u}_k^0) \cdot \textbf{n}_k dS\\
 \end{align*}
 where $\textbf{n}_k$ is the normal of the interface $A_I$ on the outward direction of the $k$ phase. 
 
 The second term is integrated only over $A_I$ as it is the interface between both phase and not the one of the control volume. 
 Using the Ledbiz rule for integration on surface yields, 
 \begin{align*}
-    \ddt \int_{A_I} f_I dS 
+    \ddt \int_{A_I} f_I^0 dS 
     &= \int_{A_I} \left[
-        \pddt f_I  + \nablabh_I \cdot (f_I \textbf{u}_I) 
+        \pddt f_I^0  + \divI (f_I^0 \textbf{u}_I^0) 
     \right]dS
 \end{align*}
 
-Regarding the non-convective integrals, by using the divergence theorem we can write, 
+Regarding the non-convective integrals, by using the divergence theorem we can write\citep{nadim1996concise}, 
 \begin{align*}
-    \int_{A_k} \mathbf{\Phi}_k\cdot \textbf{n}_k dS
-    = \int_{V_k} \nablabh\cdot\mathbf{\Phi}_k dV
-    - \int_{A_I} \mathbf{\Phi}_k\cdot \textbf{n}_k dS. 
+    \int_{A_k} \mathbf{\Phi}_k^0\cdot \textbf{n}_k dS
+    = \int_{V_k} \div\mathbf{\Phi}_k^0 dV
+    - \int_{A_I} \mathbf{\Phi}_k^0\cdot \textbf{n}_k dS. 
 \end{align*}
-The last term can also be re-written with the divergence theorem,
+The last term can also be re-written with the divergence theorem \citet{nadim1996concise},
 \begin{align*}
-    \int_{C} \mathbf{\Phi}_I\cdot \textbf{p} dC 
-    = \int_{A_I} \nablabh_I \cdot \mathbf{\Phi}_I dS
-    + \int_{A_I} \kappa \mathbf{\Phi}_I \cdot \textbf{n} dS
+    \int_{C} \mathbf{\Phi}_I^0\cdot \textbf{p} dC 
+    = \int_{A_I} \divI \mathbf{\Phi}_I^0 dS
+    - \int_{A_I} \mathbf{\Phi}_I^0 \cdot \textbf{n} \div \textbf{n} dS
+\end{align*}
+Notice that whether it is $\textbf{n}_1$ or $\textbf{n}_2$ the second term on the left conserve the same sign. 
+
+Taking in account these reformulations, we can re-write the integral balance previously exposed by, 
+\begin{align*}
+    \sum_k \int_{V_k}{\left[
+        \pddt f_k^0
+        + \div (f_k^0\textbf{u}_k^0 - \bm\Phi_k^0)
+        - s_k^0
+    \right]}\\
+    + \sum_k\int_{A_I}{\left[
+        f_k^0(\textbf{u}_I^0 - \textbf{u}_k^0)
+        + \bm\Phi_k^0
+    \right]\cdot \textbf{n}_k}
+    + \int_{A_I}{\left[
+        \pddt f_I^0 
+        + \divI (f_I^0 \textbf{u}_I - \bm\Phi_I^0)
+        + \bm\Phi_I^0 \cdot \textbf{n} \div \textbf{n}
+    \right]} =0 
 \end{align*}
 
-Now if we consider each integration over the $V_k$ it yields the general conservation law in the phase $k$, namely, 
+Every integral of volume must be balanced independently of the surface integral. 
+This means that we can separate this equation into two, 
 \begin{equation*}
     \pddt f_k  
-    + \nablabh \cdot (f_k \textbf{u}_k - \mathbf{\Phi}_k) 
-    =\textbf{S}_k. 
+    + \div (f_k \textbf{u}_k - \mathbf{\Phi}_k) 
+    =s_k. 
 \end{equation*}
-Similarly, if we isolate all the surface integrals over $A_I$ it yields,
 \begin{equation}
     \pddt f_I  
-    + \nablabh_I \cdot (f_I \textbf{u}_I -\mathbf{\Phi}_I)
-    + \mathbf{\Phi}_I \cdot \textbf{n} \nablabh \cdot \textbf{n}
-    - \textbf{S}_I
+    + \divI (f_I \textbf{u}_I -\mathbf{\Phi}_I)
+    + \mathbf{\Phi}_I \cdot \textbf{n} \div \textbf{n}
     = 
+    + s_I
     - \sum_k \left[
     f_k (\textbf{u}_I - \textbf{u}_k)
     + \mathbf{\Phi}_k
-    \right] \cdot \textbf{n}_k 
+    \right] \cdot \textbf{n}_k. 
     \label{ap:eq:dt_f_I}
 \end{equation}
+These equations are valid in $\Omega_k(t)$ and $\Sigma(t)$ for volume and surface quantity, respectively. 
 
+Now let's reformulate the third term of the surface balance equation. 
 Let $\textbf{F}$ be an arbitrary surface quantity. 
 It can be split into two part such as, 
 \begin{equation*}
@@ -99,29 +124,30 @@ It can be split into two part such as,
     + (\textbf{I} - \textbf{nn})  \cdot \textbf{F}
     = \textbf{F}_\bot + \textbf{F}_{||}.
 \end{equation*}
-Using the Gauss theorem on an arbitrary control volume it can be shown that, 
+Injecting this decomposition inside the Gauss theorem on an arbitrary control volume it can be shown that, 
 \begin{equation*}
-    \int_{S} \nablabh_I \cdot \textbf{F}dS
+    \int_{S} \divI \textbf{F}dS
     = 
-    \int_{S} \left[\nablabh_I \cdot \textbf{F}_{||} 
-    + \textbf{F} \cdot \textbf{n} \nablabh\cdot\textbf{n}
+    \int_{S} \left[\divI \textbf{F}_{||} 
+    + \textbf{F} \cdot \textbf{n} \div\textbf{n}
     \right]dS
 \end{equation*}
-Consequently, as this relation must be valid on any interface $S$ we have the following relation,
-\begin{equation}
-    \nablabh_I \cdot \textbf{F}
+Consequently, we have the following relation,
+\begin{equation*}
+    \int_{A_I} \divI \bm\Phi_I^0dS
     = 
-    \nablabh_I \cdot \textbf{F}_{||} 
-    + \textbf{F} \cdot \textbf{n} \nablabh\cdot\textbf{n}
-    \label{ap:eq:nabla_I_F}
-\end{equation}
+    \int_{A_I} \left[\divI \bm\Phi_{I||}^0
+    + \bm\Phi_I^0 \cdot \textbf{n} \div\textbf{n}
+    \right]dS
+\end{equation*}
 
-Using, \ref{ap:eq:nabla_I_F} on the divergence term in \ref{ap:eq:dt_f_I} yields, 
+By taking in account this relation it is easy to take or not the normal components of a vector to the interface within the balance equaitons. 
+For example, we can write either, 
 \begin{equation}
     \pddt f_I  
-    + \nablabh_I \cdot (f_I \textbf{u}^I_{||} -\mathbf{\Phi}^I_{||})
-    + f_I \textbf{u}_I \cdot \textbf{n} \nablabh \cdot \textbf{n}
-    - \textbf{S}_I
+    + \divI (f_I \textbf{u}^I_{||} -\mathbf{\Phi}^I_{||})
+    + f_I \textbf{u}_I \cdot \textbf{n} \div \textbf{n}
+    - s_I
     = 
     - \sum_k \left[
     f_k (\textbf{u}_I - \textbf{u}_k)
@@ -129,6 +155,19 @@ Using, \ref{ap:eq:nabla_I_F} on the divergence term in \ref{ap:eq:dt_f_I} yields
     \right] \cdot \textbf{n}_k 
     \label{ap:eq:dt_f_I2}
 \end{equation}
+Or 
+\begin{equation}
+    \pddt f_I  
+    + \divI (f_I \textbf{u}^I -\mathbf{\Phi}^I_{||})
+    - s_I
+    = 
+    - \sum_k \left[
+    f_k (\textbf{u}_I - \textbf{u}_k)
+    + \mathbf{\Phi}_k
+    \right] \cdot \textbf{n}_k 
+    \label{ap:eq:dt_f_I2}
+\end{equation}
+where we have changed the flux term formulation. 
 
 
 

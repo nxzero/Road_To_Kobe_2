@@ -28,3 +28,5 @@ proper: clean
 	-rm Closure_hybrid.pdf
 	-rm age.pdf
 	-rm Abstract_SHF.pdf
+	-rm microstructure.pdf
+	-rm microstructure_kin.pdf

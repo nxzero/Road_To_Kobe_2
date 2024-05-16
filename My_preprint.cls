@@ -18,15 +18,15 @@
 \RequirePackage{bm}
 % \RequirePackage{mdframed}
 \RequirePackage[
-  % colorlinks=true
+  colorlinks=true
 ]{hyperref}
-% \hypersetup{
-%     colorlinks=true,
-%     linkcolor=blue!50!black,
-%     filecolor=blue!50!black,
-%     citecolor = green!50!black,
-%     urlcolor=cyan,
-% }
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    filecolor=blue!50!black,
+    citecolor = green!50!black,
+    urlcolor=cyan,
+}
 %\RequirePackage[doublespacing]{setspace}
 \RequirePackage{natbib}
 \bibliographystyle{apalike}
@@ -186,6 +186,6 @@
 \definecolor{col6}{HTML}{474747}
 \definecolor{col7}{HTML}{9e9e9e}
 
-\renewcommand\thesubsection{\Alph{subsection}}
-\renewcommand\thesection{\Roman{section}}
-\renewcommand{\theequation}{\arabic{equation}}
+% \renewcommand\thesubsection{\Alph{subsection}}
+% \renewcommand\thesection{\Rman{section}}
+% \renewcommand{\theequation}{\arabic{equation}}
