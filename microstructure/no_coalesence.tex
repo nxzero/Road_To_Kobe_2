@@ -14,7 +14,7 @@ This approach allows multiple non-touching droplets to belong to the same field,
 Although this approach shares the same basic principle with the one used here, i.e. coloring adjacent droplets with different colors to avoid coalescence, it differs in term of computational methods. 
 In the following we present our methodology that as implemented in the \texttt{Basilisk} framework. 
 
-The challenge here is to assign a tracer to every adjacent droplets to prevent numerical coalesce, while minimizing the number of tracers to reduce computational cost. 
+The challenge here is to assign a tracer to every adjacent droplets to prevent numerical coalescence, while minimizing the number of tracers to reduce computational cost. 
 This recalls the famous \textit{Four color map theorem} \citep{appel1977solution} which essentially states that : 
 \enquote{every map can be color using only four colors, so that two neighboring region are different colors}. 
 In our case, this theorem implies that for any 2D configuration only four VoF tracer are necessary to avoid coalescence\footnote{It is worth noting that for a bi-periodic domain, seven colors are required due to the torus-like topology.  }. 
@@ -24,7 +24,7 @@ In our case, droplets move around over time thus transforming the static problem
 Furthermore finding the optimal coloring is known to be difficult (the problem is {\em NP-complete}) and solving it at each timestep would be too expensive.
 
 Note also that in three-dimensions the \textit{Four color map theorem} has no equivalent.
-For example, an arbitrary large number of rectangular blocks in 3D-space can all touch each other, requiring an arbitrary large number of colors to differentiate the adjacent blocks\citep{magnant2011coloring}. 
+For example, an arbitrary large number of rectangular blocks in 3D-space can all touch each other, requiring an arbitrary large number of colors to differentiate the adjacent blocks \citep{magnant2011coloring}. 
 We are not aware of an extension of the coloring problem to arrangements of spheres in 3D. 
 Nevertheless, it is reasonable to assume that the number of tracers required to avoid coalescence is significantly smaller than the number of droplets.
 Consequently, since we cannot determine the optimal coloring configuration based on theoretical grounds, we opt to assign the tracers to each droplet following the empirical strategy detailed below.
@@ -220,13 +220,12 @@ The droplet interfaces are colored by the indices of their respective tracer.
 In this simulation at that time, no more than 3 colors are needed to avoid coalescence.
 On \ref{fig:diagram} (right) we display the value of $N(t)$ in term of the dimensionless simulation time for various volume fractions $\phi$ at $Ga = 50$ and  $\lambda = 1$. 
 We observe that for the entire simulation, no more than 3 tracers were needed for the dilute emulsion ($\phi = 0.01$) and up to 7 for the denser regime ($\phi = 0.2$). 
-Although our algorithm might not be optimized, it brings sufficient efficiency for our needs. 
-Indeed, \ref{tab:performance} reports the time spent by each function during a simulation. 
-It is observed that the \texttt{no-coalesce.h} algorithm accounts for approximately $4\%$ of the total computational time of a simulation. 
-As for the \texttt{tag.h} algorithm, its cost is around $2\%$, which is also reasonable.
-In comparison, the \texttt{poisson.h} solver is about $13\%$ of the simulation time. 
-The advection of VoF tracers is about $7\%$ which is relatively high but still reasonable.
+Although our algorithm might be optimized, it brings sufficient efficiency for our needs. 
+In particular it is observed that the \texttt{no-coalesce.h} algorithm accounts for approximately $4\%$ of the total computational time of a simulation in the densest scenario. As for the \texttt{tag.h} algorithm, its cost is around $2\%$, which is also reasonable. In comparison, the \texttt{poisson.h} solver is about $13\%$ of the simulation time. 
+%The advection of VoF tracers is about $7\%$ which is relatively high but still reasonable.
 To reduce the cost related to the \texttt{no-coalesce.h} algorithm we believe that further developments, which are referenced at \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/no-coalescence.h}{no-coalescence.h}, are still doable and could be useful for future studies.
+
+%Indeed, \ref{tab:performance} reports the time spent by each function during a simulation. 
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}

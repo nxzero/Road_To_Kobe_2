@@ -1,6 +1,6 @@
 \subsection{Numerical method}
 The governing equations describe the motion of two immiscible fluids of different densities and viscosities separated by an interface with surface tension. 
-We use the so-called ``one fluid'' formulation of the variable density and viscosity Navier-Stokes equations, which can be expressed as 
+We use the so-called ``one fluid'' formulation of the variable density and viscosity Navier-Stokes equations, which can be expressed as \citep{tryggvason2011direct}
 \begin{align}
     \pddt \rho+ \div(\rho\textbf{u})
     &= 0,\\
@@ -20,7 +20,7 @@ Note that the material properties, $\rho$ and $\mu$, take the values of each pha
 In our case the arithmetic mean turns out to perform better compared to the harmonic mean, which is often used to interpolate the viscosity for bubbly flows \citet{hidman2023assessing,innocenti2020direct}.
 More details about this choice are provided in \ref{ap:validation} (\textit{Case 1.}). 
 The capillary force is defined as, $\textbf{f}_\gamma =\textbf{n} \gamma \div \textbf{n} $, where \textbf{n} is the normal to the interface.
-Following  \citep{bunner2002dynamics}, we incorporated the artificial body force term, $\avg{\rho}\textbf{g}$, on the right-hand side of \ref{eq:dt_urho}, to maintain a zero-averaged velocity throughout the entire numerical domain.  
+Following  \citep{bunner2002dynamics}, we incorporated the artificial body force term, $\avg{\rho}\textbf{g}$, on the right-hand side of \ref{eq:dt_urho}, to mimick a zero-averaged velocity throughout the entire numerical domain.  
 
 To solve these equations we first initialized $125$ spherical droplets within a cubic domain with fully periodic boundary condition. 
 We used the open source code \url{http///basilisk.fr} to discretize the governing equations. 
@@ -36,7 +36,7 @@ For readers seeking more detailed information about the solvers, we recommend th
 With the VoF method droplets and bubbles may experience premature coalescence.
 For a detailed discussion on this issue see  \citet[Appendix B]{innocenti2020direct}.
 However, in this work, it is imperative to conserve a specific (mono-disperse) population of droplets over time to accumulate sufficient statistics about the microstructure.
-To tackle this issue we present in the next section a novel algorithm which prevents coalescence between droplets at a reasonable computational cost. 
+To tackle this issue we present in the next section a novel algorithm which prevents coalescence between droplets at a reasonable computational cost. Note that this section is complemented by the wiki page, \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspension/RS.c}{RS.c}, where the reader can access the source code used to conduct the DNS, as well as comments and notes to help comprehension. 
 
 
 
