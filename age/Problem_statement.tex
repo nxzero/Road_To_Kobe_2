@@ -1,19 +1,18 @@
 
+The DNS results presented in this study are based on the exact same set of data than our previous work \citet{fintzi2024buoyancy}, were we conducted statistically steady-state simulations of rising mono-disperse suspensions of droplets in a fully periodic domain. 
+This section is only summary of the numerical methods presented in \citet{fintzi2024buoyancy}, with additional information regarding the computation of statistics employed here. 
+Note that the source code of the DNS and the post processes tools used in this section are provided and documented on the wiki page : \href{http://basilisk.fr/sandbox/fintzin/Rising-suspension/RS.c}{RS.c}. 
 
-% Objective of this section :
-% \begin{itemize}
-    % \item Introduce the dimensionless parameters.
-    % \item Present the physical parameters of some industrial processes to locate our problematic. 
-    % \item Introduce the dimensionless parameters range investigated in this study.
-    % \item Present the tri-periodic box within which we add droplets in vof 
-% \end{itemize}
-\tb{re-écrire ou mettre la partie corrigé}
-We investigate numerically the dynamic of homogeneous mono-disperse emulsion subject to buoyancy forces in a fully periodic domain. 
-Both, the dispersed (resp. continuous) phase is considered as Newtonian fluid defined by viscosity $\mu_d$ (resp. $\mu_f$), and density $\rho_d$ (resp. $\mu_f$).
-Throughout this work, the subscript $_d$ and $_f$ indicate properties belonging to the dispersed and continuous phase, respectively. 
-The interface between both fluids is considered as infinitely thin and deprived of any impurities, it is described with the surface tension coefficient $\gamma$. 
-In this work the density, viscosity, and surface tension coefficient, will be considered constant in each phase.
-In dimensionless form this problem is completely characterized by $6$ dimensionless parameters :  the viscosity and density ratio, $\lambda = \mu_d / \mu_f$ and $\zeta = \rho_d / \rho_f$,  
+
+
+\subsection{Problem statement and numerical methods}
+
+
+We consider the dynamics of homogeneous mono-disperse emulsions subject to buoyancy forces in a fully periodic domain. 
+Both the dispersed and continuous phase are considered as Newtonian fluids defined by viscosity $\mu_d$ (resp. $\mu_f$) and density $\rho_d$ (resp. $\mu_f$).
+The interface between both fluids is modeled with a constant surface tension coefficient, $\gamma$. 
+Equally, the density and viscosity will be considered constant in each phase.
+In dimensionless form this problem is completely characterized by six dimensionless parameters :  the viscosity and density ratio, $\lambda = \mu_d / \mu_f$ and $\zeta = \rho_d / \rho_f$,  
 the \textit{Galileo} number, 
 \begin{equation*}
     Ga =\sqrt{\rho_f(\rho_f - \rho_d) g d^3} / \mu_f,
@@ -24,17 +23,10 @@ the \textit{Bond} number,
 \end{equation*}
 the number of droplets per domain $N_b$, and the dispersed phase volume fraction $\phi$. 
 Here, $d$ represents the diameter of a sphere with the same volume as the droplets, and $g$ denotes the gravitational acceleration.
-The \textit{Galileo} number measure the influence of the buoyancy forces against the viscous forces.
-Whereas the \textit{Bond} number evaluate the ratio between buoyancy and capillary forces. 
-% These parameters are the input parameters that we set at the beginning of a simulation
-
-
-The primary objective of the study is to investigate the microstructure through the nearest particle pair distribution function.
-Thus, it is crucial to obtain a sufficient number of DNS samples to ensure representativeness. 
-Additionally, the physical quantities measured in these DNS must remain independent of the domain size. 
-Therefore, we use a number of particles per domain of $N_b = 125$, which is roughly what \citet{hidman2023assessing} used for DNS of fully periodic buoyant rising bubbles.
-Additionally, each DNS lasts for a time : $t^*_\text{end} = 1500 \sqrt{d/g}$.
-It is shown in \ref{ap:validation} that these parameters  are sufficient to obtain well converged statistics.  
+The \textit{Galileo} number is a measure of the strength of the buoyancy forces relative to the viscous forces, whereas the \textit{Bond} number evaluates the ratio between buoyancy and capillary forces. 
+We used a number of particles per domain of $N_b = 125$, which is roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
+Moreover, each DNS lasts for a time : $t^*_\text{end} = 1500 \sqrt{d/g}$.
+These parameters are sufficient for to obtain a goo statistical convergence \citet{fintzi2024buoyancy}. 
 \begin{table}[h!]
     \centering
     \caption{Dimensionless parameter range investigated in this work.}
@@ -45,6 +37,132 @@ It is shown in \ref{ap:validation} that these parameters  are sufficient to obta
     \end{tabular}
     \label{tab:simulations}
 \end{table}
-In this study we present DNS results with dimensionless parameters lying in ranges outlined \ref{tab:simulations}.
-In summary, we investigated $5$ \textit{Galileo} number $Ga = 5,10,25,50,100$, $4$ different volume fractions $\phi = 0.01,0.05,0.1,0.2$, and two viscosity ratios $\lambda =1,10$ with $Bo = 0.2$ and $\zeta = 0.9$. 
-This makes a total of $40$ representative simulations of $N_b = 125$ droplets for $t= 1500 \sqrt{d/g}$ time. 
+In short, we present DNS with dimensionless parameters lying in ranges outlined in \ref{tab:simulations}.
+
+The governing equations describe the motion of two immiscible fluids of different densities and viscosities separated by an interface with surface tension. 
+We use the so-called ``one fluid'' formulation of the variable density and viscosity Navier-Stokes equations, which can be expressed as 
+\begin{align}
+    \pddt \rho+ \div(\rho\textbf{u})
+    &= 0,\\
+    \label{eq:dt_urho}
+    \pddt (\rho \textbf{u})
+    + \div (\rho  \textbf{u} \textbf{u} - \bm\sigma)
+    &= (\avg{\rho} - \rho)\textbf{g}
+    + \textbf{f}_\gamma,\\
+    \label{eq:dt_C}
+    \pddt C + \textbf{u}\cdot\grad C  
+    &= 0,
+\end{align}
+i.e. the mass, momentum and colors function transport equations, respectively. 
+The scalar fields $C$, represents the color function, which ranges between $0$ and $1$ to indicate the volumetric proportion of each phase.
+We introduced the fluid velocity vector $\textbf{u}$ and the Newtonian stress tensor $\bm{\sigma} = -p \textbf{I} + \mu (\grad \textbf{u}+ \grad \textbf{u}^\dagger)$ where $p$ is the pressure field and $^\dagger$ represents the transpose operator.
+Note that the material properties, $\rho$ and $\mu$, take the values of each phase in presence, using the arithmetic average : $\rho = (1-C)\rho_f + C \rho_d$ and $\mu = (1-C)\mu_f + C \mu_d$. 
+The capillary force is defined as, $\textbf{f}_\gamma =\textbf{n} \gamma \div \textbf{n} $, where \textbf{n} is the normal to the interface.
+Following  \citep{bunner2002dynamics}, we incorporated the artificial body force term, $\avg{\rho}\textbf{g}$, on the right-hand side of \ref{eq:dt_urho}, to maintain a zero-averaged velocity throughout the entire numerical domain.  
+
+To solve these equations we first initialized $125$ spherical droplets within a cubic domain with fully periodic boundary condition. 
+We used the open source code \url{http///basilisk.fr} to discretize the governing equations. 
+Additionally, we used a novel algorithm (discussed in detail in \citep{mani2021numerical,fintzi2024buoyancy}) to prevents coalescence between droplets so that we preserve a mono-disperse population of droplets. 
+This algorithm is based on the Mult-VoF methodology. 
+The key principle is to use different VoF tracers for adjacent droplets, but allow several non-touching droplets to be in the same VoF tracer.
+This algorithm is shown to preserve the kinematic behavior of interfaces which are in close contact, even thought we do not resolve the thin liquid film between them \citep{fintzi2024buoyancy}. 
+Note that this is of major importance since this study focuses on the relative velocity of droplets in interaction. 
+
+\subsection{Numerical sampling and statistical convergence}
+
+The age-included nearest-neighbor distribution function presented in the last section requires the particles' center of mass position and the position of its nearest neighbor, along with the current age of interaction.
+Equally, the center of mass velocity of the particles together with the velocity of their nearest neighbor is also needed to reconstruct $\textbf{w}_p^{nst}$. 
+Even though these quantities are basic, they are not evident to measure in DNS.
+Indeed, when several droplets belong to the same VoF tracer it is challenging to distinguish them.
+Therefore, some comments are in order.   
+
+As detailed in \citet{fintzi2024buoyancy} the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm permits us to distinguish the different droplet volumes within a given VoF field. 
+Let define $\texttt{t}_i[\text{c},t]$ as the ``tag'' field corresponding to the droplet $i$, evaluated at the cell ``c'' of the mesh and at time $t$.
+This field is equal to 1 for cells inside the volume of the particle $i$ and 0 outside.
+Then, the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm provides us with $N$ ``tag'' field, i.e. one for each droplet. 
+Based on $\texttt{t}_i$, and on the other fields solved by \ref{eq:dt_C} and \ref{eq:dt_urho}, we can easily define the particles Lagrangian properties mentioned above. 
+The mass, position and momentum of a particle are then computed as follows 
+\begin{align*}
+    m_i(t)
+    = \sum_{\text{c} = 1}^\text{last cell}
+    \rho [\text{c},t]
+    \texttt{t}_i[\text{c},t]dv[c],
+    \\ 
+    \textbf{x}_i(t)
+    = 
+    \frac{1}{m_i(t)}
+    \sum_{\text{c} = 1}^\text{last cell}
+    \textbf{x} 
+    \rho [\text{c},t]
+    \texttt{t}_i[\text{c},t]dv[c],
+    \\ 
+    \textbf{u}_i(t)
+    = 
+    \frac{1}{m_i(t)}
+    \sum_{\text{c} = 1}^\text{last cell}
+    \textbf{u} [\text{c},t]
+    \rho [\text{c},t]
+    \texttt{t}_i[\text{c},t]dv[c],
+\end{align*}
+where the sum from ``$\text{c} = 1$'' to ``$\text{last cell}$'' denotes a summation over the entire mesh grid, and $\rho[\text{c},t]$ and $\textbf{u}[\text{c},t]$ are the density field and velocity field evaluated at the cell ``c'' and at a simulation time step $t$. 
+Likewise, $\textbf{x}[\text{c}]$ and $dv[c]$ correspond to the Cartesian coordinate and the volume of the cell, respectively. 
+
+For a given time step $t_n$, we compute the position $\textbf{x}_i(t_n)$ and velocity $\textbf{u}_i(t_n)$ of each droplet. 
+Then, by measuring each particle pair distance, we identify the nearest neighbor for each droplet $i$. 
+For convenience the nearest neighbor of the droplet $i$ is indexed $j$. 
+Once this is done we are able to compute the relative positions $\textbf{r}_{ij}(n) =\textbf{x}_i - \textbf{x}_j$, and the relative velocities $\textbf{w}_{ij} = \textbf{u}_i - \textbf{u}_j$ with the nearest neighbor for all droplets. 
+At the simulation time step $t_{n+1}$ we repeat this procedure and compute all the $\textbf{x}_i(t_{n+1}),\;\textbf{u}_i(t_{n+1}),\;\textbf{r}_{ij}(t_{n+1}),\;\textbf{w}_{ij}(t_{n+1})$. 
+If the nearest neighbor of the droplet $i$ at $t = t_{n+1}$, is still the same as at $t = t_n$, we increment the \textit{age} of interaction as $a_i = a_i + (t_{n+1} - t_n)$, where $a_i$ is the \textit{age} of the particle $i$. 
+Inversely, if the particle $j$ of time $t= t_{n+1}$ is not the same as the one of time $t=t_n$ the \textit{age} is set back to zero. 
+Note that at $t = 0$ all ages are set top zero. 
+
+
+To reconstruct all these statistics from the DNS, we treat each simulation time step and droplets as an independent event, denoted as, $\FF$. 
+As an example, to reconstruct a quantity such as $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ we gather the relative velocities $\textbf{w}_{ij}(t)$ from the simulation and store them in $i$ intervals of ages $\Delta a_k$, and relative positions $\Delta \textbf{r}_k$ for $k = 1,\ldots, n$.
+Then, we average on all the $\textbf{w}_{ij}(t;\FF)$ over each particle and time step.
+Formally, we write, 
+\begin{equation}
+    \textbf{w}^\text{nst}_p(\Delta\textbf{r}_k,\Delta a_k)
+    = \frac{1}{E_k} 
+    \sum^{E_k}_{\FF_k} 
+    % \sum_i^{N_b}
+    % \sum_{j\neq i}^{N_b}
+    \textbf{w}_{ij}(t;\FF_k)
+    % h_{ij}
+    % \text{\;\;  with  \;\;}
+    % \FF_k = \{\FF; \textbf{r}(\FF)\in\Delta \textbf{r}_k, a(\FF)\in  \Delta a_k\}
+    \label{eq:vec_cond}
+\end{equation}
+where $\FF_k$ correspond to the events were the nearest particle pair $i$ and $j$ follows $\textbf{r},a \in \Delta \textbf{r}_k ,\Delta a_k$.
+$E_k$ is the total number of events fulfilling these constraints. 
+% Thus, we obtained an approximation of $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ which takes the intervals, $(\Delta\textbf{r}_i,\Delta a_i)$ as arguments.
+At some point, it will be useful to study the averaged relative velocity, conditioned on the age or on the radial distance, independently. 
+Therefore, in a more general way if $p$ is a scalar property with $\Delta p_k$ its $n$ intervals, we can define the $p$-conditionally averaged relative velocity as, 
+\begin{equation}
+    \textbf{w}^\text{nst}_p(\Delta p_k)
+    = \frac{1}{E_{k}} 
+    \sum^{E_{k}}_{\FF_{k}}  
+    % \sum_i^{N_b} 
+    % \sum_{j\neq i}^{N_b}
+    \textbf{w}_{ij}(t;\FF_k)
+    % h_{ij}
+    % \text{\;\;  with  \;\;}
+    % \FF_k = \{\FF; p(\FF)\in\Delta p_k\}
+    \label{eq:scalar_cond}
+\end{equation}
+In this definition, $\FF_{k}$ corresponds to all the events where the nearest neighbors respect the condition, $p \in \Delta p_k$, and $E_{k}$ represents the total number of events fulfilling this constraint. 
+
+Note that due to the average over the macroscopic variables, $\textbf{w}_p^{nst}(\Delta\textbf{r}_k,\Delta a_k)$ and $\textbf{w}^\text{nst}_p(\Delta p_k)$ is dependents on $\textbf{x}$ and $t$. 
+In general this will be the case for all quantity presented in \ref{sec:results}. 
+Therefore, from now on we drop the \textbf{x} and $t$ arguments. 
+
+
+It is clear that to obtain representative averaged quantities, the number of events $E_k$ per intervals must be consequent. 
+For 2D-conditioned quantity such as \ref{eq:vec_cond}, we estimated that $100$ samples per bins were sufficient to obtain good qualitative results. 
+Consequently, the plots exposed in \ref{sec:results} have been generated by averaging the quantity of interest (velocity fields, age of interaction) with a minimum threshold of $E_k = 100$ samples for each bin.
+Regarding the scalar-conditioned fields such as in \ref{eq:scalar_cond}, we gathered $E_k = 1000$ sample per bins to obtain accurate and quantitative results. 
+Lastly, regarding the sampling, we collected data for each Lagrangian quantity every $10$ simulation time steps.
+On average, $200,000$ time steps are performed during a simulation with $N_b = 125$ droplets. 
+This results in a total number of $E = 2,500,000$ samples. 
+In \ref{ap:validation}, we demonstrate that our statistics are well-converged.
+

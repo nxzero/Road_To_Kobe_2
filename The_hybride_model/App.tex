@@ -1,0 +1,452 @@
+
+Now that we reached a clear understanding of the mathematical structures of the averaged two phase flow equation we start to expose the averaged set of equations which constitute the \textit{Hybrid model}. 
+As, mentioned in \ref{sec:two-fluid} we consider the mass, momentum and energy for the particles and continuous phase. 
+Additionally, to describe higher degree of freedom of the particle shape and momentum, one must consider the second moment of mass and first moment of momentum averaged equations. 
+This, makes a total of 10 equations, 6 for the particle phase and 4 for the continuous phase.
+
+\subsection{Continuous phase equations}
+
+The equations for the carrier are basically the same as in the classic to fluid model except that the interfacial terms must be modified in order to have the same form as the dispersed phase equations \citep{jackson1997locally,zhang1994averaged}. 
+It is done through the use of \ref{eq:f_exp} which help us to convert the exchange terms of the form of $\avg{\delta_I \ldots }$ appearing in \ref{eq:avg_dt_chi_f} to a series expansion of particle phase  quantity : $\pSavg{\ldots} - \div (\ldots)$. 
+Where the first term of this series corresponding to the particle averaged equations exchange term. 
+Note that due to the expansion shape of \ref{eq:f_exp} we also see appear higher moments of surface in the fluid phase equations, they will be responsible for the additional fluxes in the fluid phase equation due to the presence particles. 
+We start by exposing the . 
+The continuous phase primary equations simply derived using the generic expression : \ref{eq:avg_dt_chi_f}, and applying the preceding remarks to the interfacial term. 
+The mass, momentum and total energy of the continuous phase yield, 
+\begin{align}
+    \label{eq:dt_hybrid_rho}
+    &\pddt (\phi_1 \rho_1)  
+    + \div (
+        \phi_1 \rho_1\textbf{u}_1
+    )
+    = 
+    0\\
+    \label{eq:dt_hybrid_rhou_1}
+    &\pddt (\phi_1 \rho_1\textbf{u}_1)  
+    + \div (
+        \phi_1 \rho_1\textbf{u}_1\textbf{u}_1
+        + \bm{\sigma}_1^\text{eq}
+    )
+    = 
+    \phi_1 \rho_1 \textbf{g} 
+    - \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    % +\div  \pSavg{{\textbf{r}\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    \\
+    \label{eq:dt_hybrid_rhoE_1}
+    &\pddt (\phi_1\rho_1E_1)  
+    + \div (
+        \phi_1\rho_1E_1\textbf{u}_1
+        + \bm{q}_1^\text{eq}
+        + \textbf{u}_1 \cdot \bm{\sigma}_1^\text{eq}
+        % - \textbf{u}_1^0 \cdot \bm{\sigma}_1^0 
+        % + \textbf{q}_1^0
+        )
+    = 
+    \phi_1 \rho_1\textbf{u}_1 \cdot \textbf{g} 
+    - \textbf{u}_p \cdot \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}\nonumber \\
+    &- \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    - \pavg{ \intS{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    + \pSavg{{\textbf{q}_1\cdot \textbf{n}_2}}
+    % &\div [    
+        % \textbf{u}_p \cdot \pSavg{{ \textbf{r}\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    % + \pavg{ \textbf{u}_\alpha' \cdot \intS{ \textbf{r} \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    % + \pavg{ \intS{\textbf{r}\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    % - \pavg{ \intS{\textbf{r}  \textbf{q}_1^0 \cdot \textbf{n}_2}}
+    % ]
+\end{align} 
+where we defined the equivalent stress tensor $\bm{\sigma}_1^\text{eq}$ and energy flux $\textbf{q}^\text{eq}_1$ as,
+\begin{align}
+    \label{eq:sigma_eq_def}
+    \bm{\sigma}_1^\text{eq}
+    =& 
+    \avg{\chi_1\rho_1\textbf{u}_1'\textbf{u}_1'}
+    - \phi_1 \bm{\sigma}_1%- n_p \textbf{M}_p
+    - \pSavg{{\textbf{r}\bm{\sigma}_1^0 \cdot \textbf{n}_2}}\\
+    \textbf{q}_1^\text{eq}
+    =&\textbf{q}_1^\text{e} +\textbf{q}_1^\text{k}  \nonumber\\
+    \textbf{q}_1^\text{e}
+    =& \rho_1 \avg{\chi_1 \textbf{u}_1' e_1'} 
+    + \phi_1\textbf{q}_1 
+    +\pSavg{{\textbf{r}\textbf{q}_1^0 \cdot \textbf{n}_2}} 
+    \nonumber\\
+    \textbf{q}_1^\text{k}
+    =& \rho_1 \avg{\chi_1 \textbf{u}_1' k_1} 
+    - \avg{\chi_1 \textbf{u}_1' \cdot \bm{\sigma}_1^0}
+    + (\textbf{u}_1 - \textbf{u}_p)\cdot
+    \pSavg{{\textbf{r}\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    \nonumber\\\nonumber&
+    - \pavg{ \textbf{u}_\alpha' \cdot \intS{ \textbf{r} \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    - \pavg{ \intS{\textbf{r}\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+\end{align}
+It is clear that those equations yield essentially the same as the previous set of equations presented in \ref{sec:two-fluid}.
+The only difference is the presence of additional fluxes inside $\bm{\sigma}^\text{eq}_1$ and $\textbf{q}^\text{eq}_1$. 
+Especially, one can remark the presence of the first moments of external forces. 
+In facts, according to \ref{eq:f_exp} an infinite number of moments is present however we chose to explicit only the first of the series. 
+
+% \tb{introduce the exchange term explain the drag and first moments here, just recall that we already seen them}
+% \tb{Insiste on the fact that this formulation is physical and NEW}
+In this form of the averaged momentum equation we see appear the terms $\pSavg{\bm{\sigma}_1^0 \cdot \textbf{n}_2}$ which is the total components of the interphase drag force, including the mean pressure gradient of the fluid phase pressure. 
+Likewise, $\pSavg{\textbf{r}\bm{\sigma}_1^0 \cdot \textbf{n}_2}$ is the total averaged first moment of force traction, which include the mean fluid phase pressure $p_1$. 
+As discussed in \ref{sec:Lagrangian} this terms symmetric and skew symmetric part represent the averaged stresslet and torque on the particles, respectively.  
+The latter is responsible for the Einstein viscosity computed in dilute stokes flow regime \citep{guazzelli2011}. 
+The exchange term in \ref{eq:dt_avg_rhoE_k} have been decomposed into three exchange terms.
+Indeed, after taking the Taylor expansion of $\avg{\delta_I (\textbf{u}^0_2 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2)}$ around the particles center of mass we used the following decomposition on each of the moments :
+\begin{align}
+    \label{eq:exergysource}
+    \pavg{ \intS{\textbf{u}^0_2 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    &= 
+    \textbf{u}_p \cdot \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    + \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    + \pavg{ \intS{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}\\
+    \pavg{ \intS{\textbf{r}\textbf{u}^0_2 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+   &= 
+    \textbf{u}_p \cdot \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    + \pavg{ \textbf{u}_\alpha' \cdot \intS{\textbf{r}  \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    + \pavg{ \intS{\textbf{r}\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+\end{align}
+In this form the contribution to the energy exchange is now clear. 
+The first term on the right hands side of \ref{eq:exergysource} represents the work done by the mean phase relative motion, the second term is the work made by the resultants of the forces and individual particles fluctuating velocity, the last term represent the work made by the local force traction on the particle surface with the surface velocity relative to the particle center of mass velocity.
+Same comments can be made for the first order moments. 
+The relative importance of these three contribution will be determined in the next section, especially we will see that  it depends highly on the particles' nature. 
+To our knowledge, such a decomposition has not been seen in the literature except in \citep[Chapter 2]{scorsim2021particle} where they make similar consideration, but for solid spherical particles.
+% It is mainly due to the facts that these equations are often used in the context of two-phase flow modeling, which disregard the equation of the dispersed phase energy. 
+We recall that the stress integral $\pSavg{\bm{\sigma}_1^0 \cdot \textbf{n}_2}$ contains contact forces as well, making our model consistent with the latter study. 
+
+As discussed in appendix \ref{eq:dt_avg_uk2}, \ref{eq:dt_avg_kk} and \ref{eq:dt_avg_ek} need to be reformulated consistently with the dispersed phase exchange term. 
+The mean kinetic energy, pseudo turbulent energy and internal energy equation can be reformulated as, 
+\begin{align}
+    \pddt (\phi_1 \rho_1u_1^2/2)  
+    + \div (
+        \phi_1 \rho_1\textbf{u}_1u_1^2/2
+        + \textbf{u}_1 \cdot \bm{\sigma}_1^\text{eq}
+    )
+    = 
+     \bm{\sigma}_1^\text{eq} : \grad \textbf{u}_1
+    + \phi_1 \rho_1 \textbf{u}_1\cdot \textbf{g} 
+    -  \textbf{u}_1\cdot 
+        \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}} 
+        % - \div 
+        % \pSavg{{\textbf{r}\bm{\sigma}_1^0 \cdot \textbf{n}_2}} 
+        \\
+    \label{eq:dt_hybrid_k1}
+    \pddt (\phi_1\rho_1k_1)  
+    + \div (
+        \phi_1\rho_1k_1\textbf{u}_1
+        + \textbf{q}_1^\text{k} 
+        )
+    = 
+    - \avg{\chi_1\bm{\sigma}_1^0 : \grad \textbf{u}_1^0}
+    - \bm{\sigma}_1^\text{eq} : \grad \textbf{u}_1\nonumber
+    - \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_1^0 \cdot \textbf{n}_2}}\\
+    + (\textbf{u}_1 - \textbf{u}_p)\cdot \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}} 
+    - \pavg{ \intS{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}} 
+    \\
+    \label{eq:dt_hybrid_e1}
+    \pddt (\phi_1\rho_1e_1)  
+    + \div (
+        \phi_1 \rho_1e_1\textbf{u}_1
+        +
+        \textbf{q}_1^\text{e} 
+        )
+    = 
+    \avg{\chi_1\bm{\sigma}_1^0 : \grad \textbf{u}_1^0}
+    + \pSavg{{\textbf{q}_1^0 \cdot \textbf{n}_2}} 
+\end{align}
+Our form of the pseudo turbulent energy equation is consistent with the one of former studies \citep[Chapter 7]{morel2015mathematical}\citep[Chapter 2]{scorsim2021particle}\citet{kataoka1989basic}. 
+However, the  decomposition of the exchange term isn't present and the expression of $\textbf{q}_1^k$, which gather the first moments of the work, has not been exposed in the literature in such an explicit form.
+The energy exchange between the macroscopic microscopic and internal averaged energy will be detailed in the following, as the energy exchange between phases will be discussed.   
+
+
+\subsection{Dispersed phase equations}
+
+% Now, we turn our attention to the particle phase equations. 
+% \tb{Do i put the surface in or out}
+% \subsubsection{Primary equations}
+
+By applying straight ensemble averaging on \ref{eq:dt_m_alpha}, \ref{eq:dt_p_alpha} and \ref{eq:dt_E_alpha} we obtain the particle averaged mass, momentum and energy equation, namely, 
+\begin{align}
+    \label{eq:dt_hybrid_mp}
+    \pddt \left(n_p m_p\right)
+    + \div \left(n_pm_p\textbf{u}_p
+    \right)
+    = 
+    0\\
+    \label{eq:dt_hybrid_up}
+    \pddt \left(n_p m_p \textbf{u}_p\right)
+    + \div \left(n_p
+    m_p \textbf{u}_p \textbf{u}_p 
+    + \bm{\sigma}_p^\text{eq}
+    \right)
+    = 
+    n_p m_p \textbf{g}
+    + \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}},\\
+    \label{eq:dt_hybrid_Ep}
+    \pddt(m_p n_pE_p^\text{tot})
+    + \div(m_pn_p E_p^\text{tot} \textbf{u}_p 
+    + \textbf{q}_p^\text{eq} 
+    + \textbf{u}_p \cdot \bm{\sigma}_p^\text{eq})
+    =  n_p m_p \textbf{u}_p\cdot  \textbf{g}
+    % +  n_p ( \textbf{u}'_1 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2)_p^\Sigma
+    -  \pSavg{\textbf{q}_1^0 \cdot \textbf{n}_2}\nonumber\\
+    + \textbf{u}_p \cdot\pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    + \pavg{\textbf{u}_\alpha' \cdot\intS{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    + \pSavg{{\textbf{w}_2^0 \cdot\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+\end{align}
+where we have defined, 
+\begin{align*}
+    &\bm{\sigma}_p^\text{eq}
+    =  m_p\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    &\textbf{q}_p^\text{eq}
+    =\textbf{q}_p^\text{e} 
+    +\textbf{q}_p^\text{k}  
+    +\textbf{q}_p^\text{w}  
+    \\
+    &\textbf{q}_1^\text{e}
+    = m_p \pavg{\textbf{u}_\alpha' e_\alpha'} 
+    &\textbf{q}_p^\text{k}
+    = m_p \pavg{\textbf{u}_\alpha' k_\alpha} 
+    \\
+    &\textbf{q}_p^\text{w}
+    = 
+     \pavg{\textbf{u}_\alpha'W_\alpha'}
+    + \pavg{\textbf{u}_\alpha' s_\alpha' \gamma}.
+\end{align*}
+We have introduced the internal kinetic energy with $n_pW_p = \pOavg{{\rho_2  (w_2^0)^2/2}}$. 
+We recognize that these equations posses indeed the exchange terms corresponding to the fluid phase averaged equations but with opposite sign. 
+However, note that in opposition to the fluid phase averaged equations, the first order moments do not appear inside the fluxes of the particles equations. 
+Consequently, only the fluctuating quantities plays the role of dissipative fluxes. 
+It is noteworthy to mentions that in the total drag force term, $ \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}$ the divergence of a stress is hidden, teh latter represent particles-particles contact forces, \citet{jackson1997locally,zhang1997momentum}. 
+One may argue that this is not consistent since this stress would also appear on the fluid phase momentum equation upon the development of the term $\pSavg{\bm{\sigma}_1^0\cdot\textbf{n}_2}$. 
+However, this is made consistent if one notice that contact force stress is also present in the first moment $\pSavg{\textbf{r}\bm{\sigma}_1^0\cdot\textbf{n}_2}$ but with opposed sign. 
+Likewise, note that in some recent models it is possible to expands the momentum exchange terms, as the sum of a \textit{binary force} and the divergence of a stress accounting for particles' long range interaction forces \citep{zhang2021ensemble,nott2011suspension}. 
+In opposition to the contact stress, this long range interaction stress, appears on the particle and carrier fluid momentum conservation equation. 
+Eventhrougth, the latter stress has been shown to be indispensable to ensure the hypertonicity of the two phase flow equations\citep{fox2020hyperbolic}, we choose to not explicitly display this kind of stresses for succinctness. 
+
+% \subsubsection{Secondary equations}
+
+The particle averaged total energy can be decomposed in the similar way than the continuous averaged total energy \ref{eq:E_def}. 
+The decomposition is somewhat more involving than the continuous phase and reads as, 
+\begin{equation*}
+    n_p m_p E_p^\text{tot}(t) 
+    = m_p n_p e_p 
+    + n_p W_p
+    + n_p s_p \gamma
+    + m_p n_p k_p
+    + m_p n_p (u_p)^2/2
+    \label{eq:E_p_def}
+\end{equation*}
+The total energy of the particle phase is made of :
+the mean particle's internal energy $e_p$; 
+the averaged particle's internal kinetic energy $W_p$;
+the averaged particle's surface energy $n_p s_p \gamma$;
+the granular temperature $n_p k_p =\pavg{\textbf{u}_\alpha \cdot\textbf{u}_\alpha}/2$;
+and the kinetic energy of the mean particle phase velocity. 
+The mean surface energy $n_p s_p \gamma$ is treated as a source terms in the following equations, that is why it doesn't appear in \ref{eq:E_p_def}.  
+If one wish to solve for every component of the energy it is therefore needed to derive two supplementary equation. 
+Applying the average procedure on \ref{eq:dt_e_alpha}, \ref{eq:dt_w2_alpha} and \ref{eq:dt_u2_alpha} one can derive an equation for the particle averaged internal energy, internal kinetic energy and mean kinetic energy, it yields, 
+\begin{align}
+    % &\pddt \left(n_p m_p u_p^2/ 2\right)
+    % + \div \left(n_p
+    % m_p u_p^2/ 2 \textbf{u}_p 
+    % + \textbf{u}_p \cdot \bm{\sigma}_p^\text{eq}
+    % \right)
+    % = 
+    % + \bm{\sigma}_p^\text{eq}  :\grad \textbf{u}_p
+    % +  n_p v_p \textbf{u}_p \cdot 
+    % \rho_2 \textbf{g}
+    % + n_p \textbf{u}_p \cdot (\bm{\sigma}_1^0 \cdot \textbf{n}_2)^\Sigma_p,\\
+    \label{eq:dt_hybrid_u2p}
+    \pddt \left(\pavg{m_\alpha u_\alpha^2/2}\right)
+    + \div \left(\pavg{m_\alpha u_\alpha^2/2} \textbf{u}_p 
+    + \textbf{q}^k_p
+    + \textbf{u}_p \cdot \bm{\sigma}_p^\text{eq}
+    \right)
+    = 
+    n_p m_p \textbf{u}_p \cdot
+    \textbf{g}\nonumber\\  
+    + \textbf{u}_p\cdot\pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    + \pavg{\textbf{u}_\alpha'\cdot\intS{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}
+    \\
+    \label{eq:dt_hybrid_Wp}
+    \pddt \left(n_p W_p\right)
+    + \div 
+    (n_p W_p
+    \textbf{u}_p 
+    +  \textbf{q}_p^\text{w}
+    )
+    = 
+    - \pOavg{{\bm{\sigma}_2^0 : \grad\textbf{u}_2^0}}
+    + \pSavg{{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot  \textbf{n}_2}}
+    - \pavg{\dot{ s_\alpha}}
+    \\
+    \pddt \left(n_p m_p e_p\right)
+    + \div \left(n_p
+    m_p e_p \textbf{u}_p 
+    +  \textbf{q}_p^\text{e}
+    \right)
+    = 
+    + \pOavg{{\bm{\sigma}_2^0 : \grad\textbf{u}_2^0}}
+    - \pSavg{{\textbf{q}_1^0\cdot \textbf{n}_2}}
+    \label{eq:dt_hybrid_ep}
+\end{align}
+The center of mass kinetic energy can be further decomposed such as $\pavg{u_\alpha^2}/2 = n_p k_p + n_p u_p^2/2$. 
+Then, to derive an equation for $k_p$ one must retrieve to \ref{eq:dt_hybrid_u2p} the dot product of \ref{eq:dt_hybrid_up} with $\textbf{u}_p$, which eventually yields an equation for the mean kinetic energy and another for the granular temperature $k_p$, namely,
+\begin{align}
+    \label{eq:dt_hybrid_up2}
+\pddt \left(n_p m_p u_p^2/ 2\right)
+    + \div \left(n_p
+    m_p u_p^2/ 2 \textbf{u}_p 
+    + \textbf{u}_p \cdot \bm{\sigma}_p^\text{eq}
+    \right)
+    = 
+    \bm{\sigma}_p^\text{eq}  :\grad \textbf{u}_p
+    +  n_p m_p \textbf{u}_p \cdot 
+     \textbf{g}
+    + \textbf{u}_p \cdot \pSavg{{\bm{\sigma}_1^0 \cdot \textbf{n}_2}},\\
+    \label{eq:dt_hybrid_kp}
+    \pddt \left(n_p m_p k_p\right)
+    + \div \left(n_p
+    m_p k_p \textbf{u}_p 
+    + \textbf{q}^k_p
+    % + \textbf{u}_p \cdot \bm{\sigma}_p^\text{eq}
+    \right)
+    = 
+    - \bm{\sigma}_p^\text{eq}  :\grad \textbf{u}_p
+    + \pavg{\textbf{u}_\alpha'\cdot\intS{\bm{\sigma}_1^0 \cdot \textbf{n}_2}},
+\end{align}
+respectively.
+Since equation \ref{eq:dt_hybrid_Wp}, \ref{eq:dt_hybrid_ep} and \ref{eq:dt_hybrid_u2p} are discussed in \ref{sec:Lagrangian} let's focus in the granular temperature equation. 
+The usual way to derive the granular temperature equations is by the use of kinetic theory, see \citet[Chapter 7 and 9]{rao2008introduction} equation (7.75). 
+To bridge the usual formulation of the equation for $k_p$ with the kinetic theory and our model, we remark that the term $\pSavg {\bm{\sigma}_2^0 \cdot \textbf{n}_2}$ takes in account both hydrodynamic forces and particle interaction forces. 
+Consequently, the second term on the right hands side of \ref{eq:dt_hybrid_kp} can be decomposed into a contribution due to particle-particle interactions and a contribution due to particle fluid interactions, the former is the dissipation term of see \citet[Chapter 7 and 9]{rao2008introduction} equation (7.75). 
+Also, a term written as the divergence of a stress is in fact included in kinetic theory, it is supposed to account for fluxes of granular agitation due to particle-particle elastic interactions. 
+This terms can be recovered from the exchange term $\pavg{\textbf{u}_\alpha'\cdot\intS{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}$ with a similar procedure than the derivation of the contact stress tensor, see \citet{scorsim2021particle}. 
+Consequently, if we Except that the particles-fluid interaction terms are disagreed such as in \citet{rao2008introduction} we obtain consistent results. 
+Notice that we did not make any hypothesis so far, consequently, \ref{eq:dt_hybrid_kp} itself is valid regardless of the particles nature and concentration.
+The hypothesis made in kinetic theory are in fact needed to derive the closure for the exchange term, $\pavg{\textbf{u}_\alpha'\cdot\intS{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}$. 
+
+\subsection{The energy exchanges}
+
+One can verify that summing \ref{eq:dt_hybrid_ep}, \ref{eq:dt_hybrid_Wp} and \ref{eq:dt_hybrid_kp} and \ref{eq:dt_hybrid_up2} makes \ref{eq:dt_hybrid_Ep}.  
+Under this form it is easy to observe the exchange terms which drive the energy transfer between each component of the total energy. 
+Firstly, the source term $\bm{\sigma}_p^\text{Re} :\grad \textbf{u}_p$ appear in \ref{eq:dt_hybrid_up2} and \ref{eq:dt_hybrid_k1} with opposite sign. 
+Consequently, macroscopic kinetic energy is transmitted to granular agitation through the macroscopic diffusion scalar : $\bm{\sigma}_p^\text{Re} :\grad \textbf{u}_p$. 
+Then between \ref{eq:dt_hybrid_Wp} and \ref{eq:dt_hybrid_ep} we already observed that the source terms is the dissipation term,  $\pOavg{\bm{\sigma}_2^0:\grad \textbf{u}_2^0}$.
+However, note that no common term is present between \ref{eq:dt_hybrid_kp} and \ref{eq:dt_hybrid_Wp} which implies that there is no direct transfer of energy between the center of mass velocity fluctuation quantified by $k_p$ and the internal velocity fluctuation energy $W_p$. 
+However, notice that the transport equation for $k_1$, \ref{eq:dt_hybrid_k1}, contains the terms $\pavg{\textbf{u}_\alpha' \intS{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}$ and $\pSavg{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0 \cdot \textbf{n}_2}$ which are also present in \ref{eq:dt_hybrid_kp} and \ref{eq:dt_hybrid_Wp}. 
+Consequently, the energy transfer from granular agitation $k_p$ and the internal kinetic energy $W_p$ is done through the fluid phase pseudo turbulent kinetic energy. 
+To summarize this quite complicated energy cascade between both phases and the different scales we propose the following diagram \ref{fig:energy}. 
+\begin{figure}[h!]
+    \centering
+    \tikzstyle{quadri}=[rectangle,draw]
+    \begin{tikzpicture}[scale=1.2]
+        \node[quadri,fill=gray!10] (u2) at (0,0){$(u_p)^2 / 2$};
+        \node[quadri,fill=gray!10] (kp) at (4,0){$(k_p)$};
+        \node[quadri,fill=gray!10] (Wp) at (8,0){$(W_p +s_p\gamma)$};
+        \node[quadri,fill=gray!10] (ep) at (12,0){$(e_p)$};
+        \node[quadri,fill=gray!10] (u12)at (0,-3){$\frac{\rho_1}{2}(u_1)^2$};
+        \node[quadri,fill=gray!10] (k1) at (6,-3){$k_1$};
+        \node[quadri,fill=gray!10] (e1) at (10,-3){$e_1$};
+        \draw[->] (u2)--(kp)node[midway,above]{\footnotesize $\bm{\sigma}^\text{eq}_p:\grad \textbf{u}_1$};
+        % \draw[<->,text width=2cm] (kp)--(u12) node[midway,left]{\footnotesize $+  n_p v_p \textbf{u}_p \cdot 
+        % (\rho_2 \textbf{g} - \grad p_1)
+        % + n_p \textbf{u}_p \cdot \textbf{f}_{pm} - \textbf{F}_\text{pfp}$};
+        \draw[<->] (k1)--(u12) node[midway,above]{\footnotesize $\bm{\sigma}^\text{eq}_1:\grad \textbf{u}_1$}node[midway,below,sloped]{\footnotesize $\textbf{u}_1\cdot\pSavg{\bm{\sigma}_1^0\cdot \textbf{n}_2} $};
+        \draw[<->] (k1)--(e1) node[midway,below]{\footnotesize $\avg{\chi_1 \bm{\sigma}_1^0 : \grad \textbf{u}_1^0}$};
+        \draw[<->,sloped] (k1)--(kp) node[midway,above]{\footnotesize $\pavg{ \textbf{u}_\alpha'\cdot \intS{\bm{\sigma}_1^0\cdot\textbf{n}_2}}$};
+        \draw[<->] (k1)--(u2) node[midway,below,sloped]{\footnotesize $\textbf{u}_p\cdot \pSavg{\bm{\sigma}_1^0 \cdot \textbf{n}_1}$};
+        \draw[<->,sloped] (k1)--(Wp) node[midway,below]{\footnotesize $\pSavg{{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0\cdot \textbf{n}_1}}$};
+        % \draw[->] (kp)--(Wp)node[midway,above]{$(\textbf{u}_\alpha' \cdot \textbf{f}_\alpha')_p$};
+        \draw[->] (Wp)--(ep)node[midway,above]{\footnotesize $\pOavg{\bm{\sigma}_2^0 : \grad \textbf{u}_2^0}$};
+        \draw (e1)--(ep)node[midway,above,sloped]{\footnotesize $\pSavg{\textbf{q}_1^0 \cdot \textbf{n}_2}$};
+    \end{tikzpicture}
+    \caption{Energy exchange between the different components of energy in a dispersed two phase flow.
+    Macroscopic kinetic energy of the particle phase, $u_p^2/2$, and of the carrier fluid $u_1^2/2$.
+    $k_1$, Pseudo turbulent energy of the carrier fluid. 
+    $k_p$, Pseudo turbulent energy of particle center of mass. 
+     }
+    \label{fig:energy}
+\end{figure}
+% Consequently, the energy gain due to internal dissipation stress $\pOavg{\bm{\sigma}_2^0:\grad \textbf{u}_2^0}$ comes from the internal velocity fluctuation equation. 
+In the literature, it is said that the transfer terms between internal energy $e_p$ and the granular temperature $k_p$ is the \textit{dissipation rate} due to inelastic particle-particle collision present in \ref{eq:dt_hybrid_up2}, see for example \citet{fox2014multiphase,rao2008introduction}. 
+However, in light of \ref{fig:energy} the energy gain due to  $\pOavg{\bm{\sigma}_2^0:\grad \textbf{u}_2^0}$ which is the \textit{dissipation rate} has no reason to be equal to the energy loss in \ref{eq:dt_hybrid_up2} represented by the term $\pavg{\textbf{u}_\alpha' \intS{\bm{\sigma}_1^0 \cdot \textbf{n}_2}}$. 
+In fact some energy is first transmitted to the fluid phase $k_p$, then some of this energy is transmitted to the internal kinetic energy $W_p$, which will induce viscous dissipation within the particle. 
+In short, the internal kinetic energy is transformed into internal energy but by no means the \textit{dissipation rate} $\pOavg{\bm{\sigma}_2^0:\grad \textbf{u}_2^0}$ makes the link between to the granular temperature $k_p$ and the internal energy of the particle phase $e_p$. 
+
+\subsection{The first order momentum and mass equations}
+
+As it is suggested in the previous section, the needs for higher moments equations arise if one of the closure terms present in the previous set of equation is highly dependent on one of the moments of the particles. 
+In our case we suppose that the second order description of the averaged shape, i.e. $\textbf{M}_p$, and a first order description of velocity distribution, i.e. $\textbf{P}_p$,  is enough to express all closure terms. 
+By applying the average operator on \ref{eq:dt_M_alpha},\ref{eq:dt_S_alpha} and \ref{eq:dt_mu_alpha}, one get the second order moment of mass, and first order moment of momentum symmetric and skew symmetric parts, namely, 
+\begin{align}
+    &\pddt \left(n_p \textbf{M}_p\right)
+    + \div \left(
+        n_p \textbf{u}_p \textbf{M}_p
+    + \textbf{M}_p^\text{Re}
+    \right)
+    =
+    n_p2  \textbf{S}_p
+    \label{eq:dt_hybrid_Mp}
+    \\
+    % \label{eq:dt_hybrid_Pp}
+    % \pddt \left(n_p \textbf{P}_p\right)
+    % + \div \left(
+    %     n_p \textbf{u}_p \textbf{P}_p
+    % + \textbf{P}_p^\text{Re}
+    % \right)
+    % &=
+    % % -n_p v_p p_1 \textbf{I}
+    % % + n_p \textbf{F}_p
+    % \pSavg{
+    %     \textbf{r} \bm{\sigma}_1^0 \cdot\textbf{n}_2
+    % }
+    % + \pOavg{
+    %     \rho_2 \textbf{w}_2^0  \textbf{w}_2^0 
+    %     - \bm{\sigma}_2'
+    % }
+    % -  \pSavg{\gamma (\textbf{I} - \textbf{nn})},\\
+\label{eq:dt_hybrid_Sp}
+&\pddt \left(n_p \textbf{S}_p\right)
++ \div \left(
+    n_p \textbf{u}_p \textbf{S}_p
++ \textbf{S}_p^\text{Re}
+\right)
+=
+% -n_p v_p p_1 \textbf{I}
+\pSavg{(\textbf{r}\bm\sigma_1^0+\bm\sigma_1^0\textbf{r})\cdot \textbf{n}_2}
+% n_p  \mathscr{S}_p^*
+% + \pSavg{
+%     \textbf{r} \bm{\sigma}_1^0 \cdot\textbf{n}_2
+% }
+&+ \pOavg{
+    \rho_2 \textbf{w}_2^0  \textbf{w}_2^0 
+    - \bm{\sigma}_2
+}
+-  \pSavg{\gamma \textbf{I}_{||}},
+\\
+\label{eq:dt_hybrid_mup}
+&\pddt \left(n_p \bm{\mu}_p\right)
++ \div \left(
+n_p \textbf{u}_p \bm{\mu}_p
++ \bm{\mu}_p^\text{Re}
+\right)
+=
+\pSavg{\textbf{r}\times(\bm\sigma_1^0\cdot \textbf{n}_2)}
+\end{align}
+respectively, where we have defined the fluctuaiton terms as $
+ \textbf{M}_p^\text{Re}
+ = \pavg{\textbf{M}_\alpha' \textbf{u}_\alpha'} $,  $ 
+ \textbf{S}_p^\text{Re}
+ = \pavg{\textbf{P}_\alpha' \textbf{u}_\alpha'}$ and $ 
+ \bm{\mu}_p^\text{Re}
+ = \pavg{\bm{\mu}_\alpha' \textbf{u}_\alpha'}
+$.
+Note many comments can be made about these equations as they have been already treated in \ref{sec:Lagrangian}. 
+However, it is interesting to discuss the case of infinitely rigid particles where the internal velocity is defined by $\textbf{w}_2^0 = \bm\Omega_\alpha \cdot \textbf{r}$ and the particle internal stress is undefined. 
+In this case \ref{eq:dt_hybrid_Mp} and \ref{eq:dt_hybrid_mup} might be used to solve for the orientation and angular velocity of the particles. 
+Therefore, \ref{eq:dt_hybrid_Sp} seems to be redundant and is in practice never used. 
+In fact this equation can be used to determine the averaged stress, $\pOavg{\bm{\sigma}_2}$ in terms of the particles' kinetic properties. 
+Knowing the internal stress of the particles, and the constitutive law of the solid material, one is able to compute the averaged deformation of the particle. 
+Once the deformation is obtained, one is able to validate, or not, the assumption of infinitely rigid particles made at the origin. 
+
+

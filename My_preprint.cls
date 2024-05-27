@@ -141,11 +141,12 @@
 \newcommand{\pdda}{\partial_a}
 \renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
-\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
+\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n}_k }
+% \renewcommand{\Jump}[1]{\sum_{k=d,f} \left[#1\right] \cdot \textbf{n}_k }
 
 \newcommand{\intO}[1]{\int_{\Omega_\alpha} #1 d\Omega}
 % \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
-\newcommand{\intS}[1]{\int_{\Sigma_\alpha} #1 d\Sigma}
+\newcommand{\intS}[1]{\int_{\Gamma_\alpha} #1 d\Sigma}
 % \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
 \newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
 \newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
@@ -166,7 +167,7 @@
 \renewcommand{\size}[1]{0.3\textwidth}
 \newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
 \newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
-\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Sigma_\alpha} \pri{1}{#1}#2 d\Sigma}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Gamma_\alpha} \pri{1}{#1}#2 d\Sigma}}
 
 % \newcommand{\numref}[1]{\ref{#1}}
 \renewcommand{\ref}[1]{\autoref{#1}}
