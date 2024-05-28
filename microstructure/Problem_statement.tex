@@ -1,6 +1,6 @@
-In this section, we outline the approach employed for performing simulations aimed at achieving statistically steady states in the context of a rising mono-disperse suspension of droplets within a fully periodic domain.
+This section outlines the approach employed for performing simulations to achieve statistically steady states in the context of a rising mono-disperse suspension of droplets within a fully periodic domain.
 We start by presenting the relevant physical parameters, followed by an overview of the numerical methods employed.
-Finally, we detail on the methodology implemented for collecting statistical data on microstructure, which will be presented in the next sections.
+Finally, we detail the methodology implemented for collecting statistical data on microstructure, which will be presented in the following sections.
 
 %In this section we expose the strategy employed to conduct statistically steady state simulations of rising mono-disperse suspension of droplets in a fully periodic domain. 
 %We start by introducing the physical parameter, followed by a description of the numerical methods.
@@ -13,11 +13,11 @@ Finally, we detail on the methodology implemented for collecting statistical dat
 \subsection{Problem statement}
 
 We investigate numerically the dynamics of homogeneous mono-disperse emulsions subject to buoyancy forces in a fully periodic domain. 
-Both the dispersed and continuous phases are considered as Newtonian fluids defined by viscosity $\mu_d$ (resp. $\mu_f$) and density $\rho_d$ (resp. $\mu_f$).
-Throughout this work, the subscript $_d$ and $_f$ indicate properties belonging to the dispersed and continuous phases respectively. 
-The interface between both fluids is considered as infinitely thin, free of any impurities characterized by a constant surface tension $\gamma$. %with a coefficient  is assumed. 
+The dispersed and continuous phases are considered Newtonian fluids defined by viscosity $\mu_d$ (resp. $\mu_f$) and density $\rho_d$ (resp. $\mu_f$).
+Throughout this work, the subscript $_d$ and $_f$ indicate properties belonging to the dispersed and continuous phases, respectively. 
+The interface between both fluids is considered infinitely thin, free of impurities, and characterized by a constant surface tension $\gamma$. %with a coefficient  is assumed. 
 The density and viscosity will be considered constant in each phase.
-In dimensionless form this problem is completely characterized by six dimensionless parameters :  the viscosity and density ratio, $\lambda = \mu_d / \mu_f$ and $\zeta = \rho_d / \rho_f$,  
+In dimensionless form, this problem is completely characterized by six dimensionless parameters:  the viscosity and density ratio, $\lambda = \mu_d / \mu_f$ and $\zeta = \rho_d / \rho_f$,  
 the \textit{Galileo} number, 
 \begin{equation*}
     Ga =\frac{\sqrt{\rho_f(\rho_f - \rho_d) g d^3}}{\mu_f},
@@ -27,8 +27,8 @@ the \textit{Bond} number,
     Bo =\frac{(\rho_f - \rho_d) g d^2}{\gamma},
 \end{equation*}
 the number of droplets per domain $N_b$, and the dispersed phase volume fraction $\phi$. 
-Here, $d$ represents the diameter of a sphere with the same volume as the droplets, and $g$ denotes the acceleration of gravity.
-The \textit{Galileo} number is a measure of the strength of the buoyancy forces relative to the viscous forces, whereas the \textit{Bond} number evaluates the ratio between buoyancy and capillary forces. 
+Here, $d$ represents the diameter of a sphere with the same volume as the droplets and $g$ denotes the acceleration of gravity.
+The \textit{Galileo} number measures the strength of the buoyancy forces relative to the viscous forces, whereas the \textit{Bond} number evaluates the ratio between buoyancy and capillary forces. 
 
 %To provide a brief overview of the range of interest for these numbers in an industrial context, let us consider the example of a vegetable oil/water system.
 %In most liquid-liquid system encountered in industrial processes the diameter of the droplets lies in the range $d = [50 \mu \text{m}, 3 \text{mm}]$. To provide order of magnitude of the quantities of interest let us consider the example of a vegetable oil dispersed in water. The density and viscosity of the continuous phase are approximately $\rho_f = 1000 \text{kg/m}^3$ and $\mu_f = 10^{-3} \text{Pa.s}$, respectively. The density and viscosity of the dispersed phase are close to $\rho_d = 900 \text{kg/m}^3$ and $\mu_d = 10^{-2} \text{Pa.s}$, respectively.
@@ -46,16 +46,16 @@ The surface tension of the oil/water system is approximately $\gamma = 0.05 \tex
 \end{table}
 \ref{tab:parameters_exp} gives the corresponding dimensionless parameters.  
 Notice that the \textit{Bond number} is relatively low, indicating that the droplets are nearly spherical in these processes.
-Following \ref{tab:parameters_exp}, to approach real-life applications we conducted DNS for four volume fractions, specifically $\phi = 0.01,0.05,0.1,0.2$.
-In contrast to most of the previous studies, we choose to keep the number of droplets constant while changing the volume fraction $\phi$. 
+Following \ref{tab:parameters_exp}, to approach real-life applications, we conducted DNS for four volume fractions, specifically $\phi = 0.01,0.05,0.1,0.2$.
+In contrast to most previous studies, we keep the number of droplets constant while changing the volume fraction $\phi$. 
 We then modify the domain size $\mathcal{L}$ accordingly. 
-This introduces another dimensionless parameter of interest : $\mathcal{L}/d$, which measures the confinement of the particles within the finite numerical domain. 
+This introduces another dimensionless parameter of interest: $\mathcal{L}/d$, which measures the confinement of the particles within the finite numerical domain. 
 This parameter is purely determined by $\phi$ and $N_b$, and will thus be refereed as a \textit{secondary parameter}.
 
 As mentioned, the \textit{Bond} numbers of our targeted application is very low.
-Therefore, and it will stay constant throughout this study, the \textit{Bond} number is set to $Bo = 0.2$.
+Therefore, the \textit{Bond} number is set to $Bo = 0.2$, and it will stay constant throughout this study.
 DNS with lower \textit{Bond} numbers become excessively expensive due to the restrictive capillary time step constraint. 
-However, we assert that for $Bo \leq 0.2$ the droplet shape essentially remains spherical at least for small \textit{Galileo} numbers. 
+However, we assert that for $Bo \leq 0.2$, the droplet shape essentially remains spherical, at least for small \textit{Galileo} numbers. 
 Additionally, the ratio between inertia and surface tension forces is given by the \textit{Weber} number, 
 \begin{equation*}
     We = \frac{\rho U^2d}{\gamma}%\frac{Bo \cdot Re^2}{Ga},
@@ -64,18 +64,18 @@ Additionally, the ratio between inertia and surface tension forces is given by t
 where $U$ is the relative velocity which is the difference between the dispersed phase velocity and the continuous velocity.%drift velocity $U$ which is the difference between the dispersed phase velocity and the bulk velocity.
 %Values of \textit{Reynolds} numbers for each DNS are provided in \ref{ap:slip_vel} (\ref{fig:Reall}). 
 Extreme values of $We$ reached in these simulations are displayed in \ref{tab:simulations}. 
-It is clear that for $We=0.6$ we might expect some deformations, nevertheless, for most of the cases $We$ stays below these values. 
-Consequently, whether it is in the viscous regime or inertial regime, the droplets are expected to remain spherical according to the values of $Bo$ and $We$.
+It is clear that for $We=0.6$, we might expect some deformations; nevertheless, in most cases, $We$ stays below these values. 
+Consequently, whether in the viscous or inertial regimes, the droplets are expected to remain spherical according to the values of $Bo$ and $We$.
 This statement is verified in appendix \ref{ap:deformation}.%will be verified in \ref{sec:microstructure}. 
 
 %Density and viscosity ratio of droplets in real life applications are reported in \citet[Figure 1.]{balla2020effect}.
 %As depicted in \citet[Figure 1.]{balla2020effect}, the viscosity and density ratio of fluid-fluid systems range between, $\lambda \in [10^{-4} : 10^4]$ and $\zeta \in [10^{-1} : 10^1]$, respectively. 
 
-The primary objective of the study is to investigate the microstructure through the nearest particle pair distribution function.
-Thus it is crucial to obtain a sufficient number of DNS samples to ensure statistical convergence. 
-Also, the physical quantities measured in these DNS must remain independent of the domain size. 
-Therefore, we use a number of particles per domain of $N_b = 125$, which is roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
-Moreover, each DNS lasts for a time : $t^*_\text{end} = 1500 \sqrt{d/g}$.
+The study's primary objective is to investigate the microstructure through the nearest particle pair distribution function.
+Thus, obtaining a sufficient number of DNS samples is crucial to ensure statistical convergence. 
+Also, the physical quantities measured in the simulations must remain independent of the domain size. 
+Therefore, we use a number of particles per domain of $N_b = 125$, roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
+Moreover, each DNS lasts for a time: $t^*_\text{end} = 1500 \sqrt{d/g}$.
 % It is shown in \ref{ap:validation} that these parameters  are sufficient to obtain well converged statistics.  
 \begin{table}[h!]
     \centering
@@ -87,7 +87,7 @@ Moreover, each DNS lasts for a time : $t^*_\text{end} = 1500 \sqrt{d/g}$.
     \end{tabular}
     \label{tab:simulations}
 \end{table}
-In this study we present DNS results with dimensionless parameters lying in ranges outlined in \ref{tab:simulations}.
+This study presents DNS results with dimensionless parameters in ranges outlined in \ref{tab:simulations}.
 In summary, we investigated $5$ \textit{Galileo} number $Ga = 5,10,25,50,100$, $4$ different volume fractions $\phi = 0.01,0.05,0.1,0.2$, and two viscosity ratios $\lambda =1,10$ with $Bo = 0.2$ and $\zeta = 0.9$. %In this study we restrict our attention to a single density ratio, $\zeta = 0.9$.
 %Regarding the viscosity ratio, we accomplished DNS for 2 different values, namely $\lambda = 1,10$.
 %Lastly, to explore the effect of inertia on the microstructure, the \textit{Galileo} number will vary within the range $Ga \in [5,100]$.
