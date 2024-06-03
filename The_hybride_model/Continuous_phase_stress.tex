@@ -11,7 +11,7 @@ Upon developing $\phi_2 \textbf{e}_2$ multipolar series, the equivalent stress o
 \begin{multline}
     \bm{\sigma}^\text{eq}_1 = 
     \rho_1\avg{\chi_1\textbf{u}_1'\textbf{u}_1'} 
-    + \phi_1 p_1 \textbf{I} 
+    + \phi_1 p_1 \bm\delta 
     - \mu_1 \textbf{e} 
     - \pSavg{\textbf{r}\bm{\sigma}_1^0\cdot \textbf{n}_2}
     + \mu_1 \pOavg{\textbf{e}_2^0}\\
@@ -22,8 +22,8 @@ Upon developing $\phi_2 \textbf{e}_2$ multipolar series, the equivalent stress o
     \right]
     \label{eq:sigma_eq_0}
 \end{multline} 
-It is worth noting that $\textbf{e} = \grad \textbf{u} + ^\dagger \grad \textbf{u}$. 
-Nevertheless, the bulk velocity \textbf{u} is not part of our unknown instead we have access to $\textbf{u}_1$, $\textbf{u}_p$, $\textbf{P}_p$ and eventually the higher moments. 
+It is worth noting that $\textbf{e} = \grad \textbf{u} + (\grad \textbf{u})^\dagger$. 
+Nevertheless, the bulk velocity \textbf{u} is not part of our unknown instead we solve for $\textbf{u}_1$, $\textbf{u}_p$, $\textbf{P}_p$ and eventually the higher moments. 
 Therefore, the bulk shear rate must be reformulated as 
 % \begin{equation*}
 %     e_{ik}
@@ -33,13 +33,14 @@ Therefore, the bulk shear rate must be reformulated as
 %     + \partial_k (\phi_1 u_{1,i} + n_p u_{p,i} - \partial_l (n_p P_{p,il}))
 % \end{equation*}
 \begin{equation*}
-    e_{ik}
+    \textbf{e}
     = 
     \grad \textbf{U} + (\grad \textbf{U})^\dagger
     - \grad (\div (n_p \textbf{P}_p))
-    - \grad (\div (n_p \textbf{P}_p))^\dagger
+    - (\grad \div (n_p \textbf{P}_p))^\dagger
+    + \ldots
 \end{equation*}
-where $\textbf{U} = \phi_1 \textbf{u}_1 + n_p \textbf{u}_p$ is the bulk velocity of a homogeneous medium. 
+where $\textbf{U} = \phi_1 \textbf{u}_1 + n_p \textbf{u}_p$ is equivalent to the bulk velocity \textbf{u} uniquely in an homogeneous medium. 
 
 Already, we can see that the equivalent stress of the fluid phase is the made of the average fluid stress represented by the two first terms on the right hands side of \ref{eq:sigma_eq_0}. 
 The first moment $\pSavg{\textbf{r}\bm{\sigma}_1^0 \cdot \textbf{n}_2}$ appearing in \ref{eq:sigma_eq_0} posses a skew-symmetric part and a symmetric part, the latter corresponding to the stresslet (see \ref{eq:stresslet_def}).
@@ -49,10 +50,10 @@ However, for non-solid particles \ref{eq:stresslet_def} is not entirely valid si
     n_p \mathscr{S}_{p,ki}
     = \frac{1}{2}
     \pSavg{
-        x_k \sigma_{il}n_l + x_i \sigma_{kl}n_l 
+        r_k \sigma_{il}n_l + r_i \sigma_{kl}n_l 
         - \delta_{ik}
         \frac{2}{3}
-        x_l \sigma_{lk}n_k
+        r_l \sigma_{lk}n_k
         - 2 \mu_f (u_k n_i+u_i n_i)
     }
 \end{equation}
@@ -60,27 +61,27 @@ Likewise, we introduce the average skew symmetric part $\mathscr{L}_p$ and the a
 \begin{align}
     \label{eq:torque_def}
     n_p \mathscr{L}_{p,ki}
-    = \frac{1}{2}\pSavg{ x_k \sigma_{il}n_l - x_i \sigma_{kl}n_l }\\
+    = \frac{1}{2}\pSavg{ r_k \sigma_{il}n_l - r_i \sigma_{kl}n_l }\\
     \label{eq:trace_def}
     n_p \mathscr{D}_{p,ij}
-    = \frac{1}{3}\pSavg{ x_k (\sigma_{kl} + p_1 \delta_{kl})n_l } \delta_{ij}
+    = \frac{1}{3}\pSavg{ r_k (\sigma_{kl} + p_1 \delta_{kl})n_l } \delta_{ij}
     - n_p v_p p_1 \delta_{ij}
 \end{align}
-where we have retrieved the mean pressure from the trace of the first moments, so that we make appear the hydrostatic pressure  $n_p v_p p_1 \textbf{I}$ explicitely.  
+where we have retrieved the mean pressure from the trace of the first moments, so that we make appear the hydrostatic pressure  $n_p v_p p_1 \bm\delta$ explicitely.  
 Notice that the volume fraction $\phi_1$ is present in front of the averaged pressure terms in \ref{eq:sigma_eq_0}.  
 In various study \citep{prosperetti2009computational,chu2016flux}, this term is shown to be problematic  since it might generate nonphysical flux of momentum. 
-However, shown above and pointed out by  \citet{zhang1997momentum,jackson1997locally}, the first moment of hydrodynamic force tensor contains a part of the hydrostatic pressure.
+However, as shown above and pointed out by  \citet{zhang1997momentum,jackson1997locally}, the first moment of hydrodynamic force tensor contains a part of the hydrostatic pressure.
 With that contribution the total pressure in the fluid stress reach $\phi_1p_1 + n_p p_1 \approx p_1$ which is consistent.
-Additionally, as seen in \ref{sec:two-fluid} the Reynolds stress is related to the pseudo turbulent kinetic energy through $\avg{\chi_1 \rho_1\textbf{u}_1'\textbf{u}_1'} : \textbf{I} = 2k_1$ . 
-Therefore, we can write, $\avg{\chi_1 \rho_1\textbf{u}_1'\textbf{u}_1'} = 2 \rho_1 k_1 \textbf{I} + \avg{\textbf{u}_1'\textbf{u}_1'}^\text{dev}$ where the second term is the deviatoric part of the Reynolds stress. 
+Additionally, as seen in \ref{sec:two-fluid} the Reynolds stress is related to the pseudo turbulent kinetic energy through $\avg{\chi_1 \rho_1\textbf{u}_1'\textbf{u}_1'} : \bm\delta = 2k_1$ . 
+Therefore, we can write, $\avg{\chi_1 \rho_1\textbf{u}_1'\textbf{u}_1'} = 2 \rho_1 k_1 \bm\delta + \avg{\textbf{u}_1'\textbf{u}_1'}^\text{dev}$ where the second term is the deviatoric part of the Reynolds stress. 
 
 These remarks motivate us to rewrite the equivalent fluid phase stress under the general expression,  
 \begin{multline*}
     \bm{\sigma}_1^\text{eq}
     = 
-    \underbrace{p_1  \textbf{I}
+    \underbrace{p_1  \bm\delta
     - \mu_1 \textbf{e} }_\text{Newtonian fluid stress}
-    +  \underbrace{\phi_1 k_1 \textbf{I}
+    +  \underbrace{\phi_1 k_1 \bm\delta
     + \rho_1 \avg{\chi_1\textbf{u}_1'\textbf{u}_1'}^\text{dev}}_\text{fluctuating stresses}
     - \underbrace{(n_p \mathscr{S}_p
     + n_p \mathscr{L}_p

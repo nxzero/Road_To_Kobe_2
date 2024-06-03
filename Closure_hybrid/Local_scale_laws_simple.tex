@@ -1,0 +1,125 @@
+Most of the material presented in this Section is not original, we use it mainly as
+a reminder and an opportunity to present quantities and notations that will be
+used later on.
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \foreach \x/\y/\ra/\r in {
+        1/3/0.2/0.25,
+        2.55/2.7/0.4/0.4,
+        0.5/0.4/0.35/0.4,
+        2/1/0.4/0.4,
+        3/1.5/0.3/0.3,
+        0.5/1.5/0.2/0.3,
+        -0.5/2.5/0.35/0.5}{
+            \draw[fill=gray](\x,\y) ellipse(\r cm and \ra cm);
+        }
+        \draw[dashed](3.2,1.7)circle(0.25);
+        % \draw[thick,->](3.2,1.7)++(0.1767,0.1767)--++(0.4,0.4)--++(1,0);
+        \draw[thick,->](3.2,1.7)++(0.25,0)--++(1,0);
+        \draw(2.55,2.7)node{$\Omega_2$};
+        \draw(1.5,2)node{$\Omega_1$};
+        \draw(2.5,0)node{$\Omega = \Sigma \cup \Omega_1 \cup \Omega_2$};
+        % \draw(2.5,-1)node{$\Sigma = \sum_\alpha \Sigma_\alpha$};
+        % \draw(2.5,-0.5)node{$\Omega_2 = \sum_\alpha \Omega_\alpha$};
+    \end{tikzpicture}
+    \begin{tikzpicture}%[scale = 0.9]
+        \draw[very thick](0:2)arc(0:90:2)node[above right]{$\Sigma$};
+        \draw[fill=gray](0:2)arc(0:90:2)arc(180:270:2);
+        \draw[dashed](2,2)circle(2);
+        \draw[->](1.42,1.42)--++(0.7,0.7)node[below right]{$\textbf{n}_2$};
+        \draw[->](1.73,1)--++(-0.577,-0.333)node[below right]{$\textbf{n}_1$};
+        \draw(2,3)node{$\Omega_1$};
+        \draw(0.8,1.3)node{$\Omega_\alpha$};
+    \end{tikzpicture}
+    \caption{Domain definitions and scheme of the topology of dispersed two-phase flows.}
+    \label{fig:Scheme}
+\end{figure}
+We consider a system consisting of two phases, separated by a sharp interface $\Sigma(t)$ which evolves over time. 
+Each phase subdomain is denoted $\Omega_1(t)$ and $\Omega_2(t)$ for the continuous phase ($1$) and the dispersed phase ($2$) respectively (see \ref{fig:Scheme}). 
+The mathematical and physical definition of $\Sigma(t)$ is by no means straightforward, therefore, the interested reader is refereed to \cite{bothe2022sharp} to have a deeper understanding of sharp interface modeling. 
+The entire domain, denoted as $\Omega$, is defined as the union of $\Omega_1$, $\Omega_2$, and $\Sigma$.
+To track the position of the phase indexed $k$ and the interfaces, we introduce the phase indicator function and the interface indicator function, 
+\begin{align}
+    \chi_k(\textbf{x},t) =  \left\{
+      \begin{tabular}{cc}
+        $1 \;\text{if} \;\textbf{x} \in \Omega_k(t)$\\
+        $0 \;\text{if} \;\textbf{x} \notin \Omega_k(t)$
+      \end{tabular}
+      \right.
+      \text{for $k = 1,2$},
+    %   \label{eq:PIF}
+    && \delta_I(\textbf{x},t) =  \left\{
+      \begin{tabular}{cc}
+        $1 \;\text{if} \;\textbf{x} \in \Sigma(t)$\\
+        $0 \;\text{if} \;\textbf{x} \notin \Sigma(t)$
+      \end{tabular}
+      \right.,
+      \label{eq:PIF}
+\end{align}
+respectively. 
+For clarity, we omit the time and position arguments of $\chi_k(\textbf{x},t)$ and $\delta_I(\textbf{x},t)$ in the following sections. 
+
+For the purpose of clarity, we only consider the specific case of the mass, momentum and energy conservation equations for a buoyant dispersed two phase flow.
+Equally, we consider a constant density and viscosity in each domain as well as a constant surface tension on the interfaces.
+
+\subsubsection{Inside the volumes}
+
+Within phase $k$, we note $\rho_k$ the density, $\textbf{u}_k^0$ the local velocity and $E_k^0$ the local total energy per units of mass.
+All over the domain $\Omega_k(t)$ the mass, momentum and total energy obey these conservation laws :
+\begin{align}
+    \label{eq:dt_rho}
+    \pddt \rho_k  
+    + \div (
+        \rho_k\textbf{u}_k^0
+    )
+    &= 
+    0\\
+    \label{eq:dt_rhou_k}
+    \pddt (\rho_k\textbf{u}_k^0)  
+    + \div (
+        \rho_k\textbf{u}_k^0\textbf{u}_k^0
+        - \bm{\sigma}_k^0 
+    )
+    &= 
+    \rho_k \textbf{g}\\
+    \label{eq:dt_rhoE_k}
+    \pddt (\rho_kE_k^0)  
+    + \div (
+        \rho_kE_k^0\textbf{u}_k^0
+        + \textbf{q}_k^0
+        - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0 
+        )
+    &= 
+    \textbf{u}_k^0 \cdot \textbf{g}  \rho_k
+\end{align} 
+All along this work the continuous phase will be considered as Newtonian fluid thus, $\bm{\sigma}_1^0 = - p_1^0 \textbf{I} + \bm{\tau}_1^0$ where $\bm{\tau}_1^0$ is the Newtonian stress tensor with $p_1 ^0$ the local pressure and $\bm{\tau}_1^0 = \mu_1[\grad \textbf{u}_1^0+(\grad \textbf{u}_1^0)^T]$ the shear rate. 
+The vector $\textbf{q}_k^0$ represent the thermal energy flux and is often model with a Fourier law : $\textbf{q}_k^0 = -\lambda \grad T_k^0$ where $T_k$ is the temperature and $\textbf{g}$ is the acceleration of gravity which will be the only body force in the present problem. 
+All along this work the superscript $^0$ indicate that the variable is defied at the local or microscopic scale, in opposition to the averaged or macroscopic quantities that will be presented latter. 
+
+\subsubsection{On interfaces}
+
+Consequently, the interfacial mass, momentum and total energy balance equations reduce to the common expressions :
+\begin{align}
+    \label{eq:dt_rho_I}
+    \textbf{u}_I = \textbf{u}_k
+    &=0, \\
+    \Jump{\bm{\sigma}_k^0} 
+    &=
+    \divI\bm\sigma^0_{I||}
+    =
+    \gamma\kappa\textbf{n},
+    % + \gradI\sigma 
+    \label{eq:surface_tension}\\
+    \label{eq:dt_rhoI_uI2}
+    \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0}
+    &=
+     \gamma\kappa\textbf{n}\cdot \textbf{u}_{I}^0\\
+    \label{eq:dt_rhoIe_I}
+    \Jump{ \textbf{q}_k^0}
+    &= 
+     0
+\end{align}
+for the interface kinetic energy and the internal interface energy, respectively. 
+Notice that this decomposition is possible only under the assumption of no mass transfer in which case $\textbf{u}_I^0=\textbf{u}_k^0$ for $k =1,2$ and a constant surface tension coefficient.
+

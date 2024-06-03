@@ -128,7 +128,7 @@
 \newcommand{\gradI}{\mathbf{\nabla}_{||}}
 \newcommand{\divI}{\mathbf{\nabla}_{||}\cdot}
 
-\newcommand{\ddt}{\frac{d}{d t}}
+\newcommand{\ddt}{\frac{d}{dt}}
 % \renewcommand{\ddt}{d_t}
 \newcommand{\pddt}{\frac{\partial}{\partial t}}
 \newcommand{\Dt}{D_t}
@@ -146,7 +146,7 @@
 
 \newcommand{\intO}[1]{\int_{\Omega_\alpha} #1 d\Omega}
 % \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
-\newcommand{\intS}[1]{\int_{\Gamma_\alpha} #1 d\Sigma}
+\newcommand{\intS}[1]{\oint_{\Gamma_\alpha} #1 d\Gamma}
 % \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
 \newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
 \newcommand{\pSavg}[1]{\pavg{\intS{#1}}}

@@ -181,6 +181,78 @@ Indeed, it can be shown that only the tangential parts of the diffusive flux pla
 We also introduced the notation $\Jump{\ldots}$, which is defined as $\Jump{\ldots} = \sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$.
 Where $\textbf{n}_k$ is the outward normal vector associated with the domain $\Omega_k$ (see \ref{fig:Scheme}).
 
+\tb{
+\begin{align}
+    \textbf{u}_k^0 = \textbf{u}_I^0
+    \\
+    \label{eq:dt_rhoIu_I2}
+    \divI (\gamma^0 (\bm\delta - \textbf{nn}))
+    = 
+    \gradI\gamma^0
+    - \gamma^0 \textbf{n}(\div \textbf{n})
+    &= 
+    \Jump{
+        \bm\sigma^0_k
+    }\\
+    \label{eq:dt_rhoIE_I2}
+    \pddt (\rho_Ie_I^0)  
+    % + \rho_Ie_I^0  (\textbf{u}_I \cdot \textbf{n})(\div \textbf{n})
+    + \divI (
+        \rho_I e_I^0\textbf{u}_{I}^0
+        - \gamma^0 \textbf{u}_I^0 \cdot (\bm\delta - \textbf{nn}) 
+        )
+    &= 
+    - \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0}
+\end{align} 
+To relate the internal energy $ e_I^0$ to the local value of the interfacial surface tension coefficient $\gamma^0$ we must use constitutive laws.
+
+
+
+The local equilibrium assumption at the interface state that \citet{ishii2010thermo}
+\begin{equation*}
+    \gamma^0 = - T_I^0 s_I^0 \rho_I + e_I^0 \rho_I,
+\end{equation*}
+where $T_I^0 = \frac{d e_I^0 }{ds_I^0}$ is the temperature at the interface. 
+Additionally, the Gibbs-Duhem relation state that
+\begin{equation*}
+    % \rho_I s_I^0 dT_I^0 +d\gamma^0 = 0,
+    % \text{ or that }
+    \frac{d\gamma^0}{dT_I^0}=-\rho_I s_I^0. 
+\end{equation*}
+Using the definition of the temperature and the Gibbs-Duhem relation gives us the relation between the internal energy and the interfacial tension, namely
+\begin{equation}
+    \rho_I e_I^0 = - T_I^0 \left(\frac{d\gamma^0}{dT_I^0}\right) + \gamma^0
+    \label{eq:e_I_to_gamma}
+\end{equation}
+Thus under these assumptions $\gamma^0$ is only a function of the temperature such that $\gamma^0 = \gamma^0(T_I^0)$. 
+For convenience, we note $\frac{d\gamma^0}{dT_I^0} = \dot{\gamma}^0$. 
+By substituting \ref{eq:e_I_to_gamma} into \ref{eq:dt_rhoIE_I2} we obtain a formulation for the total energy equation in terms of the surface tension and teh temperature, it yields \citet{ishii2010thermo}
+\begin{equation}
+    \label{eq:dt_rhoIE_I3}
+    T_I^0\left[
+        \pddt (T_I^0\dot{\gamma}^0)  
+        + \divI (T^0_I \dot{\gamma}^0 \textbf{u}_I^0) 
+    \right]
+    - \textbf{u}_I^0 \cdot \divI (
+    \gamma^0 (\bm\delta - \textbf{nn})
+    )
+    = 
+    - \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0}
+\end{equation}
+Consequently, the total energy jump condition is far from trivial when considering non-constant surface tension coefficient. 
+Additionally, using \ref{eq:dt_rhoIu_I2} dotted with $\textbf{u}_I^0$ we derive the internal energy jump condition, namely
+\begin{equation}
+    \label{eq:dt_rhoIE_I3}
+    T_I^0\left[
+        \pddt (T_I^0\dot{\gamma}^0)  
+        + \divI (T^0_I \dot{\gamma}^0 \textbf{u}_I^0) 
+    \right]
+    = 
+    \Jump{\textbf{q}_k^0}.
+\end{equation}
+}
+
+
 The formulations given by \ref{eq:dt_rho_I},\ref{eq:dt_rhoIu_I}and \ref{eq:dt_rhoI} remains quite general and needs some further simplifications. 
 Indeed, we assume that the momentum diffusive flux of surface is solely due to surface tension, therefore $\bm{\sigma}_I^0  = \gamma (\textbf{I} - \textbf{nn}) = \gamma \textbf{I}_{||}$ where $\gamma$ is the surface tension coefficient which will be assumed constant overall the interfaces \citep[Chapter 2]{tryggvason2011direct}.  
 Note that in a more general case, interfacial viscous stress could be included into $\bm{\sigma}_{I}^0$ \citep{brenner2013interfacial,slattery2007interfacial,nadim1996concise}, nevertheless it will not be addressed in this study. 

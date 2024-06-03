@@ -13,7 +13,7 @@ We use the so-called ``one fluid'' formulation of the variable density and visco
     \pddt C + \textbf{u}\cdot\grad C  
     &= 0,
 \end{align}
-i.e. the mass, momentum and colors function transport equations, respectively. 
+for the mass, momentum and colors function transport equations, respectively. 
 The scalar field, $C$, represents the color function, which ranges between $0$ and $1$ to indicate the volumetric proportion of each phase.
 We introduced the fluid velocity vector $\textbf{u}$ and the Newtonian stress tensor $\bm{\sigma} = -p \textbf{I} + \mu (\grad \textbf{u}+ \grad \textbf{u}^\dagger)$ where $p$ is the pressure field and $^\dagger$ represents the transpose operator.
 Note that the material properties, $\rho$, and $\mu$, take the values of each phase in presence, using the arithmetic average: $\rho = (1-C)\rho_f + C \rho_d$ and $\mu = (1-C)\mu_f + C \mu_d$. 
@@ -30,13 +30,14 @@ The interfaces between the droplets and the carrier fluid is reconstructed using
 Regarding treating the surface tension force term, we refer the reader to \citet{popinet2018numerical} for more details. 
 The Basilisk solver has been validated extensively in the framework of bubbly flows. 
 Most previous studies \citep{hidman2023assessing,innocenti2020direct} recommend a resolution of $\Delta/d \ge  30$, where $\Delta$ is the grid spacing. 
-In \ref{ap:validation}, we carry out a mesh-independence study and demonstrate that a grid spacing of $\Delta = d/30$ is also suitable in our context.
+In \ref{ap:validation}, we carry out a mesh-independence study and demonstrate that a grid spacing of $\Delta/d = 20$ is suitable in our context.
 For readers seeking more detailed information about the solvers, we recommend the wiki pages: \href{http://basilisk.fr/src/navier-stokes/centered.h}{centered.h}, \href{http://basilisk.fr/src/tension.h}{tension.h} and \href{http://basilisk.fr/src/poissson.h}{poissson.h} where one can find the source code of the Navier--Stokes, surface tension and multigrid solver used in this work, respectively. 
 
 With the VoF method, droplets and bubbles may experience premature coalescence.
 See \citet[Appendix B]{innocenti2020direct} for a detailed discussion on this issue.
 However, in this work, it is imperative to conserve a specific (mono-disperse) population of droplets over time to accumulate sufficient statistics about the microstructure.
-To tackle this issue, we present a novel algorithm that prevents coalescence between droplets at a reasonable computational cost in the next section. Note that the wiki page complements this section, \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspension/RS.c}{RS.c}, where the reader can access the source code used to conduct the DNS, as well as comments and notes to help comprehension. 
+To tackle this issue, we present in the next section a novel algorithm that prevents coalescence between droplets at a reasonable computational cost. 
+Note that the wiki page \href{http://basilisk.fr/sandbox/fintzin/Rising-suspension/RS.c}{RS.c} complements this section, where the reader can access the source code used to conduct these DNS, as well as comments and notes to help comprehension. 
 
 
 

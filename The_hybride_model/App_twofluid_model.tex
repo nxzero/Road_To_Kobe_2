@@ -34,7 +34,7 @@ They read,
     \phi_k \rho_k\textbf{u}_k \cdot \textbf{g} 
     + \avg{\delta_I (\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0)\cdot \textbf{n}_k}
 \end{align} 
-with the equivalent stress and heat flux are defined as, 
+with the equivalent stress and heat flux defined as, 
 \begin{align*}
     &\bm{\sigma}_k^\text{eq}
     = 
@@ -49,9 +49,9 @@ with the equivalent stress and heat flux are defined as,
     = \rho_k \avg{\chi_k \textbf{u}_k' k_k} 
     - \avg{\chi_k \textbf{u}_k' \cdot \bm{\sigma}_k^0}.
 \end{align*}
-The main differences between these equations and their microscale counterpart, is that : (1) we have introduced a pre factor $\phi_k$ in front of most of the terms
-(2) an additional stress is present, that is the covariance between the quantity to be conserved and the velocity. 
-(3) A new source term appear on the RHS accounting for the exchange across the phases. 
+% The main differences between these equations and their microscale counterpart, is that : (1) we have introduced a pre factor $\phi_k$ in front of most of the terms
+% (2) an additional stress is present, that is the covariance between the quantity to be conserved and the velocity. 
+% (3) A new source term appear on the RHS accounting for the exchange across the phases. 
 
 The terms $\avg{\chi_k \textbf{u}_k'\textbf{u}_k'}$ will be referred as the Reynolds stress or pseudo turbulent stress. 
 It has a fundamental importance in the multiphase flow problem and as we see now its trace is related to the mean kinetic energy. 
@@ -60,12 +60,14 @@ Indeed, the phase averaged total energy can be further decompose into three ener
     E_k = e_k + k_k + u_k^2/2
     \label{eq:E_def}
 \end{align}
-where $k_1$ is the pseudo-turbulent kinetic energy defined as, $\phi_k k_k = \frac{1}{2}\avg{\chi_k \textbf{u}_k'\cdot \textbf{u}_k'}$. 
-Each of the components of the total energy represent the averaged kinetic energy at different scales. 
-From molecular kinetic energy which is $e_k$, to the macroscopic scale with the kinematic energy $u_k^2$, and in between we find the pseudo turbulent energy $k_k$. 
-To fully describe the averaged total energy one must add a supplementary equation either for $k_k$ or $e_k$. 
-In fact an equation for each of these components can be derived using the averaged momentum and total energy equation presented above. 
-The kinetic energy, pseudo turbulent and internal averaged equations read, 
+where $k_k$ is the pseudo-turbulent kinetic energy defined as, $\phi_k k_k = \frac{1}{2}\avg{\chi_k \textbf{u}_k'\cdot \textbf{u}_k'}$. 
+Each of the components of the total energy represent the averaged agitation at different scales. 
+From molecular agitation which quantified by $e_k$, to the macroscopic scale agitation or kinematic energy $u_k^2$, and in between we find the pseudo turbulent energy $k_k$ which represents the local scale velocity fluctuation. 
+To fully describe the averaged total energy one must add at least a supplementary equation either for $k_k$ or $e_k$ assuming \ref{eq:dt_avg_rhoE_k} is solved. 
+Using \ref{eq:dt_avg_rhou_k} dotted with $\textbf{u}_k$ yields an equation for the mean kinetic energy. 
+Averaging \ref{eq:dt_rhoe_k} yields un equation for $e_k$.  
+Then, subtracting these two equations to \ref{eq:dt_avg_rhoE_k} gives us an equation for $k_p$. 
+The kinetic energy, pseudo turbulent and internal averaged equations read as, 
 \begin{align}
     \label{eq:dt_avg_uk2}
     &\pddt (\phi_k \rho_ku_k^2/2)  
@@ -103,26 +105,26 @@ This derivation is in agreement with \citet{morel2015mathematical}.
 Under this form the energy transfer across scale is clear. 
 Indeed, the term $\bm{\sigma}_k^\text{eq} : \grad \textbf{u}_k$ act as a sink term in \ref{eq:dt_avg_uk2} and a source term in \ref{eq:dt_avg_kk}, while the averaged diffusive terms $\avg{\chi_k\bm{\sigma}_k^0 : \grad \textbf{u}_k^0}$ is a sink in \ref{eq:dt_avg_kk} and a source in \ref{eq:dt_avg_ek}. 
 To determine the total energy only two of the four energy equations must be solved. 
-In practice, it is useful to solve one equation for $k_1$ since it is related to the Reynolds stress appearing in the momentum equation through $\bm{\sigma}^\text{eq}_k$, with $\avg{\chi_k \textbf{u}_k^0 \textbf{u}_k^0}: \textbf{I} = 2 k_k$ and another for $e_1$ while $u_k^2$ is determinate with the averaged momentum equation. 
-
+In practice, it is useful to solve one equation for $k_k$ since it is useful for the Reynolds stress modeling since $\avg{\chi_k \textbf{u}_k^0 \textbf{u}_k^0}: \bm\delta = 2 k_k$, and another for $e_k$ since $u_k^2$ is already determined by the momentum equation. 
 
 % \subsubsection{Averaged surface equations}
-In light of \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} the volume averaged equations must be completed by an averaged surface transport equation.  
-To this purpose we multiply \ref{eq:dt_rho_I}, \ref{eq:surface_tension}, \ref{eq:dt_rhoIe_I} and \ref{eq:dt_rhoI_uI2} by $\delta_I$ and apply the average operator.
-By considering the topological equations it eventually gives us the mass, momentum, and total energy averaged conservation equation, 
+The volume averaged equations must be completed by an averaged surface transport equation.  
+For this purpose we multiply \ref{eq:surface_tension}, \ref{eq:dt_rhoIe_I} and \ref{eq:dt_rhoI_uI3} by $\delta_I$ and apply the average operator.
+By considering the topological equations we obtain the  momentum, kinetic and internal energy averaged surface equations, namely
 \begin{align}
-    \label{eq:dt_avg_rho_I}
-    \avg{\delta_I \Jump{\rho_k (\textbf{u}_I - \textbf{u}_k^0)}}
-    = 0,\\
     \label{eq:dt_avg_uI}
     \avg{\delta_I \Jump{\bm{\sigma}^0_k}}
-    = - \div \avg{\delta_I (\textbf{I} - \textbf{nn}) \gamma},\\
+    &= -\gamma \div \avg{\delta_I (\bm\delta - \textbf{nn})},\\
     \label{eq:dt_avg_gamma}
-    \avg{\delta_I \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}^0_k - \textbf{q}^0_k}}
-    = - \pddt \avg{\delta_I \gamma}
-    - \div \avg{\delta_I \gamma (\textbf{u}_{I}^0 \cdot \textbf{n})\textbf{n} },
+    \avg{\delta_I \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}^0_k}}
+    &= - \gamma \left[
+        \pddt \avg{\delta_I}
+        +  \div \avg{\delta_I (\textbf{u}_{I}^0 \cdot \textbf{n})\textbf{n} },
+    \right]\\
+    \avg{\delta_I \Jump{\textbf{q}^0_k}}
+    &= 0
 \end{align}
 respectively. 
-The first equation represents the condition of no mean mass transfer between phase.
-The second equation represents the contribution of the surface tension stresses to the bulk momentum equation.
-And the last equation represents the amount of energy stoked in the surface. 
+The first equation represents the contribution of the surface tension stresses to the bulk momentum equation.
+The second equation represents the amount of energy stored as surface deformation.
+And the last equation witnesses of the continuity of heat flux through the interface. 

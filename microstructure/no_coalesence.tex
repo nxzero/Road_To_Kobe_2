@@ -29,8 +29,8 @@ We are not aware of an extension of the coloring problem to arrangements of sphe
 Nevertheless, it is reasonable to assume that the number of tracers required to avoid coalescence is significantly smaller than the number of droplets.
 Consequently, since we cannot determine the optimal coloring configuration based on theoretical grounds, we assign the tracers to each droplet following the empirical strategy detailed below.
 
-The development of the \texttt{no-coalesce.h} algorithm was initiated in the PhD. thesis of \citet{mani2021numerical}.
-The latest version of this algorithm can be found on the Basilisk wiki page: \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/no-coalescence.h}{no-coalescence.h}.
+The development of the \texttt{no-coalescence.h} algorithm was initiated in the PhD. thesis of \citet{mani2021numerical}.
+The latest version of this algorithm can be found on the Basilisk wiki page: \href{http://basilisk.fr/src/no-coalescence.h}{no-coalescence.h}.
 Before diving into a step-by-step description of this algorithm, we must introduce another key feature used in these simulations: the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm. 
 It is an adaptation of the \textit{painter}'s algorithm but optimized using the multigrid solver of \texttt{Basilisk}. 
 Its purpose is to assign different scalar values to each cell belonging to different regions, with the regions being delimited by the different droplets' interfaces. 
@@ -215,14 +215,14 @@ Likewise, the surface tension force is computed as the sum of the contributions 
 where $\kappa_i$ is the numerical approximation of the curvature of the interface of field $C_i$, which is computed following the same method employed for a single tracer. 
 
 \ref{fig:diagram} (left) shows a snapshot of a simulation at an arbitrary time $t^* = 100 \sqrt{g/d}$. 
-The droplet interfaces are colored by the indices of their respective tracer. 
+The droplet interfaces are colored by the index of their respective tracer. 
 In this simulation at that time, no more than 3 colors are needed to avoid coalescence.
 On \ref{fig:diagram} (right), we display the value of $N(t)$ in terms of the dimensionless simulation time for various volume fractions $\phi$ at $Ga = 50$ and  $\lambda = 1$. 
-We observe that for the entire simulation, no more than three tracers were needed for the dilute emulsion ($\phi = 0.01$) and up to 7 for the denser regime ($\phi = 0.2$). 
-Although our algorithm might be optimized, it brings sufficient efficiency for our needs. 
+We observe that for the entire simulation, no more than three tracers were needed for the dilute emulsion ($\phi = 0.01$) and up to 7 for $\phi = 0.2$. 
+Although our algorithm could be optimized, it brings sufficient efficiency for our needs. 
 In particular, it is observed that the \texttt{no-coalesce.h} algorithm accounts for approximately $4\%$ of the total computational time of a simulation in the densest scenario. As for the \texttt{tag.h} algorithm, its cost is around $2\%$, which is also reasonable. In comparison, the \texttt{poisson.h} solver is about $13\%$ of the simulation time. 
 %The advection of VoF tracers is about $7\%$ which is relatively high but still reasonable.
-To reduce the cost related to the \texttt{no-coalesce.h} algorithm we believe that further developments, which are referenced at \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/no-coalescence.h}{no-coalescence.h}, are still doable and could be useful for future studies.
+To reduce the cost related to the \texttt{no-coalesce.h} algorithm we believe that further developments, which are referenced at \href{http://basilisk.fr/src/no-coalescence.h}{no-coalescence.h}, are still doable and could be useful for future studies.
 
 %Indeed, \ref{tab:performance} reports the time spent by each function during a simulation. 
 \begin{figure}[h!]
@@ -242,7 +242,7 @@ To reduce the cost related to the \texttt{no-coalesce.h} algorithm we believe th
 
 In order to validate our numerical methodology, we have compared our numerical results to the experiments of \citet{mohamed2003drop}, where they experimentally study the impact of a single drop on a flat interface of the same fluid. %, while recording the positions of the interfaces.
 It is found that the multi-VoF method captures the position of interfaces remarkably well, even with a poor description of the liquid film between these interfaces.
-Additionally, we argue that the mesh independence study conducted in \ref{ap:validation} (Case 3) substantiates the accuracy of the DNS, as the dynamics of interaction converge with reasonable errors for a grid resolution of $\Delta/d = 30$. 
+Additionally, we argue that the mesh independence study conducted in \ref{ap:validation} (Case 3) substantiates the accuracy of the DNS, as the dynamics of interaction converge with reasonable errors for a grid resolution of $\Delta/d = 20$. 
 Overall, we used an optimized multi-VoF method, enabling us to perform DNS with a maximum of 7 tracers in the densest scenario. 
 
 
