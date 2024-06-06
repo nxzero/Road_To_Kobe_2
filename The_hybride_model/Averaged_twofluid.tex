@@ -1,9 +1,11 @@
 \subsection{The averaged conservation equations}
+\label{sec:avg_def}
 In this study, we employ the ensemble average technique to establish the averaged conservation equations. 
 This method is just one of several averaging approaches, including the volume average method \citep{jackson1997locally} and time averaging \citep{ishii2010thermo}. 
 Despite their differences, all these techniques yield the same set of averaged equations \citep{jackson1997locally,zhang1997momentum}.
 In the following we recall some properties of the ensemble average operator. 
-Let, $P(\FF)$ be the probability density function that describe the probability of finding the flow in the configuration $\FF$. 
+Let, $P(\FF)$ be the probability density function that describes the probability of finding the flow in the configuration $\FF$. 
+We note $d\PP = P(\FF) d\FF$ the probable number of flows located in the incremental region of the phase space $d\FF$ around the point $\FF$. 
 It follows from this definition, that the ensemble average of an arbitrary local property $f^0(\textbf{x},t;\FF)$ defined on the whole space $\Omega$, is,
 \begin{equation}
     f(\textbf{x},t)
@@ -11,41 +13,43 @@ It follows from this definition, that the ensemble average of an arbitrary local
     =\int f^0(\textbf{x},t;\FF) d\mathscr{P}. 
     \label{eq:avg}
 \end{equation}  
-Note that we dropped the super script $^0$ on $f$ to indicate that this is an averaged quantity. 
-Therefore, all variables denoted with a $^0$ are functions of $(\textbf{x}, t; \FF)$, whereas all macroscopic variables are averaged over all $\FF$ and thus depend only on $(\textbf{x}, t)$.
+Note that we dropped the super script $^0$ on $f(\textbf{x},t)$ to indicate that this is an averaged quantity. 
+The macroscopic variables are averaged over all $\FF$, and therefore depend only on $\textbf{x}$ and $t$.
+Thus, we omit the arguments of the averaged fields, as this notation eliminates any potential ambiguity. 
 The ensemble average quantities are assumed to satisfy the following properties \citep{drew1983mathematical}
 \begin{align}
+    \label{eq:avg_properties}
     \avg{f^0+h^0} &= f+h, \\ 
     \avg{\avg{f^0}h^0} &= fh, \\
     \avg{\pddt f^0} 
     &= \pddt f, \\ 
     \avg{\grad f^0}
     &= \grad f. 
-    \label{eq:avg_properties}
 \end{align}
-were $f$ and $h$ are two arbitrary Eulerian fields. The first two relations are called the Reynolds' rules, the third one is the Leibniz' rule and the last one, the Gauss' rule \citep{drew1983mathematical}.
+were $f$ and $h$ are two arbitrary Eulerian fields. 
+The first two relations are called the Reynolds' rules, the third one is the Leibniz' rule and the last one, is the Gauss' rule \citep{drew1983mathematical}.
 Additionally, for any phase quantity defined in $\Omega_k$ we introduce the definition, 
 \begin{equation}
-    \phi_k f_k (\textbf{x},t) = \avg{\chi_k f_k^0}
+    \phi_k f_k (\textbf{x},t) = \avg{\chi_k f_k^0},
     \label{eq:1_avg}
 \end{equation}
-where, $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$
-and $f_k(\textbf{x},t)$ the average of the field $f_k^0$ conditioned on the presence of the phase $k$ at $\textbf{x}$ and time $t$.
+where $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$.
+And $f_k$ is the average of the field $f_k^0$ conditioned on the presence of the phase $k$ in the configuration $\FF$ at $\textbf{x}$ and time $t$.
 Equally, for interface quantities we have 
 \begin{equation}
-    \phi_I f_I (\textbf{x},t) = \avg{\delta_I f_I^0}
+    \phi_I f_I (\textbf{x},t) = \avg{\delta_I f_I^0},
 \end{equation}
-with $\phi_I = \avg{\delta_I}$ the interfacial area concentration function and $f_I(\textbf{x},t)$ the average of $f^0_I(\textbf{x},t,\FF)$ conditioned on the presence of an interface at $\textbf{x}$ and time $t$. 
-The fluctuation of a phase-averaged quantity around its mean is defined by,
+with $\phi_I = \avg{\delta_I}$ the interfacial area concentration function. 
+Here, $f_I$ is the average of $f^0_I$ conditioned on the presence of an interface in the configuration $\FF$ at $\textbf{x}$ and time $t$. 
+Additionally, we define the field of fluctuation of a given quantity around its mean as,
 \begin{align}
-    f_k' = f_k^0 - f_k.
-    && f_I' = f_I^0 - f_I.
+    f'(\textbf{x},t,\FF) = f^0(\textbf{x},t,\FF) - f(\textbf{x},t).
     \label{eq:def_fluctu}
 \end{align}
-Thus, the product $\avg{\chi_k f^0_kg^0_k}$ can be decomposed as $\avg{\chi_k f_k^0g_k^0}=\phi_k f_kg_k + \avg{\chi_k f'_kg'_k}$. 
+This relation applies to phase averaged quantities such that $f'_k = f^0_k - f_k$ and $f'_I = f^0_I - f_I$. 
 
 
-Applying the ensemble average on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and considering the properties from \ref{eq:avg_properties} together with \ref{eq:def_fluctu} yields the general form of the averaged equations of multiphase flows, namely,
+Applying the ensemble average on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and considering the properties from \ref{eq:avg_properties} to \ref{eq:def_fluctu}, yields the general form of the averaged equations of multiphase flows, namely,
 \begin{align}
     \pddt (\phi_k f_k)
     +\div (\phi_k f_k \textbf{u}_k - \mathbf{\Phi}_k^\text{eq})
@@ -70,10 +74,10 @@ Applying the ensemble average on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_
     f_k^0 (\textbf{u}_I^0 - \textbf{u}_k^0)
     + \mathbf{\Phi}_k^0
     } 
-     }.
+     },
     \label{eq:avg_dt_delta_f}
 \end{align}
-where $\mathbf{\Phi}_{I}^\text{eq}$ and $\mathbf{\Phi}_{I}^\text{eq}$ are the equivalent non-convective fluxes defined as 
+with, 
 \begin{align*}
     \mathbf{\Phi}_k^\text{eq}
     = \avg{\chi_k f_k' \textbf{u}_k'}
@@ -83,20 +87,20 @@ where $\mathbf{\Phi}_{I}^\text{eq}$ and $\mathbf{\Phi}_{I}^\text{eq}$ are the eq
     = \avg{\delta_I f_I' \textbf{u}_I'}
     - \phi_I \bm\Phi_I. 
 \end{align*}
-% Note that while all terms are just the average of their local counterpart, the covariance term $\avg{\chi_k f_k' \textbf{u}_k'}$ and $\avg{\delta_I f_I' \textbf{u}_I'}$ arise fropurely mathematical 
-These equations are to be solved for the averaged field $\phi_k,\phi_I,f_k$ and $f_I$ with a complementary equation of volume conservation, i.e. $\phi_1+\phi_2+\phi_I w_I = 1$ where $w_I$ is the mean width of the interfaces.
-% Thus, all term in these equations must be expressed as a function of $\phi_k,\phi_I,f_k$ and $f_I$. 
+These equations are to be solved for the averaged field $\phi_k,\phi_I,f_k$ and $f_I$ with a complementary equation of volume conservation, i.e. $\phi_f+\phi_d+\phi_I = 1$.
 The main differences between these equations and their microscale counterparts (\ref{eq:dt_f_k} and \ref{eq:dt_f_I}) are:
-(1) The unknowns are averaged quantities,
+(1) The unknowns are now averaged quantities,
 (2) Factors $\phi_k$ and $\phi_I$ are introduced in front of all the terms, and
-(3) The additional stresses $\avg{\chi_k f_k' \textbf{u}_k'}$ and $\avg{\delta_I f_I' \textbf{u}_I'}$ appear, representing the covariance between the conserved quantity and the local velocities.  
+(3) The additional terms $\avg{\chi_k f_k' \textbf{u}_k'}$ and $\avg{\delta_I f_I' \textbf{u}_I'}$ appear, representing the covariance between the conserved quantity ($f_k$ or $f_I$) and the local velocities.  
 For a complete understanding, we derived the mass, momentum, and energy averaged equations in \ref{ap:two-fluid_model}. 
-Especially we demonstrate how to derive the secondary equations of the averaged energy $E_k$, i.e. the equation for the mean internal energy $e_k$, the pseudo turbulent energy (defined therein) and the averaged kinetic energy $(u_k)^2/2$.  
+These are derived considering the simplifying hypothesis exposed in \ref{ap:hypothesis}. 
+In addition, \ref{ap:two-fluid_model} presents how to derive the secondary averaged equations of the averaged energy $E_k$, i.e. the equation for the mean internal energy $e_k$, the pseudo turbulent energy $k_k = \frac{1}{2\phi_k}\avg{\chi_k (u'_k)^2}$, and the averaged kinetic energy $(u_k)^2/2$.  
+
 
 It is important to highlight that the two-fluid model fails to adequately distinguish between the two phases, as evidenced by the \textit{symmetry} $k = 1$ and $2$ in the aforementioned equations. This symmetry does not hold physically because the dispersed phase possesses a distinct topological nature compared to the continuous phase. 
-More importantly, in a dispersed two phase flow system the closure terms are expressed as a function of the Lagrangian properties of the particles whereas this system of equation provides us with continuously averaged quantities. 
-Specifically, the mean drag force term in the averaged momentum equation is expressed as a function of the  center of mass velocity of the particles. 
-Whereas this system of equation provides us with the phase averaged velocity of the whole phase not with no consideration for the center of mass.  
+More importantly, in a dispersed two-phase flow system the closure terms are expressed as a function of the Lagrangian properties of the particles whereas this system of equation provides us with continuously averaged quantities. 
+Specifically, the mean drag force or torque term in the averaged momentum equation is expressed as a function of the center of mass linear and angular velocity  of the particles. 
+Whereas this system of equation provides us with the phase averaged velocity of the whole phase not with no consideration for the particles properties.  
 Therefore, in the subsequent section, we will introduce a kinetic model specifically devoted to the dispersed phase. 
 As illustrated below, the equations governing the dispersed phase are more comprehensive as they bear a resemblance to the equations governing a single particle.
 

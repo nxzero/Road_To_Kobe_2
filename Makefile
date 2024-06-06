@@ -22,6 +22,7 @@ proper: clean
 	-rm The_hybride_model_diapo.pdf
 	-rm The_hybride_model.pdf
 	-rm Pseudo_turb.pdf
+	-rm On_pseudo_turbulence.pdf
 	-rm ictam2024_latex_template.pdf
 	-rm Energy_balance_equaitons.pdf
 	-rm Anisotropic_particles.pdf

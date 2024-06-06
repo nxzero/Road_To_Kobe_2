@@ -1,57 +1,69 @@
-Up to now we have considered the particle phase equation and continuous phase equations independently. 
-The aim of this section is first to demonstrate how to recover averaged equations for the particle phase and then to show explicitly the relations between the two method of average, i.e. continuous and particle phase average.
-And then we write the system of equation of conservation in the hybrid form. 
+The first objective of this section is to demonstrate how to derive averaged equations for the particle phase based on Lagrangian equilibrium laws. 
+Then we provide a complete discussion regarding the equivalence between the set of equations just derived and the averaged equations governing the dispersed phase presented in \ref{sec:two-fluid}. 
 
 \subsection{Particles phase averaged equations}
 
 Up to this point, we have described the dispersed phase within a Lagrangian framework.
-However, to be consistent with the Eulerian conservation equations used to describe the continuous phase, we need to extend the Lagrangian equations to an Eulerian models. 
+However, to be consistent with the Eulerian conservation equations used to describe the continuous phase, we need to extend the Lagrangian equations to an Eulerian description. 
 In order to achieve this, we introduce the function $\delta_\alpha$, which is defined as follows, 
 \begin{align}
-    \delta_\alpha(\textbf{x},t) = \delta(\textbf{x}-\textbf{x}_\alpha(t,\FF)).
+    \delta_\alpha(\textbf{x},t) = \delta(\textbf{x}-\textbf{x}_\alpha(t,\FF)),
     \label{eq:delta_alpha}
 \end{align}
 where $\delta$ is the Dirac delta function.
-Note that we explicitly note $\textbf{x}_\alpha(t,\FF)$ since the posiiton of the particle $\alpha$ is function of time and of the flow configuration $\FF$.
-In the sens of generalized functions, the partial time derivative, $\frac{\delta_\alpha(\textbf{x},t,\FF)}{\partial t} =  \frac{\partial \textbf{x}_\alpha}{\partial t} \cdot \frac{\partial \delta_\alpha}{\partial \textbf{x}_\alpha} $ can be re-written into the following expression, 
+Note that we explicitly note the arguments $(t,\FF)$ to highlight that the position of the particle $\alpha$ is a function of time and of the flow configuration $\FF$.
+In the sense of generalized functions, the partial time derivative of $\delta_\alpha$ can be written $\frac{\delta_\alpha(\textbf{x},t,\FF)}{\partial t} =  \frac{\partial \textbf{x}_\alpha}{\partial t} \cdot \frac{\partial \delta_\alpha}{\partial \textbf{x}_\alpha} $.
+This leads to the following expression, 
 \begin{equation}
     \pddt \delta_\alpha
     + \div (\textbf{u}_\alpha  \delta_\alpha)
     =0,
     \label{eq:dt_delta_alpha}
 \end{equation}
-where we used the identity, $\frac{\partial \delta_\alpha}{\partial \textbf{x}_\alpha}  = -\grad \delta_\alpha$ and the fact that $\textbf{u}_\alpha(t;\FF)$ is not a function of $\textbf{x}$. 
-Additionally, it should be noted that \ref{eq:dt_delta_alpha} is not applicable if changes in topology, such as break up or coalescence events, occur.
+where we used the identity, $\frac{\partial \delta_\alpha}{\partial \textbf{x}_\alpha}  = -\grad \delta_\alpha$ and the fact that $\textbf{u}_\alpha(t,\FF)$ is not a function of $\textbf{x}$. 
+Additionally, it should be noted that \ref{eq:dt_delta_alpha} is not applicable if changes in topology, such as break-up or coalescence events, occur.
 In such cases it is possible, as it is done in population balance equations, to include a source term on the RHS of \ref{eq:dt_delta_alpha} to account for particle birth or death. 
-Multiplying each Lagrangian quantities by $\delta_\alpha$ yields the \textit{particle field} of a quantity $q_\alpha$, denoted as $q_\alpha(t)\delta_\alpha(\textbf{x},t)$, which is defined throughout space and time.
-Likewise, for any derivative of Lagrangian quantities, such as $\ddt q_\alpha$, we define its corresponding Eulerian field by Multiplying $\ddt q_\alpha$ with $\delta_\alpha$ and show that :
+Multiplying each Lagrangian quantities $q_\alpha$ by $\delta_\alpha$ yields the field $q_\alpha(t,\FF)\delta_\alpha(\textbf{x},t,\FF)$, which is defined over the entire domain $\Omega$.
+Likewise, for any derivative of Lagrangian quantities, such as $\ddt q_\alpha$, we define its corresponding Eulerian field by multiplying $\ddt q_\alpha$ with $\delta_\alpha$ and show that :
 \begin{equation}
     \delta_\alpha \ddt q_\alpha
     = \pddt (\delta_\alpha q_\alpha)
     + \div (\delta_\alpha q_\alpha \textbf{u}_\alpha)
     \label{eq:dt_delta_alpha_q_alpha}
 \end{equation}
-where we have utilized the fact that $q_\alpha(t)$ and $\textbf{u}_\alpha(t)$ are solely functions of time, and we made use of \ref{eq:dt_delta_alpha}.
-Additionally, let's consider a volume containing $N$ particles.
-We can then define the particle-field of a given quantity $q_\alpha$ as the sum of all the independent field, i.e. $\sum_{\alpha=0}^N \delta_\alpha q_\alpha$.
+where we have utilized the fact that $q_\alpha(t,\FF)$ and $\textbf{u}_\alpha(t,\FF)$ are not function of \textbf{x}, and we made use of \ref{eq:dt_delta_alpha}.
+Now let us consider a volume containing $N$ particles.
+We define what we call the \textit{particle field} of a quantity $q_\alpha$, as the sum of the $\delta_\alpha q_\alpha$ over all particles in the flow, namely $\sum_{\alpha=0}^N \delta_\alpha q_\alpha$.
 Notice that \ref{eq:dt_delta_alpha_q_alpha} remains valid for a sum of fields since derivative operators are linear.
 To simplify the notations, we consider implicitly the summation over all particles included in $\Omega$ whenever a Lagrangian field denoted by $\delta_\alpha (\ldots)$ is present.
 
-In the objective of obtaining coarse-grained level equations for the dispersed phase, one multiply \ref{eq:dt_q_alpha_tot} and \ref{eq:dt_Q_alpha_tot} by $\delta_\alpha$ and apply the ensemble average which is made possible since the particle fields $\delta_\alpha \ldots$ are now defined over the whole space $\Omega$ thanks to the Dirac delta functions $\delta_\alpha$.  
-These equations yield
+In the objective of obtaining coarse-grained level equations for the dispersed phase, we introduce the average of $q_\alpha$ as  
+\begin{equation}
+     n_p q_p(\textbf{x},t) = \avg{\delta_\alpha q_\alpha}
+     \label{eq:p_avg}
+\end{equation}
+where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probability density of finding a particle center of mass in the infinitesimal volume $d\textbf{x}$ around \textbf{x}, and $q_p(\textbf{x},t)$ is the average of $q_\alpha$ conditionally on the presence of a particle at \textbf{x} and time $t$. 
+Note that we used the subscript $_p$ on $q_p$ to indicate that this is an averaged field based initially on Lagrangian quantities.  
+Additionally, in light of \ref{eq:def_fluctu} we define the fluctuating part of a particle field $q_p$ as
+\begin{equation}
+    q_\alpha' = q_\alpha - q_p. 
+    \label{eq:def_fluc_p}
+\end{equation}
+
+To obtain the particle phase averaged equations one multiply \ref{eq:dt_q_alpha_tot} and \ref{eq:dt_Q_alpha_tot} by $\delta_\alpha$ and apply the ensemble average (\ref{eq:avg}), this yields
 \begin{align}
-    \pddt \avg{\delta_\alpha  q_\alpha^\text{tot}}
-    + \div \avg{\delta_\alpha\textbf{u}_\alpha q_\alpha^\text{tot}}
-    &= \pOavg{ s_2^0 }
+    \pddt (n_pq_p)
+    + \div (n_p q_p \textbf{u}_p + \bm\Phi_p^\text{eq})
+    &= \pOavg{ s_d^0 }
     + \pSavg{ s_I^0 }
-    + \pSavg{ \left[\mathbf{\Phi}_1^0 + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0) \right] \cdot \textbf{n}_2 ,}
+    + \pSavg{ \left[\mathbf{\Phi}_f^0 + f_f^0 (\textbf{u}_I^0-\textbf{u}_f^0) \right] \cdot \textbf{n}_d },
     \label{eq:avg_dt_dq_alpha_tot}\\
-    \pddt \avg{\delta_\alpha \textbf{Q}_\alpha^\text{tot}}
-    + \div \avg{\delta_\alpha\textbf{u}_\alpha\textbf{Q}_\alpha^\text{tot}}
+    \pddt (n_p\textbf{Q}_p)
+    + \div (n_p \textbf{Q}_p \textbf{u}_p + \bm\Phi_p^\text{eq-2})
     &=\pOavg{ \left(
-        \textbf{r} s_2^0         
-        + f_2^0  \textbf{w}_2^0 
-        - \mathbf{\Phi}_2^0
+        \textbf{r} s_d^0         
+        + f_d^0  \textbf{w}_d^0 
+        - \mathbf{\Phi}_d^0
     \right) }
     + \pSavg{ \left(
         \textbf{r}s_I^0
@@ -59,29 +71,21 @@ These equations yield
         - \mathbf{\Phi}_{I||}^0
     \right) }\nonumber\\
     &+ \pSavg{ \textbf{r} \left[
-        \mathbf{\Phi}_1^0
-        + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0)
-    \right]\cdot \textbf{n}_2  }.
+        \mathbf{\Phi}_f^0
+        + f_f^0 (\textbf{u}_I^0-\textbf{u}_f^0)
+    \right]\cdot \textbf{n}_d  }.
     \label{eq:avg_dt_dQ_alpha_tot}
 \end{align}
-In \ref{ap:Moments_equations} the derivation of the higher moment particle-averaged equations is provided. 
-In this study, \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} are refereed to as the phase-averaged equations, while \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot} are denoted as the particle-averaged equation. 
-In these expressions we kept a general notation yet. 
-But note that, we can note the particle phase averaged quantity by,
-\begin{equation}
-     n_p q_p(\textbf{x},t) = \avg{\delta_\alpha q_\alpha}
-     \label{eq:p_avg}
-\end{equation}
-where, $n_p(\textbf{x},t) = \avg{\delta_\alpha}$ is the probable number of finding a particle center of mass at $\textbf{x}$
-and $q_p$ is the conditional average of $q_\alpha$ conditionally on the presence of a particle at \textbf{x}. 
-Additionally, notice that it is possible to define the fluctuating parts of a property by, 
-\begin{equation}
-    q_\alpha' = q_\alpha - q_p
-    % \;\;\;\;\;\;\text{and}
-    % \;\;\;\;\;\;
-\end{equation}
-such that the particle average of a product can be rewritten, $\pavg{q_\alpha\textbf{u}_\alpha} = n_p q_p \textbf{u}_p + \pavg{q_\alpha' \textbf{u}_\alpha'}$. 
-These notations will find their use in \ref{sec:averaged_eq}, but for now we keep the formulation rather generic as in \ref{eq:avg_dt_dQ_alpha_tot} and \ref{eq:avg_dt_dq_alpha_tot}
+with, 
+\begin{align*}
+    \bm\Phi_p^\text{eq-1}= \pavg{\textbf{u}_\alpha' q_\alpha'},
+    && \bm\Phi_p^\text{eq-1}= \pavg{\textbf{u}_\alpha' \bm{Q}_\alpha'}.
+\end{align*}
+Notice that the only fluxes present in \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot} are the fluctuation tensors $\pavg{\textbf{u}_\alpha' q_\alpha'}$ and $\pavg{\textbf{u}_\alpha' \bm{Q}_\alpha'}$. 
+Thus, the diffusive fluxes $\bm\Phi_d^0$ and $\bm\Phi_I^0$ do not play the role of macroscopic diffusive fluxes, as it is the case in \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f}, but rather they act as source terms in the first moment and higher moment equations. 
+This is the main structural differences between the Kinetic-like model (\ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}) and the two-phase flow model (\ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f}). 
+The derivation of the higher moment particle-averaged equations is provided in \ref{ap:Moments_equations}. 
+In this study, \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} are referred to as the phase-averaged equations, while \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot} are called the particle-averaged equations. 
 
  
 

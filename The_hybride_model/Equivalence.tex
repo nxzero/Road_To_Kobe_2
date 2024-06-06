@@ -2,34 +2,32 @@
 %\subsubsection*{Equivalence between particle and continuous models}
 \subsection{Equivalence between particle-averaged and phase-averaged equations}
 \label{sec:equivalence}
-To model the dispersed phase we can either use \ref{eq:avg_dt_chi_f} with $k=2$, or the particle-average \ref{eq:avg_dt_dq_alpha_tot}, \ref{eq:avg_dt_dQ_alpha_tot} and possibly the higher moments equations. 
-% As mentioned in \ref{sec:Lagrangian} we notified that \ref{eq:dt_dq_alpha_tot} was already subject to an average over the particles' volume and the surfaces. 
-% Meaning that \ref{eq:avg_dt_dq_alpha_tot} is the results of two average processes. 
-Consequently, it is fair to address the question of the compatibility and differences between both formalism, i.e. between \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_dq_alpha_tot}. 
+To model the dispersed phase we can either use \ref{eq:avg_dt_chi_f} with $k=d$, or the particle-averaged equations: \ref{eq:avg_dt_dq_alpha_tot}, \ref{eq:avg_dt_dQ_alpha_tot} and possibly the higher moments equations in \ref{ap:Moments_equations}. 
+Consequently, it is fair to address the question of the compatibility and differences between both formalisms. 
 
 To begin with, it has been demonstrated in various studies \citep{nott2011suspension,jackson1997locally,zhang1994averaged}, that phase-averaged quantities can be expressed as a Taylor series expansion of particle-averaged quantities. 
-Indeed, the dispersed phase indicator function $\chi_2(\textbf{x},t)$ can be expressed as a sum of phase indicator function, $\chi_2(\textbf{x},t) = \sum_\alpha\chi_\alpha(\textbf{x},t)$ where $\chi_\alpha =1$ in the particle domain $\Omega_\alpha(t)$ and $0$ otherwise. 
-Then, notice that any a dispersed phase quantity can be written as, 
+Indeed, the dispersed phase indicator function $\chi_d(\textbf{x},t)$ can be expressed as a sum of phase indicator function, $\chi_d(\textbf{x},t) = \sum_\alpha\chi_\alpha(\textbf{x},t)$ where $\chi_\alpha =1$ in the particle domain $\Omega_\alpha(t)$ and $0$ otherwise. 
+Then, notice that any dispersed phase quantity can be written as, 
 \begin{equation*}
-    f^0_2 \chi_2(\textbf{x},t)
-    = \sum_\alpha f^0_2 \chi_\alpha(\textbf{x},t) 
-    = \sum_\alpha \int_{\mathbb{R}^3} f^0_2 \chi_\alpha(\textbf{x}_\alpha+\textbf{r},t)\delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r}) d\textbf{r} 
+    f^0_d \chi_d(\textbf{x},t)
+    = \sum_\alpha f^0_d \chi_\alpha(\textbf{x},t) 
+    = \sum_\alpha \int_{\mathbb{R}^3} f^0_d \chi_\alpha(\textbf{x}_\alpha+\textbf{r},t)\delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r}) d\textbf{r} 
 \end{equation*}
-Which upon using the Taylor expansion of the Dirac delta function in the neighborhood of $\textbf{r}=0$ one obtain :  $\delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r}) = \delta(\textbf{x}- \textbf{x}_\alpha) - \textbf{r}\cdot\grad \delta(\textbf{x} - \textbf{x}_\alpha) + \frac{\textbf{rr}}{2}:\grad\grad\delta(\textbf{x}- \textbf{x}_\alpha)\ldots $.
-% Thus, the dispersed phase quantity $(f_2^0\chi_2)$ can be re-written as, 
-% \begin{equation*}
-%     f^0_2 \chi_2(\textbf{x},t)
-%     = \sum_\alpha \left[
-%         \intO{f^0_2}
-%         - \div\intO{\textbf{r} f^0_2}
-%         + \frac{1}{2}\grad\grad :\intO{\textbf{rr} f^0_2}
-%         \ldots
-%     \right]
-% \end{equation*}
-% where we recognize the zeroth, first and second order moments of $f_2^0$. 
-Applying these considerations to interfaces quantities and averaging over all configurations of the phase space, one obtain a general relation between continuous and particle averaged quantities, namely, 
+Upon using the Taylor expansion of the Dirac delta function in the neighborhood of $\textbf{r}=0$ one obtain :  $\delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r}) = \delta(\textbf{x}- \textbf{x}_\alpha) - \textbf{r}\cdot\grad \delta(\textbf{x} - \textbf{x}_\alpha) + \frac{\textbf{rr}}{2}:\grad\grad\delta(\textbf{x}- \textbf{x}_\alpha) - \ldots $.
+Thus, the dispersed-phase field $f_d^0\chi_d$ can be re-written as, 
+\begin{equation*}
+    f^0_d \chi_d(\textbf{x},t)
+    = \sum_\alpha \left[
+          \left(\delta_\alpha\intO{f^0_d}\right)
+        - \div\left(\delta_\alpha\intO{\textbf{r} f^0_d}\right)
+        + \frac{1}{2}\grad\grad :\left(\delta_\alpha\intO{\textbf{rr} f^0_d}\right)
+        \ldots
+    \right]
+\end{equation*}
+where we recognize the zeroth, first and second order moments of $f_d^0$. 
+Applying similar considerations to the interface indicator function $\delta_I$, and averaging over all configurations, we obtain the general relations that link continuous-averaged and particle-averaged fields, namely, 
 \begin{align}
-    \avg{\chi_2f_2^0} 
+    \avg{\chi_df_d^0} 
     &=  \pavg{q_\alpha}
         - \div  
         \pavg{\textbf{Q}_\alpha}        
@@ -43,39 +41,45 @@ Applying these considerations to interfaces quantities and averaging over all co
         + \ldots  
     \label{eq:f_exp}
 \end{align}
-It must be noted that \ref{eq:f_exp} is the bridge between the continuous phase average formalism and the particle formulation. 
-One of the consequences of these relations is that, 
+% It must be noted that \ref{eq:f_exp} is the bridge between the continuous phase average formalism and the particle formulation. 
+Particularly we note that if $f_d^0 = \rho_d$ and $f_d^0 = \rho_d \textbf{u}_d^0$ we obtain, 
 \begin{align}
-    \phi_2 \rho_2
+    \label{eq:f_exp_exe1}
+    \phi_d \rho_d
     = m_p n_p 
-    + \frac{1}{2}\grad^2 : (n_p\textbf{M}_p)+\ldots\\
-    \phi_2 \rho_2 \textbf{u}_2
+    + \frac{1}{2}\grad^2 : (n_p\textbf{M}_p)+\ldots,\\
+    \phi_d \rho_d \textbf{u}_d
     = m_p n_p \textbf{u}_p 
-    - \div (n_p\textbf{P}_p)+\ldots
+    - \div (n_p\textbf{P}_p)+\ldots,
     \label{eq:f_exp_exe}
 \end{align}
-meaning that $\phi_2\rho_2$ is in fact related to $\textbf{M}_p$ and the phase averaged velocity $\textbf{u}_2$ contains the first  moment of momentum $\textbf{P}_p$, which as discussed accounts for rotational and stretching motions of the particles. 
+respectively. 
+Meaning that $\phi_d\rho_d$ is related to the shape of the particles, represented by $\textbf{M}_p$ through \ref{eq:f_exp_exe1}.
+Additionally, considering \ref{eq:f_exp_exe}, it becomes apparent that the phase-averaged velocity $\textbf{u}_d$ encompasses the first moment of momentum $\textbf{P}_p$, which as discussed (in \ref{sec:Lagrangian}) accounts for the rotational, dilatational, and stretching motions of the particles. 
+The second terms on the right-hand side of \ref{eq:f_exp_exe1} and \ref{eq:f_exp_exe} become negligible for homogeneous mixture, i.e. if $n_p$, $\textbf{M}_p$ and $\textbf{P}_p$ are not function of \textbf{x}. 
+Conversely, these terms might become significant if $n_p$, $\textbf{M}_p$ or $\textbf{P}_p$ are space-dependent.
+For example, close to solid boundaries of a macroscopic flow strong gradients of $n_p$ are present at the particle length scale, since at the exact location of the boundaries we must respect $n_p = 0$. 
 
 
-In order to establish the equivalence between both formalism, we follow the strategy of \citep{lhuillier2000bilan,lhuillier2009rheology} by taking the Taylor expansion of each terms in \ref{eq:avg_dt_chi_f} with $k=2$ using the relation \ref{eq:f_exp}. 
-Since we made use of the surface transport equations in the particles phase equations : \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}, we also need to consider \ref{eq:avg_dt_delta_f}  to prove equivalence. 
+In order to establish the equivalence between both formalism, we follow the strategy of \citep{lhuillier2000bilan,lhuillier2009rheology} by taking the Taylor expansion of each terms in \ref{eq:avg_dt_chi_f} with $k=d$ using the relation \ref{eq:f_exp}. 
+Since we made use of the surface transport equations in the particles phase equations : \ref{eq:avg_dt_dq_alpha_tot} and \ref{eq:avg_dt_dQ_alpha_tot}, we also consider \ref{eq:avg_dt_delta_f} to prove equivalence. 
 As the resulting expression can become quite cumbersome, we will adopt the following definition. 
-Let $\mathbb{C}_2$ represent the phase-averaged equation of conservation (\ref{eq:avg_dt_chi_f} with $k=2$) and $\mathbb{C}_I$ the averaged surface transport equation, namely, 
+Let $\mathbb{C}_d$ represent the phase-averaged equation of conservation (\ref{eq:avg_dt_chi_f} with $k=d$) and $\mathbb{C}_I$ the averaged surface transport equation, namely, 
 \begin{align*}
-    \mathbb{C}_2
+    \mathbb{C}_d
     &=
-    - \pddt \avg{\chi_2f_2^0}
-    - \div \avg{\chi_2 \mathbf{\Phi}_2^0 - \chi_2f_2^0 \textbf{u}_2^0}
-    + \avg{\chi_2 s_2^0}
+    - \pddt \avg{\chi_df_d^0}
+    - \div \avg{\chi_d \mathbf{\Phi}_d^0 - \chi_df_d^0 \textbf{u}_d^0}
+    + \avg{\chi_d s_d^0}
     + \avg{\delta_I\left[
-        \mathbf{\Phi}_2^0
-        + f_2^0
+        \mathbf{\Phi}_d^0
+        + f_d^0
         \left(
             \textbf{u}_I^0
-            - \textbf{u}_2^0
+            - \textbf{u}_d^0
         \right)
     \right]
-    \cdot \textbf{n}_2}.\\
+    \cdot \textbf{n}_d}.\\
     \mathbb{C}_I
     &= 
     -\pddt \avg{\delta_If_I^0}
@@ -86,10 +90,10 @@ Let $\mathbb{C}_2$ represent the phase-averaged equation of conservation (\ref{e
     + \mathbf{\Phi}_k^0
     } }. 
 \end{align*}
-It must be understood from \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} that $\mathbb{C}_2=0$ and $\mathbb{C}_I=0$.
-Then, by taking the Taylor expansion of each terms of $\mathbb{C}_2+\mathbb{C}_I$ we can equally show that,
+It must be understood from \ref{eq:avg_dt_chi_f} and \ref{eq:avg_dt_delta_f} that $\mathbb{C}_d=0$ and $\mathbb{C}_I=0$.
+By taking the Taylor expansion of each terms of $\mathbb{C}_d+\mathbb{C}_I$ we can show that,
 \begin{equation}
-    \mathbb{C}_2 
+    \mathbb{C}_d 
     + \mathbb{C}_I 
     = \mathbb{M}_0 - \div \mathbb{M}_1 + \frac{1}{2} \grad\grad : \mathbb{M}_2 \ldots = 0,
     \label{eq:scheme_equivalence}
@@ -100,18 +104,18 @@ where the expression $\mathbb{M}_0$ and $\mathbb{M}_1$ turn out to be,
     = 
     - \avg{\delta_\alpha \ddt {q_\alpha^\text{tot}}}
     % -\avg{\delta_\alpha\textbf{u}_\alpha q_\alpha^\text{tot}}
-    + \pOavg{ s_2^0 }
+    + \pOavg{ s_d^0 }
     + \pSavg{ s_I^0 }
     + \pSavg{ 
-    \left[\mathbf{\Phi}_1^0 
-    + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0) \right] \cdot \textbf{n}_2 },\\
-    &\mathbb{M}_1 =
+    \left[\mathbf{\Phi}_f^0 
+    + f_f^0 (\textbf{u}_I^0-\textbf{u}_f^0) \right] \cdot \textbf{n}_d },\\
+    &\mathbb{M}_f =
     -  \avg{\delta_\alpha \ddt {\textbf{Q}_\alpha^\text{tot}}}
     % - \avg{\delta_\alpha\textbf{u}_\alpha \textbf{Q}_\alpha^\text{tot}}
      + \pOavg{ \left(
-        \textbf{r} s_2^0         
-        + f_2^0  \textbf{w}_2^0 
-        - \mathbf{\Phi}_2^0
+        \textbf{r} s_d^0         
+        + f_d^0  \textbf{w}_d^0 
+        - \mathbf{\Phi}_d^0
     \right) }
     + \pSavg{ \left(
         \textbf{r}s_I^0
@@ -119,42 +123,46 @@ where the expression $\mathbb{M}_0$ and $\mathbb{M}_1$ turn out to be,
         - \mathbf{\Phi}_{I||}^0
     \right) }\\
     &+ \pSavg{ \textbf{r} \left[
-        \mathbf{\Phi}_1^0
-        + f_1^0 (\textbf{u}_I^0-\textbf{u}_1^0)
-    \right]\cdot \textbf{n}_2  },
+        \mathbf{\Phi}_f^0
+        + f_f^0 (\textbf{u}_I^0-\textbf{u}_f^0)
+    \right]\cdot \textbf{n}_d  },
 \end{align*}
 respectively. 
-In the presence of \ref{eq:scheme_equivalence} we reach the major conclusion of this work. 
-Indeed, we can observe that $\mathbb{M}_0$, $\mathbb{M}_1$ and $\mathbb{M}_2$ represent the zeroth, first and second order moments equations, respectively. 
-In fact, it is shown in \ref{ap:Moments_equations} that the coefficient $\mathbb{M}_n$ in \ref{eq:scheme_equivalence} correspond to the $n^{th}$ order particle-average conservation equation. 
-As a matter of fact, the phase average applied to the dispersed phase contains all the particle-averaged moments equations.
-In \ref{ap:Moments_equations} we provide the expression for each moment equation $\mathbb{M}_n$ as well as the complete derivation of \ref{eq:scheme_equivalence}. 
-In \cite{lhuillier2000bilan} they reached similar conclusion when comparing the area density phase-averaged and particle-averaged equations of conservation for spherical particles. 
-Thus, from \ref{eq:scheme_equivalence} it is evident that one can use an arbitrary order of moments equations to reach an arbitrary accurate description of the dispersed phase.
+In the presence of \ref{eq:scheme_equivalence}, we reach the major conclusion of this work. 
+Indeed, we can observe that $\mathbb{M}_0$ and $\mathbb{M}_1$ represent the zeroth and first order moments equations, respectively. 
+Additionally, it is shown in \ref{ap:Moments_equations} that the coefficient $\mathbb{M}_n$ in \ref{eq:scheme_equivalence} correspond to the $n^{th}$ order moment particle-averaged conservation equation. 
+From \ref{eq:scheme_equivalence} we conclude that \ref{eq:dt_chi_k_f_k} for $k=d$ encompasses the particles moments equations through a Taylor expansion around the particle center of mass. 
+Thus, it is evident that one can use an arbitrary order of particles moments equations to achieve an arbitrarily accurate description of the dispersed phase, regardless of the properties of the multiphase flow.
+In \cite{lhuillier2000bilan} they reached a similar conclusion when comparing the phase-averaged area density and particle-averaged area density equations for spherical particles. 
+In \ref{ap:Moments_equations} we provide the expression for each $\mathbb{M}_n$ as well as the complete derivation of \ref{eq:scheme_equivalence}. 
 
 Another approach is to notice that $\mathbb{M}_n=0$ for all $n$. Thus, we can rewrite \ref{eq:scheme_equivalence} such that all moments equations vanish, except $\mathbb{M}_0$, which gives, 
 \begin{equation}
-    \mathbb{C}_2 
-    \mathbb{C}_I
+    \mathbb{C}_d 
+    + \mathbb{C}_I
     = \mathbb{M}_0 = 0.
+    \label{eq:proof2}
 \end{equation}
-This implies that equation \ref{eq:avg_dt_chi_f} with the surface transport equation \ref{eq:avg_dt_delta_f} is rigorously equivalent to \ref{eq:avg_dt_dq_alpha_tot} which has been shown by \cite[Appendix A]{nott2011suspension} for the specific case of the momentum conservation equation of solid spherical particle.
-In fact, we generalize the conclusion of \citet[Appendix A]{zhang1997momentum} which stipulate that the particle momentum equation is as legitimate as the phase averaged equation. 
-In fact, it is not surprising at all, since the phases and particles averaged equations are all constructed from \ref{eq:dt_f_k}.
-However, if one do not consider a proper derivation as it is done in \ref{sec:Lagrangian} it might not be as obvious, even if it should remain.
-Nevertheless, it is important to note that this conclusion is not entirely objective since following the same procedure we could show equally that $\mathbb{C}_2  = -\div\mathbb{M}_1=0$ and $\mathbb{C}_2  = \frac{1}{2}\grad\grad:\mathbb{M}_2=0$ and so on for the other higher terms. 
+This implies that equation \ref{eq:avg_dt_chi_f} with the surface transport equation \ref{eq:avg_dt_delta_f} is rigorously equivalent to \ref{eq:avg_dt_dq_alpha_tot}.
+\citet[Appendix A]{zhang1997momentum} provided evidences that the particle-averaged momentum equation is as legitimate as the phase-averaged momentum equation, which is consistent with \ref{eq:proof2}. 
+Additionally, \citet[Appendix A]{nott2011suspension} derived a similar expression than \ref{eq:proof2}, also in the case of the averaged momentum equation for suspension of solid spherical particles.
+Thus, in light of \ref{eq:proof2}, we generalize the conclusion of these authors and demonstrated that this is also true for all conservation laws regardless of the dispersed phase nature.  
+Considering the Lagrangian equations derived in \ref{sec:Lagrangian} this conclusion is not surprising at all since the phase-averaged and particle-averaged equations are all built on \ref{eq:dt_f_k} and \ref{eq:dt_f_I}.
+However, if one does not consider a proper derivation as it is done in \ref{sec:Lagrangian} it might not be as obvious, even if \ref{eq:proof2} should remain true as demonstrated by \citet{zhang1997momentum,nott2011suspension}.
+Nevertheless, it is important to note that the conclusion given by \ref{eq:proof2} is not entirely objective since following the same procedure we could show equally that $\mathbb{C}_d  = -\div\mathbb{M}_f=0$ and $\mathbb{C}_d  = \frac{1}{2}\grad\grad:\mathbb{M}_2=0$ and so on. 
 Thus, it is more appropriate to examine the problem from the perspective of \ref{eq:scheme_equivalence}. 
-Namely, the particle-averaged equations constitute a system of equations with one equation for each moment, while the phase-averaged equation contains all the terms of the particle-averaged equations within a single equation.
-Therefore, the particle-averaged formalism encompasses more information since it provide one equation for each moment. 
-This,  gain in information have been possible through the consideration of the topology of the dispersed phase. 
+Namely, the particle-averaged equations constitute a system of equations with one equation for each moment, while the phase-averaged equation contains all the particle-averaged equations within a single equation.
+Therefore, the particle-averaged formalism encompasses more information since it provides one equation for each moment. 
+Note that this gain in information has been possible through the consideration of the topology of the dispersed phase. 
 
-The major consequence of this finding is that it enable us to better understand the role of the particle phase stresses $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$, in the particle averaged momentum equation such as it is written in a kinetic-like model. 
-Indeed, as shown by the general form \ref{eq:avg_dt_dq_alpha_tot}, $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$ will not play a role on the particle averaged momentum equations, i.e. the equation of : $n_p m_p \textbf{u}_p$. 
-However, as shown in \ref{eq:dt_avg_uk2}, the phase averaged momentum : $\rho_2 \phi_2 \textbf{u}_2$,  will be subject to the particle surface and internal stresses, since $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$ are present in this phase averaged equation.
-This is made consistent if one consider that these stresses act as source terms on the higher moments of momentum equations $\mathbb{M}_1$\ldots, which are related to $\rho_2 \phi_2 \textbf{u}_2$ through \ref{eq:f_exp_exe}. 
-In brief, the non-convective fluxes $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$  have no direct impact on the particle averaged center of mass momentum :$n_pm_p\textbf{u}_p$, regardless of the particles nature and volume fraction. 
-The influence of $\phi_2\bm{\sigma}_2$ and $\phi_I\bm{\sigma}_I$ on the particles' averaged momentum, $n_p m_p \textbf{u}_p$ is made through the dependence of the source terms present in \ref{eq:avg_dt_dq_alpha_tot} with the higher moments of the particles, which depend themselves on the non-convective fluxes as suggested by the moments of momentum equations. 
-Consequently, it must be understood that the kinetic-like equations are formally exact and apply for any type of particle and particle volume fraction, as long as the closure terms are well modeled. 
-Similar remarks can be made regrading the non-convective fluxes of the energy equation $\textbf{q}_2$ and for all other conservation equation. 
+The major consequence of this finding is that it enables us to better understand the role of the dispersed phase stresses $\phi_d\bm{\sigma}_d$ and $\phi_I\bm{\sigma}_I$, in the particle-averaged momentum equation such as it is written in a kinetic-like model (\ref{eq:avg_dt_dq_alpha_tot}). 
+Indeed, as shown by \ref{eq:avg_dt_dq_alpha_tot}, $\phi_d\bm{\sigma}_d$ and $\phi_I\bm{\sigma}_I$ will not play a role in the particle-phase averaged momentum equations, i.e. the equation of $n_p m_p \textbf{u}_p$. 
+However, as shown in \ref{eq:dt_avg_rhou_k} (for $k =d$), the phase averaged momentum $\rho_d \phi_d \textbf{u}_d$,  will be subject to the particle surface and internal stresses, since $\phi_d\bm{\sigma}_d$ and $\phi_I\bm{\sigma}_I$ are present in this equation.
+This is made consistent if one considers that these stresses act as source terms in the higher moments of momentum equations, i.e.  $\mathbb{M}_1$,$\mathbb{M}_2$, \ldots, which are related to $\rho_d \phi_d \textbf{u}_d$ through \ref{eq:f_exp_exe}. 
+In brief, the non-convective fluxes $\phi_d\bm{\sigma}_d$ and $\phi_I\bm{\sigma}_I$  have no direct impact on the particle-phase averaged momentum $n_p m_p\textbf{u}_p$, regardless of the particles nature and volume fraction. 
+The influence of $\phi_d\bm{\sigma}_d$ and $\phi_I\bm{\sigma}_I$ on the particles' averaged momentum, $n_p m_p \textbf{u}_p$ is made through the dependence of the source terms or closure term present in \ref{eq:avg_dt_dq_alpha_tot} with the higher moments of the particles such as $\textbf{M}_p$, $\textbf{P}_p$. 
+Indeed, $\textbf{P}_p$ and $\textbf{M}_p$ are directly related to the non-convective fluxes as suggested by the \ref{eq:dt_P_alpha}. 
+Consequently, it must be understood that the kinetic-like equations (\ref{eq:avg_dt_dq_alpha_tot}) are formally exact and apply for any type of particle and particle volume fraction, as long as the closure terms are well modeled. 
+Similar remarks can be made regarding the non-convective fluxes of the energy equation $\textbf{q}_2$ and for all other conservation equations. 
 
 
