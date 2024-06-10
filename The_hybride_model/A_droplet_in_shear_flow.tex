@@ -1,0 +1,417 @@
+\section{The conditionally averaged Navier Stokes equations}
+\label{ap:conditionally_navier_stokes}
+
+In this appendix we revisit the method to derive the closure term of a stoke stain spherical droplets. 
+Following \citet{zhang1994ensemble} we first demonstrate that in order to be closed the particle-averaged  fields need to be expressed in terms of \textit{single-particle} conditionally-averaged field. 
+Then we demonstrate how to obtain these \textit{single-particle} conditionally-averaged field from what we call here the \textit{single-particle} conditionally-averaged equations. 
+
+\subsection{The conditional average}
+The first step is to introduce the relation between particle averaged field and \textit{single-particle} conditionally-averaged field.
+For instance, let us take the example of the drag force term. 
+Form the definition of the particle-average \ref{eq:p_avg} we write,
+\begin{align}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    &= \int \sum_{\alpha=1}^N \delta(\textbf{x}-\textbf{x}_\alpha[t; \FF])
+    \int_{\Gamma_\alpha(t,\FF)}
+    \bm\sigma_f^0\cdot\textbf{n}[\textbf{y},t;\FF]
+    d\Gamma(\textbf{y}) d\PP
+\end{align}
+By writing this integral explicitly, we want to emphasize that the particle-averaged quantity is evaluated at the point \textbf{x}, while the integration over the surface of the particles $\alpha$ is carried out over the surface with the integration parameter $\textbf{y}$.
+Therefore, we may enlarge the domain of integration from $\Gamma_\alpha$ to $\mathbb{R}^3$ by multiplying $\bm\sigma_f^0\cdot\textbf{n}(\textbf{r},t;\FF)$ with $\delta(|\textbf{y} - \textbf{x}_\alpha(t,\FF)| - a)$. 
+It reads, 
+\begin{equation}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    = 
+    \int_{\mathbb{R}^3}
+    \int
+     \sum_{\alpha=1}^N 
+     \delta(\textbf{x}-\textbf{x}_\alpha(t; \FF))
+    \delta(|\textbf{y} - \textbf{x}_{\alpha}(t;\FF)|-a)
+    (\bm\sigma_f^0\cdot\textbf{n})[\textbf{y},t;\FF]
+    d\PP
+    d\textbf{y}
+\end{equation}
+Note that this definition is only valid for identical spherical particles of radius $a$. 
+Due to the presence of $\delta(\textbf{x}-\textbf{x}_\alpha(t; \FF))$, this expression is non-zero only when $\textbf{x} = \textbf{x}_\alpha(\FF,t)$. 
+Therefore, we can write, 
+\begin{equation}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    n_p(\textbf{x})
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \bm\sigma_f^1 \cdot \textbf{n}
+    d\textbf{y}
+    \label{eq:conditionally_averaged}
+\end{equation}
+where, 
+\begin{equation*}
+    \bm\sigma^1_f[\textbf{y},t;\textbf{x}] n_p(\textbf{x})
+    =
+    \avg{\delta_\alpha \bm\sigma^0_f}[\textbf{y},t;\textbf{x}]
+    = 
+    \int 
+    \sum_\alpha^N \delta(\textbf{x} - \textbf{x}_\alpha(\FF,t))
+    \bm\sigma_f^0[\textbf{y},t;\FF]
+    d\PP
+\end{equation*}
+is the \textit{single-particle} conditionally-averaged local stress of the continuous phase knowing that interface of the particle at $\textbf{x}$ is  present in \textbf{y}. 
+In other world $\bm\sigma^1_f$ is the mean fluid phase stress evaluated at $\textbf{y}$ and time $t$ on every configuration where a particle is present at $\textbf{x}$. 
+And $n_p(\textbf{x})$ is the number density but evaluated at $\textbf{x}$.
+In light of \ref{eq:conditionally_averaged} we made the link between particle-average and the integral of a \textit{single-particle} conditionally-averaged quantity. 
+Note that all quantities denoted with the superscript $^1$ refer to \textit{single-particle} conditionally-averaged  quantities.  
+Therefore, it is implicit that these quantities are evaluated at $\textbf{y}$ and $t$ and conditionally on $\textbf{x}$. 
+
+\subsection{The disturbance field}
+
+Let $f^1_f$ be an arbitrary \textit{single-particle} conditionally-averaged quantity. 
+Notice that when $f^1_f$ is evaluated infinitely far from the particle we have the relation, 
+\begin{equation*}
+    \lim_{|\textbf{x} - \textbf{y}| \to \infty}  f^1_f [\textbf{y},t;\textbf{x}] = f_f [\textbf{y},t]
+\end{equation*}
+Indeed, at large distance from a particle the \textit{single-particle} conditionally-averaged quantities are not influenced by the particles and therefore reduce to the classic averaged fields. 
+Therefore, we define the distance field of a particle as $f^{1d}_f = f^1_f [\textbf{y},t;\textbf{x}]  - f_f[\textbf{y},t]$ such that any disturbance field satisfy, 
+\begin{equation*}
+    \lim_{|\textbf{x} - \textbf{y}| \to \infty}  f^{1d}_f [\textbf{y},t;\textbf{x}] = 0 
+\end{equation*}
+The fluid phase is a Newtonian thus, $\bm\sigma_f^0 = - p_f^0\bm\delta + 2\mu_f [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger]$.
+Considering the previous definition we can re-write the stress as a mean and fluctuating part, namely 
+\begin{equation*}
+    \bm\sigma_f^1 = 
+    - p_f\bm\delta + 2\mu_f [\grad \textbf{u}_f + (\grad \textbf{u}_f)^\dagger]
+    - p_f^{1d}\bm\delta + 2\mu_f [\grad \textbf{u}_f^{1d} + (\grad \textbf{u}_f^{1d})^\dagger]
+\end{equation*}
+For simplification we introduce the notations
+\begin{align}
+    \bm\Sigma_f = - p_f\bm\delta + 2\mu_f \textbf{E}_f,\\
+    \bm\Sigma_f^{1d} = - p_f^{1d}\bm\delta + 2\mu_f \textbf{E}_f^{1d}. 
+\end{align}
+The reader must understand here that $\bm\sigma_f \neq \bm\Sigma_f$ because of the two different shear components that are note equivalent: $\textbf{E}_f \neq \textbf{e}_f$. 
+
+
+Using  $\bm\sigma_f^1 = \bm\Sigma_f + \bm\Sigma_f^{1d}$ these definitions we may write, 
+\begin{equation}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    n_p(\textbf{x})
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \bm\Sigma_f
+    \cdot \textbf{n}
+    d\textbf{y}
+    + n_p(\textbf{x})
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \bm\Sigma_f^{1d}
+    \cdot \textbf{n}
+    d\textbf{y}
+    \label{eq:drag}
+\end{equation}
+Notice that $\bm\Sigma_f$ is evaluated at $\textbf{y}$ therefore to get it out of the integration one can notice that $\bm\sigma_f(\textbf{y},t) = \bm\sigma_f(\textbf{x},t) + \textbf{r}\cdot \grad\bm\sigma_f(\textbf{x},t)+ \ldots$
+where we have introduced $\textbf{r} = \textbf{y} - \textbf{x}$. 
+Substituting the first two terms of this Taylor series into \ref{eq:drag} yields
+\begin{equation}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    n_p v_p 
+    \div\bm\Sigma_f
+    +
+    n_p 
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \bm\Sigma_f^{1d} \cdot \textbf{n}
+    d\textbf{y}
+    \label{eq:drag_final}
+\end{equation}
+Therefore, notice that drag force term has a component related to the mean fluid phase stress plus the contribution from the disturbance fields. 
+Additionally, similar consideration can be made for the first two moments of the hydrodynamic force traction. 
+This gives, 
+\begin{align}
+    \pSavg{\textbf{r}\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    n_p v_p \bm\Sigma_f
+    +
+    n_p 
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \textbf{r}\bm\Sigma_f^{1d} \cdot \textbf{n}
+    d\textbf{y}\\
+    \pSavg{\textbf{rr}\bm\Sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    n_pv_p  \frac{a^2}{5} 3 [(\div \bm\Sigma_f)\bm\delta]^\text{sym}
+    +
+    n_p 
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \textbf{rr}\bm\Sigma_f^{1d} \cdot \textbf{n}
+    d\textbf{y}\\
+\end{align}
+where the operator $[\ldots]^\text{sym}$ returns the symmetric part of the arguments.
+Notice that the contribution from the mean stress in the second moment of the hydrodynamic force might become negligible for small $\phi_d$. 
+In these expressions no hypothesis have been made. 
+
+\subsection*{The consitional averaged Navier stokes equaiton}
+As shown above $\bm\Sigma_f$ is function of the unknown of the problem so it is closed. 
+The remaining term to compute is $\bm\Sigma_f^{1d}$ which is a function of $\textbf{u}_f^{1d}$ and $p_1^{1d}$. 
+To obtain these fields one must solve the \textit{single-particle} conditionally-averaged equations for the disturbance fields  $\textbf{u}_f^{1d}$ and $p_1^{1d}$. 
+Notice that we assume that the equation for  $\textbf{u}_f^{1d}$ and $p_1^{1d}$ follow the stokes hypothesis. 
+However, in light of \ref{eq:dt_hybrid_rhou_f} the fields $\textbf{u}_f^{1}$ has no reason to follow the stokes limit hypothesis. 
+For this reason we believe that (5.1) and (5.2) of \citet{zhang1997momentum} is not well posed. 
+
+In all rigor to obtain the equations for the $\textbf{u}_k^1$ one multiply the single-fluid formulation of the momentum \eqref{eq:dt_f} evaluated at \textbf{y} by $\sum_\alpha \delta(\textbf{x}-\textbf{x}_\alpha)$ and then average over all configuration.
+This yields,
+\begin{equation*}
+    \pddt \avg{\rho^0 \textbf{u}^0 \delta_i}
+    + \div \avg{\rho^0 \textbf{u}^0  \textbf{u}^0 \delta_i
+        - \bm\sigma^0\delta_i}
+    - \pddr \avg{\rho^0 \textbf{u}^0 \textbf{u}_i \delta_i}
+    = 0. 
+\end{equation*}
+At the zeroth order in 
+
+Then using the averaged Navier Stokes equations for $\textbf{u}_1$ one arrive to the stokes equations for $\textbf{u}_f^{1d}$, they read, 
+\begin{align*}
+    \div \textbf{u}_f^{1d} = 0 &&
+    \div \bm\Sigma_f^{1d} = 0 
+\end{align*}
+Wit boundary condition 
+\begin{align*}
+    \textbf{u}_f^{1d}[\textbf{y},t|\textbf{x}] = 0 \text{  for  } |\textbf{r}| \to \infty\\
+    \textbf{u}_f^{1d}\cdot \textbf{n}[\textbf{y},t|\textbf{x}] = (\textbf{v} - \textbf{u}_f)\cdot \textbf{n}[\textbf{y},t]\text{  on  } S_p
+\end{align*}
+According to the definition $\textbf{u}_f^{1d}$ the mean fluid velocity $\textbf{u}_f$ is evaluated at $\textbf{y}$, thus we might rewrite the second boundary condition as, 
+\begin{align*}
+    % \textbf{u}_f^{1d} = 0 \text{  for  } |\textbf{r}| \to \infty\\
+    \textbf{u}_f^{1d} = \textbf{v} - \textbf{u}_f(\textbf{x},t)
+    -\textbf{r}\cdot\grad\textbf{u}_f(\textbf{x},t)
+    -\frac{1}{2}\textbf{rr}:\grad^2\textbf{u}_f(\textbf{x},t)
+    \ldots
+    \text{  on  } S_p
+\end{align*}
+
+These equations might be evaluated for two senarios
+\section{Singularity solution for spherical droplets}
+
+\subsubsection*{A droplet in an arbitrary linear flows}
+
+It is known that the velocity field around a droplet immersed in an arbitrary linear flow is written,
+\begin{equation}
+    \textbf{u}_f^1(\textbf{r})
+    = 
+    \mathcal{U}\cdot \textbf{u}_{fp}
+    + \mathcal{E}: \textbf{E}_{f}
+\end{equation}
+where the second and third order tensor $\mathcal{U}$ and $\mathcal{E}$ read as, 
+\begin{align}
+    \mathcal{U}_{ik} = 
+    \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right)
+    \left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right) 
+    + 
+    \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right)
+    \left(\frac{\delta_{ik}}{r^3} - \frac{3r_ir_k}{r^5}\right)  \\
+    \mathcal{E}_{ijk}
+    = \bm\delta\textbf{r}
+    -\frac{\lambda}{(\lambda + 1)r^5} \bm\delta\textbf{r}
+    -\left(\frac{5\lambda +2}{2(\lambda +1 )r^5} - \frac{5\lambda}{2(\lambda+1)r^7}\right) \textbf{rrr}\\
+\end{align}
+where the \textbf{r} are made dimensionless with the particle radius. 
+When evaluating these expressions at the particle surface yields, 
+\begin{align}
+    \mathcal{U}_{ik} = 
+    % \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right)
+    % \left(\delta_{ik} + r_ir_k\right) 
+    % + 
+    % \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right)
+    % \left(\delta_{ik} - 3r_ir_k\right)  \\
+    \frac{1}{2}\left(\frac{2\lambda + 1}{\lambda +1}\right)
+    \delta_{ik} 
+    + 
+    \frac{1}{2}\left(\frac{1}{\lambda +1}\right)
+    r_ir_k  \\
+    \mathcal{E}_{ijk}
+    = \left[1-\frac{\lambda}{(\lambda + 1)}\right]\bm\delta\textbf{r}
+    -\left(\frac{2}{2(\lambda +1 )} \right) \textbf{rrr}
+\end{align}
+Thus in the reference attached to the particle we have, 
+\begin{equation*}
+    \textbf{w}_d^0 
+    = \left(\frac{\lambda + \frac{1}{2}}{\lambda +1} - 1\right)
+    \textbf{u}_{pf} 
+    + 
+    \frac{1}{2}\left(\frac{1}{\lambda +1}\right)
+    \textbf{rr} \cdot \textbf{u}_{pf} 
+    + \left[1-\frac{\lambda}{(\lambda + 1)}\right]\textbf{E}_f\cdot\textbf{r}
+    -\left(\frac{2}{2(\lambda +1 )} \right) \textbf{r} \textbf{E}_f:\textbf{rr}
+\end{equation*}
+
+
+\subsection*{A translating droplets}
+\label{ap:Translating_sphere}
+
+\tb{Consider using the famous reciprocal theorem  ?  ? ? ? }
+
+\tb{This is usefull to derive the faxen contribution }
+
+\tb{this is not usefull to derive the spetical contribution . . .}
+
+
+In this appendix we expose the velocity fields solution for the stokes flow past a spherical drop. 
+In a second step, we compute the form of the moment of momentum closure mentioned in \ref{sec:Lagrangian} in terms of the fluid properties and the drop fluid relative velocity.
+
+We consider a drop of radius $a$ translating with the velocity $\textbf{u}_\alpha$ in a stokes flow with undisturbed velocity $\textbf{u}_1$.
+The relative velocity between the droplet and the fluid is defined as $\textbf{u}_{\alpha 1}= \textbf{u}_\alpha - \textbf{u}_1(\textbf{x}_\alpha)$ where $\textbf{u}_1(\textbf{x}_\alpha)$ is the undisturbed averaged fluid velocity at the position $\textbf{x}_\alpha$. 
+In these conditions, the local fluid phase velocity $\textbf{u}_1^0$, the local particle interior velocity $\textbf{u}_2^1$ and the local stress fields $\bm\sigma_2^0$ within the particle phase, might be written as\citet{pozrikidis1992boundary}\footnote{The solution of this problem is derived in the above cited book p .207.  However, the author made a slight mistakes on the constant $\textbf{c}$ which we corrected here. }, 
+\begin{align*}
+    u_{1,i}^0
+    = \left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right)  g_k
+    + \left(-\frac{\delta_{ik}}{r^3} + \frac{3r_ir_k}{r^5}\right)  d_k\\
+    u_{2,i}^0
+    = c_i
+    + \left(2 r^2 \delta_{ik} - r_ir_k\right) e_k\\
+    % e_{2,ik}^0
+    % = \mu(
+    %     3 \delta_{ij} r_k 
+    %     + 3 \delta_{kj} r_i
+    %     -2 r_j \delta_{ki}
+    % )e_j 
+    \sigma_{2,ik}^0
+    = \mu 3(
+        - 4 \delta_{ik} r_j
+        + \delta_{ij} r_k
+        + r_i \delta_{kj}
+    )e_j 
+\end{align*}
+with, 
+\begin{align*}
+    &\textbf{g} = a\frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right) \textbf{u}_{\alpha 1},
+    &\textbf{d} = -a^3\frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right) \textbf{u}_{\alpha 1},\\
+    &\textbf{c} = \frac{1}{2}\left(\frac{2\lambda + 3}{\lambda +1}\right) \textbf{u}_{\alpha 1},
+    &\textbf{e} = -\frac{1}{a^2}\frac{1}{2}\left(\frac{1}{\lambda +1}\right)  \textbf{u}_{\alpha 1}.\\
+\end{align*}
+
+Now that we have an explicit solution for the internal flow and stress one can compute the terms appearing in the energy and moment of momentum balance equations. 
+The integral involving the particle internal motion in the equation exposed in \ref{sec:Lagrangian} are evaluated exhaustively and yield, 
+\begin{equation*}
+    \intO{\rho_2(\textbf{w}_2^0)_i (\textbf{w}_2^0)_j}
+    = \frac{m_\alpha}{140 (\lambda +1)^2}
+    (7 (\textbf{u}_{\alpha 1})_i(\textbf{u}_{\alpha 1})_j + (\textbf{u}_{\alpha 1}\cdot \textbf{u}_{\alpha 1})\delta_{ij})
+\end{equation*} 
+\begin{equation*}
+    \intO{\rho_2(\textbf{w}_2^0)_k (\textbf{w}_2^0)_k}
+    = \frac{m_\alpha}{14 (\lambda +1)^2}
+     (\textbf{u}_{\alpha 1})_k(\textbf{u}_{\alpha 1})_k
+\end{equation*} 
+\begin{equation*}
+    \intO{\rho_2(\textbf{w}_2^0)_i (\textbf{w}_2^0)_j}^\text{dev}
+    = \frac{m_\alpha}{20 (\lambda +1)^2}
+    ((\textbf{u}_{\alpha 1})_i(\textbf{u}_{\alpha 1})_j + (\textbf{u}_{\alpha 1}\cdot \textbf{u}_{\alpha 1})\delta_{ij})
+\end{equation*} 
+\begin{equation*}
+    \intO{\bm\sigma_2^0}
+    = 0 
+\end{equation*}
+\begin{equation*}
+    \intO{\bm{\sigma}_2^0:\grad \textbf{u}_2^0}
+    = 2\mu_2 \intO{\textbf{e}_2^0: \textbf{e}_2^0 }
+    = 
+    \frac{6 \mu_2 v_p}{a^2(1+\lambda)^2}
+    (\textbf{u}_{\alpha 1}\cdot \textbf{u}_{\alpha 1})
+\end{equation*}
+\begin{align*}
+    \intO{\textbf{r}\textbf{u}_2^0}
+    = 0 
+\end{align*}
+\begin{equation*}
+    \intS{\bm\sigma_1^0\cdot \textbf{n}_2}
+    = - \frac{3v_\alpha\mu_1}{2 a^2} 
+    \left(\frac{3\lambda+2}{\lambda+1}\right) 
+    \textbf{u}_{\alpha 1}
+\end{equation*}
+\begin{equation*}
+    \intS{\textbf{r}\bm\sigma_2^0\cdot \textbf{n}_2}
+    = 0 
+\end{equation*}
+\begin{equation*}
+    \intS{(\bm\sigma_2^0\cdot \textbf{n}_2)_i r_kr_l}
+    = \frac{3\mu_1\phi_2}{10}\left(\frac{5\lambda+1}{\lambda+1}\right)u_{1 \alpha,i}\delta_{kl}
+    + \frac{3\mu_1\phi_2}{5}\left(\frac{1}{\lambda+1}\right)(u_{1 \alpha,k}\delta_{il}+u_{1 \alpha,l}\delta_{ki})
+\end{equation*}
+\begin{equation*}
+    \intO{\mu(\textbf{e}_2^0)_{ik} r_l} =
+    \frac{\phi_2\mu_1}{10}\left(\frac{1}{\lambda+1}\right)
+    \left(
+        2\delta_{ik}u_{1 \alpha , l}
+        -3\delta_{kl}u_{1 \alpha , i}
+        -3\delta_{il}u_{1 \alpha , k}
+    \right)
+\end{equation*}
+We can notice that now all these quantities are determined by the relative velocity.  
+While the hill vortex is a solution valid in potential and stokes flow, the solution for the exterior flow is limited to stoke flow. 
+Consequently, the zero, first and second moment of surface force are limited to stokes flow. 
+
+\subsection{A droplet in shear flow}
+
+We consider an infinite linear flow $\textbf{u}^\infty = \bm\Gamma\cdot \textbf{r} =(\bm\Omega + \textbf{E})\cdot \textbf{r} $ such that the undisturbed flow around the sphere is $\textbf{u}^\infty = \bm\Gamma\cdot\textbf{r}$.
+The disturbance flow in this case might be determined following the method outlined in \citep{leal2007advanced}, we obtain  :
+\begin{align*}
+    \textbf{u}^0_1
+    = \bm\Gamma\cdot\textbf{r}
+    -\frac{\lambda}{(\lambda + 1)r^5} \textbf{E}\cdot\textbf{r}
+    - \left(\frac{5\lambda +2}{2(\lambda +1 )r^5} - \frac{5\lambda}{2(\lambda+1)r^7}\right) \textbf{r}(\textbf{E}:\textbf{rr})\\
+    p_1^0 
+    = -\frac{(5\lambda+2)}{(\lambda+1)r^5}\textbf{E}:\textbf{rr}\\
+% \end{align*}
+% \begin{align*}
+    \textbf{u}^0_2
+    = \bm\Omega\cdot\textbf{r}
+    + \frac{5r^2- 3}{2(\lambda + 1)} 
+    \textbf{E}\cdot\textbf{r}
+    -\frac{1}{\lambda+1} \textbf{r}(\textbf{E}:\textbf{rr})\\
+    p_2^0 
+    = \frac{21\lambda}{2(\lambda+1)}
+    \textbf{E}:\textbf{rr}
+\end{align*}
+
+With that we are able to compute the following integrals,
+\begin{equation*}
+    \intO{\rho_2(\textbf{w}_2^0)_i (\textbf{w}_2^0)_j}
+    = \frac{4\pi}{15}\bm\Omega\cdot\bm\Omega
+    + \frac{4\pi}{945(\lambda+1)^2}
+    (2\textbf{E}:\textbf{EI} + 15 \textbf{E}\cdot \textbf{E})
+\end{equation*}
+\begin{equation*}
+    \intO{\rho_2(\textbf{w}_2^0)_k (\textbf{w}_2^0)_k}
+    = \frac{4\pi}{15}\bm\Omega:\bm\Omega
+    + \frac{4\pi}{45(\lambda+1)^2}
+    \textbf{E}:\textbf{E} 
+\end{equation*} 
+\begin{equation*}
+    \intO{\bm\sigma_2^0}
+    = \frac{8\pi}{5(\lambda+1)}
+    \textbf{E}
+\end{equation*}
+\begin{equation*}
+    \intO{\textbf{e}_2^0}
+    = \frac{4\pi}{5(\lambda+1)}
+    \textbf{E}
+\end{equation*}
+\begin{equation*}
+    \intO{\bm{\sigma}_2^0:\grad \textbf{u}_2^0}
+    = 2\mu_2 \intO{\textbf{e}_2^0: \textbf{e}_2^0 }
+    = 
+    \frac{4\pi}{(\lambda+1)^2}\textbf{E}:\textbf{E}
+\end{equation*}
+\begin{align*}
+    \intO{\textbf{r}\textbf{u}_2^0}
+    = 0 
+\end{align*}
+\begin{equation*}
+    \intS{\bm\sigma_1^0\cdot \textbf{n}_2}
+    = 0
+\end{equation*}
+\begin{equation*}
+    \intS{\textbf{r}\bm\sigma_1^0\cdot \textbf{n}_2}
+    = \frac{4\pi}{5}\frac{5\lambda+2}{\lambda+1}\textbf{E} 
+\end{equation*}
+\begin{equation*}
+    \intS{(\bm\sigma_2^0\cdot \textbf{n}_2)_i r_kr_l}
+    = 0
+\end{equation*}
+\begin{equation*}
+    \intO{\mu(\textbf{e}_2^0)_{ik} r_l} =
+    0
+\end{equation*}
