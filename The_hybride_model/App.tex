@@ -6,18 +6,22 @@ Additionally, to describe the particle shape and inner velocity, one must consid
 This, makes a total of 10 equations, 6 for the particle phase and 4 for the continuous phase.
 
 To support the subsequent discussion, we provide the expressions of the closure terms for a dilute emulsion of spherical droplets. 
-Even though the closures are expressed in the Stokes limit, note that the set of equations provided remains valid regardless of the flow regime.
 We will consider a monodisperse suspension of droplets with radius $a$ and viscosity $\mu_d$. 
 Although much of this information is already known, it is useful for the purposes of understanding. 
 Additionally, significant implications regarding the energy equation arise due to the consideration of fluid particles, even in the limit of Stokes flows. 
+Even though the closures are expressed in the Stokes limit, note that the set of equations provided remains valid regardless of the flow regime.
 
 \subsection{Continuous phase equations}
 
-The equations for the carrier fluid are basically the same as in the classic two-fluid model derived in \ref{ap:two-fluid_model}, except for the exchange terms of the form $\avg{\delta_I \ldots }$, that must be reformulated in terms of particle-averaged quantities to be consistent with the particle-phase equations \citep{jackson1997locally,zhang1994averaged}. 
-This is achieved through the use of \ref{eq:f_exp} which enables us to convert the exchange terms of the form $\avg{\delta_I \ldots }$ appearing in \ref{eq:avg_dt_chi_f} into a series expansion of particle phase quantities. 
-For clarity, we only retain the first order term in the expansion of the interfacial terms. 
-However, understand that the higher order moments are not necessarily negligible. 
-The continuous phase-averaged mass, momentum and total energy equations yield, 
+The equations for the carrier fluid are basically the same as in the classic two-fluid model derived in \ref{ap:two-fluid_model}, except for the interfacial terms of the form $\avg{\delta_I \ldots }$.
+Indeed, those terms must be reformulated in terms of particle-averaged quantities to be consistent with the particle-phase equations \citep{jackson1997locally,zhang1994averaged}. 
+This is achieved through the use of \ref{eq:f_exp} which enables us to convert the exchange terms appearing in \ref{eq:avg_dt_chi_f} into a series expansion of particle phase quantities. 
+For clarity, we only retain the first order terms, however understand that the higher order moments are not necessarily negligible. 
+
+\subsubsection*{Primary fluid phase equations}
+
+
+Applying these transformations on the set of equation presented in \ref{ap:two-fluid_model}, the continuous phase-averaged mass, momentum and total energy equations yield, 
 \begin{align}
     \label{eq:dt_hybrid_rho}
     &\pddt (\phi_f \rho_f)  
@@ -86,33 +90,34 @@ where we defined the equivalent stress tensor $\bm{\sigma}_f^\text{eq}$ and ener
 It is clear that those equations yield essentially the same as the previous set of equations presented in \ref{ap:two-fluid_model}.
 The only difference is the presence of additional fluxes inside $\bm{\sigma}^\text{eq}_f$ and $\textbf{q}^\text{eq}_f$ due to the expansion of the interfacial terms. 
 
-The averaged continuous-phase momentum balance \eqref{eq:dt_hybrid_rhou_f} was established long ago by numerous authors \citep{zhang1997momentum,jackson1997locally,drew1983mathematical,kataoka1986local}.  
-% However, note that here we choose to expose a very general formulation.  
-In our formulation the term $\pSavg{\bm{\sigma}_f^0 \cdot \textbf{n}_d}$ represents the total components of the interphase drag force, including the mean divergence of the fluid phase stress $\bm\sigma_f^0$. 
-Likewise, $\pSavg{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}$ is the total averaged first moment of force traction, which includes the mean fluid phase stress. 
-Similar consideration hold for the second moment of the force traction. 
+Let us first discuss the averaged continuous-phase momentum balance \eqref{eq:dt_hybrid_rhou_f} was established long ago by numerous authors \citep{zhang1997momentum,jackson1997locally,drew1983mathematical,kataoka1986local}.  
+Our formulation agree with these authors. 
 For purpose of understanding note that in the case of a dilute emulsion of identical droplets of radius $a$ these terms reads as
 \begin{align}
     \pSavg{\bm{\sigma}_f^0\cdot \textbf{n}_d} &= 
-    \phi_d \div\bm\Sigma_f
+    \phi_d \div\bm\sigma_f
     + \frac{3\phi_d\mu_f}{2 a^2} 
     \left(\frac{3\lambda+2}{\lambda+1}\right) \textbf{u}_{f p} 
     + \frac{3\phi_d\mu_f}{4} \left(\frac{\lambda}{\lambda+1}\right)\grad^2\textbf{u}_f\\
     \label{eq:first_mom}
     \pavg{\intS{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}} 
-    &= \phi_d \bm\Sigma_f + 
+    &= 
+    \phi_d \bm\sigma_f + 
     \frac{3}{5}\mu_f \phi_d \left(\frac{2+5\lambda}{1+\lambda}\right)
     \textbf{E}_f
         \\
         \pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_kr_l}} &=
-        \frac{3\mu_f\phi_d}{10}\left(\frac{5\lambda+1}{\lambda+1}\right)u_{fp,i}\delta_{kl}
-        + \frac{3\mu_f\phi_d}{5}\left(\frac{1}{\lambda+1}\right)(u_{fp,k}\delta_{il}+u_{fp,l}\delta_{ki})
+        n_pv_p  \frac{a^2}{5} 3 [(\div \bm\sigma_f)\bm\delta]^\text{sym}\\
+        &+ \frac{3\mu_f\phi_d}{10}\left(\frac{5\lambda+1}{\lambda+1}\right)u_{fp,i}\delta_{kl}
+        + \frac{3\mu_f\phi_d}{5}\left(\frac{1}{\lambda+1}\right)(u_{fp,k}\delta_{il}+u_{fp,l}\delta_{ki})\nonumber
 \end{align}
-Where $\bm\Sigma_f = -p_f \bm\delta+2\mu_f \textbf{E}_f$ with $\textbf{E}_f = \frac{1}{2}[\grad \textbf{u}_f+(\grad \textbf{u}_f)^\dagger]$.
-Were we highlighted the fact that $2\phi_f \textbf{e}_f = \avg{\chi_f [\grad \textbf{u}_f^0+(\grad \textbf{u}_f^0)^\dagger]}$ is not the same as $2\phi_f \textbf{E}_f = 2 \mu_f [\grad \textbf{u}_f+(\grad \textbf{u}_f)^\dagger]$ for fluid particles.
-Note that \citet{zhang1997momentum} decided to retrieve the continuous-phase stress $\bm\sigma_f$ to each of these terms instead of $\bm\Sigma_f$, leaving the remaining exchange terms to represent the stress resultant caused by the disturbance field around the particles (see \ref{ap:conditionally_navier_stokes}). 
-This is why both formulations appear different, nevertheless they are indeed consistent.
-The tensor $\pSavg{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}$ is responsible for the famous Einstein viscosity correction \citep{guazzelli2011} which is valid in the stokes flow regime for solid spherical inclusion. 
+where $\textbf{u}_{fp} = \textbf{u}_f - \textbf{u}_p$ and $\textbf{E}_f = \frac{1}{2}\left[\grad \textbf{u}_f + (\grad \textbf{u}_f)^\dagger\right]$. 
+In our formulation the term $\pSavg{\bm{\sigma}_f^0 \cdot \textbf{n}_d}$ represents the total components of the interphase drag force, including the mean divergence of the fluid phase stress $\bm\sigma_f^0$. 
+Specifically we recognize the Stokes drag force plus the faxen contribution. 
+Likewise, $\pSavg{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}$ is the total averaged first moment of force traction, which includes the mean fluid phase stress. 
+Similar consideration hold for the second moment of the force traction. 
+\ref{eq:first_mom} is in agreement with the finding of \citet{zhang1997momentum}.
+Note that the tensor $\pSavg{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}$ is responsible for the famous Einstein viscosity correction \citep{guazzelli2011} which is valid in the stokes flow regime for solid spherical inclusion. 
 Consequently, this term is of particular interest in the averaged momentum equations and is non-negligible in most of the flow conditions, if not all of them.
 The second moment appearing in the series is $\pSavg{\textbf{rr}\bm{\sigma}_f^0 \cdot \textbf{n}_d}$. 
 Although not displayed in \ref{eq:dt_hybrid_rhou_f} it is shown in \citet{jackson1997locally,zhang1997momentum} that to remain first order in the dispersed phase volume fraction $\phi_d$, one must keep this term in the momentum equation. 
@@ -125,7 +130,7 @@ This term represents it the stress related to the microscale agitation whether i
 Now, let's discuss the continuous-phase averaged total energy balance \eqref{eq:dt_hybrid_rhoE_f}. 
 Most of the terms have already been addressed in \ref{ap:two-fluid_model}, so for now, let's direct our attention to the exchange terms. 
 On the right-hand side of \ref{eq:dt_hybrid_rhoE_f} we identify four exchange terms.
-Indeed, after taking the Taylor expansion of the interfacial term $\avg{\delta_I (\textbf{u}^0_d \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d)}$ of \ref{eq:dt_avg_rhoE_k}, we used the following decomposition on each of the moments:
+Indeed, after taking the Taylor expansion of the interfacial term $\avg{\delta_I (\textbf{u}^0_d \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d)}$ on the right-hand side of \ref{eq:dt_avg_rhoE_k}, we used the following decomposition on each of the moments:
 \begin{align}
     \label{eq:exergysource}
     \pavg{ \intS{\textbf{u}^0_d \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
@@ -153,6 +158,7 @@ We recall that the stress integral $\pSavg{\bm{\sigma}_f^0 \cdot \textbf{n}_d}$ 
 Our formulation is therefor more general. 
 
 
+\subsubsection*{Secondary energy equations}
 
 The continuous phase averaged total energy can be further decomposed into three energy components (see \ref{ap:two-fluid_model}), that is,  
 \begin{align}
@@ -171,8 +177,8 @@ Therefore, we reformulate the kinetic energy, pseudo turbulent energy and intern
         + \textbf{u}_f \cdot \bm{\sigma}_f^\text{eq}
     )
     = 
-     \bm{\sigma}_f^\text{eq} : \grad \textbf{u}_f
-    + \phi_f \rho_f \textbf{u}_f\cdot \textbf{g} 
+    \phi_f \rho_f \textbf{u}_f\cdot \textbf{g} 
+    + \bm{\sigma}_f^\text{eq} : \grad \textbf{u}_f
     -  \textbf{u}_f\cdot 
         \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}} 
         \\
@@ -212,10 +218,10 @@ In this case the \textit{inner velocity} evaluated at the surface of the particl
 \begin{equation*}
     \textbf{w}_d^0 
     = \left(\frac{\lambda + \frac{1}{2}}{\lambda +1} - 1\right)
-    \textbf{u}_{pf} 
+    \textbf{u}_{fp} 
     + 
     \frac{1}{2}\left(\frac{1}{\lambda +1}\right)
-    \textbf{rr} \cdot \textbf{u}_{pf} 
+    \textbf{rr} \cdot \textbf{u}_{fp} 
     + \left[1-\frac{\lambda}{(\lambda + 1)}\right]\textbf{E}_f\cdot\textbf{r}
     -\frac{1}{a^2}\left(\frac{1}{\lambda +1 } \right) \textbf{r} \textbf{E}_f:\textbf{rr}. 
 \end{equation*}
@@ -223,7 +229,7 @@ Injecting this expression into the Last term on the right-hand side of \ref{eq:e
 \begin{multline}
     \pSavg{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0\cdot\textbf{n}_2}
     =  
-    \frac{1}{\lambda+1}\textbf{u}_{p f} \cdot \left[
+    \frac{1}{\lambda+1}\textbf{u}_{fp} \cdot \left[
         \left(\frac{\lambda +1 }{2}\right)\pSavg{ \bm{\sigma}_1^0\cdot\textbf{n}_2}
         % + \pavg{\textbf{u}_{\alpha}' \cdot \intS{ \bm{\sigma}_1^0\cdot\textbf{n}_2} }
         + \frac{1}{2a^2}
@@ -418,6 +424,26 @@ Consequently, if we consider only particles-particles interaction terms uch as i
 Notice that we did not make any hypothesis so far, consequently, \ref{eq:dt_hybrid_kp} itself is valid regardless of the particles nature and concentration.
 The hypothesis made in kinetic theory are in fact needed to derive the closure for the exchange term, $\pavg{\textbf{u}_\alpha'\cdot\intS{\bm{\sigma}_f^0 \cdot \textbf{n}_d}}$. 
 
+Most of the closure terms present in these expressions also appear in the continuous phase. 
+They have therefore already been discussed. 
+In the context of unreformable sphere in stokes flows the internal energy term as well as the internal dissipation can in fact be computed directly. 
+The internal dissipation term as well as the internal energy however can be expressed this yield, 
+\begin{align*}
+    W_p =  \frac{\rho_d \phi_d}{24 (\lambda +1)^2}
+    (\textbf{u}_{pf} \cdot \textbf{u}_{pf})
+    + \frac{\rho_d \phi_d}{30(\lambda+1)^2}
+    \textbf{E}_f:\textbf{E}_f    \\
+    \intO{\bm{\sigma}_2^0:\grad \textbf{u}_2^0}
+    % = 2\mu_2 \intO{\textbf{e}_2^0: \textbf{e}_2^0 }
+    = 
+    \frac{3 \phi_d \mu_f \lambda}{(\lambda+1)^2}\textbf{E}_f:\textbf{E}_f
+    + \frac{6 \phi_d \mu_f \lambda}{a^2(1+\lambda)^2}
+    (\textbf{u}_{pf}\cdot \textbf{u}_{pf})
+\end{align*}
+As can be seen under this hypothesis the internal energy is not an unkownanymore. 
+Nevertheless, it is still part  of the total energy of the particle phase and therefore it must be considered. 
+The mechanical work inside the particle is therefore source of heat inside the particle. 
+
 \subsection{The energy exchanges}
 
 One can verify that summing \ref{eq:dt_hybrid_ep}, \ref{eq:dt_hybrid_Wp} and \ref{eq:dt_hybrid_kp} and \ref{eq:dt_hybrid_up2} makes \ref{eq:dt_hybrid_Ep}.  
@@ -479,7 +505,15 @@ By applying the average operator on \ref{eq:dt_M_alpha},\ref{eq:dt_S_alpha} and 
     \right)
     &=
     n_p2  \textbf{S}_p
-    \label{eq:dt_hybrid_Mp}
+    \label{eq:dt_hybrid_Mp}\\
+    \label{eq:dt_hybrid_mup}
+    \pddt \left(n_p \bm{\mu}_p\right)
+    + \div \left(
+    n_p \textbf{u}_p \bm{\mu}_p
+    + \bm{\mu}_p^\text{Re}
+    \right)
+    &=
+    \pSavg{\textbf{r}\times(\bm\sigma_f^0\cdot \textbf{n}_d)}
     \\
     % \label{eq:dt_hybrid_Pp}
     % \pddt \left(n_p \textbf{P}_p\right)
@@ -511,20 +545,11 @@ By applying the average operator on \ref{eq:dt_M_alpha},\ref{eq:dt_S_alpha} and 
 % + \pSavg{
 %     \textbf{r} \bm{\sigma}_f^0 \cdot\textbf{n}_d
 % }
-&+ \pOavg{
++ \pOavg{
     \rho_d \textbf{w}_d^0  \textbf{w}_d^0 
     - \bm{\sigma}_d
-}\\
+}\nonumber\\
 &-  \pSavg{\gamma (\bm\delta - \textbf{nn})},
-\\
-\label{eq:dt_hybrid_mup}
-\pddt \left(n_p \bm{\mu}_p\right)
-+ \div \left(
-n_p \textbf{u}_p \bm{\mu}_p
-+ \bm{\mu}_p^\text{Re}
-\right)
-&=
-\pSavg{\textbf{r}\times(\bm\sigma_f^0\cdot \textbf{n}_d)}
 \end{align}
 respectively, where we have defined the fluctuaiton terms as $
  \textbf{M}_p^\text{Re}
@@ -543,3 +568,14 @@ Knowing the internal stress of the particles, and the constitutive law of the so
 Once the deformation is obtained, one is able to validate, or not, the assumption of infinitely rigid particles made at the origin. 
 
 At this stage it is interesting to have a look at the different closures in the situation of stokes flows. 
+Especially, the closure term in the stretching of momentum have the form 
+\begin{align*}
+    \pOavg{\rho_d \textbf{w}_d^0  \textbf{w}_d^0 }
+    &= \frac{\rho_d \phi_d}{140(\lambda +1 )}\left(7\textbf{u}_{fp}\textbf{u}_{pf} + (\textbf{u}_{pf}\cdot \textbf{u}_{pf})\bm\delta\right)
+    + \frac{\rho_d \phi_d a^2}{315 (\lambda + 1)^2}[(\textbf{E}_f : \textbf{E}_f)\bm\delta+15\textbf{E}_f\cdot \textbf{E}_f]\\
+    \pOavg{\bm{\sigma}_d}
+    &= \frac{6}{5}\phi \mu_f \frac{1}{1+\lambda} \textbf{E}_f
+\end{align*}
+This indicates a possible link between translation and deformation of the drops. 
+Indeed, the translation of the drop induce inertial motion inside it which tends to deform the droplet. 
+Regarding the surface tension contribution it is proportional to the shape of the particle \citep{lhuillier1987phenomenology}. 

@@ -33,24 +33,32 @@ It reads,
 \end{equation}
 Note that this definition is only valid for identical spherical particles of radius $a$. 
 Due to the presence of $\delta(\textbf{x}-\textbf{x}_\alpha(t; \FF))$, this expression is non-zero only when $\textbf{x} = \textbf{x}_\alpha(\FF,t)$. 
-Therefore, we can write, 
+Also, we can introduce the conditional average on the velocity of the particle by noticing that, 
+\begin{equation*}
+    \int_{\mathbb{R}^3} \delta(\textbf{c} - \textbf{u}_\alpha(\FF,t)) d\textbf{c} = 1. 
+\end{equation*}
+Taking in account the preceding remarks we are able to write
 \begin{equation}
     \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
     =
     n_p(\textbf{x})
+    \int_{\mathbb{R}^3}
     \int_{|\textbf{x}-\textbf{y}|=a}
-    \bm\sigma_f^1 \cdot \textbf{n}
+    \bm\sigma_f^1[\textbf{y},t;\textbf{x},\textbf{c}] \cdot \textbf{n}
     d\textbf{y}
+    d\textbf{c}
     \label{eq:conditionally_averaged}
 \end{equation}
 where, 
 \begin{equation*}
-    \bm\sigma^1_f[\textbf{y},t;\textbf{x}] n_p(\textbf{x})
+    \bm\sigma^1_f[\textbf{y},t;\textbf{x},\textbf{c}] n_p(\textbf{x},\textbf{c})
     =
-    \avg{\delta_\alpha \bm\sigma^0_f}[\textbf{y},t;\textbf{x}]
+    \avg{\delta_\alpha \bm\sigma^0_f}[\textbf{y},t;\textbf{x},\textbf{c}]
     = 
     \int 
-    \sum_\alpha^N \delta(\textbf{x} - \textbf{x}_\alpha(\FF,t))
+    \sum_\alpha^N 
+    \delta(\textbf{x} - \textbf{x}_\alpha(\FF,t))
+    \delta(\textbf{c} - \textbf{u}_\alpha(\FF,t))
     \bm\sigma_f^0[\textbf{y},t;\FF]
     d\PP
 \end{equation*}
@@ -66,56 +74,45 @@ Therefore, it is implicit that these quantities are evaluated at $\textbf{y}$ an
 Let $f^1_f$ be an arbitrary \textit{single-particle} conditionally-averaged quantity. 
 Notice that when $f^1_f$ is evaluated infinitely far from the particle we have the relation, 
 \begin{equation*}
-    \lim_{|\textbf{x} - \textbf{y}| \to \infty}  f^1_f [\textbf{y},t;\textbf{x}] = f_f [\textbf{y},t]
+    \lim_{|\textbf{x} - \textbf{y}| \to \infty}  f^1_f [\textbf{y},t;\textbf{x},\textbf{c}] = f_f [\textbf{y},t]
 \end{equation*}
 Indeed, at large distance from a particle the \textit{single-particle} conditionally-averaged quantities are not influenced by the particles and therefore reduce to the classic averaged fields. 
-Therefore, we define the distance field of a particle as $f^{1d}_f = f^1_f [\textbf{y},t;\textbf{x}]  - f_f[\textbf{y},t]$ such that any disturbance field satisfy, 
+Therefore, we define the distance field of a particle as $f^{1d}_f = f^1_f [\textbf{y},t;\textbf{x},\textbf{c}]  - f_f[\textbf{y},t]$ such that any disturbance field satisfy, 
 \begin{equation*}
-    \lim_{|\textbf{x} - \textbf{y}| \to \infty}  f^{1d}_f [\textbf{y},t;\textbf{x}] = 0 
+    \lim_{|\textbf{x} - \textbf{y}| \to \infty}  f^{1d}_f [\textbf{y},t;\textbf{x},\textbf{c}] = 0 
 \end{equation*}
-The fluid phase is a Newtonian thus, $\bm\sigma_f^0 = - p_f^0\bm\delta + 2\mu_f [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger]$.
-Considering the previous definition we can re-write the stress as a mean and fluctuating part, namely 
-\begin{equation*}
-    \bm\sigma_f^1 = 
-    - p_f\bm\delta + 2\mu_f [\grad \textbf{u}_f + (\grad \textbf{u}_f)^\dagger]
-    - p_f^{1d}\bm\delta + 2\mu_f [\grad \textbf{u}_f^{1d} + (\grad \textbf{u}_f^{1d})^\dagger]
-\end{equation*}
-For simplification we introduce the notations
-\begin{align}
-    \bm\Sigma_f = - p_f\bm\delta + 2\mu_f \textbf{E}_f,\\
-    \bm\Sigma_f^{1d} = - p_f^{1d}\bm\delta + 2\mu_f \textbf{E}_f^{1d}. 
-\end{align}
-The reader must understand here that $\bm\sigma_f \neq \bm\Sigma_f$ because of the two different shear components that are note equivalent: $\textbf{E}_f \neq \textbf{e}_f$. 
-
-
-Using  $\bm\sigma_f^1 = \bm\Sigma_f + \bm\Sigma_f^{1d}$ these definitions we may write, 
+Using  $\bm\sigma_f^1 = \bm\sigma_f + \bm\sigma_f^{1d}$ these definitions we may write, 
 \begin{equation}
     \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
     =
     n_p(\textbf{x})
+    \int_{\mathbb{R}^3}
     \int_{|\textbf{x}-\textbf{y}|=a}
-    \bm\Sigma_f
+    \bm\sigma_f
     \cdot \textbf{n}
     d\textbf{y}
+    d\textbf{c}
     + n_p(\textbf{x})
+    \int_{\mathbb{R}^3}
     \int_{|\textbf{x}-\textbf{y}|=a}
-    \bm\Sigma_f^{1d}
+    \bm\sigma_f^{1d}
     \cdot \textbf{n}
     d\textbf{y}
+    d\textbf{c}
     \label{eq:drag}
 \end{equation}
-Notice that $\bm\Sigma_f$ is evaluated at $\textbf{y}$ therefore to get it out of the integration one can notice that $\bm\sigma_f(\textbf{y},t) = \bm\sigma_f(\textbf{x},t) + \textbf{r}\cdot \grad\bm\sigma_f(\textbf{x},t)+ \ldots$
+Notice that $\bm\sigma_f$ is evaluated at $\textbf{y}$ therefore to get it out of the integration one can notice that $\bm\sigma_f(\textbf{y},t) = \bm\sigma_f(\textbf{x},t) + \textbf{r}\cdot \grad\bm\sigma_f(\textbf{x},t)+ \ldots$
 where we have introduced $\textbf{r} = \textbf{y} - \textbf{x}$. 
 Substituting the first two terms of this Taylor series into \ref{eq:drag} yields
 \begin{equation}
     \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
     =
     n_p v_p 
-    \div\bm\Sigma_f
+    \div\bm\sigma_f
     +
     n_p 
     \int_{|\textbf{x}-\textbf{y}|=a}
-    \bm\Sigma_f^{1d} \cdot \textbf{n}
+    \bm\sigma_f^{1d} \cdot \textbf{n}
     d\textbf{y}
     \label{eq:drag_final}
 \end{equation}
@@ -125,24 +122,60 @@ This gives,
 \begin{align}
     \pSavg{\textbf{r}\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
     =
-    n_p v_p \bm\Sigma_f
+    n_p v_p \bm\sigma_f
     +
     n_p 
+    \int_{\mathbb{R}^3}
     \int_{|\textbf{x}-\textbf{y}|=a}
-    \textbf{r}\bm\Sigma_f^{1d} \cdot \textbf{n}
-    d\textbf{y}\\
-    \pSavg{\textbf{rr}\bm\Sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    \textbf{r}\bm\sigma_f^{1d} \cdot \textbf{n}
+    d\textbf{y}
+    d\textbf{c}
+    \\
+    \pSavg{\textbf{rr}\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
     =
-    n_pv_p  \frac{a^2}{5} 3 [(\div \bm\Sigma_f)\bm\delta]^\text{sym}
+    n_pv_p  \frac{a^2}{5} 3 [(\div \bm\sigma_f)\bm\delta]^\text{sym}
     +
     n_p 
+    \int_{\mathbb{R}^3}
     \int_{|\textbf{x}-\textbf{y}|=a}
-    \textbf{rr}\bm\Sigma_f^{1d} \cdot \textbf{n}
-    d\textbf{y}\\
+    \textbf{rr}\bm\sigma_f^{1d} \cdot \textbf{n}
+    d\textbf{y}
+    d\textbf{c}
+    \\
 \end{align}
 where the operator $[\ldots]^\text{sym}$ returns the symmetric part of the arguments.
 Notice that the contribution from the mean stress in the second moment of the hydrodynamic force might become negligible for small $\phi_d$. 
 In these expressions no hypothesis have been made. 
+
+
+The fluid phase is a Newtonian thus, $\bm\sigma_f^0 = - p_f^0\bm\delta + 2\mu_f [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger]$.
+Therefore, the fluid phase stress averaged conditionally on the presence of a particle at \textbf{x} with the fluid phase at \textbf{y} might be written
+\begin{align*}
+    n_p \phi_f^1 \bm\sigma_f^{1d} = 
+    n_p \phi_f^1 \bm\sigma_f^{1d} 
+    - n_p \phi_f^1 \bm\sigma_f \\
+    = - \phi_f^1 p_f^{1d}\bm\delta 
+    + \mu_f \avg{\chi_f \delta_1 [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger] }
+    - \mu_f n_p \avg{\chi_f [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger] }\\
+    =- p_f^{1d}\bm\delta 
+    + \mu_f \avg{(\delta_1 - n_p) [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger] }
+    - \mu_f \avg{\chi_d (\delta_1 - n_p) [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger] }
+\end{align*}
+By noticing that both $\delta_1$ and $n_p$ commute with the derivatives and by noticing that  
+\begin{equation*}
+    \avg{(\delta_1 - n_p)  \textbf{u}^0}
+    = 
+    n_p \textbf{u}^{1d}
+\end{equation*}
+is the disturbance field of the bulk velocity conditionally on a particle present at $\textbf{y}$ we arrive at the relation 
+\begin{align*}
+    n_p \phi_f^1 \bm\sigma_f^{1d} = 
+    - \phi_f^1 p_f^{1d} \bm\delta 
+    + \mu_f n_p \left[\grad \textbf{u}^1 + (\grad \textbf{u}^1)^\dagger\right]
+    - 2 \mu_f n_p \phi_d^1 \textbf{e}_d^{1d}
+\end{align*}
+where the second term is the contribution from the particle to the fluid phase stress, conditionally on the presence of the dispersed phase at \textbf{x} with a particle already present at \textbf{y}. 
+Due to the simultaneous presence of $\phi_d$ and $n_p$ this term is negligible at first order in $\phi$. 
 
 \subsection*{The consitional averaged Navier stokes equaiton}
 As shown above $\bm\Sigma_f$ is function of the unknown of the problem so it is closed. 
@@ -152,16 +185,19 @@ Notice that we assume that the equation for  $\textbf{u}_f^{1d}$ and $p_1^{1d}$ 
 However, in light of \ref{eq:dt_hybrid_rhou_f} the fields $\textbf{u}_f^{1}$ has no reason to follow the stokes limit hypothesis. 
 For this reason we believe that (5.1) and (5.2) of \citet{zhang1997momentum} is not well posed. 
 
-In all rigor to obtain the equations for the $\textbf{u}_k^1$ one multiply the single-fluid formulation of the momentum \eqref{eq:dt_f} evaluated at \textbf{y} by $\sum_\alpha \delta(\textbf{x}-\textbf{x}_\alpha)$ and then average over all configuration.
-This yields,
+In all rigor to obtain the equations for the $\textbf{u}^{1d}$ one multiply the single-fluid formulation of the momentum \eqref{eq:dt_f} evaluated at \textbf{r} by $\sum_\alpha \delta(\textbf{x}-\textbf{x}_\alpha)$ and then average over all configuration,  and use $\textbf{u}^1 = \textbf{u}^{1d} - \textbf{u}$ to obtain an equation for the averaged fields only. 
+This, yields
 \begin{equation*}
-    \pddt \avg{\rho^0 \textbf{u}^0 \delta_i}
-    + \div \avg{\rho^0 \textbf{u}^0  \textbf{u}^0 \delta_i
-        - \bm\sigma^0\delta_i}
-    - \pddr \avg{\rho^0 \textbf{u}^0 \textbf{u}_i \delta_i}
+    \pddt (n_p \rho^1 \textbf{u}^1)
+    + \pddr  (
+        n_p \rho^1 \textbf{u}^1  \textbf{u}^1 
+        - n_p \bm\sigma^1
+        )
+    + \div (\rho^1 \textbf{u}^1 \textbf{u}_p^1  n_p )
     = 0. 
 \end{equation*}
-At the zeroth order in 
+Where we have neglected covariance terms generated due to the product of the velocities.
+At the zeroth order in $\div \textbf{u}^1[\textbf{r},t|\textbf{x}]$ ? $\div \textbf{u}_p[\textbf{x}]$ ? 
 
 Then using the averaged Navier Stokes equations for $\textbf{u}_1$ one arrive to the stokes equations for $\textbf{u}_f^{1d}$, they read, 
 \begin{align*}
@@ -188,25 +224,42 @@ These equations might be evaluated for two senarios
 
 \subsubsection*{A droplet in an arbitrary linear flows}
 
-It is known that the velocity field around a droplet immersed in an arbitrary linear flow is written,
+It is known that the velocity field around and inside a droplet immersed in an arbitrary linear flow is written,
 \begin{equation}
     \textbf{u}_f^1(\textbf{r})
     = 
-    \mathcal{U}\cdot \textbf{u}_{fp}
-    + \mathcal{E}: \textbf{E}_{f}
+    \mathcal{U}_f\cdot \textbf{u}_{fp}
+    + \mathcal{E}_f: \textbf{E}_{f}
+\end{equation}
+\begin{equation}
+    \textbf{u}_d^1(\textbf{r})
+    = 
+    \mathcal{U}_d\cdot \textbf{u}_{fp}
+    + \mathcal{E}_d: \textbf{E}_{f}
 \end{equation}
 where the second and third order tensor $\mathcal{U}$ and $\mathcal{E}$ read as, 
 \begin{align}
-    \mathcal{U}_{ik} = 
+    \mathcal{U}_{ik,f} = 
     \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right)
     \left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right) 
     + 
     \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right)
     \left(\frac{\delta_{ik}}{r^3} - \frac{3r_ir_k}{r^5}\right)  \\
-    \mathcal{E}_{ijk}
-    = \bm\delta\textbf{r}
+    \mathcal{E}_{ijk,f}
+    =
+    %  \bm\delta\textbf{r}
     -\frac{\lambda}{(\lambda + 1)r^5} \bm\delta\textbf{r}
-    -\left(\frac{5\lambda +2}{2(\lambda +1 )r^5} - \frac{5\lambda}{2(\lambda+1)r^7}\right) \textbf{rrr}\\
+    -\left(\frac{5\lambda +2}{2(\lambda +1 )r^5} - \frac{5\lambda}{2(\lambda+1)r^7}\right) \textbf{rrr}
+\end{align}
+\begin{align}
+    \mathcal{U}_{ik,d} = 
+    \frac{1}{2}\left(\frac{2\lambda +3}{\lambda +1}\right)\bm\delta
+    +\frac{1}{2} (2r^2 \bm\delta - \textbf{rr})
+    \left(\frac{1}{\lambda +1}\right)\\
+    \mathcal{E}_{ijk,d}
+    =
+    \frac{5r^2 -3}{2(\lambda +1)} \textbf{r}\bm\delta
+    - \frac{1}{\lambda+1}\textbf{rrr}
 \end{align}
 where the \textbf{r} are made dimensionless with the particle radius. 
 When evaluating these expressions at the particle surface yields, 
@@ -223,9 +276,14 @@ When evaluating these expressions at the particle surface yields,
     \frac{1}{2}\left(\frac{1}{\lambda +1}\right)
     r_ir_k  \\
     \mathcal{E}_{ijk}
-    = \left[1-\frac{\lambda}{(\lambda + 1)}\right]\bm\delta\textbf{r}
+    = 
+    % \left[1-
+    \frac{\lambda}{(\lambda + 1)}
+    % \right]
+    \bm\delta\textbf{r}
     -\left(\frac{2}{2(\lambda +1 )} \right) \textbf{rrr}
 \end{align}
+Remember that these was the expression of the disturbance flow we therefore must add the velocity of the fluid plus its gradient. 
 Thus in the reference attached to the particle we have, 
 \begin{equation*}
     \textbf{w}_d^0 
