@@ -1,135 +1,102 @@
 
 \subsection{The fluid phase equivalent stress}
 \tb{This section can be shortened a lotsss }
-% In this section we focus on the formulation of the averaged fluid phase equivalent stress tensor $\bm{\sigma}_1^\text{Re}$. 
+% In this section we focus on the formulation of the averaged fluid phase equivalent stress tensor $\bm{\sigma}_f^\text{Re}$. 
 For instance the stress appearing on the left hands side of the fluid phase momentum balance is of the form of \ref{eq:sigma_eq_def}. 
 However, it is more convenient to express the equivalent stress as a Newtonian stress, plus a contribution arising due to the presence of the particles. 
-We first reformulate $\bm{\sigma}_1$ by considering that the carrier fluid is Newtonian, therefore $\phi_1 \bm{\sigma}_1 = - \phi_1 p_1 + \phi_1 \mu_1 \textbf{e}_1$ where $\phi_1 \bm{e}_1 = \avg{\chi_1  (\grad \textbf{u}_1^0 + (\grad \textbf{u}_1^0)^T)}$. 
-Additionally, we state that the fluid strain is equal to the bulk strain $\textbf{e} = \grad \textbf{u}+ (\grad \textbf{u})^T$, minus the particle averaged strain, i.e. $\phi_1 \mu_1 \textbf{e}_1 = \mu_1\textbf{e} - \mu_1 \phi_2 \textbf{e}_2$. 
-Under this form we clearly remark that $\phi_2 \textbf{e}_2 = 0$ for solid particles, recovering the expression $\phi_1 \textbf{e}_1 = \textbf{e}$ of \citet{jackson1997locally}. 
-Upon developing $\phi_2 \textbf{e}_2$ multipolar series, the equivalent stress of the fluid phase can be reformulated as, 
+In this objective we first reformulate $\bm{\sigma}_f$ by considering that the carrier fluid is Newtonian, therefore $\phi_f \bm{\sigma}_f = - \phi_f p_f + 2 \phi_f \mu_f \textbf{e}_f$ where $2 \phi_f \bm{e}_f = \avg{\chi_f  (\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^T)}$. 
+Additionally, we state that the fluid strain is equal to the bulk strain $2\textbf{e} = \grad \textbf{u}+ (\grad \textbf{u})^T$, minus the particle averaged strain, i.e. $\phi_f \mu_f \textbf{e}_f = \mu_f\textbf{e} - \mu_f \phi_d \textbf{e}_d$. 
+Under this form we clearly remark that $\phi_d \textbf{e}_d = 0$ for solid particles, recovering the expression $\phi_f \textbf{e}_f = \textbf{e}$ of \citet{jackson1997locally}. 
+Upon developing $\phi_d \textbf{e}_d$ multipolar series, the equivalent stress of the fluid phase can be reformulated as, 
 \begin{multline}
-    \bm{\sigma}^\text{eq}_1 = 
-    \rho_1\avg{\chi_1\textbf{u}_1'\textbf{u}_1'} 
-    + \phi_1 p_1 \bm\delta 
-    - \mu_1 \textbf{e} 
-    - \pSavg{\textbf{r}\bm{\sigma}_1^0\cdot \textbf{n}_2}
-    + \mu_1 \pOavg{\textbf{e}_2^0}\\
-    + \frac{1}{2} \div \left[
-        \pSavg{\textbf{rr}\bm{\sigma}_1^0\cdot \textbf{n}_2}
-        + 2\pOavg{\mu_1 \textbf{re}_2^0 }
+    \bm{\sigma}^\text{eq}_f = 
+    \phi_f p_f \bm\delta 
+    - 2\mu_f \textbf{e} 
+    + \rho_f\avg{\chi_f\textbf{u}_f'\textbf{u}_f'} 
+    + 2 \mu_f \pOavg{\textbf{e}_d^0}
+    - \pSavg{\textbf{r}\bm{\sigma}_f^0\cdot \textbf{n}_d}
+    \\
+    + \div \left[
+        \frac{1}{2} \pSavg{\textbf{rr}\bm{\sigma}_f^0\cdot \textbf{n}_d}
+        - 2 \mu_f\pOavg{ \textbf{re}_d^0 }
         + \ldots
     \right]
     \label{eq:sigma_eq_0}
 \end{multline} 
 It is worth noting that $\textbf{e} = \grad \textbf{u} + (\grad \textbf{u})^\dagger$. 
-Nevertheless, the bulk velocity \textbf{u} is not part of our unknown instead we solve for $\textbf{u}_1$, $\textbf{u}_p$, $\textbf{P}_p$ and eventually the higher moments. 
-Therefore, the bulk shear rate must be reformulated as 
-% \begin{equation*}
-%     e_{ik}
-%     = \partial_i u_k
-%     + \partial_k u_i
-%     = \partial_i (\phi_1 u_{1,k} + n_p u_{p,k} - \partial_l (n_p P_{p,kl}))
-%     + \partial_k (\phi_1 u_{1,i} + n_p u_{p,i} - \partial_l (n_p P_{p,il}))
-% \end{equation*}
-\begin{equation*}
+Nevertheless, the bulk velocity \textbf{u} is not part of our unknown instead we solve for $\textbf{u}_f$, $\textbf{u}_p$, $\textbf{P}_p$ and eventually the higher moments. 
+Therefore, in all rigor we must write 
+\begin{equation}
     \textbf{e}
     = 
     \grad \textbf{U} + (\grad \textbf{U})^\dagger
     - \grad (\div (n_p \textbf{P}_p))
     - (\grad \div (n_p \textbf{P}_p))^\dagger
     + \ldots
-\end{equation*}
-where $\textbf{U} = \phi_1 \textbf{u}_1 + n_p \textbf{u}_p$ is equivalent to the bulk velocity \textbf{u} uniquely in an homogeneous medium. 
-
-Already, we can see that the equivalent stress of the fluid phase is the made of the average fluid stress represented by the two first terms on the right hands side of \ref{eq:sigma_eq_0}. 
-The first moment $\pSavg{\textbf{r}\bm{\sigma}_1^0 \cdot \textbf{n}_2}$ appearing in \ref{eq:sigma_eq_0} posses a skew-symmetric part and a symmetric part, the latter corresponding to the stresslet (see \ref{eq:stresslet_def}).
-However, for non-solid particles \ref{eq:stresslet_def} is not entirely valid since in stokes theory the quantity referred as the stresslet is defined as \citet{pozrikidis1992boundary,kim2013microhydrodynamics},
-\begin{equation}
-    \label{eq:stresslet_def}
-    n_p \mathscr{S}_{p,ki}
-    = \frac{1}{2}
-    \pSavg{
-        r_k \sigma_{il}n_l + r_i \sigma_{kl}n_l 
-        - \delta_{ik}
-        \frac{2}{3}
-        r_l \sigma_{lk}n_k
-        - 2 \mu_f (u_k n_i+u_i n_i)
-    }
+    \label{eq:rate_of_strain}
 \end{equation}
-Likewise, we introduce the average skew symmetric part $\mathscr{L}_p$ and the average trace of the first moments $\mathscr{D}_p$ such as, 
-\begin{align}
-    \label{eq:torque_def}
-    n_p \mathscr{L}_{p,ki}
-    = \frac{1}{2}\pSavg{ r_k \sigma_{il}n_l - r_i \sigma_{kl}n_l }\\
-    \label{eq:trace_def}
-    n_p \mathscr{D}_{p,ij}
-    = \frac{1}{3}\pSavg{ r_k (\sigma_{kl} + p_1 \delta_{kl})n_l } \delta_{ij}
-    - n_p v_p p_1 \delta_{ij}
-\end{align}
-where we have retrieved the mean pressure from the trace of the first moments, so that we make appear the hydrostatic pressure  $n_p v_p p_1 \bm\delta$ explicitely.  
-Notice that the volume fraction $\phi_1$ is present in front of the averaged pressure terms in \ref{eq:sigma_eq_0}.  
-In various study \citep{prosperetti2009computational,chu2016flux}, this term is shown to be problematic  since it might generate nonphysical flux of momentum. 
-However, as shown above and pointed out by  \citet{zhang1997momentum,jackson1997locally}, the first moment of hydrodynamic force tensor contains a part of the hydrostatic pressure.
-With that contribution the total pressure in the fluid stress reach $\phi_1p_1 + n_p p_1 \approx p_1$ which is consistent.
-Additionally, as seen in \ref{sec:two-fluid} the Reynolds stress is related to the pseudo turbulent kinetic energy through $\avg{\chi_1 \rho_1\textbf{u}_1'\textbf{u}_1'} : \bm\delta = 2k_1$ . 
-Therefore, we can write, $\avg{\chi_1 \rho_1\textbf{u}_1'\textbf{u}_1'} = 2 \rho_1 k_1 \bm\delta + \avg{\textbf{u}_1'\textbf{u}_1'}^\text{dev}$ where the second term is the deviatoric part of the Reynolds stress. 
+where $\textbf{U} = \phi_f \textbf{u}_f + n_p v_p \textbf{u}_p$ is equivalent to the bulk velocity \textbf{u} uniquely in an homogeneous medium. 
 
-These remarks motivate us to rewrite the equivalent fluid phase stress under the general expression,  
-\begin{multline*}
-    \bm{\sigma}_1^\text{eq}
+The fluid phase averaged stress is therefore composed of : 
+(1) the pseudo turbulent contribution $\rho_f\avg{\chi_f  \textbf{u}_f' \textbf{u}_f'}$ whic can be decomposed in an isotropic part $2 k_f = \avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}:\bm\delta$ that contribute to the effective pressure, and a deviatoric part defined as $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'} - 2 k_f\bm\delta$. 
+(2) the shear stress $2\mu_f \textbf{e}$ of the fluid phase \ref{eq:rate_of_strain}. 
+(3) the particles internal shear $2\mu_f \pOavg{\textbf{e}_d^0}$
+(4) the particle first moment of the hydrodynamic forces $\pSavg{\textbf{r}\bm{\sigma}_f^0\cdot \textbf{n}_d}$. 
+(5) and the higher order moments of forces and internal shear.  
+
+At this point if one want to write the fluid phase averaged stress as an equivalent Newtonian stress with effective pressure $p^{eff}$ and effective viscosity $\mu^{eff}$ he needs to express each of the closure terms mentioned above as a function of isotropic tensor which will contribute to the effective pressure, or as a linear function of  $\textbf{e}$ which will contribute to the effective viscosity. 
+Note that this is not always possible, indeed, according to \ref{eq:second_mom} the second order moment of the hydrodynamic stress is a function of the relative velocity and not of the mean shear rate. 
+Thus, in addition to the Newtonian behavior of the averaged fluid one must predict an effective viscosity dependent on the gradient of the viscosity. 
+
+Once again it is useful to consider the stokes flow regime to provide a closed form of the fluid phese stresses. 
+To that end notice first that the internal shear rate inside the particles, for isolated spherical droplets in an arbitrary linear flow  is written, 
+\begin{align*}
+    \pOavg{\textbf{e}_d^0}
     = 
-    \underbrace{p_1  \bm\delta
-    - \mu_1 \textbf{e} }_\text{Newtonian fluid stress}
-    +  \underbrace{\phi_1 k_1 \bm\delta
-    + \rho_1 \avg{\chi_1\textbf{u}_1'\textbf{u}_1'}^\text{dev}}_\text{fluctuating stresses}
-    - \underbrace{(n_p \mathscr{S}_p
-    + n_p \mathscr{L}_p
-    + n_p \mathscr{D}_p )}_\text{interfacial particles stresses}\\
-    % + \mu_1  \pSavg{{\textbf{u}_1\textbf{n}_2 + \textbf{n}_2 \textbf{u}_1}}
-    % - n_p \textbf{F}_\text{p}
-    % + n_p \textbf{F}_\text{pfp} 
-    + \frac{1}{2} \div \underbrace{\left[
-        \pSavg{\textbf{rr}\bm{\sigma}_1^0\cdot \textbf{n}_2}
-        + 2\pOavg{\mu_1 \textbf{re}_2^0 }
-        + \ldots
+    \phi_d 
+    \textbf{E}_f
+    \frac{3}{5}\frac{1}{\lambda+1}
+    \\
+    \pOavg{\mu_f \textbf{e}_d^0\textbf{r} }
+    = 
+    - \frac{\phi_d\mu_f}{10(\lambda+1)}
+    \left[
+        (\bm\delta \textbf{u}_{fp})_{ijk}
+        - \frac{3}{2}
+        \left[
+            (\bm\delta \textbf{u}_{fp})_{kij}
+            + (\bm\delta \textbf{u}_{fp})_{jki}
         \right]
-        }_\text{inhomogeneous particles stresses}
-    \label{eq:sigma_eq1_def}
-\end{multline*}
-% with, 
-% \begin{equation*}
-%      \bm{\Sigma}
-%     = 
-%      \pMSavg{\textbf{rr} \bm{\sigma}_1^0\cdot \textbf{n}_2}
-%      -\pMOavg{\mu_1 \textbf{r} \textbf{e}_2 }\\
-% \end{equation*}
-The contribution of the fluid phase equivalent pressure is made of,
-the averaged $p_1$, the fluctuating part of the moment of force traction $\mathscr{D}_p$, and the fluid pseudo turbulent energy, $\phi_1 k_1$. 
-The deviatoric part of the stress is constituted of the deviatoric part of the Reynolds stress $\avg{\chi_1\textbf{u}_1'\textbf{u}_1'}^\text{dev}$, the mean fluid shear rate $\mu_1 \textbf{e}$, the stresslet $\mathscr{S}_p$ and the hydrodynamic torque $\mathscr{L}_p$. 
-The higher order moments found in $\bm{\Sigma}$ are not necessarily negligible, as shown in \citet{lhuillier1996contribution,jackson1997locally}, in fact they exhibit a different physical meaning. 
-The first order moments will be function of the mean gradient of the fluid velocity while the other will be function of the background relative motion. 
-
-\tb{a enlever}
-It is known that the $n_p \mathscr{S}_p$ plays a significant role in the determination of the equivalent viscosity of the mixture. 
-Therefore, it is of major importance to be able to measure it in DNS or experiment.
-As, demonstrated by the expression of the ensemble averaged stress it is quite difficult to obtain such an information by experimental means, since it is mixed among other stresses.  
-In DNS however we have access to pretty much any information, nevertheless surface integration of the stress can be shown to be inaccurate when performing volume of fluid method. 
-Therefore, we propose the following formulas based on \ref{eq:dt_hybrid_Sp} which enable us to compute the stresslet by almost only volume integration,  
-
-
-The last integral accounting for surface tension cannot be converted to volume integral. 
-However, this integral is related only to the geometry of the interface. 
-Besides, note that the pressure is absent as $\mathscr{S}_p$ is traceless. 
-
-\begin{multline}    
-    + n_p \mathscr{S}_p
-    =
-    \frac{1}{2}\pavg{\ddt^2{\textbf{M}_\alpha^\text{dev}}}
-    - \pOavg{\left(
-    \rho_2\textbf{w}_2^0 \textbf{w}_2^0
-    - \rho_2\frac{1}{3}(\textbf{w}_2^0 \cdot \textbf{w}_2^0)\bm\delta\right)}\\
-    + \mu_1 (\lambda - 1)\pOavg{\textbf{e}_2^0}
-    + \pSavg{\gamma\left(\frac{1}{3}\bm\delta-\textbf{nn}\right)}\\
-\end{multline}
-
+    \right]
+    \label{eq:closur_e}
+\end{align*}
+Notice that the second moment of momentum is present under the $\partial_k\partial_l$ operator in the moment of momentum equation, meaning that the skew-symmetic part of $\pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_kr_l}} $ and $\pSavg{{\mu(\textbf{e}_d^0)_{ik} r_l}}$ vanish in the momentum equation. 
+Therefore, the second moment of surface traction force might be written, 
+\begin{align*}
+    [\pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_k}} -
+    2\pSavg{{\mu(\textbf{e}_d^0)_{ik}}} ]
+    = 
+    
+    
+    \\
+    [\frac{1}{2}\pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_kr_l}} -
+    2\pSavg{{\mu(\textbf{e}_d^0)_{ik} r_l}} ]
+    = 
+    \frac{\mu_f\phi_d}{2(\lambda +1) }
+    \left[
+        \frac{3\lambda}{2} 
+        u_{fp,i}\delta_{kl}
+        +  u_{fp,l}\delta_{ki}
+    \right]
+\end{align*}
+where we neglected the terms related to the mean fluid phase stress since it makes a contribution of $\mathcal{\phi^2}$\citet{jackson1997locally}.
+Considering this relation together with \ref{eq:sigma_eq_0}, \ref{eq:closur_e}, \ref{eq:second_mom} and \ref{eq:first_mom} we can re-write the effective stress of the suspension as, 
+\begin{align*}
+    \bm{\sigma}^\text{eq}_{f,ik} =
+    p_f \bm\delta
+    - 2 \mu_{Ein}(\phi_d) \textbf{e}
+    + \rho_f\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}_{ik} 
+    + \mu_{Rel} \left[\grad (\phi_d\textbf{u}_{fp}) + \grad (\phi_d\textbf{u}_{fp})^\dagger\right]
+    + \lambda_\text{Rel}
+        \bm\delta [\div (\phi_d \textbf{u}_{fp})]
+\end{align*} 
