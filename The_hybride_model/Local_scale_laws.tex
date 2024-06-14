@@ -1,5 +1,6 @@
-In this section we derive the conservation equations using a two-fluid formulation.
-While the derivation of this formulation is available in various studies such as those by \citet{kataoka1986local,lhuillier2010multiphase,ishii2010thermo,morel2015mathematical,bothe2022sharp} our approach here enables us to introduce specific notations and key results that will prove useful for later discussions. %
+In this section, we derive the conservation equations using a two-fluid formulation. Although this formulation has been derived in various studies, such as those by \citet{kataoka1986local}, \citet{lhuillier2010multiphase}, \citet{ishii2010thermo}, \citet{morel2015mathematical}, and \citet{bothe2022sharp}, our approach allows us to introduce specific notations and key results that will be useful for later discussions.
+%In this section we derive the conservation equations using a two-fluid formulation.
+%While the derivation of this formulation is available in various studies such as those by \citet{kataoka1986local,lhuillier2010multiphase,ishii2010thermo,morel2015mathematical,bothe2022sharp} our approach here enables us to introduce specific notations and key results that will prove useful for later discussions. %
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}
@@ -37,13 +38,17 @@ While the derivation of this formulation is available in various studies such as
 \end{figure}
 
 We consider a system consisting of two phases, separated by a sharp interface $\Gamma(t,\FF)$,
-where $t$ represents the current time and $\FF$ an initial flow configuration. 
-More detail will be given later regarding the meaning of what we call the initial \textit{flow configuration}. 
-For now just think of it as a way to denote the dependence of the local functions such as $\Gamma(t,\FF)$ on the exact flow configuration. 
-In opposition to the averaged fields introduced in \ref{sec:avg_def} which will be defined as the average of these local functions over all the configurations $\FF$. 
-Each phase subdomain is denoted as $\Omega_f(t,\FF)$ and $\Omega_d(t,\FF)$, representing the continuous or fluid phase ($f$) and the dispersed phase ($d$), respectively (refer to Figure \ref{fig:Scheme}).
-The entire domain, denoted as $\Omega$, is defined as the union of $\Omega_f$, $\Omega_d$, and $\Gamma$.
-To track the position of the phase indexed $k$ and the interfaces, we introduce the phase indicator function $\chi_k$ defined as
+where $t$ represents the current time and $\FF$ a flow realization. %an initial flow configuration. 
+Further explanation about the concept of a flow realization will be provided later. For now, it can be thought as an initial flow configuration. %Troughout this work we use the superscript `` $^0$ '' on a field to indicate that it is defined at the local non average level, which implies that it is a function of the flow configuration $\FF$, the position vector $\textbf{x}$, and the time $t$.
+%More detail will be given later regarding the meaning of what is a flow realization. %we call the initial \textit{flow configuration}. 
+%For now we may just think of it as an initial flow configuration.
+%For now just think of it as a way to denote the dependence of the local functions such as $\Gamma(t,\FF)$ on the exact flow configuration. 
+%In opposition to the averaged fields introduced in \ref{sec:avg_def} which will be defined as the average of these local functions over all the configurations $\FF$. 
+The phase subdomains are labeled as $\Omega_f(t,\FF)$ and $\Omega_d(t,\FF)$, corresponding to the continuous (fluid) phase ($f$) and the dispersed phase ($d$), respectively (see Figure \ref{fig:Scheme}). The complete domain, $\Omega$, is composed of the union of $\Omega_f$, $\Omega_d$, and $\Gamma$. To track the position of phase $k$ and the interfaces, we introduce the phase indicator function $\chi_k$ defined as follows
+
+%Each phase subdomain is denoted as $\Omega_f(t,\FF)$ and $\Omega_d(t,\FF)$, representing the continuous or fluid phase ($f$) and the dispersed phase ($d$), respectively (refer to Figure \ref{fig:Scheme}).
+%The entire domain, denoted as $\Omega$, is defined as the union of $\Omega_f$, $\Omega_d$, and $\Gamma$.
+%To track the position of the phase indexed $k$ and the interfaces, we introduce the phase indicator function $\chi_k$ defined as
 \begin{align}
     \chi_k(\textbf{x},t,\FF) =  \left\{
       \begin{tabular}{cc}
@@ -54,12 +59,14 @@ To track the position of the phase indexed $k$ and the interfaces, we introduce 
       \text{for $k = f,d$}.
       \label{eq:PIF}
 \end{align}
-Additionally, we define $\Omega_\alpha(t,\FF)$ as the domain delimited by the volume occupied by the particle labelled $\alpha$ at time $t$ and in the configuration $\FF$ (see \ref{fig:Scheme}). 
-The union of each $\Omega_\alpha(t,\FF)$ for $\alpha = 1,\ldots N$, assuming $N$ particles are present in the flow, is equivalent to $\Omega_d(t,\FF)$.
-Likewise, we suppose that $\Gamma(t,\FF)$ can be subdivided into $N$ subdomains denoted $\Gamma_\alpha(t,\FF)$, each of which represents the surface of the particle $\alpha$. 
+Additionally, we define $\Omega_\alpha(t, \FF)$ as the region occupied by particle $\alpha$ at time $t$ within the configuration $\FF$ (refer to Figure \ref{fig:Scheme}). The collective union of $\Omega_\alpha(t, \FF)$ for $\alpha = 1, \ldots, N$, where $N$ denotes the number of particles present in the flow, corresponds to $\Omega_d(t, \FF)$. Similarly, we assume that $\Gamma(t, \FF)$ can be partitioned into $N$ subregions, labeled $\Gamma_\alpha(t, \FF)$, each representing the surface of particle $\alpha$.
+
+%Additionally, we define $\Omega_\alpha(t,\FF)$ as the domain delimited by the volume occupied by the particle labelled $\alpha$ at time $t$ and in the configuration $\FF$ (see \ref{fig:Scheme}). 
+%The union of each $\Omega_\alpha(t,\FF)$ for $\alpha = 1,\ldots N$, assuming $N$ particles are present in the flow, is equivalent to $\Omega_d(t,\FF)$.
+%Likewise, we suppose that $\Gamma(t,\FF)$ can be subdivided into $N$ subdomains denoted $\Gamma_\alpha(t,\FF)$, each of which represents the surface of the particle $\alpha$. 
 
 \subsection{Topological equations}
-Using the distribution formalism, one may show that $\chi_k(\textbf{x},t,\FF)$ obeys the following relations \citep{drew1983mathematical,orlando2023evolution}. 
+Using the distribution formalism, one may show that $\chi_k(\textbf{x},t,\FF)$ obeys the following relations \citep{drew1983mathematical}. 
 \begin{align}
     \pddt \chi_k
     + \textbf{u}_I^0 \cdot \grad \chi_k
@@ -69,23 +76,38 @@ Using the distribution formalism, one may show that $\chi_k(\textbf{x},t,\FF)$ o
     \grad \chi_k
     &= - \delta_I \textbf{n}_k, 
 \end{align}
-where $\textbf{u}^0_I(\textbf{x},t,\FF)$ is the velocity of the interface and $\delta_I(\textbf{x},t,\FF)$ is the Dirac function localized on the interface, also called the interfacial indicator function.
-Throughout this work we employ the subscript $_I$ to indicate any quantity inherently defined on the interfaces, such as $\textbf{u}_I^0(\textbf{x},t,\FF)$ and $\delta_I(\textbf{x},t,\FF)$. 
-Furthermore, we use the superscript `` $^0$ '' on a field to indicate that it is defined at the local or microscopic level, which implies that it is a function of the flow configuration $\FF$, the position vector $\textbf{x}$, and the time $t$. 
-Therefore, for clarity and ease of reading purposes, we omit these arguments for any local function denoted by a `` $^0$ '' (including $\delta_I$ and $\chi_k$) as it is implicitly referring to $\textbf{x},t$ and $\FF$.
+where $\textbf{u}^0_I(\textbf{x},t,\FF)$ is the velocity of the interface and $\delta_I(\textbf{x},t,\FF)$ denotes the Dirac function localized for the interface, also called the interfacial indicator function \citep{drew1983mathematical,junqua2003}. More specifically the distribution $\delta_I$ is defined as \citep{appel2007}
+\begin{equation}
+<\delta_I,\phi> =\int_{\Gamma} \phi d\Gamma 
+\end{equation}  
+where $\phi$ is a function with compact support. %in space-time
+%\color{blue}
+%a reformuler.
+%\color{black}
+In this work, we use the subscript $_I$ to denote any quantity inherently defined on the interfaces, such as $\textbf{u}_I^0(\textbf{x}, t, \FF)$ and $\delta_I(\textbf{x}, t, \FF)$. Additionally, we employ the superscript $^0$ on a field to indicate that it is defined at the local, non-averaged level, meaning it is a function of the flow configuration $\FF$, the position vector $\textbf{x}$, and time $t$. For clarity and readability, we omit the arguments $\FF$, $\textbf{x}$, and $t$ for any local function denoted by $^0$ (as well as for $\delta_I$ and $\chi_k$), as their dependence on $\textbf{x}$, $t$, and $\FF$ is implied.
+%Throughout this work we employ the subscript $_I$ to indicate any quantity inherently defined on the interfaces, such as $\textbf{u}_I^0(\textbf{x},t,\FF)$ and $\delta_I(\textbf{x},t,\FF)$. 
+%Furthermore, we use the superscript `` $^0$ '' on a field to indicate that it is defined at the local non average level, which implies that it is a function of the flow configuration $\FF$, the position vector $\textbf{x}$, and the time $t$. 
+%For clarity and ease of reading purposes, we omit the arguments $\FF$, $\textbf{x}$ and $t$ for any local function denoted by a `` $^0$ '' (as well as for $\delta_I$ and $\chi_k$) as their dependence implicitly referring to $\textbf{x},t$ and $\FF$.
 
-To describe the evolution of $\delta_I$ we derive a first equation by taking the gradient of \ref{eq:dt_chi_k} and then applying the dot product of the resulting expression with $\textbf{n}_k$.
-A second equation is obtained by taking the gradient of the trivial relation: $\delta_I = \delta_I \textbf{n}_k\cdot \textbf{n}_k$.
-This yields \citep{morel2007surface,orlando2023evolution}, 
-\begin{align}
+To derive a conservation equation for $\delta_I$, one can take the gradient of \ref{eq:dt_chi_k} and then compute the dot product of the resulting expression with $\textbf{n}_k$. This approach yields the following result \citep{lhuillier2000bilan,junqua2003,orlando2023evolution}
+%One may obtain a conservation equation for $\delta_I$ by taking the gradient of \ref{eq:dt_chi_k} and then applying the dot product of the resulting expression with $\textbf{n}_k$. We obtain \citep{junqua2003,orlando2023evolution} %describe the evolution of $\delta_I$ we derive a first equation by taking the gradient of \ref{eq:dt_chi_k} and then applying the dot product of the resulting expression with $\textbf{n}_k$.
+
+\begin{equation}
     \pddt \delta_I
-    + \div [\delta_I (\textbf{u}_I^0\cdot \textbf{n}) \textbf{n}]
-    &= \delta_I (\textbf{u}_I^0 \cdot \textbf{n})(\div\textbf{n}),
-    \label{eq:dt_delta_I}\\
+    + \div [(\textbf{u}_I^0\cdot \textbf{n}) \textbf{n}\delta_I ]
+    = (\textbf{u}_I^0 \cdot \textbf{n})(\div\textbf{n}) \delta_I ,
+    \label{eq:dt_delta_I}
+\end{equation} 
+where we make use of the relation $\textbf{n}_k\cdot \pddt\textbf{n}_k= \frac{1}{2}\pddt(\textbf{n}_k\cdot \textbf{n}_k) = 0$. A second equation is obtained by taking the gradient of the trivial relation $\delta_I = \delta_I \textbf{n}_k\cdot \textbf{n}_k$, resulting in
+
+%. This yields, %\citep{morel2007surface,orlando2023evolution}, 
+
+\begin{equation}
     \grad\delta_I 
-    &= \textbf{n}\cdot  \grad (\textbf{n} \delta_I) 
+    = \textbf{n}\cdot  \grad (\textbf{n} \delta_I) 
     \label{eq:grad_delta_I}
-\end{align} 
+\end{equation}
+
 Remark that to derive \ref{eq:dt_delta_I} and \ref{eq:grad_delta_I} we have utilized the relations $\textbf{n}_k\cdot \pddt\textbf{n}_k= \frac{1}{2}\pddt(\textbf{n}_k\cdot \textbf{n}_k) = 0$ and $\grad \textbf{n}_k \cdot \textbf{n}_k =\frac{1}{2} \grad(\textbf{n}_k\cdot \textbf{n}_k) = 0$. 
 Furthermore, we did not specify the index of the normal $\textbf{n}$ in \ref{eq:dt_delta_I} and \ref{eq:grad_delta_I} to highlight that both equations are independent of the index $k$. 
 This is because \textbf{n} appears twice in each term of \ref{eq:dt_delta_I} and \ref{eq:grad_delta_I}.
