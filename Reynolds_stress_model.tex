@@ -25,7 +25,7 @@
 \author{\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}{\underline{N. Fintzi}\footnote{IFP \'Energies Nouvelles, France}$^{,2}$}, JL. Pierson$^1$ and S. Popinet\footnote{Sorbonne Universit\'e, France}}
 % \date{Created on May 22, 2022}
 
-\titlebackground{image/HOMOGENEOUS/Stream/Stream_PHI_20_Ga_25_l_1.pdf}
+\titlebackground{image/700drop.png}
 
 % document body
 \addtobeamertemplate{navigation symbols}{}{%
@@ -43,55 +43,229 @@
 \begin{document}
 \maketitle
 
+
 \begin{frame}
-  {Governing equation for the continuous phase}*
-  \small
-  \textbf{Fluid phase :}
-  \begin{align*}
-    &\pddt (\phi_f \rho_f)  
-    + \div (
-        \phi_f \rho_f\textbf{u}_f
-    )
-    = 
-    0\\
-    &\pddt \left(n_p m_p\right)
-    + \div \left(n_pm_p\textbf{u}_p
-    \right)
-    = 
-    0\\
-    &\pddt (\phi_f \rho_f\textbf{u}_f)  
-    + \div (
-        \phi_f \rho_f\textbf{u}_f\textbf{u}_f
-        + \bm{\sigma}_f^\text{eq}
-    )
-    = 
-    \phi_f \rho_f \textbf{g} 
-    - \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}}}\\
-    &\pddt \left(n_p m_p \textbf{u}_p\right)
-    + \div \left(n_p
-    m_p \textbf{u}_p \textbf{u}_p 
-    + \bm{\sigma}_p^\text{eq}
-    \right)
-    = 
-    n_p v_p \rho_2 \textbf{g}
-    + \pSavg{{\bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}},
-\end{align*} 
-where we have defined the equivalent fluid and particle stress tensor $\bm{\sigma}_f^\text{eq}$ and $\bm{\sigma}_p^\text{eq}$ by : 
+  \frametitle{Problem statement}
+
+  \begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \foreach \x/\y/\ra/\r/\th in 
+        {1/3/0.4/0.4/0,
+        2.55/2.7/0.4/0.4/0,
+        0.5/0.4/0.4/0.4/10,
+        2/1/0.4/0.4/10,
+        3/1.5/0.4/0.4/0,
+        0.5/1.5/0.4/0.4/10,
+        -0.5/2.5/0.4/0.4/10}{
+            \draw[fill=gray!50,rotate=\th](\x,\y) ellipse(\r cm and \ra cm);
+        }
+        \draw[dashed](3.2,1.7)circle(0.25);
+        % \draw[thick,->](3.2,1.7)++(0.1767,0.1767)--++(0.4,0.4)--++(1,0);
+        \draw[thick,->](3.2,1.7)++(0.25,0)--++(1,0);
+        \draw[thick,->](-1,1)--++(0,-1)node[midway, left]{$\bm g$};
+        \draw(2.55,2.7)node{$\Omega_d$};
+        \draw(1.5,2)node{$\Omega_f$};
+        \draw(2.5,0)node{$\Omega = \Gamma \cup \Omega_f \cup \Omega_d$};
+        % \draw(2.5,-1)node{$\Gamma = \sum_\alpha \Gamma_\alpha$};
+        % \draw(2.5,-0.5)node{$\Omega_d = \sum_\alpha \Omega_\alpha$};
+    \end{tikzpicture}
+    \begin{tikzpicture}
+        \draw[very thick](0:2)arc(0:90:2)node[above right]{$\Gamma$};
+        \draw[fill=gray!50](0:2)arc(0:90:2)arc(180:270:2);
+        \draw[dashed](2,2)circle(2);
+        \draw[->](1.42,1.42)--++(0.7,0.7)node[below right]{$\textbf{n}_d$};
+        \draw[->](1.73,1)--++(-0.577,-0.333)node[below right]{$\textbf{n}_1$};
+        \draw(2,3)node{$\Omega_f$};
+        \draw(0.8,1.3)node{$\Omega_\alpha$};
+    \end{tikzpicture}
+    \caption{Domain definitions and scheme of the topology of dispersed two-phase flows.
+    $\rho_k$ and $\mu_k$ is the density and viscosity of phase $k$, respectively. }
+    \label{fig:Scheme}
+\end{figure}
+
+The phase and interface indicator functions : 
 \begin{align*}
-    &\bm{\sigma}_1^\text{eq}
-    = 
-    \tb{\avg{\chi_1\rho_1\textbf{u}_1'\textbf{u}_1'}}
-    - \phi_1 \bm{\sigma}_1%- n_p \textbf{M}_p
-    - \pSavg{{\textbf{r}\bm{\sigma}_\text{ext}^0 \cdot \textbf{n}}}\\
-    &\bm{\sigma}_p^\text{eq}
-    =  \tb{m_p\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}
+  \chi_k(\textbf{x},t) =  \left\{
+    \begin{tabular}{cc}
+      $1 \;\text{if} \;\textbf{x} \in \Omega_k(t)$\\
+      $0 \;\text{if} \;\textbf{x} \notin \Omega_k(t)$
+    \end{tabular}
+    \right.
+    % \text{for $k = 1,2$},
+    % \label{eq:PIF}
+    &&
+  \delta_I(\textbf{x},t) =  \left\{
+    \begin{tabular}{cc}
+      $1 \;\text{if} \;\textbf{x} \in \Gamma(t)$\\
+      $0 \;\text{if} \;\textbf{x} \notin \Gamma(t)$
+    \end{tabular}
+    \right.,
+    \label{eq:PIF_I}
 \end{align*}
-\begin{itemize}
-  \item $\bm{\sigma}_\text{ext} \cdot \textbf{n}$ : momentum flux due to particle-fluid and particles-particles interactions. 
-  \item $\textbf{u}_\alpha$ : center of mass velocity of the particle $\alpha$
-\end{itemize}
-\tb{$\to$ How to model the Reynolds Stresses ? }
+
 \end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Local scale mass and momentum laws.}
+  The mass $\rho_k$ and momentum $\rho_k \textbf{u}_k^0$, conservation in the volumes follow :
+\begin{align}
+  \div  \textbf{u}_k^0
+  &= 
+  0
+  \;\;\;\; 
+  \text{in} 
+  \;\;\;\; 
+  \Omega_k(t)\\
+  \pddt (\rho_k \textbf{u}_k^0)  
+  + \div (
+      \rho_k \textbf{u}_k^0\textbf{u}_k^0
+      - \bm{\sigma}_k^0 
+      )
+  &= 
+  \rho_k \textbf{g}
+  \;\;\;\; 
+  \text{in} 
+  \;\;\;\; 
+  \Omega_k(t)
+\end{align}
+And at the interfaces : 
+\begin{align*}
+  \Jump {\textbf{u}_k^0}
+  = 0,\;\;\;
+  \Jump {\bm{\sigma}_k^0}
+  = 
+   \gamma\textbf{n}(\div \textbf{n})
+   \;\;\;\; 
+   \text{at} 
+   \;\;\;\; 
+   \Gamma(t)
+\end{align*}
+\begin{definition}
+  \begin{itemize}
+    \item $\Jump{\ldots} = \sum_k \ldots$ Jump condition.  
+    \item The superscript $^0$ indicated that it is a local quantity.
+    \item $\rho_k$  density of phase $k$. 
+    \item $\textbf{u}_k$  Velocity of phase $k$.
+    % \item $\textbf{b}_k^0 = \rho_k \textbf{g}$  local body force.  
+    \item $\gamma$ and $\div \textbf{n}$  surface tension coefficient and curvature of the surface.  
+    \item $\bm\sigma_f^0 = -p_f^0 \textbf{I} + \mu_f (\grad \textbf{u}_f^0+^\dagger\grad \textbf{u}_f^0)$ Newtonian stress tensor of the fluid phase. 
+    % \item $\bm\sigma_d^0 = \textbf{Udefined}$ Solid phase stress. 
+  \end{itemize}
+\end{definition}
+
+\end{frame}
+
+
+% \begin{frame}
+%   \frametitle{Two-fluid formulation of the momentum equation.}
+% %   Transport of the phase indicator function, 
+% %   \begin{align}
+% %     \pddt \chi_k
+% %     + \textbf{u}_I^0 \cdot \grad \chi_k
+% %     = 0,&&
+% % % \end{align}
+% % % \begin{align}
+% %     \grad \chi_k
+% %     = - \delta_I \textbf{n}_k
+% %   \end{align}
+%   Multiplying the momentum equation by $\chi_k$ gives two-fluid formulation of the momentum equation :
+  
+%   \begin{align}
+%     \label{eq:mass}
+%     \pddt (\chi_k\rho_k)  
+%     + \div (
+%         \chi_k\rho_k \textbf{u}_k^0
+%         )
+%     &= 0\\
+%     \pddt (\chi_k\rho_k \textbf{u}_k^0)  
+%     + \div (
+%         \chi_k\rho_k \textbf{u}_k^0\textbf{u}_k^0
+%         - \chi_k\bm{\sigma}_k^0 
+%         )
+%     &= 
+%     \chi_k\textbf{b}_k^0
+%     + \underbrace{\delta_I \bm{\sigma}_k^0\cdot\textbf{n}_k}_\text{Interphase momentum transfer}
+%     \label{eq:momentim}
+%   \end{align}
+
+%   $\to$ notice that (\ref{eq:mass}) and (\ref{eq:momentim}) are defined over $\Omega$ thanks to $\chi_k$. 
+%   Therefore, we are now able to apply the ensemble average procedure. 
+% \end{frame}
+
+
+\begin{frame}
+  \frametitle{Ensemble average definition}
+%   Let, $P(\FF)$ be the probability density function that describe the probability of finding the flow in the configuration $\FF$, were $\FF = (\lambda_1,\lambda_d,\lambda_3,\ldots)$ is a finite set of all the parameters describing the initial flow configuration.
+% \footnote{Assuming that the flow can be described by a finite number of parameters related to both phase...}. 
+% We define $d\mathscr{P} = P(\FF)d\FF$ as the probable number of flow in the incremental region of the particles' phase space $d\FF$ around $\FF$. 
+% It follows from this definition, that the ensemble average of an arbitrary local property $f^0[\textbf{x},t;\FF]$ defined on the whole space $\Omega$, is,
+The continuous and particle ensemble  averaged energy : 
+\begin{align*}
+  \phi_k (\textbf{x},t) = \avg{\chi_k }\\
+  \phi_k \rho_k  \textbf{u}_k (\textbf{x},t) = \avg{\chi_k \rho_k \textbf{u}_k^0 }\\
+  \phi_k \bm\sigma_k (\textbf{x},t) = \avg{\chi_k \bm\sigma_k^0 }\\
+  % \phi_k \textbf{b}_k (\textbf{x},t) = \avg{\chi_k \textbf{b}_k^0 }
+  \label{eq:1_avg}
+\end{align*}
+% \begin{equation}
+%   n_p E_p(\textbf{x},t) = \avg{\sum_\alpha^N \delta(\textbf{x} - \textbf{x}_\alpha(\FF,t)) E_\alpha}
+%   \label{eq:p_avg}
+% \end{equation}
+\begin{definition}
+  \begin{itemize}
+    \item $\avg{\ldots}$ ensemble average operator. 
+    \item  $\phi_k (\textbf{x},t)$ volume fraction of the phase $k$. 
+    \item Note that we dropped the superscript $^0$ on $\textbf{u}^0_k$ to indicate that $\textbf{u}_k$ is a macroscopic quantity. 
+    % \item $n_p (\textbf{x},t) = \avg{\sum_\alpha^N \delta(\textbf{x} - \textbf{x}_\alpha(\FF,t))}$ number density of particles. 
+    % \item  Both are linked through :   $\phi_d \rho_d= m_p n_p + \frac{1}{2}\grad^2 : (n_p\mathcal{M}_p)+\ldots$
+  \end{itemize}
+\end{definition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Continuous phase averaged equations }
+\begin{align*}
+  \phi_d + \phi_f &= 1\\
+  \pddt (\phi_f \rho_f)  
+  + \div (\phi_f \rho_f\textbf{u}_f)
+  &= 
+  0\\
+  \pddt (\phi_f \rho_f\textbf{u}_f)  
+  + \div (
+      \phi_f \rho_f\textbf{u}_f\textbf{u}_f
+      + \bm{\sigma}_f^\text{eq}
+  )
+  &= 
+  \phi_f  \rho_f \textbf{g}
+  + 
+  \underbrace{
+    \avg{\delta_I \bm{\sigma}_f^0 \cdot \textbf{n}_f}
+  }_\text{Interphase force}
+\end{align*}
+The \textbf{effective stress} is written :
+$
+  \bm{\sigma}_f^\text{eq}
+  = 
+   \underbrace{\rho_f\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}}_\text{Reynolds stress}
+    - \underbrace{\phi_f \bm{\sigma}_f}_\text{Newtonian stress},
+$
+
+\begin{enumerate}
+  \item How to model $\rho_f\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$ in terms of the averaged fields unknown ?
+  \begin{itemize}
+    \item $\phi_d$ Droplets volume fraction 
+    \item $\textbf{u}_p$ mean dispersed phase velocity
+    \item $\textbf{u}_f$ mean fluid phase velocity
+  \end{itemize}
+\end{enumerate}
+
+\end{frame}
+
+
+
 
 \begin{frame}
   {In the case of buoyant suspension}

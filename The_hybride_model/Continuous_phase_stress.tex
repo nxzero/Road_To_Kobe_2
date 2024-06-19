@@ -38,7 +38,7 @@ Therefore, in all rigor we must write
 where $\textbf{U} = \phi_f \textbf{u}_f + n_p v_p \textbf{u}_p$ is equivalent to the bulk velocity \textbf{u} uniquely in an homogeneous medium. 
 
 The fluid phase averaged stress is therefore composed of : 
-(1) the pseudo turbulent contribution $\rho_f\avg{\chi_f  \textbf{u}_f' \textbf{u}_f'}$ whic can be decomposed in an isotropic part $2 k_f = \avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}:\bm\delta$ that contribute to the effective pressure, and a deviatoric part defined as $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'} - 2 k_f\bm\delta$. 
+(1) the pseudo turbulent contribution $\rho_f\avg{\chi_f  \textbf{u}_f' \textbf{u}_f'}$ which can be decomposed in an isotropic part $2 k_f = \avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}:\bm\delta$ that contribute to the effective pressure, and a deviatoric part defined as $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'} - 2 k_f\bm\delta$. 
 (2) the shear stress $2\mu_f \textbf{e}$ of the fluid phase \ref{eq:rate_of_strain}. 
 (3) the particles internal shear $2\mu_f \pOavg{\textbf{e}_d^0}$
 (4) the particle first moment of the hydrodynamic forces $\pSavg{\textbf{r}\bm{\sigma}_f^0\cdot \textbf{n}_d}$. 
@@ -50,7 +50,7 @@ Thus, in addition to the Newtonian behavior of the averaged fluid one must predi
 
 Once again it is useful to consider the stokes flow regime to provide a closed form of the fluid phese stresses. 
 To that end notice first that the internal shear rate inside the particles, for isolated spherical droplets in an arbitrary linear flow  is written, 
-\begin{align*}
+\begin{align}
     \pOavg{\textbf{e}_d^0}
     = 
     \phi_d 
@@ -69,18 +69,19 @@ To that end notice first that the internal shear rate inside the particles, for 
         \right]
     \right]
     \label{eq:closur_e}
-\end{align*}
+\end{align}
 Notice that the second moment of momentum is present under the $\partial_k\partial_l$ operator in the moment of momentum equation, meaning that the skew-symmetic part of $\pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_kr_l}} $ and $\pSavg{{\mu(\textbf{e}_d^0)_{ik} r_l}}$ vanish in the momentum equation. 
 Therefore, the second moment of surface traction force might be written, 
 \begin{align*}
-    [\pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_k}} -
-    2\pSavg{{\mu(\textbf{e}_d^0)_{ik}}} ]
+    \pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_k}} -
+    2\pSavg{{\mu(\textbf{e}_d^0)_{ik}}} 
     = 
-    
-    
+    \phi_d p_f\bm\delta
+    - \frac{5\lambda +2}{\lambda +1}
+    \textbf{e}_f \phi \mu_f
     \\
-    [\frac{1}{2}\pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_kr_l}} -
-    2\pSavg{{\mu(\textbf{e}_d^0)_{ik} r_l}} ]
+    \frac{1}{2}\pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_kr_l}} -
+    2\pSavg{{\mu(\textbf{e}_d^0)_{ik} r_l}} 
     = 
     \frac{\mu_f\phi_d}{2(\lambda +1) }
     \left[
@@ -93,10 +94,48 @@ where we neglected the terms related to the mean fluid phase stress since it mak
 Considering this relation together with \ref{eq:sigma_eq_0}, \ref{eq:closur_e}, \ref{eq:second_mom} and \ref{eq:first_mom} we can re-write the effective stress of the suspension as, 
 \begin{align*}
     \bm{\sigma}^\text{eq}_{f,ik} =
-    p_f \bm\delta
-    - 2 \mu_{Ein}(\phi_d) \textbf{e}
     + \rho_f\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}_{ik} 
-    + \mu_{Rel} \left[\grad (\phi_d\textbf{u}_{fp}) + \grad (\phi_d\textbf{u}_{fp})^\dagger\right]
-    + \lambda_\text{Rel}
-        \bm\delta [\div (\phi_d \textbf{u}_{fp})]
+    + p_f \bm\delta
+    - 2 \mu_f \textbf{e}\left[
+        1
+        +\frac{\phi_d}{2}\left(
+            \frac{5\lambda +2}{\lambda +1}
+        \right)
+    \right]
+    + 
+    \frac{\mu_f 3\lambda}{4(\lambda +1) }
+    \left[
+        \grad (\phi_d\textbf{u}_{fp,i})
+        +  
+        \frac{2}{3\lambda} 
+        [\div (\phi_d\textbf{u}_{fp,l})]\bm\delta_{ki}
+    \right]
 \end{align*} 
+This is in complete agreement with \citet[Appendix A]{zhang1997momentum}. 
+In order to highlight that the stress tensor is symmetric we add and remove the term $ \grad \textbf{u}_{fp,i}^\dagger$ and notice that only the symmetric part in the indices $kl$ remain under the application of the double gradient to this expression and show that it gives, 
+\begin{align}
+    \bm{\sigma}^\text{eq}_{f,ik} =
+    + \rho_f\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}_{ik} 
+    + p_f \bm\delta
+    - 2\mu^\text{eff} \textbf{e}\\
+    + 
+    \mu_\text{U}^\text{eff}
+    \left[
+        \partial_k   (\phi_d\textbf{u}_{fp,i})
+        + \partial_i (\phi_d\textbf{u}_{fp,k})
+        + \frac{2-3\lambda}{3\lambda}  [\div (\phi_d\textbf{u}_{fp,l})]\bm\delta_{ki}
+    \right]
+    \label{eq:fluid_phase_stress}
+\end{align} 
+The equivalent viscosity of the fluid are given by 
+\begin{align*}
+    \mu^\text{eff}_\text{e} = \mu_f \left[
+        1
+        +\frac{\phi_d}{2}\left(
+            \frac{5\lambda +2}{\lambda +1}
+        \right)
+    \right]\\
+    \mu^\text{eff}_\text{U}
+    = \mu_f\frac{ 3\lambda}{4(\lambda +1) }
+\end{align*}
+One can notice that $\mu^\text{eff}_\text{U}$ is the same as the faxen force coefficient. 

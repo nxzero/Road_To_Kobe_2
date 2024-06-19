@@ -69,7 +69,132 @@ In light of \ref{eq:conditionally_averaged} we made the link between particle-av
 Note that all quantities denoted with the superscript $^1$ refer to \textit{single-particle} conditionally-averaged  quantities.  
 Therefore, it is implicit that these quantities are evaluated at $\textbf{y}$ and $t$ and conditionally on $\textbf{x}$. 
 
-\subsection{The disturbance field}
+At some point it will also be useful to express continuous phase averaged quantities, i.e. $\avg{\chi_k f_k^0}$  in terms of one  \textit{single-particle} conditionally-averaged fields. 
+Two examples are the Reynolds stress $\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$ and the fluid phase dissipation $\avg{\chi_f\sigma_f^0:\grad \textbf{u}_f^0}$ that appear in \ref{eq:dt_hybrid_rhou_f} and \ref{eq:dt_hybrid_k1}, respectively.  
+To proceed one must first notice that, 
+\begin{equation}
+    \frac{1}{N}\sum_\alpha 
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    \delta(\textbf{y}-\textbf{x}_\alpha)
+    \delta(\textbf{c}-\textbf{u}_\alpha)
+    d\textbf{x}
+    d\textbf{c}
+    = 1
+\end{equation}
+where $N$ is the total number of particle in the flow. 
+Using this relation one may re-formulate the ensemble average of a continuous phase quantity as 
+\begin{equation}
+    \avg{\chi_k f_k^0}[\textbf{x},t]
+    = 
+    \frac{1}{N}
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    f_k^1 P_1[\textbf{y},\textbf{c};\textbf{x},t] \phi_k[\textbf{x},t]
+    d\textbf{y} 
+    d\textbf{c}
+    \label{eq:conditional_averaged_fluid}
+\end{equation}
+where,
+\begin{equation*}
+    f_k^1[\textbf{x},t;\textbf{y},\textbf{c}] P_1[\textbf{y},\textbf{c};\textbf{x},t] \phi_k[\textbf{x},t]
+    =     
+    \sum_i^N 
+    \int
+    \delta(\textbf{y}-\textbf{x}_i)
+     \delta(\textbf{c}-\textbf{u}_i)
+    \chi_k
+    f^0_k[\textbf{x},t;\FF]
+    d\PP.
+\end{equation*}
+In this expression $f_f^1[\textbf{x},t;\textbf{y},\textbf{c}]$ is the average of the local quantity $f_f^0$ evaluated at $\textbf{x}$ and time $t$ conditionally on the presence of a particle center of mass at $\textbf{y}$ with center of mass velocity $\textbf{c}$. 
+% Similarly, $\phi_f^1[\textbf{x},t;\textbf{y},\textbf{c}]$ is the fluid phase volume fraction at \textbf{x} and time $t$, conditionally on the presence of a particle at $\textbf{y}$ with velocity \textbf{c}. 
+Similarly, $P_1[\textbf{y},\textbf{c};\textbf{x},t]$ is the probability density of finding a particle center of mass within the infinitesimal volume $d\textbf{y}$ around $\textbf{y}$ with a center of mass velocity ranging between the interval $d\textbf{c}$ around $\textbf{c}$, knowing that the point \textbf{x} is occupied by the continuous phase. 
+Notice that this derivation is consistent with \citet{zhang1994ensemble}. 
+
+
+Notice that  $P_1$ involve the number of particle $N$ in its definition, which is not practical since in a general manner this is not a defined quantity. 
+Additionally, $P_1$ is evaluated at $\textbf{y}$ which is also the variable of integration, that is not convenient. 
+In fact $P_1 = \frac{n_p}{N} = \frac{1}{V}$, therefore \ref{eq:conditional_averaged_fluid} can be reformulated as, 
+\begin{equation}
+    \avg{\chi_k f_k^0}[\textbf{x},t]
+    = \frac{1}{V}
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    f_k^1 P_c[\textbf{c};\textbf{x},t] \phi_k[\textbf{x},t]
+    d\textbf{y} 
+    d\textbf{c}
+\end{equation}
+meaning that we converted an ensemble average to a volume average. 
+
+Thus, we need to reformulate the fluid phase average in another way. 
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+    % Dimensions de l'espace
+    \pgfmathsetmacro{\width}{10}
+    \pgfmathsetmacro{\height}{10}
+
+    % Nombre de cercles
+    \pgfmathsetmacro{\numcircles}{5}
+    
+    % Placer les cercles aléatoirement
+    \foreach \i in {1,...,\numcircles} {
+        \pgfmathsetmacro{\x}{rnd*\width}
+        \pgfmathsetmacro{\y}{rnd*\height}
+        
+        % Dessiner la lueur bleue avec plusieurs cercles concentriques
+        \foreach \j in {1,...,10} {
+            \pgfmathsetmacro{\opacity}{0.1*(11-\j)}
+            \draw[blue, opacity=\opacity] (\x,\y) circle (\j*0.1+1);
+        }
+        % Dessiner le cercle principal
+        \draw[blue, thick] (\x,\y) circle (1);
+    }
+\end{tikzpicture}
+\end{center}
+We use the assumption of \citet{batchelor1972sedimentation} and assume linearity of the local scale equations. 
+Therefore, we stipulate that $f_f^0(\textbf{x},t;\FF)$ can be subdivided by  
+\begin{equation}
+    f_f^0(\textbf{x},t;\FF)
+    = 
+    \sum_i
+    f_{f\alpha}^0(\textbf{x},t;\FF)
+\end{equation}
+where $f_{fi}^0(\textbf{x},t;\FF)$ is the disturbance fields produce by the particle $i$ on $f_f^0$. 
+This of course implies that $f_f^0 = 0$ in the absence of particle in the flow. 
+Under this very restrictive hypothesis we can write, 
+\begin{equation}
+    \avg{\chi_ff_f^0}[\textbf{x},t]
+    = 
+    \sum_\alpha
+    \avg{\chi_f f_{f\alpha}^0(\textbf{x},t;\FF)}
+    = 
+    \int_{\mathbb{R}^3} 
+    \avg{
+        \sum_\alpha
+    \chi_f f_{f\alpha}^0(\textbf{x}_\alpha + \textbf{r},t;\FF) \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})}d\textbf{r}
+\end{equation}
+assuming that \textbf{r} is relatively small compared to the macroscale we may write $\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) =\delta(\textbf{x} - \textbf{x}_\alpha) - \textbf{r}\cdot \grad\delta(\textbf{x} - \textbf{x}_\alpha)+ \ldots$
+\begin{equation}
+    \avg{\chi_ff_f^0}[\textbf{x},t]
+    = 
+    n_p(\textbf{x}) 
+    \int_{\mathbb{R}^3} 
+    f_{f\alpha}^1(\textbf{x}+ \textbf{r}| \textbf{x})
+    d\textbf{r}
+\end{equation}
+with, 
+\begin{equation*}
+    f_{f\alpha}^1[\textbf{x}+ \textbf{r}| \textbf{x}]n_p(\textbf{x}) 
+    = 
+    \int{
+    \sum_\alpha
+    \chi_f f_{f\alpha}^0(\textbf{x}_\alpha + \textbf{r},t;\FF) \delta(\textbf{x} - \textbf{x}_\alpha)
+    }d\PP
+\end{equation*}
+Not really satifying 
+
+\subsection{The force traction term}
 
 Let $f^1_f$ be an arbitrary \textit{single-particle} conditionally-averaged quantity. 
 Notice that when $f^1_f$ is evaluated infinitely far from the particle we have the relation, 
@@ -220,6 +345,32 @@ According to the definition $\textbf{u}_f^{1d}$ the mean fluid velocity $\textbf
 \end{align*}
 
 These equations might be evaluated for two senarios
+
+\subsubsection*{Computation of the fluid phase term}
+
+For suspension of spherical particles in the dilute limit the fluid phase averaged fields may be simplyfied by noticing that $\phi_f^1[\textbf{x},t;\textbf{y},\textbf{c}] P_1[\textbf{y},\textbf{c},t] = P_1[\textbf{y},\textbf{c},t]$ when $|\textbf{x} - \textbf{y}| > a$. 
+\begin{equation}
+    \avg{\chi_f f_f^0}[\textbf{x},t]
+    = 
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    f_f^1 \phi_f^1[\textbf{x},t;\textbf{y},\textbf{c}] P_1[\textbf{y},\textbf{c},t]
+    d\textbf{y} 
+    d\textbf{c}
+\end{equation}
+where,
+\begin{equation*}
+    f_f^1 \phi_f^1[\textbf{x},t;\textbf{y},\textbf{c}] P_1[\textbf{y},\textbf{c},t]
+    =     
+    \int
+    \frac{1}{N}
+    \sum_\alpha \delta(\textbf{y}-\textbf{x}_\alpha)
+     \delta(\textbf{c}-\textbf{u}_\alpha)
+    \chi_f
+    f^0_f[\textbf{x},t;\FF]
+    d\PP.
+\end{equation*}
+
 \section{Singularity solution for spherical droplets}
 
 \subsubsection*{A droplet in an arbitrary linear flows}
@@ -396,6 +547,10 @@ The integral involving the particle internal motion in the equation exposed in \
         -3\delta_{kl}u_{1 \alpha , i}
         -3\delta_{il}u_{1 \alpha , k}
     \right)
+\end{equation*}
+\begin{equation*}
+    \int_{r>a} \mu_f \bm\sigma^0_f:\grad \textbf{u}_f  d\textbf{r}
+    = 
 \end{equation*}
 We can notice that now all these quantities are determined by the relative velocity.  
 While the hill vortex is a solution valid in potential and stokes flow, the solution for the exterior flow is limited to stoke flow. 

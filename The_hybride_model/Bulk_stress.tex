@@ -2,208 +2,223 @@
 
 \subsection{The bulk stress in dispersed multiphase flow}
 
-\tb{modify in our conetxt}
-Now that the architecture of the averaged dispersed multiphase flow equation is clarified, we would like to present the expression of the bulk stress tensor in a suspension of inertial particles subject to an arbitrary local body force field, $\textbf{b}^0$.
-Firstly, is important to recall the definition of the \textit{bulk stress}. 
-We define the \textit{bulk stress} tensor as a force applied on the fluid and on the particles phase, having the form $\div \bm{\Sigma}$, which added to the total external force $\textbf{B}$, balance exactly the material derivative of the mixture momentum : $\frac{D \rho \textbf{u}}{Dt}$. 
-In this definition $\textbf{B}$ cannot be decomposed into a vector and a divergence of a tensor, in which case the latter would just contribute to $\bm{\Sigma}$.
-Equally, we insist on the fact that the momentum considered is $\rho\textbf{u}$ which is the bulk momentum. 
 
-We first expose the averaged mixture momentum and angular momentum equation easily derived from \ref{eq:dt_avg_f}, 
-\begin{align}
-    \pddt (\rho u_i)
-    + \partial (\rho u_iu_k
-    + \sigma_{ik}^\text{eq})
-    = b_i\\
-    \epsilon_{ijk} \sigma_{jk}
-    = 0 
-    \label{eq:momentum_bulk}
-\end{align}
-In the momentum equation we have defined, $\sigma_{ik}^\text{eq} = \avg{\rho\textbf{u}'\textbf{u}'}
-- \avg{\chi_1\bm{\sigma}_1^0}-\avg{\chi_2\bm{\sigma}_2^0} - \avg{\delta_I \bm{\sigma}_I^0}$. 
-Additionally, in the averaged angular momentum equation we have assumed that no-body torque exist at the local scale making the second equality equal to $0$ \citet{leal2007advanced} and the averaged mixture stress $\bm{\sigma}$ a symmetric quantity. 
-However, note that $\bm{\sigma}$ is not exactly equal to the \textit{bulk stress} tensor $\bm{\Sigma}$ since $\textbf{b}$ can be expressed as a divergence of a stress.
-Indeed, have defined $\textbf{b} = \textbf{B} + \div  \pMOavg{\textbf{b}_2^0}$ where $\textbf{B} = \phi_1 \textbf{b}_1 +  \pOavg{\textbf{b}_2^0 }$ and  $\pMOavg{\textbf{r}\textbf{b}_2^0}$ is defined accordingly to the previous definition. 
-It follows the definition of the \textit{bulk stress} : 
-\begin{equation}
-    \bm{\Sigma}
-    = 
-    \avg{\rho\textbf{u}'\textbf{u}'}
-    - \avg{\chi_1\bm{\sigma}_1^0}
-    - \avg{\chi_2\bm{\sigma}_2^0} 
-    - \avg{\delta_I \bm{\sigma}_I^0}
-    - \pMOavg{\textbf{r}\textbf{b}_2^0}
-\end{equation}
-which proves already, in the absence of particles moments of the body forces $\pMOavg{\textbf{r}\textbf{b}_2^0}$, the antisymmetric part of the suspension stress is null, in agreement with \citet{dolata2020heterogeneous}.
-% This skew symmetric part can be written in vector form as, 
-% \begin{equation*}
-%     \epsilon_{ijk}\textbf{T}_{jk}
-%     = 
-%     -\epsilon_{ijk} \pOavg{r_kb_j}
-%     -\epsilon_{ijk}\frac{1}{2}\partial_l \pOavg{r_lr_kb_j}
-%     = 0  
-% \end{equation*}
-We recall that the carrier fluid is a Newtonian fluid, therefore we may express the fluid phase stress as, 
-\begin{equation}
-    \phi_1 \sigma_{1,jk}
-    = -p_1 \delta_{jk}
-    + \mu_1 e_{jk}
-    - \mu_1 \phi_2 e_{2,jk}. 
-\end{equation} 
-Additionally, we use the methodology of \citep{lhuillier1992volume,lhuillier1996contribution} to re express the averaged particle stress terms. 
-The divergence of the particle phase stress may be expressed using \ref{eq:f_exp}, 
-\begin{align}
-    \label{eq:exp_sigma22}
-    \partial_k \avg{\chi_2 {\sigma}_2^0}_{ik}
-    &=  \partial_k\pOavg{ {\sigma}_{2,ik}^0}
-    -\frac{1}{2} \partial_k\partial_j
-    \pOavg{ r_j{\sigma}^0_{2,ik} + r_k\sigma^0_{2,ij}}
-    + \ldots  \\
-    \label{eq:exp_sigmaI2}
-    \partial_k \avg{\delta_I {\sigma}^0_I}_{ik} 
-    &=  \partial_k\pSavg{ {\sigma}_{I,ik}^0 }
-        -\frac{1}{2} \partial_k\partial_j \pSavg{ r_j {\sigma}_{I,ik}^0+r_k {\sigma}_{I,ij}^0 }
-        + \ldots  
-\end{align}
-Note that the heterogeneous terms must remain symmetric in the index $kj$ due to the double contraction with the operator $\partial_k\partial_j$, thus only the symmetric part in $jk$ remain and the terms such as, $\pOavg{ r_j{\sigma}^0_{2,ik} - r_k\sigma^0_{2,ij}}$ vanish. 
-Upon the use of the moment of momentum equation of the first and second order we can easily derive these expressions, 
-\begin{align}
-    \intS{ (\bm{\sigma}_I)_{ik}}
-    +\intO{ (\bm{\sigma}_2^0)_{ik}}
-    = 
-    \intO{ \rho_2 
-    (\textbf{w}_2^0\textbf{w}_2^0  )_{ik}
-    }
-    -\ddt \intO{ r_i (\textbf{u}^0_2)_k }
-    +\intS{ 
-        b_{i}
-        r_k 
-    }
-    +\intS{ 
-     r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k}
-    }\\
-    \intO{ r_{j}(\bm{\sigma}^0_2)_{ik}+r_{k}(\bm{\sigma}^0_2)_{ji}}
-    +\intS{ r_{j}(\bm{\sigma}^0_I)_{ik}+r_{k}(\bm{\sigma}_I^0)_{ji}}
-    = 
-    - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_i r_j r_k }\nonumber\\
-    + \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)}
-    +\intS{  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l }
-    + \intO{ r_{k}r_{j}  \rho_2 b_i } 
-    \label{eq:dt_P2_alpha}
-\end{align}
-It is evident that by using an arbitrary order of moment of momentum equation one can substitute any volume integral of the particle stress appearing in the expansion \ref{eq:exp_sigma22}. 
-% By consideration of symmetric of the local stress, it is evident that the skew symmetric part of the moment of momentum will not have any dynamical role thus we can retrieve the average of \ref{eq:dt_mu_alpha} to the first relation. 
-% To extract the skew symmetric part we start by writing the permutation of these equations with $ik$ yielding,  
-% \begin{align}
-%     \intS{ 
-%     (\bm{\sigma}_I)_{ki}
-%     }
-%     +\intO{ 
-%     (\bm{\sigma}_2^0)_{ki}
-%     }
-%     = 
-%     \intO{ \rho_2 
-%     (\textbf{w}_2^0\textbf{w}_2^0  )_{ki}
-%     }
-%     -\ddt \intO{ r_k (\textbf{u}^0_2)_i }
-%     +\intS{ b_{k}r_i }
-%     +\intS{ r_k (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{i}}\\
-%     \intO{ r_{j}(\bm{\sigma}^0_2)_{ki}+r_{i}(\bm{\sigma}^0_2)_{jk}}
-%     +\intS{ r_{j}(\bm{\sigma}^0_I)_{ki}+r_{i}(\bm{\sigma}_I^0)_{jk}}
-%     = 
-%     - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_k r_j r_i }\nonumber\\
-%     + \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_i (\textbf{u}^0_2)_k + r_i (\textbf{w}_2^0)_j (\textbf{u}^0_2)_k)}
-%     +\intS{  r_{i}r_{j} (\bm{\sigma}_1^0)_{kl} (\textbf{n}_2)_l }
-%     + \intO{ r_{i}r_{j}  \rho_2 b_k } \\
-%     \intO{ r_{i}(\bm{\sigma}^0_2)_{jk}+r_{k}(\bm{\sigma}^0_2)_{ij}}
-%     +\intS{ r_{i}(\bm{\sigma}^0_I)_{jk}+r_{k}(\bm{\sigma}_I^0)_{ij}}
-%     = 
-%     - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_j r_i r_k }\nonumber\\
-%     + \intO{ \rho_2 (r_{i} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_j 
-%     + r_k (\textbf{w}_2^0)_i (\textbf{u}^0_2)_j)}
-%     +\intS{  r_{k}r_{i} (\bm{\sigma}_1^0)_{jl} (\textbf{n}_2)_l }
-%     + \intO{ r_{k}r_{i}  \rho_2 b_j } 
-% \end{align}
-% Acknowledgement of the symmetrical nature of $\bm{\sigma}_2^0$ and $\bm{\sigma}_I^0$ gives the following antisymmetrical balance equations, 
-% \begin{align}
-%     0
-%     = 
-%     -\ddt \intO{ r_i (\textbf{u}^0_2)_k -r_k (\textbf{u}^0_2)_i }
-%     +\intS{ b_{i}r_k -b_{k}r_i }
-%     +\intS{r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k} - r_k (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{i}}\\
-%     \intO{ r_{j}(\bm{\sigma}^0_2)_{ik}
-%             -r_{i}(\bm{\sigma}^0_2)_{jk}}
-%     +\intS{ r_{j}(\bm{\sigma}^0_I)_{ik}
-%            - r_{i}(\bm{\sigma}_I^0)_{jk}}
-%     = 
-%     - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_i r_j r_k -  \rho_2 (\textbf{u}_2^0)_j r_i r_k }\nonumber\\
-%     + \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)}
-%     - \intO{ \rho_2 (r_{i} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_j + r_k (\textbf{w}_2^0)_i (\textbf{u}^0_2)_j)}\\
-%     +\intS{  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l 
-%     -r_{k}r_{i} (\bm{\sigma}_1^0)_{jl} (\textbf{n}_2)_l }
-%     + \intO{ r_{k}r_{j}  \rho_2 b_i
-%     - r_{k}r_{i}  \rho_2 b_j } 
-% \end{align}
-% The last equation need to be added to the second permutation which gives, 
-% \begin{align*}
-% \intO{ r_{j}(\bm{\sigma}^0_2)_{ik}}
-% +\intS{ r_{j}(\bm{\sigma}^0_I)_{ik}}
-% = 
-% - \ddt\intO{ \rho_2 (\textbf{u}_2^0)_k r_j r_i 
-% + \rho_2 (\textbf{u}_2^0)_i r_j r_k 
-% -  \rho_2 (\textbf{u}_2^0)_j r_i r_k }\nonumber\\
-% + \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)}
-% - \intO{ \rho_2 (r_{i} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_j + r_k (\textbf{w}_2^0)_i (\textbf{u}^0_2)_j)}\\
-% - \intO{ \rho_2 (r_{j} (\textbf{w}_2^0)_i (\textbf{u}^0_2)_k + r_i (\textbf{w}_2^0)_j (\textbf{u}^0_2)_k)}\\
-% +\intS{  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l 
-% +r_{j}r_{i} (\bm{\sigma}_1^0)_{kl} (\textbf{n}_2)_l 
-% -r_{k}r_{i} (\bm{\sigma}_1^0)_{jl} (\textbf{n}_2)_l }
-% + \intO{ r_{k}r_{j}  \rho_2 b_i
-% + r_{j}r_{i}  \rho_2 b_k 
-% - r_{k}r_{i}  \rho_2 b_j 
-% } 
-% \end{align*}
-In, addition one must notice that the particle angular momentum balance equation doesn't involve the integral of the particle local stress and has therefore, no dynamical role in the equivalent stress expression. 
-Making use of these remarks we obtain this general formula for the suspension stress,  
-\begin{multline}
-    \bm{\Sigma}
-    = \avg{\rho\textbf{u}'\textbf{u}'}_{ik}
-    + \phi_1 p_1 \delta_{ik}
-    - \mu_1 e_{ik}
-    % + \mu_1 \phi_2 e_{2,ik}. 
-    - \pOavg{ \rho_2 (\textbf{w}_2^0\textbf{w}_2^0  )_{ik}}
-    + \pavg{\ddt {\mathcal{S}_{ik}} }\\
-    - \pSavg{ b_{i}r_k - b_{k}r_i }
-    - \pSavg{ r_i (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{k}
-    + r_k (\bm{\sigma}_1^0 \cdot \textbf{n}_2)_{i}}
-    + \mu_1 \pOavg{e_2^0}_{ik}
-    + \frac{1}{2} \div\bm{\Sigma}_1
-    \label{eq:eq_stress}
-\end{multline}
-with the inhomogeneous stress gathered in $\bm{\Sigma}_1$, namely,
-\begin{multline}
-    \bm{\Sigma}_1
-    = 
-    - \pavg{\ddt\intO{ \rho_2 (\textbf{u}_2^0)_i r_j r_k }}
-    + \pOavg{ \rho_2 (r_{j} (\textbf{w}_2^0)_k (\textbf{u}^0_2)_i + r_k (\textbf{w}_2^0)_j (\textbf{u}^0_2)_i)}\nonumber\\
-    +\pSavg{  r_{k}r_{j} (\bm{\sigma}_1^0)_{il} (\textbf{n}_2)_l }
-    - \mu_1 2 \pOavg{\textbf{r} \textbf{e}_2^0}_{jik}
-\end{multline}
-According to \ref{eq:scheme_equivalence}, expanding each component related to the dispersed phase in \ref{eq:momentum_bulk} one would see appear each moment of momentum equations under the divergence operator.
-However, to stay consistent with the definition of the bulk stress tensor $\bm{\Sigma}$, we must keep the advecting term on the LHS of \ref{eq:momentum_bulk} unchanged, this is however not the case of the averaged body force term $\textbf{b}$ which allowed us to cancel all the body forces terms with the expansion of $\textbf{T}$.  
 
 One of the major question in suspension dynamic raised by several authors, is the evaluation of the bulk stress or equivalent stress tensor of a suspension, see \citep{prosperetti2006stress, batchelor1970stress,zhang1997momentum,nadim1996concise} and more recently \citet{dolata2020heterogeneous}. 
-The answer to this question is given in the general case of the generic averaged mixture equation. 
-In light of \ref{eq:eq_stress} we have demonstrated how to express in a routine manner the bulk stress of the particle phase. 
-And doing so without making appear explicitly the particles  internal stress. 
-This, conclusion deserve several comments regarding previous studies. 
-In  \citet{jackson1997locally},  the volume averaged momentum balance (equation (38) of \citet{jackson1997locally}) they make appear the higher moment of velocity of the particles as closure terms, these are hidden in $\pOavg{\textbf{w}_2^0 \textbf{w}_2^0}$.
-However, in \citet{jackson1997locally} they did not remove the angular momentum to the stress yieldings a slightly different term. 
-What we have shown here is that these higher moments of the particles phase such has the particles rotations have no dynamical significance in the mixture equations. 
-Therefore, equation (38) of \citet{jackson1997locally} can be further simplified to the fluid and first order particle averaged equations. 
-Equally, in the momentum mixture equation derived by \citet{zhang1997momentum} (equation (8.2)), they make appear explicitly the higher moment of acceleration and the higher moments of velocity in their equivalent stress. 
-These terms must therefore simplify. 
-In fact as, it could be supposed in their appendix these moments equally cancel. 
-In agreement with \citet{dolata2021faxen} which also found that the only remaining part of the stress were solely the fluid phase exchange terms upon the calculation of the body forces moments. 
-Similar, comments can be made on the study of \citet{prosperetti2006stress}. 
-This also explain why \citet{nadim1996concise} found out that the interfacial terms of the surface tension and viscous interfacial forces play no direct role in the equivalent stress of the emulsion.
+Specifically we seek to express the bulk stress in the suspension in terms of particle-averaged quantities. 
+Only then it is possible to derive closure for the stress. 
+Therefore, in this subsection we derive an expression for the bulk stress of an emulsion in terms of the Lagrangian particle quantities derived in the two previous section. 
+For purpose of generality in this section we use an arbitrary body force $\textbf{b}^0$ instead of $\rho^0 \textbf{g}$. 
+
+The \textit{bulk stress} tensor is the force per unit of surface applied on the fluid and on the particles phases, having the form $\div \bm{\sigma}^\text{eff}$, which added to the total external force $\textbf{B}$, balance exactly the material derivative of the mixture momentum : $\frac{D \rho \textbf{u}}{Dt}$. 
+In this definition $\textbf{B}$ cannot be decomposed into a vector plus a divergence of a tensor, in which case the latter would just contribute to $\bm{\sigma}^\text{eff}$.
+Equally, we insist on the fact that the momentum considered is $\rho\textbf{u}$ which is the momentum of the bulk. 
+To derive the mixture momentum equation we add \ref{eq:dt_avg_rhou_k} for $k = f,d$ and \ref{eq:dt_avg_uI}. 
+This yields, 
+\begin{align}
+    \label{eq:momentum_bulk}
+    \pddt (\rho u_i)
+    + \partial_j  (\rho u_iu_j
+    + \sigma_{ij}^\text{eff})
+    &= \left[\phi_f \textbf{b}_f + \pOavg{\textbf{b}}\right]_i
+    % \epsilon_{ijk} \sigma_{jk}
+    % &= 0 
+    % \label{eq:angular_momentum_bulk}
+\end{align}
+
+% Indeed, in the averaged angular momentum equation we have assumed that no-body torque exist at the local scale making the skew-symmetric part of $\sigma_{jk}^0$ equal to $0$ \citet{leal2007advanced}. 
+% Taking the average of the bulk momentum and angular momentum equation gives directly, 
+Where we have defined the effective stress of the suspension as,
+\begin{equation}
+    \bm{\sigma}^\text{eff}
+    = 
+    \avg{\rho\textbf{u}'\textbf{u}'}
+    - \phi_f\bm{\sigma}_f
+    - \phi_d(\bm{\sigma}_d - 2\mu_f \textbf{e}_d)
+    - \phi_I \bm{\sigma}_I
+    + \pOavg{\textbf{r}\textbf{b}_d^0}
+    -\frac{1}{2} \div \pOavg{\textbf{rr}\textbf{b}_d^0} + \ldots
+    \label{eq:sigma_bulk}
+\end{equation}
+% where we have used the relation 
+The first term corresponds to the Reynolds stress, the second third and four terms are obtained by noticing that $\bm\sigma = \phi_f\bm\sigma_f + \phi_d\bm\sigma_d + \phi_I \bm\sigma_I$ with 
+$
+    \phi_f \bm\sigma_f
+    = -p_f \bm\delta
+    + \mu_f \textbf{e}
+    - 2 \mu_f \phi_d \textbf{e}_d 
+$
+where $\phi_f p_f$ is the mean fluid pressure and $\textbf{e} = \grad \textbf{u} + ^\dagger(\grad \textbf{u})$ the averaged strain of the suspension. 
+The last two terms of \ref{eq:sigma_bulk} have been obtained by expanding the body force term $\phi_d \textbf{b}_d$ originally present on the right-hand side of \ref{eq:momentum_bulk} in a Taylor expansion according to \ref{eq:f_exp}. 
+Indeed, we consider non-self torquing fluids such that the local stress follows  $\epsilon_{ijk} \sigma_{jk}^0 = 0 $. 
+Due to the linearity of the ensemble average operator we deduce that the averaged stress also respects $\epsilon_{ijk} \sigma_{jk} =0 $. 
+Thus, we already see that the five first terms on the right-hand side of \ref{eq:sigma_bulk} are by definition symmetric. 
+Consequently, the only possible skew-symmetric contribution to the suspension stress must arise from the last two terms on the right-hand side of \ref{eq:sigma_bulk}.  
+
+% The first moment contribution to the skew symmetric part is given by 
+% \begin{equation}
+%     \pOavg{\textbf{r}\textbf{b}_d^0 - \textbf{b}_d^0 \textbf{r}}. 
+%     \label{eq:body_torque}
+% \end{equation}
+% This term corresponds to the averaged torque generated by the body force field $\textbf{b}^0$ on the particles. 
+% Thus, all body force fields generating body torque will induce self toque in the suspension. 
+
+% For the higher moment of body force the reasoning is slightly different.
+% We use a methodology similar to \citep{lhuillier1992volume,lhuillier1996contribution} to re express the second and higher moment of the body force.  
+% For convenience let us note 
+% \begin{equation}
+%     B_{ijk}
+%     = \pOavg{\textbf{rr}\textbf{b}_d^0} - \frac{1}{3}\div \pOavg{\textbf{rrr}\textbf{b}_d^0} + \ldots
+% \end{equation}
+% % which represent the second plus the divergence of the higher order moment of the body forces. 
+% Since this tensor is the sum of the second plus the higher moment it is not symmetric on any index. 
+
+% We recall that the carrier fluid is a Newtonian fluid, therefore we may express the fluid phase stress as, 
+Let us now present the bulk stress formulation in the \textit{hybrid} form, meaning in terms of particle-average quantities.  
+The divergence of the dispersed phase stresses present in \ref{eq:momentum_bulk} through \ref{eq:sigma_bulk} may be expressed using \ref{eq:f_exp}, it gives
+\begin{align}
+    \label{eq:exp_e2}
+    \partial_k (\phi_d \textbf{e}_d)_{ik} 
+    &=  \partial_k\pSavg{ (\textbf e_d^0)_{ik} }
+        -\frac{1}{2} \partial_k\partial_j \pSavg{ r_j (\textbf e_d^0)_{ik} +r_k (\textbf e_d^0)_{ij} }
+        + \ldots  \\
+    \label{eq:exp_sigma22}
+    \partial_k (\phi_d \bm\sigma_d)_{ik}
+    &=  \partial_k\pOavg{ (\bm\sigma_d^0)_{ik}}
+    -\frac{1}{2} \partial_k\partial_j
+    \pOavg{ r_j(\bm\sigma^0_d)_{ik} + r_k(\bm\sigma^0_d)_{ij}}
+    + \ldots  \\
+    \label{eq:exp_sigmaI2}
+    \partial_k (\phi_I \bm\sigma_I)_{ik} 
+    &=  \partial_k\pSavg{ (\bm\sigma_I^0)_{ik} }
+        -\frac{1}{2} \partial_k\partial_j \pSavg{ r_j (\bm\sigma_I^0)_{ik} +r_k (\bm\sigma_I^0)_{ij} }
+        + \ldots  
+\end{align}
+Note that we reformulated the second terms on the right-hand side of \ref{eq:exp_sigma22} and \ref{eq:exp_sigmaI2} according to the fact that both must remain symmetric in the index $k$,$j$ due to the double contraction with the operator $\partial_k\partial_j$. 
+Now we can use the first moment of momentum conservation \eqref{eq:dt_S_alpha} and the second moment of momentum equation (derived in \ref{ap:Moments_equations}, see \eqref{eq:second_momoent_of_momentum}) to reformulate the particle internal stresses, this yields,  
+\begin{multline}
+    \intS{ (\bm{\sigma}_I^0)_{ik}}
+    +\intO{ (\bm{\sigma}_d^0)_{ik}}
+    = 
+    \intO{ \rho_d 
+    (\textbf{w}_d^0\textbf{w}_d^0  )_{ik}
+    }
+    -\frac{1}{2}\left(\frac{d^2 \textbf{M}_\alpha}{dt^2} \right)_{ik}\\
+    +\frac{1}{2}\intO{ \left[
+        (\textbf{b}_d^0)_i
+        r_k 
+        + (\textbf{b}_d^0)_k
+        r_i
+    \right]}
+    +
+    \frac{1}{2}\intS{ \left[
+        (\bm{\sigma}_1^0 \cdot \textbf{n}_d)_i r_k
+        + (\bm{\sigma}_1^0 \cdot \textbf{n}_d)_k r_i
+    \right]
+    }
+    \label{eq:dt_P1_alpha_bis}
+\end{multline}
+\begin{multline}
+    \intO{ r_{j}(\bm{\sigma}^0_d)_{ik}+r_{k}(\bm{\sigma}^0_d)_{ji}}
+    +\intS{ r_{j}(\bm{\sigma}^0_I)_{ik}+r_{k}(\bm{\sigma}_I^0)_{ji}}
+    = 
+    - \ddt\intO{ \rho_d (\textbf{u}_d^0)_i r_j r_k }
+    \\
+    + \intO{ \left[
+        \rho_d (\textbf{u}^0_d\textbf{r}\textbf{w}_d^0)_{ijk} + \rho_d (\textbf{u}^0_d\textbf{r}\textbf{w}_d^0)_{kji}
+    \right]}
+    +\intS{  r_{k}r_{j} (\bm{\sigma}_1^0\cdot\textbf{n}_d)_i }
+    + \intO{ r_{k}r_{j}  \rho_d (\textbf{b}_d^0)_i } 
+    \label{eq:dt_P2_alpha_bis}
+\end{multline}
+It is evident that by using an arbitrary order of moment of momentum equation (derived in \ref{ap:Moments_equations}) one can substitute any volume integral of the particle stress appearing in the expansion \ref{eq:exp_sigma22} into particles kinematic properties plus the hydrodynamic moment of the fluid phase. 
+Substituting \ref{eq:dt_P2_alpha_bis} and \ref{eq:dt_P1_alpha_bis} into \ref{eq:sigma_bulk} gives directly, 
+\begin{multline}
+    (\bm{\sigma}^\text{eff})_{ik}
+    = 
+    \underbrace{
+        % \left[
+        \phi_f p_f 
+        % + \frac{1}{3}\pOavg{\textbf{r}\cdot\bm{\sigma}_f^0 \cdot \textbf{n}_d} 
+    % \right]
+    \delta_{ik}
+    - \mu_f e_{ik} 
+    }_\text{Newtonian contribution}
+    + \underbrace{\avg{\rho\textbf{u}'\textbf{u}'}_{ik}}_\text{Reynolds stress}
+    % + \mu_f \phi_2 e_{2,ik}. 
+    + \underbrace{\epsilon_{ijk} \frac{1}{2}\pSavg{ (\textbf{b}_d^0 \times \textbf{r})_k}}_\text{Particles body torque}\\
+    - \frac{1}{2}\underbrace{\pSavg{\left[
+        (\bm{\sigma}_f^0 \cdot \textbf{n}_d)_kr_i  
+        + (\bm{\sigma}_f^0 \cdot \textbf{n}_d)_i r_k
+        % - \frac{2}{3}(\textbf{r}\cdot\bm{\sigma}_f^0 \cdot \textbf{n}_d)\delta_{ik}
+    \right]}
+    + 2 \mu_f \pOavg{(\textbf{e}_d^0)_{ik}}}_\text{Averaged Stresslet}\\
+    - \underbrace{\pOavg{ \rho_d (\textbf{w}_d^0\textbf{w}_d^0  )_{ik}}
+    + \pavg{\frac{d^2 \textbf{M}_{ik}}{dt^2}  }}_\text{particles inertia}
+    + \underbrace{\frac{1}{2} (\div\bm{\Sigma})_{ik}}_\text{Inhomogeneous stresses}
+    \label{eq:stress_bulk_explicit}
+\end{multline}
+with,
+\begin{multline}
+    \bm{\Sigma}
+    = 
+    - \pavg{\ddt\intO{ \rho_d (\textbf{u}_d^0)_i r_j r_k }}
+    + \pOavg{ 
+        \rho_d \left[
+        (\textbf{u}^0_d\textbf{r}\textbf{w}_d^0)_{ijk} +  (\textbf{u}^0_d\textbf{r}\textbf{w}_d^0)_{kji}
+    \right]
+    }\nonumber\\
+    +\pSavg{  (\bm{\sigma}_f^0 \cdot \textbf{n}_d)_i r_{j}  r_{k}  }
+    - 2 \mu_f \pOavg{[( \textbf{e}_d^0 \textbf{r})_{ikj}
+    + ( \textbf{e}_d^0 \textbf{r})_{ijk}]} + \div[\ldots]
+\end{multline}
+Under this form the different contribution to the suspension stress are explicit. 
+The first contribution is the averaged continuous phase Newtonian stress. 
+The second term is the  contribution from the total phase fluctuation to the suspension stress, including the particle internal fluctuation. 
+The third term is the skew-symmetric part of the first moment of the body forces, in this study $\textbf{b}^0 = \rho^0 \textbf{g}$ thus this term vanishes for any particles. 
+The symmetric part of the hydrodynamic stresses together with the particles internal shear form what is called the Stresslet \citep{pozrikidis1992boundary}. 
+Especially, we see in the next section that this term is related to the Einstein equivalent viscosity (see \ref{eq:fluid_phase_stress}). 
+The first two terms on the third line of \ref{eq:stress_bulk_explicit} is the particle inertia contribution to the suspension stresses. 
+This includes the second order derivative of the particle shape represented by $\textbf{M}_\alpha$ and the internal particle motions. 
+As discussed in the previous section this term is solely related to the inertia induced by change of orientation or shape of the particles. 
+Finally, the last term of the expression represents the contribution to the stress from all the higher moments of the particles, it can be the moments related to internal velocity or to external hydrodynamic forces.  
+Notice that since this term appear under the divergence operator it is non-zero only for Inhomogeneous suspension, therefore we call it the \textit{Inhomogeneous stresses}. 
+The formulation of the bulk stress given by \ref{eq:stress_bulk_explicit} is formally equivalent to equation (8) and (12) of \citet{lhuillier1996contribution} and equation (8.2) of \citet{zhang1997momentum}.
+If we derive \ref{eq:stress_bulk_explicit} for solid spherical particle by Substituting the internal velocity $\textbf{w}_d^0$ by a solid body motion, i.e. $\textbf{r}\times\bm\omega_\alpha$ we obtain equation (8.2) of \citet{zhang1997momentum}. 
+Therefore, the relation \ref{eq:stress_bulk_explicit} is not new, however the derivation presented here is 
+
+
+We now discuss the symmetry properties of $\bm\sigma^\text{eff}$ as it has been a subject of controversy over the past 20 years.
+In the pioneering study  \citep{prosperetti2006stress} it is found that the equivalent stress of a non-inertial suspension of spherical particles possess a skew-symmetric contribution (excluding the torque or the body torque term). 
+However, more recently \citet{zhou2020lamb} and \citet{dolata2020heterogeneous} claimed that the only skew-symmetric part present in the equivalent stress tensor \eqref{eq:stress_bulk_explicit} is the body torque term $\intO{\textbf{b}_d^0 \times \textbf{r}}$ in opposition to the conclusion of \citep{prosperetti2006stress}.
+In support to the conclusion of  \citet{dolata2020heterogeneous} limited to non-inertial suspension, we propose here to revisit their proof extended to inertial suspension. 
+In fact, it is found in \citet{lhuillier1996contribution} that reached the same the conclusion than \citet{dolata2020heterogeneous} but years before them, i.e. they conclude that the only skew-symmetric part present in the equivalent stress tensor is the body torque. 
+Since it seems that the article by \citet{lhuillier1996contribution} went unnoticed we propose here to re-demonstrate their proof as this will introduce useful relations for the next section. 
+
+From \ref{eq:sigma_bulk} it is clear that a skew-symmetric contribution arise from the body torque term $\intO{\textbf{b}_d^0 \times \textbf{r}}$. 
+On the other hand another contribution might arise due to the inhomogeneous stress tensor $\div \bm\Sigma_1$. 
+So the challenge here is to prove that  $\div \bm\Sigma_1$ is either symmetric or skew-symmetic. 
+Notice that due to the higher moments present in $\Sigma_{ijk}$ this tensor is arbitrary. 
+Additionally, in the bulk moment of momentum conservation \eqref{eq:momentum_bulk} the tensor $\Sigma_{ijk}$ appears under the operator $\partial_j \partial_k$, therefore only the term $\partial_j \partial_k \Sigma_{ijk}$ is of physical significance. 
+Thus, one can demonstrate that \citep{lhuillier1996contribution}
+\begin{equation}
+    \partial_j \partial_k \Sigma_{ijk}
+    = \partial_j \partial_k \Sigma_{i(jk)}
+    =
+    \partial_j \partial_k \left[
+        \Sigma_{i(jk)}
+        + \Sigma_{j(ik)}
+        - \Sigma_{k(ij)}
+    \right],
+    \label{eq:second_mom}
+\end{equation}
+where $\Sigma_{i(jk)} = \frac{1}{2}[\Sigma_{ijk} + \Sigma_{ikj}]$ represents the symmetric part of $\Sigma_{ijk}$ over the index $jk$, as indicated by the parenthesis. 
+Thus, the first equality is made possible by noting that $\partial_j \partial_k [\Sigma_{ijk} - \Sigma_{ikj}] = 0$.
+The second equality is obtained by adding and subtracting $\partial_j \partial_k \Sigma_{j(ik)}$ from the expression and recognizing that $\partial_j \partial_k \Sigma_{j(ik)} = \partial_j \partial_k \Sigma_{k(ij)}$ since $j$ and $k$ are dummy indices. 
+In \ref{eq:second_mom} the first two terms $\partial_k(\Sigma_{i(jk)} + \Sigma_{j(ik)})$ form a symmetric stress tensor over the index $i$ and $j$, while the last term $\partial_k\Sigma_{k(ij)}$ is symmetric over $i$ and $j$ as indicated by the parenthesis. 
+Thus, according to \ref{eq:second_mom} only the symmetric part of $\bm\Sigma$ is significant when applying the double divergence operator $\grad\grad$. 
+Therefore, while $\bm\Sigma$ might possess a skew-symmetric part, it vanishes under the application of the double divergence operator. 
+Consequently, in the momentum equation only the symmetric part of the second and higher moments of body force are of physical significance.
+Note that we could use \ref{eq:second_mom} to reformulate $\div\bm\Sigma$ in \ref{eq:stress_bulk_explicit} to write explicitly the symmetric contribution. 
+Therefore, for non-self torquing fluids, i.e. with symmetric local stresses,  the only contribution to the skew-symmetric part of the bulk stress is the body torque.
+Thus, in the situation where the only body force is the gravity, the bulk stress is symmetric even for inertial non-homogeneous suspension of arbitrary particles. 

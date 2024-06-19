@@ -63,7 +63,7 @@ future}
 \newcommand{\pddt}{\frac{\partial}{\partial t}}
 % \renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
-\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
+\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n}_k }
 
 \newcommand{\intO}[1]{\int_{\Omega_\alpha} #1 d\Omega}
 % \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}

@@ -120,141 +120,9 @@ It describes the evolution in space and time of the topology of the flow interfa
 \label{sec:local_eq}
 Let now introduce the local conservation laws that govern the fluid inside bulk phases (inside $\Omega_d$ and $\Omega_f$) and on the interfaces (on $\Gamma$). 
 
-\subsubsection{Inside the volumes}
+% \subsubsection{Generic formulation}
 
-Within phase $k$, we note $\rho_k^0$ the density, $\textbf{u}_k^0$ the local velocity and $E_k^0$ the local total energy per unit of mass.
-All over the domain $\Omega_k$ the mass, momentum and total energy obey these conservation laws:
-\begin{align}
-    \label{eq:dt_rho}
-    \pddt \rho_k^0  
-    + \div (
-        \rho_k^0\textbf{u}_k^0
-    )
-    &= 
-    0,\\
-    \label{eq:dt_rhou_k}
-    \pddt (\rho_k^0\textbf{u}_k^0)  
-    + \div (
-        \rho_k^0\textbf{u}_k^0\textbf{u}_k^0
-        - \bm{\sigma}_k^0 
-    )
-    &= 
-    \rho_k^0 \textbf{g},\\
-    \label{eq:dt_rhoE_k}
-    \pddt (\rho_k^0E_k^0)  
-    + \div (
-        \rho_k^0E_k^0\textbf{u}_k^0
-        + \textbf{q}_k^0
-        - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0 
-        )
-    &= 
-    \textbf{u}_k^0 \cdot \textbf{g}  \rho_k^0, 
-\end{align} 
-respectively. 
-Where $\bm\sigma_k^0$ and $\textbf{q}_k^0$ represent the stress tensor and the thermal energy flux of phase $k$, respectively. 
-The vector $\textbf{g}$ is the acceleration of gravity which is the only body force considered here.
-Additionally, the continuous phase is assumed Newtonian therefore, $\bm{\sigma}_f^0 = - p_f^0 \bm\delta + \mu_f \textbf{e}_f^0$, with $\textbf{e}_f^0 = \grad \textbf{u}_f^0+(\grad \textbf{u}_f^0)^\dagger$ the shear rate tensor, $\bm\delta$ the identity tensor and $p_f ^0$ the local pressure. 
-No heat source will be considered in this study.
-
-The total energy of phase $k$ can be further decomposed as $E_k^0 = e_k^0 + (u_k^0)^2/2$, where $e_k^0$ is the internal energy per unit of mass representing molecular agitation and $(u_k^0)^2/2$ is the kinetic energy per unit of mass.
-This decomposition, along with the previous set of equations, leads us to two independent equations, one for $e_k^0$ and a second for $(u_k^0)^2/2$, they read
-\begin{align}
-    \label{eq:dt_rhou_k2}
-    \pddt [\rho_k^0(u_k^0)^2]  
-    + \div [\rho_k^0(u_k^0)^2\textbf{u}_k^0/2 - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0]
-    &=
-    \rho_k^0\textbf{u}_2^0 \cdot \textbf{g}  
-    -  \bm{\sigma}_k^0 : \grad \textbf{u}_k^0,
-    \\
-    \label{eq:dt_rhoe_k}
-    \pddt (\rho_k^0e_k^0)  
-    + \div (
-        \rho_k^0e_k^0\textbf{u}_k^0
-        + \textbf{q}_k^0
-        )
-    &= 
-    \bm{\sigma}_k^0 : \grad \textbf{u}_k^0,
-\end{align} 
-respectively. 
-We can observe that the term, $\bm{\sigma}_k^0 : \grad \textbf{u}_k^0$,  appears with opposite signs in \ref{eq:dt_rhou_k2} and \ref{eq:dt_rhoe_k}.
-This indicates that the amount of energy transformed from kinetic to internal energy is given by $\bm{\sigma}_k^0 : \grad \textbf{u}_k^0$.
-Thus, in the case of Newtonian fluids, $\bm{\sigma}_f^0 : \grad \textbf{u}_f^0$ represents the energy dissipation due to viscous forces, which then acts as a heat source in \ref{eq:dt_rhoe_k}. 
-
-\subsubsection{On interfaces}
-
-On the interface $\Gamma$ the governing equations take the form of $2D$ conservation laws. 
-They are often viewed as \textit{jump conditions} or as boundary conditions for  \ref{eq:dt_rho}, \ref{eq:dt_rhou_k} and \ref{eq:dt_rhoE_k}. 
-In the most general case, the mass, momentum and energy surface equations read as \citep{ishii2010thermo,morel2015mathematical,bothe2022sharp}, 
-\begin{align}
-    \label{eq:dt_rhoI}
-    \pddt \rho_I^0
-    + \divI (\rho_I^0\textbf{u}_{I}^0)
-    + \rho_I^0 (\textbf{u}_I^0 \cdot \textbf{n})(\div \textbf{n})
-    &= 
-    -\Jump{
-        \rho_k^0 (\textbf{u}_I - \textbf{u}_k)
-    }
-    \\
-    \label{eq:dt_rhoIu_I}
-    \pddt (\rho_I^0\textbf{u}_I^0)  
-    + \divI (
-        \rho_I^0\textbf{u}_{I}^0\textbf{u}_{I||}^0
-        - \bm{\sigma}_{I||}^0)
-        + \rho_I^0 \textbf{u}_I^0 (\textbf{u}_I^0 \cdot \textbf{n})(\div \textbf{n})
-    &= 
-    \rho_I^0 \textbf{g}
-    - \Jump{
-        \rho_k^0 \textbf{u}_k (\textbf{u}_I - \textbf{u}_k)
-        + \bm\sigma^0_k
-    }
-    \\
-    \label{eq:dt_rhoIE_I}
-    \pddt (\rho_I^0E_I^0)  
-    + \divI (
-        \rho_I^0 E_I^0\textbf{u}_{I||}^0
-        - \textbf{u}_I^0 \cdot \bm{\sigma}_{I||}^0 
-        + \textbf{q}_{I||}^0
-        )
-    + \rho_I^0E_I^0  (\textbf{u}_I \cdot \textbf{n})(\div \textbf{n})
-    &= 
-    \textbf{u}_I^0 \cdot \textbf{g}  \rho_I^0 \nonumber\\
-    &- \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0
-    + \rho_k^0 E_k (\textbf{u}_I - \textbf{u}_k)
-    },
-\end{align} 
-respectively.
-Where $\rho_I^0$ is the interface density, $\rho_I^0\textbf{u}_I^0$ the interface momentum 
-and $E_I^0 = e_I^0 + \frac{1}{2}(u_I^0)^2$ the total energy of the interface, with $e_I^0$ the internal energy of the interface.
-$\bm{\sigma}_{I||}^0$ and $\textbf{q}_{I||}^0$ denote the momentum and heat fluxes on the interface, respectively.
-Note that we use the subscript  $_{||}$ to indicate the projection of a field onto the plane tangential to the surface $\Gamma$. 
-Specifically, for an arbitrary quantity $\textbf{f}$ defined on $\Gamma$, we denote its tangential projection as $\textbf{f}_{||} = (\bm\delta-\textbf{nn})\cdot \textbf{f}$. 
-Thus, notice that the diffusive flux $\bm{\sigma}_{I||}^0$ in \ref{eq:dt_rhoIu_I} and \ref{eq:dt_rhoIE_I} is a quantity projected onto the tangential plane of $\Gamma$.
-This arises from the fact that at thermodynamic equilibrium the diffusive flux $\bm{\sigma}_{I||}^0$ exhibits solely tangential components.
-Specifically, we can write \citep{nadim1996concise,bothe2022sharp}
-\begin{equation}
-    \bm\sigma_{I||}^0 = \left[\gamma + (\mu_{Id} -\mu_{Is}) \divI\textbf{u}_I^0\right] \bm\delta_{||}
-    +  \mu_{Is} \bm\delta_{||} \left[\grad_I\textbf{u}_I^0 + (\gradI \textbf{u}_I^0)^\dagger\right] \bm\delta_{||},
-    \label{eq:surface_fluxes}
-\end{equation}
-where $\mu_{Id}$ and $\mu_{Is}$ are the interfaces dilatational and shear viscosities, respectively, and $\gamma$ is the surface tension coefficient. 
-This observation holds significant implications for later analysis.
-
-The previous definition also applies to the divergence operator, meaning that $\gradI= (\bm\delta-\textbf{nn})\cdot \grad$ is referred to as the surface divergence operator. 
-Consequently, the flux terms of the form $\divI[(\ldots)_{||}]$ in \ref{eq:dt_rhoI}, \ref{eq:dt_rhoIu_I} and \ref{eq:dt_rhoIE_I} represent 2D diffusive and convective fluxes that result from tangential motions or diffusive processes at the interface. 
-Conversely, the terms involving the local curvature $(\div \textbf{n})$ are related to the interface expansion or contraction resulting from the normal velocity of the interface $\textbf{u}_I^0\cdot \textbf{n}$. 
-Thus, the latter term is the consequence of the time-varying metric of the interface, while the former can be non-zero for a static interface $\Gamma$. 
-We introduced the notation $\Jump{\ldots}$, where $\Jump{\ldots} = \sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$ signifying the discontinuity across the interface.
-Consequently, the terms present on the right-hand side of \ref{eq:dt_rhoI}, \ref{eq:dt_rhoIu_I} and \ref{eq:dt_rhoIE_I} represent the source due to the discontinuity of the bulk properties at each sides of the interface. 
-Specifically, we recognize the terms related to mass transfer as $\rho_k^0 (\ldots) (\textbf{u}_I - \textbf{u}_k)$ where $(\ldots)$ refers to the quantity to be conserved. 
-
-
-In \ref{ap:hypothesis} we expose the surface conservation equations considering no surface properties except the uniform surface tension effects, i.e. first term of \ref{eq:surface_fluxes} with $\gamma$ constant. 
-This yields a much simpler set of equations for the interfaces that will be used in the last section of the present paper (see \ref{sec:application}). 
-For further insights into the modeling of sharp interface thermodynamics a comprehensive review may be found in \cite{bothe2022sharp}. 
-
-\subsubsection{Generic formulation}
-
-For ease of understanding, we now introduce generic conservation laws in the volumes and on the interfaces. 
+We introduce generic conservation laws in the volumes and on the interfaces. 
 Let $f_k^0$ denote a volumetric quantity of arbitrary tensorial order defined in $\Omega_k$.
 Likewise, let $f_I^0$ represent an arbitrary surface property defined on $\Gamma$.
 Using the strategy outlined in \citep{ishii2010thermo,bothe2022sharp}, the local conservation equations for $f_k^0$ and $f_I^0$ yield,  
@@ -286,6 +154,32 @@ respectively.
 The tensors $\mathbf{\Phi}_k^0(f_k^0)$ and $\mathbf{\Phi}_{I||}^0(f_I^0)$ represent the non-convective fluxes corresponding to the quantities $f_k^0$ and $f_I^0$, respectively. 
 Notice that $\mathbf{\Phi}_{I||}^0$ also carries the $_{||}$ subscript which implies that only the tangential component of this tensor plays a role in the surface balance equation. 
 Similarly, $s_k^0(f_k^0)$ and $s_I^0(f_I^0)$ are the source terms corresponding to the quantities $f_k^0$ and $f_I^0$, respectively.
+
+Note that we use the subscript  $_{||}$ to indicate the projection of a field onto the plane tangential to the surface $\Gamma$. 
+Specifically, for an arbitrary quantity $\textbf{f}$ defined on $\Gamma$, we denote its tangential projection as $\textbf{f}_{||} = (\bm\delta-\textbf{nn})\cdot \textbf{f}$. 
+Thus, notice that the diffusive flux $\bm\Phi_{I||}^0$ in \ref{eq:dt_f_I} is a quantity projected onto the tangential plane of $\Gamma$.
+This arises from the fact that at thermodynamic equilibrium the diffusive flux $\bm\Phi_{I||}^0$ exhibits solely tangential components.
+Indeed, in most of the cases the interfacial stress or heat fluxes, or mass fluxes.  
+Specifically, we can write \citep{nadim1996concise,bothe2022sharp}
+\begin{equation}
+    \bm\sigma_{I||}^0 = \left[\gamma + (\mu_{Id} -\mu_{Is}) \divI\textbf{u}_I^0\right] \bm\delta_{||}
+    +  \mu_{Is} \bm\delta_{||} \left[\grad_I\textbf{u}_I^0 + (\gradI \textbf{u}_I^0)^\dagger\right] \bm\delta_{||},
+    \label{eq:surface_fluxes}
+\end{equation}
+where $\mu_{Id}$ and $\mu_{Is}$ are the interfaces dilatational and shear viscosities, respectively, and $\gamma$ is the surface tension coefficient. 
+This observation holds significant implications for later analysis.
+
+The previous definition also applies to the divergence operator, meaning that $\gradI= (\bm\delta-\textbf{nn})\cdot \grad$ is referred to as the surface divergence operator. 
+Consequently, the flux terms of the form $\divI[(\ldots)_{||}]$ in \ref{eq:dt_f_I} represent 2D diffusive and convective fluxes that result from tangential motions or diffusive processes at the interface. 
+Conversely, the terms involving the local curvature $(\div \textbf{n})$ are related to the interface expansion or contraction resulting from the normal velocity of the interface $\textbf{u}_I^0\cdot \textbf{n}$. 
+Thus, the latter term is the consequence of the time-varying metric of the interface, while the former can be non-zero for a static interface $\Gamma$. 
+We introduced the notation $\Jump{\ldots}$, where $\Jump{\ldots} = \sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$ signifying the discontinuity across the interface.
+Consequently, the terms present on the right-hand side of \ref{eq:dt_f_I} represent the source due to the discontinuity of the bulk properties at each sides of the interface. 
+Specifically, we recognize the terms related to mass transfer as $\rho_k^0 (\ldots) (\textbf{u}_I - \textbf{u}_k)$ where $(\ldots)$ refers to the quantity to be conserved. 
+
+
+
+
 For practical uses, note that the advecting term in \ref{eq:dt_f_I} can be written in the more compact form $\divI(f_I^0 \textbf{u}_I^0)$. 
 Indeed, one can show that $f_I^0 (\textbf{u}_I \cdot \textbf{n})(\div \textbf{n})
 +\divI(f_I^0 \textbf{u}_{I||}^0) = \divI(f_I^0 \textbf{u}_I^0)$, by noticing that $\textbf{n}\cdot\gradI(\ldots) = 0$ and $\divI\textbf{n} = \div\textbf{n}$ \citep{nadim1996concise}.
