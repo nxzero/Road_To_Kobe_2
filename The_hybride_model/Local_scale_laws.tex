@@ -92,7 +92,7 @@ In this work, we use the subscript $_I$ to denote any quantity inherently define
 %Furthermore, we use the superscript `` $^0$ '' on a field to indicate that it is defined at the local non average level, which implies that it is a function of the flow configuration $\FF$, the position vector $\textbf{x}$, and the time $t$. 
 %For clarity and ease of reading purposes, we omit the arguments $\FF$, $\textbf{x}$ and $t$ for any local function denoted by a `` $^0$ '' (as well as for $\delta_I$ and $\chi_k$) as their dependence implicitly referring to $\textbf{x},t$ and $\FF$.
 
-To derive a conservation equation for $\delta_I$, one can take the gradient of \ref{eq:dt_chi_k} and then compute the dot product of the resulting expression with $\textbf{n}_k$. This approach yields the following result \citep{marle1982,drew1990,lhuillier2000bilan,junqua2003}
+To derive a conservation equation for $\delta_I$, one can take the gradient of \ref{eq:dt_chi_k} and then compute the dot product of the resulting expression with $\textbf{n}_k$. This approach yields the following result \citep{marle1982macroscopic,drew1990,lhuillier2000bilan,junqua2003}
 %One may obtain a conservation equation for $\delta_I$ by taking the gradient of \ref{eq:dt_chi_k} and then applying the dot product of the resulting expression with $\textbf{n}_k$. We obtain \citep{junqua2003,orlando2023evolution} %describe the evolution of $\delta_I$ we derive a first equation by taking the gradient of \ref{eq:dt_chi_k} and then applying the dot product of the resulting expression with $\textbf{n}_k$.
 
 \begin{equation}
@@ -103,23 +103,25 @@ To derive a conservation equation for $\delta_I$, one can take the gradient of \
 \end{equation} 
 where we make use of the relation $\textbf{n}_k\cdot \pddt\textbf{n}_k= \frac{1}{2}\pddt(\textbf{n}_k\cdot \textbf{n}_k) = 0$. We did not specify the index of the normal $\textbf{n}$ in \ref{eq:dt_delta_I} to emphasize that this equation is independent of the index $k$. This is because $\textbf{n}$ appears twice in each term of this equation. Consequently, we will omit the index of the normal vector in subsequent discussions unless it is required. %For this reason, in the following, we will not specifcy the index of the normal when this it not necessary. %Furthermore, note that in  \ref{eq:dt_delta_I} and \ref{eq:grad_delta_I}.
 Additionally, note that in \ref{eq:dt_delta_I} only the normal component of the surface velocity is present, and the term $\div \textbf{n}$ represents twice the mean curvature of the surface \citep{aris2012vectors}.  %\color{blue} 
+
+
 A second equation is obtained by taking the gradient of the distribution $\delta_I$. In the sense of distribution \citep{appel2007}, 
 
 \begin{equation}
-<\frac{\partial \delta_I}{\partial x_i},\phi> = - <\delta_I,\frac{\partial \phi}{\partial x_i}>.
+<\nabla \delta_I,\phi> = - <\delta_I,\nabla \phi>.
 \end{equation}
 Hence,
 \begin{equation}
-<\frac{\partial \delta_I,}{\partial x_i}\phi> = - \int_{\Gamma} \frac{\partial \phi}{\partial x_i} d\Gamma.
+<\nabla \delta_I,\phi> = - \int_{\Gamma} \nabla \phi d\Gamma.
 \label{eq:1grad_delta_I}
 \end{equation}
-Since $\textbf{n}$ is a unit vector, we have $\frac{\partial n_j}{\partial x_i}n_j =0$ and%. Inserting this relation in \ref{eq:1grad_delta_I} we obtain
-\begin{equation}
-\frac{\partial \phi }{\partial x_i}= \frac{\partial}{\partial x_i}(\phi n_j) n_j,
-\end{equation}
+Since $\textbf{n}$ is a unit vector, we have $\bm\nabla \textbf{n} \cdot \textbf{n} =\bm 0$ and%. Inserting this relation in \ref{eq:1grad_delta_I} we obtain
+%\begin{equation}
+$\nabla \phi= \bm\nabla (\phi \textbf{n}) \cdot \textbf{n},$
+%\end{equation}
 which yields 
 \begin{equation}
-<\frac{\partial \delta_I}{\partial x_i},\phi> = - \int_{\Gamma} \frac{\partial}{\partial x_i}(\phi n_j) n_j d\Gamma = <\frac{\partial \delta_I n_j}{\partial x_i}n_j,\phi>.
+<\nabla \delta_I,\phi> = - \int_{\Gamma} \bm\nabla (\phi \textbf{n}) \cdot \textbf{n} d\Gamma = <\bm\nabla (\delta _I \textbf{n}) \cdot \textbf{n},\phi>.
 \end{equation}
 With a slight abuse of notation the preceding relation may be rewritten as
 %Multiplying the integrand by $\frac{n_{k}} \cdot \frac{n_{k}}$ and  we get 
@@ -136,7 +138,7 @@ With a slight abuse of notation the preceding relation may be rewritten as
 
 \begin{equation}
     \grad\delta_I 
-    =   \grad (\textbf{n} \delta_I) \cdot \textbf{n}
+    =   \bm\nabla (\textbf{n} \delta_I) \cdot \textbf{n}
     \label{eq:grad_delta_I}
 \end{equation}
 \ref{eq:grad_delta_I} has been derived straightforwardly, yet it differs from the expression recently obtained by \citet{orlando2023}.  The source of this discrepancy is unclear to the current authors. It might be due to differences in their notation, with their operator gradient potentially representing a normal derivative.%The source of this discrepancy is unclear to the current authors, but it may be related to discrepancy in their notation, their operator graident actually meaning normal derivative. %the definition of the gradient operator in \citet{orlando2023}, which could be the normal derivative in their paper.
@@ -147,14 +149,15 @@ These equations describe the spatiotemporal evolution of the interfaces topology
 
 \subsection{Local conservation equations}
 \label{sec:local_eq}
-Let now introduce the local conservation laws that govern the fluid inside bulk phases (inside $\Omega_d$ and $\Omega_f$) and on the interfaces (on $\Gamma$). 
-
+We now introduce the local conservation laws that govern the fluid inside bulk phases (inside $\Omega_d$ and $\Omega_f$) and on the interfaces (on $\Gamma$). 
 % \subsubsection{Generic formulation}
-
-We introduce generic conservation laws in the volumes and on the interfaces. 
+We present generic conservation laws within the volumes and at the interfaces. 
 Let $f_k^0$ denote a volumetric quantity of arbitrary tensorial order defined in $\Omega_k$.
-Likewise, let $f_I^0$ represent an arbitrary surface property defined on $\Gamma$.
-Using the strategy outlined in \citep{ishii2010thermo,bothe2022sharp}, the local conservation equations for $f_k^0$ and $f_I^0$ yield,  
+Similarly, let $f_I^0$ represent an arbitrary surface property defined on $\Gamma$. The subscript $_{||}$ is used to denote the projection of a field onto the plane tangential to the surface $\Gamma$. Specifically, for an arbitrary quantity $\textbf{g}$ defined on $\Gamma$, its tangential projection is given by $\textbf{g}_{||} = (\bm\delta-\textbf{nn})\cdot \textbf{g}$ where $\bm\delta$ is the identity tensor. This definition also extends to the divergence operator, where $\gradI= (\bm\delta-\textbf{nn})\cdot \grad$ is referred to as the surface divergence operator.
+
+%We use the subscript  $_{||}$ to indicate the projection of a field onto the plane tangential to the surface $\Gamma$. Specifically, for an arbitrary quantity $\textbf{g}$ defined on $\Gamma$, we denote its tangential projection as $\textbf{g}_{||} = (\bm\delta-\textbf{nn})\cdot \textbf{g}$. The previous definition also applies to the divergence operator, meaning that $\gradI= (\bm\delta-\textbf{nn})\cdot \grad$ is referred to as the surface divergence operator. 
+
+Following the strategy outlined in \citep{ishii2010thermo,bothe2022sharp}, the local conservation equations for $f_k^0$ and $f_I^0$ can be written as follows
 \begin{align}
     \label{eq:dt_f_k}
     \pddt f_k^0
@@ -180,40 +183,32 @@ Using the strategy outlined in \citep{ishii2010thermo,bothe2022sharp}, the local
     \label{eq:dt_f_I}
 \end{align}
 respectively.
-The tensors $\mathbf{\Phi}_k^0(f_k^0)$ and $\mathbf{\Phi}_{I||}^0(f_I^0)$ represent the non-convective fluxes corresponding to the quantities $f_k^0$ and $f_I^0$, respectively. 
-Notice that $\mathbf{\Phi}_{I||}^0$ also carries the $_{||}$ subscript which implies that only the tangential component of this tensor plays a role in the surface balance equation. 
-Similarly, $s_k^0(f_k^0)$ and $s_I^0(f_I^0)$ are the source terms corresponding to the quantities $f_k^0$ and $f_I^0$, respectively.
-
-Note that we use the subscript  $_{||}$ to indicate the projection of a field onto the plane tangential to the surface $\Gamma$. 
-Specifically, for an arbitrary quantity $\textbf{f}$ defined on $\Gamma$, we denote its tangential projection as $\textbf{f}_{||} = (\bm\delta-\textbf{nn})\cdot \textbf{f}$. 
-Thus, notice that the diffusive flux $\bm\Phi_{I||}^0$ in \ref{eq:dt_f_I} is a quantity projected onto the tangential plane of $\Gamma$.
-This arises from the fact that at thermodynamic equilibrium the diffusive flux $\bm\Phi_{I||}^0$ exhibits solely tangential components.
-Indeed, in most of the cases the interfacial stress or heat fluxes, or mass fluxes.  
-Specifically, we can write \citep{nadim1996concise,bothe2022sharp}
-\begin{equation}
-    \bm\sigma_{I||}^0 = \left[\gamma + (\mu_{Id} -\mu_{Is}) \divI\textbf{u}_I^0\right] \bm\delta_{||}
-    +  \mu_{Is} \bm\delta_{||} \left[\grad_I\textbf{u}_I^0 + (\gradI \textbf{u}_I^0)^\dagger\right] \bm\delta_{||},
-    \label{eq:surface_fluxes}
-\end{equation}
-where $\mu_{Id}$ and $\mu_{Is}$ are the interfaces dilatational and shear viscosities, respectively, and $\gamma$ is the surface tension coefficient. 
-This observation holds significant implications for later analysis.
-
-The previous definition also applies to the divergence operator, meaning that $\gradI= (\bm\delta-\textbf{nn})\cdot \grad$ is referred to as the surface divergence operator. 
-Consequently, the flux terms of the form $\divI[(\ldots)_{||}]$ in \ref{eq:dt_f_I} represent 2D diffusive and convective fluxes that result from tangential motions or diffusive processes at the interface. 
-Conversely, the terms involving the local curvature $(\div \textbf{n})$ are related to the interface expansion or contraction resulting from the normal velocity of the interface $\textbf{u}_I^0\cdot \textbf{n}$. 
-Thus, the latter term is the consequence of the time-varying metric of the interface, while the former can be non-zero for a static interface $\Gamma$. 
-We introduced the notation $\Jump{\ldots}$, where $\Jump{\ldots} = \sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$ signifying the discontinuity across the interface.
-Consequently, the terms present on the right-hand side of \ref{eq:dt_f_I} represent the source due to the discontinuity of the bulk properties at each sides of the interface. 
-Specifically, we recognize the terms related to mass transfer as $\rho_k^0 (\ldots) (\textbf{u}_I - \textbf{u}_k)$ where $(\ldots)$ refers to the quantity to be conserved. 
-
-
-
-
-For practical uses, note that the advecting term in \ref{eq:dt_f_I} can be written in the more compact form $\divI(f_I^0 \textbf{u}_I^0)$. 
+The tensors $\mathbf{\Phi}_k^0$ and $\mathbf{\Phi}_{I||}^0$ represent the non-convective fluxes corresponding to the quantities $f_k^0$ and $f_I^0$, respectively. Similarly, $s_k^0$ and $s_I^0$ are the source terms corresponding to the quantities $f_k^0$ and $f_I^0$, respectively. We assume that only the tangential component of the tensor $\mathbf{\Phi}_{I}^0$ plays a role in the surface balance equation \citep{bothe2022sharp}. However, in certain specific scenarios, such as momentum transport along a membrane, the interface may exhibit resistance to bending. For further discussion on this topic, see \citet{jaensson2019}. % although in some very specific scenario for instance momentum tranport along a mebrane, the interface may resist bending. See for instance \citet{jaensson2019} for a discussion on the subject.
+%. In some very specific scenario the interface may resist bending, see for instance Jaensson for a discussion on the subject.
+%Notice that $\mathbf{\Phi}_{I||}^0$ carries the $_{||}$ subscript which implies that only the tangential component of this tensor plays a role in the surface balance equation. Indeed we use the subscript  $_{||}$ to indicate the projection of a field onto the plane tangential to the surface $\Gamma$.  
+%Thus, notice that the diffusive flux $\bm\Phi_{I||}^0$ in \ref{eq:dt_f_I} is a quantity projected onto the tangential plane of $\Gamma$.
+%This arises from the fact that at thermodynamic equilibrium the diffusive flux $\bm\Phi_{I||}^0$ exhibits solely tangential components.
+%Indeed, in most of the cases the interfacial stress or heat fluxes, or mass fluxes.  
+%Specifically, we can write \citep{nadim1996concise,bothe2022sharp}
+%\begin{equation}
+%    \bm\sigma_{I||}^0 = \left[\gamma + (\mu_{Id} -\mu_{Is}) \divI\textbf{u}_I^0\right] \bm\delta_{||}
+%    +  \mu_{Is} \bm\delta_{||} \left[\grad_I\textbf{u}_I^0 + (\gradI \textbf{u}_I^0)^\dagger\right] \bm\delta_{||},
+%    \label{eq:surface_fluxes}
+%\end{equation}
+%where $\mu_{Id}$ and $\mu_{Is}$ are the interfaces dilatational and shear viscosities, respectively, and $\gamma$ is the surface tension coefficient. 
+%This observation holds significant implications for later analysis.
+Consequently, the flux terms of the form $\divI[(\ldots)_{||}]$ in \ref{eq:dt_f_I} represent two-dimensional diffusive and convective fluxes arising from tangential motions or diffusive processes at the interface.
+Conversely, the term involving the local curvature $(\div \textbf{n})$ is related to the interface expansion or contraction resulting from the normal velocity of the interface $\textbf{u}_I^0\cdot \textbf{n}$. For practical uses, note that the advecting term in \ref{eq:dt_f_I} can be written in the more compact form $\divI(f_I^0 \textbf{u}_I^0)$. 
 Indeed, one can show that $f_I^0 (\textbf{u}_I \cdot \textbf{n})(\div \textbf{n})
 +\divI(f_I^0 \textbf{u}_{I||}^0) = \divI(f_I^0 \textbf{u}_I^0)$, by noticing that $\textbf{n}\cdot\gradI(\ldots) = 0$ and $\divI\textbf{n} = \div\textbf{n}$ \citep{nadim1996concise}.
-It is important to note that \ref{eq:dt_f_k} and \ref{eq:dt_f_I} are defined uniquely in the domains $\Omega_k$ and $\Gamma$, respectively.
-Consequently, these equations are referred to as local conservation equations. 
+%Thus, the latter term is the consequence of the time-varying metric of the interface, while the former can be non-zero for a static interface $\Gamma$. 
+In \ref{eq:dt_f_I} we have introduced the notation $\Jump{\ldots}$, where $\Jump{\ldots} = \sum_{k=1}^2 [\ldots] \cdot \textbf{n}_k$ signifies the jump across the interface. Thus, the last term on the right-hand side of \ref{eq:dt_f_I} represent a source of $f_I^0$ due to the discontinuity of bulk properties on either side of the interface. We also recognize a term related to mass transfer proportional to $(\textbf{u}_I - \textbf{u}_k)$. %$\rho_k^0 (\ldots) (\textbf{u}_I - \textbf{u}_k)$ where $(\ldots)$ refers to the quantity to be conserved. 
+It is important to note that \ref{eq:dt_f_k} and \ref{eq:dt_f_I} are uniquely defined within the domains $\Omega_k$ and $\Gamma$, respectively.
+Consequently, these equations are referred to as local conservation equations.
+
+
+
+ 
 
 
 \subsection{The two-fluid formulation}
