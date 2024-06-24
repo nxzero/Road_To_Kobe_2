@@ -1,36 +1,55 @@
 \subsection{Lagrangian's equations for a single particle}
 \label{ap:particles_eq}
-For the reason mentioned in \ref{sec:two-fluid} the two-fluid model isn't suited to describe dispersed two phase flow therefore we derive the governing equation under a lagrangian framework. 
 
-\subsubsection{First order law}
-First let us define a complementary property of the particle. 
-This is the total energy $E_\alpha^\text{tot}$ of a particle which can be written 
+
+We now introduce an additional property of the particles: the total energy $E_\alpha$, which is defined as
 \begin{equation*}    
-     E_\alpha^\text{tot}(t) 
+    m_\alpha E_\alpha(t) 
     = \intO{ \rho_d [e_d^0 + (u_d^0)^2/2] }
-    + \intS{ \gamma },
+    % + \intS{ \gamma },
 \end{equation*}
-Note that the total energy of the particle is the integral of the local total energy $\rho_d [e_d^0 + (u_d^0)^2/2]$ over its volume and the integral of the local surface energy, $\gamma$ over its surface. 
-Additionally, in the following we note $s_\alpha = \intS{}$ the surface of the particle $\alpha$. 
-Using the decomposition $\textbf{u}_d^0 = \textbf{u}_\alpha + \textbf{w}_d^0$, the total energy $E_\alpha^\text{tot}$ can be decomposed according to,
+Using the decomposition $\textbf{u}_d^0 = \textbf{u}_\alpha + \textbf{w}_d^0$, the total energy $E_\alpha$ can be decomposed according to,
 \begin{equation*}
     \label{eq:E_alpha_def}
-    E_\alpha^\text{tot}
+    m_\alpha E_\alpha
     = m_\alpha e_\alpha 
     + W_\alpha
     + m_\alpha (u_\alpha)^2/2
-    + \gamma s_\alpha 
+    % + \gamma s_\alpha 
 \end{equation*}
 Consequently, the total energy of a particle is the contribution of :
 its internal energy $m_\alpha e_\alpha$; 
-its internal kinetic energy, $W_\alpha = \intO{\rho_d  (w_d^0)^2/2 }$;
-its center of mass kinetic energy, $u_\alpha^2/2$; 
-its surface energy $\intS{ \gamma} = \gamma s_\alpha$; 
+its internal kinetic energy, $W_\alpha =  \intO{\rho_d  (w_d^0)^2/2 }$;
+its center of mass kinetic energy, $u_\alpha^2/2$;. 
+Finally, we introduce the total energy of both the volume and the surface of the particle, which is defined as 
+\begin{equation*}
+    m_\alpha E_\alpha^\text{tot}
+    = 
+    \frac{s_\alpha}{m_\alpha} \gamma 
+    + m_\alpha E_\alpha
+\end{equation*}
+where we noted $s_\alpha = \intS{}$ the surface of the particle $\alpha$, thus  $\gamma s_\alpha $ corresponds to the surface energy of the particle. 
 
-The volume equation of a single particle follow the notation \ref{eq:dt_q_alpha} and stay relatively straightforward to derive.
-What is less evident thought is the derivation of the surface equations, or boundary conditions, integrated on the surface of a single particle. 
-They are derived following the procedure of \ref{eq:dt_q_I_alpha} exposed in \ref{sec:Lagrangian}. 
-Integrating the momentum, kinetic energy and internal energy jump conditions, i.e.  \ref{eq:surface_tension}, \ref{eq:dt_rhoI_uI3} and  \ref{eq:dt_rhoIe_I}  gives, 
+
+\subsubsection{First order law}
+
+Using the local conservation, \ref{eq:dt_rho}, \ref{eq:dt_rhou_k} and \ref{eq:dt_rhoE_k} into the generic formulation \ref{eq:dt_q_alpha} yields directly the mass momentum and total energy conservation equation for a single particle, namely
+\begin{align}
+    \ddt m_\alpha
+    &= 
+    0,\\
+    \ddt (m_\alpha \textbf{u}_\alpha)
+    &= 
+    m_\alpha\textbf{g}
+    +  \intS{\bm{\sigma}_d^0 \cdot \textbf{n}_d},\\
+    \ddt (m_\alpha E_\alpha)
+    &= 
+    m_\alpha \textbf{u}_\alpha \cdot \textbf{g}
+    +\intS{\textbf{u}_d^0 \cdot \bm{\sigma}_d^0 \cdot  \textbf{n}_d} 
+    - \intS{\textbf{q}_d^0 \cdot \textbf{n}_d}. 
+\end{align}
+As mentioned in \ref{sec:Lagrangian} we now need to derive the particle's surface equations to re-formulate the exchange terms on the right-hand side of these equations. 
+It is done by integrating \ref{eq:surface_tension}, \ref{eq:dt_rhoI_uI3} and  \ref{eq:dt_rhoIe_I}  over the surface of the particle, which gives,  
 \begin{align}
     \label{eq:int_u_I}
     \intS{\Jump{\bm{\sigma}_k^0} }
@@ -38,9 +57,11 @@ Integrating the momentum, kinetic energy and internal energy jump conditions, i.
     \intS{\divI\bm\sigma^0_{I||}} = 0\\
     \label{eq:int_u_I2}
     \intS{\Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0}},
+    % = \intS{\Jump{\textbf{w}_k^0 \cdot \bm{\sigma}_k^0}},
     &=
-    -\intS{\gamma\textbf{n}\cdot \textbf{u}_{I}^0(\div \textbf{n})}
+    -\intS{\gamma(\textbf{n}\cdot \textbf{u}_{I}^0)(\div \textbf{n})}
     = \gamma \ddt s_\alpha,\\
+    \label{eq:int_q_I}
     \Jump{\textbf{q}_k^0}
     &=
     0,
@@ -48,10 +69,10 @@ Integrating the momentum, kinetic energy and internal energy jump conditions, i.
 respectively. 
 The second equality of \ref{eq:int_u_I} is demonstrated using \ref{eq:gauss_surface}. 
 The second equality of \ref{eq:int_u_I2} is derived using both \ref{eq:gauss_surface} and \ref{eq:reynolds_transport}. 
-Consequently, on a closed surface the surface tension plays no role in the momentum jump condition.
-Additionally, the work of the surface tension force is equal to $\gamma$ times the rate of change of the area of a given particle. 
+As witnesses by \ref{eq:int_u_I}, on a closed surface the surface tension plays no role in the momentum jump condition.
+Additionally, according to \ref{eq:int_u_I2} the work of the surface tension force is equal to $\gamma$ times the rate of change of the area of a given particle. 
 
-Using these equations as boundary condition we easily derive the  mass, momentum and energy equations for a single particle, 
+Using \ref{eq:int_u_I}, \ref{eq:int_u_I2} and \ref{eq:int_q_I} to reformulate the preceding equations, we easily derive the total mass, momentum and energy equations for a single particle, 
 \begin{align}
     \label{eq:dt_m_alpha}
     \ddt m_\alpha
@@ -71,13 +92,11 @@ Using these equations as boundary condition we easily derive the  mass, momentum
     - \intS{\textbf{q}_f^0 \cdot \textbf{n}_d}
 \end{align}
 where  $\intS{  \bm{\sigma}_f^0 \cdot \textbf{n}_d }$ is the resultants of the hydrodynamic force of the continuous phase, $\intS{\textbf{w}_f^0 \cdot \bm{\sigma}_f^0 \cdot  \textbf{n}_d} $ is the resultant of the work of the continuous phase stresses with the surface velocity, and $\intS{ \textbf{q}_f^0 \cdot \textbf{n}_d }$ is the resultants of the surface heat flux. 
-The second term on the right hands side of the energy equation is the work produced by the mean force and the translational motion of the droplets, while $\intS{\textbf{w}_f^0 \cdot \bm{\sigma}_f^0 \cdot  \textbf{n}_d}$ is the work produced by the local forces and local motion of the fluid at the surface of the particle.
-Since we integrated the energy over the particle's volume and its surface, we explicitly made appear the surface energy $\gamma s_\alpha$ within the derivative operator using \ref{eq:int_u_I2}. 
+Notice that the second term on the right hands side of \ref{eq:dt_E_alpha_tot} is the work produced by the mean force and the translational motion of the droplets, while $\intS{\textbf{w}_f^0 \cdot \bm{\sigma}_f^0 \cdot  \textbf{n}_d}$ is the work produced by the local forces and local motion of the fluid at the surface of the particle.
 Note that these equations does not explicitly account for inter-particle interactions. 
-However, the surface external stress flux $\bm{\sigma}_f^0$ contains inter-particle forces mediated through the carrier fluid such as lubrication forces and long range inter-particle forces.
+Nevertheless, note that the surface external stress flux $\bm{\sigma}_f^0$ contains inter-particle forces mediated through the carrier fluid such as lubrication forces and long range inter-particle forces.
 
-
-In the spirit of the energy decomposition exposed in \ref{eq:E_alpha_def} the total energy equation \ref{eq:dt_E_alpha_tot} can be split into three secondary equations. 
+In the spirit of the energy decomposition exposed in the previous section (\ref{eq:dt_rhou_k2} and \ref{eq:dt_rhoe_k} )the total energy equation \ref{eq:dt_E_alpha_tot} can be split into three secondary equations. 
 One for the center of mass kinetic energy $u_\alpha^2/2$, another for the particle internal kinetic energy $W_\alpha$, and a last one for the particle internal energy $e_\alpha$, it reads
 \begin{align}
     \label{eq:dt_u2_alpha}
@@ -114,8 +133,7 @@ In fact, we will see that the transfer between these scales is archived thought 
 
 \subsubsection{Higher moments balance}
 
-We now consider the case of mass and momentum conservation laws for a particle of arbitrary shape. 
-
+In the objective of describing the shape as well as the deformation of a particle we now introduce the second moment of mass and first order moment of momentum of a particle. 
 Following \ref{eq:Q_n_definition} we define the second-order moment of mass and the first-order moment of momentum as respectively,
 \begin{equation}
     \textbf{M}_\alpha 
@@ -382,5 +400,5 @@ Thus, the surface tension force impacts the hydrodynamic behavior of a particle 
 In \ref{ap:Moments_equations} we show how to derive the higher-order moment of momentum equations, which can also be viewed as formulas for the higher moments of the internal particle stress distribution. 
 It is interesting to mention that in a recent study of \citet{dolata2021faxen} and \citet{zhou2020lamb} they use energy methods and recover the first two moments of momentum equations hidden into another but equivalent form, valid in the Stokes flow regime. 
 
-Hence, the moment of momentum emerges as a quantity of utmost importance for all types of particles with variable shape or volume. In general, the first moments $\textbf{Q}_{\alpha}$ and $\textbf{Q}_{I\alpha}$ hold significant importance when considering particles with high internal gradients, i.e. when $\grad f_d^0$ or $\gradI f_I^0$ are non-negligible at the scale of one particle. 
+Hence, the moment of momentum emerges as a quantity of utmost importance for all types of particles with variable shape or volume. 
 

@@ -1,58 +1,55 @@
-We now treat the specific case of the mass, momentum and total energy conservation of an emulsion subject to buoyancy forces only. 
-Thus, in this section we re iterate the derivation presented from \ref{sec:local_eq} to \ref{sec:Lagrangian}. 
-Specifically, we first  present the local conservation laws, the two-fluid formulation and the Lagrangian conservation equations. 
-The complete hybrid model will be presented in the subsequent section. 
+In this section we re iterate the derivation presented from \ref{sec:local_eq} to \ref{sec:Lagrangian} applied to mass, momentum and energy conservation laws. 
+We consider a mono-disperse emulsions with subject to buoyancy forces. 
+The dispersed and continuous phases are considered Newtonian ﬂuids deﬁned by the constant viscosities $\mu_k$ and density $\rho_k$.
 
 
-\subsection{Local conservation equaitons}
+\subsection{Local conservation equations}
 
-Within phase $k$, we note $\rho_k$ the constant density of the fluid $k$, $\textbf{u}_k^0$ the local velocity and $E_k^0$ the local total energy per unit of mass.
-All over the domain $\Omega_k$ the mass, momentum and total energy obey these conservation laws:
+Within phase $k$, we note, $E_k^0 = e_k^0 + (u_k^0)^2/2$ the local total energy per unit of mass, where $e_k^0$ is the internal energy per unit of mass and $(u_k^0)^2/2$ is the kinetic energy per unit of mass.
+All over the domain $\Omega_k$ the mass, momentum and total energy obey 
 \begin{align}
     \label{eq:dt_rho}
-    \pddt \rho_k^0  
-    + \div (
-        \rho_k^0\textbf{u}_k^0
-    )
+    % \pddt \rho_k  
+    % + 
+    \div \textbf{u}_k^0
     &= 
     0,\\
     \label{eq:dt_rhou_k}
-    \pddt (\rho_k^0\textbf{u}_k^0)  
+    \pddt (\rho_k\textbf{u}_k^0)  
     + \div (
-        \rho_k^0\textbf{u}_k^0\textbf{u}_k^0
+        \rho_k\textbf{u}_k^0\textbf{u}_k^0
         - \bm{\sigma}_k^0 
     )
     &= 
-    \rho_k^0 \textbf{g},\\
+    \rho_k \textbf{g},\\
     \label{eq:dt_rhoE_k}
-    \pddt (\rho_k^0E_k^0)  
+    \pddt (\rho_kE_k^0)  
     + \div (
-        \rho_k^0E_k^0\textbf{u}_k^0
+        \rho_kE_k^0\textbf{u}_k^0
         + \textbf{q}_k^0
         - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0 
         )
     &= 
-    \textbf{u}_k^0 \cdot \textbf{g}  \rho_k^0, 
+    \textbf{u}_k^0 \cdot \textbf{g}  \rho_k, 
 \end{align} 
 respectively. 
 Where $\bm\sigma_k^0$ and $\textbf{q}_k^0$ represent the stress tensor and the thermal energy flux of phase $k$, respectively. 
 The vector $\textbf{g}$ is the acceleration of gravity which is the only body force considered here.
-No heat source will be considered in this study.
-
-The total energy of phase $k$ can be further decomposed as $E_k^0 = e_k^0 + (u_k^0)^2/2$, where $e_k^0$ is the internal energy per unit of mass representing molecular agitation and $(u_k^0)^2/2$ is the kinetic energy per unit of mass.
-This decomposition, along with the previous set of equations, leads us to two independent equations, one for $e_k^0$ and a second for $(u_k^0)^2/2$, they read
+We consider Newtonian fluids therefore $\bm\sigma_k^0 = -p_k^0\bm\delta + 2\mu_f \textbf{e}_k^0$ with $\textbf{e}_k^0$ is the local rate of strain of phase $k$, namely $\textbf{e}_k^0 = \frac{1}{2}[\grad \textbf{u}_k^0 + (\grad \textbf{u}_k^0)^\dagger]$. 
+No heat source will be considered in this study. 
+From the previous set of equations we can derive two independent equations, one for $e_k^0$ and a second for $(u_k^0)^2/2$, they read
 \begin{align}
     \label{eq:dt_rhou_k2}
-    \pddt [\rho_k^0(u_k^0)^2]  
-    + \div [\rho_k^0(u_k^0)^2\textbf{u}_k^0/2 - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0]
+    \pddt [\rho_k(u_k^0)^2]  
+    + \div [\rho_k(u_k^0)^2\textbf{u}_k^0/2 - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0]
     &=
-    \rho_k^0\textbf{u}_2^0 \cdot \textbf{g}  
+    \rho_k\textbf{u}_2^0 \cdot \textbf{g}  
     -  \bm{\sigma}_k^0 : \grad \textbf{u}_k^0,
     \\
     \label{eq:dt_rhoe_k}
-    \pddt (\rho_k^0e_k^0)  
+    \pddt (\rho_ke_k^0)  
     + \div (
-        \rho_k^0e_k^0\textbf{u}_k^0
+        \rho_ke_k^0\textbf{u}_k^0
         + \textbf{q}_k^0
         )
     &= 
@@ -61,7 +58,6 @@ This decomposition, along with the previous set of equations, leads us to two in
 respectively. 
 We can observe that the term, $\bm{\sigma}_k^0 : \grad \textbf{u}_k^0$,  appears with opposite signs in \ref{eq:dt_rhou_k2} and \ref{eq:dt_rhoe_k}.
 This indicates that the amount of energy transformed from kinetic to internal energy is given by $\bm{\sigma}_k^0 : \grad \textbf{u}_k^0$.
-Thus, in the case of Newtonian fluids, $\bm{\sigma}_f^0 : \grad \textbf{u}_f^0$ represents the energy dissipation due to viscous forces, which then acts as a heat source in \ref{eq:dt_rhoe_k}. 
 
 % \subsection{On interfaces}
 
@@ -75,7 +71,7 @@ Thus, in the case of Newtonian fluids, $\bm{\sigma}_f^0 : \grad \textbf{u}_f^0$ 
 %     + \rho_I^0 (\textbf{u}_I^0 \cdot \textbf{n})(\div \textbf{n})
 %     &= 
 %     -\Jump{
-%         \rho_k^0 (\textbf{u}_I - \textbf{u}_k)
+%         \rho_k (\textbf{u}_I - \textbf{u}_k)
 %     }
 %     \\
 %     \label{eq:dt_rhoIu_I}
@@ -87,7 +83,7 @@ Thus, in the case of Newtonian fluids, $\bm{\sigma}_f^0 : \grad \textbf{u}_f^0$ 
 %     &= 
 %     \rho_I^0 \textbf{g}
 %     - \Jump{
-%         \rho_k^0 \textbf{u}_k (\textbf{u}_I - \textbf{u}_k)
+%         \rho_k \textbf{u}_k (\textbf{u}_I - \textbf{u}_k)
 %         + \bm\sigma^0_k
 %     }
 %     \\
@@ -102,7 +98,7 @@ Thus, in the case of Newtonian fluids, $\bm{\sigma}_f^0 : \grad \textbf{u}_f^0$ 
 %     &= 
 %     \textbf{u}_I^0 \cdot \textbf{g}  \rho_I^0 \nonumber\\
 %     &- \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0 - \textbf{q}_k^0
-%     + \rho_k^0 E_k (\textbf{u}_I - \textbf{u}_k)
+%     + \rho_k E_k (\textbf{u}_I - \textbf{u}_k)
 %     },
 % \end{align} 
 % respectively.
@@ -117,16 +113,12 @@ Thus, in the case of Newtonian fluids, $\bm{\sigma}_f^0 : \grad \textbf{u}_f^0$ 
 
 % \subsection{Simplifying hypothesis}
 
-For the interfacial equations we consider that :
+For the equations governing the interfaces we consider that :
 (1) The mass, momentum and kinetic energy per unit of surface can be neglected.
-% , i.e. $\textbf{u}_I^0\rho_I = 0 $ and $(u_I^0)^2\rho_I = 0$. 
-% Implying that the surface source terms are also neglected, here $\rho_I \textbf{u}_I^0\cdot \textbf{g} = 0$; 
 (2) No mass transfer is allowed at the interface, together with the previous assumption this implies that $\textbf{u}_k^0 = \textbf{u}_I^0$ for $k = 1,2$. 
 (3) All molecular diffusion fluxes can be neglected, i.e. the viscous stress at the interfaces as well as the surface heat flux can be neglected.
 (4) The surface stress tensor is assumed surface isotropic, and is written $\bm{\sigma}_I^0  = \gamma (\bm\delta - \textbf{nn}) = \gamma \bm\delta_{||}$ where $\gamma$ is the constant surface tension coefficient.
-% Under this hypothesis the internal energy and the surface tension coefficient are related through $\phi_I^0 e_I^0 = \gamma$ \cite{ishii2010thermo};
-% When using a constant surface tension coefficient the interfacial mass, momentum and total energy balance equations reduce to the expressions,
-Under these restrictive assumptions we obtain the following set of governing equations for the interfaces,
+Under these restrictive assumptions we obtain the mass, momentum and total energy equations valid on the domain $\Gamma$, namely
 \begin{align}
     \label{eq:dt_rho_I}
     \textbf{u}_k^0 = \textbf{u}_I^0, \\
@@ -143,7 +135,7 @@ Under these restrictive assumptions we obtain the following set of governing equ
 \end{align}
 % respectively. 
 % The jump condition for the total energy can be separated into an expression for the kinetic and internal energy. 
-By taking the dot product of \ref{eq:surface_tension} with $\textbf{u}_I^0$ and subtracting this first expression to \ref{eq:dt_rhoI_EI}, gives us
+Subtracting the dot product of \ref{eq:surface_tension} with $\textbf{u}_I^0$ to \ref{eq:dt_rhoI_EI}, gives 
 \begin{align}
     \label{eq:dt_rhoI_uI3}
     \Jump{\textbf{u}_k^0 \cdot \bm{\sigma}_k^0}
@@ -152,7 +144,7 @@ By taking the dot product of \ref{eq:surface_tension} with $\textbf{u}_I^0$ and 
     \label{eq:dt_rhoIe_I}
     \Jump{ \textbf{q}_k^0}
     &= 
-     0
+     0.
 \end{align}
-which are the interface kinetic energy and the internal interface energy jump condition, respectively. 
+\ref{eq:dt_rhoI_uI3} and \ref{eq:dt_rhoIe_I} correspond to the interface kinetic energy and the internal interface energy jump condition, respectively. 
 As witnesses by \ref{eq:dt_rhoI_uI3} the discontinuity of mechanical energy through the surface is equivalent to the work of the tension forces. 
