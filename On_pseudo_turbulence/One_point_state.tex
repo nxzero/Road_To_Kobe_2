@@ -1,0 +1,629 @@
+
+\section{Single-particle conditional average}
+
+Before diving into the NPS strategy adopted in this work we present the original strategy that \citet{van1982bubble} used in his work. 
+
+\subsection{Basic Definitions}
+Let $\FF$ be a flow configuration and $d\PP = P(\FF)d\FF$ the probable number of flow in such a configuration. 
+Equally, let $\textbf{u}_f^0(\textbf{x},t,\FF)$ be the local fluid velocity and $\chi_f(\textbf{x},t,\FF)$ the continuous phase indicator function evaluated at $\textbf{x}$ and time $t$ for a flow configuration $\FF$. 
+The continuous phase averaged velocity is written as, 
+\begin{equation}
+    \phi_f \textbf{u}_f(\textbf{x},t)
+    = \avg{\chi_f \textbf{u}_f^0} 
+    = \int  \chi_f \textbf{u}_f^0(\textbf{x},t,\FF) d\PP
+\end{equation}
+where $\phi_f$ is the fluid phase volume fraction and $\avg{\ldots}$ denote an ensemble average operator. 
+With these notations the \textit{Reynolds stress} tensor for the fluid phase can be written as 
+\begin{equation}
+    \bm\sigma^\text{Re}
+    =\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+    =\avg{\chi_f \textbf{u}_f^0 \textbf{u}_f^0 }
+    - \phi_f \textbf{u}_f \textbf{u}_f
+\end{equation}
+
+In order to be able to close this term one must perform conditional average. 
+To introduce this we first notice the relation 
+\begin{equation}
+    \int_{\mathbb{R}^3}
+    \sum_i^N \delta(\textbf{r}-\textbf{x}_i(t,\FF))
+    d\textbf{r}
+    = N 
+\end{equation}
+where $\textbf{x}_i$ is the Lagrangian position vector of the particle $i$. 
+For purpose of generality let $\Lambda$ and $\Lambda_i(t,\FF)$ be a list of Eulerian and Lagrangian properties solely related to the particles among which the position vector is present. 
+In this case we may write the more general expression, 
+\begin{equation}
+    \int
+    \sum_i^N \delta(\bm\Lambda-\bm\Lambda_i(t,\FF))
+    d\bm\Lambda
+    = N 
+\end{equation}
+Based on this relation we can show that, 
+\begin{equation}
+    \phi_f \textbf{u}_f(\textbf{x},t)
+    = 
+    \int 
+    \textbf{u}^1_f 
+    P_{1f}(\textbf{x},t,\Lambda)
+    d\Lambda
+\end{equation}
+where $\textbf{u}^1_f(\textbf{x},t,\bm\Lambda)$ is the averaged velocity of the continuous phase at \textbf{x} and $t$ conditionally on the single particle state $\bm\Lambda$. 
+
+The \textit{Reynolds stress} tensor may be expressed in terms of conditionally average velocity fields, 
+\begin{equation}
+    \avg{\chi_f\textbf{u}_f^0 \textbf{u}_f^0}
+    = 
+    \int \textbf{u}_f^1\textbf{u}_f^1 P_{1f} d\bm\Lambda
+    + 
+    \int \avg{\delta_1 \chi_f\textbf{u}_f'' \textbf{u}_f''} d\bm\Lambda
+\end{equation}
+where we have defined $\textbf{u}_f''(\textbf{x},t,\FF) = \textbf{u}^0_f(\textbf{x},t,\FF) -\textbf{u}^1_f(\textbf{x},t,\bm\Lambda)$. 
+Subtracting $\phi_f \textbf{u}_f\textbf{u}_f$ yields the formula for the \textit{Reynolds Stress}, namely 
+\begin{equation}
+    \avg{\chi_f\textbf{u}_f' \textbf{u}_f'}
+    = 
+    \int \textbf{v}_f^1\textbf{v}_f^1 P_{1f} d\bm\Lambda
+    + 
+    \int \avg{\delta_1 \chi_f\textbf{u}_f'' \textbf{u}_f''} d\bm\Lambda
+    \label{eq:Re}
+\end{equation}
+To summarize we have introduced the following definition, 
+\begin{align*}
+    \text{fluctuation of the local value around the ensemble average : }\textbf{u}_f' = \textbf{u}_f^0 - \textbf{u}_f\\
+    \text{fluctuation of the local value around the single particle conditional average : }\textbf{u}_f'' = \textbf{u}_f^0 - \textbf{u}_f^1\\
+    \text{Fluctuation of the single particle conditional average around the ensemble average : }\textbf{v}_f^1 = \textbf{u}_f^1 - \textbf{u}_f
+\end{align*}
+Based on these definitions we state that we can separate the \textit{Reynolds stress} into two distinct contribution :  (1) the agitation generated due to the averaged wakes around the particles; (2) all other source of fluctuations such as those generated through particles interactions and the single phase turbulence. 
+
+\subsection{Conditional averaged Navier-Stokes equation}
+
+The first term of \ref{eq:Re} require the velocity field $\textbf{v}_f^1$. 
+It is obtained by solving what called by \citet{hinch1977averaged} the single particle conditional averaged Navier-Stokes equation. 
+
+In our notation the Navier-Stokes equations for an incompressible fluid reads, 
+\begin{align}
+    \div \textbf{u}_k^0  = 0 \\
+    \pddt (\rho_k \textbf{u}_k^0 )
+    + \div(\rho_k \textbf{u}_k^0  \textbf{u}_k^0 ) 
+    = - \grad p_k^0 
+    + \rho_k \textbf{g}
+    + \mu_k \grad^2 \textbf{u}_k^0
+\end{align}
+where $k$ is either referring to the dispersed or continuous phase. 
+From our previous work we showed that the two fluid formulation for the Navier-Stokes equation is rather 
+\begin{align}
+    \pddt (\chi_k \rho_k )
+    + \div (
+        \chi_k \rho_k  \textbf{u}_k^0
+        )
+        = 
+        0 \\
+        \pddt (\chi_k \rho_k \textbf{u}_k^0)
+        + \div (
+        \chi_k \rho_k \textbf{u}_k^0 \textbf{u}_k^0
+        - \chi_k \bm\sigma_k^0 
+        )
+    = 
+    % \chi_k \rho_k \textbf{g}
+    + \delta_I
+         \bm\sigma_k^0
+    \cdot \textbf{n}_k\\
+        \div (\delta_I \bm\sigma_{I||}^0 )
+        = 
+        - \sum_k
+        \delta_I
+        \bm\sigma_k^0
+   \cdot \textbf{n}_k
+\end{align}
+To derive the single-particle conditionally averaged Navier-Stokes we must multiply these equations by $\delta^1$. 
+For this purpose notice that, 
+\begin{equation}
+    \pddt \delta^1+\grad_\Lambda\cdot(\dot{\bm\Lambda}_i \delta^1 ) = 0 
+\end{equation} 
+Using this expression leads us to 
+\begin{align}
+    \pddt (\chi_k \delta_1 \rho_k )
+    + \div (
+        \chi_k  \delta_1 \rho_k  \textbf{u}_k^0
+        )
+    +  \grad_\Lambda \cdot (\chi_k \rho_k \dot{\bm\Lambda}_i \delta^1)
+    = 
+    0 \\
+    \pddt (\chi_k \rho_k \delta_1 \textbf{u}_k^0)
+    + \div (
+        \chi_k\delta_1 \rho_k \textbf{u}_k^0 \textbf{u}_k^0
+        - \chi_k\delta_1 \bm\sigma_k^0 
+        )
+    +  \grad_\Lambda \cdot ( \rho_k \textbf{u}_k^0 \chi_k \dot{\bm\Lambda}_i \delta^1)
+    = 
+    % \chi_k \rho_k \textbf{g}
+    + \delta_I\delta_1
+         \bm\sigma_k^0
+    \cdot \textbf{n}_k\\
+        \div (\delta_I \bm\sigma_{I||}^0 \delta_1 )
+        = 
+        - \sum_k\delta_1
+        \delta_I
+        \bm\sigma_k^0
+   \cdot \textbf{n}_k
+\end{align}
+
+Now we apply the ensemble average operator, which gives independently 
+\begin{align}
+    \avg{\chi_k\delta_1 \rho_k \textbf{u}_k^0 \textbf{u}_k^0}
+    = 
+    \textbf{u}_k^1 \textbf{u}_k^1 P_{1f}
+    + \avg{\chi_k\delta_1 \rho_k \textbf{u}_k'' \textbf{u}_k''}\\
+    \avg{\rho_k \textbf{u}_k^0 \chi_k \dot{\bm\Lambda}_i \delta^1}
+    = 
+    \textbf{u}_k^1 \avg{\rho_k  \chi_k \dot{\bm\Lambda}_i \delta^1}
+    + \avg{\rho_k \textbf{u}_k'' \chi_k \dot{\bm\Lambda}_i \delta^1}
+\end{align}
+
+To help underscoring note that if $\Lambda_i = (\textbf{x}_i,\textbf{u}_i)$ and $\bm\Lambda = (\textbf{x}+\textbf{r},\textbf{c})$ we would have, $\avg{\rho_k  \chi_k \textbf{u}_i \delta^1}$ explicitly this reads, 
+\begin{equation}
+    \avg{\rho_k  \chi_k \textbf{u}_i \delta^1}
+    = \int 
+    \rho_f \chi_k(\textbf{x},t,\FF)
+    \sum_i^N \textbf{u}_i(\FF,t) 
+    \delta(\textbf{x}+\textbf{r}-\textbf{x}_i)
+    \delta(\textbf{c}-\textbf{u}_i)
+    d\PP
+    = 
+    \rho_k \textbf{c}
+    P_{1f}(\textbf{x},t,\textbf{r},\textbf{c})
+\end{equation}
+and also 
+\begin{equation}
+    \avg{\rho_k  \chi_k \textbf{a}_i \delta^1}
+    = \int 
+    \rho_f \chi_k(\textbf{x},t,\FF)
+    \sum_i^N \textbf{a}_i(\FF,t) 
+    \delta(\textbf{x}+\textbf{r}-\textbf{x}_i)
+    \delta(\textbf{u}-\textbf{u}_i)
+    d\PP
+    = 
+    \rho_k \textbf{a}_p^1(\textbf{x},t,\textbf{r},\textbf{c})
+    P_{1f}(\textbf{x},t,\textbf{r},\textbf{c})
+\end{equation}
+This is the acceleration of the particles center of mass conditioned on the position \textbf{r} with velocity \textbf{u} with fluid at \textbf{x} at time $t$. 
+Generally it can be state that, $\textbf{u}_k^1 \avg{\rho_k  \chi_k \dot{\bm\Lambda}_i \delta^1} = \rho_k \textbf{u}_k^1 \dot{\Lambda}_p^1 P_{1f}$
+
+Neglecting this term the equations above yields, 
+\begin{align}
+    \pddt ( P_{1f} \rho_k )
+    + \div (
+        \rho_k  \textbf{u}_k^1 P_{1f}
+        )
+    +  \grad_\Lambda \cdot ( \rho_k \dot{\bm\Lambda}_p^1 P_{1f})
+    = 
+    0 \\
+    \pddt (\rho_k \textbf{u}_k^1 P_{1f})
+    + \div (
+         \rho_k \textbf{u}_k^1 \textbf{u}_k^1 P_{1f}
+        - \bm\sigma_k^{1-eq}
+        )
+    +  \grad_\Lambda \cdot ( \rho_k \textbf{u}_k^1 \dot{\bm\Lambda}_p^1 P_{1f} + \textbf{R})
+    = 
+    % \chi_k \rho_k \textbf{g}
+    + \avg{\delta_I\delta_1
+         \bm\sigma_k^0
+    \cdot \textbf{n}_k}\\
+        \div \avg{\delta_I \bm\sigma_{I||}^0 \delta_1 }
+        = 
+        - \sum_k\avg{\delta_1
+        \delta_I
+        \bm\sigma_k^0
+   \cdot \textbf{n}_k}
+\end{align}
+with, 
+\begin{align}
+    \bm\sigma_k^{1-eq}
+    =
+    \avg{\chi_f \delta_1 \rho_k \textbf{u}''_k\textbf{u}''_k}
+    - \bm\sigma_k^1 P_{1f}\\
+    \textbf{R}
+    = 
+    \avg{\rho_k \textbf{u}_k'' \chi_k \dot{\bm\Lambda}_i \delta^1}
+\end{align}
+Thus, these equations still needs closure terms. 
+At this point it is convenient to neglect all of them otherwise the problem is never solvable. 
+
+We first notice that, 
+\begin{multline}
+    \pddt (\rho_k \textbf{u}_k^1 P_{1f})
+    + \div (
+         \rho_k \textbf{u}_k^1 \textbf{u}_k^1 P_{1f})
+    = \rho_k P_{1f} \left[\pddt \textbf{u}_k^1 
+        +\textbf{u}_k^1 \cdot \grad \textbf{u}_k^1 
+    \right]
+    + \textbf{u}_k^1 \left[
+        \pddt (P_{1f}\rho_k)
+        +\div(\rho_k \textbf{u}_k^1 P_{1f})
+    \right]\\
+    = \rho_k P_{1f} \left[\pddt \textbf{u}_k^1 
+        +\textbf{u}_k^1 \cdot \grad \textbf{u}_k^1 
+    \right]
+    - \textbf{u}_k^1 
+        \grad_\Lambda \cdot ( \rho_k \dot{\bm\Lambda}_p^1 P_{1f})
+    \\
+\end{multline}
+It can also be express (and it might be better) : 
+\begin{multline}
+    \avg{\delta_1 \chi_f \bm\sigma_f^1}
+    = 
+    - p_f^1 P_{1f} \textbf{I}
+    + \mu_f P_1 (\grad \textbf{u}^1 + ^\dagger \grad \textbf{u}^1)
+    - \avg{\delta_1\chi_d \mu_f (\grad \textbf{u}_d^0 + ^\dagger \grad \textbf{u}_d^0)}\\
+\end{multline}
+The second term is the particle contribution and the first $\textbf{u}^1  =  \phi_f^1 \textbf{u}_f^1 + \phi_d^1 \textbf{u}_d^1 $ and $P_1 = \avg{\delta_1}$ is the probability of finding a particle in the state $\bm\Lambda$. 
+Let re-write the momentum equation conserving the advective term on the left while gathering the stresses on  the right, 
+\begin{multline}
+    \rho_k P_{1f} \left[\pddt \textbf{u}_k^1 
+        +\textbf{u}_k^1 \cdot \grad \textbf{u}_k^1 
+    \right]
+    +  \rho_k \dot{\bm\Lambda}_p^1 P_{1f} \cdot \grad_\Lambda \textbf{u}_k^1 
+    =  - \grad (p_f^1 P_{1f})
+    + \mu_f P_1 \grad^2 \textbf{u}_f^1
+    \\
+    - (\grad,\grad_\Lambda) \cdot (\avg{\chi_f \delta_1 \rho_k \textbf{u}''_k\textbf{u}''_k} + \avg{\delta_1 \chi_d \mu_f \textbf{e}_d^0},\textbf{R})
+    + \avg{\delta_I\delta_1
+         \bm\sigma_k^0
+    \cdot \textbf{n}_k}\\
+\end{multline}
+This, equation is the full Conditioned Navier-Stokes equation. 
+It must be completed with some boundary condition at infinity. 
+Note that $P_{1f} = \phi_f^1(\textbf{x},t|\bm\Lambda) P_1(\bm\Lambda)$.
+Namely, we have, 
+\begin{align}
+    \lim_{r \to \infty}  \textbf{u}_k^1(\textbf{x},t,\bm\Lambda)
+    &= \textbf{u}_k(\textbf{x},t)
+    \approx \textbf{u}_k(\textbf{x}+\textbf{r},t)
+    + \textbf{r} \cdot \grad \textbf{u}_k(\textbf{x}+\textbf{r},t) 
+    + \ldots\\
+    \lim_{r \to \infty}  p_k^1(\textbf{x},t,\bm\Lambda)
+    &= p_k(\textbf{x},t)
+    \approx p_k(\textbf{x}+\textbf{r},t)
+    + \textbf{r} \cdot \grad p_k(\textbf{x}+\textbf{r},t) 
+    + \ldots\\
+    \lim_{r \to \infty}  \phi_f^1(\textbf{x},t,\bm\Lambda)
+    &= \phi_f^1(\textbf{x},t)
+    \approx \phi_f(\textbf{x}+\textbf{r},t)
+    + \textbf{r} \cdot \grad \phi_f(\textbf{x}+\textbf{r},t) 
+    + \ldots\\
+    \lim_{r \to \infty}  \bm\sigma_f^1(\textbf{x},t,\bm\Lambda)
+    &= \bm\sigma_f^1(\textbf{x},t)
+\end{align}
+Based on this information we define, $\textbf{u}_f^{1d} = \textbf{u}_f^1 - \textbf{u}_f$, $p_f^{1d} = p_f^1 - p_f$ and $\phi_1^{1d} = \phi_f^1 - \phi_f$ as the disturbance fields caused by the particle. 
+Instead of solving directly the CNSE we prefer to solve for the disturbance field. 
+Thus, we substitute these formulas into the CANS which gives, 
+% \begin{multline}
+%     \rho_k P_{1f} \left[\pddt \textbf{v}_k^1 
+%         +\textbf{v}_k^1 \cdot \grad \textbf{v}_k^1 
+%     \right]
+%     +  \rho_k \dot{\bm\Lambda}_p^1 P_{1f} \cdot \grad_\Lambda \textbf{v}_k^1 
+%     =  - \grad (q_f^1 P_{1f})
+%     + \mu_f P_1 \grad^2 \textbf{v}^1
+%     \\
+%     - \grad (p_f P_{1f})
+%     + \mu_f P_1 \grad^2 \textbf{u}
+%     - \rho_k P_{1f} \left[\pddt \textbf{u}_k
+%         +\textbf{u}_k \cdot \grad \textbf{u}_k 
+%         +\textbf{u}_k \cdot \grad \textbf{v}_k^1 
+%         +\textbf{v}_k^1 \cdot \grad \textbf{u}_k 
+%     \right]
+%     +  \rho_k \dot{\bm\Lambda}_p^1 P_{1f} \cdot \grad_\Lambda \textbf{u}_k 
+%     \\
+%     - (\grad,\grad_\Lambda) \cdot (\avg{\chi_f \delta_1 \rho_k \textbf{u}''_k\textbf{u}''_k} + \avg{\delta_1 \chi_d \mu_f \textbf{e}_d^0},\textbf{R})
+%     + \avg{\delta_I\delta_1
+%          \bm\sigma_k^0
+%     \cdot \textbf{n}_k}\\
+% \end{multline}
+\begin{equation}
+    \pddt ( \phi_k^{1d} P_1  \rho_k )
+    + \div (\rho_k  \textbf{u}_k^{1d} \phi_k^{1d} P_1 )
+    +  \grad_\Lambda \cdot ( \rho_k \dot{\bm\Lambda}_p^1 \phi_k^{1d} P_1 )
+    = 
+    - \div (\rho_k  \textbf{u}_k \phi_k^{1d} P_1 )
+    - \div (\rho_k  \textbf{u}_k^{1d} \phi_k P_1 )
+    % - \div (\rho_k  \textbf{u}_k \phi_k P_1 )
+    % - \pddt ( \phi_k  \rho_k P_1 )
+    % -  \grad_\Lambda \cdot ( \rho_k \dot{\bm\Lambda}_p^1 \phi_k P_1)
+\end{equation}
+\begin{multline}
+    \pddt (\rho_k \textbf{u}_k^{1d}  P_{1f})
+    + \div (
+         \rho_k \textbf{u}_k^{1d} \textbf{u}_k^{1d}  P_{1f}
+        - \bm\sigma_k^{1d} P_{1f}
+        )
+    +  \grad_\Lambda \cdot ( \rho_k \textbf{u}_k^{1d} \dot{\bm\Lambda}_p^1  P_{1f} )\\
+    = 
+    - \pddt (\rho_k \textbf{u}_k  P_{1f})
+    - \div (
+        \rho_k \textbf{u}_k \textbf{u}_k  P_{1f}
+        + \rho_k \textbf{u}_k \textbf{u}_k^{1d}  P_{1f}
+        + \rho_k \textbf{u}_k^{1d} \textbf{u}_k  P_{1f}
+        - \bm\sigma_k P_{1f}
+        )
+    +  \grad_\Lambda \cdot ( \rho_k \textbf{u}_k \dot{\bm\Lambda}_p^1  P_{1f} )\\
+    - (\grad,\grad_\Lambda)\cdot(\avg{\chi_f \delta_1 \rho_k \textbf{u}''_k\textbf{u}''_k},\avg{\rho_k \textbf{u}_k'' \chi_k \dot{\bm\Lambda}_i \delta^1})
+    % \chi_k \rho_k \textbf{g}
+    + \avg{\delta_I\delta_1
+         \bm\sigma_k^0
+    \cdot \textbf{n}_k}\\ 
+\end{multline}
+Expanding the fluid phase volume fraction yields, 
+
+
+To simplify this equation notice that the averaged velocity field $\textbf{u}_k$ satisfy, 
+\begin{align}
+    \pddt (\phi_k \rho_k)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_k
+    )
+    = 
+    0\\
+    \pddt (\phi_k \rho_k\textbf{u}_k)  
+    + \div (
+        \phi_k \rho_k\textbf{u}_k\textbf{u}_k
+        - \phi_f\bm\sigma_f
+    )
+    = 
+    - \div\avg{\chi_f\textbf{u}_f' \textbf{u}_f'}
+    + \avg{\delta_I \bm{\sigma}_k^0 \cdot \textbf{n}_k}
+\end{align}
+a conservation equation for $P_{1f}$ is just the one for $P_1$ and $\phi_1^{1d}$
+The conservation equation for $P_1$ reads, 
+\begin{equation}
+    \pddt P_1 +\grad_\Lambda\cdot(\dot{\bm\Lambda}_p^1 P_1) = 0 
+\end{equation} 
+Therefore, 
+\begin{align*}
+    \pddt (\phi_k \rho_k P_1 )  
+    + \div (\phi_k \rho_k\textbf{u}_k P_1)
+    + \grad_\Lambda (\phi_k \rho_k\dot{\bm\Lambda}_p^1 P_1)
+    = 
+    0\\
+    \pddt (P_1 \phi_k \rho_k\textbf{u}_k)  
+    + \div (
+        P_1 \phi_k \rho_k\textbf{u}_k\textbf{u}_k
+        - P_1 \phi_f\bm\sigma_f
+    )
+    + \grad_\Lambda\cdot(\phi_k \rho_k \textbf{u}_k \dot{\bm\Lambda}_p^1 P_1)
+    = 
+    - P_1 \div\avg{\chi_f\textbf{u}_f' \textbf{u}_f'}
+    + P_1 \avg{\delta_I \bm{\sigma}_k^0 \cdot \textbf{n}_k}
+\end{align*}
+Using this equation into teh CNSE yields, 
+\begin{multline}
+    \pddt (\rho_k \textbf{u}_k^{1d}  \phi_f^{1d} P_1)
+    + \div (
+     \rho_k \textbf{u}_k^{1d} \textbf{u}_k^{1d}  \phi_f^{1d} P_1
+    - \bm\sigma_k^{1d} \phi_f^{1d} P_1
+    )
+    +  \grad_\Lambda \cdot ( \rho_k \textbf{u}_k^{1d} \dot{\bm\Lambda}_p^1  \phi_f^1 P_1 )\\
+    = 
+    - \pddt (\rho_k \textbf{u}_k^{1d}  \phi_f P_1)
+    - \div (
+    \rho_k \textbf{u}_k^{1d} \textbf{u}_k^{1d}  \phi_f P_1
+    - \bm\sigma_k^{1d} \phi_f P_1
+    )
+    \\
+    - \pddt (\rho_k \textbf{u}_k  \phi_f^{1d} P_1)
+    - \div (
+        \rho_k \textbf{u}_k \textbf{u}_k  \phi_f^{1d} P_1
+        + \rho_k \textbf{u}_k \textbf{u}_k^{1d}  \phi_f^1 P_1
+        + \rho_k \textbf{u}_k^{1d} \textbf{u}_k  \phi_f^1 P_1
+        - \bm\sigma_k \phi_f^{1d} P_1
+        )
+    +  \grad_\Lambda \cdot ( \rho_k \textbf{u}_k \dot{\bm\Lambda}_p^1 \phi_f^{1d} P_{1} )\\
+    - (\grad,\grad_\Lambda)\cdot(\avg{\chi_f \delta_1 \rho_k \textbf{u}''_k\textbf{u}''_k} 
+    - P_1 \avg{\chi_f \textbf{u}_f'\textbf{u}_f'},\avg{\rho_k \textbf{u}_k'' \chi_k \dot{\bm\Lambda}_i \delta^1})
+    % \chi_k \rho_k \textbf{g}
+    + \avg{\delta_I\delta_1
+         \bm\sigma_k^0
+    \cdot \textbf{n}_k}\\ 
+\end{multline}
+which is way too complicated. 
+The fluctuating term can be express to, 
+\begin{align}
+    \avg{\chi_f \delta_1 \rho_k \textbf{u}''_k\textbf{u}''_k}
+    = 
+    \avg{\chi_f \delta_1 \rho_k \textbf{u}_k^0 \textbf{u}_k^0 }
+    - P_1 \phi_f^1 \textbf{u}_f^1\textbf{u}_f^1 \\
+    P_1 \avg{\chi_f \rho_k \textbf{u}_k'\textbf{u}_k'}
+    = 
+    P_1 \avg{\chi_f \rho_k \textbf{u}_k^0 \textbf{u}_k^0 }
+    - P_1 \phi_f \textbf{u}_f\textbf{u}_f 
+\end{align}
+therefore the previous tensor reads, 
+\begin{equation}
+    \avg{\chi_f \delta_1 \rho_k \textbf{u}_k^0 \textbf{u}_k^0 
+    - P_1 \chi_f \rho_k \textbf{u}_k^0 \textbf{u}_k^0}
+    - P_1 \phi_f^1 \textbf{u}_f^1\textbf{u}_f^1
+    + P_1 \phi_f \textbf{u}_f\textbf{u}_f 
+\end{equation}
+
+Note on the conditioned volume fraction in the dilute regime :
+\begin{itemize}
+    \item $\phi_f^1$ is one outside the particle 
+    \item This is inconsistent with the boundary condition $\lim_{r\to\infty} \phi_f^1 = \phi_f$. 
+\end{itemize}
+In the uniform regime and outside the particle $\phi_f^1 = \phi_f$ also, $\phi_f^{1d} =  0$. 
+In this sense we can re-write the above eq. 
+
+\subsection{Dilute approximation}
+
+In the dilute approximation and at $|\textbf{r}| > a$ the CANS reads,
+
+\begin{equation*}
+    \pddt ( P_1  \rho_f )
+    + \div (
+        \rho_f  \textbf{u}_f^1 P_1 
+        )
+    +  \grad_\Lambda \cdot ( \rho_f \dot{\bm\Lambda}_p^1 P_1 )
+    = 
+    0 
+\end{equation*}
+\begin{multline}
+    \pddt (\rho_f \textbf{u}_f^{1d}  P_1)
+    + \div (
+         \rho_f \textbf{u}_f^{1d} \textbf{u}_f^{1d}  P_1
+        - \bm\sigma_f^{1d} P_1
+        )
+    +  \grad_\Lambda \cdot ( \rho_f \textbf{u}_f^{1d} \dot{\bm\Lambda}_p^1  P_1 )\\
+    = 
+    - \pddt (\rho_f \textbf{u}_f  P_1)
+    - \div (
+        \rho_f \textbf{u}_f \textbf{u}_f  P_1
+        + \rho_f \textbf{u}_f \textbf{u}_f^{1d}  P_1
+        + \rho_f \textbf{u}_f^{1d} \textbf{u}_f  P_1
+        - \bm\sigma_f P_1
+        )
+\end{multline}
+The far fields equation in the limit $\phi_f \sim 1$ is, 
+\begin{align*}
+    \pddt (\rho_f P_1 )  
+    + \div (\rho_f\textbf{u}_f P_1)
+    + \grad_\Lambda (\rho_f\dot{\bm\Lambda}_p^1 P_1)
+    = 
+    0\\
+    \pddt (P_1 \rho_f\textbf{u}_f)  
+    + \div (
+        P_1 \rho_f\textbf{u}_f\textbf{u}_f
+        - P_1 \bm\sigma_f
+    )
+    + \grad_\Lambda\cdot(\rho_f \textbf{u}_f \dot{\bm\Lambda}_p^1 P_1)
+    = 0
+    % - P_1 \div\avg{\chi_f\textbf{u}_f' \textbf{u}_f'}
+    % + P_1 \avg{\delta_I \bm{\sigma}_f^0 \cdot \textbf{n}_f}
+\end{align*}
+where we have assumed that the fluctuating terms where proportional to $\phi^2$ at the lowest order. 
+If $\avg{\chi_f \textbf{u}_f' \textbf{u}_f'} \sim \phi $ which is negligible in this case. 
+This is in fact just the NS equations. 
+
+Using this approximation in the previous equation yields, 
+\begin{align*}
+    \div (
+        \rho_f  \textbf{u}_f^{1d} P_1 
+        )
+    = 
+    0 \\
+    \pddt (\rho_f \textbf{u}_f^{1d}  P_1)
+    + \div (
+         \rho_f \textbf{u}_f^{1d} \textbf{u}_f^{1d}  P_1
+        - \bm\sigma_f^{1d} P_1
+        )
+    +  \grad_\Lambda \cdot ( \rho_f \textbf{u}_f^{1d} \dot{\bm\Lambda}_p^1  P_1 )\\
+    = 
+    - \div (
+        % \rho_f \textbf{u}_f \textbf{u}_f  P_1
+         \rho_f \textbf{u}_f \textbf{u}_f^{1d}  P_1
+        + \rho_f \textbf{u}_f^{1d} \textbf{u}_f  P_1
+        % - \bm\sigma_f P_1
+        )
+\end{align*}
+Or in conservative form, 
+\begin{align*}
+    \rho_f \Dt \textbf{u}_f^{1d}  
+    +  \rho_f  \dot{\bm\Lambda}_p^1  P_1   \cdot \grad_\Lambda \textbf{u}_f^{1d} 
+    + \rho_f \textbf{u}_f  P_1 \grad \textbf{u}_f^{1d}
+    +  \rho_f \textbf{u}_f^{1d} P_1 \grad\textbf{u}_f
+    = 
+    \div ( \bm\sigma_f^{1d} P_1)
+\end{align*}
+Now we can assume that $\bm\dot{\Gamma} =(\textbf{x}+ \textbf{r},\textbf{c})$ such that the momentum eq reduce to 
+\begin{align*}
+    \pddt (\rho_f \textbf{u}_f^{1d}  P_1)
+    + \div (
+         \rho_f \textbf{u}_f^{1d} \textbf{u}_f^{1d}  P_1
+        - \bm\sigma_f^{1d} P_1
+        )
+    +  \grad_\textbf{r} \cdot ( \rho_f \textbf{u}_f^{1d} \textbf{c}  P_1(\textbf{r},\textbf{c}) )
+    +  \grad_\textbf{c} \cdot ( \rho_f \textbf{u}_f^{1d} \textbf{a}_p^1  P_1 )\\
+    = 
+    - \div (
+        % \rho_f \textbf{u}_f \textbf{u}_f  P_1
+         \rho_f \textbf{u}_f \textbf{u}_f^{1d}  P_1
+        + \rho_f \textbf{u}_f^{1d} \textbf{u}_f  P_1
+        % - \bm\sigma_f P_1
+        )
+\end{align*}
+
+\subsection{Dimensionless approximation}
+Let $\textbf{u}^{1d}_f = \textbf{u}^{1d*}_f U$ and $\pddt = \pddt^* \tau$, $\grad = \grad^* l$ and $\bm\sigma^{1d}_f = \bm\sigma^{1d*}_f \mu_f U/l$ and $\textbf{u}_f = \textbf{u}_f^* U^\infty$.
+$\textbf{c} = \textbf{c}U^\infty_p$ and $\textbf{a}_p^1 = U^\infty_p / \tau$. 
+Let $\grad_\textbf{r} = \grad_\textbf{r}^* l$ 
+
+\begin{align*}
+    \frac{\rho_f l^2 }{\tau \mu_f}\pddt^*( \textbf{u}_f^{1d*}  P_1)
+    + \frac{\rho_f U l}{\mu_f }\grad^* \cdot (\textbf{u}_f^{1d*} \textbf{u}_f^{1d*}  P_1) 
+    -  \div (\bm\sigma_f^{1d*} P_1)
+    + \frac{l \rho_f U^\infty_p}{\mu_f } \grad_\textbf{r}^* \cdot (  \textbf{u}_f^{1d*} \textbf{c}^*  P_1(\textbf{r},\textbf{c}) )
+    +  \frac{\rho_f l^2}{\mu_f \tau U^\infty_p} \grad_\textbf{c}^* \cdot (  \textbf{u}_f^{1d*} \textbf{a}_p^{1*}  P_1 )\\
+    = 
+    -  \frac{U^\infty\rho_f l}{\mu_f } \div ( \textbf{u}_f \textbf{u}_f^{1d}  P_1
+        +  \textbf{u}_f^{1d} \textbf{u}_f  P_1)
+\end{align*}
+Assuming that $l/\tau = U$ as it is often the case we have, 
+\begin{align*}
+    Re \pddt^*( \textbf{u}_f^{1d*}  P_1)
+    + Re \grad^* \cdot (\textbf{u}_f^{1d*} \textbf{u}_f^{1d*}  P_1) 
+    -  \div (\bm\sigma_f^{1d*} P_1)
+    + Re_p^\infty \grad_\textbf{r}^* \cdot (  \textbf{u}_f^{1d*} \textbf{c}^*  P_1(\textbf{r},\textbf{c}) )
+    +  \frac{\rho_f l^2}{\mu_f \tau U^\infty_p} \grad_\textbf{c}^* \cdot (  \textbf{u}_f^{1d*} \textbf{a}_p^{1*}  P_1 )\\
+    = 
+    - Re^\infty \div ( \textbf{u}_f \textbf{u}_f^{1d}  P_1
+        +  \textbf{u}_f^{1d} \textbf{u}_f  P_1)
+\end{align*}
+It is hard to say if my advective terms vanish or not. 
+we may have $\grad_\textbf{r}^* \cdot = - \div$ 
+It must be checked, but in all case the advective term remain. 
+It seems that we find back Stone eq in conservative form. 
+In the conservative form we have 
+\begin{align*}
+    \rho_f \Dt  \textbf{u}_f^{1d*}  
+    +  \rho_f  \textbf{c}  P_1   \cdot \pddr \textbf{u}_f^{1d} 
+    +  \rho_f  \textbf{a}_p^1  P_1   \cdot \partial_\textbf{c} \textbf{u}_f^{1d} 
+    + \rho_f \textbf{u}_f  P_1 \grad \textbf{u}_f^{1d}
+    +  \rho_f \textbf{u}_f^{1d} P_1 \grad\textbf{u}_f
+    = 
+    \div ( \bm\sigma_f^{1d} P_1)
+\end{align*}
+In Dimensionless form 
+\begin{align*}
+    Re \Dt^*  \textbf{u}_f^{1d*}  
+    + Re_p  \textbf{c}  P_1   \cdot \pddr \textbf{u}_f^{1d} 
+    +  \frac{\rho_f U l^2 }{\mu_f \tau U_p}  \textbf{a}_p^1  P_1   \cdot \partial_\textbf{c} \textbf{u}_f^{1d} 
+    + Re^\infty \textbf{u}_f  P_1 \grad \textbf{u}_f^{1d}
+    + Re^\infty \textbf{u}_f^{1d} P_1 \grad\textbf{u}_f
+    = 
+    \div ( \bm\sigma_f^{1d} P_1)
+\end{align*}
+Due to the \textbf{x} \textbf{r} symmetry we have 
+\begin{align*}
+    Re \Dt^*  \textbf{u}_f^{1d*}  
+    +  \frac{\rho_f U l^2 }{\mu_f \tau U_p}  \textbf{a}_p^1  P_1   \cdot \partial_\textbf{c} \textbf{u}_f^{1d} 
+    + Re ( \textbf{u}_f -   \textbf{c}  ) P_1 \grad \textbf{u}_f^{1d}
+    + Re^\infty \textbf{u}_f^{1d} P_1 \grad\textbf{u}_f
+    = 
+    \div ( \bm\sigma_f^{1d} P_1)
+\end{align*}
+The averaged velocity, 
+$\textbf{u}_f(\textbf{x},t) = \textbf{u}_f(\textbf{x}+ \textbf{r},t) + \textbf{r}\cdot \grad \textbf{u}_f(\textbf{x}+ \textbf{r},t)+ \ldots$ upon the assumption of linear quadratic etc flows one gets the desired equations in terms of the interpolated values of $\textbf{u}_f$. 
+
+\section{Nearest particle closure}
+
+
+\section*{Inertial part of the stresslet }
+
+\begin{equation*}
+    \textbf{S}_p 
+    =
+    \phi \mu Re
+    \frac{59}{80} \left[
+        - 3\textbf{U}\textbf{U}
+        + (\textbf{U}\cdot\textbf{U})\bm\delta
+    \right] 
+\end{equation*}
+

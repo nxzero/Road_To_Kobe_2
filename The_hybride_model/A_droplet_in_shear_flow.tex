@@ -313,6 +313,73 @@ is the disturbance field of the bulk velocity conditionally on a particle presen
 where the second term is the contribution from the particle to the fluid phase stress, conditionally on the presence of the dispersed phase at \textbf{x} with a particle already present at \textbf{y}. 
 Due to the simultaneous presence of $\phi_d$ and $n_p$ this term is negligible at first order in $\phi$. 
 
+\subsection{Closure terms for the energy equations}
+\subsubsection*{The work dissipation tensor}
+In this section we give the closure for the drag force term velocity correlation appearing in the total energy equation. 
+\begin{align*}
+    \pSavg{(\textbf{u}_\alpha - \textbf{u}_p)[\textbf{x}]\cdot  \bm\sigma_f^0\cdot \textbf{n}_d }
+    = 
+    \avg{
+        \sum_\alpha \delta(\textbf{x}-\textbf{x}_\alpha[\FF,t] )
+        (\textbf{u}_\alpha[\FF,t] - \textbf{u}_p[\textbf{x},t])\cdot  
+        \intS{\bm\sigma_f^0\cdot \textbf{n}_d[\textbf{y},t,\FF]}
+    }\\
+    = 
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    \avg{
+        \sum_\alpha 
+        \delta(\textbf{x}-\textbf{x}_\alpha[\FF,t] )
+        \delta(\textbf{w}-\textbf{u}_\alpha[\FF,t] )
+        \delta(|\textbf{y} - \textbf{x}_{\alpha}(t;\FF)|-a)
+        (\textbf{u}_\alpha[\FF,t] - \textbf{u}_p[\textbf{x},t])\cdot  
+        \bm\sigma_f^0\cdot \textbf{n}_d[\textbf{y},t,\FF]
+    }
+    d\textbf{w}
+    d\textbf{y}\\
+    = 
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    (\textbf{w} - \textbf{u}_p[\textbf{x},t])\cdot  
+    \delta(|\textbf{y} - \textbf{x}|-a)
+    \avg{
+        \sum_\alpha 
+        \delta(\textbf{x}-\textbf{x}_\alpha[\FF,t] )
+        \delta(\textbf{w}-\textbf{u}_\alpha[\FF,t] )
+        \bm\sigma_f^0\cdot \textbf{n}_d[\textbf{y},t,\FF]
+    }
+    d\textbf{w}
+    d\textbf{y}\\
+    = 
+    \int_{\mathbb{R}^3}
+    n_p[\textbf{x},\textbf{w},t]
+    (\textbf{w} - \textbf{u}_p[\textbf{x},t])\cdot  
+    \int_{|\textbf{x}-\textbf{y}| = a}
+    \bm\sigma_f^1[\textbf{y},t|\textbf{x},\textbf{w}]
+    \cdot \textbf{n}
+    d\textbf{y}
+    d\textbf{w}
+\end{align*}
+with,
+\begin{equation}
+    \bm\sigma_f^1[\textbf{y},t|\textbf{x},\textbf{w}]
+    n_p[\textbf{x},\textbf{w},t]
+    = 
+    \avg{
+        \sum_\alpha 
+        \delta(\textbf{x}-\textbf{x}_\alpha[\FF,t] )
+        \delta(\textbf{w}-\textbf{u}_\alpha[\FF,t] )
+        \bm\sigma_f^0\cdot \textbf{n}_d[\textbf{y},t,\FF]
+    }
+\end{equation}
+The normal \textbf{n} is not an averaged value since all particles have the same shape. 
+In all rigor $\bm\sigma_f^1[\textbf{y},t|\textbf{x},\textbf{w}]$ is the averaged stress of the fluid phase at \textbf{y} and $t$ knowing a particle at \textbf{x} and an interface at the position \textbf{y}. 
+The last condition is implicit. 
+
+
+\subsubsection*{The induced dissipation tensor}
+
+
 \subsection*{The consitional averaged Navier stokes equaiton}
 As shown above $\bm\Sigma_f$ is function of the unknown of the problem so it is closed. 
 The remaining term to compute is $\bm\Sigma_f^{1d}$ which is a function of $\textbf{u}_f^{1d}$ and $p_1^{1d}$. 
@@ -343,12 +410,12 @@ Then using the averaged Navier Stokes equations for $\textbf{u}_1$ one arrive to
 Wit boundary condition 
 \begin{align*}
     \textbf{u}_f^{1d}[\textbf{y},t|\textbf{x}] = 0 \text{  for  } |\textbf{r}| \to \infty\\
-    \textbf{u}_f^{1d}\cdot \textbf{n}[\textbf{y},t|\textbf{x}] = (\textbf{v} - \textbf{u}_f)\cdot \textbf{n}[\textbf{y},t]\text{  on  } S_p
+    \textbf{u}_f^{1d}\cdot \textbf{n}[\textbf{y},t|\textbf{x}] = (\textbf{w} - \textbf{u}_f)\cdot \textbf{n}[\textbf{y},t]\text{  on  } S_p
 \end{align*}
 According to the definition $\textbf{u}_f^{1d}$ the mean fluid velocity $\textbf{u}_f$ is evaluated at $\textbf{y}$, thus we might rewrite the second boundary condition as, 
 \begin{align*}
     % \textbf{u}_f^{1d} = 0 \text{  for  } |\textbf{r}| \to \infty\\
-    \textbf{u}_f^{1d} = \textbf{v} - \textbf{u}_f(\textbf{x},t)
+    \textbf{u}_f^{1d} = \textbf{w} - \textbf{u}_f(\textbf{x},t)
     -\textbf{r}\cdot\grad\textbf{u}_f(\textbf{x},t)
     -\frac{1}{2}\textbf{rr}:\grad^2\textbf{u}_f(\textbf{x},t)
     \ldots

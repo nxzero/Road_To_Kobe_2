@@ -58,7 +58,7 @@
   \pause
   \underline{In all those process we want to : }
   \begin{itemize}
-    \item Predict global hydrodynamics using \textbf{Euler-Euler} averaged models. 
+    \item Predict global hydrodynamics using \textbf{Euler-Euler} framework. 
     \begin{itemize}
       \item Closure for the interphase drag forces, first moments of hydrodynamics forces, inter-particles forces.
       \item Closure of coalesce and break-up to predict the size distribution.
@@ -155,6 +155,7 @@ With the effective stress :
 \end{itemize}
 \end{frame}
 
+
 \begin{frame}
   \frametitle{L.Van Wijngaarden approach for potential flow.}
 
@@ -163,7 +164,7 @@ With the effective stress :
 Disturbance velocity field of an isolated translating bubble is :
 \begin{equation*}
   \textbf{u}'_\text{pot}(\textbf{r})
-  = \frac{a^3 \textbf{U}}{2}\left(\frac{\textbf{I}}{r^3} - \frac{3 \textbf{rr}}{r^5}\right)
+  = \frac{a^3 \textbf{U}}{2} \cdot \left(\frac{\textbf{I}}{r^3} - \frac{3 \textbf{rr}}{r^5}\right)
   \text{    for    }r>a
 \end{equation*}
 \column{0.2\textwidth}
@@ -188,6 +189,7 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
   \underline{$\to$ We aim for the same closure but in Stokes regime}
 \end{frame}
 
+
 \begin{frame}
   \frametitle{Stokes flow around a translating spherical drop}
   The stokes flow solution of an isolated translating drop is :
@@ -195,8 +197,8 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
     \column{0.6\textwidth}
   \begin{multline*}
     \textbf{u}_\text{stokes} 
-    = \left(\frac{ \textbf{I}}{r} + \frac{\textbf{rr}}{r^3}\right)  \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right) a \textbf{U}\\
-    - \left(-\frac{\textbf{I}}{r^3} + \frac{3 \textbf{rr} }{r^5}\right)  \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right) a^3 \textbf{U}
+    = \left(\frac{ \textbf{I}}{r} + \frac{\textbf{rr}}{r^3}\right)  \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right) a \cdot \textbf{U}\\
+    - \left(-\frac{\textbf{I}}{r^3} + \frac{3 \textbf{rr} }{r^5}\right)  \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right) a^3 \cdot \textbf{U}
   \end{multline*}
   \begin{itemize}
       \item $\lambda$ is the viscosity ratio.
@@ -222,7 +224,39 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
 
 \end{frame}
 
+
+
+
+
 \section{The Nearest Particle Statistics}
+
+
+
+\begin{frame}{The Nearest Particle Statistics (NPS) approach (DZ Zhang, JFM, 2020)}
+  Using the relation between ensemble average $\avg{\ldots}$ and NPS average we obtain :
+  \begin{equation*}
+    \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)
+    = \phi_f
+    \underbrace{\int 
+      \textbf{u}^\text{nst}_f
+      \textbf{u}^\text{nst}_f 
+      P_\text{nst}(\textbf{r}|\textbf{x}) d\textbf{r} 
+    }_\text{Averaged wake contribution}
+    + \underbrace{ 
+      \int \avg{\delta_i h_i \chi_f \textbf{v}_f''\textbf{v}_f''}  d\textbf{r}
+    % P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    }_{\mathcal{O}(\phi^2)}
+  \end{equation*}
+
+\begin{itemize}
+  \item $\textbf{u}^\text{nst}(\textbf{x}|\textbf{y})$ disturbance velocity evaluated at \textbf{x}, knowing the nearest particle is located at $\textbf{r}$
+  \item $\textbf{v}''_f = \textbf{u}^0_f - \textbf{u}^\text{nst}_f$ fluctuating values of the local velocity $\textbf{u}_f^0$ (non-averaged) around $\textbf{u}_f^\text{nst}$.
+  \item $P_\text{nst}(\textbf{r}|\textbf{x})$ is the probability of finding a nearest particle at \textbf{r} knowing \textbf{x} is occupied by the continuous phase.   
+  \item This relation is exact and require no assumption. 
+\end{itemize}
+\end{frame}
+
+
 \transwipe[direction=90]
 \begin{frame}{The Nearest Particle Statistics (NPS) approach (DZ Zhang, JFM, 2020)}
   $P_\text{nst}(\textbf{r}|\textbf{x})$ is the probability of finding a nearest particle at \textbf{r} knowing \textbf{x} is occupied by the continuous phase.   
@@ -301,29 +335,6 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
 \end{frame}
 
 
-\begin{frame}
-  \frametitle{The Reynolds stress decomposition with NPS}
-  Using the relation between ensemble average $\avg{\ldots}$ and NPS average we obtain :
-  \begin{equation*}
-    \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)
-    = \phi_f
-    \underbrace{\int 
-      \textbf{u}^\text{nst}_f
-      \textbf{u}^\text{nst}_f 
-      P_\text{nst}(\textbf{r}|\textbf{x}) d\textbf{r} 
-    }_\text{Averaged wake contribution}
-    + \underbrace{ 
-      \int \avg{\delta_i h_i \chi_f \textbf{v}_f''\textbf{v}_f''}  d\textbf{r}
-    % P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
-    }_{\mathcal{O}(\phi^2)}
-  \end{equation*}
-
-\begin{itemize}
-  \item $\textbf{u}^\text{nst}(\textbf{x}|\textbf{y})$ disturbance velocity evaluated at \textbf{x}, knowing the nearest particle is located at $\textbf{y} = \textbf{x}+\textbf{r}$
-  \item $\textbf{v}''_f = \textbf{u}^0_f - \textbf{u}^\text{nst}_f$ fluctuating values of the local velocity $\textbf{u}_f^0$ (non-averaged) around $\textbf{u}_f^\text{nst}$.
-  \item This relation is exact and require no assumption. 
-\end{itemize}
-\end{frame}
 
 
 
@@ -344,16 +355,26 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
     P_\text{nst}(r) d\textbf{r} }
     + \mathcal{O}(\phi^2)
   \end{equation*}\pause
-  \footnotesize
-  \begin{multline*}
+  \begin{equation*}
     % - \phi_f \textbf{u}_f\textbf{u}_f\\
-    =  
-    + \left(\frac{9(2+3\lambda)^2 \Gamma(1/3)}{80 (\lambda +1)^2}\phi^{2/3} 
-    - \frac{27+82\lambda + 62\lambda^2}{20(\lambda + 1)^2}\phi \right)\textbf{UU}
-    + \left(\frac{(2+3\lambda)^2 \Gamma(1/3)}{240 (\lambda +1)^2}\phi^{2/3} 
-     - \frac{1+6\lambda + 6\lambda^2}{20(\lambda + 1)^2}\phi \right)U^2\textbf{I} 
-  \end{multline*}
-
+    \boxed{
+    \begin{aligned}
+    &=  \frac{(2+3\lambda)^2\Gamma(1/3)}{80(\lambda+1)^2}\left(
+      9 \textbf{UU}
+      + \frac{1}{3}U^2 \textbf{I}
+    \right)\phi^{2/3}\\
+    &- 
+    \frac{1}{20(\lambda+1)^2}\left[
+      (27+82\lambda + 62\lambda^2) \textbf{UU}
+      + (1+6\lambda + 6\lambda^2) U^2 \textbf{I}
+    \right]\phi+ \mathcal{O}(\phi^2)
+    \end{aligned}
+    }
+    % \left(\frac{9(2+3\lambda)^2 \Gamma(1/3)}{80 (\lambda +1)^2}\phi^{2/3} 
+    % - \frac{27+82\lambda + 62\lambda^2}{20(\lambda + 1)^2}\phi \right)\textbf{UU}\\
+    % + \left(\frac{(2+3\lambda)^2 \Gamma(1/3)}{240 (\lambda +1)^2}\phi^{2/3} 
+    %  - \frac{1+6\lambda + 6\lambda^2}{20(\lambda + 1)^2}\phi \right)U^2\textbf{I} 
+  \end{equation*}
   \begin{itemize}
     % \item  \textbf{Hypothesis 1} :$P_\text{nst}(\textbf{r}|\textbf{x}) = \frac{3\phi}{4\pi}
     % e^{ - \phi (r^3 - 1) }$
@@ -363,7 +384,7 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
   \begin{enumerate}
     \item $\Gamma(a) = \int_0^\infty t^{a-1} e^{-t} dt $ is the gamma  function. 
     \item  Notice that $\lim_{\phi \to 0} \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)/\phi \sim\phi^{-1/3} =\infty$. 
-    \item We found that $\avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)\sim\phi^{2/3}$ in agreement with Hill (2001) (ordered arrays solution). 
+    \item We found that $\avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)\sim\phi^{2/3}$.  
   \end{enumerate}
     
 \end{frame}
@@ -481,9 +502,9 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
 
 \begin{frame}
   {Going further}
-  Toward a more complete model of \textbf{Bubble induced turbulence} : 
+  Toward a more complete model of \textbf{Drops induced turbulence} : 
   \small
-  \begin{multline*}
+  \begin{equation*}
     \avg{\chi_f  \textbf{u}_f' \textbf{u}_f'}
     =
     \underbrace{
@@ -495,15 +516,15 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
     }_\text{Particle Induced Turbulence (PIT)}
     % }_\text{Bubble induced turbulence in a uniform flow}
     % \\
-  \end{multline*}
+  \end{equation*}
   \pause
-  \begin{multline*}
+  \begin{equation*}
     + \underbrace{\frac{\phi_d a^2 }{105 (\lambda +1)^2 }\left[
         (129\lambda^2+108\lambda+24)\textbf{E}_f\cdot \textbf{E}_f
         + (20\lambda^2 +20\lambda + 6)
         (\textbf{E}_f : \textbf{E}_f)\textbf{I}
     \right]}_\text{Shear Particle Induced Turbulence (S-PIT)}
-\end{multline*}
+\end{equation*}
 \begin{columns}
   \column{0.5\textwidth}
   \begin{itemize}
@@ -535,7 +556,24 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
 
 % \end{frame}
 
+
 \backmatter
+\begin{frame}
+  {Going further}
+   Model for \textbf{Drops induced dissipation rate} : 
+   \begin{multline*}
+    \avg{\chi_f \bm\sigma_f^0 :\grad\textbf{u}_f^0}
+    =
+    \frac{3\mu_f \phi_d}{2a^2}
+    \frac{(3\lambda^2 + 4\lambda +2)}{(\lambda + 1)^2}
+    (\textbf{u}_{fp}\cdot \textbf{u}_{fp} + 2 \avg{\textbf{u}_p'\cdot\textbf{u}_p'}) \\
+    + 
+    \frac{3\mu_f \phi_d}{5}
+    \frac{(5\lambda^2 + 4\lambda +4)}{(\lambda + 1)^2}
+    \textbf{E}_f:\textbf{E}_f
+    +2 \phi_f \textbf{E}_f:\textbf{E}_f
+\end{multline*}
+\end{frame}
 
 \begin{frame}
   \frametitle{Potential flow solution with NPS}
@@ -580,6 +618,7 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
   \item A slight improvement is observed
 \end{itemize}
 \end{frame}
+
 
 
 \end{document}

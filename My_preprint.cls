@@ -134,10 +134,12 @@
 \newcommand{\Dt}{D_t}
 \newcommand{\pddx}{\frac{\partial}{\partial \textbf{x}}}
 \newcommand{\pddr}{\frac{\partial}{\partial \textbf{r}}}
-\newcommand{\pddu}{\frac{\partial}{\partial \textbf{u}}}
+\newcommand{\pddy}{\frac{\partial}{\partial \textbf{y}}}
+\newcommand{\pddw}{\frac{\partial}{\partial \textbf{w}}}
 \renewcommand{\pddx}{{\partial_\textbf{x}}}
 \renewcommand{\pddr}{{\partial_\textbf{r}}}
-\renewcommand{\pddu}{{\partial_\textbf{u}}}
+\renewcommand{\pddy}{{\partial_\textbf{y}}}
+\renewcommand{\pddw}{{\partial_\textbf{w}}}
 \newcommand{\pdda}{\partial_a}
 \renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
