@@ -1,0 +1,119 @@
+\subsection{Fundamental properties of a particle}
+
+At this stage, we define some fundamental properties associated to each particle labeled $\alpha$.
+Following the strategy of \citet{lhuillier2009rheology,lhuillier1992volume,zaepffel2011modelisation} and \citet[Chapter 2]{morel2015mathematical}
+we define the mass $m_\alpha$, position of center of mass $\mathbf{x}_\alpha$, and the momentum $\textbf{p}_\alpha$ of the particle $\alpha$, as
+\begin{align}
+    m_\alpha(t,\FF)
+    = \intO{ \rho_d  }, 
+    &&
+    \textbf{x}_\alpha(t,\FF)
+    = \frac{1}{m_\alpha(t,\FF) }\intO{ \rho_d \textbf{x} }, 
+    &&\textbf{p}_\alpha(t,\FF) 
+    = \intO{ \rho_d \textbf{u}_d^0 }.
+    \label{eq:mass_pos}
+    % \label{eq:momentum_energy}
+\end{align}
+$\Omega_\alpha(t,\FF)$ is the time-dependent domain occupied by the particle $\alpha$ (see \ref{fig:Scheme}). 
+Subsequently, we define the velocity of the particle center of mass as
+\begin{equation*}
+\textbf{u}_\alpha = \frac{d \textbf{x}_\alpha}{dt}.
+\end{equation*}
+Replacing $\textbf{x}_\alpha$ by its definition (\ref{eq:mass_pos}) we obtain
+\begin{equation*}
+    \textbf{u}_\alpha = \frac{1}{m_\alpha}
+    \frac{d}{dt} 
+    \left(
+        \intO{ \rho_d \textbf{x} }
+    \right)
+    - \frac{1}{m_\alpha^2} \frac{d}{dt} \left(\intO{ \rho_d } \right)
+    \intO{ \rho_d \textbf{x} }.
+\end{equation*}
+%\tb{ A finaliser
+Using the Reynolds transport theorem (\ref{eq:reynolds_transport}) for both terms in parentheses and making use of the conservation of mass (\ref{eq:dt_rho}) and the definition of $\textbf{x}_\alpha(t,\FF)$ in the last term, gives
+\begin{equation}
+    \textbf{u}_\alpha = 
+    \frac{1}{m_\alpha}\intO{ \left[
+        \pddt (\textbf{x}\rho_d ) + \div\left(\textbf{u}_d^0 \textbf{x} \rho_d\right) 
+    \right]} \\
+    + \frac{1}{m_\alpha}\intS{ \textbf{x} \rho_d(\textbf{u}_I   - \textbf{u}_d^0) \cdot \textbf{n}_d }
+    -  \frac{\textbf{x}_\alpha}{m_\alpha}    \intS{ \rho_d(\textbf{u}_I   - \textbf{u}_d^0) \cdot \textbf{n}_d }
+\end{equation}
+Then by considering the mass conservation for the first term and noticing that $\grad \textbf{x} = \bm\delta$ with $\bm\delta$ the unit tensor, for the second term gives, 
+\begin{equation}
+    \textbf{u}_\alpha(t,\FF) = \frac{1}{m_\alpha(t,\FF)} \left(
+        \textbf{p}_\alpha(t,\FF)
+        +  \intS{\rho_d \textbf{r} (\textbf{u}_I^0 - \textbf{u}_d^0)\cdot \textbf{n}_d }
+        \right),
+        \label{eq:dt_y_alpha}
+\end{equation}
+where $\textbf{r}(\textbf{x},t) = \textbf{x} - \textbf{x}_\alpha(t)$. 
+In \ref{eq:dt_y_alpha}, it can be observed that the first component of the velocity represents the linear momentum divided by the mass of the particle. 
+This corresponds to the mass-averaged velocity over the volume of the particle.
+The second term in \ref{eq:dt_y_alpha} arises from the contribution of anisotropic mass transfer across the surface of the particle. 
+This mass transfer leads to the motion of the particle's center of mass, thereby contributing to the total velocity.
+To illustrate this concept, let us consider a fixed drop with no momentum lying over a very hot plate.
+In this scenario, we assume that the plate is sufficiently hot to induce evaporation, specifically on the bottom portion of the drop.
+Hence, under the effect of an anisotropic evaporation flux one may expect the second term to be non-negligible.
+Consequently, the center of mass of the drop has a non-zero velocity in the opposite direction of the plate, even though the momentum is assumed to be zero.
+Note that \ref{eq:dt_y_alpha} generalized usual expression of the center of mass velocity whom neglect the second term.
+In the following, for the sake of brevity we discard the dependency on $t$ and $\FF$ on the notations for all Lagrangian quantities denoted by the subscript $_\alpha$ and in particular $\Gamma_\alpha$ and $\Omega_\alpha$.
+Nevertheless, the reader must understand that all Lagrangian quantities and integration domains subscribed by $_\alpha$ are time and configuration-dependent. 
+
+The particle's internal relative motions or the \textit{inner velocity} is given by $\textbf{w}_d^0 = \textbf{u}_d^0 - \textbf{u}_\alpha$. 
+Substituting the inner velocity in the momentum definition (\ref{eq:mass_pos}) yields
+\begin{equation}
+    \label{eq:momentum_definition_1}
+    \textbf{p}_\alpha
+    = m_\alpha \textbf{u}_\alpha
+    + \int_{\Omega_\alpha} \rho_d \textbf{w}_d^0 d\Omega.
+\end{equation}
+Alternatively, from \eqref{eq:dt_y_alpha}, we obtain,
+\begin{equation}
+    \textbf{p}_\alpha
+    =  m_\alpha \textbf{u}_\alpha
+    - \int_{\Gamma_\alpha} \rho_d\textbf{r}(\textbf{u}_I^0 - \textbf{u}_d^0)\cdot \textbf{n}_d d\Sigma
+    \label{eq:momentum_definition}
+\end{equation}
+Therefore, the momentum of a particle can be seen as a sum of the mean velocity plus the integral of the fluctuation (\ref{eq:momentum_definition_1}), with the latter being equivalent to minus the first moment of mass transfer term (\ref{eq:momentum_definition}).
+Indeed, by identification we obtain : $\intO{ \rho_d \textbf{w}_d^0 } = - \intS{  \rho_d\textbf{r} (\textbf{u}_I^0 - \textbf{u}_d^0)\cdot \textbf{n}_d }$. 
+Hence, the internal velocity fluctuations within a fluid particle do not contribute to the total linear momentum $\textbf{p}_\alpha$, as long as the anisotropic mass transfer is negligible.  
+Only within this simplified context we can consider the classic relation $\textbf{p}_\alpha = m_\alpha \textbf{u}_\alpha$. 
+
+\subsection{Conservation laws}
+
+
+
+\subsubsection{Inside the volume}
+
+ 
+
+
+Let us consider the specific case of the momentum balance, i.e. $q_\alpha = \textbf{p}_\alpha$.
+In this situation, \ref{eq:dt_q_alpha} reads
+\begin{equation}
+    \ddt  \textbf{p}_\alpha
+    = \intO{ \rho_d\textbf{g} }
+    + \intS{ 
+        \left[
+        f_d^0 (\textbf{u}_I^0-\textbf{u}_d^0)
+         + \bm{\sigma}_d^0%\cdot\textbf{n}_d  
+        %+ \mathbf{\Phi}_d^0 
+        \right] 
+        \cdot \textbf{n}_d },
+\end{equation}
+% first term reads as $\intO{ \rho_d\textbf{g} }$ 
+The first term on the right-hand side represents the total weight acting on the particle $\alpha$, 
+the second term represents the total source of momentum due to phase transfer, and it is expressed as, $\intS{ \rho_d \textbf{u}_d^0 (\textbf{u}_I^0-\textbf{u}_d^0)\cdot\textbf{n}_d }$,
+and the last term $\intS{ \bm{\sigma}_d^0\cdot\textbf{n}_d }$, represents the resultant of the hydrodynamic forces acting on the surface of the particle.
+It is important to notice that under this form, the exchange terms are expressed as integrals of dispersed phase fields denoted by the subscript $_d$.
+Nevertheless, depending on the nature of the dispersed phase, these fields may not always be defined.
+For rigid particles the stress within the particle $\bm{\sigma}_d^0$ is indeterminate \citep{guazzelli2011}.  
+Hence, our objective is to express these exchange terms, in terms of the continuous phase field quantities instead of the dispersed phase fields, i.e. in terms of $\mathbf{\Phi}_f^0$ and $\textbf{u}_f^0$ rather than $\mathbf{\Phi}_d^0$ and $\textbf{u}_d^0$. 
+
+%\subsubsection{On the interfaces}
+ 
+
+%For completeness, we exposed in \ref{ap:particles_eq} a clear derivation of the mass, momentum and total energy equations for a single particle.
+%The derivation takes place using the same hypothesis as it is exposed in \ref{ap:hypothesis}.
+%Especially, it is shown that the integration of the kinetic energy jump condition corresponds to the Lagrangian derivative of the particle surface, see \ref{eq:int_u_I2}.
