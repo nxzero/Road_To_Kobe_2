@@ -31,3 +31,4 @@ proper: clean
 	-rm Abstract_SHF.pdf
 	-rm microstructure.pdf
 	-rm microstructure_kin.pdf
+	-rm fintzi_lhuillier_piersonICMF2025.pdf

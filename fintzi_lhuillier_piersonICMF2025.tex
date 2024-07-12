@@ -4,6 +4,99 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{fancyhdr}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{empheq}
+\usepackage{bm}
+\newcommand{\size}{0.22\textwidth}
+\newcommand{\avg}[1]{\left<#1\right>}
+\renewcommand{\avg}[1]{\left<#1\right>}
+\newcommand{\Exp}[1]{\overline{\overline{#1}}}
+\newcommand{\davg}[1]{\left<#1\right>_d}
+\newcommand{\cavg}[1]{\left<#1\right>_c}
+\newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
+% \newcommand{\pnavg}[1]{n\left<#1\right>_p}
+
+\newcommand{\avgcond}[1]{\left<#1\right>}
+\renewcommand{\avgcond}[1]{\overline{#1}}
+\newcommand{\condavg}[2]{\overline{#1}^{#2}}
+\newcommand{\ravg}[1]{\avgcond{#1}^\textbf{r}}
+\newcommand{\Tavg}[1]{\avgcond{#1}^T}
+\newcommand{\Xavg}[1]{\avgcond{#1}^X}
+\newcommand{\TXavg}[1]{\Tavg{\Xavg{#1}}}
+\newcommand{\kavg}[1]{\avgcond{#1}^k}
+\newcommand{\Iavg}[1]{\avgcond{#1}^I}
+\newcommand{\pnnavg}[1]{\avgcond{#1}^{p}}
+\newcommand{\pnavg}[1]{n_p\pnnavg{#1}}
+\newcommand{\oneavg}[1]{\avgcond{#1}^1}
+\newcommand{\twoavg}[1]{\avgcond{#1}^2}
+\newcommand{\smallavg}[2]{\avgcond{#1}^{#2}}
+\newcommand{\sym}[1]{\text{Sym}\left[#1\right]}
+
+\newcommand{\nstavg}[1]{\overline{#1}^{nst}}
+\newcommand{\nstrelavg}[1]{\overline{#1}^{nst}_{rel}}
+\newcommand{\mavg}[1]{\left<#1\right>_m}
+\newcommand{\gavg}[2][\gamma]{\left<#2\right>_{#1}}
+\newcommand{\partials}[1]{\partial_{i_1}\partial_{i_2}\ldots\partial{i_{#1}}}
+\newcommand{\partialp}[2]{ \prod_{m=#1}^{#2} \partial_{i_m}}
+\newcommand{\hatpartialp}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{j_m}}
+\newcommand{\hatpartialpi}[2]{ \prod_{m=#1}^{#2} \hat{\partial}_{i_m}}
+\newcommand{\pri}[2]{ \prod_{m=#1}^{#2} r_{i_m}}
+\newcommand{\prj}[2]{ \prod_{m=#1}^{#2} r_{j_m}}
+
+\newcommand{\grad}{\mathbf{\nabla}}
+\renewcommand{\div}{\mathbf{\nabla}\cdot}
+\newcommand{\gradI}{\mathbf{\nabla}_{||}}
+\newcommand{\divI}{\mathbf{\nabla}_{||}\cdot}
+
+\newcommand{\ddt}{\frac{d}{dt}}
+% \renewcommand{\ddt}{d_t}
+\newcommand{\pddt}{\frac{\partial}{\partial t}}
+\newcommand{\Dt}{D_t}
+\newcommand{\pddx}{\frac{\partial}{\partial \textbf{x}}}
+\newcommand{\pddr}{\frac{\partial}{\partial \textbf{r}}}
+\newcommand{\pddy}{\frac{\partial}{\partial \textbf{y}}}
+\newcommand{\pddw}{\frac{\partial}{\partial \textbf{w}}}
+\renewcommand{\pddx}{{\partial_\textbf{x}}}
+\renewcommand{\pddr}{{\partial_\textbf{r}}}
+\renewcommand{\pddy}{{\partial_\textbf{y}}}
+\renewcommand{\pddw}{{\partial_\textbf{w}}}
+\newcommand{\pdda}{\partial_a}
+\renewcommand{\pddt}{\partial_t}
+\newcommand{\norm}[1]{\hat{#1}}
+\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n}_k }
+\renewcommand{\Jump}[1]{\sum_{k=d,f} \left[#1\right] \cdot \textbf{n}_k }
+
+\newcommand{\intO}[1]{\int_{V_\alpha} #1 dV}
+% \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
+\newcommand{\intS}[1]{\oint_{S_\alpha} #1 dS}
+% \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
+\newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
+\newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
+\newcommand{\pMavg}[1]{\mathscr{M}\!\!\left[#1\right]}
+\newcommand{\pMOavg}[1]{\mathscr{M}_\Omega\!\!\left[#1\right]}
+\newcommand{\pMSavg}[1]{\mathscr{M}_\Sigma\!\!\left[#1\right]}
+\newcommand{\CC}{\mathscr{C}}
+\newcommand{\PP}{\mathscr{P}}
+\newcommand{\FF}{\mathscr{F}}
+
+%%% Utiliser pour les commentaires
+\newcommand{\JL}[1]{\color{red}#1\color{black}}
+\newcommand{\DL}[1]{\color{green}#1\color{black}}
+\newcommand{\tb}[1]{\color{blue}#1\color{black}}
+% \renewcommand{\alpha}{}
+% \renewcommand{\tb}[1]{}
+
+\renewcommand{\size}[1]{0.3\textwidth}
+\newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Gamma_\alpha} \pri{1}{#1}#2 d\Sigma}}
+
+% \newcommand{\numref}[1]{\ref{#1}}
+% \renewcommand{\ref}[1]{\autoref{#1}}
 
 % FORMAT OF PAGE
 \addtolength{\textheight}{4.5cm}
@@ -30,7 +123,7 @@
 
 % TITLE IN CAPITAL LETTERS
 \begin{center}
-{\large {\bf Averaged equations for dispersed multiphase flows}}
+{\large {\bf On the Pseudo Turbulent Kinetic Energy (PTKE) equation for disperse multiphase flow made of arbitrary fluid droplets}}
 \vspace{10pt}
 
 % AUTHORS
@@ -46,134 +139,126 @@ $^2$Affiliation of second author: University, School, Department, Institute, Cit
 
 \vspace{10pt}
 \noindent{\bf {\large Abstract}}:\\
-   This article presents a comprehensive study of the averaged equations for dispersed multiphase flows.
-    We present a systematic derivation of a general averaged hybrid model that incorporates the influence of internal properties and surface properties of arbitrary particles dispersed in a continuous phase.
-    The dispersed phase averaged equations are derived using two distinct formalism :
-    the particle-average or Lagrangian formalism proposed by \citet{zhang1994ensemble,jackson1997locally};
-    and the phase-average method, which is also employed for the continuous phase based on the approach of \citet{drew1983mathematical}. 
-    The particle-phase averaged formalism yields the conventional linear conservation equations, as well as the less familiar moments' conservation equations.
-    The primary contribution is the demonstration of the equivalence between the particle-averaged and phase-averaged equations. 
-    We show that the phase-averaged equation of the dispersed phase, is in fact a series expansion of the so-called particle-averaged moments equations. 
-    The second contribution of this work is the global derivation of linear and moments equations of the particle phase in their most generalized form, the link to the continuous phase is also made. 
-    We expose the mass, momentum and energy equations for both phases and investigate where does the contribution of the particle inner and surface stresses impact these equations. }
+    Buoyancy-driven droplet flows are encountered in many chemical engineering processes such as gravity separators and liquid-liquid extractors. 
+    The usual engineering practice to model such facilities is to use the averaged Navier-Stokes equations, that is: mass and momentum transport equations for the dispersed and continuous phase. 
+    These equations are often completed by a \textit{pseudo turbulent kinetic energy} (PTKE) equation for the continuous phase. 
+    % The PTKE is defined as the average of the dot product of the local velocity fluctuations within the continuous phase : namely, $\phi_f k_f =\frac{1}{2}\avg{\chi_f \textbf{u}_f'\cdot \textbf{u}_f'}$, where $\chi_f$ is the continuous phase indicator function and $\phi_f$ the continuous phase volume fraction. 
+    Numerous authors derived PTKE equations using what we call a \textit{two-fluid} formulation \citep{kataoka1986local}. 
+    However, none of these authors took advantage of the topology of the dispersed phase, which becomes problematic for the modeling of the exchange terms of the PTKE equaiton. 
+    Therefore, inspired by the Lagrangian-based modeling introduced by \citep{buyevich1979flow, lhuillier1992volume}, we propose to take advantage of the dispersed nature of the inclusions and derive a PTKE equation considering Newtonian fluid particles, we call it the \textit{hybrid formulation} of the PTKE equation. 
+    This new formulation enables us to better understand the physical significance of the interphase exchange terms. 
+    Specifically, we identify the source term appearing in the PTKE equation that is due uniquely to the consideration of the droplet's internal motions.
+    Then it is demonstrated that the consideration of hill vortex motions within the droplets drastically impacts the total kinetic energy exchange between the droplets and continuous phases.
+    This conclusion as well as the general \textit{hybrid formulation} of the PTKE equation constitutes the major result of this work, as it extends our current understanding of the PTKE, and includes seemingly non-negligible exchange terms that are related to the fluid nature of the particles.
+    \vspace{10pt}
+
+\noindent{{\bf Keywords}}: PTKE equations, hybrid model, Averaged equations, dispersed multiphase flows
 
 \vspace{10pt}
-\noindent{{\bf Keywords}}: Averaged equations, dispersed multiphase flows
+\noindent{\bf {\large Hybrid formulation of the PTKE equaiton}}:
 
-\vspace{10pt}
-\noindent{\bf {\large Introduction}}:\\
-
-In this section, we derive the conservation equations using a two-fluid formulation. While this approach has been employed in numerous studies, including those by \citet{kataoka1986local}, \citet{lhuillier2010multiphase}, \citet{ishii2010thermo}, \citet{morel2015mathematical}, and \citet{bothe2022sharp}, our method enables us to establish general results that encompass previous work. Notably, we will present a general two-fluid formulation on surfaces, which has not been reported so far.
-
-
-Lagrangian-based modeling of the dispersed phase has been explored extensively in numerous studies \citep{buyevich1979flow, lhuillier1992volume, simonin1996, zhang1994averaged, zhang1994ensemble, zhang1997momentum, jackson1997locally, zaepffel2011modelisation}. However, these studies predominantly focus on solid particles \citep{buyevich1979flow, lhuillier1992volume, simonin1996, zhang1994averaged, jackson1997locally} or non-deformable spherical fluid inclusions \citep{zhang1994ensemble, zaepffel2011modelisation}. A notable exception is the work by \citep{zhang1994ensemble}, which considered spherical bubbles with varying radii, although this analysis was limited to constant surface tension and spherical shapes. In this work, we aim to address a more general scenario by considering fluid particles with arbitrary shapes and surface properties. Thus, we propose a Lagrangian-based model for each inclusion capable of describing the dispersed phase with arbitrary accuracy.
-
-Let $f_k^0$ denote a volumetric quantity of arbitrary tensorial order defined in $\Omega_k$.
-Similarly, let $f_I^0$ represent an arbitrary surface property defined on $\Gamma$. The subscript $_{||}$ is used to denote the projection of a field onto the plane tangential to the surface $\Gamma$. Following the strategy outlined in \citep{ishii2010thermo,bothe2022sharp}, the local conservation equations for $f_k^0$ and $f_I^0$ can be written as follows
+Let us consider a dispersed two-phases flow made of two immiscible fluids of different densities and viscosities separated by an interface with constant surface tension.
+In this context, the PTKE equations can be derived within a classic \textit{two-fluid} formulation and reads as, 
 \begin{align}
-    \label{eq:dt_f_k}
-    \pddt f_k^0
-    +\div \left(
-        f_k^0\textbf{u}_k^0
-        - \mathbf{\Phi}_k^0
-        \right)
-    &= 
-    s_k^0
-    & \text{ in } \Omega_k,&\\
-    \pddt f_I^0 
-    + f_I^0 (\textbf{u}_I \cdot \textbf{n})(\div \textbf{n})
-    +\divI
-    (f_I^0 \textbf{u}_{I||}^0
-        - \mathbf{\Phi}_{I||}^0 )
-    &= 
-    s_I^0
-    - \Jump{
-       f_k (\textbf{u}_I^0 - \textbf{u}_k^0)
-       + \mathbf{\Phi}_k^0
-    } 
-    & \text{ on } \Gamma,&
-    \label{eq:dt_f_I}
-\end{align}
-respectively. The tensors $\mathbf{\Phi}_k^0$ and $\mathbf{\Phi}_{I||}^0$ represent the non-convective fluxes corresponding to the quantities $f_k^0$ and $f_I^0$, respectively. Similarly, $s_k^0$ and $s_I^0$ are the source terms corresponding to the quantities $f_k^0$ and $f_I^0$, respectively.
-
-
-The two-fluid formulation may be obtained by multiplying \ref{eq:dt_f_k} by $\chi_k$. 
-Using \ref{eq:dt_chi_k} and \ref{eq:grad_chi_k} we obtain
-\begin{equation}
-    \pddt (\chi_k f_k^0)
+    \pddt (\phi_f\rho_fk_f)  
     + \div (
-        \chi_k f_k^0 \textbf{u}_k^0
-        - \chi_k \mathbf{\Phi}_k^0 
+        \phi_f\rho_fk_f\textbf{u}_f
+        + \textbf{q}_{eq}^\text{k} 
+        )
+    &= 
+    - \avg{\chi_f\bm{\sigma}_f^0 : \grad \textbf{u}_f^0}
+    - \bm{\sigma}_f^\text{eq} : \grad \textbf{u}_f
+    + \avg{\delta_\Gamma \textbf{u}_f' \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_f},
+    \label{eq:PTKE}
+    \\
+    \bm{\sigma}_k^\text{eq}
+    &= 
+     \rho_k\avg{\chi_k \textbf{u}_k'\textbf{u}_k'}
+      - \phi_k \bm{\sigma}_k \nonumber
+\end{align}
+where we introduced: $\avg{\ldots}$ as an ensemble average procedure; $\chi_f$ as the fluid phase indicator function; $k_f$ as the PTKE; the tensor $\bm\sigma_f^0$ and $\bm\sigma_f$ as the local and averaged fluid phase stress; the vector $\textbf{u}_f^0$ and $\textbf{u}_f$ represent the local and averaged continuous phase velocities; $\delta_\Gamma$ is the interface indicator function; $\textbf{u}_f' = \textbf{u}_f^0 - \textbf{u}_f$ is the fluctuating velocity; and $\textbf{q}_{eq}^\text{k}$ represents the effective heat flux. 
+In light of \eqref{eq:PTKE} we observe that $k_f$ results from an equilibrium between what we call the equivalent or macroscopic dissipation term $\bm{\sigma}_f^\text{eq} : \grad \textbf{u}_f$, the average of the local continuous phase dissipation $\avg{\chi_f\bm{\sigma}_f^0 : \grad \textbf{u}_f^0}$, and the interphase energy transfer term: $\avg{\delta_\Gamma \textbf{u}_f' \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_f}$. 
+It is important to highlight that under this form the latter term is not easily interpretable, since it involves the local velocity at every point on the interface. 
+
+% \textit{two-fluid} model fails to adequately distinguish between the two phases, as evidenced by the \textit{symmetry} of the exchange term $\avg{\delta_\Gamma \textbf{u}_f' \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_f}$ which has the same form for the dispersed phase PTKE equation. 
+% This symmetry does not hold physically because the dispersed phase possesses a distinct topological nature compared to the continuous phase. 
+% In a dispersed two-phase flow system, the closure terms are typically expressed as functions of the Lagrangian properties of the particles. 
+% In contrast, the current system of equations yields continuously averaged quantities, which are not directly connected to the Lagrangian properties.
+
+Upon noticing that the interface-exchange term present in \eqref{eq:PTKE} can be expanded in a Taylor series around the center of mass of the particles, we arrive at the major result of this work, which is the \textit{hybrid} formulation of PTKE equation for arbitrarily shaped fluid particles, namely
+\begin{align}
+    \pddt (\phi_f\rho_fk_f)  
+    + \div (
+        \phi_f\rho_fk_f\textbf{u}_f
+        + \textbf{q}_f^\text{k-h} 
         )
     = 
-    \chi_k s_k^0
-    + \delta_I\left[
-        f_k^0
-        \left(
-            \textbf{u}_I^0
-            - \textbf{u}_k^0
-        \right)
-        + \mathbf{\Phi}_k^0
+    (\textbf{u}_f - \textbf{u}_p)\cdot \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}}} 
+    - \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_f^0 \cdot \textbf{n}}}\nonumber\\
+    - \pavg{ \intS{\textbf{w}^0 \cdot \bm{\sigma}_f^0 \cdot \textbf{n}}},
+    - \avg{\chi_f\bm{\sigma}_f^0 : \grad \textbf{u}_f^0}
+    - \bm{\sigma}_f^\text{eq} : \grad \textbf{u}_f
+    \label{eq:PTKE2}
+\end{align}
+where we have noticed that $\textbf{u}_d^0 = \textbf{u}_p + \textbf{u}_\alpha' +\textbf{w}_d^0$, with $\textbf{u}_p$ the average of the particle center of mass velocity, $\textbf{u}_\alpha' = \textbf{u}_\alpha - \textbf{u}_p$ the center of mass velocity of the particle $\alpha$ relative to $\textbf{u}_p$, and $\textbf{w}_\alpha = \textbf{u}_d^0 - \textbf{u}_\alpha$ the velocity within the particle volume and surface relative to its center of mass velocity. 
+Under this form the contribution of the kinetic energy exchange is explicit. 
+The first term on the right-hand side of \eqref{eq:PTKE2} represents the work done by the mean particle-phase motion with the mean drag force.
+The second term represents the covariance of the velocity of the particles with their respective drag forces.
+The last term represents the work made by the local force traction on the particle surface with the velocity at the surface of the particles $\textbf{w}_d^0$.
+
+While the first two terms on the right-hands side of \eqref{eq:PTKE2} have already been identified in several studies, the first term of the second line appears to be new when expressed in such generality.
+We claim that the latter term results from particle internal motions, which can be either due to the particles rotation, or what is of interest here, the droplet's fluid internal circulation. 
+
+\vspace{10pt}
+
+\noindent{\bf {\large Impact of the droplets internal motion on the exchange terms  }}:
+
+Let us consider spherical droplets of radius $a$ and viscosity $\mu_f \lambda$, and let us assume that the particle internal motions are determined uniquely by the continuous and particle phase mean relative motions, that is: the mean relative velocity $\textbf{u}_f - \textbf{u}_p$, and mean gradient of the velocity $\textbf{E}_f = \grad \textbf{u}_f+ (\grad \textbf{u}_f)^\dagger$ at the particle position. 
+In this situation, and based on the singularity solution of isolated droplets in Stokes flow, we can express $\textbf{w}_d^0$ as a function of $\textbf{u}_f$, $\textbf{u}_p$ and $\textbf{E}_f$ and show that, 
+\begin{align}
+    \pSavg{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0\cdot\textbf{n}_2}
+    &\approx
+    \frac{1}{\lambda+1}(\textbf{u}_{f} - \textbf{u}_p) \cdot \left[
+        -\frac{1}{2}\pSavg{ \bm{\sigma}_1^0\cdot\textbf{n}_2}
+        % + \pavg{\textbf{u}_{\alpha}' \cdot \intS{ \bm{\sigma}_1^0\cdot\textbf{n}_2} }
+        % + \frac{1}{2a^2}
+        % \pSavg{\textbf{rr}\cdot \bm{\sigma}_1^0\cdot\textbf{n}_2}
+    \right]\nonumber
+    % \\
+    &+ \frac{1}{\lambda+1} \left[
+        -\frac{1}{2}
+        \pavg{\textbf{u}_\alpha' \cdot  \intS{\bm{\sigma}_1^0\cdot\textbf{n}_2}}
+        % + \pavg{\textbf{u}_{\alpha}' \cdot \intS{ \bm{\sigma}_1^0\cdot\textbf{n}_2} }
+        % + \frac{1}{2a^2}
+        % \pavg{\textbf{u}_\alpha' \cdot \intS{\textbf{rr}\cdot \bm{\sigma}_1^0\cdot\textbf{n}_2}}
+    \right] \nonumber
+    \\
+    % \left[
+    %     \textbf{u}_{p f} \cdot
+    %     +
+        % \pavg{\textbf{u}_{\alpha}' \cdot \intS{\textbf{rr}\cdot \bm{\sigma}_1^0\cdot\textbf{n}_2}}
+    % \right]
+    &+ \frac{1}{\lambda + 1} \textbf{E}_{f} : \left[ 
+     \pSavg{\textbf{r} \bm{\sigma}_1^0\cdot\textbf{n}_2}
+    %  -\frac{1}{a^2} 
+    %  \pSavg{ \textbf{rrr} \cdot \bm{\sigma}_1^0\cdot\textbf{n}_2}
     \right]
-    \cdot \textbf{n}_k.
-    \label{eq:dt_chi_k_f_k}
-\end{equation}
-This yields an equation defined over $\Omega$, to be solved for the quantity $\chi_k f_k^0$ instead of $f_k^0$. 
-Moreover, in contrast to \ref{eq:dt_f_k} we observe the emergence of the interfacial term $ \delta_I[\ldots]$ on the right-hand side of \ref{eq:dt_chi_k_f_k}. 
-To the best of the author's knowledge, the general form of the interfacial transport equation, expressed using the distribution formalism, has not yet been derived. However, some specific forms applicable to a given $f_i$ can be found in \citet{marle1982macroscopic, teigen2009}.
+    \label{eq:energy_term}
+\end{align} 
+Notice how the terms present in this equation shear similarities with the first two terms on the RHS of \eqref{eq:PTKE2}. 
+In fact by injecting \eqref{eq:energy_term} in \eqref{eq:PTKE2} we observe that the coefficient in front of the drag force velocity terms, which is originally $1$, changes to $\frac{\lambda +\frac{1}{2}}{\lambda+1}$, and that a new term proportional to $\textbf{E}_f$ appears. 
+Consequently, the consideration of hill's vortex ends up adding a coefficient in front of the exchange term which varies from $1$ (for $\lambda = \infty$) to $1/2$ for ($\lambda = 0$), respectively.  
+Additionally, the last term of \eqref{eq:energy_term} implies that even neutrally buoyant droplets can generate PTKE due to their simple presence in a linear flow, and that the PTKE production is proportional to $\textbf{E}_f$ and a quantity related to the first moment of the hydrodynamic forces.  
+
+Anyhow, the consideration of the internal motion of particles have a very significant impact regarding the magnitude of the pseudo turbulent exchange terms in \eqref{eq:PTKE2}, especially when one is considering bubbly flow ($\lambda = 0$). 
+The physical explanation of the decrease of the coefficient in front of the exchange terms for bubbles can be due to the facts that the fluid slip on the bubbles or droplet's surface induce less work exchange than if the fluid followed exactly the particle's surface as it is the case for solid particles. 
 
 
+Overall, based on solid theoretical ground, we demonstrated that it is necessary to well take in account the fluid nature of the particle phase in the PTKE equation to model accurately the exchange term.
 
-%An extended abstract should have {\bf one or two pages maximum, and be written in English.} The first part is a text block containing the title, the authors' names and affiliations, the keywords, and the abstract. Following that, you can write an introduction and describe the work to be presented at the conference. 
-%All the extended abstracts will go under peer review by the Scientific Committee. The research quality will be evaluated. The accepted abstracts will be either for oral or poster presentation, and published in the scientific program of ICMF 2025. 
-%When the abstract is ready, please make a .pdf file and submit it to the submission webpage of the conference (https://www.icmf2025.com/submission/). The {\bf deadline for abstract submission is 15 July 2024.} The notification of acceptance will be sent to one of the authors by 15 October 2024. 
-\\
+ 
 
-%\noindent{\bf {\large Experimental Facility / Numerical Methods / etc.}}:\\
-
-%\noindent Here, please describe your experimental facility, numerical methods, etc. Please change the section title to fit the text. 
-%In each section, you can include figures, equations, references \cite{bib:ref_1}. An example of a figure is shown in Fig. \ref{fig:banner}.
-
-
-
-%\begin{figure}[h]
-%\centering
-%\includegraphics[width=\linewidth]{Toulouse.pdf} 
-%\caption{Caption.}
-%\label{fig:banner}
-%\end{figure}
-
-%An example of an equation is written as.\\
-
-%\begin{eqnarray}
-%t_{det}=\frac{4 \pi R_{det}^3}{3 Q}
-%\label{tdet}
-%\end{eqnarray}
-
-%\noindent{\bf {\large Results and discusison}}:\\
-
-%Please describe and discuss your results.\\
-
-%\noindent{\bf {\large Conclusion}}:\\
-
-%Please describe the main conclusion.\\
-
-%\noindent{\bf {\large Acknowledgments}}:\\
-
-%Please place an optional section (if needed) before References.\\
-
-
-%%%%%%%%%%%
-
-\begin{thebibliography}{99}
-
-\bibitem{bib:ref_1} 
-Authors, 1 \& Authors, 2 
-\textit{Title.},
-Journal name. \textbf{volume}, pages--pages (year).
-
-
- \end{thebibliography}
-
+\bibliographystyle{abbrv}
+\bibliography{Bib/bib_bulles.bib}
 \end{document}
 
