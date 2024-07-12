@@ -1,0 +1,750 @@
+\section{The closure problem}
+\label{ap:Closure_problem}
+
+Inspired by \cite{hinch1977averaged} and \cite{zhang1994ensemble} we present here a general method to derive closure for dispersed multiphase flows. 
+The first step is to re-express the closure terms as function of what we will call here \textit{single-particle conditionally averaged quantities}. 
+This is done for particle ensemble averaged quantities and fluid phase averaged quantities. 
+
+We restrict our analysis to spherical particles as our purpose is to demonstrate how to recover classic results of the literature with our statistical approach. 
+Nevertheless, this approach extends to any type of particles, this will be treated in a future work. 
+
+\subsection{Reformulation of the closure terms}
+
+Our final objective is to compute our closure terms within the stokes flow limit for spherical particle.
+In this regime we expect that  the closure terms will only be determined by the translating velocity of the particle, they position and the properties of, what is usually called, \textit{background flow}. 
+
+
+Therefore, we must express our closure based on averaged quantity conditioned on the velocity and position of the particles. 
+That is the purpose of this section. 
+Note that for shape dependent closure terms it would also be necessary to obtain the \textit{shape-conditioned averaged fields}. 
+
+\subsubsection{Interfacial terms}
+
+In the equations presented in \ref{sec:application} some closure such as the surface traction forces, surface heat fluxes are expressed under the form of an integral over the surface of the particles than it is ensemble averaged. 
+Here we focus on the reformulation of these kinds of terms in terms of the \textit{single-particle conditionally averaged quantities} that will be defined subsequently.
+
+As the procedure is similar for all surface integrated terms, let us take the example of the drag force term appearing in both averaged momentum equations (\ref{eq:dt_hybrid_rhou_f} and \ref{eq:dt_hybrid_up}). 
+Form the definition of the particle-average we write,
+\begin{align}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    &= \avg{ \sum_{\alpha=1}^N \delta(\textbf{x}-\textbf{x}_\alpha[t; \FF])
+    \int_{\Gamma_\alpha(t,\FF)}
+    (\bm\sigma_f^0\cdot\textbf{n})[\textbf{y},t;\FF]
+    d\Gamma[\textbf{y}] }
+    \label{eq:first_step}
+\end{align}
+By writing this integral explicitly, we emphasize that the particle-averaged quantity is evaluated at the point \textbf{x}, while the parameter $\textbf{y}$ is used to integrate over the surface of the particle with center of mass at \textbf{x}. 
+Thus, note that $(\bm\sigma_f^0\cdot\textbf{n})[\textbf{y},t;\FF]$ means that we evaluate the local stress as well as the local normal $\textbf{n}$ to the particle at \textbf{y}. 
+We now enlarge the domain of integration from $\Gamma_\alpha$ to $\mathbb{R}^3$ with the introduction of the interface indicator function of the particle located \textbf{x}, namely $\delta(|\textbf{y} - \textbf{x}_\alpha[t,\FF]| - a)$, 
+it reads,
+\begin{equation}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    = 
+    \int_{\mathbb{R}^3}
+    \avg{
+     \sum_{\alpha=1}^N 
+     \delta(\textbf{x}-\textbf{x}_\alpha(t; \FF))
+    \delta(|\textbf{y} - \textbf{x}_{\alpha}(t;\FF)|-a)
+    (\bm\sigma_f^0\cdot\textbf{n})[\textbf{y},t;\FF]
+    }
+    d\textbf{y}. 
+\end{equation} 
+As mentioned above our closure terms are entirely determined by the translational velocity of our particles therefore we introduce the relation 
+\begin{equation*}
+    \int_{\mathbb{R}^3} \delta(\textbf{w} - \textbf{u}_\alpha[\FF,t]) d\textbf{w} = 1,
+\end{equation*}
+where $\textbf{w}$ is the particle velocity in the Eulerian space. 
+Injecting this expression in \ref{eq:first_step} the drag force terms can be finally reformulated as, 
+\begin{equation}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    \int_{\mathbb{R}^3}
+    P_1[\textbf{x},\textbf{w},t]
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \bm\sigma_f^1[\textbf{y},t;\textbf{x},\textbf{w}] \cdot \textbf{n}
+    d\textbf{y}
+    d\textbf{w}
+    \label{eq:conditionally_averaged}
+\end{equation}
+where we introduced the definition, 
+\begin{align}
+    \bm\sigma^1_f[\textbf{y},\textbf{x},\textbf{w},t]
+    \phi_I^1[\textbf{y}|\textbf{x},\textbf{w},t] 
+    P_1[\textbf{x},\textbf{w},t]
+    = 
+    \avg{
+    \sum_\alpha^N 
+    \delta(\textbf{x} - \textbf{x}_\alpha[t,\FF])
+    \delta(\textbf{w} - \textbf{u}_\alpha[t,\FF])
+    \delta(|\textbf{y} - \textbf{x}_{\alpha}[t,\FF]|-a)
+    \bm\sigma_f^0[\textbf{y},t,\FF]
+    }
+    \label{eq:sigma_f_1}
+    \\
+    \phi_I^1[\textbf{y}|\textbf{x},\textbf{w},t] 
+    P_1[\textbf{x},\textbf{w},t]
+    = 
+    \avg{
+    \sum_\alpha^N 
+    \delta(\textbf{x} - \textbf{x}_\alpha[t,\FF])
+    \delta(\textbf{w} - \textbf{u}_\alpha[t,\FF])
+    \delta(|\textbf{y} - \textbf{x}_{\alpha}[t,\FF]|-a)
+    }\\
+    P_1[\textbf{x},\textbf{w},t]
+    = 
+    \avg{
+    \sum_\alpha^N 
+    \delta(\textbf{x} - \textbf{x}_\alpha[t,\FF])
+    \delta(\textbf{w} - \textbf{u}_\alpha[t,\FF])
+    }
+\end{align}
+% Here $\bm\sigmais the \textit{single-particle} conditionally-averaged local stress of the continuous phase knowing that interface of the particle at $\textbf{x}$ is  present in \textbf{y} and that there is a particle at \textbf{x} with velocity \textbf{w}. 
+Here $\bm\sigma^1_f$ is the mean fluid phase stress evaluated at $\textbf{y}$ and time $t$ on every configuration where a particle is present at $\textbf{x}$ with velocity \textbf{w} and that the surface of this particle occupy the point \textbf{y}.
+$\phi_I^1[\textbf{y}|\textbf{x},\textbf{w},t] $ is the probability of finding the interface of the particle at the location \textbf{y} knowing its center of mass is located at \textbf{x}. 
+For identical spherical particle we may write $\phi_I^1[\textbf{y}|\textbf{x},\textbf{w},t] = \delta(|\textbf{x} - \textbf{y}| -a)$ which restricted the domain of integration over \textbf{y} in \ref{eq:conditionally_averaged}. 
+For deformable particles, this function may take a continuous form to account for the uncertainty in the position of the particle interface. 
+It is clear that if the position of the interface is conditioned by the exact shape of the interface, then can always express $\phi_I^1 = \delta(f(\textbf{x}))$ where $f$ is a distance function of the shape. 
+Finally, $P_1(\textbf{x},\textbf{w},t)$ is the probability of finding a particle center of mass at \textbf{x} knowing the particle center of mass velocity is  \textbf{w}.
+This distribution can be decomposed such that $P_1[\textbf{x},\textbf{w},t] = n_p[\textbf{x},t] P_1[\textbf{w}|\textbf{x},t]$ where $n_p$ is the number density evaluated at \textbf{x} and $P_1$ the probability density of having a particle with velocity \textbf{w} knowing its center of mass location is \textbf{x}. 
+Notice that, 
+\begin{equation*}
+    \int_{\mathbb{R}^3} P_1[\textbf{w}|\textbf{x},t] d \textbf{w} = 1. 
+\end{equation*}
+Note that all quantities denoted with the superscript $^1$ refer to \textit{single-particle} conditionally-averaged  quantities.  
+These, quantities are therefore conditionally averaged on the presence of a particle located at \textbf{x} with velocity \textbf{w}. 
+
+In the following we will use the shorthand $\delta_1 = \sum_\alpha \delta(\textbf{x} - \textbf{x}_\alpha[t,\FF]) \delta(\textbf{w} - \textbf{u}_\alpha[t,\FF])$ such that we can define the \textit{single-particle conditional averaged} as, 
+\begin{equation*}
+    f^1[\textbf{y}|\textbf{x},\textbf{w},t] P_1 = \avg{\delta_1 f^0[\textbf{y},\FF,t]}.
+\end{equation*}
+Such that $f^1$ is the averaged value of $f^0$ at \textbf{y} over all configurations where a particle is present at \textbf{x} with velocity \textbf{w}. 
+If $f_k$ is a quantity defined in the continuous phase we may write 
+\begin{equation*}
+    f^1_k[\textbf{y}|\textbf{x},\textbf{w},t] \phi_k^1[\textbf{y}|\textbf{x},\textbf{w},t]  P_1 = \avg{\delta_1 f^0[\textbf{y},\FF,t]}.
+\end{equation*}
+Such that $\phi_k^1$ is the probability of finding the phase $k$ at \textbf{y} knowing a particle is located at \textbf{w} with velocity \textbf{w}. 
+For example in the fluid phase we define the \textit{single-particle conditioned average} of the velocity fields by, 
+\begin{equation*}
+    \textbf{u}_f^1 \phi_f^1 
+    = \avg{\delta_1 \chi_f \textbf{u}_f^0}
+\end{equation*} 
+where $\phi_f^1$ is the probability of finding the fluid phase at \textbf{y} knowing a particle is present at \textbf{x} with velocity \textbf{w}. $\textbf{u}_f^1$ is the averaged local velocity evaluated at \textbf{y} knowing the fluid phase is present at \textbf{y} with a particle at \textbf{x} having velocity \textbf{w}. 
+
+The stress present in \ref{eq:conditionally_averaged} can now be expressed in terms of conditionally averaged velocities and pressure field. 
+We use the constitutive law $\bm\sigma_f^0 = -p_f^0 \bm\delta + \mu_f [\pddy \textbf{u}_f^1+ (\pddy \textbf{u}_f^1)^\dagger]$ with $\pddy$ the gradient over the \textbf{y} coordinate.
+Injecting this law into \ref{eq:sigma_f_1} we obtain directly 
+\begin{equation*}
+    \bm\sigma^1_f
+    P_1
+    = 
+    - p^1_f
+    \phi_I^1
+    P_1
+    + \mu_f \avg{
+        \delta_1
+        \delta(|\textbf{y} - \textbf{x}_\alpha[\FF,t]|-a)
+        [
+            \pddy \textbf{u}_f^0
+            + (\pddy \textbf{u}_f^0)^\dagger
+        ]
+        }
+\end{equation*}
+The first terms represent the conditional averaged pressure fields, the second term however still need to be reformulated. 
+This is done by first noticing that $\delta_1$ is independent of \textbf{y}, meaning that it can be included into the gradient. 
+However, notice that it is not the case for the function $\delta(|\textbf{y} - \textbf{x}_\alpha[\FF,t]|-a)$, thus care is needed while manipulating this term, which gives,
+\begin{equation*}
+    \phi_I^1 \bm\sigma_f^1
+    = - p_f^1 \phi_I^1 \bm\delta
+    +\mu_f \phi_I^1 [\grad \textbf{u}_f^1+(\grad \textbf{u}_f^1)^\dagger]
+    - \mu_f\avg{
+        \delta_1
+        [(\textbf{u}_f^0 - \textbf{u}_f^1)\pddy \delta_{I\alpha}
+        + \pddy \delta_{I\alpha} (\textbf{u}_f^0 - \textbf{u}_f^1)]
+    }
+    \label{eq:stress_final}
+\end{equation*}
+In this expression $p_f^1$ and $\textbf{u}_f^1$ are the conditionally averaged pressure and velocity fields conditioned on the presence of a particle at \textbf{x} and velocity \textbf{w}. 
+The last term on the RHS represent the fluctuation between the local and conditional velocities. 
+At this stage, it is difficult to understand the physical significance of this term due to the presence of the gradient of the interface indicator function, $\pddy \delta_{I\alpha}$, which is challenging to interpret. 
+Nevertheless, notice that in \ref{eq:conditionally_averaged} the stress is dotted with the surface normal \textbf{n} and therefore vanish identically. 
+On the points lying on the surface of the test particle the previous expression reduce to, 
+\begin{equation*}
+    \bm\sigma_f^1
+    = - p_f^1 \bm\delta
+    +\mu_f [\grad \textbf{u}_f^1+(\grad \textbf{u}_f^1)^\dagger], 
+\end{equation*}
+where we have noticed that $\phi_I^1 = 1$,  $(\textbf{u}_f^0 - \textbf{u}_f^1)\cdot \textbf{n} = 0$ and $\textbf{n} \cdot \pddy \delta_{I\alpha}$ due to the consideration of no mass transfer. 
+% Notice that at the point $|\textbf{x}-\textbf{y}| = a$, whether $\bm\sigma_f^1$ is conditioned by the presence of an interface or by the presence of the continuous phase is equivalent. 
+% Thus, let express the stress conditioned on a particle at \textbf{x} with and on the presence of fluid phase at \textbf{y}, it reads
+% \begin{equation*}
+%     \phi_f^1 \bm\sigma_f^1
+%     = - p_f^1 \phi_f^1 \bm\delta
+%     +\mu_f \phi_f^1 [\grad \textbf{u}_f^1+(\grad \textbf{u}_f^1)^\dagger]
+%     - \mu_f\avg{
+%         \delta_1
+%         [(\textbf{u}_f^0 - \textbf{u}_f^1) \textbf{n}_f \delta_I
+%         + \textbf{n}_f \delta_I (\textbf{u}_f^0 - \textbf{u}_f^1)]
+%     }
+% \end{equation*}
+% In this definition $\delta_I$ is the interface indicator function of all particles. 
+% For the point  $|\textbf{y}- \textbf{x}_\alpha| = a$, $\delta_{I\alpha}$ and $\delta_I$ are equivalent.  
+In conclusion, the ensemble averaged interphase drag force terms can be expressed as conditionally averaged quantities, among them is the \textit{single-particle conditional average} of the velocity field $\textbf{u}_f^1$. 
+
+
+\subsubsection{Mean fields and disturbance fields contribution}
+
+As it is often done in the literature \citep{zhang1994ensemble}, we would like to separate the contribution of the drag force into a contribution from the mean flow and pressure fields and the one arising due to the disturbance velocity and pressure fields.  
+
+In the first place we thus need to define what is the disturbance field, to do so let us take the example of the conditioned velocity field.
+We introduce the relation 
+\begin{equation}
+    \lim_{|\textbf{y}-\textbf{x}|\to\infty} 
+    \textbf{u}_f^1[\textbf{y},\textbf{x},\textbf{y},t]
+    =
+    \textbf{u}_f[\textbf{y},t]
+    \label{eq:lim_u_1}
+\end{equation} 
+This, relation means that the conditioned field $\textbf{u}_f^1$ is equivalent to the ensemble averaged velocity field $\textbf{u}_f^1$ if it is evaluated at a point \textbf{y} sufficiently far from the particle at \textbf{x}. 
+In light of \ref{eq:lim_u_1}, we define the disturbance velocity field as 
+\begin{equation*}
+    \textbf{u}_f^{1d}
+    =
+    \textbf{u}_f^1 
+    - 
+    \textbf{u}_f. 
+    \label{eq:def_u_1d}
+\end{equation*}
+Notice that with this definition, 
+\begin{equation*}
+    \lim_{|\textbf{y}-\textbf{x}|\to\infty} 
+    \{\textbf{u}_f^1[\textbf{y},\textbf{x},\textbf{y},t]
+    - \textbf{u}_f[\textbf{y},t]\}
+    =
+    \textbf{u}_f^{1d}[\textbf{y},\textbf{x},\textbf{y},t]
+    = 0.
+    \label{eq:lim_u_1d}
+\end{equation*} 
+Which means that the disturbance velocity fields as it is defined here tends to zero at large $|\textbf{y} - \textbf{x}|$.
+The definition \ref{eq:def_u_1d} can apply to any fluid phase quantities,
+for instance we define the \textit{disturbance stress} as,
+\begin{equation*}
+    \lim_{|\textbf{y}-\textbf{x}|\to\infty} 
+    \{\bm\sigma_f^1[\textbf{y},\textbf{x},\textbf{y},t]
+    - \bm\sigma_f[\textbf{y},t]\}
+    =
+    \bm\sigma_f^{1d}[\textbf{y},\textbf{x},\textbf{y},t]
+    = 0.
+\end{equation*} 
+More generally any \textit{conditional averaged} quantities $f^1$ will be assigner a disturbance fields defined by 
+\begin{equation*}
+    \lim_{|\textbf{y}-\textbf{x}|\to\infty} 
+    \{f_f^1[\textbf{y},\textbf{x},\textbf{y},t]
+    - f_f[\textbf{y},t]\}
+    =
+    f_f^{1d}[\textbf{y},\textbf{x},\textbf{y},t]
+    = 0.
+\end{equation*} 
+Using this decomposition we finally write, 
+\begin{align*}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    \int_{\mathbb{R}^3}
+    P_1[\textbf{x},\textbf{w}]
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \bm\sigma_f[\textbf{y},t]
+    \cdot \textbf{n}
+    d\textbf{y}
+    d\textbf{w}\\
+    + 
+    \int_{\mathbb{R}^3}
+    P_1[\textbf{x},\textbf{w}]
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \bm\sigma_f^{1d}[\textbf{y},\textbf{x},\textbf{w},t]
+    \cdot \textbf{n}
+    d\textbf{y}
+    d\textbf{w}
+\end{align*}
+where the first term represents the contribution from the mean fluid phase stress field and the second term is the contribution from the disturbance fields stress. 
+Notice that $\bm\sigma_f$ is evaluated at $\textbf{y}$ therefore to get it out of the integration one can notice that $\bm\sigma_f[\textbf{y},t] = \bm\sigma_f[\textbf{x},t] + \textbf{r}\cdot \grad\bm\sigma_f[\textbf{x},t]+ \ldots$
+where we have introduced $\textbf{r} = \textbf{y} - \textbf{x}$. 
+Retaining only the three terms in the series we can show that 
+\begin{equation}
+    \pSavg{\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    n_p v_p 
+    \div\bm\sigma_f[\textbf{x},t]
+    +
+    \int_{\mathbb{R}^3}
+    P_1[\textbf{x},\textbf{w}]
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \bm\sigma_f^{1d} \cdot \textbf{n}
+    d\textbf{y}d\textbf{w}
+    \label{eq:drag_final}
+\end{equation}
+Therefore, notice that drag force term has a component related to the divergence of the mean fluid phase stress plus the contribution from the disturbance fields. 
+Additionally, similar consideration can be made for the first two moments of the hydrodynamic force traction. 
+This reads,
+\begin{align}
+    \pSavg{\textbf{r}\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    n_p v_p \bm\sigma_f[\textbf{x},t]
+    +
+    \int_{\mathbb{R}^3}
+    P_1[\textbf{x},\textbf{w}]
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \textbf{r}\bm\sigma_f^{1d} \cdot \textbf{n}
+    d\textbf{y}
+    d\textbf{w}
+    \\
+    \pSavg{\textbf{rr}\bm\sigma_f^0\cdot\textbf{n}}[\textbf{x},t]
+    =
+    % n_pv_p  \frac{a^2}{5} 3 [(\div \bm\sigma_f)\bm\delta]^\text{sym}
+    % +
+    \int_{\mathbb{R}^3}
+    P_1[\textbf{x},\textbf{w}]
+    \int_{|\textbf{x}-\textbf{y}|=a}
+    \textbf{rr}\bm\sigma_f^{1d} \cdot \textbf{n}
+    d\textbf{y}
+    d\textbf{w}
+    \\
+\end{align}
+% where the operator $[\ldots]^\text{sym}$ returns the symmetric part of the arguments.
+Notice that the contribution from the mean stress in the second moment of the hydrodynamic force might become negligible for small $\phi_d$ it is therefore not considered here. 
+To obtain explicit close we now need to compute the term $\bm\sigma^{1d}_f$ that is to say we need the conditioned averaged pressure and velocity fields.  
+These will be obtained with the conditionally averaged Navier-Stokes equation exposed in the subsequent sections. 
+
+\subsubsection{Particle phase volume terms}
+
+Some closure terms such as the particle internal stress $\pOavg{\bm{\sigma}_2^0}$ are expressed as the average of volume integrated quantities. 
+In this situation the reformulation is slightly different since we must consider volume and not surfaces of the particle nevertheless the approach is similar. 
+The final results read, 
+\begin{equation}
+    \pOavg{\bm\sigma_d^0}[\textbf{x},t]
+    =
+    \int_{\mathbb{R}^3}
+    P_1[\textbf{x},\textbf{w}]
+    \int_{|\textbf{x}-\textbf{y}|<a}
+    \bm\sigma_d^1[\textbf{y},t;\textbf{x},\textbf{w}] 
+    d\textbf{y}
+    d\textbf{w}. 
+    \label{eq:conditionally_averaged_vol}
+\end{equation}
+Here the stress can be reformulated as well, it reads, 
+\begin{equation*}
+    \bm\sigma_d^1\phi_d^1  
+    = 
+    -p_d^1 \phi_d^1  \bm\delta
+    + \mu_d 
+    \phi_d^1 
+     [\pddy \textbf{u}^1_d+(\pddy  \textbf{u}^1_d)^\dagger]
+     - \mu_d
+     \avg{
+         \delta_1
+         (\textbf{u}_d^0 - \textbf{u}_d^1)
+         \pddy  \chi_{\alpha}
+         + 
+         [(\textbf{u}_d^0 - \textbf{u}_d^1)
+            \pddy  \chi_{\alpha}]^\dagger
+         ]
+         }
+\end{equation*}
+The last term might be reformulated noticing that $\pddy  \chi_\alpha = - \textbf{n}_d \delta_{\alpha}$. 
+Giving, 
+\begin{equation*}
+    \bm\sigma_d^1\phi_d^1  
+    = 
+    -p_d^1 \phi_d^1  \bm\delta
+    + \mu_d \phi_d^1 [\pddy \textbf{u}^1_d+(\pddy  \textbf{u}^1_d)^\dagger]
+     - \mu_d
+     \avg{
+         \delta_1
+         \delta_{I\alpha}
+         [(\textbf{u}_d^0 - \textbf{u}_d^1) \textbf{n}_d 
+         + \textbf{n}_d (\textbf{u}_d^0 - \textbf{u}_d^1)]
+         }
+\end{equation*}
+Notice that the first term is simply the average Newtonian part of the stress while the second term arise due to velocity fluctuation between the conditionally averaged field and the local field at the surface of the particles. 
+The latter term is identically null since we considered that the fluid motion near the particle is purely determined by it velocity and center of mass position which are already taken into account in $\textbf{u}_f^1$. 
+In the domain $|\textbf{x} - \textbf{y}| < a$ this expression reduce to, 
+\begin{equation*}
+    \bm\sigma_d^1  
+    = 
+    -p_d^1   \bm\delta
+    + \mu_d  [\pddy \textbf{u}^1_d+(\pddy  \textbf{u}^1_d)^\dagger],
+\end{equation*}
+which is simply the expression of the Newtonian stress within the particle centered at \textbf{x}. 
+
+\subsubsection{Continuous phase closures}
+
+The closure terms of the form $\avg{\chi_f f_f^0}$ are different in they mathematical structure since it concerns the continuous phase instead of the dispersed phase. 
+Therefore, the reformulation method is slightly different and require some additional assumption. 
+Two examples are the Reynolds stress $\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$ and the fluid phase dissipation $\avg{\chi_f\sigma_f^0:\grad \textbf{u}_f^0}$ that appear in \ref{eq:dt_hybrid_rhou_f} and \ref{eq:dt_hybrid_k1}, respectively.  
+
+The first step to reformulate the ensemble average into a conditional average is to first notice that, 
+\begin{equation}
+    \frac{1}{N}\sum_\alpha^N
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    \delta(\textbf{x}-\textbf{x}_\alpha)
+    \delta(\textbf{w}-\textbf{u}_\alpha)
+    d\textbf{x}
+    d\textbf{w}
+    = 1
+\end{equation}
+where $N$ is the total number of particle in the flow. 
+Using this relation one may re-formulate the ensemble average of a continuous phase quantity as 
+\begin{equation}
+    \phi_f f_f[\textbf{y},t]
+    = 
+    \frac{1}{N}
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    f_f^1[\textbf{y},\textbf{x},\textbf{w},t] \phi_f^1[\textbf{y}|\textbf{x},\textbf{w},t]  P_1[\textbf{x},\textbf{w}] 
+    d\textbf{x} 
+    d\textbf{w}
+    \label{eq:conditional_averaged_fluid}
+\end{equation}
+where,
+\begin{equation*}
+    f_f^1[\textbf{y},\textbf{x},\textbf{w},t] \phi_f^1[\textbf{y}|\textbf{x},\textbf{w},t]  P_1[\textbf{x},\textbf{w}]
+    =     
+    \int
+    \sum_\alpha^N 
+    \delta(\textbf{y}-\textbf{x}_\alpha[\FF,t])
+     \delta(\textbf{w}-\textbf{u}_\alpha[\FF,t])
+    (\chi_f
+    f^0_f)[\textbf{x},t;\FF]
+    d\PP.
+\end{equation*}
+In this expression $f_f^1[\textbf{x},t;\textbf{y},\textbf{w}]$ is the average of the local quantity $f_f^0$ evaluated at $\textbf{y}$ and time $t$ conditionally on the presence of the continuous phase at \textbf{y} and a particle center of mass at $\textbf{x}$ with center of mass velocity $\textbf{w}$. 
+Similarly, $\phi_f^1[\textbf{x},t;\textbf{y},\textbf{w}]$ is the fluid phase volume fraction at \textbf{x} and time $t$, conditionally on the presence of a particle at $\textbf{y}$ with velocity \textbf{w}. 
+Notice that for $|\textbf{y}- \textbf{x}| < a$, $\phi_f^1[\textbf{y}|t,\textbf{x},\textbf{w}] = 0$ however at, 
+$
+    \lim_{|\textbf{x} - \textbf{y}| \to \infty} \phi_f^1 = \phi_f,
+$
+thus in the non-dilute regime this term still plays a role in \ref{eq:conditional_averaged_fluid}. 
+Notice that this derivation is consistent with (2.21) and (2.22) of \citet{zhang1994ensemble} with $K = 1$. 
+
+This, formulation remains quite general and is valid regardless of the flow regime, however notice that the presence of the term $N$ makes this formulation unpractical. 
+Indeed, $P_1 /N = V_\Omega$ where $V_\Omega$ is the volume of the whole domain thus \ref{eq:conditional_averaged_fluid} require macroscopic information such as $N$ and $V_\Omega$ that we do not necessarily have if our goal is to compute theoretical yet quite general closure. 
+This is because we did not consider one contribution per particle as it is the case for the interfacial and dispersed quantities.
+Consequently, we follow the idea proposed by \citet{batchelor1972sedimentation} and reformulate this conditional average based on the assumption of additivity.
+Therefore, we stipulate that $f_f^0(\textbf{x},t;\FF)$ can be subdivided into $N$ contribution, namely  
+\begin{equation}
+    f_f^0(\textbf{x},t;\FF)
+    = 
+    \sum_i
+    f_{f_i}^0(\textbf{x},t;\FF)
+    + f_{f_0}^0(\textbf{x},t;\FF)
+\end{equation}
+where $f_{f_i}^0(\textbf{x},t;\FF)$ is the disturbance fields produced by the particle $i$ on $f_f^0$ and $f_{f_0}^0$ is the undisturbed background flow. 
+This of course implies that $f_{f}^0 = f_{f_0}^0$ in the absence of particle in the flow. 
+Under this very restrictive hypothesis we can write, 
+\begin{equation}
+    \avg{\chi_f f_f^0}[\textbf{x},t]
+    % = 
+    % \sum_i
+    % \avg{(\chi_f f_{f_i}^0)[\textbf{x},t;\FF]}
+    % + \avg{(\chi_f f_{f_0}^0)[\textbf{x},t;\FF]}
+    = 
+    \int_{\mathbb{R}^3} 
+    \avg{
+        \sum_i
+    \chi_f f_{f_i}^0(\textbf{x}_\alpha + \textbf{r},t;\FF) \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})}d\textbf{r}
+    + \phi_f f_{f_0}[\textbf{x},t]
+\end{equation}
+Where $\phi_f f_{f_0}[\textbf{x},t]$ is the mean background flow and were we have used relation similar to \ref{eq:taylor_f_d}, to reformulate the first term. 
+Now let use the relation  $\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) =\delta(\textbf{x} - \textbf{x}_\alpha) - \textbf{r}\cdot \grad\delta(\textbf{x} - \textbf{x}_\alpha)+ \ldots$ in the first term on the RHS, that read,
+\begin{align}
+    \avg{\chi_f f_f^0}[\textbf{x},t]
+    = 
+    \phi_f f_{f_0}[\textbf{x},t]
+    + 
+    \int_{\mathbb{R}^6} 
+    (f_{f_1}^1\phi_f^1) [\textbf{y}|\textbf{x},\textbf{w},t] P_1[\textbf{w},\textbf{x}]
+    d\textbf{r}
+    d\textbf{w}\\
+    + 
+    \div 
+    \int_{\mathbb{R}^6} 
+    \textbf{r}
+    (f_{f_1}^1\phi_f^1) [\textbf{y}|\textbf{x},\textbf{w},t] P_1[\textbf{w},\textbf{x}]
+    d\textbf{r}
+    d\textbf{w}
+    + \ldots
+    \label{eq:f_f_1_def}
+\end{align}
+with, 
+\begin{equation*}
+    f_{f_1}^1[\textbf{y},\textbf{x},\textbf{w},t] \phi_f^1 [\textbf{y}|\textbf{x},\textbf{w},t] P_1[\textbf{w},\textbf{x}]
+    = 
+    \int{
+    \sum_i
+    \chi_f f_{f_i}^0[\textbf{x}_\alpha + \textbf{r},t;\FF] 
+    \delta(\textbf{x} - \textbf{x}_\alpha[\FF,t])
+    \delta(\textbf{w} - \textbf{u}_\alpha[\FF,t])
+    }d\PP
+\end{equation*}
+where $f_{f_1}^1[\textbf{x}+ \textbf{r}| \textbf{x}]$ is the averaged value of the $f_{f_i}^0$ at $\textbf{x}+\textbf{r}$ knowing the particle $i$ is at \textbf{x} and that the point $\textbf{x}+\textbf{r}$ is occupied by the continuous phase. 
+Thus, in this definition $f_{f_i}^1$ is the averaged value of the disturbance fields produced by a single particle in $\textbf{x}$ in opposition to $f_f^1$ which is the averaged value of $f_f^0$ conditionally on the presence of an arbitrary particle at \textbf{y}.
+Assuming a situation where there is no background flow (such as in the case of segmenting particle in an otherwise inert flow), a homogeneous medium and in the dilute limit such that $\phi_f^1 = \phi_f$ when $|\textbf{x}-\textbf{y}|>a$ and $\phi_f^1 =0$ when $|\textbf{x}-\textbf{y}|<a$, we obtain, 
+\begin{equation}
+    f_f[\textbf{x},t]
+    = 
+    \int_{\mathbb{R}^3} 
+    P_1[\textbf{x},\textbf{w}] 
+    \int_{|\textbf{x}-\textbf{y}| >a} 
+    f_{f_i}^1[\textbf{x}+ \textbf{r}| \textbf{x}]
+    d\textbf{r}
+    d\textbf{w}
+    + 
+    \text{Error}
+    \label{eq:Batchelor2}
+\end{equation}
+\begin{equation}
+    \text{Error}
+    = 
+    \iint{
+    \sum_i
+    \chi_f f_{f_i}^0[\textbf{x}_\alpha + \textbf{r},t;\FF] 
+    \mathcal{O}(|\textbf{r}|)
+    }d\PP d\textbf{r}
+    \label{eq:error}
+\end{equation}
+where we have expressed explicitly the error. 
+Acknowledging that $\text{Error}= \mathcal(\phi^2)$, \ref{eq:Batchelor2} is consistent with equation (2.10) of \citet{batchelor1972sedimentation}. 
+Consequently, \ref{eq:f_f_1_def} is a generalization of \ref{eq:Batchelor2} when the homogeneous hypothesis as well as the dilute hypothesis is not assumed. 
+As discussed in length in  \citet{batchelor1972sedimentation} the first integral in \ref{eq:f_f_1_def} might be divergent if the disturbance field $f_{f_i}$ doesn't decay rapidly enough. 
+In the present work we state that we state that regardless of the form of $f_{f_i}$, the integral in the RHS \ref{eq:f_f_1_def} will ultimately diverge if one consider a sufficiently high order moment. 
+This, last remarks imply that \ref{eq:Batchelor2} is not valid if slight inhomogeneity are present in the flow. 
+
+We believe that \ref{eq:f_f_1_def} is unusable in general because it has required the use of the Taylor expansion $\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) =\delta(\textbf{x} - \textbf{x}_\alpha) - \textbf{r}\cdot \grad\delta(\textbf{x} - \textbf{x}_\alpha)+ \ldots + \mathcal{O}(\textbf{r}^n)$. 
+In the integrals of \ref{eq:f_f_1_def} and \ref{eq:Batchelor2} \textbf{r} is evaluated from the particle surface to an infinitely large distance from it.
+This is evident that at $|\textbf{r}| \to \infty$ the error generated is $\mathcal{O}(\textbf{r}^n) \to\infty$ where $n$ is the order of the moment considered in \ref{eq:f_f_1_def}. 
+In  \citet{batchelor1972sedimentation} it is said that in some case the integral converge and provides a physical results. 
+As shown in \ref{eq:error} the only way to obtain a finite result and finite error is that the term $f_{f_i}^0\mathcal{O}(|\textbf{r}|)$ decrease sufficiently fast so that it converges, in such a case the first term in \ref{eq:Batchelor2} will converge as well.  
+
+Even if \ref{eq:Batchelor2} is not ideal and that the field $f_{f_i}^0$ differ from the field $f_f^1$ used in \ref{eq:sigma_f_1} we will be using this relation to compute the continuous phase quantities. 
+
+\subsection{The disturbance field equation}
+
+As mentioned above we need to solve for the disturbance field $\textbf{u}^{1d}[\textbf{y}|\textbf{x},\textbf{y},t]$ in order to close the drag force term. 
+To do so we first expose the volume and momentum conservation of the mixture or bulk phase at the local scale :
+\begin{align}
+    \pddt (\rho_f\chi_f) \pddy \cdot (\rho_f\chi_f\textbf{u}^0_f) = 0 \\
+    \pddt (\rho^0\chi_f\textbf{u}^0_f)
+    + \pddy\cdot (\rho^0\chi_f\textbf{u}^0_f\textbf{u}^0_f - \bm\sigma^0_f\chi_f)
+    = - \delta_I \sigma_f \cdot \textbf{n}_d  
+    \label{ap_cond:eq:dt_local}
+\end{align}
+Notice that these are evaluated at the point \textbf{y} while the Dirac function, $\delta_1(\textbf{x},\textbf{w},t,\FF) = \sum_i \delta(\textbf{x}_i-\textbf{x})\delta(\textbf{u}_i - \textbf{w})$ express the condition of having a particle at \textbf{x} with velocity \textbf{w}, and is therefore independent of \textbf{y}. 
+Taking the partial time derivative of $\delta_1$ yields directly, 
+\begin{equation}
+    \pddt\delta_1 
+    + \pddx\cdot(\textbf{w}\delta_1)
+    + \pddw\cdot(\textbf{a}_i\delta_1)
+    = 0 
+    \label{ap_cond:eq:dt_delta_1}
+\end{equation}
+where $\textbf{a}_i(\FF,t) = \pddt \textbf{u}_i(\FF,t)$ is the acceleration of the particle $i$. 
+Averaging this equation yields an equation for  $P_1(\textbf{x},\textbf{w})$, namely, 
+\begin{equation}
+    \pddt P_1 
+    + \pddx\cdot(\textbf{w} P_1)
+    + \pddw\cdot(\textbf{a}_p P_1)
+    = 0 
+    \label{ap_cond:eq:dt_P_1}
+\end{equation}
+Then, to obtain an equation for the disturbance velocity fields $\textbf{u}^{1d}$ we simply multiply \ref{ap_cond:eq:dt_local} by $\delta_1 - P_1$ and average over all configuration. 
+Using \ref{ap_cond:eq:dt_delta_1} and \ref{ap_cond:eq:dt_P_1} gives directly, 
+\begin{align}
+    \pddt \avg{(\delta_1 - P_1)\rho_f\chi_f}
+    + \pddy\cdot \avg{(\delta_1 - P_1)\rho_f\chi_f\textbf{u}^0_f} \nonumber \\
+    + \pddx\cdot \avg{(\delta_1 - P_1)\rho_f \chi_f \textbf{w}}
+    + \pddw\cdot \avg{(\delta_1\textbf{a}_i - P_1\textbf{a}_p)\rho_f \chi_f }
+    = 0 
+    \\
+    \pddt \avg{(\delta_1 - P_1)\rho_f \chi_f \textbf{u}^0_f}
+    + \pddy\cdot \avg{(\rho_f \chi_f \textbf{u}^0_f\textbf{u}^0_f- \chi_f \bm\sigma^0_f )(\delta_1 - P_1)} \nonumber \\ 
+    + \pddx\cdot \avg{(\delta_1 - P_1)\rho_f \chi_f \textbf{u}^0_f\textbf{w}}
+    + \pddw\cdot \avg{(\delta_1\textbf{a}_i - P_1\textbf{a}_p)\rho_f \chi_f \textbf{u}^0_f}
+    = 0 
+    \label{ap_cond:eq:conditional_eqs}
+\end{align}
+with the boundary condition, 
+\begin{align*}
+    \lim_{|\textbf{y}-\textbf{x}|\to\infty} \textbf{u}^{1d}_f[\textbf{y},\textbf{w},\textbf{x},t] = 0 \\
+    \textbf{u}^{1d}[\textbf{y},\textbf{w},\textbf{x},t] 
+    = \textbf{w} - \textbf{u}[\textbf{y},t]
+    = 
+    \textbf{w} 
+    - \textbf{u}[\textbf{x},t]
+    -\textbf{r} \cdot \pddy\textbf{u}[\textbf{x},t]
+    - \ldots
+    \;\;\; \forall \textbf{y} \in \{ |\textbf{y}-\textbf{x}| = a \}
+     \\
+\end{align*}
+where we recall that $\textbf{u}[\textbf{y},t] = \avg{\textbf{u}^0}$ is the (unconditionally) bulk averaged velocity of the mixture. 
+At this stage the physical significance of the terms in \ref{ap_cond:eq:conditional_eqs} cannot be discussed.
+\tb{we considered solid spherical particle here... to be extended}
+
+Let us now expose the different terms present in \ref{ap_cond:eq:conditional_eqs}, they read 
+\begin{align*}
+    P_1 \textbf{u}^{1d}
+    = \avg{(\delta_1 - P_1) \chi_f \textbf{u}_f^0}
+    + \avg{(\delta_1 - P_1) \chi_d \textbf{u}_d^0}\\
+    \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0}
+    =
+    \avg{(\delta_1 - P_1)\rho_f\chi_f\textbf{u}^0_f}
+    + \avg{(\delta_1 - P_1)\rho_d\chi_d\textbf{u}^0_d}\\
+    \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0\textbf{u}^0}
+    =
+    \avg{(\delta_1 - P_1)\rho_f\chi_f\textbf{u}^0_f\textbf{u}_f^0}
+    +\avg{(\delta_1 - P_1)\rho_d\chi_d\textbf{u}^0_d\textbf{u}_d^0}\\
+    \avg{(\delta_1 - P_1)\bm\sigma^0}
+    = 
+    - \avg{(\delta_1 - P_1)p_f^0 \chi_f} \bm\delta
+    +\mu_fP_1[\pddy \textbf{u}^{1d}+ (\pddy\textbf{u}^{1d})^\dagger]
+    + \avg{(\delta_1 - P_1)\bm\sigma_d^0 \chi_d}
+\end{align*}
+
+\subsubsection{The finite particle Reynolds number dilute regime}
+In the first place we consider the situation where the particle volume fraction is relatively small. 
+More precisely we neglect all terms proportional to $\sim P_1^2$ in the expression when $|\textbf{y} - \textbf{x}| > a$. 
+
+
+Neglecting all the $\mathcal{P_1^2}$ implies that we must neglect all ensemble averaged quantities containing $\avg{\delta_1 \chi_d \ldots}\sim P_1^2$ and $P_1 \avg{ \chi_d \ldots}\sim P_1^2$. 
+Additionally, note that at $\mathcal{O}(\phi^2)$ we also have $\avg{\chi_f} = 1$. 
+Applying these considerations we may rewrite these terms as, 
+\begin{align*}
+    P_1 \textbf{u}^{1d}
+    = P_1 \textbf{u}_f^{1d}\\
+    \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0}
+    = P_1\rho_f\textbf{u}^{1d}_f\\
+    \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0\textbf{u}^0}
+    =
+    P_1\rho_f[
+        \textbf{u}^{1d}_f\textbf{u}_f
+        + \textbf{u}_f\textbf{u}_f^{1d}
+        + \textbf{u}^{1d}_f\textbf{u}_f^{1d}
+    ]\\
+    + \avg{\delta_1\rho_f\chi_f\textbf{u}_f''\textbf{u}_f''}
+    - P_1 \avg{\rho_f\chi_f\textbf{u}_f'\textbf{u}_f'}
+    \\
+    \avg{(\delta_1 - P_1)\bm\sigma^0}
+    = 
+    - P_1 p_f^{1d} \bm\delta
+    +\mu_fP_1[\pddy \textbf{u}^{1d}_f + (\pddy\textbf{u}^{1d}_f)^\dagger]
+\end{align*}
+
+Now we are able to re-write \ref{ap_cond:eq:conditional_eqs} at $|\textbf{y}-\textbf{x}| > a$ by injecting these new expressions into \ref{ap_cond:eq:conditional_eqs}, this yields,  
+\begin{align}
+    P_1 \pddy \cdot \textbf{u}^{1d} = 0 \\
+    \pddt (P_1 \rho_f \textbf{u}_f^{1d})
+    + P_1 \pddy\cdot (
+    \rho_f \textbf{u}^{1d}_f\textbf{u}_f^{1d} 
+    + \textbf{u}_f\textbf{u}_f^{1d}
+    + \textbf{u}^{1d}_f\textbf{u}_f
+    + \bm\sigma^\text{Re})\nonumber\\
+    + \pddx\cdot (P_1 \textbf{u}_f^{1d}\rho_f\textbf{w}) 
+    + \pddw\cdot \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0\textbf{a}_i}
+    = P_1 (
+        \mu_f \pddy^2 \textbf{u}^{1d}_f  
+        - \pddy p_f^{1d} 
+    )
+\end{align}
+with, 
+\begin{equation*}
+    \bm\sigma^{Re}
+    = 
+    % + \textbf{u}_f\textbf{u}_f^{1d}
+    % + \textbf{u}^{1d}_f\textbf{u}_f^{1d}
+    + \frac{1}{P_1}\avg{\delta_1\rho_f\chi_f\textbf{u}_f''\textbf{u}_f''}
+    - \avg{\rho_f\chi_f\textbf{u}_f'\textbf{u}_f'}
+\end{equation*}
+Notice that these equations are quite similar to the classic Navier-Stokes equation written in an isolated particle reference frame at finite inertial effects \citep{maxey1983equation}. 
+Nevertheless, a few supplementary assumptions are needed to recover the exact same expression. 
+
+First notice that the averaged volume conservation equaiton of $\phi_f$ multiplyed by $P_1$ gives, 
+\begin{equation*}
+    P_1\pddy \cdot \textbf{u}_f = 0
+\end{equation*}
+at order $\mathcal{\phi_d}$. 
+Additionally, in the dilute regime is it reasonable to assume that $\pddt P_1$ and $\pddx P_1$ are completely negligible compared to the other contribution. 
+Alternatively, we may assume a complete homogeneous system such that $P_1(\textbf{x},\textbf{w},t) = P_1(\textbf{w})$. 
+Under that assumption one can notice that $\pddx \textbf{u}_f^{1d}[\textbf{y}|\textbf{x},\textbf{w},t] = - \pddy \textbf{u}^{1d}[\textbf{y}|\textbf{x},\textbf{w},t]$. 
+In that case, we reach the final form of the conditionally averaged Navier-Stokes equations in the dilute regime  namely, 
+\begin{align*}
+    \pddy \cdot \textbf{u}^{1d} = 0 \\
+    \rho_f \left[
+        \pddt \textbf{u}_f^{1d}
+        +  \textbf{u}^{1d}_f\cdot \pddy\textbf{u}_f^{1d} 
+        +  \textbf{u}^{1d}_f\cdot \pddy\textbf{u}_f 
+        +  (\textbf{u}_f - \textbf{w})\cdot \pddy\textbf{u}_f^{1d}
+    \right]
+    =
+        \mu_f \pddy^2 \textbf{u}^{1d}_f  
+        - \pddy p_f^{1d} 
+    - \pddy \cdot \bm\sigma^\text{Re}
+    % + \pddw\cdot \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0\textbf{a}_i}
+\end{align*}
+with, 
+\begin{equation*}
+    \bm\sigma^{Re}
+    = 
+    % + \textbf{u}_f\textbf{u}_f^{1d}
+    % + \textbf{u}^{1d}_f\textbf{u}_f^{1d}
+    + \frac{1}{P_1}\avg{\delta_1\rho_f\chi_f\textbf{u}_f''\textbf{u}_f''}
+    - \avg{\rho_f\chi_f\textbf{u}_f'\textbf{u}_f'}
+\end{equation*}
+and the boundary condition, 
+\begin{align*}
+    \lim_{|\textbf{y}-\textbf{x}|\to\infty} \textbf{u}_f^{1d}[\textbf{y}|\textbf{w},\textbf{x},t] = 0 \\
+    \textbf{u}_f^{1d} = \textbf{w} - \textbf{u}_f[\textbf{y},t]
+    = 
+    \textbf{w} 
+    - \textbf{u}_f|_{\textbf{y}=\textbf{x}}
+    -\textbf{r} \cdot \pddy\textbf{u}_f|_{\textbf{y}=\textbf{x}}
+    - \ldots
+    \;\;\; \forall \textbf{y} \in \{ |\textbf{y}-\textbf{x}| = a \}
+     \\
+\end{align*}
+Which is consistent with equation (15) of \citep{maxey1983equation} except that we included one additional stresses related to the local velocity fluctuations. 
+
+\subsubsection{The finite volume fraction with no inertial effects}
+In this situation we neglect all the terms proportional to $Re$ meaning that all the advecting terms vanish leaving us with, 
+\begin{align*}
+    % P_1 \textbf{u}^{1d}
+    % = \avg{(\delta_1 - P_1) \chi_f \textbf{u}_f^0}
+    % + \avg{(\delta_1 - P_1) \chi_d \textbf{u}_d^0}\\
+    % \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0}
+    % =
+    % \avg{(\delta_1 - P_1)\rho_f\chi_f\textbf{u}^0_f}
+    % + \avg{(\delta_1 - P_1)\rho_d\chi_d\textbf{u}^0_d}\\
+    % \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0\textbf{u}^0}
+    % =
+    % \avg{(\delta_1 - P_1)\rho_f\chi_f\textbf{u}^0_f\textbf{u}_f^0}
+    % +\avg{(\delta_1 - P_1)\rho_d\chi_d\textbf{u}^0_d\textbf{u}_d^0}\\
+    \avg{(\delta_1 - P_1)\bm\sigma^0}
+    = 
+    - P_1 [
+        \phi_f p_f^{1d}
+        +\phi_f^{1d} p_f
+        +\phi_f^{1d} p_f^{1d}
+    ] \bm\delta
+    +\mu_fP_1[\pddy \textbf{u}^{1d}+ (\pddy\textbf{u}^{1d})^\dagger]
+    + \avg{(\delta_1 - P_1)\bm\sigma_d^0\chi_d}
+\end{align*}
+Notice that the term, 
+\begin{equation*}
+    \chi_d \bm\sigma_d^0
+    = \delta(\textbf{x}_j - \textbf{y})\intO{\bm\sigma_d^0}
+    -\pddy \cdot \delta(\textbf{x}_j - \textbf{y})\intO{ \textbf{r} \bm\sigma_d^0}
+    + \ldots
+\end{equation*}
+where the summation over all the $j$ is implicit. 
+Using this relation truncated at the first order we may show that, 
+\begin{equation*}
+    \int{\avg{(\delta_1 - P_1)\sum_j \delta(\textbf{x}_j - \textbf{y})H(|\textbf{x}_j - \textbf{z}| - a)\bm\sigma_d^0}}d\textbf{z}
+    = 
+\end{equation*}

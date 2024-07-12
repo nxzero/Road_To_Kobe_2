@@ -1,8 +1,8 @@
-\subsection{Averaged the two-fluid model}
+\subsection{Averaged two-fluid model}
 \label{ap:two-fluid_model}
 Before introducing the \textit{hybrid model} which will be the subject of the next section, we first expose the classic averaged two-fluid model. 
 
-% \subsubsection{Volume equation}
+\subsubsection{Averaged volume equations}
 Using the generic formulation \ref{eq:avg_dt_chi_f} and the local expression of the mass, momentum and total energy equation, i.e. : \ref{eq:dt_rho}, \ref{eq:dt_rhou_k} and \ref{eq:dt_rhoE_k} we easily find the averaged form of the mass, momentum and total energy equation.
 They read, 
 \begin{align}
@@ -111,7 +111,7 @@ Indeed, the term $\bm{\sigma}_k^\text{eq} : \grad \textbf{u}_k$ act as a sink te
 To determine the total energy only two of the four energy equations must be solved. 
 In practice, it is useful to solve one equation for $k_k$ since it is useful for the Reynolds stress modeling since $\avg{\chi_k \textbf{u}_k^0 \textbf{u}_k^0}: \bm\delta = 2 k_k$, and another for $e_k$ since $u_k^2$ is already determined by the momentum equation. 
 
-% \subsubsection{Averaged surface equations}
+\subsubsection{Averaged surface equations}
 The volume averaged equations must be completed by an averaged surface transport equation.  
 For this purpose we multiply \ref{eq:surface_tension}, \ref{eq:dt_rhoIe_I} and \ref{eq:dt_rhoI_uI3} by $\delta_I$ and apply the average operator.
 By considering the topological equations we obtain the  momentum, kinetic and internal energy averaged surface equations, namely
@@ -133,68 +133,81 @@ The first equation represents the contribution of the surface tension stresses t
 The second equation represents the amount of energy stored as surface deformation.
 And the last equation witnesses of the continuity of heat flux through the interface. 
 
+\subsubsection{Averaged single fluid formulation}
 Lastly, by summing the above formulations we can also derive equations for the bulk quantities. 
 Indeed, summing \ref{eq:dt_avg_rho_k}, \ref{eq:dt_avg_rhou_k} and \ref{eq:dt_avg_rhoE_k} for $k=f,d$ with the surface equations one obtain the bulk conservation equations, 
 \begin{align}
     \label{eq:dt_avg_rho}
     \pddt \rho 
     + \div (
-         \rho \textbf{u}
+         \rho \textbf{u}_m
     )
     &= 
     0,\\
     \label{eq:dt_avg_rhou}
-    \pddt ( \rho\textbf{u})  
+    \pddt ( \rho\textbf{u}_m)  
     + \div (
-         \rho\textbf{u}\textbf{u}
-        + \bm{\sigma}^\text{eq}
+         \rho\textbf{u}_m\textbf{u}_m
+        + \bm{\sigma}^\text{eq}_m
     )
     &= 
      \rho \textbf{g} \\
     \label{eq:dt_avg_rhoE}
-    \pddt (\rho E)  
+    \pddt (\rho E_m)  
     + \div (
-        \rho E \textbf{u}
-        + \bm{q}^\text{eq}
-        + \textbf{u} \cdot \bm{\sigma}^\text{eq}
+        \rho E_m \textbf{u}_m
+        + \bm{q}^\text{eq}_m
+        + \textbf{u}_m \cdot \bm{\sigma}^\text{eq}_m
         % - \textbf{u}_k^0 \cdot \bm{\sigma}_k^0 
         % + \textbf{q}_k^0
         )
     &= 
-     \rho \textbf{u}  \cdot \textbf{g} 
+     \rho \textbf{u}_m  \cdot \textbf{g} 
 \end{align} 
 respectively. 
 Where we have introduced the effective stress and heat fluxes namely, 
 \begin{align*}
-    &\bm{\sigma}^\text{eq}
+    &\bm{\sigma}^\text{eq}_m
     = 
-     \rho\avg{ \textbf{u}'\textbf{u}'}
-      -  \bm{\sigma},%- n_p \textbf{M}_p
-    &\textbf{q}^\text{eq}
-    =\textbf{q}^\text{e} +\textbf{q}^\text{k},  \\
-    &\textbf{q}^\text{e}
-    = \rho \avg{\textbf{u}' e'} 
-    + \phi\textbf{q},
-    &\textbf{q}^\text{k}
-    = \rho \avg{ \textbf{u}' k} 
-    - \avg{ \textbf{u}' \cdot \bm{\sigma}^0}.
+    \avg{ \rho^0\textbf{u}'_m\textbf{u}'_m}
+      - \phi_f\bm\sigma_f
+      - \phi_d\bm\sigma_d
+      - \phi_I\bm\sigma_I,%- n_p \textbf{M}_p
+    &\textbf{q}^\text{eq}_m
+    =\textbf{q}^\text{e}_m +\textbf{q}^\text{k}_m,  \\
+    &\textbf{q}^\text{e}_m
+    = \avg{\rho^0\textbf{u}_m' e_m'} 
+    + \phi\textbf{q}_m,
+    &\textbf{q}^\text{k}_m
+    = \avg{\rho^0 \textbf{u}_m' k_m} 
+    - \avg{ \textbf{u}_m' \cdot \bm{\sigma}^0}.
 \end{align*}
-Where we have defined the total energy as, 
+In these equations we have make use of the subscript $_m$ to denote the Favre average quantities, such that, 
+\begin{align*}
+    \rho \textbf{u}_m
+    = \avg{\rho^0 \textbf{u}^0}
+    &&
+    \rho E_m
+    = \avg{\rho^0 \textbf{u}^0}
+    &&
+    \rho e_m
+    = \avg{\rho^0 \textbf{u}^0}
+\end{align*}
+Likewise, the fluctuating quantity are written as, 
 \begin{equation}
-    E = \avg{\sum_k \rho_k [e_k^0 + \frac{1}{2}(u_k)^2] 
-    + \delta_I \gamma}
-    = e + k + \frac{1}{2}(u)^2
+    \textbf{u}_m'
+    = \textbf{u}^0 - \textbf{u}_m
 \end{equation}
-with, $e = \sum_k \phi_k e_k + \phi_I \gamma$ and $k = \avg{\rho \textbf{u}'\cdot \textbf{u}'}/2$. 
-Notice particularly that the bulk stress is defined as, 
-\begin{equation*}
-    \bm\sigma^{eff}
-    = 
-    \phi_f\bm\sigma_f
-    + \phi_d\bm\sigma_d
-    + \phi_I\bm\sigma_I
-\end{equation*}
+In \ref{eq:dt_avg_rhoE} we have defined the bulk total energy as the average of the sum of the local energy, namely, 
+\begin{equation}
+    \rho E_m = \avg{\sum_k \rho_k [e_k^0 + \frac{1}{2}(u_k)^2] 
+    + \delta_I \gamma}
+    = \rho( e_m +  k_m + \frac{1}{2}u_m^2)
+\end{equation}
+with, $e_m = \avg{\sum_k \rho_k\phi_k e_k + \phi_I \gamma}$ and $k = \avg{\rho^0 \textbf{u}'\cdot \textbf{u}'}/2$. 
+
+
 These equations are particularly interesting on an experimental point of view. 
 Indeed, as in experiment we cannot distinguish between the details of both phase. 
-For example in a Rheometer we are able to measure only for the \textit{Bulk stress} $\bm\sigma$ as it measure the stress response from the mixture phases. 
+For example in a Rheometer we are able to measure only for the \textit{Bulk stress} $\bm\sigma^\text{eq}_m$ as it measure the stress response from the mixture phases. 
 Therefore, in the next section we treat about the bulk stress

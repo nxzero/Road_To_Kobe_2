@@ -1,20 +1,27 @@
-\subsection{Fundamental properties of a particle}
+\subsection{Lagrangian's equations for a single particle}
+\label{ap:particles_eq}
+
+\subsubsection{Fundamental properties of a particle}
 
 At this stage, we define some fundamental properties associated to each particle labeled $\alpha$.
 Following the strategy of \citet{lhuillier2009rheology,lhuillier1992volume,zaepffel2011modelisation} and \citet[Chapter 2]{morel2015mathematical}
-we define the mass $m_\alpha$, position of center of mass $\mathbf{x}_\alpha$, and the momentum $\textbf{p}_\alpha$ of the particle $\alpha$, as
+we define the mass $m_\alpha$, position of center of mass $\mathbf{x}_\alpha$, the momentum $\textbf{p}_\alpha$ and the total energy $E_\alpha$ of the particle $\alpha$, as
 \begin{align}
-    m_\alpha(t,\FF)
-    = \intO{ \rho_d  }, 
-    &&
-    \textbf{x}_\alpha(t,\FF)
-    = \frac{1}{m_\alpha(t,\FF) }\intO{ \rho_d \textbf{x} }, 
-    &&\textbf{p}_\alpha(t,\FF) 
-    = \intO{ \rho_d \textbf{u}_d^0 }.
+    m_\alpha
+    &= \intO{ \rho_d  }, 
+    \\
+    \textbf{x}_\alpha
+    &= \frac{1}{m_\alpha }\intO{ \rho_d \textbf{x} }, 
+    \\\textbf{p}_\alpha 
+    &= \intO{ \rho_d \textbf{u}_d^0 },
     \label{eq:mass_pos}
+    \\
+    E_\alpha(t) 
+    &=\frac{1}{m_\alpha} 
+    \intO{ \rho_d [e_d^0 + (u_d^0)^2/2] }
     % \label{eq:momentum_energy}
 \end{align}
-$\Omega_\alpha(t,\FF)$ is the time-dependent domain occupied by the particle $\alpha$ (see \ref{fig:Scheme}). 
+% $\Omega_\alpha(t,\FF)$ is the time-dependent domain occupied by the particle $\alpha$ (see \ref{fig:Scheme}). 
 Subsequently, we define the velocity of the particle center of mass as
 \begin{equation*}
 \textbf{u}_\alpha = \frac{d \textbf{x}_\alpha}{dt}.
@@ -78,38 +85,155 @@ Alternatively, from \eqref{eq:dt_y_alpha}, we obtain,
 Therefore, the momentum of a particle can be seen as a sum of the mean velocity plus the integral of the fluctuation (\ref{eq:momentum_definition_1}), with the latter being equivalent to minus the first moment of mass transfer term (\ref{eq:momentum_definition}).
 Indeed, by identification we obtain : $\intO{ \rho_d \textbf{w}_d^0 } = - \intS{  \rho_d\textbf{r} (\textbf{u}_I^0 - \textbf{u}_d^0)\cdot \textbf{n}_d }$. 
 Hence, the internal velocity fluctuations within a fluid particle do not contribute to the total linear momentum $\textbf{p}_\alpha$, as long as the anisotropic mass transfer is negligible.  
-Only within this simplified context we can consider the classic relation $\textbf{p}_\alpha = m_\alpha \textbf{u}_\alpha$. 
-
-\subsection{Conservation laws}
+Only within this simplified context which is assumed in this study we can consider the classic relation $\textbf{p}_\alpha = m_\alpha \textbf{u}_\alpha$. 
 
 
+Using the decomposition $\textbf{u}_d^0 = \textbf{u}_\alpha + \textbf{w}_d^0$, the total energy $E_\alpha$ can be decomposed according to,
+\begin{equation*}
+    \label{eq:E_alpha_def}
+    m_\alpha E_\alpha
+    = m_\alpha e_\alpha 
+    + W_\alpha
+    + m_\alpha (u_\alpha)^2/2
+    % + \gamma s_\alpha 
+\end{equation*}
+Consequently, the total energy of a particle is the contribution of :
+its internal energy $m_\alpha e_\alpha = \intO{\rho_d^0 e_d^0}$; 
+its internal kinetic energy, $W_\alpha =  \intO{\rho_d  (w_d^0)^2/2 }$;
+its center of mass kinetic energy, $u_\alpha^2/2$;. 
+Finally, we introduce the total energy of both the volume and the surface of the particle, which is defined as 
+\begin{equation*}
+    m_\alpha E_\alpha^\text{tot}
+    = 
+    s_\alpha \gamma 
+    + m_\alpha E_\alpha
+\end{equation*}
+where we noted $s_\alpha = \intS{}$ the surface of the particle $\alpha$, meaning that  $\gamma s_\alpha $ corresponds to the surface energy of the particle. 
 
-\subsubsection{Inside the volume}
+
+In the objective of describing the shape as well as the deformation of a particle we now introduce the second moment of mass and first order moment of momentum of a particle. 
+Following \ref{eq:Q_n_definition} we define the second-order moment of mass and the first-order moment of momentum as respectively,
+\begin{equation}
+    \textbf{M}_\alpha 
+    = \intO{ \rho_d \textbf{r} \textbf{r} }
+    \;\;\;\text{and}\;\;\;
+    \textbf{P}_\alpha 
+    = \intO{ \rho_d \textbf{r} \textbf{u}_d^0 }.
+    \label{eq:first_moment_of_momentum_def}
+\end{equation}
+Note that $\textbf{M}_\alpha$ is analogous to the inertia tensor $\textbf{I}_\alpha$ in solid mechanics, both are related through the expression $\textbf{I}_\alpha = \bm\delta : \textbf{M}_\alpha - \textbf{M}_\alpha$.
+For a constant density, the tensor $\textbf{M}_\alpha$ describes the second moment of the volume distribution around the particle center of mass.
+Likewise, the tensor $\textbf{P}_\alpha$ describes the first moment of the velocity distribution within the particle volume. 
+To provide a clearer physical interpretation of the moment of momentum tensor, we decompose $\textbf{P}_\alpha$ into two distinct parts. 
+Namely, 
+$\textbf{P}_\alpha = \textbf{S}_\alpha+\textbf{T}_\alpha$, where $\textbf{S}_\alpha$ represents the symmetric part and $\textbf{T}_\alpha$ is the antisymmetric part of $\textbf{P}_\alpha$.
+Then, the tensors $\textbf{S}_\alpha$ and $\textbf{T}_\alpha$ correspond respectively to the stretching and angular momentum of the particle $\alpha$. 
+The tensor $\textbf{S}_\alpha$ quantifies how fast and in which direction the particle gets elongated or flattened, in other words it represents the mean rate of deformation experienced by the particle.
+The tensor $\textbf{T}_\alpha$ is related to the angular momentum of the particle denoted by the pseudo vector $\bm\mu_\alpha = \intO{ \rho_d \textbf{r} \times \textbf{u}_d^0 }$. 
+Indeed, both  $\textbf{T}_\alpha$ and $\bm{\mu}_\alpha$ represent the angular momentum and are related through $(\bm{\mu}_\alpha)_i = \epsilon_{ijk} (\textbf{P}_\alpha)_{jk}= \epsilon_{ijk} (\textbf{T}_\alpha)_{jk}$, where $\bm\epsilon$ is the third order alternating unit tensor or Levi-Cita tensor. 
+Lastly, we also introduce the scalar $M_\alpha =\frac{1}{3}\bm\delta : \textbf{P}_\alpha = \frac{1}{3}\intO{ \rho_d \textbf{r} \cdot \textbf{u}_d^0 }.$, which quantifies the rate at which the particle is being compressed or expanded.
+To better explain the implication of these quantities on the particle kinematics we provide in \ref{eq:scheme}, three schemes representing possible inner velocity fields with their corresponding value of the moment of momentum tensor.
+Note that in \ref{eq:scheme} we explicit
+\begin{figure}[h!]
+    \centering
+    \hfill
+    \begin{tikzpicture}[ultra thick,scale=0.6]
+        \def\nRows{6}
+        \def\nCols{6}
+        \draw[dashed,thin] (0,0)circle(2.5);
+        \draw[fill=gray!30] (0,0)ellipse(2.8 and 2.2);
+        \foreach \x in {-\nRows,...,\nRows} {
+            \foreach \y in {-\nCols,...,\nCols} {
+                \pgfmathsetmacro\distance{veclen(\x*0.4, \y*0.4)};
+                \pgfmathparse{\distance < 2.45 ? "blue" : "white"}
+                \edef\colour{\pgfmathresult};
+                \ifthenelse{\equal{\colour}{blue}}{                    
+                    \draw[thin,->](\x*0.4,\y*0.4)--++(0.08*\x,-0.08*\y);
+                }
+            }
+        }
+        \node (txt) at (0,3){(\textit{Case 1})};
+        \node (txt) at (0,-3){($|\textbf{S}_\alpha| > 0$)};
+    \end{tikzpicture}
+     \hfill
+    \begin{tikzpicture}[ultra thick,scale=0.6]
+        \def\nRows{6}
+        \def\nCols{6}
+        \draw[fill=gray!30] (0,0)circle(2.5);
+        \foreach \x in {-\nRows,...,\nRows} {
+            \foreach \y in {-\nCols,...,\nCols} {
+                \pgfmathsetmacro\distance{veclen(\x*0.4, \y*0.4)};
+                \pgfmathparse{\distance < 2.5 ? "blue" : "white"}
+                \edef\colour{\pgfmathresult};
+                \ifthenelse{\equal{\colour}{blue}}{                    
+                    \draw[thin,->](\x*0.4,\y*0.4)--++(0.08*\y,-0.08*\x);
+                }
+            }
+        }
+        \node (txt) at (0,3){(\textit{Case 2})};
+        \node (txt) at (0,-3){($|\textbf{T}_\alpha| > 0$)};
+    \end{tikzpicture}
+    \hfill
+    \begin{tikzpicture}[ultra thick,scale=0.6]
+        \def\nRows{6}
+        \def\nCols{6}
+        \draw[dashed,thin] (0,0)circle(2.5);
+        \draw[fill=gray!30] (0,0)circle(2.2);
+        \foreach \x in {-\nRows,...,\nRows} {
+            \foreach \y in {-\nCols,...,\nCols} {
+                \pgfmathsetmacro\distance{veclen(\x*0.4, \y*0.4)};
+                \pgfmathparse{\distance < 2.3 ? "blue" : "white"}
+                \edef\colour{\pgfmathresult};
+                \ifthenelse{\equal{\colour}{blue}}{                    
+                    \draw[thin,->](\x*0.4,\y*0.4)--++(-0.08*\x,-0.08*\y);
+                }
+            }
+        }
+        \node (txt) at (0,3){(\textit{Case 3})};
+        \node (txt) at (0,-3){($M_\alpha < 0$)};
+    \end{tikzpicture}
+    \hfill
+    \caption{Graphical representation of the inner kinematics of an arbitrary particle under three scenarios. 
+        The arrows represent the velocity field inside the particle, $\textbf{w}_d^0$, with the corresponding value of the moment of momentum tensor indicated below. 
+        The operator $|\ldots|$ refers to the norm of the tensors. 
+        According to the inner velocity field:
+        (\textit{Case 1}) The particle experiences a mean rate of deformation, resulting in non-zero stretching of momentum along the principal axis of deformation;
+        (\textit{Case 2}) The particle is rotating, leading to a non-zero angular momentum vector in the direction of rotation;
+        (\textit{Case 3}) The particle undergoes compression, resulting in a negative trace of the moment of momentum.
+    }
+    \label{eq:scheme}
+\end{figure}
+
+% \subsection{Conservation laws}
+
+
+
+% \subsubsection{Inside the volume}
 
  
 
 
-Let us consider the specific case of the momentum balance, i.e. $q_\alpha = \textbf{p}_\alpha$.
-In this situation, \ref{eq:dt_q_alpha} reads
-\begin{equation}
-    \ddt  \textbf{p}_\alpha
-    = \intO{ \rho_d\textbf{g} }
-    + \intS{ 
-        \left[
-        f_d^0 (\textbf{u}_I^0-\textbf{u}_d^0)
-         + \bm{\sigma}_d^0%\cdot\textbf{n}_d  
-        %+ \mathbf{\Phi}_d^0 
-        \right] 
-        \cdot \textbf{n}_d },
-\end{equation}
+% Let us consider the specific case of the momentum balance, i.e. $q_\alpha = \textbf{p}_\alpha$.
+% In this situation, \ref{eq:dt_q_alpha} reads
+% \begin{equation}
+%     \ddt  \textbf{p}_\alpha
+%     = \intO{ \rho_d\textbf{g} }
+%     + \intS{ 
+%         \left[
+%         f_d^0 (\textbf{u}_I^0-\textbf{u}_d^0)
+%          + \bm{\sigma}_d^0%\cdot\textbf{n}_d  
+%         %+ \mathbf{\Phi}_d^0 
+%         \right] 
+%         \cdot \textbf{n}_d },
+% \end{equation}
 % first term reads as $\intO{ \rho_d\textbf{g} }$ 
-The first term on the right-hand side represents the total weight acting on the particle $\alpha$, 
-the second term represents the total source of momentum due to phase transfer, and it is expressed as, $\intS{ \rho_d \textbf{u}_d^0 (\textbf{u}_I^0-\textbf{u}_d^0)\cdot\textbf{n}_d }$,
-and the last term $\intS{ \bm{\sigma}_d^0\cdot\textbf{n}_d }$, represents the resultant of the hydrodynamic forces acting on the surface of the particle.
-It is important to notice that under this form, the exchange terms are expressed as integrals of dispersed phase fields denoted by the subscript $_d$.
-Nevertheless, depending on the nature of the dispersed phase, these fields may not always be defined.
-For rigid particles the stress within the particle $\bm{\sigma}_d^0$ is indeterminate \citep{guazzelli2011}.  
-Hence, our objective is to express these exchange terms, in terms of the continuous phase field quantities instead of the dispersed phase fields, i.e. in terms of $\mathbf{\Phi}_f^0$ and $\textbf{u}_f^0$ rather than $\mathbf{\Phi}_d^0$ and $\textbf{u}_d^0$. 
+% The first term on the right-hand side represents the total weight acting on the particle $\alpha$, 
+% the second term represents the total source of momentum due to phase transfer, and it is expressed as, $\intS{ \rho_d \textbf{u}_d^0 (\textbf{u}_I^0-\textbf{u}_d^0)\cdot\textbf{n}_d }$,
+% and the last term $\intS{ \bm{\sigma}_d^0\cdot\textbf{n}_d }$, represents the resultant of the hydrodynamic forces acting on the surface of the particle.
+% It is important to notice that under this form, the exchange terms are expressed as integrals of dispersed phase fields denoted by the subscript $_d$.
+% Nevertheless, depending on the nature of the dispersed phase, these fields may not always be defined.
+% For rigid particles the stress within the particle $\bm{\sigma}_d^0$ is indeterminate \citep{guazzelli2011}.  
+% Hence, our objective is to express these exchange terms, in terms of the continuous phase field quantities instead of the dispersed phase fields, i.e. in terms of $\mathbf{\Phi}_f^0$ and $\textbf{u}_f^0$ rather than $\mathbf{\Phi}_d^0$ and $\textbf{u}_d^0$. 
 
 %\subsubsection{On the interfaces}
  

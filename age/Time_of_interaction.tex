@@ -60,7 +60,7 @@ We propose to evaluate the age distribution $P_a$ and to verify the \textit{rand
 In \ref{fig:age_picture} we display the dimensionless age distribution $P_a(a)$, measured in our DNS. 
 The age is made dimensionless using the timescale, $U/d_p$ with $d_p = n_p^{-1/3}$.
 It is shown in the next few paragraphs that $d_p$ constitute a representative inter-particle length scale. 
-The theoretical prediction for the age distribution $P_a(a)$ are obtained by computing the mean \textit{age} $a_p$ from our DNS. 
+The theoretical prediction for the age distribution $P_a(a)$ are obtained by computing the mean \textit{age} $a_p$ from our DNS and using \ref{eq:Pa}. 
 The values of $a_p$ are display in \ref{fig:tau_p} and will be discussed here after. 
 
 It is seen on \ref{fig:age_picture} (right) that the age distributions of the inertial cases are rather well represented by the theoretical age distributions from \ref{eq:Pa}.
@@ -203,40 +203,35 @@ In general, we believe that $w_{pn}^a(\textbf{x},t,a)$ might be useful for the f
 
 
 \tb{
-    Now we would like to perform a kinetic model for the relative velocity of particles. 
-    To so we exploit the DNS data presented above, but also, such a model must respects some physical and mathematical condition :
-    \begin{itemize}
-        \item From numerical observation we can state that :
+    Now we would like to build a kinetic model for the normal approach velocity of particles. 
+    This, is of particular interest since thing such as collision kernel are directly related to the normal approach velocity \citep{sundaram1997collision}
+    \begin{enumerate}
+        \item From numerical observation of \ref{fig:normal_vel_picture} we can state that the normal approach velocity has the form :
         \begin{equation*}
             w_{pn}^a(\textbf{x},t,a) = \frac{d_p}{\tau_p} \left(
                 - C_1 e^{- 2 a/\tau_p }
                 + C_2
             \right)
         \end{equation*}
-         \item The theoretical observation made in Appendix suggest that in statistically steady-state 
+         \item The theoretical observation made in \ref{sec:Theory} suggest that in statistically steady-state the normal approach velocity must respect the condition :
          \begin{equation*}
          \int_\mathbb{R} w_{pn}^aP_a(\textbf{x},t,a) da = 0 
          \end{equation*}
-         which suggests the following constrain $C_2 = C_1 /3$. 
-         \item Let $\phi = 0.01$ be considered at the maximum value reach $w_{pn}^a(\textbf{x},t,a\to\infty)$. 
-         Suppose that $w_{pn}^a(\textbf{x},t,a\to\infty,\phi)$ varies linearly with $\phi$ from $w_{pn}^a(\textbf{x},t,a\to\infty,\phi = 0.01) = 0.15$ to $w_{pn}^a(\textbf{x},t,a\to\infty,\phi = \phi_\text{max}) = 0.15$
+         which means that both constant must respect $C_2 = C_1 /3$. 
+         \item Let consider that the maximum value of $w_{pn}^a$ is reached for the lowest volume fraction $\phi = 0.01$ at $a \to \infty$ (see \ref{fig:normal_vel_picture}).     
+        \item Besides approaching the packing volume fraction limit $\phi_\text{max}$ the relative velocity must approach zero. 
+         Additionally, suppose that $w_{pn}^a(\textbf{x},t,a\to\infty,\phi)$ varies linearly with $\phi$ from $w_{pn}^a(\textbf{x},t,a\to\infty,\phi = 0.01) \approx 0.15$ to $w_{pn}^a(\textbf{x},t,a\to\infty,\phi = \phi_\text{max}) \approx 0$. 
          This leads us to $C_1 = 2\frac{-0.015}{\phi_\text{max} - 0.01}(\phi - \phi_\text{max})$. 
-         Maybe it is better to goes for an exponential function $C_2 = 0.15 e^{-\phi * 5}$
-
-         \item the dependency on $Ga$ and $\lambda$ is implicitly included in the mean age.
-         The final model is  
+         \item Note that the dependency of $w_{pn}$ on $Ga$ and $\lambda$ is implicitly included in the mean age.
+         \item Making use of all these remarks a good model for the relative normal approach velocity is, 
          \begin{equation*}
             w_{pn}^a(\textbf{x},t,a) = \frac{d_p 0.15}{\tau_p} e^{-5 \phi }\left(
                 1
                 - 3 e^{-2 a/\tau_p }
             \right)
         \end{equation*}
-    \end{itemize}
-    It has been shown that $\int_\mathbb{R} w_{pn}^a P_a da = 0$ thus any model for $w$ must take that in account. 
-    Besides approaching the packing volume fraction limit $\phi_\text{max}$ the relative velocity must approach zero. 
-    The dilute limite is reached at $\phi = 0.01$. 
-    So $w(0,\phi = 0) = - 0.35$ $w(0,\phi=\phi_\text{max} ) = - 0.35$ 
-    Lastly from the graphs the  relaxation time is approximately $\tau_p$. 
+    \end{enumerate}
 
-
+    We obtained a model of $w_{pn}$ in terms of the volume fraction and the mean age of interaction $\tau_p$.
+    The remaining thing to do would be to create a closed model for $\tau_p$ in terms of $Ga$ $\phi$ and $\lambda$. 
 }

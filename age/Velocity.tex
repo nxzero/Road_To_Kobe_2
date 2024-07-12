@@ -1,7 +1,6 @@
 \subsection{Relative particles kinematic}
 
-In \ref{sec:microstructure} we have investigated the microstructure geometry, 
-in \ref{sec:time} we have seen that the timescale governing both, the microstructure evolution and the particles pair relative velocity is $\tau_p$.   
+In the previous sections we have seen that the timescale governing both, the microstructure evolution and the particles pair relative velocity is $\tau_p$.   
 We now give a visual representation of the nearest pair relative velocity in space to better understand how the relative kinematic behave.  
 To that end we compute the nearest relative velocity and age, averaged on all ages, that is,
 \begin{align*}
@@ -235,7 +234,7 @@ Thus, \ref{fig:unst_l} display the fields  $\textbf{u}_p^\text{r}$ for both case
     \includegraphics[height=0.35\textwidth]{image/HOMOGENEOUS_NEW/Dist/U_l_10_Ga_100_PHI_5.pdf}
     \includegraphics[height=0.35\textwidth]{image/HOMOGENEOUS_NEW/Dist/U_l_1_Ga_100_PHI_5.pdf}
     \caption{
-         Quiver plots of the conditioned particle velocity field $\textbf{u}^\text{r}(\textbf{x},\textbf{r},t)$ colored by the averaged dimensionless vertical velocity difference : $(\textbf{u}^\text{r} - \textbf{u}_p )/ \textbf{u}_p$, for $\phi = 0.05$ and $Ga = 100$. 
+         Quiver plots of the conditioned particle velocity field $\textbf{u}^\text{r}(\textbf{x},\textbf{r},t)$ colored by the averaged dimensionless vertical velocity difference : $(\textbf{u}^\text{r}_p - \textbf{u}_p )/ \textbf{u}_p$, for $\phi = 0.05$ and $Ga = 100$. 
          (left) High viscosity ratio $\lambda = 10$.
          (right) Low viscosity ratio, $\lambda = 1$.
          }
@@ -247,9 +246,9 @@ If isolated particle rise at the average velocity it is because the isolated par
 Therefore, this fact is not particularly relevant as it is just a statistical bias. 
 Nevertheless, we can still conclude that for $\lambda = 10$ particles goes faster with a nearest neighbor on top or bottom, while for  $\lambda = 1$ particles goes faster when the nearest neighbor is at large distance. 
 
-\subsubsection{Relation with the pseudo turbulent particle Reynolds stress and further modeling possibly}
+\subsubsection{Relation with the particle phase velocity fluctuation tensor}
 
-In addition to provides physical explanation the fields $\textbf{u}_p^d = \textbf{u}^r_p - \textbf{u}_p$ is of great importance to study the particle phase fluctuation tensor $\avg{\delta_i \textbf{u}_i' \textbf{u}_i'}$ which is of crucial importance in multiphase flow modeling. 
+In addition to provides physical explanation the field $\textbf{u}_p^d = \textbf{u}^r_p - \textbf{u}_p$ is of great importance to study the particle phase fluctuation tensor $\avg{\delta_i \textbf{u}_i' \textbf{u}_i'}$ which is of crucial importance in multiphase flow modeling. 
 Indeed, it can be shown that 
 \begin{equation*}
     \frac{\avg{\delta_i \textbf{u}_i' \textbf{u}_i'}}{n_p}(\textbf{x},t)
@@ -258,93 +257,51 @@ Indeed, it can be shown that
     \textbf{u}_p^d
     \textbf{u}_p^d
     P_{nst}(\textbf{r}|\textbf{x},t)
+    d\textbf{r}
     + \int_{\mathbb{R}^3 }
     \textbf{F}(\textbf{r},\textbf{x},t)
     d\textbf{r}
 \end{equation*}
-where, $\textbf{F} = \avg{\delta_j\delta_i h_{ij}(\textbf{u}_i - \textbf{u}_p^{nst})(\textbf{u}_i - \textbf{u}_p^{nst})}$. 
+where, $\textbf{F} = \avg{\sum_i\sum_{j\neq i}\delta_j\delta_i h_{ij}(\textbf{u}_i - \textbf{u}_p^{nst})(\textbf{u}_i - \textbf{u}_p^{nst})}$. 
 Thus, the ensemble averaged particle phase Reynolds stress is the sum of the fluctuation given by $\textbf{u}_p^r$ plus an additional contribution form the others particles fluctuation around the average field $\textbf{u}_p^d$. 
-At first order in $\phi$ no more than two particle interaction arise, so the former term represents the majority of the particle phase fluctuation. 
-This could lead to a model for the particle phase stress. 
+At $\mathcal{O}(\phi)$ so the former term represents the majority of the particle phase fluctuation. 
+Therefore, \ref{fig:unst_l} constitute a visual representation of the particle phase agitation tensor $\avg{\delta_i \textbf{u}_i' \textbf{u}_i'}$. 
+Particularly, it can be seen on \ref{fig:unst_l}  that the particle phase fluctuations tensor is seen to be anisotropic. 
+Indeed, more vertical velocity fluctuation than horizontal one is observed. 
 
 \subsubsection{Discussion}
-\tb{
-    The field $\textbf{w}_p^r$ is useful for several reasons. 
-    As discussed it might serve to close equations such as \ref{eq:dt_R}. 
-    Or simply it provides us with clear physical explanation of what particles interaction look like. 
-    Also, we believe that it might be useful for coalesce kernels modeling. 
-    However, the entire description of the velocity field is not necessary. 
-    Instead, one may use the relation 
-    \begin{equation*}
-        \textbf{w}_p^r P_r(\textbf{r})
-        = \int_{\mathbb{R}^3} 
-        \textbf{w}_p^r P_r (\textbf{x})
-        \delta( \textbf{r}-  \textbf{x})
-        d\textbf{x}
-    \end{equation*}
-    Which upon using the relation, $\delta(\textbf{r} - \textbf{x}) = \delta(\textbf{r}) - \textbf{x} \cdot \pddx \delta(\textbf{r})\cdot$, gives
-    
-    \begin{equation*}
-        \textbf{w}_p^r P_r(\textbf{r})
-        = 
-        \delta( \textbf{r})
-        \int_{\mathbb{R}^3} 
-        \textbf{w}_p^r P_r (\textbf{x})
-        d\textbf{x}
-        - \pddr 
-        \cdot 
-        \delta( \textbf{r})
-        \int_{\mathbb{R}^3} 
-        \textbf{x} \cdot \textbf{w}_p^r P_r (\textbf{x})
-        d\textbf{x}
-    \end{equation*}
-    Which upon using the relation, 
+% \tb{
+%     The field $\textbf{w}_p^r$ is useful for several reasons. 
+%     As discussed it might serve to close equations such as \ref{eq:dt_R}. 
+%     Or simply it provides us with clear physical explanation of what particles interaction look like. 
+%     Also, we believe that it might be useful for coalesce kernels modeling. 
 
     
-}
+% }
 
-From \ref{sec:time} we demonstrated that $\textbf{R}(\textbf{x},t)$ follows a transport equation were the tensor $\textbf{W}(\textbf{x},t)$ act as a source term. 
+From \ref{sec:Theory} we demonstrated that $\textbf{R}(\textbf{x},t)$ follows a transport equation were the tensor $\textbf{W}(\textbf{x},t)$ act as a source term. 
 This tensor might be expressed as the symmetric part of $\int_0^\infty \textbf{r} \textbf{w}_p^\text{r} P(\textbf{x},\textbf{r},t) da$. 
 Thus, the trends of the $\textbf{w}_p^\text{r}(\textbf{x},\textbf{r},t) $ in terms of the position determine the value of $\textbf{W}(\textbf{x},t)$ and partly determine the final value of $\textbf{R}(\textbf{x},t)$. 
 In most of the graphs we observed that the vertical components of $\textbf{w}_p^\text{r}$ where negative when the vertical component of where positive \textbf{r} and vice versa. 
-Consequently, $W_{yy}$ must be on average negative, which ultimately contribute to the value of $\textbf{R}(\textbf{x},t)$ and $\textbf{A}(\textbf{x},t)$ through \ref{eq:dt_R} and justify the sign of $A_{xx}$ in \ref{fig:A}. 
+Consequently, $W_{yy}$ must be on average negative and $W_{xx}$ positive, which ultimately contribute to the value of $\textbf{R}(\textbf{x},t)$ and $\textbf{A}(\textbf{x},t)$ through \ref{eq:dt_R} and justify the sign of $A_{xx}$ in \ref{fig:A}. 
 
-\tb{phase diagram of W ???? ?? It could be useful to end well this discussion a=and have an idea of the tendency}
-
-% On a different note, we now ask this question : 
+In \ref{fig:phase} we display the values of $W_{xx}$ in terms of $Ga$ and $\phi$. 
+These graphs provide us with a concise description of the relative kinematic. 
+We recall that $\textbf{W}:\bm\delta = 0$ as we demonstrated in \ref{sec:Theory}, thus the value  $W_{xx}$ entirely determine  $W_{yy}$ since the problem is symmetric. 
+For example, we see that the highest dimensionless relative velocity position is reached for $Ga = 10$ and $\phi = 0.01$. 
+This implies that it is in the dilute regime and with relatively small inertial effect that the particles have the fastest relative motions. 
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}[scale=0.8]
         \node (img) at (0,0) {\includegraphics[height=5.5cm]{image/HOMOGENEOUS_NEW/PA/phase_Wxx_l_1.pdf}};
-        % \draw[dashed] (10cm,-1.6) ellipse (3 and 2);
-        % \node (txt) at (-2,1) {Clustering};
-        % \node (txt) at (-1,-1.6) {Dispersed};
-        % \draw[dashed] ($(-1,-1.6) + (-10:3 and 2)$(P) arc
-        % (-10:155:3 and 2);
         \node (img) at (11,0) {\includegraphics[height=5.5cm]{image/HOMOGENEOUS_NEW/PA/phase_Wxx_l_10.pdf}};
-        % \draw[dashed] (10cm,-1.6) ellipse (3 and 2);
-        % \node (txt) at (8.5,1) {Clustering};
-        % \node (txt) at (10,-1.6) {Dispersed};
-        % \draw[dashed] ($(10,-2) + (-10:3 and 2)$(P) arc
-        % (-10:180:3 and 2);
     \end{tikzpicture}
-    % \begin{tikzpicture}[scale=0.8]
-    %     \node (img) at (0,0) {\includegraphics[height=5.5cm]{image/HOMOGENEOUS_NEW/PA/phase_axx_l_1.pdf}};
-    %     \draw[dashed] (1.2,0.3) ellipse (1.5 and 2.5);
-    %     \node (txt) at (1.2,1) {Anisotropic};
-    %     \node (txt) at (-2,1) {Isotropic};
-
-    %     \node (img) at (10.5,0) {\includegraphics[height=5.5cm]{image/HOMOGENEOUS_NEW/PA/phase_axx_l_10.pdf}};
-    %     % \draw[dashed] (11.7,-0.5) ellipse (0.75 and 1.75);
-    %     % \node (txt) at (11.7,1) {Anisotropic};
-    %     \node (txt) at (8,1) {Isotropic};
-    % \end{tikzpicture}
     \caption{Phase diagram of the horizontal components of the dimensionless correlation tensor $W_{xx}/(Ud)$. 
         (left) Iso-viscous emulsion $\lambda = 1$.
         (right) Viscous droplets $\lambda = 10$ }
     \label{fig:phase}
 \end{figure}
-Is the relative velocity fields $\textbf{w}_p^r$ is the cause of the microstructure's shape as it is suggested by \ref{eq:dt_R}. 
+Is the relative velocity fields $\textbf{w}_p^r$ the cause of the microstructure's shape as it is suggested by \ref{eq:dt_R}. 
 Or does $\textbf{w}_p^r$ is the consequence of microstructure shape, as it could be through looking at the previous graphs ?
 Indeed, on \ref{fig:Why_l_matter} (right), the clear asymmetry with respect to the horizontal plane can be explained as the consequence of cluster  in the flows. 
 Although it is tedious question, we believe that both are true, even if physical parameters also impact $\textbf{w}_p^r$, which makes the microstructure case dependent.  
@@ -357,5 +314,4 @@ It is in fact possible in our framework to include such dynamic variable by deri
 % In this case it is reasonable to believe that the closure terms for the dynamical equation might be computable theoretically in terms of the physical parameters $Ga$, $\phi$ and $\lambda$. 
 
 
-\tb{relation with the particle phase Reynolds stress !!!!! }
 
