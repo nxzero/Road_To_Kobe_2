@@ -1,0 +1,179 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+% FORMAT OF PAGE
+\addtolength{\textheight}{4.5cm}
+\addtolength{\topmargin}{-1.5cm}
+\addtolength{\footskip}{0cm}
+\addtolength{\textwidth}{5cm}
+\addtolength{\evensidemargin}{-2.5cm}
+\addtolength{\oddsidemargin}{-2.5cm}
+
+\definecolor{mygray}{gray}{0.6}
+\renewcommand\refname{\textbf{\large References}}
+
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\lhead{\textcolor{mygray}{12th International Conference on Multiphase flow}}
+\rhead{\textcolor{mygray}{ICMF 2025, Toulouse, France, May 12-16, 2025}}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+
+% TITLE IN CAPITAL LETTERS
+\begin{center}
+{\large {\bf Averaged equations for dispersed multiphase flows}}
+\vspace{10pt}
+
+% AUTHORS
+
+\underline{Nicolas Fintzi}$^1$, Daniel Lhuillier$^2$, Jean-Lou Pierson$^1$\\
+% AFFILIATIONS
+{\it
+$^1$IFP Energies Nouvelles, Solaize, 69360, France,jean-lou.pierson@ifpen.fr\\
+$^2$Affiliation of second author: University, School, Department, Institute, City, Country, E-mail\\
+%$^3$Affiliation of third author: University, School, Department, Institute, City, Country, E-mail\\
+}
+\end{center}
+
+\vspace{10pt}
+\noindent{\bf {\large Abstract}}:\\
+   This article presents a comprehensive study of the averaged equations for dispersed multiphase flows.
+    We present a systematic derivation of a general averaged hybrid model that incorporates the influence of internal properties and surface properties of arbitrary particles dispersed in a continuous phase.
+    The dispersed phase averaged equations are derived using two distinct formalism :
+    the particle-average or Lagrangian formalism proposed by \citet{zhang1994ensemble,jackson1997locally};
+    and the phase-average method, which is also employed for the continuous phase based on the approach of \citet{drew1983mathematical}. 
+    The particle-phase averaged formalism yields the conventional linear conservation equations, as well as the less familiar moments' conservation equations.
+    The primary contribution is the demonstration of the equivalence between the particle-averaged and phase-averaged equations. 
+    We show that the phase-averaged equation of the dispersed phase, is in fact a series expansion of the so-called particle-averaged moments equations. 
+    The second contribution of this work is the global derivation of linear and moments equations of the particle phase in their most generalized form, the link to the continuous phase is also made. 
+    We expose the mass, momentum and energy equations for both phases and investigate where does the contribution of the particle inner and surface stresses impact these equations. }
+
+\vspace{10pt}
+\noindent{{\bf Keywords}}: Averaged equations, dispersed multiphase flows
+
+\vspace{10pt}
+\noindent{\bf {\large Introduction}}:\\
+
+In this section, we derive the conservation equations using a two-fluid formulation. While this approach has been employed in numerous studies, including those by \citet{kataoka1986local}, \citet{lhuillier2010multiphase}, \citet{ishii2010thermo}, \citet{morel2015mathematical}, and \citet{bothe2022sharp}, our method enables us to establish general results that encompass previous work. Notably, we will present a general two-fluid formulation on surfaces, which has not been reported so far.
+
+
+Lagrangian-based modeling of the dispersed phase has been explored extensively in numerous studies \citep{buyevich1979flow, lhuillier1992volume, simonin1996, zhang1994averaged, zhang1994ensemble, zhang1997momentum, jackson1997locally, zaepffel2011modelisation}. However, these studies predominantly focus on solid particles \citep{buyevich1979flow, lhuillier1992volume, simonin1996, zhang1994averaged, jackson1997locally} or non-deformable spherical fluid inclusions \citep{zhang1994ensemble, zaepffel2011modelisation}. A notable exception is the work by \citep{zhang1994ensemble}, which considered spherical bubbles with varying radii, although this analysis was limited to constant surface tension and spherical shapes. In this work, we aim to address a more general scenario by considering fluid particles with arbitrary shapes and surface properties. Thus, we propose a Lagrangian-based model for each inclusion capable of describing the dispersed phase with arbitrary accuracy.
+
+Let $f_k^0$ denote a volumetric quantity of arbitrary tensorial order defined in $\Omega_k$.
+Similarly, let $f_I^0$ represent an arbitrary surface property defined on $\Gamma$. The subscript $_{||}$ is used to denote the projection of a field onto the plane tangential to the surface $\Gamma$. Following the strategy outlined in \citep{ishii2010thermo,bothe2022sharp}, the local conservation equations for $f_k^0$ and $f_I^0$ can be written as follows
+\begin{align}
+    \label{eq:dt_f_k}
+    \pddt f_k^0
+    +\div \left(
+        f_k^0\textbf{u}_k^0
+        - \mathbf{\Phi}_k^0
+        \right)
+    &= 
+    s_k^0
+    & \text{ in } \Omega_k,&\\
+    \pddt f_I^0 
+    + f_I^0 (\textbf{u}_I \cdot \textbf{n})(\div \textbf{n})
+    +\divI
+    (f_I^0 \textbf{u}_{I||}^0
+        - \mathbf{\Phi}_{I||}^0 )
+    &= 
+    s_I^0
+    - \Jump{
+       f_k (\textbf{u}_I^0 - \textbf{u}_k^0)
+       + \mathbf{\Phi}_k^0
+    } 
+    & \text{ on } \Gamma,&
+    \label{eq:dt_f_I}
+\end{align}
+respectively. The tensors $\mathbf{\Phi}_k^0$ and $\mathbf{\Phi}_{I||}^0$ represent the non-convective fluxes corresponding to the quantities $f_k^0$ and $f_I^0$, respectively. Similarly, $s_k^0$ and $s_I^0$ are the source terms corresponding to the quantities $f_k^0$ and $f_I^0$, respectively.
+
+
+The two-fluid formulation may be obtained by multiplying \ref{eq:dt_f_k} by $\chi_k$. 
+Using \ref{eq:dt_chi_k} and \ref{eq:grad_chi_k} we obtain
+\begin{equation}
+    \pddt (\chi_k f_k^0)
+    + \div (
+        \chi_k f_k^0 \textbf{u}_k^0
+        - \chi_k \mathbf{\Phi}_k^0 
+        )
+    = 
+    \chi_k s_k^0
+    + \delta_I\left[
+        f_k^0
+        \left(
+            \textbf{u}_I^0
+            - \textbf{u}_k^0
+        \right)
+        + \mathbf{\Phi}_k^0
+    \right]
+    \cdot \textbf{n}_k.
+    \label{eq:dt_chi_k_f_k}
+\end{equation}
+This yields an equation defined over $\Omega$, to be solved for the quantity $\chi_k f_k^0$ instead of $f_k^0$. 
+Moreover, in contrast to \ref{eq:dt_f_k} we observe the emergence of the interfacial term $ \delta_I[\ldots]$ on the right-hand side of \ref{eq:dt_chi_k_f_k}. 
+To the best of the author's knowledge, the general form of the interfacial transport equation, expressed using the distribution formalism, has not yet been derived. However, some specific forms applicable to a given $f_i$ can be found in \citet{marle1982macroscopic, teigen2009}.
+
+
+
+%An extended abstract should have {\bf one or two pages maximum, and be written in English.} The first part is a text block containing the title, the authors' names and affiliations, the keywords, and the abstract. Following that, you can write an introduction and describe the work to be presented at the conference. 
+%All the extended abstracts will go under peer review by the Scientific Committee. The research quality will be evaluated. The accepted abstracts will be either for oral or poster presentation, and published in the scientific program of ICMF 2025. 
+%When the abstract is ready, please make a .pdf file and submit it to the submission webpage of the conference (https://www.icmf2025.com/submission/). The {\bf deadline for abstract submission is 15 July 2024.} The notification of acceptance will be sent to one of the authors by 15 October 2024. 
+\\
+
+%\noindent{\bf {\large Experimental Facility / Numerical Methods / etc.}}:\\
+
+%\noindent Here, please describe your experimental facility, numerical methods, etc. Please change the section title to fit the text. 
+%In each section, you can include figures, equations, references \cite{bib:ref_1}. An example of a figure is shown in Fig. \ref{fig:banner}.
+
+
+
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=\linewidth]{Toulouse.pdf} 
+%\caption{Caption.}
+%\label{fig:banner}
+%\end{figure}
+
+%An example of an equation is written as.\\
+
+%\begin{eqnarray}
+%t_{det}=\frac{4 \pi R_{det}^3}{3 Q}
+%\label{tdet}
+%\end{eqnarray}
+
+%\noindent{\bf {\large Results and discusison}}:\\
+
+%Please describe and discuss your results.\\
+
+%\noindent{\bf {\large Conclusion}}:\\
+
+%Please describe the main conclusion.\\
+
+%\noindent{\bf {\large Acknowledgments}}:\\
+
+%Please place an optional section (if needed) before References.\\
+
+
+%%%%%%%%%%%
+
+\begin{thebibliography}{99}
+
+\bibitem{bib:ref_1} 
+Authors, 1 \& Authors, 2 
+\textit{Title.},
+Journal name. \textbf{volume}, pages--pages (year).
+
+
+ \end{thebibliography}
+
+\end{document}
+
