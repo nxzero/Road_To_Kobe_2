@@ -140,15 +140,19 @@
 \renewcommand{\pddr}{{\partial_\textbf{r}}}
 \renewcommand{\pddy}{{\partial_\textbf{y}}}
 \renewcommand{\pddw}{{\partial_\textbf{w}}}
+\renewcommand{\pddx}{{\grad_\textbf{x}}}
+\renewcommand{\pddr}{{\grad_\textbf{r}}}
+\renewcommand{\pddy}{{\grad_\textbf{y}}}
+\renewcommand{\pddw}{{\grad_\textbf{w}}}
 \newcommand{\pdda}{\partial_a}
 \renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
 \newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n}_k }
 % \renewcommand{\Jump}[1]{\sum_{k=d,f} \left[#1\right] \cdot \textbf{n}_k }
 
-\newcommand{\intO}[1]{\int_{\Omega_\alpha} #1 d\Omega}
+\newcommand{\intO}[2][\alpha]{\int_{\Omega_{#1}} #2 d\Omega}
 % \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
-\newcommand{\intS}[1]{\oint_{\Gamma_\alpha} #1 d\Gamma}
+\newcommand{\intS}[2][\alpha]{\oint_{\Gamma_{#1}} #2 d\Gamma}
 % \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
 \newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
 \newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
