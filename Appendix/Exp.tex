@@ -101,10 +101,10 @@ where we used the expression for the $l^{th}$ order moment of inertia tensor.
 A general conservation equation over the $k$ phase is written as, 
 \begin{multline}
     \frac{\partial}{\partial t} (\phi_k\kavg{f})
-    + \nablab \cdot \left(
+    + \grad \cdot \left(
         \phi_k \kavg{f \textbf{u}}
     \right)\\
-    = \nablab \cdot \left(
+    = \grad \cdot \left(
         \phi_k \kavg{\bm{\Phi}}
     \right)
     + \phi_k \kavg{\textbf{S}}
@@ -121,7 +121,7 @@ A general conservation equation over the $k$ phase is written as,
 besides the local balance available inside the volume of the $k$ phase,
 \begin{equation}
     \pddt f_k
-    = \nablabh \cdot \left(
+    = \grad \cdot \left(
         \bm{\Phi}_k
         - f_k\textbf{u}_k
         \right)
@@ -130,7 +130,7 @@ besides the local balance available inside the volume of the $k$ phase,
 In the particular average formalism the same balance can be written as, 
 \begin{equation}
     \pddt   \left(\pavg{q_\alpha}\right)
-    + \nablab \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right)
+    + \grad \cdot \left(\pavg{q_\alpha \textbf{u}_\alpha}\right)
     = \pavg{\int_{V_\alpha} \textbf{S}_k dV }
     + \pavg{\int_{S_\alpha} \left[\bm{\Phi}_k + f (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S}
 \end{equation}
@@ -164,28 +164,28 @@ By decomposition into symmetric and antisymmetric part we arrive to the expressi
 \end{equation}
 Taking the divergence of the same product yields, 
 \begin{align*}
-    \nablabh \cdot \left(\prod^{l+1}_{m=1} r_{i_m} \bm{\Phi}\right)
-    &= \prod^{l+1}_{m=1} r_{i_m} \nablabh \cdot \bm{\Phi}
-    + \bm{\Phi} \cdot \nablabh \prod^{l+1}_{m=1} r_{i_m}\\
-    &= \prod^{l+1}_{m=1} r_{i_m} \nablabh \cdot \bm{\Phi}
-    + \bm{\Phi}  \cdot\sum_{m=1}^l \nablabh r_{i_m}  \prod^{l}_{\substack{n=1 \\ n \neq m}} r_{i_m}\\,
-    &= \prod^{l+1}_{m=1} r_{i_m} \nablabh \cdot \bm{\Phi}
+    \grad \cdot \left(\prod^{l+1}_{m=1} r_{i_m} \bm{\Phi}\right)
+    &= \prod^{l+1}_{m=1} r_{i_m} \grad \cdot \bm{\Phi}
+    + \bm{\Phi} \cdot \grad \prod^{l+1}_{m=1} r_{i_m}\\
+    &= \prod^{l+1}_{m=1} r_{i_m} \grad \cdot \bm{\Phi}
+    + \bm{\Phi}  \cdot\sum_{m=1}^l \grad r_{i_m}  \prod^{l}_{\substack{n=1 \\ n \neq m}} r_{i_m}\\,
+    &= \prod^{l+1}_{m=1} r_{i_m} \grad \cdot \bm{\Phi}
     + \sum_{m=1}^l \bm{\Phi}_{i_m}  \prod^{l}_{\substack{n=1 \\ n \neq m}} r_{i_m}\\,
 \end{align*}
 Which, by considering the previous relation and the fact that the anti symmetric part is null under derivation, gives, 
 \begin{equation}
     \prod^{l}_{m=1} r_{i_m} \bm{\Phi}_{i_{l+1}}
     =\frac{1}{l+1}\sum_{m=1}^{l+1} \bm{\Phi}_{i_m}  \prod^{l+1}_{\substack{n=1 \\ n \neq m}} r_{i_m}
-    =\frac{1}{l+1}\nablabh\cdot \left(\prod^{l+1}_{m=1} r_{i_m} \bm{\Phi}\right)
-    - \frac{1}{l+1}\prod^{l+1}_{m=1} r_{i_m} \nablabh\cdot \bm{\Phi}.
+    =\frac{1}{l+1}\grad\cdot \left(\prod^{l+1}_{m=1} r_{i_m} \bm{\Phi}\right)
+    - \frac{1}{l+1}\prod^{l+1}_{m=1} r_{i_m} \grad\cdot \bm{\Phi}.
 \end{equation}
 Using the micro scale conservation equation for the second term it reads, 
 \begin{equation}
     (l+1) \prod^{l}_{m=1} r_{i_m} \bm{\Phi}_{i_{l+1}}
-    =\nablabh \cdot \left(\prod^{l+1}_{m=1} r_{i_m} \bm{\Phi}\right)
+    =\grad \cdot \left(\prod^{l+1}_{m=1} r_{i_m} \bm{\Phi}\right)
     - \prod^{l+1}_{m=1} r_{i_m} \left(
         \pddt f 
-        + \nablabh \cdot (f \textbf{u})
+        + \grad \cdot (f \textbf{u})
         - \textbf{S}
     \right).
 \end{equation}
@@ -235,7 +235,7 @@ Injecting this term into the initial expansion and using Gauss theorem on the fi
         g_{\alpha}
         \int_{V_\alpha}
         \prod^{l+1}_{m=1}
-        r_{i_m} \nablabh \cdot (f \textbf{u}) dV
+        r_{i_m} \grad \cdot (f \textbf{u}) dV
     \right],\\
 \end{align*}
 where we recognize the expansion of the source term \textbf{S} and the one of the non-convective flux dotted with the normal, i.e. $\bm{\Phi}\cdot\textbf{n}$.
@@ -245,12 +245,12 @@ Now let's focus on the third and fourth term. Namely,
     \int_{V_\alpha}\pri{1}{l+1}\left[
         \pddt f 
         + 
-        \nablabh \cdot (f \textbf{u}) 
+        \grad \cdot (f \textbf{u}) 
     \right]dV
     &= \int_{V_\alpha} \left[
     \pddt \left(\pri{1}{l+1}  f \right)
     + 
-    \nablabh \cdot \left(
+    \grad \cdot \left(
     \prod^{l+1}_{m=1}
     r_{i_m} f \textbf{u}
     \right) \right]dV   \\ 
@@ -259,16 +259,16 @@ Now let's focus on the third and fourth term. Namely,
         r_{i_m} \right)
         +
         \textbf{u} \cdot
-        \nablabh \pri{1}{l+1}  
+        \grad \pri{1}{l+1}  
     \right]
     dV.\\
 \end{align*}
-Noticing that $\pddt \textbf{r} = - \textbf{u}_\alpha$, $\nablabh \textbf{r} = \textbf{I}$, and using the Reynolds transport theorem on the first term on the RHS (\ref{eq:q_alpha_dt}), gives, 
+Noticing that $\pddt \textbf{r} = - \textbf{u}_\alpha$, $\grad \textbf{r} = \textbf{I}$, and using the Reynolds transport theorem on the first term on the RHS (\ref{eq:q_alpha_dt}), gives, 
 \begin{align*}
     \int_{V_\alpha}\pri{1}{l+1}\left[
         \pddt f 
         + 
-        \nablabh \cdot (f \textbf{u}) 
+        \grad \cdot (f \textbf{u}) 
     \right]dV
     &= \ddt \int_{V_\alpha} 
     \pri{1}{l+1}  f dV   \\
@@ -328,7 +328,7 @@ Notice that the time derivative doesn't commute with the particular average oper
         \frac{(-1)^{l+1}}{(l+1)!}
         \prod^{l+1}_{m=1}
         \partial_{i_m}
-        \nablab \cdot
+        \grad \cdot
         \sum_{\alpha}
         g_{\alpha} \textbf{u}_\alpha 
         \int_{V_\alpha}
@@ -362,27 +362,27 @@ Notice that the time derivative doesn't commute with the particular average oper
 In this expression we clearly recognize the time derivative of the moments of $\pri{1}{l+1}f$, which will obviously cancel with the first term on the LHS of \ref{ap:eq:avg_k_global}.
 Now let's compare the two remaining term to the expansion of the advection term in \ref{ap:eq:avg_k_global}, which reads as, 
 \begin{equation}
-    \nablab \cdot \phi_k \kavg{\textbf{u} f}
+    \grad \cdot \phi_k \kavg{\textbf{u} f}
     = \sum_{l=0}^\infty  
     \left[
         \frac{(-1)^l}{l!} \prod^{l}_{m=1}\partial_{i_m}
-        \nablab \cdot
+        \grad \cdot
         \sum_\alpha  g_\alpha \int_{V_\alpha} \prod^l_{m=1}r_{i_m} \textbf{u} f dV
     \right],
 \end{equation}
 using the decomposition of the velocity, $\textbf{u} = \textbf{u}_\alpha + \textbf{w}$, 
 \begin{align}
-    \nablab \cdot \phi_k \kavg{\textbf{u} f}
+    \grad \cdot \phi_k \kavg{\textbf{u} f}
     &= \sum_{l=0}^\infty  
     \left[
         \frac{(-1)^l}{l!} \prod^{l}_{m=1}\partial_{i_m}
-        \nablab \cdot
+        \grad \cdot
         \sum_\alpha  g_\alpha \textbf{u}_\alpha  \int_{V_\alpha} \prod^l_{m=1}r_{i_m} f dV
     \right]\\
     &+ \sum_{l=0}^\infty  
     \left[
         \frac{(-1)^l}{l!} \prod^{l}_{m=1}\partial_{i_m}
-        \nablab \cdot
+        \grad \cdot
         \sum_\alpha  g_\alpha \int_{V_\alpha} \prod^l_{m=1}r_{i_m} \textbf{w} f dV
     \right]
     \label{ap:eq:partial_uf}
@@ -413,7 +413,7 @@ Consequently, the remaining term will be an antisymmetric tensor, in the indices
 At last, the only terms remaining in \ref{ap:eq:avg_k_global} are the following,
 \begin{multline*}
     \pddt   \left(\pavg{\int_{V_\alpha} f_k dV}\right)
-    + \nablab \cdot \left(\pavg{\textbf{u}_\alpha \int_{V_\alpha} f_k  dV  }\right)\\
+    + \grad \cdot \left(\pavg{\textbf{u}_\alpha \int_{V_\alpha} f_k  dV  }\right)\\
     = \pavg{\int_{V_\alpha} \textbf{S}_k dV }
     + \pavg{\int_{S_\alpha} \left[\bm{\Phi}_k 
     + f (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S},
@@ -421,7 +421,7 @@ At last, the only terms remaining in \ref{ap:eq:avg_k_global} are the following,
 If we note, $q_\alpha = \int_{V_\alpha} f_k dV$ it yields the particular averaged equation, i.e. 
 \begin{equation}
     \pddt   \left(\pavg{q_\alpha}\right)
-    + \nablab \cdot \left(\pavg{\textbf{u}_\alpha q_\alpha  }\right)
+    + \grad \cdot \left(\pavg{\textbf{u}_\alpha q_\alpha  }\right)
     = \pavg{\int_{V_\alpha} \textbf{S}_k dV }
     + \pavg{\int_{S_\alpha} \left[\bm{\Phi}_k 
     + f (\textbf{u}_I-\textbf{u}_k) \right] \cdot \textbf{n}_k d S},
@@ -434,11 +434,11 @@ Thus, the phase average on the $k$ phase is equivalent to the particular average
 \section{Particular surface averaged equation}
 \begin{equation}
     \pddt a_I
-    + \nablab \cdot \left(
+    + \grad \cdot \left(
         a_I
         \Iavg{\textbf{u}}
     \right)
-    = a_I \Iavg{\nablabh \cdot \textbf{u}}
+    = a_I \Iavg{\grad \cdot \textbf{u}}
 \end{equation}
 
 Each term give,
@@ -452,20 +452,20 @@ also,
         g_{\alpha}
         \int_{S_\alpha}
         \pri{1}{n}dS \\
-    \nablab \cdot (a_I \Iavg{\textbf{u}^I}) &= \frac{(-1)^{n}}{n!}
-        \nablab\cdot\prod^{n}_{m=1}
+    \grad \cdot (a_I \Iavg{\textbf{u}^I}) &= \frac{(-1)^{n}}{n!}
+        \grad\cdot\prod^{n}_{m=1}
         \partial_{i_m}
         \sum_{\alpha}
         g_{\alpha}
         \int_{S_\alpha}
         \pri{1}{n} \textbf{u}_IdS\\
-    a_I \Iavg{\nablabh \cdot \textbf{u}^I} &= \frac{(-1)^{n}}{n!}
+    a_I \Iavg{\grad \cdot \textbf{u}^I} &= \frac{(-1)^{n}}{n!}
         \prod^{n}_{m=1}
         \partial_{i_m}
         \sum_{\alpha}
         g_{\alpha}
         \int_{S_\alpha}
-        \pri{1}{n} (\nablabh \cdot \textbf{u}_I)dS\\
+        \pri{1}{n} (\grad \cdot \textbf{u}_I)dS\\
 \end{align*}
 Using the relation derived in \ref{ap:cinematic}, 
 \begin{align*}
@@ -482,7 +482,7 @@ Using the relation derived in \ref{ap:cinematic},
 \end{align*}
 we have,
 \begin{align*}
-    a_I \Iavg{\nablabh \cdot \textbf{u}^I} 
+    a_I \Iavg{\grad \cdot \textbf{u}^I} 
     &= \frac{(-1)^{n}}{n!}
     \pddt 
     \prod^{n}_{m=1}
@@ -491,7 +491,7 @@ we have,
     g_{\alpha} 
     \int_{S_\alpha} \pri{1}{n}dS \\
     &+ \frac{(-1)^{n}}{n!}
-    \nablab \cdot
+    \grad \cdot
     \prod^{n}_{m=1}
     \partial_{i_m}
     \sum_{\alpha}
@@ -516,18 +516,18 @@ we have,
 We can see that the time derivatives cancels out, therefore it reads, 
 \begin{align*}
     &\pddt \pavg{\int_{S_\alpha} dS}
-     + \nablab \cdot \left(
+     + \grad \cdot \left(
          \pavg{\textbf{u}_\alpha \int_{S_\alpha} dS} 
     \right)
-    = \pavg{\int_{S_\alpha} \nablab \cdot \textbf{u}_I dS} \\
+    = \pavg{\int_{S_\alpha} \grad \cdot \textbf{u}_I dS} \\
     &+ \frac{(-1)^{n+1}}{n!}
-    \nablab\cdot\prod^{n}_{m=1}
+    \grad\cdot\prod^{n}_{m=1}
     \partial_{i_m}
     \pavg{
     \int_{S_\alpha}
     \pri{1}{n} \textbf{u}_IdS}\\
     &+ \frac{(-1)^{n}}{n!}
-    \nablab \cdot
+    \grad \cdot
     \prod^{n}_{m=1}
     \partial_{i_m}
     \pavg{
@@ -549,12 +549,12 @@ We can see that the time derivatives cancels out, therefore it reads,
 It is evident that the $3^{th}$ and fourth line simplify, 
 \begin{align*}
     &\pddt \pavg{\int_{S_\alpha} dS}
-     + \nablab \cdot \left(
+     + \grad \cdot \left(
          \pavg{\textbf{u}_\alpha \int_{S_\alpha} dS} 
     \right)
-    = \pavg{\int_{S_\alpha} \nablab \cdot \textbf{u}_I dS} \\
+    = \pavg{\int_{S_\alpha} \grad \cdot \textbf{u}_I dS} \\
     &+ \frac{(-1)^{n+1}}{n!}
-    \nablab\cdot\prod^{n}_{m=1}
+    \grad\cdot\prod^{n}_{m=1}
     \partial_{i_m}
     \pavg{
     \int_{S_\alpha}
@@ -564,7 +564,7 @@ It is evident that the $3^{th}$ and fourth line simplify,
         \pri{1}{n} \textbf{u}_IdS
     \right)^S}\\
     &+ \frac{(-1)^{n}}{n!}
-    \nablab \cdot
+    \grad \cdot
     \prod^{n}_{m=1}
     \partial_{i_m}
     \pavg{
@@ -580,10 +580,10 @@ where $(...)^S$ is the symmetric part of the argument.
 Both terms are thus antisymmetric and vanish under the divergence operators. 
 \begin{align*}
     &\pddt \pavg{\int_{S_\alpha} dS}
-     + \nablab \cdot \left(
+     + \grad \cdot \left(
          \pavg{\textbf{u}_\alpha \int_{S_\alpha} dS} 
     \right)
-    = \pavg{\int_{S_\alpha} \nablab_I \cdot \textbf{u}_I dS} \\
+    = \pavg{\int_{S_\alpha} \grad_I \cdot \textbf{u}_I dS} \\
     & +  \frac{(-1)^{n+1}}{n!}
     \prod^{n+1}_{m=1}
     \partial_{i_m}

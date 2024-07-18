@@ -40,12 +40,8 @@
 \AtBeginDocument{\newcommand{\refn}[1]{\ref{#1}}}
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
 \numberwithin{equation}{section}
-  % \RequirePackage[
-  %     a4paper,
-  %     left=20mm,
-  %     right=20mm,
-  %     top=20mm
-  % ]{geometry}
+\usepackage[bmargin=2cm,tmargin=2cm,lmargin=2cm,rmargin=2cm]{geometry}
+
 % \RequirePackage{ragged2e}
 % \RequirePackage{times}
 
@@ -54,7 +50,6 @@
 \RequirePackage{mathtools}% it load amsmath 
 \RequirePackage{tikz}
 \RequirePackage{todonotes}
-\RequirePackage{nomencl}
 % \setlength{\marginparwidth}{3.5cm}
 % \usepackage[bmargin=2cm,tmargin=2cm,lmargin=2cm,rmargin=2cm]{geometry}
 \RequirePackage{csquotes}
@@ -85,7 +80,18 @@
 \pgfplotsset{compat=newest}
 \RequirePackage{graphicx}
 % \RequirePackage{gnuplot-lua-tikz}
+% \RequirePackage{etoolbox}
+% \RequirePackage{tocloft}
+\RequirePackage{etoc}
 
+% \newcommand{\chaptertoc}{
+%     \begingroup
+%     \let\clearpage\relax
+%     \let\cleardoublepage\relax
+%     \tableofcontents
+%     \endgroup
+%     \addtocontents{toc}{\protect\contentsline{chapter}{}{}}
+% }
 
 \newcommand{\size}{0.22\textwidth}
 \newcommand{\avg}[1]{\left<#1\right>}
@@ -128,23 +134,34 @@
 \newcommand{\gradI}{\mathbf{\nabla}_{||}}
 \newcommand{\divI}{\mathbf{\nabla}_{||}\cdot}
 
-\newcommand{\ddt}{\frac{d}{d t}}
+\newcommand{\ddt}{\frac{d}{dt}}
 % \renewcommand{\ddt}{d_t}
 \newcommand{\pddt}{\frac{\partial}{\partial t}}
+\newcommand{\Dt}{D_t}
 \newcommand{\pddx}{\frac{\partial}{\partial \textbf{x}}}
 \newcommand{\pddr}{\frac{\partial}{\partial \textbf{r}}}
+\newcommand{\pddy}{\frac{\partial}{\partial \textbf{y}}}
+\newcommand{\pddw}{\frac{\partial}{\partial \textbf{w}}}
 \newcommand{\pddu}{\frac{\partial}{\partial \textbf{u}}}
 \renewcommand{\pddx}{{\partial_\textbf{x}}}
 \renewcommand{\pddr}{{\partial_\textbf{r}}}
+\renewcommand{\pddy}{{\partial_\textbf{y}}}
+\renewcommand{\pddw}{{\partial_\textbf{w}}}
 \renewcommand{\pddu}{{\partial_\textbf{u}}}
+\renewcommand{\pddx}{{\grad_\textbf{x}}}
+\renewcommand{\pddr}{{\grad_\textbf{r}}}
+\renewcommand{\pddy}{{\grad_\textbf{y}}}
+\renewcommand{\pddw}{{\grad_\textbf{w}}}
+\renewcommand{\pddu}{{\grad_\textbf{u}}}
 \newcommand{\pdda}{\partial_a}
 \renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
-\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n} }
+\newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n}_k }
+% \renewcommand{\Jump}[1]{\sum_{k=d,f} \left[#1\right] \cdot \textbf{n}_k }
 
-\newcommand{\intO}[1]{\int_{\Omega_\alpha} #1 d\Omega}
+\newcommand{\intO}[2][\alpha]{\int_{\Omega_{#1}} #2 d\Omega}
 % \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
-\newcommand{\intS}[1]{\int_{\Sigma_\alpha} #1 d\Sigma}
+\newcommand{\intS}[2][\alpha]{\oint_{\Gamma_{#1}} #2 d\Gamma}
 % \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
 \newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
 \newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
@@ -165,12 +182,13 @@
 \renewcommand{\size}[1]{0.3\textwidth}
 \newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
 \newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
-\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Sigma_\alpha} \pri{1}{#1}#2 d\Sigma}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Gamma_\alpha} \pri{1}{#1}#2 d\Sigma}}
 
 % \newcommand{\numref}[1]{\ref{#1}}
 \renewcommand{\ref}[1]{\autoref{#1}}
 \newtheorem{remark}{Remark}
 \usetikzlibrary{calc}
+
 
 
 

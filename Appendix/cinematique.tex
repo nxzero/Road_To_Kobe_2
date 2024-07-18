@@ -279,7 +279,7 @@ From this formula we can derive the theoretical expression of the second order s
     \mathcal{G}_{ij} 
     = \rho \int_{V_\alpha} \textbf{r} \textbf{r} dV 
     = \rho \int_0^R r^2 dr \int_{S_\alpha} \textbf{n} \textbf{n}  dS 
-    = \rho \frac{R^3}{3} \int_{V_\alpha} \nablabh \textbf{n} dV
+    = \rho \frac{R^3}{3} \int_{V_\alpha} \grad \textbf{n} dV
     = \rho \frac{R^2}{3} V_\alpha \delta_{ij}
 \end{equation*}
 where we have used the relation $\frac{\partial}{\partial y_i}n_j = R^{-1} \delta_{ij}$, notice that this is equivalent to the regular calculation, i.e. 
@@ -329,17 +329,17 @@ If we consider a 2D ellipse where the main axis are of length $a$ and $b$ we can
 Here is the proof of the surface tensor derivations,
 \begin{equation*}
     \ddt \int_{S_\alpha} dS 
-    = \int_{S_\alpha} \nablabh_I \cdot \textbf{u}_I dS
+    = \int_{S_\alpha} \grad_I \cdot \textbf{u}_I dS
 \end{equation*}
 \begin{equation*}
     \ddt \int_{S_\alpha} \textbf{r} dS 
-    = \int_{S_\alpha} \textbf{r} \nablabh_I \cdot \textbf{u}_I dS
+    = \int_{S_\alpha} \textbf{r} \grad_I \cdot \textbf{u}_I dS
     + \int_{S_\alpha} \textbf{u}_I  \cdot (\textbf{I}-\textbf{nn}) dS
     - \textbf{u}_\alpha \int_{S_\alpha} dS
 \end{equation*}
 \begin{equation*}
     \ddt \int_{S_\alpha} \textbf{rr} dS 
-    = \int_{S_\alpha} \textbf{rr} \nablabh_I \cdot \textbf{u}_I dS
+    = \int_{S_\alpha} \textbf{rr} \grad_I \cdot \textbf{u}_I dS
     + 2 \int_{S_\alpha}\textbf{r} \textbf{u}_I  \cdot (\textbf{I}-\textbf{nn}) dS
     - \int_{S_\alpha} \textbf{u}_\alpha \textbf{r} + \textbf{r}  \textbf{u}_\alpha dS
 \end{equation*}
@@ -651,15 +651,15 @@ From similar arguments as before one can easily show that,
 \begin{multline*}
     \ddt Q_{i_1\ldots i_n}
     = \sum_{e=1}^{n} \int_{V_\alpha} f  \prod^{n}_{\substack{ m=1 \\   m \neq e}} r_{i_m} w_{i_e}dV
-    +\int_{V_\alpha} \pri{1}{n} \nablabh\cdot\mathbf{\Phi} dV\\
+    +\int_{V_\alpha} \pri{1}{n} \grad\cdot\mathbf{\Phi} dV\\
     + \int_{V_\alpha} \pri{1}{n} \textbf{S} dV
     +\int_{S_\alpha} \pri{1}{n} f \left(u^I_k - u_k\right) n_k dS.
 \end{multline*}
 The second term can be reformulated such as,
 \begin{align*}
-    \int_{V_\alpha} \pri{1}{n} \nablabh\cdot\mathbf{\Phi} dV
-    &= \int_{S_\alpha} \nablabh \cdot \left(\pri{1}{n} \mathbf{\Phi} \right)dV
-    - \int_{V_\alpha} \mathbf{\Phi} \cdot \nablabh \left(\pri{1}{n} \right)dV\\
+    \int_{V_\alpha} \pri{1}{n} \grad\cdot\mathbf{\Phi} dV
+    &= \int_{S_\alpha} \grad \cdot \left(\pri{1}{n} \mathbf{\Phi} \right)dV
+    - \int_{V_\alpha} \mathbf{\Phi} \cdot \grad \left(\pri{1}{n} \right)dV\\
     &= \int_{S_\alpha} \pri{1}{n} \mathbf{\Phi} \cdot \textbf{n}dS
     -\sum_{e=1}^{n} \int_{V_\alpha} \mathbf{\Phi}  \prod^{n}_{\substack{ m=1 \\m \neq e}} r_{i_m}  dV
 \end{align*}
@@ -675,10 +675,10 @@ Then it is possible from this equation to carry out a particular average but als
 Indeed, if we consider $V_\alpha$ as being a fixed control volume the above equality can be rewritten such as, 
 \begin{multline*}
     \pddt \left(\pri{1}{n}f\right)
-    + \nablabh \cdot \left(\pri{1}{n}f \textbf{u}\right)
+    + \grad \cdot \left(\pri{1}{n}f \textbf{u}\right)
     = n  \pri{1}{n-1}  (w_{i_n}f  - \Phi)\\
     + \pri{1}{n} \textbf{S} 
-    + \nablabh \cdot \left( \pri{1}{n} \mathbf{\Phi} \right)
+    + \grad \cdot \left( \pri{1}{n} \mathbf{\Phi} \right)
     \label{ap:eq:dt_rrf}
 \end{multline*}
 
@@ -1124,22 +1124,22 @@ Yielding,
     & = \ddt \int_{V_\alpha} \textbf{r} f_k dV  
     =  \int_{V_\alpha} \left[
         \pddt(\textbf{r}  f_k)
-        + \nablabh \cdot \left(f \textbf{r} \textbf{u}_k\right)
+        + \grad \cdot \left(f \textbf{r} \textbf{u}_k\right)
     \right]dV \nonumber \\
     &+ \int_{S_\alpha} \textbf{r}  f_k  (\textbf{u}_I-\textbf{u}_k)\cdot \textbf{n}_k  dS  \nonumber \\
     &=  \int_{V_\alpha} \textbf{r}\left[
         \pddt f_k
-        + \nablabh \cdot \left(f_k \textbf{u}_k\right)
+        + \grad \cdot \left(f_k \textbf{u}_k\right)
     \right] dV
     + \int_{V_\alpha} f_k \left[
         \pddt \textbf{r}
-        +\textbf{u}_k \nablabh \textbf{r}
+        +\textbf{u}_k \grad \textbf{r}
     \right]dV\\
     &+ \int_{S_\alpha} \textbf{r}  f_k (\textbf{u}_I-\textbf{u}_k)\cdot \textbf{n}_k  dS,
 \end{align}
 Using \ref{eq:general_conservation} for the first term, and considering the relation,
 $  \pddt \textbf{r}
-+ \textbf{u}_k \cdot \nablabh \textbf{r}
++ \textbf{u}_k \cdot \grad \textbf{r}
 = - \frac{d}{dt} \textbf{y}_\alpha  + \textbf{u}_k \cdot \textbf{I}
 = \textbf{w}_k$,
 where $\textbf{I}$ is the identity tensor. 
@@ -1147,7 +1147,7 @@ Applying this relation for the second term, we get,
 \begin{align}
     \ddt \textbf{Q}_\alpha
     &= \int_{V_\alpha} \textbf{r} \left[
-         \textbf{S}_k +  \nablabh \cdot \bm{\Phi}_k
+         \textbf{S}_k +  \grad \cdot \bm{\Phi}_k
     \right]dV
     +\int_{V_\alpha} f_k  \textbf{w}_k dV
     + \int_{S_\alpha} \textbf{r}  f_k (\textbf{u}_I-\textbf{u}_k)\cdot \textbf{n}_k  dS,\\

@@ -29,26 +29,26 @@ To start with, it is well known that the weighting function $g(\textbf{x},\textb
 \begin{equation}
     g(\textbf{x},\textbf{y})
     = g(\textbf{x},\textbf{y}_\alpha)
-    - \textbf{r} \cdot \nablab g(\textbf{x},\textbf{y}_\alpha)
-    + \frac{1}{2} \textbf{r}\textbf{r} : \nablab\nablab g(\textbf{x},\textbf{y}_\alpha)
+    - \textbf{r} \cdot \grad g(\textbf{x},\textbf{y}_\alpha)
+    + \frac{1}{2} \textbf{r}\textbf{r} : \grad\grad g(\textbf{x},\textbf{y}_\alpha)
     + \ldots
     \label{eq:g_exp}
 \end{equation} 
-where, we used the relation $\nablabh g_\alpha = - \nablab g_\alpha$, to make appear the global gradient operators. 
+where, we used the relation $\grad g_\alpha = - \grad g_\alpha$, to make appear the global gradient operators. 
 This relation is the starting point to carry out the comparison between both averaging methods. 
 Indeed, from this Taylor expansion it can be shown that any phase and interface averaged quantities can be expressed as a Taylor expansion series of particular averaged quantities. 
 We can show that any continuous averaged volumetric and surface quantities follows these relations
 \begin{align*}
     \phi_k \kavg{f_k} 
     &=  \pavg{q_\alpha}
-        - \nablab \cdot  
+        - \grad \cdot  
         \left(\pavg{\textbf{Q}_\alpha}\right)        
-        + \frac{1}{2} \nablab\nablab : \left(\pavg{\textbf{Q}_\alpha^2}\right)
+        + \frac{1}{2} \grad\grad : \left(\pavg{\textbf{Q}_\alpha^2}\right)
         + \ldots  \\
     a_I \Iavg{f_k} 
     &=  \pavg{q_\alpha^I}        
-        - \nablab \cdot  \left(\pavg{\textbf{Q}_\alpha^I}\right)        
-        + \frac{1}{2} \nablab\nablab : \left(\pavg{\textbf{Q}_\alpha^{I2}}\right)
+        - \grad \cdot  \left(\pavg{\textbf{Q}_\alpha^I}\right)        
+        + \frac{1}{2} \grad\grad : \left(\pavg{\textbf{Q}_\alpha^{I2}}\right)
         + \ldots  
 \end{align*}      
 where, we have used the definition of the particular, volume and interface average, together with the \ref{eq:g_exp}. 
@@ -57,9 +57,9 @@ As a matter of fact this expression clearly exhibit the link between particular 
 Since these expansions have a cumbersome notation, we propose the following formulation, 
 \begin{align}
     \phi_k \kavg{f_k} 
-    &= \pavg{q_\alpha} - \nablab \cdot \Exp{\textbf{Q}_\alpha},\\
+    &= \pavg{q_\alpha} - \grad \cdot \Exp{\textbf{Q}_\alpha},\\
     a_I \Iavg{f_k} 
-    &= \pavg{q_\alpha^I} - \nablab \cdot \Exp{\textbf{Q}^I_\alpha}, 
+    &= \pavg{q_\alpha^I} - \grad \cdot \Exp{\textbf{Q}^I_\alpha}, 
     \label{eq:q_alpha_exp}
 \end{align}   
 where $\Exp{\ldots}$ is the operators that return the first and above order terms of the expansion series of the arguments.
@@ -71,7 +71,7 @@ Therefore, in the following we make use of \ref{eq:q_alpha_exp} to clearly demon
 Indeed, regarding the mass conservation equations we have,
 \begin{equation}
     \pddt (\pavg{m_\alpha})
-    + \nablab \cdot \left(\pavg{m_\alpha\textbf{u}_\alpha}\right) 
+    + \grad \cdot \left(\pavg{m_\alpha\textbf{u}_\alpha}\right) 
     = 
     - \pavg{\int_{S_\alpha} M_c dS},
     \label{eq:classic_hybrid_mass_p}
@@ -79,10 +79,10 @@ Indeed, regarding the mass conservation equations we have,
 for the dispersed phase and from \ref{eq:avg_k_mass} and \ref{eq:q_alpha_exp}, we get
 \begin{equation}
     \pddt \phi_c 
-    + \nablab \cdot \left(
+    + \grad \cdot \left(
         \cavg{\textbf{u}}\phi_c 
     \right) 
-    =  \pavg{\int_{S_\alpha} M_c dS} - \nablab \cdot \Exp{\int \textbf{r} M_c dS},
+    =  \pavg{\int_{S_\alpha} M_c dS} - \grad \cdot \Exp{\int \textbf{r} M_c dS},
     \label{eq:classic_hybrid_mass_c}
 \end{equation}
 for the continuous phase. 
@@ -95,7 +95,7 @@ Similarly, the continuous momentum balance interfacial term in \ref{eq:avg_k_mom
 We recall that the particular averaged dispersed phase momentum equation reads as,
 \begin{multline}
     \pddt   \left(\pavg{\textbf{p}_\alpha}\right)
-    + \nablab \cdot (\pavg{\textbf{p}_\alpha \textbf{u}_\alpha})
+    + \grad \cdot (\pavg{\textbf{p}_\alpha \textbf{u}_\alpha})
     = \pavg{\int_{V_\alpha} \textbf{b}_d dV}\\
     - \pavg{\int_{S_\alpha} \left(\textbf{T}_c  \cdot \textbf{n}_c  + \textbf{u}_c M_c \right) d S}.
     \label{eq:classic_hybrid_momentum_p}
@@ -103,10 +103,10 @@ We recall that the particular averaged dispersed phase momentum equation reads a
 On the other hand, after expanding the interfacial term the continuous averaged momentum equation of the continuous phase reads as, 
 \begin{multline}
     \pddt (\phi_c\cavg{\rho\textbf{u}}) 
-    + \nablab \cdot ( \phi_c \cavg{\rho\textbf{uu}})
+    + \grad \cdot ( \phi_c \cavg{\rho\textbf{uu}})
     = \pavg{\int_{S_\alpha} (\textbf{T}_c  \cdot \textbf{n}_c + \textbf{u}_c M_c) d S}\\
     +\phi_c\cavg{\textbf{b}}
-    + \nablab\cdot\left[
+    + \grad\cdot\left[
     \phi_c \cavg{\textbf{T}}
     - \Exp{\int_{S_\alpha} \textbf{r} (\textbf{T}_c  \cdot \textbf{n}_c + \textbf{u}_c M_c)dS}
     \right]
@@ -154,13 +154,13 @@ With similar developments as in \ref{eq:dt_Q_alpha}, it is possible to derive a 
 It reads as,
 \begin{equation*}
     \pddt (f_k \textbf{r})
-    + \nablabh \cdot \left(
+    + \grad \cdot \left(
         f_k \textbf{r} \textbf{u}_k
     \right)
     = \textbf{r} \textbf{S}_k 
     - \bm{\Phi}_k
     + f_k \textbf{w}_k
-    + \nablabh \cdot \left(
+    + \grad \cdot \left(
         \textbf{r}\bm{\Phi}_k
     \right),
 \end{equation*}
@@ -178,14 +178,14 @@ Regarding the averaged equations for the continuous phase, they remain the same 
 Anyhow, the dispersed phase mass and momentum averaged equations in the hybrid model reads respectively as, 
 \begin{equation}
     \pddt   \left(\pavg{m_\alpha}\right)
-    + \nablab \cdot \left(\pavg{m_\alpha \textbf{u}_\alpha} 
-    + \frac{1}{2}\nablab\nablab : \Exp{ \mathcal{G}_\alpha\textbf{u}_\alpha}\right) 
+    + \grad \cdot \left(\pavg{m_\alpha \textbf{u}_\alpha} 
+    + \frac{1}{2}\grad\grad : \Exp{ \mathcal{G}_\alpha\textbf{u}_\alpha}\right) 
     = -\pavg{\int_{S_\alpha} M_c d S},
         \label{eq:hybrid_mass_p}
 \end{equation}
 \begin{multline}
     \pddt   \left(\pavg{\textbf{p}_\alpha}\right)
-    + \nablab \cdot (\pavg{\textbf{p}_\alpha \textbf{u}_\alpha})
+    + \grad \cdot (\pavg{\textbf{p}_\alpha \textbf{u}_\alpha})
     = \pavg{\int_{V_\alpha} \textbf{b} dV}\\
     + \pavg{\int_{S_\alpha} \left(\textbf{T}_c  \cdot \textbf{n}_c  + \textbf{u}_c M_c \right) dS},
     \label{eq:hybrid_momentum_p}
@@ -195,9 +195,9 @@ We notice that, as stated by the equivalence principle, the phase averaged momen
 Regarding the mass balance equation, we can notice that as expected higher order terms stay and do not cancel out.
 This equation is obtained after simplification of the higher order moments of each terms in the original mass balance equation. 
 Indeed, the derivation isn't trivial, it makes use of the use of \ref{eq:velocity_definition}, \ref{eq:G_alpha_dt} and \ref{eq:dt_G_alpha_l}.
-As a result, we see appear in the LHS of this equation the advection of the higher moments of mass; i.e. $\nablab \nablab : \Exp{ \mathcal{G}_\alpha\textbf{u}_\alpha}$. 
+As a result, we see appear in the LHS of this equation the advection of the higher moments of mass; i.e. $\grad \grad : \Exp{ \mathcal{G}_\alpha\textbf{u}_\alpha}$. 
 Interestingly enough, the higher moments of the mass transfer terms and the time derivative of the moments of mass vanish. 
-Also, notice that the particular averaged equation of mass (\ref{eq:avg_p_m_mass}) remain valid, therefore subtracting the no-assumption mass balance with the former equation results in the following condition, $\nablab\nablab\nablab \vdots \left(\pavg{ \mathcal{G}_\alpha\textbf{u}_\alpha}\right) = 0$, where we keep solely the first term of the expansion. 
+Also, notice that the particular averaged equation of mass (\ref{eq:avg_p_m_mass}) remain valid, therefore subtracting the no-assumption mass balance with the former equation results in the following condition, $\grad\grad\grad \vdots \left(\pavg{ \mathcal{G}_\alpha\textbf{u}_\alpha}\right) = 0$, where we keep solely the first term of the expansion. 
 From the view of this condition we can state that the flux of the shape of each particle through a control volume must remain null. 
 This term can might have a certain importance in inhomogeneous medium. 
 
@@ -207,9 +207,9 @@ The equivalence between both equations has been partially studied by \citep{lhui
 In \ref{ap:exp} we derive the surface transport equation by carrying out the expansion of each term of \ref{eq:avg_I_a}, resulting in the particular averaged transport equation of the area transport, namely, 
 \begin{equation}
     \pddt (\pavg{A_\alpha})
-    + \nablab \cdot (\pavg{\textbf{u}_\alpha A_\alpha})
+    + \grad \cdot (\pavg{\textbf{u}_\alpha A_\alpha})
     = -\pavg{\int_{S_\alpha} \kappa\textbf{u}_I\cdot \textbf{n} dS }\\
-    - \nablab \cdot \Exp{\int_{S_\alpha} \textbf{u}^I \cdot\textbf{nn} dS}^S,
+    - \grad \cdot \Exp{\int_{S_\alpha} \textbf{u}^I \cdot\textbf{nn} dS}^S,
     % + \Exp{\Psi A_\alpha}
     \label{eq:hybrid_area}
 \end{equation}

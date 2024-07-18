@@ -10,14 +10,14 @@ Also, in this manuscript we write in bold symbols the vectors and tensors, while
 Any conservation equation for an arbitrary quantity $f_k(\textbf{y})$, where $f_k$ represent the quantity $f$ but defined in the arbitrary phase $k$, will takes the form,
 \begin{equation}
     \pddt f_k
-    = \nablabh \cdot \left(
+    = \grad \cdot \left(
         \bm{\Phi}_k
         - f_k\textbf{u}_k
         \right)
     + \textbf{S}_k
     \label{eq:general_conservation}
 \end{equation}
-where $\nablabh\cdot()$ is the local divergence operator defined as, $\frac{\partial}{\partial \textbf{y}}\cdot()$, $\textbf{u}_k$ is the phase velocity defined in the phase $k$. 
+where $\grad\cdot()$ is the local divergence operator defined as, $\frac{\partial}{\partial \textbf{y}}\cdot()$, $\textbf{u}_k$ is the phase velocity defined in the phase $k$. 
 $\bm{\Phi}_k$ is the non-conservative flux corresponding to the quantity $f_k$,
 The non-conservative flux is often expressed through a constitutive equation depending on the nature of the flow such as the stress tensor for the momentum. 
 And $\textbf{S}_k$ is the volumetric source of $f_k$, such as the body forces still for the momentum equation.
@@ -44,7 +44,7 @@ Therefore, the topological balance equations correspond to the transport equatio
 First, the transport equation of $\chi_k$ reads as \citep{drew1983mathematical,kataoka1986local,morel2015mathematical},
 \begin{equation}
     \pddt \chi_k
-    + \textbf{u}_I \cdot \nablabh \chi_k 
+    + \textbf{u}_I \cdot \grad \chi_k 
     = 0,
     \label{eq:phaseindicator_transport}
 \end{equation}
@@ -52,7 +52,7 @@ where $\textbf{u}_I$ is the velocity of the interface.
 It is important here to make the distinction between the velocity \textbf{of the interface} which is different from the velocity of the phase $k$ \textbf{at the interface} location which is noted $\textbf{u}_k$.
 Besides, it can be shown \citep{tryggvason2011direct} that, 
 \begin{equation}
-    \nablabh \chi_k 
+    \grad \chi_k 
     = - \delta_I \textbf{n}_k   
 \end{equation}
 where we have introduced the interface indicator function $\delta_I$, defined as $\delta(\textbf{y}-\textbf{y}_I)$, where $\delta$ is the Dirac-delta function and $\textbf{y}_I$ the position vector of the interfaces. 
@@ -60,17 +60,17 @@ We also define $\textbf{n}_k$ as the outward normal vector of the phase $k$.
 We apply the Reynolds transport theorem on $\delta(\textbf{y}-\textbf{y}_I)$, which permit us to obtain the surface balance equation \citep{lhuillier2003dynamics,morel2015mathematical}, 
 \begin{equation}
     \pddt \delta_I
-    + \nablabh \cdot\left[
+    + \grad \cdot\left[
         (\textbf{u}_I\cdot\textbf{n})\textbf{n}\delta_I 
     \right]
     = \delta_I (\textbf{u}_I\cdot\textbf{n})
-    (\nablabh_I\cdot\textbf{n}),
+    (\grad_I\cdot\textbf{n}),
     \label{eq:interface_transport}
 \end{equation}
-where, $\nablabh_I$ is the interfacial gradient operator defined as $\nablabh_I\cdot() = (\textbf{I}-\textbf{nn}):\nablabh()$.
+where, $\grad_I$ is the interfacial gradient operator defined as $\grad_I\cdot() = (\textbf{I}-\textbf{nn}):\grad()$.
 Notice that the normal vector \textbf{n} appear twice in each term, the sign has therefore no importance and there isn't any ambiguity regarding the definition of \textbf{n}, so we removed the index $k$.  
 The first term on the right-hand side (RHS) of this equation corresponds to the source term due to the deformation of the interface.
-Indeed, it is expressed as the normal velocity $\textbf{u}\cdot\textbf{n}$ times the curvature of the interface defined as $\kappa = - \nablabh \cdot \textbf{n}$.
+Indeed, it is expressed as the normal velocity $\textbf{u}\cdot\textbf{n}$ times the curvature of the interface defined as $\kappa = - \grad \cdot \textbf{n}$.
 Consequently, we can stipulate that the interface evolution is explicitly function of the velocity times the curvature at the interface and its own advection along the interfacial velocity. 
 We would like to highlight that this source term doesn't explicitly include topological change in the flow. 
 Indeed, it is important to understand that coalescence and break-up phenomenons affect the curvature term, which, in turn, have an impact on the evolution of the interface. 
@@ -78,8 +78,8 @@ Indeed, it is important to understand that coalescence and break-up phenomenons 
 As pointed out by \citet{morel2007surface}, this equation can be rewritten under the more common form,
 \begin{equation}
     \pddt \delta_I
-    + \nablabh \cdot (\delta_I \textbf{u}_I)
-    = \delta_I \nablabh_I \cdot \textbf{u}_I.
+    + \grad \cdot (\delta_I \textbf{u}_I)
+    = \delta_I \grad_I \cdot \textbf{u}_I.
     \label{eq:interface_transport2}
 \end{equation}
 Notice that now the velocity involved is simply $\textbf{u}_I$ and not the normal velocity $\textbf{u} \cdot \textbf{n}$ as in \ref{eq:interface_transport}.
@@ -97,7 +97,7 @@ So we derive the so called \textit{two-fluid} formulation by multiplying \ref{eq
 By making use of the \ref{eq:phaseindicator_transport}, it yields  
 \begin{equation}
     \pddt (\chi_k f_k)
-    = \nablabh \cdot (\chi_k \bm{\Phi}_k - \chi_k f_k \textbf{u}_k)
+    = \grad \cdot (\chi_k \bm{\Phi}_k - \chi_k f_k \textbf{u}_k)
     + \chi_k \textbf{S}_k
     + \left[
         \bm{\Phi}_k 
@@ -145,7 +145,7 @@ Besides, we define the arbitrary quantity $f$ being the sum of the $f_k\chi_k$'s
 By taking into account these remarks it is trivial to show that, 
 \begin{equation}
     \pddt f
-    = \nablabh \cdot (\bm{\Phi} - f \textbf{u})
+    = \grad \cdot (\bm{\Phi} - f \textbf{u})
     + \textbf{S}
     + \textbf{J}_I \delta_I,
     \label{eq:single-fluid_global}
@@ -160,7 +160,7 @@ According to \ref{eq:two-fluid_global} the \textit{two-fluid} formulation mass b
 \begin{equation}
     \rho_k\pddt\chi_k
     = 
-    - \rho_k\nablabh\cdot(\textbf{u}_k \chi_k)  
+    - \rho_k\grad\cdot(\textbf{u}_k \chi_k)  
     + \rho_k (\textbf{u}_k-\textbf{u}_I) \cdot \textbf{n}_k \delta_I,
     \label{eq:two-fluid_mass}
 \end{equation}
@@ -181,7 +181,7 @@ interface which is usually what is considered (see \citet{morel2015mathematical}
 By summing \ref{eq:two-fluid_mass} on all phases and using the jump condition \ref{eq:mass_jump} and the definition of the field quantities we can derive the \textit{single-fluid} formulation of the mass balance equation, namely,  
 \begin{equation}
     \pddt \rho
-    + \nablabh\cdot(\rho\textbf{u}_k). 
+    + \grad\cdot(\rho\textbf{u}_k). 
     = 0 
     \label{eq:single-fluid_mass}
 \end{equation}
@@ -194,7 +194,7 @@ We can apply the same routine to obtain the momentum balance equation than for t
 Then, the momentum balance in the \textit{two-fluid} formulation is given by,
 \begin{equation}
     \pddt (\rho_k \chi_k \textbf{u}_k)
-    = \nablabh \cdot \left(
+    = \grad \cdot \left(
         \chi_k\textbf{T}_k 
         -\rho_k \chi_k \textbf{u}_k \textbf{u}_k 
     \right) 
@@ -209,8 +209,8 @@ where $\textbf{T}_k$ is the stress tensor.
 In this work we consider solely Newtonian fluid therefore,
 \begin{equation*}
     \textbf{T}_k 
-    = -\nablabh p_k 
-    + \mu_k \left[\nablabh \textbf{u} - (\nablabh\textbf{u})^T\right],
+    = -\grad p_k 
+    + \mu_k \left[\grad \textbf{u} - (\grad\textbf{u})^T\right],
 \end{equation*}
 with $p_k$ the pressure field and $\textbf{b}_k$ the body forces present in the phase $k$.
 The last term on the RHS is due to the exchange momentum at the interface.
@@ -230,17 +230,17 @@ Therefore, it can be expressed as \citep{tryggvason2011direct},
 \begin{equation}
     \textbf{f}_I    
     = \sigma \kappa \textbf{n}
-    +\nablabh_I \sigma,
+    +\grad_I \sigma,
     \label{eq:f_I}
 \end{equation}
-where we recall that $\kappa$ is the curvature of the interface defined by $\kappa = -\nablabh_I\cdot\textbf{n}$ or $\kappa = -\nablabh\cdot\textbf{n}$. 
+where we recall that $\kappa$ is the curvature of the interface defined by $\kappa = -\grad_I\cdot\textbf{n}$ or $\kappa = -\grad\cdot\textbf{n}$. 
 We can notice that the surface tension force include a term expressed as the divergence of $\sigma$, which is the contribution of non-constant superficial surface tension coefficient which it is commonly known as the  Marangoni forces.
 In this work we discard the effect of these forces and consider solely a constant surface tension coefficient.  
 
 Next, we introduce the \textit{single-fluid} formulation of the momentum balance by adding on all phases \ref{eq:two-fuild_momentum} and using the momentum jump condition \ref{eq:stressjump}, 
 \begin{equation}
    \pddt (\rho \textbf{u})
-    = \nablabh \cdot (\textbf{T} -\rho  \textbf{u} \textbf{u})
+    = \grad \cdot (\textbf{T} -\rho  \textbf{u} \textbf{u})
     + \textbf{b}
     + \textbf{f}_I\delta_I.
     \label{eq:one-fuild_momentum}
@@ -258,7 +258,7 @@ The total energy balance for phase $k$ is obtained by setting $f_k = \rho_k E_k$
     \pddt \left(
         \chi_k \rho_k E_k
     \right)
-    = \nablabh \cdot \left[
+    = \grad \cdot \left[
         \chi_k\left(
             \textbf{T}_k\cdot\textbf{u}_k
             - \textbf{q}_k
@@ -277,7 +277,7 @@ The total energy balance for phase $k$ is obtained by setting $f_k = \rho_k E_k$
     \label{eq:two-fuild_totenergy}
 \end{multline}
 where $\textbf{q}_k$ is the internal energy flux in the phase $k$, usually defined with a Fourier 
-law, namely, $\textbf{q}_k = D_k\nablabh T_k$ with $T_k$ the temperature and $D_k$ the thermal 
+law, namely, $\textbf{q}_k = D_k\grad T_k$ with $T_k$ the temperature and $D_k$ the thermal 
 conductivity. 
 The first term on the RHS correspond to the work of the stress $\textbf{T}_k\cdot \textbf{u}_k$ the internal flux, $\textbf{q}_k$,  and the advection of the total energy, $\textbf{u}_k \rho_k E_k$. 
 The source term $\textbf{b}\cdot\textbf{u}_k$ correspond to the work of the body forces. 
@@ -303,7 +303,7 @@ Likewise, the \textit{single-fluid} formulation is given by adding up \ref{eq:tw
 on all phases and making use the above jump condition, it is then trivial to show that
 \begin{equation}
     \pddt (\rho E)
-    = \nablabh \cdot \left(
+    = \grad \cdot \left(
         \textbf{T}\cdot\textbf{u}
         - \textbf{q}
         -\rho E \textbf{u} 
@@ -317,9 +317,9 @@ The kinetic energy equation is obtained by taking the dot product between
 \ref{eq:two-fuild_momentum} and the velocity vector $\textbf{u}$, yielding,
 \begin{equation}
     \frac{1}{2}\pddt (\rho u^2)
-    +\frac{1}{2} \nablabh \cdot (\rho u^2 \textbf{u})
+    +\frac{1}{2} \grad \cdot (\rho u^2 \textbf{u})
     =\textbf{u}\cdot\left(
-        \nablabh\cdot\textbf{T}
+        \grad\cdot\textbf{T}
         +\textbf{b}
         +\textbf{f}_I\delta_I.
     \right)
@@ -331,8 +331,8 @@ obtain the internal energy equation \citep{tryggvason2011direct}
 \begin{equation}
     \pddt (\rho e)
     = 
-    \textbf{T}:\nablabh\textbf{u}
-    - \nablabh\cdot(\textbf{q} + \rho  e\textbf{u}),
+    \textbf{T}:\grad\textbf{u}
+    - \grad\cdot(\textbf{q} + \rho  e\textbf{u}),
     \label{eq:one-fuild_internal_energy}
 \end{equation}
 where the first term on the RHS is the source term caused by friction in the fluid and the remaining terms have already been defined. 
