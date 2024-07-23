@@ -41,7 +41,9 @@
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
 \numberwithin{equation}{section}
 \usepackage[bmargin=2cm,tmargin=2cm,lmargin=2cm,rmargin=2cm]{geometry}
+\usepackage{xcolor}
 
+\usepackage{listings}
 % \RequirePackage{ragged2e}
 % \RequirePackage{times}
 
