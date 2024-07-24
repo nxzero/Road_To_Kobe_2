@@ -34,20 +34,20 @@ Additionally, for any phase quantity defined in $\Omega_k$ we introduce the defi
     \phi_k f_k (\textbf{x},t) = \avg{\chi_k f_k^0},
     \label{eq:1_avg}
 \end{equation}
-where $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the volume fraction of the phase $k$.
+where $\phi_k(\textbf{x},t) = \avg{\chi_k}$ is the probability of finding the phase $k$ at the location \textbf{x} and time $t$.
 And $f_k$ is the average of the field $f_k^0$ conditioned on the presence of the phase $k$ in the configuration $\FF$ at $\textbf{x}$ and time $t$.
 Equally, for interface quantities we have 
 \begin{equation}
-    \phi_I f_I (\textbf{x},t) = \avg{\delta_I f_I^0},
+    \phi_\Gamma f_\Gamma (\textbf{x},t) = \avg{\delta_\Gamma f_\Gamma^0},
 \end{equation}
-with $\phi_I = \avg{\delta_I}$ the interfacial area concentration function. 
-Here, $f_I$ is the average of $f^0_I$ conditioned on the presence of an interface in the configuration $\FF$ at $\textbf{x}$ and time $t$. 
+with $\phi_\Gamma = \avg{\delta_\Gamma}$ the probability of finding the interface at the point \textbf{x} at time $t$. 
+Here, $f_\Gamma$ is the average of $f^0_\Gamma$ conditioned on the presence of an interface in the configuration $\FF$ at $\textbf{x}$ and time $t$. 
 Additionally, we define the field of fluctuation of a given quantity around its mean as,
 \begin{align}
     f'(\textbf{x},t,\FF) = f^0(\textbf{x},t,\FF) - f(\textbf{x},t).
     \label{eq:def_fluctu}
 \end{align}
-This relation applies to phase averaged quantities such that $f'_k = f^0_k - f_k$ and $f'_I = f^0_I - f_I$. 
+This relation applies to phase averaged quantities such that $f'_k = f^0_k - f_k$ and $f'_\Gamma = f^0_\Gamma - f_\Gamma$. 
 
 
 Applying the ensemble average on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_I} and considering the properties from \ref{eq:avg_properties} to \ref{eq:def_fluctu}, yields the general form of the averaged equations of multiphase flows, namely,
@@ -56,24 +56,24 @@ Applying the ensemble average on \ref{eq:dt_chi_k_f_k} and \ref{eq:dt_delta_I_f_
     +\div (\phi_k f_k \textbf{u}_k - \mathbf{\Phi}_k^\text{eq})
     &= 
     \phi_k s_k
-    + \avg{\delta_I\left[
+    + \avg{\delta_\Gamma\left[
         \mathbf{\Phi}_k^0
         + f_k^0
         \left(
-            \textbf{u}_I^0
+            \textbf{u}_\Gamma^0
             - \textbf{u}_k^0
         \right)
     \right]
-    \cdot \textbf{n}_k} ,
+    \cdot \textbf{n}_k},
     \label{eq:avg_dt_chi_f}\\
-    \pddt (\phi_I f_I)
-    +\div (\phi_I f_I \textbf{u}_I- \mathbf{\Phi}_{I}^\text{eq})
+    \pddt (\phi_\Gamma f_\Gamma)
+    +\div (\phi_\Gamma f_\Gamma \textbf{u}_\Gamma- \mathbf{\Phi}_\Gamma^\text{eq})
     &= 
-    \phi_I s_I
-    - \avg{\delta_I 
+    \phi_\Gamma s_\Gamma
+    - \avg{\delta_\Gamma 
     \Jump{
-    f_k^0 (\textbf{u}_I^0 - \textbf{u}_k^0)
-    + \mathbf{\Phi}_k^0
+    \mathbf{\Phi}_k^0
+    + f_k^0 (\textbf{u}_\Gamma^0 - \textbf{u}_k^0)
     } 
      },
     \label{eq:avg_dt_delta_f}
@@ -84,15 +84,15 @@ with,
     = \avg{\chi_k f_k' \textbf{u}_k'}
     - \phi_k \bm\Phi_k,
     &&
-    \mathbf{\Phi}_{I}^\text{eq}
-    = \avg{\delta_I f_I' \textbf{u}_I'}
-    - \phi_I \bm\Phi_I. 
+    \mathbf{\Phi}_\Gamma^\text{eq}
+    = \avg{\delta_\Gamma f_\Gamma' \textbf{u}_\Gamma'}
+    - \phi_\Gamma \bm\Phi_\Gamma. 
 \end{align*}
-These equations are to be solved for the averaged field $\phi_k,\phi_I,f_k$ and $f_I$ with a complementary equation of volume conservation, i.e. $\phi_f+\phi_d+\phi_I = 1$.
+These equations are to be solved for the averaged field $\phi_k,\phi_\Gamma,f_k$ and $f_\Gamma$ with a complementary equation of volume conservation, i.e. $\phi_f+\phi_d+\phi_\Gamma = 1$.
 The main differences between these equations and their microscale counterparts (\ref{eq:dt_f_k} and \ref{eq:dt_f_I}) are:
 (1) The unknowns are now averaged quantities,
-(2) Factors $\phi_k$ and $\phi_I$ are introduced in front of all the terms, and
-(3) The additional terms $\avg{\chi_k f_k' \textbf{u}_k'}$ and $\avg{\delta_I f_I' \textbf{u}_I'}$ appear, representing the covariance between the conserved quantity ($f_k$ or $f_I$) and the local velocities.  
+(2) Factors $\phi_k$ and $\phi_\Gamma$ are introduced in front of all the terms, and
+(3) The additional terms $\avg{\chi_k f_k' \textbf{u}_k'}$ and $\avg{\delta_\Gamma f_\Gamma' \textbf{u}_\Gamma'}$ appear, representing the covariance between the conserved quantity ($f_k$ or $f_\Gamma$) and the local velocities.  
 %For a complete understanding, we derived the mass, momentum, and energy averaged equations in \ref{ap:two-fluid_model}. 
 %These are derived considering the simplifying hypothesis exposed in \ref{ap:hypothesis}. 
 %In addition, \ref{ap:two-fluid_model} presents how to derive the secondary averaged equations of the averaged energy $E_k$, i.e. the equation for the mean internal energy $e_k$, the pseudo turbulent energy $k_k = \frac{1}{2\phi_k}\avg{\chi_k (u'_k)^2}$, and the averaged kinetic energy $(u_k)^2/2$.  

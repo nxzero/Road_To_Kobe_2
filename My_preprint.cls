@@ -93,7 +93,7 @@
 \newcommand{\Exp}[1]{\overline{\overline{#1}}}
 \newcommand{\davg}[1]{\left<#1\right>_d}
 \newcommand{\cavg}[1]{\left<#1\right>_c}
-\newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
+\newcommand{\pavg}[1]{\avg{\delta_p #1}}
 % \newcommand{\pnavg}[1]{n\left<#1\right>_p}
 
 \newcommand{\avgcond}[1]{\left<#1\right>}
@@ -171,10 +171,9 @@
 % \renewcommand{\tb}[1]{}
 
 \renewcommand{\size}[1]{0.3\textwidth}
-\newcommand{\expo}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
-\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\int_{\Omega_\alpha} \pri{1}{#1}#2 d\Omega}}
-\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\int_{\Gamma_\alpha} \pri{1}{#1}#2 d\Sigma}}
-
+\newcommand{\expo}[2][n]{\frac{(-1)^{#1}}{{#1}!} \partialp{1}{#1} \pavg{\intO{ \pri{1}{#1}#2 }}}
+\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\intO{ \pri{1}{#1}#2 }}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\intS{\pri{1}{#1}#2 }}}
 % \newcommand{\numref}[1]{\ref{#1}}
 \renewcommand{\ref}[1]{\autoref{#1}}
 \newtheorem{remark}{Remark}
