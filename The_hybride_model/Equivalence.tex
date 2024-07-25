@@ -10,17 +10,17 @@ Consequently, it is important to address the compatibility between these two for
 It has been demonstrated in various studies \citep{lhuillier1992ensemble,jackson1997locally,zhang1994averaged}, that phase-averaged quantities can be expressed as a Taylor series expansion of particle-averaged quantities. 
 Indeed, the dispersed phase indicator function $\chi_d(\textbf{x},t)$ can be expressed as a sum of phase indicator function, $\chi_d(\textbf{x},t) = \sum_\alpha\chi_\alpha(\textbf{x},t)$ where $\chi_\alpha =1$ in the particle domain $\Omega_\alpha(t)$ and $0$ otherwise. 
 Then, notice that any dispersed phase quantity can be written as, 
-\JL{Il faut absolument aussi citer le papier de Daniel : fluid dynamics of particulate suspension selected topics - qui fait quelque chose de tres similaire.
-Par ailleurs je n'aime pas bcp la relation ci apres. Ca me derange de faire apparaitre une integrale volumique avec un Dirac.
+% \JL{Il faut absolument aussi citer le papier de Daniel : fluid dynamics of particulate suspension selected topics - qui fait quelque chose de tres similaire.
+% Par ailleurs je n'aime pas bcp la relation ci apres. Ca me derange de faire apparaitre une integrale volumique avec un Dirac.}
 \begin{equation*}
     f^0_d \chi_d(\textbf{x},t)
     = \sum_\alpha f^0_d \chi_\alpha(\textbf{x},t) 
     = \sum_\alpha \int_{\mathbb{R}^3} f^0_d \chi_\alpha(\textbf{x}_\alpha+\textbf{r},t)\delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r}) d\textbf{r} 
     \label{eq:taylor_f_d}
-\end{equation*}}
+\end{equation*}
 Upon using the Taylor expansion of the Dirac delta function in the neighborhood of $\textbf{r}=0$ one obtain :  $\delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r}) = \delta(\textbf{x}- \textbf{x}_\alpha) - \textbf{r}\cdot\grad \delta(\textbf{x} - \textbf{x}_\alpha) + \frac{\textbf{rr}}{2}:\grad\grad\delta(\textbf{x}- \textbf{x}_\alpha) - \ldots $.
 Thus, the dispersed-phase field $f_d^0\chi_d$ can be re-written as, 
-\JL{je comprends ce que tu fais, mais dans le papier originel de Daniel 1992, il fait une expansion de taylor sur $f$. ca parait plus naturelle, car c'est f qui est supposé varier peu le long de la particule}
+% \JL{je comprends ce que tu fais, mais dans le papier originel de Daniel 1992, il fait une expansion de taylor sur $f$. ca parait plus naturelle, car c'est f qui est supposé varier peu le long de la particule}
 \begin{equation*}
     f^0_d \chi_d(\textbf{x},t)
     = \sum_\alpha \left[
@@ -31,6 +31,8 @@ Thus, the dispersed-phase field $f_d^0\chi_d$ can be re-written as,
     \right]
 \end{equation*}
 where we recognize the zeroth, first and second order moments of $f_d^0$. 
+Notice that even before applying any kind of averaging procedure we could demonstrate an equivalence between the dispersed phase fields, of the form $\chi_d(\ldots)$, and the particle fields of the form $\delta_p(\ldots)$. 
+It is interesting to notice that this relation hols even if it may seem counterintuitive. 
 Applying similar considerations to the interface indicator function $\delta_\Gamma$, and averaging over all configurations, we obtain the general relations that link continuous-averaged and particle-averaged fields, namely, 
 \begin{align}
     \avg{\chi_df_d^0} 
@@ -47,11 +49,18 @@ Applying similar considerations to the interface indicator function $\delta_\Gam
         + \ldots  
     \label{eq:f_exp}
 \end{align}
-% It must be noted that \ref{eq:f_exp} is the bridge between the continuous phase average formalism and the particle formulation. 
+Upon adding an infinity of term in \ref{eq:f_exp} one might eventually reache a converged approximation of $\chi_d f_d^0$. 
+However care must be taken as Taylor series posses what is called a \textit{radius of convergence} above which adding terms in the series do not make the approximation more accurate\citep[Chapter 1]{appel2007}. 
+Meaning that above a certain distance \textbf{r} the series might diverges depending on the nature of teh function $f_d^0$ around the point $\textbf{x}_\alpha$. 
+Nevertheless, if the radius of convergence of the function $f_d^0$ evaluated at a point $\textbf{x}_\alpha$ is greater than the particle size, then \ref{eq:f_exp} might converges and provides a good approximation.
+In brief, high care must be taken when using these kind of taylor expansion especially in that context since we do not know the exact form of $f_d$.  
+Nevertheless it is reasonable to assume that $f_d$ is slowly variying at the sacle of the particle with a radius of convergence sufficiently large, in this case \ref{eq:f_exp} might provide a good approximation, 
+and we might expect an error of $\mathcal{O}[(a/L)^{n}]$ when the highest moment of the series is of order $n-1$ with $L$ being a macroscopic length scale. 
+It is within the context of this assumption that the following disscussion takes place. 
 
-\JL{pour l'instant j'ai eneleve la partie applicative (meme si elle me semble tres interessante). 
-D'ailleurs pq le second terme du dvt pr les conservation de la masse est nul ? 
-Ce serait bien de donner de petites lois d'echelles pr evaluer les ordres de grandeurs de chacun des termes.}
+% \JL{pour l'instant j'ai eneleve la partie applicative (meme si elle me semble tres interessante). 
+% D'ailleurs pq le second terme du dvt pr les conservation de la masse est nul ? 
+% Ce serait bien de donner de petites lois d'echelles pr evaluer les ordres de grandeurs de chacun des termes.}
 %Particularly we note that if $f_d^0 = \rho_d$ and $f_d^0 = \rho_d \textbf{u}_d^0$ we obtain, 
 %\begin{align}
 %    \label{eq:f_exp_exe1}
@@ -112,16 +121,16 @@ where the expression $\mathcal{M}^{(0)}$ and $\mathcal{M}^{(1)}$ turn out to be,
 \begin{align*}
     &\mathcal{M}^{(0)}
     = 
-    - \avg{\delta_\alpha \ddt {Q_\alpha}}
-    % -\avg{\delta_\alpha\textbf{u}_\alpha q_\alpha^\text{tot}}
+    - \avg{\delta_p \ddt {Q_\alpha}}
+    % -\avg{\delta_p\textbf{u}_\alpha q_\alpha^\text{tot}}
     + \pOavg{ s_d^0 }
     + \pSavg{ s_\Gamma ^0 }
     + \pSavg{ 
     \left[\mathbf{\Phi}_f^0 
     + f_f^0 (\textbf{u}_\Gamma ^0-\textbf{u}_f^0) \right] \cdot \textbf{n}_d },\\
     &\mathcal{M}^{(1)} =
-    -  \avg{\delta_\alpha \ddt {\textbf{Q}_\alpha^{(1)}}}
-    % - \avg{\delta_\alpha\textbf{u}_\alpha \textbf{Q}_\alpha^\text{tot}}
+    -  \avg{\delta_p \ddt {\textbf{Q}_\alpha^{(1)}}}
+    % - \avg{\delta_p\textbf{u}_\alpha \textbf{Q}_\alpha^\text{tot}}
      + \pOavg{ \left(
         \textbf{r} s_d^0         
         + f_d^0  \textbf{w}_d^0 
@@ -159,11 +168,11 @@ This implies that equation \ref{eq:avg_dt_chi_f} with the surface transport equa
 Additionally, \citet[Appendix A]{nott2011suspension} derived a similar expression than \ref{eq:proof2}, also in the case of the averaged momentum equation for suspension of solid spherical particles.
 Thus, in light of \ref{eq:proof2}, we generalize the conclusion of these authors and demonstrated that this is also true for all conservation laws regardless of the dispersed phase nature.  
 Considering the Lagrangian equations derived in \ref{sec:Lagrangian} this conclusion is not surprising at all since the phase-averaged and particle-averaged equations are all built on \ref{eq:dt_f_k} and \ref{eq:dt_f_I}.
-However, if one does not consider a proper derivation as it is done in \ref{sec:Lagrangian} it might not be as obvious, even if \ref{eq:proof2} should remain true as demonstrated by \citet{zhang1997momentum,nott2011suspension}.
-Nevertheless, it is important to note that the conclusion given by \ref{eq:proof2} is not entirely objective since following the same procedure we could show equally that $\mathcal{C}_d  = -\div\mathcal{M}^{(1)}=0$ and $\mathcal{C}_d  = \frac{1}{2}\grad\grad:\mathcal{M}^{(2)}=0$ and so on. 
+However, if one does not consider a proper derivation of the lagrangian balance equations as it is done in \ref{sec:Lagrangian} it might not be as obvious, even if \ref{eq:proof2} should remain true as demonstrated by \citet{zhang1997momentum,nott2011suspension}.
+Nevertheless, it is important to note that the conclusion given by \ref{eq:proof2} is not entirely objective since following the same procedure we could show equally that $\mathcal{C}_d+\mathcal{C}_\Gamma  = -\div\mathcal{M}^{(1)}=0$ and $\mathcal{C}_d+\mathcal{C}_\Gamma  = \frac{1}{2}\grad\grad:\mathcal{M}^{(2)}=0$ and so on. 
 Thus, it is more appropriate to examine the problem from the perspective of \ref{eq:scheme_equivalence}. 
-Namely, the particle-averaged equations constitute a system of equations with one equation for each moment, while the phase-averaged equation contains all the particle-averaged equations within a single equation.
-Therefore, the particle-averaged formalism encompasses more information since it provides one equation for each moment. 
+Namely, the particle-averaged equations ($\mathcal{M}^{(1)}$\ldots $\mathcal{M}^{(n)}$) constitute a system of equations with $n$ equations, one equation for each moment, while the phase-averaged equations ($\mathcal{C}_d$ and $\mathcal{C}_\Gamma$) is a system of two equations made of all the particle-averaged equations.
+Therefore, the particle-averaged formalism encompasses more information since it provides one equation for each moment, in opposition to the phase averaged equations which are only two. 
 Note that this gain in information has been possible through the consideration of the topology of the dispersed phase. 
 
 
@@ -173,9 +182,9 @@ Note that this gain in information has been possible through the consideration o
 
 As the purpose of this work is not only to prove the equivalence, but also to provide a general framework to work with dispersed two-phase flows, we now expose \textit{The hybrid model}.
 
-Let us assume that we must conserve the quantity $f^0$ at the local scale on the bulk and at the interfaces, (here $f^0$ could be the mass, momentum, concentration of chemical species etc \ldots) . 
-Then the equations to solve for to conserve these quantities on a macroscopic scale with a hybrid description is constituted from one equation describing the fluid phase and $n$ equations describing the dispersed phase.  
-In all it generality the hybrid description of $f$ might be written,
+Let us assume that we are interested by a macroscopic quantity $f$ that follows \ref{dt_f} at the local scale, (here $f^0$ could be the mass, momentum, concentration of chemical species etc \ldots) . 
+Then the system of equations to solve to conserve $f$ is constituted from one equation describing the fluid phase, meaning the conservation of $f_f$ and $n$ equations describing the dispersed phase, i.e. the conservation of the $\textbf{Q}_p^{(n)}$.  
+In all its generality the hybrid description of $f$ might be written,
 \begin{align}
     \pddt (\phi_f f_f)
     +\div (\phi_f f_f \textbf{u}_f - \mathbf{\Phi}_f^\text{eff})
@@ -236,7 +245,7 @@ With the effective continuous phase non-convective flux term written as,
 \begin{align*}
     \mathbf{\Phi}_f^\text{eff}
     = \avg{\chi_f f_f' \textbf{u}_f'}
-    - \phi_f \bm\Phi_f
+    - \avg{\chi_f \bm\Phi_f^0}
     - \pSavg{\textbf{r}\left[
         \mathbf{\Phi}_f^0
         + f_f^0
@@ -248,8 +257,7 @@ With the effective continuous phase non-convective flux term written as,
     \cdot \textbf{n}_d}
     + \div[\ldots]
 \end{align*}
-The only modification compared to what is already presented is that we expanded the exchange term of the continuous phase equations \eqref{eq:avg_hybrid_dt_chi_f}. 
-Notice the terms $\div[\ldots]$ in the expression for  $\mathbf{\Phi}_f^\text{eff}$ indicates the presence of the higher moments of interphase exchange that appear due to the Taylor expansion of the interface term $\avg{\delta_\Gamma \left[
+The only modification compared to what is already presented, is that in the continuous phase conservation \eqref{eq:avg_hybrid_dt_chi_f} we expanded the exchange term $\avg{\delta_\Gamma \left[
     \mathbf{\Phi}_f^0
     + f_f^0
     \left(
@@ -257,7 +265,8 @@ Notice the terms $\div[\ldots]$ in the expression for  $\mathbf{\Phi}_f^\text{ef
         - \textbf{u}_f^0
     \right)
 \right]
-\cdot \textbf{n}_d}$. 
+\cdot \textbf{n}_d}$ in a taylor series according to \ref{eq:f_exp}. 
+Notice the terms $\div[\ldots]$ in the expression for  $\mathbf{\Phi}_f^\text{eff}$ indicates the presence of the higher moments of interphase exchange term. 
 Likewise, the three verticals dots below \ref{eq:avg_hybrid_q_1} indicates that one might eventually add an arbitrary number of dispersed phase equations of any $n^{th}$ order moment $\textbf{Q}_p^{(n)}$, which are given by \ref{eq:dt_Q_n}. 
 Under this form we can notice that the exchange term on the right-hand side of \ref{eq:avg_hybrid_dt_chi_f} is exactly the one appearing on the right-hand side of \ref{eq:avg_hybrid_q}. 
 Additionally, in the effective flux $\mathbf{\Phi}_f^\text{eff}$ one see appear the exchange term of \ref{eq:avg_hybrid_q_1} and so on for the higher moments equations. 
@@ -265,29 +274,31 @@ Consequently, the zeroth order exchange term makes the transfer between $Q_\alph
 
 
 The system is composed of $n+1$ equations for $n+1$ unknown that are : $f_f$, $\textbf{Q}_p^{(1)}$\ldots$\textbf{Q}_p^{(n)}$. 
-Notice that one might include $\phi_f$ and $n_p$ as unknowns by adding an equation for these terms by setting $f_f=1$ and $Q_\alpha^{(n)} =1$ in \ref{eq:avg_hybrid_dt_chi_f} and \ref{eq:avg_hybrid_q}.
-The closure problem consists in finding an explicit expression for all the term in these equations in terms of the unknowns of the problem, which are, 
+Notice that one might include $\phi_f$ and $n_p$ as unknowns by adding an equation for these terms, this is done by setting $f_f=1$ and $Q_\alpha^{(n)} =1$ in \ref{eq:avg_hybrid_dt_chi_f} and \ref{eq:avg_hybrid_q}.
+Then, the closure problem consists in finding an explicit expression for all the term of the form $\avg{\ldots}$ in terms of the unknowns of the problem, i.e. 
 $f_f$, $Q_\alpha$, $Q_\alpha^{(1)}$ \ldots $Q_\alpha^{(n)}$.  
 Once that is done the equations can be solved for $f_f$,  $Q_\alpha$, $\textbf{Q}_p^{(1)}$\ldots$\textbf{Q}_p^{(n)}$. 
-The question that we would like to address now is : in which cases the higher moments $\textbf{Q}_p^{(n)}$ is needed in this system of equations ?
-There is two reason for which the moment $\textbf{Q}_p^{(n)}$ could be needed, that is : 
+
+The question that we would like to address now is the following : in which cases the higher moments $\textbf{Q}_p^{(n)}$ is needed in this system of equations ?
+In fact there is two reason for which the moment $\textbf{Q}_p^{(n)}$ could be needed, these are : 
 (1) because $\textbf{Q}_p^{(n)}$ could be an information that we seek to obtain as it is.
-For instance think of the orientation of fibers in a flow, which correspond to the second moment of the distribution of mass.  
-This information is the objective of a simulation as one seek to understand how the orientation of fiber end up in the flow for industrial purpose. 
+For instance think of the orientation of fibers in a flow, which correspond to the second moment of the distribution of mass of the particles.  
+This information might be the goal of the whole study, as one seek to understand how the orientation of fiber evolve in the flow for industrial purposes. 
 (2) because $\textbf{Q}_p^{(n)}$ is essential to compute one of the closure in the above equations. 
-Again, the particle orientation, even if the user isn't interested in this information for industrial purposes, it might be relevant, or even essential to model accurately the closure terms. 
+Again, the particle orientation is a good example, as even if the user isn't particularily interested in that information, it might be relevant, or even essential to have this information to model accurately the closure terms. 
 Another example might be the particle angular velocity, which corresponds to the first order moment of momentum. 
-This information is often not the final objective of the study, nevertheless it is essential to well model the closure terms of \textit{The hybrid model}. 
-Therefore, the answer to the question : in which cases the higher moments $\textbf{Q}_p^{(n)}$ is needed in this system of equations ?
-We can conclude that it is needed uniquely if the closure terms are highly dependent on the higher moments, or if the information given by $\textbf{Q}_p^{(n)}$ is the objective of the study at hand. 
+This information is often not the final objective of the study, nevertheless it is essential to well model the closure terms of \textit{The hybrid model}, especially the effective stress of the suspenison, or the inter-phase drag force. 
+Thus, we can conclude that the higher moments $\textbf{Q}_p^{(n)}$ is needed uniquely if the closure terms are highly dependent on this moment, or if the information given by $\textbf{Q}_p^{(n)}$ is the final objective of the study. 
 
 The clear and general exposition of system of equations exposed here enables us to better understand the role of the dispersed phase non-convective flux term $\bm\Phi_d$ and $\bm\Phi_\Gamma$, in the particle phase conservation equation. 
-Indeed, as evidenced by \ref{eq:avg_hybrid_q}, $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ do not play any role in the particle-phase averaged conservation, i.e. the equation of $n_pQ_p$. 
+As evidenced by \ref{eq:avg_hybrid_q}, $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ do not play any role in the particle-phase averaged conservation, i.e. the equation of $n_pQ_p$. 
 However, as shown in \ref{eq:avg_dt_chi_f} (for $k = d$) and \ref{eq:avg_dt_delta_f}, the phase averaged quantities $f_d$ and $f_\Gamma$, are subject to the particle surface and internal non-convective fluxes, since $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ are present in these equations.
-These facts may seem in contradiction, however, remark that $\bm{\Phi}_d^0$ and $\bm{\Phi}_\Gamma^0$ play the role of source term in the conservation equation of the higher moments : $\textbf{Q}^{(2)}_p$ \ldots $\textbf{Q}^{(n)}_p$, which are related to $f_d$ and $f_\Gamma$ through \ref{eq:f_exp}.
+These facts may seem in contradiction, however, remark that $\bm{\Phi}_d^0$ and $\bm{\Phi}_\Gamma^0$ play the role of source term in the conservation equation of the higher moments : $\textbf{Q}^{(1)}_p$ \ldots $\textbf{Q}^{(n)}_p$, which are related to $f_d$ and $f_\Gamma$ through \ref{eq:f_exp}.
 In brief, the non-convective fluxes $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$  are not explicitly related to $Q_p$, and that regardless of the particles nature and volume fraction. 
 Consequently, the influence of $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ on $Q_p$ is made solely through the dependence of closure term present in \ref{eq:avg_hybrid_q} with the higher moments : $\textbf{Q}^{(1)}_p$ \ldots $\textbf{Q}^{(n)}_p$, which are them self explicitly dependent on $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ through \ref{eq:avg_hybrid_q_1}. 
-Consequently, it must be understood that the kinetic-like equations (\ref{eq:avg_dt_dq_alpha_tot}) is formally exact and apply for any type of particle and particle volume fraction, as long as the closure terms are well modeled and that the Taylor expansion used in these expressions reaches a convergence on the scale of the particles. 
+Consequently, it must be understood that the kinetic-like equations (\ref{eq:avg_dt_dq_alpha_tot}) is formally exact and apply for any type of particle and particle volume fraction, as long as the closure terms are well modeled and that the Taylor expansion used in these expressions reaches a convergence on the scale of the particles as discussed below.
+The reader is invited to interpret this expression for the specific case of the momentum conservation law. 
+
 
 
 
