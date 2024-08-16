@@ -33,6 +33,7 @@
 
 \RequirePackage{url}
 \RequirePackage{authblk}
+\RequirePackage{multirow}
 \renewcommand\Affilfont{\itshape\small}
 
 \RequirePackage{stmaryrd}
@@ -109,7 +110,7 @@
 \newcommand{\condavg}[2]{\overline{#1}^{#2}}
 \newcommand{\ravg}[1]{\avgcond{#1}^\textbf{r}}
 \newcommand{\Tavg}[1]{\avgcond{#1}^T}
-\newcommand{\Xavg}[1]{\avgcond{#1}^X}
+\newcommand{\Xavg}[1]{\avgcond{#1}^V}
 \newcommand{\TXavg}[1]{\Tavg{\Xavg{#1}}}
 \newcommand{\kavg}[1]{\avgcond{#1}^k}
 \newcommand{\Iavg}[1]{\avgcond{#1}^I}
@@ -161,6 +162,7 @@
 \newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n}_k }
 % \renewcommand{\Jump}[1]{\sum_{k=d,f} \left[#1\right] \cdot \textbf{n}_k }
 
+\newcommand{\intOf}[2][\alpha]{\int_{\Omega_f} #2 d\Omega}
 \newcommand{\intO}[2][\alpha]{\int_{\Omega_{#1}} #2 d\Omega}
 % \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
 \newcommand{\intS}[2][\alpha]{\oint_{\Gamma_{#1}} #2 d\Gamma}

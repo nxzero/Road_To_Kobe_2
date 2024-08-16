@@ -23,10 +23,7 @@ For a more complete and rigourous definition of the Einstein summation conventio
 
 To write a scalar product in $\texttt{Basilisk C}$ one needs first to define vector and second-order tensor-like structures. The default vector structure is the `coord` struct. The second or higher-order structures must be defined by the user. 
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
 typedef struct {
 coord x,y,z;
 } mytensor;
@@ -35,10 +32,7 @@ mytensor A,B,C;
 
 Note that the name `mytensor` is arbitrary. However, the name of the structure members must be $x$, $y$ and $z$. Following the Einstein summation convention the scalar product introduced in the previous paragraph can be written in $\texttt{Basilisk C}$ as
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
 einstein_sum(i,j,k) {
   C.i.j = A.i.k*B.k.j; 
 }
@@ -47,19 +41,13 @@ einstein_sum(i,j,k) {
 With this macro, the preprocessor of $\texttt{Basilisk C}$ interprets all lines of code within the braces as tensor operations. The letters given within the parenthesis indicate the indices on which the Einstein summation takes place. In this case a summation will be applied on the index $k$ and permutations will be performed on the indices $i$ and $j$. 
 To verify that the $\texttt{Basilisk C}$ preprocessor gives the desired results, one can precompile the $\texttt{Basilisk C}$ file with the command line
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
-   language = bash,
-   xleftmargin = 2cm,
-   framexleftmargin = 1em]
+\begin{lstlisting}
 qcc -source my_file.c
 \end{lstlisting}
 
 The results of the precompilation stored in \texttt{\_my\_file.c} will be
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
 {
   C.x.x = A.x.x*B.x.x+ A.x.y*B.y.x+ A.x.z*B.z.x;
   C.x.y = A.x.x*B.x.y+ A.x.y*B.y.y+ A.x.z*B.z.y;
@@ -85,19 +73,13 @@ As long as the user follows the rules mentioned above, the desired result will b
 However, the \texttt{einstein\_sum} macro is somewhat more permissive than the original rules of the convention. 
 For example the code
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
 U.i = M.i.j*u.j*v.j;
 \end{lstlisting}
 
 which is **not defined correctly** will still be compiled, and in $2D$ will give
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
 U.x = M.x.x*u.x*v.x + M.x.y*u.y*v.y;
 U.y = M.y.x*u.x*v.x + M.y.y*u.y*v.y;
 \end{lstlisting}
@@ -106,19 +88,13 @@ The use of C functions within the macro is also allowed.
 Let `function(args)` be an arbitrary C function. 
 Then the expression, 
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
 U.i = function (M.i.j*u.j*v.j);
 \end{lstlisting}
 
 will be expanded to
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
 U.x = function (M.x.x*u.x*v.x + M.x.y*u.y*v.y);
 U.y = function (M.y.x*u.x*v.x + M.y.y*u.y*v.y);
 \end{lstlisting}
@@ -128,19 +104,13 @@ Here the summation takes place inside the parenthesis since all indices \texttt{
 
 A useful example of the use of a function is the computation of the L2 norm of the second-order tensor $\textbf C$
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
 L2 = sqrt (C.i.j*C.i.j);
 \end{lstlisting}
 
 Lastly, if no equality sign is identified, the preprocessor will not perform any summation operations. It will only carry the permutation on the current line of code. For example if one wants to print the content of a tensor one may write 
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
 einstein_sum (i,j) {
   fprintf (stderr, "%g\n", C.i.j);
 }
@@ -148,10 +118,7 @@ einstein_sum (i,j) {
 
 which gives in $2D$
 
-\begin{lstlisting}[backgroundcolor = \color{lightgray},
- language = C,
- xleftmargin = 2cm,
- framexleftmargin = 1em]
+\begin{lstlisting}
   fprintf (stderr, "%g\n", C.x.x);
   fprintf (stderr, "%g\n", C.x.y);
   fprintf (stderr, "%g\n", C.y.x);

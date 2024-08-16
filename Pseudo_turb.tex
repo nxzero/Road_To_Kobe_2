@@ -40,7 +40,6 @@
 
 
 
-\section{Introduction}
 In the first part of this investigation we derived the averaged equations for a dispersed flow made of fluid particles. We demonstrate that in addition to the drag force many closure laws are needed to close the two phases ...
 
 \JL{TO DO LIST :
@@ -57,81 +56,10 @@ In the first part of this investigation we derived the averaged equations for a 
 - verifier que la figure 2 et bien basee sur la vitesse relative}
 - imprimer ou retrouver le papier de wang 2021 (et celui de Lhuillier 2009 ?)
 - utiliser Tavashanad pour comparer nos resultats à lambda =10 (force et pseudo turbulence ?)
-\input{Pseudo_turb/closure.tex}
+
 \input{Pseudo_turb/Introduction.tex}
+\input{Pseudo_turb/closure.tex}
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section{Theoretical context}
-% \input{Pseudo_turb/Problem_statement.tex}
-
-%\section{Numerical methodology}
-% \input{Pseudo_turb/Simulation_Setup.tex}
-% \input{Pseudo_turb/no_coalesence.tex}
-
-\section{Computational methodology}
-%\section{Numerical procedure and problem statement}
-%\input{Pseudo_turb/Simulation_Setup.tex}
-%\input{Pseudo_turb/no_coalesence.tex}
-%\section{Preliminary tests}
-%\label{sec:preliminary}
-
-
-%\input{Pseudo_turb/Problem_statement.tex}
-
-\subsection{Statistics computations}
-
-Objectives : 
-\begin{itemize}
-    \item Present How we compute the particle properties. 
-    \item Explain How we approximate the ensemble average in the numerical calculations
-    \item Focus on the drag force term and on the velocity fluctuation. 
-\end{itemize}
-
-Following \citet{du2022analysis} we consider ergodicity at all time of the numerical experiment.
-Thus, the ensemble average of a quantity $X$ can be approximated by a spatial average $\Xavg{X}$ and a time average $\Tavg{X}$ such that $\int X d\PP = \avg{X} \approx \Xavg{\Tavg{X}} = \Tavg{\Xavg{X}}$.
-Consequently, the ensemble average of a numerical field, $X$, is taken through space and time such that,
-\begin{equation}
-    \avg{X}
-    = \Tavg{\Xavg{X}}
-    = \frac{1}{ t_{end} - t_0}\int_{t_0}^{t_{end}} 
-    \Xavg{X}(t) dt
-\end{equation}
-where, 
-\begin{equation}
-    \Xavg{X}(t)
-    = \frac{1}{L^3}\int 
-    X(\textbf{x},t) d\textbf{x}
-\end{equation}
-where $L$ is the length of the cubic domain.
-$t_0$ and $t_{end}$ is the starting time of sampling and the time duration of the simulation, respectively.
-In practice, we take $t_0$ such that the simulation reach a statistically steady regime for $t>t_0$.  
-Both $t_{end} $ and $t_0$ are given in \ref{ap:A} after several validations studies. 
-
-To compute the continuous phase averaged quantities such as \ref{eq:def_uuc} we proceed as such,
-\begin{equation}
-    \phi_c \bm{\sigma}^{\text{Re}}_c /\rho_c
-    % = \Tavg{\Xavg{\chi_c \textbf{u}_c' \textbf{u}_c'}}
-    = \Tavg{\Xavg{\chi_c (\textbf{u}_c^0 -\textbf{u}_c ) (\textbf{u}_c^0 -\textbf{u}_c)}}
-    = \Tavg{\Xavg{\chi_c \textbf{u}_c^0 \textbf{u}_c^0}}
-    -  \phi_c  \textbf{u}_c \textbf{u}_c.
-    \label{eq:def_uuc_num} 
-\end{equation}
-where the indicator funciton $\chi_c$ must be understood as its approximation in the DNS, i.e the color function $1 - \alpha_d$. 
-Consequently, \ref{eq:def_uuc_num} indicate that we must take the average of the product of the velocities, and then we retrieve the mean velocities' product. 
-Additionally,  note that the Reynolds stress can be decomposed by such as : 
-\begin{align*}
-    \phi_c \bm{\sigma}^{\text{Re}}_c /\rho_c
-    &= 
-    \Tavg{\Xavg{\chi_c (\textbf{u}_c^0 -\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} ) (\textbf{u}_c^0 -\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} )}}\\
-    &+ \Tavg{\Xavg{\chi_c} (\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} - \textbf{u}_c ) (\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c} - \textbf{u}_c)}\\
-\end{align*}
-where the first term is the space fluctuation relative to the instantaneous mean velocity of the fluid $\Xavg{\chi_c\textbf{u}_c^0} / \Xavg{\chi_c}$, and the second is the time fluctuation of the instantaneous mean velocity of the fluid. 
-
-Similar expression can be derived for the particular phase by integrating the property over the volume of the particle which is done throught the use of the \texttt{tag.h} function, then we average on each particle at all time.
 
 %\JL{ajouter comment sont calculees les "nearest statistics"}
 
@@ -159,8 +87,8 @@ Similar expression can be derived for the particular phase by integrating the pr
 %\input{Pseudo_turb/configuration.tex}
 
 \section{Stresslet and PFP}
- \input{Pseudo_turb/PFP.tex}
- \input{Pseudo_turb/Stresslet.tex}
+%  \input{Pseudo_turb/PFP.tex}
+%  \input{Pseudo_turb/Stresslet.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

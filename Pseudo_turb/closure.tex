@@ -5,7 +5,7 @@ Objectives
     \item Focus only on the drag force and velocity fluctuations. 
 \end{itemize}
 To clarify the role of the different forces and stresses in a multiphase flow model we start by listing the averaged momentum equations for dispersed two-phase flows obtained by an ensemble averaging procedure.
-For mono disperse fluid particles they read as \citep{zhang1997momentum,jackson1997locally}\todo{citer le papier with Daniel},
+For mono disperse fluid particles they read as \citep{zhang1997momentum,jackson1997locally}
 \begin{align}
     \pddt (\phi_f\rho_f \textbf{u}_f)
     + \div \left(\phi_f\rho_f \textbf{u}_f\textbf{u}_f + \phi_f  \bm{\sigma}_f^{\text{Re}} - n_p\textbf{M}_p \right)
@@ -28,22 +28,91 @@ $\phi$ is the volume fraction, $n_p$ the particle number density, \textbf{u} the
 Additionally, due to the presence of the particles we have the interphase drag force term : $\textbf{f}_p$, and the interphase stress or first moment : $\textbf{M}_p$. 
 
 
-In this study we focus on three of these closure terms, namely the interphase drag force : $\textbf{f}_p$, and the Reynolds stresses : $\bm{\sigma}^{\text{Re}}_c$ and $\bm{\sigma}^{\text{Re}}_p$. 
+In this study we focus on three of these closure terms, namely the interphase drag force : $\textbf{f}_p$, and the Reynolds stresses : $\bm{\sigma}^{\text{Re}}_f$ and $\bm{\sigma}^{\text{Re}}_p$. 
 Using the statistical average formalism on all configuration of the flow termed by $\CC$, we can define these quantities as,  
 \begin{align}
     \textbf{f}_p (\textbf{x},t) &= \
     \frac{1}{n_p}\int \sum_i \delta(\textbf{x} - \textbf{x}_\alpha(t,\CC)) \textbf{f}_\alpha d\PP\\
     \label{eq:f_alpha}
-    \text{with} \;\;\; &\textbf{f}_\alpha(t,\CC) = \int_{S_\alpha} \bm{\sigma}_c'(\textbf{x},t,\CC) \cdot \textbf{n} dS \\
+    \text{with} \;\;\; &\textbf{f}_\alpha(t,\CC) = \int_{S_\alpha} \bm{\sigma}_f'(\textbf{x},t,\CC) \cdot \textbf{n} dS \\
     \bm{\sigma}^{\text{Re}}_p(\textbf{x},t) &=\frac{1}{n_p} \int \sum_i \delta(\textbf{x} - \textbf{x}_\alpha(t,\CC)) \rho_d \textbf{u}_\alpha'\textbf{u}_\alpha' d\PP\\
     \label{eq:def_uuc}
-    \bm{\sigma}^{\text{Re}}_c(\textbf{x},t) &= \frac{1}{\phi_c}\int \rho_c\chi_c \textbf{u}_c' \textbf{u}_c'd\PP
+    \bm{\sigma}^{\text{Re}}_f(\textbf{x},t) &= \frac{1}{\phi_f}\int \rho_f\chi_f \textbf{u}_f' \textbf{u}_f'd\PP
 \end{align}
 where $d\PP$ is a probability measure. 
-$\textbf{x}_\alpha$ is the center of mass of a particle labeled $\alpha$, $\chi_c(\textbf{x},t\CC)$ is teh phase indicator function of the continuous phase, and $\delta$ the Dirac delta function. 
-The superscript $'$ indicate the relative values of a quantity with respect to its phasic mean values, specifically $\bm{\sigma}_c' = \bm{\sigma}_c^0(\textbf{x},t, \CC)  - \bm{\sigma}_c(\textbf{x},t)$, $\textbf{u}_\alpha' = \textbf{u}_\alpha(t,\CC) - \textbf{u}_p(\textbf{x},t)$ and $\textbf{u}_c' = \textbf{u}_c^0(\textbf{x},t, \CC)  -\textbf{u}_c(\textbf{x},t)$, with $\bm{\sigma}_c^0 $, $\textbf{u}_c^0$ and $\textbf{u}_\alpha$ being the local stress of the fluid phase, the local velocity of the fluid phase and the velocity of the center of mass of the particle $\alpha$, respectively. 
+$\textbf{x}_\alpha$ is the center of mass of a particle labeled $\alpha$, $\chi_f(\textbf{x},t\CC)$ is teh phase indicator function of the continuous phase, and $\delta$ the Dirac delta function. 
+The superscript $'$ indicate the relative values of a quantity with respect to its phasic mean values, specifically $\bm{\sigma}_f' = \bm{\sigma}_f^0(\textbf{x},t, \CC)  - \bm{\sigma}_f(\textbf{x},t)$, $\textbf{u}_\alpha' = \textbf{u}_\alpha(t,\CC) - \textbf{u}_p(\textbf{x},t)$ and $\textbf{u}_f' = \textbf{u}_f^0(\textbf{x},t, \CC)  -\textbf{u}_f(\textbf{x},t)$, with $\bm{\sigma}_f^0 $, $\textbf{u}_f^0$ and $\textbf{u}_\alpha$ being the local stress of the fluid phase, the local velocity of the fluid phase and the velocity of the center of mass of the particle $\alpha$, respectively. 
 
 
 
 
 
+
+\section{Computational methodology}
+
+We have considered the same set of data and configuration than in our previous study. 
+except that we extended our data to $3$ viscosity ratios, namely $\lambda =10,1,0.1$.
+Thus, our rage of study becomes, 
+\begin{table}[h!]
+    \centering
+    \caption{Dimensionless parameter range investigated in this work.}
+    \begin{tabular}{|ccccccc|ccc|}
+        \hline
+        \multicolumn{7}{|c}{Primary parameters} & \multicolumn{3}{||c|}{Secondary parameters}\\ \hline
+        \multicolumn{1}{|c|}{$Ga$}                               & \multicolumn{1}{c|}{$Bo$}                   & \multicolumn{1}{c|}{$\phi$} & \multicolumn{1}{c|}{$\lambda$}                    & \multicolumn{1}{c|}{$\zeta$}                & \multicolumn{1}{c|}{$N_b$} & $t^*_\text{end}$ & \multicolumn{1}{||c|}{$\mathcal{L}/d$} & \multicolumn{1}{c|}{$Re$}  & $We$   \\ \hline
+        \multicolumn{1}{|c|}{\multirow{4}{*}{$5\rightarrow 80$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.5$}} & \multicolumn{1}{c|}{$1\%$}  & \multicolumn{1}{c|}{\multirow{4}{*}{$10$ \& $1$\&$0.1$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.9$}} & \multicolumn{1}{c|}{$160$} & $400$           & \multicolumn{1}{||c|}{$20$}            & \multicolumn{1}{c|}{$1.3\to 110$} & {$0.03\to 0.95$} \\ 
+        \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$5\%$}  & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$800$} & $400$           & \multicolumn{1}{||c|}{$20$}            & \multicolumn{1}{c|}{$1.0\to 92$} &  {$0.02\to 0.67$}\\ 
+        \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$10\%$} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$200$} & $1000$           & \multicolumn{1}{||c|}{$10$}            & \multicolumn{1}{c|}{$1.9\to 77$}&  {$0.01\to 0.47$}\\ 
+        \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$20\%$} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$400$} & $1000$           & \multicolumn{1}{||c|}{$10$}            & \multicolumn{1}{c|}{$1.7\to 62$}&  {$9\cdot 10^{-3}\to 0.31$}\\ \hline
+        \end{tabular}
+\end{table}
+
+\subsection{Statistics computations}
+
+Following \citet{du2022analysis} we consider ergodicity at all time of the numerical experiment.
+Thus, the ensemble average of a quantity $X$ can be approximated by a spatial average $\Xavg{X}$ and a time average $\Tavg{X}$ such that $\int X d\PP = \avg{X} \approx \Xavg{\Tavg{X}} = \Tavg{\Xavg{X}}$.
+Consequently, the ensemble average of a numerical field, $X$, is taken through space and time such that,
+\begin{equation}
+    \avg{X}
+    = \Tavg{\Xavg{X}}
+    = \frac{1}{ t_{end} - t_0}\int_{t_0}^{t_{end}} 
+    \Xavg{X}(t) dt
+\end{equation}
+where, 
+\begin{equation}
+    \Xavg{X}(t)
+    = \frac{1}{L^3}\int 
+    X(\textbf{x},t) d\textbf{x}
+\end{equation}
+where $L$ is the length of the cubic domain.
+$t_0$ and $t_{end}$ is the starting time of sampling and the time duration of the simulation, respectively.
+In practice, we take $t_0$ such that the simulation reach a statistically steady regime for $t>t_0$.  
+Both $t_{end} $ and $t_0$ are given in \ref{ap:A} after several validations studies. 
+
+Therefore, to compute the phase average of the local phase velocity $\textbf{u}_k^0$, we simply perform an integration over space and time, 
+\begin{equation*}
+    \textbf{u}_k = \frac{1}{\phi_k} \Tavg{\Xavg{\chi_k \textbf{u}_k^0}}
+\end{equation*}
+To compute continuous phase averaged quantities such as \ref{eq:def_uuc} it is a little more complicated,
+\begin{equation}
+    \phi_f \bm{\sigma}^{\text{Re}}_f /\rho_f
+    % = \Tavg{\Xavg{\chi_f \textbf{u}_f' \textbf{u}_f'}}
+    = \Tavg{\Xavg{\chi_f (\textbf{u}_f^0 -\textbf{u}_f ) (\textbf{u}_f^0 -\textbf{u}_f)}}
+    = \Tavg{\Xavg{\chi_f \textbf{u}_f^0 \textbf{u}_f^0}}
+    -  \phi_f  \textbf{u}_f \textbf{u}_f.
+    \label{eq:def_uuc_num} 
+\end{equation}
+where the indicator funciton $\chi_f$ must be understood as its approximation in the DNS, i.e the color function $1 - \alpha_d$. 
+Consequently, \ref{eq:def_uuc_num} indicate that we must take the average of the product of the velocities, and then we retrieve the mean velocities' product. 
+% Additionally,  note that the Reynolds stress can be decomposed by such as : 
+% \begin{align*}
+%     \phi_f \bm{\sigma}^{\text{Re}}_f /\rho_f
+%     &= 
+%     \Tavg{\Xavg{\chi_f (\textbf{u}_f^0 -\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f} ) (\textbf{u}_f^0 -\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f} )}}\\
+%     &+ \Tavg{\Xavg{\chi_f} (\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f} - \textbf{u}_f ) (\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f} - \textbf{u}_f)}\\
+% \end{align*}
+% where the first term is the space fluctuation relative to the instantaneous mean velocity of the fluid $\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f}$, and the second is the time fluctuation of the instantaneous mean velocity of the fluid. 
+
+Similar expression can be derived for the particular phase by integrating the property over the volume of the particle which is done throught the use of the \texttt{tag.h} function as explaine in the preceding chapter, then we average on each particle at all time.
+
+Regarding the averaged surface quantities such as the mean drag force, we demonstrate now that it is possible to compute it directly through the difference of relative velocities. 

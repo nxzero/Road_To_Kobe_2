@@ -33,3 +33,13 @@ proper: clean
 	-rm microstructure_kin.pdf
 	-rm fintzi_lhuillier_piersonICMF2025.pdf
 	-rm closure_ellipsoidal.pdf
+
+diff: clean
+	latexpand microstructure.tex > microstructure_new.tex
+	latexdiff ../Parper_micro/microstructure_old.tex microstructure_new.tex > microstructure_diff.tex
+	rm microstructure_new.tex
+	pdflatex microstructure_diff
+	# pdflatex microstructure_diff
+	# bibtex microstructure_diff
+	# pdflatex microstructure_diff
+
