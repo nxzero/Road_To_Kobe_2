@@ -189,7 +189,7 @@
 \newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\intS{\pri{1}{#1}#2 }}}
 
 % \newcommand{\numref}[1]{\ref{#1}}
-\renewcommand{\ref}[1]{\autoref{#1}}
+\renewcommand{\ref}[1]{\autoref{(#1)}}
 \newtheorem{remark}{Remark}
 \usetikzlibrary{calc}
 

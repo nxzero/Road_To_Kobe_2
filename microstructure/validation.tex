@@ -151,60 +151,54 @@ First, we notice that the average of $\text tr(\textbf{R})/r_m^2$ appears well-c
 This indicates that we have gathered a sufficient number of statistics to obtain accurate results. 
 Secondly, it is found that the four cases converge approximately to the same value at large  $t\sqrt{d/g}$, implying that this quantity is also mesh-independent. 
 
-% \begin{figure}[h!]
-%     \centering
-%     % \includegraphics[height = 0.3\textwidth]{image/HOMOGENEOUS_final/CA/tr.pdf}
-%     \includegraphics[height = 0.3\textwidth]{image/HOMOGENEOUS_final/CA/tr.pdf}
-%     \caption{
-%         (left) Running average of the trace of $\textbf{R}$ as a function of the dimensionless time $t \sqrt{d/g}$. 
-%         (right) Running average of the Reynolds number based on the instantaneous volume-averaged relative velocity, $Re(t) = \rho_f U d /\mu_f$, with $U(t) = |\textbf{u}_d - \textbf{u}_c|$ for $\phi = 0.1$, $Ga=100$ and $\lambda =10$. 
-%         $\textbf{u}_d$ and $\textbf{u}_c$ represent the volume-averaged velocities of the dispersed phase and the continuous phase, respectively, at the dimensionless time $t \sqrt{d/g}$.
-%         %$\textbf{u}_p$ and $\textbf{u}_f$ are the particle and fluid phase volume averaged velocity at time $t$.
-%         In the legend we display the value of the mesh resolution. 
-%     }
-%     \label{fig:Re}
-% \end{figure}
-% In \ref{fig:Re} (right) we display the running-averaged drift velocity as a function of time, for five mesh resolutions. 
-% Now let's verify the good convergence of the results for all our cases. 
+\subsection{ Domain size independence study}
+
+As discussed in the main text, the length scale of the distance between the particle layers is of the same order as the domain size. 
+This raises an important question: Is the observed microstructure a physical phenomenon, or merely an artifact of the domain's size?
+To address this, we conducted a DNS of a random array of $N_b=800$ droplets with a domain size of $\mathcal{L}/d = 20$. With the following dimensionless parameters:
+\begin{align*}
+    \lambda = 1,
+    && \zeta = 1.11,
+    && Bo = 0.5,
+    && Ga = 80,
+    && \phi = 0.05. 
+\end{align*}
+Note that the \textit{Galileo} number and the \textit{Bond} number are slightly different than in the original set of DNS due to numerical constraints.
+We expect that these changes are not significant, so that the comparison remains valuable.
 
 
-%It is clear from \ref{fig:apstat} (left) that both mesh definition produce nearly the same radial distribution, no notable difference is identified. 
-%In \ref{fig:apstat} (middle) we can observe the age distribution for both mesh definition. 
-%It is clear that refining the mesh induce a difference in the age distribution. 
-%As, a matter of fact it has a small impact on the mean age, $\tau_p = 6.96$ for the lower definition, and $\tau_p = 6.14$ for the finest grid.
-%This makes a $10\%$ error, but as mentioned above this is probably the highest error that we could encounter among all cases. 
-%\begin{figure}
-%    \centering
-%    \includegraphics[height = 0.24\textwidth]{image/HOMOGENEOUS_NEW/VAL/Pr.pdf}
-%    \includegraphics[height = 0.24\textwidth]{image/HOMOGENEOUS_NEW/VAL/Pa.pdf}
-%    \includegraphics[height = 0.24\textwidth]{image/HOMOGENEOUS_NEW/VAL/w.pdf}
-%    \caption{
-%        Statistical averaged functions for two mesh definition. 
-%        (left) Radial normalized probability density function  $P_r(\textbf{x},|\textbf{r}|,t)/P_\text{th}$, in terms of the dimensionless radial position. 
-%        (middle) Probability density function of the age distribution $P_a(\textbf{x},t,a)$. 
-%        (right) Nearest averaged dimensionless approach velocity for both mesh definition, in terms of the dimensionless age. 
-%    }
-%    \label{fig:apstat}
-%\end{figure}
-%Even through an error is identified on the mean age of interaction we still notice that both nearest averaged dimensionless approach velocity on \ref{fig:apstat} (right) match perfectly. 
-%\begin{figure}[h!]
-%    \centering
-%    \includegraphics[height = 0.3\textwidth]{image/HOMOGENEOUS_NEW/VAL/U_rel_ndc_25.pdf}
-%    \includegraphics[height = 0.3\textwidth]{image/HOMOGENEOUS_NEW/VAL/U_rel_ndc_35.pdf}
-%    \caption{Quiver plots of the relative averaged velocity field $\textbf{w}^\text{r}(\textbf{x},\textbf{r},t)$ colored by the averaged dimensionless age $a^r(\textbf{x},\textbf{r},t)$, for $\phi = 0.05$ and $Ga = 100$. 
-%    (left) Low mesh definition.
-%    (right) High mesh definition. 
-%    }
-%    \label{fig:velap}
-%\end{figure}
-%Regarding, the 2D fields  $\textbf{w}^\text{r}(\textbf{x},\textbf{r},t)$ we can see that no notable difference can be identified, if it is not the slight difference in the value of the age scale. 
+In \ref{fig:Pnst_large_domain} we compare the distribution $P_\text{nst}$ from the current case with $N_b =800$ droplets to the dataset used in this study with $N_b = 125$ droplets.
+A good agreement is observed between the two distributions, although slight differences are noticeable.
+These differences could be due to the different \textit{Galileo} numbers used in the larger simulation.
+Nevertheless, the anisotropic behavior of $P_\text{nst}$ appears to be preserved between these two DNS.   
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height=0.205\textwidth]{image/HOMOGENEOUS_NEW/Dist/Pnst_l_1_Ga_100_PHI_0_05.pdf}
+    \includegraphics[height=0.205\textwidth]{image/HOMOGENEOUS_final/Dist/Pnst_l_1_Ga_80_PHI_0_05.pdf}
+    \caption{Histogram of the normalized function $P_\text{nst}$ at high inertia $Ga = 100$.
+    The color map represents the values of the nearest pair distribution function. %of $P_\text{nst}$.
+    The origin corresponds to the position of the \textit{\textit{test particle}}.
+    The dimensionless radial and azimuthal coordinates, $|\textbf{r}|/d$ and $\theta$, correspond to the nearest neighbor position.
+    The vertical direction corresponds to the flow direction, which is also the axis of symmetry for $P_\text{nst}$.
+    (left) Original DNS with $N_b =125$ droplets.
+    (right) Reference DNS with $N_b = 800$ droplets.}
+    \label{fig:Pnst_large_domain}
+\end{figure}
+To provide a qualitative visualization of the system behavior, we displayed in \ref{fig:images_deux} a snapshot from both DNS. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{image/HOMOGENEOUS_NEW/P_PHI_5_l_10_Ga_100.png}
+    \includegraphics[width=0.45\textwidth]{image/HOMOGENEOUS_final/Ga_80_phi_005_l_1.png}
+ %    \includegraphics[width=0.45\textwidth]{image/HOMOGENEOUS_NEW/Ga_100_phi_005_l_10.png}
+    \caption{Snapshot of a simulation at $t^* = 150$ for $\phi=0.05$.
+    Color map : values of the vertical component of the velocity, field on the vertical plane defined by the equation $z=0$. 
+    (left)  Tipical DNS used in this study  with $\lambda = 1$ and $N_b = 125$ droplets.
+    (right) A larger DNS with same $\phi$ and  $\lambda$ but with $N_b = 800$ droplets.
+    }
+    \label{fig:images_deux}
+\end{figure}
+We can observe that the DNS with $N_b = 800$ droplets also exhibits layers and clusters of droplets, similar to the original simulation. 
+At this stage, we have not delved into quantitative analysis to verify if the distance between layers is consistent across both sets of simulations. 
 
-
-%Overall, the one dimensional and two-dimensional conditioned statistics are almost independent of the mesh definition. 
-%By obtaining the same statistics with two independent DNS makes us confident on the fact that our numerical samples is large enough.
-%Indeed, if the samples were not sufficient we would have obtained two different distribution functions, thus we can be sure that the statistics have well converged. 
-%The slight difference in rising velocity and age distribution found for these Reynolds number must be acknowledged.
-%As mentioned at the beginning, this case is in fact very challenging as the volume fraction of droplets is consequent which induce numerous inertial interactions. 
-%Nevertheless, we can be sure that our final results is accurate at most with a $5\%$ error for this case, and probably less for the others cases. 
-%These, error testify for the very challenging  aspect of these simulations. 
-%Overall, we have great confidence in the statistical and physical representativity of our DNS results. 
+Overall, we conclude that the domain size used in this work, $\mathcal{L}/d = 10$, is sufficient. 
+Indeed, The distribution $P_\text{nst}$ remains similar in the larger domain (with $\mathcal{L}/d = 20$), and the microstructure displays the same types of particle layers and clusters.

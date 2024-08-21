@@ -150,7 +150,8 @@ This problem has been treated extensively in the literature, \citet{pozrikidis19
 with, 
 \begin{align*}
     (\mathcal{U}_{f})_{ik} &= 
-    \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right)
+    \delta_{ik}
+    + \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right)
     \left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right) 
     + 
     \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right)
@@ -159,14 +160,18 @@ with,
     &=
     %  \bm\delta\textbf{r}
     -\frac{\lambda}{(\lambda + 1)r^5} \bm\delta\textbf{r}
-    -\left(\frac{5\lambda +2}{2(\lambda +1 )r^5} - \frac{5\lambda}{2(\lambda+1)r^7}\right) \textbf{rrr}\\
+    -\left(
+        5\lambda +2
+        - \frac{5\lambda}{r^2}
+        \right) 
+    \frac{\textbf{rrr}}{2(\lambda+1)r^5}\\
     (\mathcal{U}_{d})_{ik} &= 
     \frac{1}{2}\left(\frac{2\lambda +3}{\lambda +1}\right)\bm\delta
     -\frac{1}{2} (2r^2 \bm\delta - \textbf{rr})
     \left(\frac{1}{\lambda +1}\right)\\
     (\mathcal{E}_{d})_{ijk}
-    &=
-    \frac{5r^2 -3}{2(\lambda +1)} \textbf{r}\bm\delta
+    &= -\bm\delta \textbf{r}
+    + \frac{5r^2 -3}{2(\lambda +1)} \textbf{r}\bm\delta
     - \frac{1}{\lambda+1}\textbf{rrr}\\
     \mathcal{U}_f^p &= 
       \frac{1}{2}\left(\frac{3\lambda + 2}{\lambda +1}\right) \frac{\textbf{r}}{r^3}\\
@@ -554,15 +559,15 @@ At this stage we do not completely understand why.
 
 The objective of this study is to determine the effect of inertial translation of a drop on the deformation.
 To do so we have shown that it is necessary to compute the first moments of the hydrodynamic forces as well as the droplets internal inertia and velocity. 
-To this end we assume that $\hat{\textbf{U}} = \textbf{r} \cdot \hat{\textbf{E}}_f$ meaning  that the \textit{tool} far field flow is purely linear, and since we consider only relative translation we set $\textbf{U}[\textbf{y}] = \textbf{U}[\textbf{x}] = \textbf{w} - \textbf{U}_f$. 
+To this end we assume that $\hat{\textbf{U}} = - \textbf{r} \cdot \hat{\textbf{E}}_f$ meaning  that the \textit{tool} far field flow is purely linear, and since we consider only relative translation we set $\textbf{U}[\textbf{y}] = \textbf{U}[\textbf{x}] = \textbf{w} - \textbf{U}_f$. 
 Choosing the appropriate velocity field as a tool solution we conclude that, 
 \begin{equation*}
     \intS{r_i (\bm\sigma_f^{(1)} \cdot \textbf{n})_j}
     -\lambda 2 \intO{ (\textbf{e}_d^{(1)})_{ij}  }
     % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
     = 
-    - \zeta\intO{(\mathcal{E}_d - \textbf{r}\bm\delta) \cdot \textbf{f}_d^{(0)}}
-    - \intOf{\mathcal{E}_f \cdot  \textbf{f}^{(0)}_f}
+    + \zeta\intO{(\mathcal{E}_d + \textbf{r}\bm\delta) \cdot \textbf{f}_d^{(0)}}
+    + \intOf{\mathcal{E}_f \cdot  \textbf{f}^{(0)}_f}
     % \intS{\textbf{u}_f^{(1)}\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}
     % \intOf{\textbf{u}_f^{(0)}\cdot ( \div \hat{\bm\sigma}_f)}
 \end{equation*}
@@ -586,29 +591,53 @@ This leads us to the relations,
     \intOf{(\mathcal{E}_f)_{ijm} \cdot (\textbf{u}_f^{(0)}\cdot \grad \textbf{u}_f^{(0)})_m}
     % + \intOf{(\mathcal{E}_f)_{ijm} \cdot (\textbf{u}_f^{(0)}\cdot \grad (\textbf{U}_f^{(0)} - \textbf{w}))}
     + \intOf{(\mathcal{E}_f)_{ijm} \cdot ((\textbf{U}_f - \textbf{w})\cdot \grad \textbf{u}_f^{(0)})_m}.\\
-    \intO{(\mathcal{E}_d - \textbf{r}\bm\delta)_{ijk} \cdot (\textbf{f}_d^{(0)})_m}
+    \intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} \cdot (\textbf{f}_d^{(0)})_m}
     &=
-    \intO{(\mathcal{E}_d - \textbf{r}\bm\delta)_{ijk} \cdot (\textbf{u}_d^{(0)}\cdot \grad \textbf{u}_d^{(0)})_m}
-    % + \intO{(\mathcal{E}_d - \textbf{r}\bm\delta)_{ijk} \cdot (\textbf{u}_d^{(0)}\cdot \grad (\textbf{U}_d^{(0)} - \textbf{w}))}
-    + \intO{(\mathcal{E}_d - \textbf{r}\bm\delta)_{ijk} \cdot ((\textbf{U}_d^{(0)} - \textbf{w})\cdot \grad \textbf{u}_d^{(0)})_m}.\\
+    \intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} \cdot (\textbf{u}_d^{(0)}\cdot \grad \textbf{u}_d^{(0)})_m}
+    % + \intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} \cdot (\textbf{u}_d^{(0)}\cdot \grad (\textbf{U}_d^{(0)} + \textbf{w}))}
+    + \intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} \cdot ((\textbf{U}_f - \textbf{w})\cdot \grad \textbf{u}_d^{(0)})_m}. =0 \\
 \end{align*}
 Where we have used indices notation to get rid of any confusions. 
 The integrals on the fluid domain are entirely convergent and can be computed. 
 
+Since we can use the stokes flow solution for $\textbf{u}^{(0)}_f$ we may write, 
+\begin{equation*}
+    (\textbf{u}^{(0)}_f)_i = (\mathcal{U}_f)_{ij} U_j
+\end{equation*}
+And since $(\textbf{U}_f - \textbf{w}) = - \textbf{U}$ we obtain the following relation, 
+\begin{equation*}
+    \intOf{(\mathcal{E}_f)_{ijk} (\textbf{f}^{(0)}_f)_i }
+    = 
+    \intOf{(\mathcal{E}_f)_{ijk} \cdot (\textbf{u}_f^{(0)} - \textbf{U})_l \partial_l (\textbf{u}_f^{(0)})_i}
+    =
+    \intOf{(\mathcal{E}_f)_{ijk} \cdot ((\mathcal{U}_f)_{lm} - \delta_{lm}) \partial_l (\mathcal{U}_f)_{in} }
+    U_m U_n
+\end{equation*}
 
 The only traceless symmetric second order tensor that can be formed with a combinaison of $\textbf{U}$ is $\textbf{UU} - (\textbf{U}\cdot \textbf{U})\bm\delta /3$. 
 This implies that only one scalar integration is necessary to determine the tensor form of the  stress, this yields,
+% \begin{align*}
+%     \intS{r_i (\bm\sigma_f^{(1)} \cdot \textbf{n})_j}
+%     -\lambda 2 \intO{ (\textbf{e}_d^{(1)})_{ij}  }
+%     % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
+%     = 
+%     A
+%     [
+%         \textbf{UU} - \frac{1}{3}(\textbf{U}\cdot \textbf{U})\bm\delta 
+%     ]\\
+%     A= - \frac{345 \lambda^{3} + 928 \lambda^{2} + 856 \lambda + 272}{320 \left(\lambda + 1\right)^{3}}
+%     + \frac{\zeta \left(12 \lambda + 13\right)}{20 \left(\lambda + 1\right)^{2}}
+% \end{align*}
 \begin{align*}
-    \intS{r_i (\bm\sigma_f^{(1)} \cdot \textbf{n})_j}
-    -\lambda 2 \intO{ (\textbf{e}_d^{(1)})_{ij}  }
+    \pSavg{r_i (\bm\sigma_f^{(1)} \cdot \textbf{n})_j}
+    % -\lambda 2 \intO{ (\textbf{e}_d^{(1)})_{ij}  }
     % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
     = 
-    A
+    \phi A
     [
         \textbf{UU} - \frac{1}{3}(\textbf{U}\cdot \textbf{U})\bm\delta 
     ]\\
-    A= - \frac{345 \lambda^{3} + 928 \lambda^{2} + 856 \lambda + 272}{320 \left(\lambda + 1\right)^{3}}
-    + \frac{\zeta \left(12 \lambda + 13\right)}{20 \left(\lambda + 1\right)^{2}}
+    A=  \frac{57 \lambda^{3} + 192 \lambda^{2} + 216 \lambda + 80}{320 \left(\lambda + 1\right)^{3}}
 \end{align*}
 Where $A$ is a yet unknown constant that can be obtained upon integrating. 
 

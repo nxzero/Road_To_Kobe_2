@@ -31,13 +31,13 @@ It is done by integrating \ref{eq:surface_tension}, \ref{eq:dt_rhoI_uI3} and  \r
     -\intS{\gamma(\textbf{n}\cdot \textbf{u}_{I}^0)(\div \textbf{n})}
     = \gamma \ddt s_\alpha,\\
     \label{eq:int_q_I}
-    \Jump{\textbf{q}_k^0}
+    \intS{\Jump{\textbf{q}_k^0}}
     &=
     0,
 \end{align}
 for the momentum, kinetic and internal energy of the surface, respectively. 
 The second equality of \ref{eq:int_u_I} is demonstrated using \ref{eq:gauss_surface}. 
-The second equality of \ref{eq:int_u_I2} is derived using both \ref{eq:gauss_surface} and \ref{eq:reynolds_transport}. 
+The second equality of \ref{eq:int_u_I2} is derived noticing that $\intS{\gamma(\textbf{n}\cdot \textbf{u}_{I}^0)(\div \textbf{n})} = \intS{\divI (\gamma \textbf{u}_I^0)} $ using \ref{eq:gauss_surface} and then the last identity is obtained by using \ref{eq:reynolds_transport}. 
 As witnesses by \ref{eq:int_u_I}, on a closed surface the surface tension plays no role in the momentum jump condition.
 Additionally, according to \ref{eq:int_u_I2} the work of the surface tension force is equal to $\gamma$ times the rate of change of the area of a given particle. 
 
@@ -61,9 +61,9 @@ Using \ref{eq:int_u_I}, \ref{eq:int_u_I2} and \ref{eq:int_q_I} to reformulate th
     - \intS{\textbf{q}_f^0 \cdot \textbf{n}_d}
 \end{align}
 where  $\intS{  \bm{\sigma}_f^0 \cdot \textbf{n}_d }$ is the resultants of the hydrodynamic force of the continuous phase, $\intS{\textbf{w}_f^0 \cdot \bm{\sigma}_f^0 \cdot  \textbf{n}_d} $ is the resultant of the work of the continuous phase stresses with the surface velocity, and $\intS{ \textbf{q}_f^0 \cdot \textbf{n}_d }$ is the resultants of the surface heat flux. 
-Notice that the second term on the right hands side of \ref{eq:dt_E_alpha_tot} is the work produced by the mean force and the translational motion of the droplets, while $\intS{\textbf{w}_f^0 \cdot \bm{\sigma}_f^0 \cdot  \textbf{n}_d}$ is the work produced by the local forces and local motion of the fluid at the surface of the particle.
+Notice that the second term on the right-hand side of \ref{eq:dt_E_alpha_tot} is the work produced by the mean force and the translational motion of the droplets, while $\intS{\textbf{w}_f^0 \cdot \bm{\sigma}_f^0 \cdot  \textbf{n}_d}$ is the work produced by the local forces and local motion of the fluid at the surface of the particle.
 Note that these equations does not explicitly account for inter-particle interactions. 
-Nevertheless, note that the surface external stress flux $\bm{\sigma}_f^0$ contains inter-particle forces mediated through the carrier fluid such as lubrication forces and long range inter-particle forces.
+Nevertheless, the surface external stress flux $\bm{\sigma}_f^0$ contains inter-particle forces mediated through the carrier fluid such as lubrication forces and long range inter-particle forces.
 
 In the spirit of the energy decomposition exposed in the previous section (\ref{eq:dt_rhou_k2} and \ref{eq:dt_rhoe_k} )the total energy equation \ref{eq:dt_E_alpha_tot} can be split into three secondary equations. 
 One for the center of mass kinetic energy $u_\alpha^2/2$, another for the particle internal kinetic energy $W_\alpha$, and a last one for the particle internal energy $e_\alpha$, it reads
@@ -71,8 +71,8 @@ One for the center of mass kinetic energy $u_\alpha^2/2$, another for the partic
     \label{eq:dt_u2_alpha}
     \frac{1}{2}\ddt (m_\alpha u_\alpha^2)
     &= 
-    \textbf{u}_\alpha\cdot
-    \textbf{g}m_\alpha
+    m_\alpha\textbf{u}_\alpha\cdot
+    \textbf{g}
     + 
     \textbf{u}_\alpha\cdot
     \intS{\bm\sigma_f^0 \cdot \textbf{n}_d},\\
@@ -92,15 +92,15 @@ respectively.
 The first equation is obtained by taking the dot product of \ref{eq:dt_p_alpha} with $\textbf{u}_\alpha$. 
 The third equation is directly obtained using the local conservation of $e_k^0$ (\ref{eq:dt_rhoe_k}) and setting $f_d^0 = e_d^0$ in \ref{eq:dt_q_alpha_tot}.
 The last equation is obtained by subtracting the first and third equations to \ref{eq:dt_E_alpha_tot}. 
-Note that under this form the surface energy plays the role as a spring in the energy balance.   
+Note that under this form the surface energy is part of the total energy to be conserved, while it could also be treated as a source term using the first formulation of \ref{eq:int_u_I2}.
 From this set of equation we can easily see that the rate of dissipation terms $\intS{\bm{\sigma}_d^0 : \grad\textbf{u}_d^0}$ represent an energy sink in the equation of $W_\alpha$ while it is a source term in the internal energy equation. 
 As it has been observed in the previous section, this terms convert the energy of internal motion to molecular agitation. 
-However, the interplay between the center of mass  kinetic energy and the internal fluctuation is not obvious, indeed \ref{eq:dt_u2_alpha} shears no common term with the heat and internal kinetic energy equation.
-In fact, we will see that the transfer between these scales is archived thought the fluid phase pseudo turbulent energy. 
+However, the interplay between the center of mass  kinetic energy and the internal fluctuation is not obvious, indeed \ref{eq:dt_u2_alpha} shares no common term with the heat and internal kinetic energy equation.
+We will see that the transfer between these scales is achieved through the fluid phase pseudo turbulent energy. 
 
 
 
-\subsubsection{Higher moments balance}
+\subsubsection{Higher order moments balance}
 
 
 Injecting, $f_d^0 = \rho_d$ in the second-order moment equation (derived in \ref{ap:Moments_equations}) we obtain :
@@ -109,13 +109,16 @@ Injecting, $f_d^0 = \rho_d$ in the second-order moment equation (derived in \ref
     \label{eq:dt_M_alpha}
 \end{equation}
 which is the second-order moment of mass conservation equation. 
-From \ref{eq:dt_M_alpha} we deduce that the evolution of the distribution of mass of a particle is solely motivated by the stretching of momentum $\textbf{S}_\alpha$. 
-This implies that the angular momentum (not to be confused with the angular velocity) plays no role in the evolution of the second moment of mass. 
+From \ref{eq:dt_M_alpha} we deduce that the evolution of the distribution of mass of a particle is solely determined by the stretching of momentum $\textbf{S}_\alpha$. 
+This implies that the angular momentum plays no role in the evolution of the second moment of mass. 
 This is due to the symmetry of the tensor $\textbf{M}_\alpha$, which must be preserved after differentiation with respect to time.
-Note that if the particle has a constant $\textbf{M}_\alpha$ under change of reference frame, such as for spherical particles where we can write $\textbf{M}_\alpha= \frac{a^2 m_\alpha}{5} \bm\delta$, then $\textbf{S}_\alpha=0$ since $\ddt \textbf{M}_\alpha = 0$ in this situation.
-This argument has no restriction on the internal particle motions, thus it is also true for fluid particles with possible inner motion. 
-Additionally, applying the trace operator on both sides of \ref{eq:dt_M_alpha}, yields the interesting relation $\ddt {M_\alpha}=\frac{2}{3}\bm\delta : \textbf{S}_\alpha$.
-We can state that $M_\alpha = \lambda^\alpha_f(t)+\lambda^\alpha_d(t)+\lambda^\alpha_3(t)$, with $\lambda_i^\alpha$ for $i=1,2,3$, the eigenvalues of $\textbf{M}_\alpha$, as it is a symmetric tensor and thus always diagonalizable.
+Nevertheless, that does not mean that the particle angular velocity (noted $\bm\omega_\alpha$ here) has no role in the equation. 
+As an example let us consider solid body motion, such that $\textbf{w}_d^0 = \bm\omega_\alpha \times \textbf{r}$, in that case we found, $2\textbf{S}_\alpha = \bm\omega_\alpha \times \textbf{M}_\alpha+ \textbf{M}_\alpha\times \bm\omega_\alpha $. 
+Therefore, the angular velocity plays a significant role in the evolution of the second moment of mass equation. 
+Additionally, if $\textbf{M}_\alpha$ is constant under change of reference frame, such as for spherical particles where we can write $\textbf{M}_\alpha= \frac{a^2 m_\alpha}{5} \bm\delta$, then $\textbf{S}_\alpha=0$ since $\ddt \textbf{M}_\alpha = 0$ in this situation.
+This argument is not restricted to solid particles, thus it is also true for fluid particles with possible inner motion. 
+Additionally, applying the trace operator on both sides of \ref{eq:dt_M_alpha}, yields the relation $\ddt {M_\alpha}=\frac{2}{3}\bm\delta : \textbf{S}_\alpha$.
+We can state that $M_\alpha = \lambda^\alpha_1(t)+\lambda^\alpha_2(t)+\lambda^\alpha_3(t)$, with $\lambda_i^\alpha$ for $i=1,2,3$, the eigenvalues of $\textbf{M}_\alpha$, as it is a symmetric tensor and thus always diagonalizable.
 For undeformable particles, it is evident that the eigenvalues are not functions of time, implying $\ddt M_\alpha = 0$.  
 Consequently, $\bm\delta : \textbf{S}_\alpha$ possesses the notable property of being zero whenever the particle shape remains constant, regardless of the orientation.
 
@@ -151,7 +154,7 @@ Notice that every term on the right-hand side of \ref{eq:dt_P_alpha} vanished du
 Particularly, the surface tension terms do not appear in the angular momentum balance since $\bm\sigma_I^0 = \gamma (\bm\delta-\textbf{nn})$ is symmetric, which is consistent with the findings of \citet{hesla1993note}. 
 As a consequence, the surface tension does not affect the angular momentum regardless of the particle's shape. 
 In the literature, it is common to include the torque due to inter-particular interactions in the angular momentum balance, as is done in \citet{jackson1997locally} and \citet{zhang1997momentum}.
-In our case note that $\bm{\sigma}_f^0$ contains also short-range interaction forces which can be assimilated to the particle-particle interaction forces.
+In our case note that $\bm{\sigma}_f^0$ contains short-range hydrodynamic interaction forces. % which can be assimilated to the particle-particle interaction forces.
 
 Taking the double contracted product of \ref{eq:dt_P_alpha} with the tensor $\bm\delta$ and using \ref{eq:dt_M_alpha}, yields directly  
 % \begin{equation}
@@ -182,7 +185,7 @@ the internal inertial term, $\intO{\rho_d \textbf{w}_d^0 \cdot \textbf{w}_d^0 }$
 the particle internal pressure $\intO{\bm\sigma_d^0:\bm\delta}$; 
 the surface energy $\gamma\intS{  }$; 
 and the trace of the hydrodynamic first moment $\intS{\textbf{r}\cdot\bm\sigma_f^0\cdot \textbf{n}}$.
-If one considers spherical particles composed of compressible fluid, \ref{eq:dt_D_alpha} transforms into the Rayleigh-Lamb-Plesset equation. 
+If one considers spherical particles composed of compressible fluid, \ref{eq:dt_D_alpha} transforms into the Rayleigh-Lamb-Plesset equation as demonstrated in the unpublished work of \citep{danielcours}. 
 In the steady-state regime, this reduces to the Young-Laplace equation, as indicated by the presence of the first three terms on the right-hand side of \ref{eq:dt_D_alpha}. 
 
 % \tb{
@@ -251,13 +254,13 @@ Taking the symmetric part of \ref{eq:dt_P_alpha}, and making use of \ref{eq:dt_M
     \label{eq:dt_S_alpha}
 \end{equation}
 On the left-hand side of \ref{eq:dt_S_alpha}, we recover the symmetric part of the inertial contributions. 
-Especially, in opposition to \ref{eq:dt_P_alpha} we could substitute $\textbf{P}_\alpha+\textbf{P}_\alpha^\dagger$ by $\ddt \textbf{M}_\alpha$. 
-Consequently, \ref{eq:dt_S_alpha} is a dynamical equation for the droplet mean deformation. 
-In our case, only the external contribution $\frac{1}{2}\intS{\textbf{r}\bm\sigma_f^0\cdot \textbf{n}}$ is responsible for the generation of angular momentum, see \ref{eq:dt_mu_alpha}.
+In opposition to \ref{eq:dt_P_alpha} we could substitute the term $\ddt (\textbf{P}_\alpha+\textbf{P}_\alpha^\dagger)$ initially present in the equation by $\ddt^2 \textbf{M}_\alpha$ using \ref{eq:dt_M_alpha}. 
+Consequently, \ref{eq:dt_S_alpha} is a second order partial differential equation for the droplet mean deformation. 
+In our case, only the external contribution $\intS{\textbf{r}\bm\sigma_f^0\cdot \textbf{n}}$ is responsible for the generation of angular momentum, see \ref{eq:dt_mu_alpha}.
 Taking the symmetric part of this tensor ultimately removes this contribution. 
 Thus, on the right-hand side of \ref{eq:dt_S_alpha}, we identify the terms responsible for the droplet deformation exclusively.
 Therefore, \ref{eq:dt_S_alpha} must be interpreted as an equation for the shape of the particle, represented by the tensor $\textbf{M}_\alpha$.
-One might immediately recognize that \ref{eq:dt_S_alpha} is in fact an extension of Batchelor’s famous result, 
+One might immediately recognize that \ref{eq:dt_S_alpha} is in fact an extension of \citet{batchelor1970stress}'s famous result, 
 \begin{equation}
     \intO{\bm{\sigma}_d^0}
     + \intS{\gamma(\bm\delta - \textbf{nn})}
@@ -265,17 +268,16 @@ One might immediately recognize that \ref{eq:dt_S_alpha} is in fact an extension
     \label{eq:Batchelor}
 \end{equation}
 but with the consideration of the inertia of the particle.
-\ref{eq:Batchelor} is particularly useful to express the unknown internal stress within solid particles (in which case $\gamma = 0$), in terms of surface integral, i.e. the stresslet $\intS{(\textbf{r}\bm\sigma_d^0+ \bm\sigma_d^0\textbf{r})\cdot \textbf{n}}$.
-This relation is the main tool used to express the bulk stress of a suspension, it eventually leads to the computation of the famous Einstein equivalent viscosity, upon having a closed expression for the average of $\intS{(\textbf{r}\bm\sigma_d^0+ \bm\sigma_d^0\textbf{r})\cdot \textbf{n}}$ \citep{guazzelli2011}. 
-In the inertial case, due to the limited degree of freedom of solid particles, the tensors $\textbf{M}_\alpha$ and the inner velocity field $\textbf{w}_d^0$ are fully determined by \ref{eq:dt_M_alpha} and \ref{eq:dt_mu_alpha}, indicating that $\textbf{M}_\alpha$ and $\textbf{w}_d^0$ can be utilized in \ref{eq:dt_S_alpha} not as unknowns but as source terms. 
+\ref{eq:Batchelor} is particularly useful to compute the unknown internal stress within solid particles (for which $\gamma = 0$), in terms of surface integral, i.e. the stresslet $\intS{(\textbf{r}\bm\sigma_d^0+ \bm\sigma_d^0\textbf{r})\cdot \textbf{n}}$.
+This relation is the main tool used to express the bulk stress of a suspension.
+It eventually leads to the computation of the famous Einstein equivalent viscosity, upon having a closed expression for the average of $\intS{(\textbf{r}\bm\sigma_d^0+ \bm\sigma_d^0\textbf{r})\cdot \textbf{n}}$ \citep{guazzelli2011}. 
+In the inertial case, due to the limited degree of freedom of solid particles, the tensors $\textbf{M}_\alpha$ and the inner velocity field $\textbf{w}_d^0$ are fully determined by \ref{eq:dt_M_alpha} and \ref{eq:dt_mu_alpha}, indicating that $\textbf{M}_\alpha$ and $\textbf{w}_d^0$ can be used in \ref{eq:dt_S_alpha} not as unknowns but as source terms. 
 Consequently, for solid particles, \ref{eq:dt_S_alpha} must be interpreted as a generalized equation for the undefined stress $\bm\sigma_d^0$ integrated on the volume of the particles.
-Whether it is solid or fluid particles \ref{eq:dt_S_alpha} becomes particularly relevant for expressing the averaged stress within an inertial suspension in terms of Lagrangian properties, as discussed in section \ref{sec:averaged_eq}.
+Whether it is solid or fluid particles \ref{eq:dt_S_alpha} becomes particularly relevant for expressing the averaged stress within an inertial suspension in terms of Lagrangian properties, as discussed in the next chapter. 
 
-It is now clear that if the surface tension forces play no role in the linear and angular momentum equation, it does impact the moment of momentum $\textbf{P}_\alpha$ or more specifically its symmetric part $\textbf{S}_\alpha$.
+It is now clear that if the surface tension forces play no role in the linear and angular momentum equation, however it impacts the moment of momentum $\textbf{P}_\alpha$ or more specifically its symmetric part $\textbf{S}_\alpha$.
 Thus, the surface tension force impacts the hydrodynamic behavior of a particle solely through its action on $\textbf{S}_\alpha$, which is related to the shape of a particle represented by $\textbf{M}_\alpha$, through \ref{eq:dt_M_alpha}.
 In \ref{ap:Moments_equations} we show how to derive the higher-order moment of momentum equations, which can also be viewed as formulas for the higher moments of the internal particle stress distribution. 
-It is interesting to mention that in a recent study of \citet{dolata2021faxen} and \citet{zhou2020lamb} they recover the first two moments of momentum equations hidden into another but equivalent form, valid in the Stokes flow regime. 
+It is interesting to mention that in a recent study of \citet{dolata2021faxen} and \citet{zhou2020lamb} they make use of the first two moments of momentum equations hidden into another but equivalent form, valid in the Stokes flow regime. 
 
-Hence, the moment of momentum emerges as a quantity of utmost importance for all types of particles with variable shape or volume. 
-% The evolution equation of the skew-symmetric part of $\textbf{P}_\alpha$ is equivalent to the angular momentum of a particle. 
 

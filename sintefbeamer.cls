@@ -21,17 +21,18 @@ future}
 \newcommand{\size}{0.22\textwidth}
 \newcommand{\avg}[1]{\left<#1\right>}
 \renewcommand{\avg}[1]{\left<#1\right>}
-\newcommand{\condavg}[1]{\left<#1 | \mathscr{C}_1\right>}
 \newcommand{\Exp}[1]{\overline{\overline{#1}}}
 \newcommand{\davg}[1]{\left<#1\right>_d}
 \newcommand{\cavg}[1]{\left<#1\right>_c}
-\newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
+\newcommand{\pavg}[1]{\avg{\delta_p #1}}
 % \newcommand{\pnavg}[1]{n\left<#1\right>_p}
 
 \newcommand{\avgcond}[1]{\left<#1\right>}
 \renewcommand{\avgcond}[1]{\overline{#1}}
+\newcommand{\condavg}[2]{\overline{#1}^{#2}}
+\newcommand{\ravg}[1]{\avgcond{#1}^\textbf{r}}
 \newcommand{\Tavg}[1]{\avgcond{#1}^T}
-\newcommand{\Xavg}[1]{\avgcond{#1}^X}
+\newcommand{\Xavg}[1]{\avgcond{#1}^V}
 \newcommand{\TXavg}[1]{\Tavg{\Xavg{#1}}}
 \newcommand{\kavg}[1]{\avgcond{#1}^k}
 \newcommand{\Iavg}[1]{\avgcond{#1}^I}
@@ -58,16 +59,34 @@ future}
 \newcommand{\gradI}{\mathbf{\nabla}_{||}}
 \newcommand{\divI}{\mathbf{\nabla}_{||}\cdot}
 
-\newcommand{\ddt}{\frac{d}{d t}}
+\newcommand{\ddt}{\frac{d}{dt}}
 % \renewcommand{\ddt}{d_t}
 \newcommand{\pddt}{\frac{\partial}{\partial t}}
-% \renewcommand{\pddt}{\partial_t}
+\newcommand{\Dt}{D_t}
+\newcommand{\pddx}{\frac{\partial}{\partial \textbf{x}}}
+\newcommand{\pddr}{\frac{\partial}{\partial \textbf{r}}}
+\newcommand{\pddy}{\frac{\partial}{\partial \textbf{y}}}
+\newcommand{\pddw}{\frac{\partial}{\partial \textbf{w}}}
+\newcommand{\pddu}{\frac{\partial}{\partial \textbf{u}}}
+\renewcommand{\pddx}{{\partial_\textbf{x}}}
+\renewcommand{\pddr}{{\partial_\textbf{r}}}
+\renewcommand{\pddy}{{\partial_\textbf{y}}}
+\renewcommand{\pddw}{{\partial_\textbf{w}}}
+\renewcommand{\pddx}{{\grad_\textbf{x}}}
+\renewcommand{\pddr}{{\grad_\textbf{r}}}
+\renewcommand{\pddy}{{\grad_\textbf{y}}}
+\renewcommand{\pddw}{{\grad_\textbf{w}}}
+\renewcommand{\pddu}{{\grad_\textbf{u}}}
+\newcommand{\pdda}{\partial_a}
+\renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
 \newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n}_k }
+% \renewcommand{\Jump}[1]{\sum_{k=d,f} \left[#1\right] \cdot \textbf{n}_k }
 
-\newcommand{\intO}[1]{\int_{\Omega_\alpha} #1 d\Omega}
+\newcommand{\intOf}[2][\alpha]{\int_{\Omega_f} #2 d\Omega}
+\newcommand{\intO}[2][\alpha]{\int_{\Omega_{#1}} #2 d\Omega}
 % \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
-\newcommand{\intS}[1]{\int_{\Sigma_\alpha} #1 d\Sigma}
+\newcommand{\intS}[2][\alpha]{\oint_{\Gamma_{#1}} #2 d\Gamma}
 % \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
 \newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
 \newcommand{\pSavg}[1]{\pavg{\intS{#1}}}

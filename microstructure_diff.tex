@@ -1,7 +1,7 @@
 \documentclass[11pt]{My_preprint}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL ../Parper_micro/microstructure_old.tex   Mon Aug 19 11:27:20 2024
-%DIF ADD microstructure_new.tex                   Mon Aug 19 11:35:03 2024
+%DIF ADD microstructure_new.tex                   Wed Aug 21 14:41:08 2024
 
 \title{
     Buoyancy driven motion of non-coalescing inertial drops: microstructure modeling with nearest particle statistics. 
@@ -855,7 +855,17 @@ As predicted by $P_\text{nst}$, we observe layers and particles in close contact
 \end{figure}
 In fact, for $\lambda = 10$, in \ref{fig:images} (right), we can still observe horizontal rafts of droplets or droplets rising side-by-side, but this effect is not as pronounced as for $\lambda = 1$. 
 Drops with high viscosity ratios maintain a significant distance between other drops, which prevents the creation of structures such as droplet layers.
-From the present analysis of $P_\text{nst}$ and the actual microstructure presented in \ref{fig:images} we can infer that the \textit{nearest particle statistics} is able to predict features in the microstructure such as layers and clusters. 
+\DIFaddbegin 
+
+\DIFadd{On another note, we can observe \ref{fig:images} (left) that the distance between
+the layers are roughly equal to the length of the numerical domain. 
+Indeed, only two layers of droplets are present in the domain.
+This raises the question of whether the current microstructure is constrained by the domain size. 
+To address this, we conducted DNS within a larger domain, while keeping all other numerical parameters constant.
+As detailed in  \ref{ap:validation} these simulations confirmed that the observed layers are indeed physically accurate and not an artifact of the domain size.
+}
+
+\DIFaddend From the present analysis of $P_\text{nst}$ and the actual microstructure presented in \ref{fig:images} we can infer that the \textit{nearest particle statistics} is able to predict features in the microstructure such as layers and clusters. 
 
 
 \subsection{Nearest particle radial distribution function }
@@ -1062,7 +1072,7 @@ Each of these types is characterized by specific values of $\textbf{R}$; they ar
         Homogeneous & Yes & Yes &(\textit{Case 1}) & $ \approx 1$ & $\approx 0$ \\
         Dispersed &  No & Yes  &(\textit{Case 2}) & $ > 1$ & $\approx 0$ \\
         Clustering &  No & Yes  &(\textit{Case 2}) & $ < 1$ & $\approx 0$ \\
-        Layering &    No & No  &(\textit{Case 4}) & $ - $ & $< 1$\\ \hline
+        Layering &    No & No  &(\textit{Case \DIFdelbeginFL \DIFdelFL{4}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{3}\DIFaddendFL }) & $ - $ & $< 1$\\ \hline
     \end{tabular}
 \end{table}
 Additionally, to highlight the dependence of $\textbf{R}$ on $\phi$ and $Ga$, we display the values of $A_{xx}/tr(\textbf{R})$ and $\textbf{R}:\bm\delta/r_m^2$ in phase diagrams on \ref{fig:phase}.
@@ -1376,15 +1386,60 @@ The good agreement between the case  $d/\Delta = 10$ and $d/\Delta = 18$ is part
 This figure validates two important points. 
 First, we notice that the average of $\text tr(\textbf{R})/r_m^2$ appears well-converged at large $t\sqrt{d/g}$. 
 This indicates that we have gathered a sufficient number of statistics to obtain accurate results. 
-Secondly, it is found that the four cases converge approximately to the same value at large  $t\sqrt{d/g}$, implying that this quantity is also mesh-independent}\DIFaddend . 
+Secondly, it is found that the four cases converge approximately to the same value at large  $t\sqrt{d/g}$, implying that this quantity is also mesh-independent. 
+}
+
+\subsection{ \DIFadd{Domain size independence study}}
+
+\DIFadd{As discussed in the main text, the length scale of the distance between the particle layers is of the same order as the domain size. 
+This raises an important question: Is the observed microstructure a physical phenomenon, or merely an artifact of the domain's size?
+To address this, we conducted a DNS of a random array of $N_b=800$ droplets with a domain size of $\mathcal{L}/d = 20$ With the following dimensionless parameters:
+}\begin{align*}
+    \DIFadd{\lambda = 1,
+    }&& \DIFadd{\zeta = 1.11,
+    }&& \DIFadd{Bo = 0.5,
+    }&& \DIFadd{Ga = 80,
+    }&& \DIFadd{\phi = 0.05. 
+}\end{align*}
+\DIFadd{Note that the }\textit{\DIFadd{Galileo}} \DIFadd{number and the }\textit{\DIFadd{Bond}} \DIFadd{number are slightly different than in the original set of DNS due to numerical constraints.
+We expect that these changes are not significant, so that the comparison remains valuable.
+}
 
 
+\DIFadd{In \ref{fig:Pnst_large_domain} we compare the distribution $P_\text{nst}$ from the current case with $N_b =800$ droplets to the dataset used in this study with $N_b = 125$ droplets.
+A good agreement is observed between the two distributions, although slight differences are noticeable.
+These differences could be due to the different }\textit{\DIFadd{Galileo}} \DIFadd{numbers used in the larger simulation.
+Nevertheless, the anisotropic behavior of $P_\text{nst}$ appears to be preserved between these two DNS.   
+}\begin{figure}[h!]
+    \centering
+    \includegraphics[height=0.205\textwidth]{image/HOMOGENEOUS_NEW/Dist/Pnst_l_1_Ga_100_PHI_0_05.pdf}
+    \includegraphics[height=0.205\textwidth]{image/HOMOGENEOUS_final/Dist/Pnst_l_1_Ga_80_PHI_0_05.pdf}
+    \caption{\DIFaddFL{Histogram of the normalized function $P_\text{nst}$ at high inertia $Ga = 100$.
+    The color map represents the values of the nearest pair distribution function. The origin corresponds to the position of the }\textit{\textit{\DIFaddFL{test particle}}}\DIFaddFL{.
+    The dimensionless radial and azimuthal coordinates, $|\textbf{r}|/d$ and $\theta$, correspond to the nearest neighbor position.
+    The vertical direction corresponds to the flow direction, which is also the axis of symmetry for $P_\text{nst}$.
+    (left) Original DNS with $N_b =125$ droplets.
+    (right) Reference DNS with $N_b = 800$ droplets.}}
+    \label{fig:Pnst_large_domain}
+\end{figure}
+\DIFadd{To provide a qualitative visualization of the system behavior, we displayed in \ref{fig:images_deux} a snapshot from both DNS. 
+}\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{image/HOMOGENEOUS_NEW/P_PHI_5_l_10_Ga_100.png}
+    \includegraphics[width=0.45\textwidth]{image/HOMOGENEOUS_final/Ga_80_phi_005_l_1.png}
+\caption{\DIFaddFL{Snapshot of a simulation at $t^* = 150$ for $\phi=0.05$.
+    Color map : values of the vertical component of the velocity, field on the vertical plane defined by the equation $z=0$. 
+    (left)  Tipical DNS used in this study  with $\lambda = 1$ and $N_b = 125$ droplets.
+    (right) A larger DNS with same $\phi$ and  $\lambda$ but with $N_b = 800$ droplets.
+    }}
+    \label{fig:images_deux}
+\end{figure}
+\DIFadd{We can observe that the DNS with $N_b = 800$ droplets also exhibits layers and clusters of droplets, similar to the original simulation. 
+At this stage, we have not delved into quantitative analysis to verify if the distance between layers is consistent across both sets of simulations. 
+}
 
-
-
-
-
- 
+\DIFadd{Overall, we conclude that the domain size used in this work, $\mathcal{L}/d = 10$, is sufficient. 
+Indeed, The distribution $P_\text{nst}$ remains similar in the larger domain (with $\mathcal{L}/d = 20$), and the microstructure displays the same types of particle layers and clusters}\DIFaddend . 
 
 \bibliography{Bib/bib_bulles.bib}
 
