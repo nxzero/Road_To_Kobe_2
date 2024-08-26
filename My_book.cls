@@ -190,7 +190,7 @@
 
 % \newcommand{\numref}[1]{\ref{#1}}
 \renewcommand{\ref}[1]{\autoref{(#1)}}
-\newtheorem{remark}{Remark}
+
 \usetikzlibrary{calc}
 
 

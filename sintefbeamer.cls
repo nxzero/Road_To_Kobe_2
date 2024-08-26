@@ -5,6 +5,8 @@
 \ProvidesClass{sintefbeamer}[2021/11/02]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
+
+
 \ProcessOptions\relax
 \LoadClass{beamer}
 \logo{

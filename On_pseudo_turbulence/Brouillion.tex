@@ -1,3 +1,362 @@
+\section{Introduction}
+
+The main result of this work is that the pseudoturbulent or \textit{Reynolds stress } tensor is shown to be equal to,
+\begin{equation}
+    \frac{\avg{\chi_f (\textbf{u}_f')_y (\textbf{u}_f')_y}}{\phi_f  U^2}
+    = 
+    \frac{63\lambda^2+84\lambda+28}{60\lambda^2+120\lambda+60} \Gamma\left(1/3\right)  \phi^{2/3}
+    - \frac{17\lambda^2+22\lambda+7}{5\lambda^2+10\lambda+5} \phi
+\end{equation}
+\begin{equation}
+    \frac{\avg{\chi_f (\textbf{u}_f')_x (\textbf{u}_f')_x}}{\phi_f  U^2}
+    = 
+    - \frac{6\lambda^2+6\lambda+1}{20\lambda^2+40\lambda+20} \phi
+    +\frac{9\lambda^2+12\lambda+4}{240\lambda^2+480\lambda+240} \Gamma\left(1/3\right) \phi^{2/3}
+\end{equation}
+at first order in particle volume fraction. 
+In tensor notation this reads, 
+\begin{multline}
+    \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+    =
+    \frac{- (72\lambda^2 + 72\lambda + 12)\phi + 
+    \left(9\lambda^2 + 12\lambda + 4\right)\Gamma(1/3) \phi^{2/3}}{240\lambda^2 + 480\lambda + 240}
+    (\textbf{U}\cdot \textbf{U}) \textbf{I}\\
+    + 
+    \frac{- (248\lambda^2 + 328\lambda + 108)\phi + 
+    \left(81\lambda^2 + 108\lambda + 36\right)\Gamma(1/3) \phi^{2/3}}{80\lambda^2 + 160\lambda + 80}
+    \textbf{UU}\\
+\end{multline}
+\section{Preliminary definitions}
+
+\subsection{ensemble average}
+Let $\FF$ be a flow configuration and $d\PP = P(\FF)d\FF$ the probable number of flow in such a configuration. 
+Equally, let $\textbf{u}_f^0(\textbf{x},t,\FF)$ be the local fluid velocity and $\chi_f(\textbf{x},t,\FF)$ the continuous phase indicator function evaluated at $\textbf{x}$ and time $t$ for a flow configuration $\FF$. 
+The continuous phase averaged velocity is written as, 
+\begin{equation}
+    \phi_f \textbf{u}_f(\textbf{x},t)
+    = \avg{\chi_f \textbf{u}_f^0} 
+    = \int  \chi_f \textbf{u}_f^0(\textbf{x},t,\FF) d\PP
+\end{equation}
+where $\phi_f$ is the fluid phase volume fraction and $\avg{\ldots}$ denote an ensemble average operator. 
+With these notations the \textit{Reynolds stress} tensor for the fluid phase can be written as 
+\begin{equation}
+    \phi_f \bm\sigma^\text{Re}
+    =\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+    =\avg{\chi_f \textbf{u}_f^0 \textbf{u}_f^0 }
+    - \phi_f \textbf{u}_f \textbf{u}_f
+\end{equation}
+\subsection{Nearest particle average}
+In the objective of closing this term we now introduce the \textit{Nearest Particle Statistics} (NPS). 
+We introduce the following relation \citet{zhang2021ensemble} :
+\begin{equation*}
+    \textbf{u}_f [\textbf{x},t]
+    = 
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    \textbf{u}_f^\text{nst}[\textbf{x},t, \textbf{r},\textbf{w}]
+    P_\text{nst}[\textbf{r},\textbf{w}|\textbf{x},t]
+    d\textbf{r}
+    d\textbf{w}
+\end{equation*}
+with 
+\begin{equation*}
+    \textbf{u}_f^\text{nst}[\textbf{x},t; \textbf{r},\textbf{w}]
+    P_\text{nst}[\textbf{r},\textbf{w};\textbf{x},t]
+    =
+    \frac{1}{\phi_f[\textbf{x},t]} 
+    \int 
+    \chi_f \textbf{u}_f^0[\textbf{x},t,\FF]
+    \sum_i 
+    \delta(\textbf{x}+\textbf{r}-\textbf{x}_i[t,\FF])
+    \delta(\textbf{w}-\textbf{u}_i[t,\FF])
+    h_i[\textbf{x},t,\FF]
+    d\PP
+\end{equation*}
+
+\subsection{Reynolds stress decomposition}
+\begin{equation}
+    \bm\sigma^\text{Re}
+    = 
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    \textbf{v}_f^\text{nst}
+    \textbf{v}_f^\text{nst}
+    P_\text{nst}
+    d\textbf{r}
+    d\textbf{w}
+    + 
+    \frac{1}{\phi_f}
+    \int_{\mathbb{R}^3}
+    \int_{\mathbb{R}^3}
+    \avg{
+        \chi_f
+        \textbf{u}_f''
+        \textbf{u}_f''
+        \sum_i 
+        \delta(\textbf{x}+\textbf{r}-\textbf{x}_i)
+        \delta(\textbf{w}-\textbf{u}_i)
+        h_i
+    }
+    d\textbf{r}
+    d\textbf{w}
+\end{equation}
+with 
+\begin{align*}
+    \text{fluctuation of the local value around the ensemble average : }\textbf{u}_f' = \textbf{u}_f^0 - \textbf{u}_f\\
+    \text{fluctuation of the local value around the single particle conditional average : }\textbf{u}_f'' = \textbf{u}_f^0 - \textbf{u}_f^\text{nst}\\
+    \text{Fluctuation of the single particle conditional average around the ensemble average : }\textbf{v}_f^\text{nst} = \textbf{u}_f^\text{nst} - \textbf{u}_f
+\end{align*}
+Assuming we neglect the second term we still need to solve for $\textbf{v}^\text{nst}$
+
+
+
+Mass and momentum conservation without body forces, 
+\begin{align*}
+    \pddt \rho^0 + \div(\textbf{u}^0 \rho^0 ) = 0 \\
+    \pddt (\textbf{u}^0 \rho^0) + \div(\textbf{u}^0 \textbf{u}^0 \rho^0 - \bm\sigma^0) = 0 \\
+\end{align*}
+
+\subsection*{The single particle conditional averaged equations}
+Let takes 
+$\pddt \delta(\textbf{x}_i(\FF,t) - \textbf{y}) 
+= \frac{\partial \textbf{x}_i}{\partial t} \frac{\partial }{\partial \textbf{x}_i} \delta(\textbf{x}_i(\FF,t) - \textbf{y})
+= - \textbf{u}_i \cdot \frac{\partial }{\partial \textbf{y}} \delta(\textbf{x}_i - \textbf{y})$
+The Dirac delta function follows, This constrains,
+\begin{align*}
+    \pddt \delta(\textbf{x}_i(t,\FF)  - \textbf{y})
+    +\textbf{u}_i(t,\FF)  \cdot \pddy [ \delta(\textbf{x}_i(t,\FF)  - \textbf{y})]
+    = 0\\
+    \pddt \delta(\textbf{u}_i(t,\FF) -\textbf{w})
+    + \pddw \cdot [\textbf{a}_i(t,\FF)  \delta(\textbf{u}_i(t,\FF)  - \textbf{w})]
+    = 0\\
+    \pddt \chi_f(\textbf{x},t,\FF) 
+    + \textbf{u}_\Gamma^0(\textbf{x},t,\FF) \cdot \pddx \chi_f(\textbf{x},t,\FF) = 0 \\
+    \pddx \chi_f(\textbf{x},t,\FF) = - \delta_\Gamma \textbf{n}_f(\textbf{x},t,\FF)
+\end{align*}
+Thus, $\delta_1 =\sum_i \delta(\textbf{x}_i(t,\FF)  - \textbf{y})\delta(\textbf{u}_i(t,\FF) -\textbf{w})$ gives,
+\begin{equation*}
+    \pddt \delta_1 
+    + \pddy\cdot [\textbf{w} \delta_1 ]
+    + \pddw\cdot [\textbf{a}_i \delta_1 ]
+    =0 
+\end{equation*} 
+multiplying by 
+\begin{align*}
+    \pddt (\textbf{u}^0 \rho^0\delta_1) + \div(\textbf{u}^0 \textbf{u}^0 \rho^0 \delta_1 - \bm\sigma^0\delta_1) 
+    +\pddy\cdot (\textbf{u}^0 \rho^0  \textbf{w}\delta_1)
+    +\pddw\cdot (\textbf{u}^0 \rho^0  \textbf{a}_i\delta_1) = 0 \\
+\end{align*}
+\begin{align*}
+    \pddt \avg{\textbf{u}^0 \rho^0\delta_1} 
+    + \div\avg{\textbf{u}^0 \textbf{u}^0 \rho^0 \delta_1 - \bm\sigma^0\delta_1}
+    +\pddy\cdot \avg{\textbf{u}^0 \rho^0  \textbf{w}\delta_1}
+    +\pddw\cdot \avg{\textbf{u}^0 \rho^0  \textbf{a}_i\delta_1} 
+    = 0 \\
+\end{align*}
+Now let's consider that we neglect the fluctuation terms
+\begin{align*}
+    \pddt (\textbf{u}^1 \rho^1n_p) + \div(\textbf{u}^1 \textbf{u}^1 \rho^1 n_p - \bm\sigma^1n_p) 
+    +\pddy\cdot (\textbf{u}^1 \rho^1  \textbf{w}n_p)
+    +\pddw\cdot (\textbf{u}^1 \rho^1  \textbf{a}_in_p) = 0 \\
+\end{align*}
+The last terms can be re-written 
+\begin{equation*}
+    +\pddy\cdot (\textbf{u}^1 \rho^1  \textbf{w}n_p)
+    = 
+    \frac{\partial \textbf{x}}{\partial \textbf{y}}
+    \frac{\partial }{\partial \textbf{x}}
+    \cdot (\textbf{u}^1 \rho^1  \textbf{w}n_p)
+    = 
+    \frac{\partial }{\partial \textbf{x}}
+    \cdot (\textbf{u}^1 \rho^1  \textbf{w}n_p)
+\end{equation*}
+\begin{equation*}
+    +\pddw\cdot (\textbf{u}^1 \rho^1  \textbf{a}_i n_p)
+    = 
+    \frac{\partial \textbf{x}}{\partial \textbf{w}}
+    \frac{\partial }{\partial \textbf{x}}
+    \cdot (\textbf{u}^1 \rho^1  \textbf{a}_i n_p)
+    = 
+    \frac{\partial }{\partial \textbf{x}}
+    \cdot (\textbf{u}^1 \rho^1  \textbf{a}_i n_p)
+\end{equation*}
+The first line assume $\textbf{x} = \textbf{y}- \textbf{r}$ the second must assume that $\textbf{x} = \textbf{w}-$
+Neglecting the acc gives 
+\begin{align*}
+    \pddt (\textbf{u}^1 \rho^1n_p) + \div(\textbf{u}^1 \textbf{u}^1 \rho^1 n_p - \bm\sigma^1n_p) 
+    +\pddx\cdot (\textbf{u}^1 \rho^1  \textbf{w}n_p)
+    = 0 \\
+\end{align*}
+\subsubsection*{title}
+\subsection*{The Nearest particle conditional averaged equations}
+Let takes 
+$\pddt \delta(\textbf{x}_i(\FF,t) - \textbf{y}) 
+= \frac{\partial \textbf{x}_i}{\partial t} \frac{\partial }{\partial \textbf{x}_i} \delta(\textbf{x}_i(\FF,t) - \textbf{y})
+= - \textbf{u}_i \cdot \frac{\partial }{\partial \textbf{y}} \delta(\textbf{x}_i - \textbf{y})$
+The Dirac delta function follows, This constrains,
+\begin{align*}
+    \pddt \delta(\textbf{x}_i(t,\FF)  - \textbf{y})
+    + \pddy \cdot [\textbf{u}_i(t,\FF)  \delta(\textbf{x}_i(t,\FF)  - \textbf{y})]
+    = 0\\
+    \pddt \delta(\textbf{u}_i(t,\FF) -\textbf{w})
+    + \pddw \cdot [\textbf{a}_i(t,\FF)  \delta(\textbf{u}_i(t,\FF)  - \textbf{w})]
+    = 0\\
+    \pddt \chi_f(\textbf{x},t,\FF) 
+    + \textbf{u}_\Gamma^0(\textbf{x},t,\FF) \cdot \pddx \chi_f(\textbf{x},t,\FF) = 0 \\
+    \pddx \chi_f(\textbf{x},t,\FF) = - \delta_\Gamma \textbf{n}_f(\textbf{x},t,\FF)
+\end{align*}
+Note that since $\textbf{y} = \textbf{x} + \textbf{r}$, 
+\begin{equation*}
+    \frac{\partial }{\partial \textbf{r}}
+    = \frac{\partial }{\partial \textbf{x}}
+    \frac{\partial (\textbf{y} - \textbf{r})}{\partial \textbf{r}}
+    = - \frac{\partial }{\partial \textbf{x}}
+    = \frac{\partial }{\partial \textbf{y}}
+    \frac{\partial (\textbf{x} + \textbf{r})}{\partial \textbf{r}}
+    = \frac{\partial }{\partial \textbf{y}}
+\end{equation*}
+\begin{equation*}
+    \frac{\partial }{\partial \textbf{x}}
+    = \frac{\partial }{\partial \textbf{y}}
+    \frac{\partial (\textbf{x} + \textbf{r})}{\partial \textbf{x}}
+    = \frac{\partial }{\partial \textbf{y}}
+    = \frac{\partial }{\partial \textbf{r}}
+    \frac{\partial (\textbf{y} - \textbf{x})}{\partial \textbf{x}}
+    = - \frac{\partial }{\partial \textbf{r}}
+\end{equation*}
+\begin{equation*}
+    \frac{\partial }{\partial \textbf{y}}
+    = \frac{\partial }{\partial \textbf{x}}
+    \frac{\partial (\textbf{y} - \textbf{r})}{\partial \textbf{y}}
+    = \frac{\partial }{\partial \textbf{x}}
+    = \frac{\partial }{\partial \textbf{r}}
+    \frac{\partial (\textbf{y} - \textbf{x})}{\partial \textbf{y}}
+    = \frac{\partial }{\partial \textbf{r}}
+\end{equation*}
+So the evolution equation for 
+$\delta_\text{nst}(\textbf{x},\textbf{y},\textbf{w},t,\FF) =  \sum_i \delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) h_i(\textbf{x})$
+\begin{align*}
+    \pddt \delta_{nst}
+    + \pddy \cdot (\textbf{w} \delta_{nst})
+    + \pddw \cdot (\textbf{a}_i  \delta_{nst})
+    = 
+    \delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) \pddt h_i
+\end{align*}
+
+The conditional mass and momentum equations then read,
+\begin{align*}
+    \pddt (\rho^0 \delta_{nst}) 
+    + \pddx \cdot (\textbf{u}^0 \rho^0 \delta_{nst} ) 
+    + \pddy \cdot (\textbf{w}   \rho^0 \delta_{nst})
+    + \pddw \cdot (\textbf{a}_i \rho^0 \delta_{nst})
+    = 
+    \rho^0 \delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) 
+    [\pddt h_i 
+    +  \textbf{u}^0 \cdot \pddx h_i] 
+    \\
+    \pddt (\textbf{u}^0 \rho^0 \delta_{nst}) 
+    + \pddx \cdot (\textbf{u}^0 \textbf{u}^0 \rho^0 \delta_{nst} - \bm\sigma^0 \delta_{nst}) 
+    + \pddy \cdot (\textbf{u}^0\rho^0 \textbf{w}   \delta_{nst}) 
+    + \pddw \cdot (\textbf{u}^0\rho^0 \textbf{a}_i \delta_{nst}) \\
+    = \rho^0 \textbf{u}^0  
+    \delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) 
+    [
+        \pddt h_i 
+        + \textbf{u}^0\cdot \pddx\delta_{nst}
+        ]
+    \\
+\end{align*}
+ensemble average the eq for $\delta_{nst}$ gives, 
+\begin{align*}
+    \pddt P_{nst}
+    + \pddy \cdot (\textbf{w} P_{nst})
+    + \pddw \cdot (\textbf{a}_p^\text{nst}  P_{nst})
+    = 
+    \avg{\delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) \pddt h_i}
+\end{align*}
+\begin{align*}
+    \pddt (\rho^{nst} P_{nst}) 
+    + \pddx \cdot \avg{\textbf{u}^0 \rho^0 \delta_{nst} }
+    + \pddy \cdot (\textbf{w}   \rho^{nst} P_{nst})
+    + \pddw \cdot \avg{\textbf{a}_i \rho^0 \delta_{nst}}
+    = 
+    \avg{\rho^0 \delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) D_t h_i }
+    \\
+    \pddt \avg{\textbf{u}^0 \rho^0 \delta_{nst}}
+    + \pddx \cdot \avg{\textbf{u}^0 \textbf{u}^0 \rho^0 \delta_{nst} - \bm\sigma^0 \delta_{nst}}
+    + \pddy \cdot \avg{\textbf{u}^0\rho^0 \textbf{w}   \delta_{nst} }
+    + \pddw \cdot \avg{\textbf{u}^0\rho^0 \textbf{a}_i \delta_{nst} }
+    = \avg{\rho^0 \textbf{u}^0  
+    \delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w})D_t h_i }
+    \\
+\end{align*}
+
+Ensembel avg time $P_{nst}$ gives, 
+\begin{align*}
+    \pddt (\rho P_{nst}) 
+    + \pddx \cdot (\avg{\textbf{u}^0 \rho^0 } P_{nst})
+    + \pddy \cdot (\textbf{w}  P_{nst} \rho)
+    + \pddw \cdot (\textbf{a}_p^{nst} P_{nst}\rho)
+    = \\
+    \rho \avg{\delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) \pddt h_i }
+    \\
+    \pddt (\avg{\textbf{u}^0 \rho^0 } P_{nst})
+    + \pddx \cdot (\avg{\textbf{u}^0 \textbf{u}^0 \rho^0  - \bm\sigma^0 } P_{nst})
+    + \pddy \cdot ( \avg{\rho^0 \textbf{u}^0} \textbf{w}   P_{nst} )
+    + \pddw \cdot ( \avg{\rho^0 \textbf{u}^0} \textbf{a}_p^{nst} P_{nst} )
+    = \\
+    \avg{\rho^0 \textbf{u}^0}  
+    \avg{\delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) \pddt h_i }
+    \\
+\end{align*}
+
+
+\subsection*{Dilute assumption}
+\begin{equation*}
+    \avg{\rho^0 \textbf{u}^0 \delta_{nst}(\textbf{y},\textbf{w},t,\FF)} 
+    = 
+    \avg{\chi_f\rho_f \textbf{u}^0_f(\textbf{x},t,\FF) \delta_{nst}(\textbf{y},\textbf{w},t,\FF)} 
+    + \avg{\chi_d\rho_d \textbf{u}^0_d(\textbf{x},t,\FF) \delta_{nst}(\textbf{y},\textbf{w},t,\FF)} 
+\end{equation*}
+If $|\textbf{x}-\textbf{y}| > a$ the $\chi_d = 0$ and $\chi_f = 1$ since at \textbf{y} it is the nearest
+\begin{equation*}
+    \avg{\rho^0 \textbf{u}^0 \delta_{nst}(\textbf{y},\textbf{w},t,\FF)} 
+    = 
+    \phi_f \rho_f \textbf{u}_f^{nst} P_{nst|f}
+    + \phi_d \rho_d \textbf{u}_d^{nst} P_{nst|d}
+\end{equation*}
+\begin{align*}
+    \pddt (\rho_f P_{nst}) 
+    + \pddx \cdot (\rho_f \textbf{u}_f^{nst} P_{nst})
+    + \pddy \cdot (\textbf{w}   \rho_f P_{nst})
+    + \pddw \cdot ( \rho_f \textbf{a}_p^{nst} P_{nst})
+    = 
+    \avg{\rho^0 \delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) \pddt h_i }
+    \\
+    \pddt ( \rho_f\textbf{u}_f^{nst} P_{nst})
+    + \pddx \cdot ( \rho_f \textbf{u}_f^{nst}\textbf{u}_f^{nst}P_{nst} + \avg{\textbf{u}''\textbf{u}''\delta_{nst}} - \bm\sigma_f^{nst} P_{nst})\\
+    + \pddy \cdot (\textbf{u}^{nst}_f \rho_f \textbf{w}   P_{nst} )
+    + \pddw \cdot (\textbf{u}^{nst}_f \rho_f \textbf{a}_p^{nst} P_{nst} )
+    = \avg{\rho^0 \textbf{u}^0  
+    \delta(\textbf{x}_i -\textbf{y}) \delta(\textbf{u}_i - \textbf{w}) \pddt h_i }
+    \\
+\end{align*}
+
+The difficultly is on the term 
+\begin{equation*}
+    \pddy \cdot \avg{\textbf{u}^0\rho^0 \textbf{w}   \delta_{nst} }
+    = 
+    \pddy \cdot \avg{\textbf{u}^0(\textbf{x})\rho^0(\textbf{x}) \textbf{w}   \sum_i \delta(\textbf{x}+ \textbf{r} - \textbf{x}_i)\delta(\textbf{w}- \textbf{u}_i) h_i(\textbf{x}) }
+\end{equation*}
+\tb{that s all wrong because we $\delta_{nst} = f(\textbf{x})$}
+
+
+\begin{equation*}
+    \frac{\partial }{\partial \textbf{y}}
+    = 
+    \frac{\partial }{\partial \textbf{x}}
+    \frac{\partial (\textbf{y} - \textbf{r} )}{\partial \textbf{y}}
+\end{equation*}
 
 \section{Single-particle conditional average}
 
@@ -612,18 +971,156 @@ Due to the \textbf{x} \textbf{r} symmetry we have
 The averaged velocity, 
 $\textbf{u}_f(\textbf{x},t) = \textbf{u}_f(\textbf{x}+ \textbf{r},t) + \textbf{r}\cdot \grad \textbf{u}_f(\textbf{x}+ \textbf{r},t)+ \ldots$ upon the assumption of linear quadratic etc flows one gets the desired equations in terms of the interpolated values of $\textbf{u}_f$. 
 
-\section{Nearest particle closure}
 
 
-\section*{Inertial part of the stresslet }
 
+\section*{Computation of the derive of $h_i$}
+
+The definitions with $r_i = |\textbf{x}_i - \textbf{x}|$.  
 \begin{equation*}
-    \textbf{S}_p 
-    =
-    \phi \mu Re
-    \frac{59}{80} \left[
-        - 3\textbf{U}\textbf{U}
-        + (\textbf{U}\cdot\textbf{U})\bm\delta
-    \right] 
+    h_i(\textbf{x},t,\FF)
+    = 
+    \frac{1}{N(\textbf{x},t,\FF)}
+    \prod_j
+    H(r_j - r_i)
+\end{equation*}
+and 
+\begin{equation*}
+    N(\textbf{x},t\FF)
+    = \sum_i \prod_j 
+    H(r_j - r_i)
 \end{equation*}
 
+The Gradient of this function gives
+\begin{equation*}
+    \pddt  h_i(\textbf{x},t,\FF)
+    = 
+    -  \frac{\pddt N(\textbf{x},t,\FF)}{N(\textbf{x},t,\FF)^2}
+    \prod_j
+    H(r_j - r_i)
+    + \frac{1}{N(\textbf{x},t,\FF)}
+    \pddt \prod_j
+    H(r_j - r_i)
+\end{equation*}
+\begin{equation*}
+    \pddx  h_i(\textbf{x},t,\FF)
+    = 
+    -  \frac{\pddx N(\textbf{x},t,\FF)}{N(\textbf{x},t,\FF)^2}
+    \prod_j
+    H(r_j - r_i)
+    + \frac{1}{N(\textbf{x},t,\FF)}
+    \pddx \prod_j
+    H(r_j - r_i)
+\end{equation*}
+with, 
+\begin{equation*}
+    \pddt 
+    \prod_j
+    H(r_j - r_i)
+    = 
+    \sum_k 
+    \delta(r_k - r_i)
+    (\textbf{u}_k  \cdot \hat{\textbf{r}}_k - \textbf{u}_i  \cdot \hat{\textbf{r}}_i)
+    \prod_{j\neq k}
+    H(r_j - r_i)
+\end{equation*}
+\begin{equation*}
+    \pddx
+    \prod_j
+    H(r_j - r_i)
+    = 
+    \sum_k 
+    \delta(r_k - r_i)
+    ( \hat{\textbf{r}}_i -  \hat{\textbf{r}}_k)
+    \prod_{j\neq k}
+    H(r_j - r_i)
+\end{equation*}
+
+\begin{align*}
+    \pddt r_k
+    = \pddt [(\textbf{x}_k(\FF,t) - \textbf{x})\cdot (\textbf{x}_k(\FF,t) - \textbf{x})]^{1/2}\\
+    = 
+    2 \textbf{u}_k(\FF,t)  \cdot (\textbf{x}_k(\FF,t) - \textbf{x})
+    \frac{1}{2}[(\textbf{x}_k(\FF,t) - \textbf{x})\cdot (\textbf{x}_k(\FF,t) - \textbf{x})]^{- 1/2}
+    = 
+    \textbf{u}_k  \cdot \hat{\textbf{r}}_k
+\end{align*}
+\begin{align*}
+    \pddx r_k
+    = \pddx [(\textbf{x}_k(\FF,t) - \textbf{x})\cdot (\textbf{x}_k(\FF,t) - \textbf{x})]^{1/2}
+    = - \hat{\textbf{r}}_k
+\end{align*}
+
+The $N$ function derivative gives 
+\begin{equation*}
+    \pddt 
+    N 
+    = \pddt 
+    \sum_i \prod_j
+    H(r_j - r_i)
+    = 
+    \sum_i 
+    \sum_k 
+    \delta(r_k - r_i)
+    (\textbf{u}_k  \cdot \hat{\textbf{r}}_k - \textbf{u}_i  \cdot \hat{\textbf{r}}_i)
+    \prod_{j\neq k}
+    H(r_j - r_i) = 0 
+\end{equation*}
+
+Thus, we have \citet{zhang2021ensemble} 
+\begin{align*}
+    \pddt  h_i(\textbf{x},t,\FF)
+    = 
+    \frac{1}{N(\textbf{x},t,\FF)}
+    \sum_k 
+    \delta(r_k - r_i)
+    (\textbf{u}_k  \cdot \hat{\textbf{r}}_k - \textbf{u}_i  \cdot \hat{\textbf{r}}_i)
+    \prod_{j\neq k}
+    H(r_j - r_i)
+    \\
+    \textbf{u}_i \cdot \grad h_i(\textbf{x},t,\FF)
+    = 
+    \frac{1}{N(\textbf{x},t,\FF)}
+    \sum_k 
+    \delta(r_k - r_i)
+    (\textbf{u}_i  \cdot \hat{\textbf{r}}_i -  \textbf{u}_i  \cdot\hat{\textbf{r}}_k)
+    \prod_{j\neq k}
+    H(r_j - r_i)
+    \\
+\end{align*}
+Since $\delta(r_k - r_i)$ we have $r_k = r_i$ therefor $H(r_k - r_i) = H(0) = 1 $
+\begin{align*}
+    \pddt  h_i(\textbf{x},t,\FF)
+    = 
+    \sum_k 
+    \delta(r_k - r_i)
+    (\textbf{u}_k  \cdot \hat{\textbf{r}}_k - \textbf{u}_i  \cdot \hat{\textbf{r}}_i)
+    h_i
+    \\
+    \textbf{u}^0 \cdot \grad h_i(\textbf{x},t,\FF)
+    = 
+    \sum_k 
+    \delta(r_k - r_i)
+    (\textbf{u}^0  \cdot \hat{\textbf{r}}_i -  \textbf{u}^0  \cdot\hat{\textbf{r}}_k)
+    h_i
+    \\
+\end{align*}
+Idea, maybe if i sum on i it cancel ? 
+\begin{align*}
+    \pddt  h_i(\textbf{x},t,\FF) +\textbf{u}^0 \cdot \grad h_i(\textbf{x},t,\FF)
+    &= 
+    \sum_k 
+    \delta(r_k - r_i)
+    (\textbf{u}_k  \cdot \hat{\textbf{r}}_k  - \textbf{u}_i  \cdot \hat{\textbf{r}}_k)
+    h_i
+    \\
+    &= 
+    \sum_k 
+    \delta(r_k - r_i)
+    [(\textbf{u}_k  - \textbf{u}^0) \cdot \hat{\textbf{r}}_k - (\textbf{u}_i - \textbf{u}^0)  \cdot \hat{\textbf{r}}_i]
+    h_i
+    \\
+\end{align*}
+This can be treated in a similar way that previously
+
+ensemble average these equations gives 

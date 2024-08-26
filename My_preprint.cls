@@ -14,7 +14,6 @@
 \RequirePackage{amsthm}
 \RequirePackage{mathrsfs}
 \RequirePackage{empheq}
-
 \RequirePackage{bm}
 % \RequirePackage{mdframed}
 \RequirePackage[
@@ -37,8 +36,11 @@
 
 \RequirePackage{stmaryrd}
 
+\RequirePackage[nameinlink,capitalize]{cleveref}
+
 \AtBeginDocument{\newcommand{\refn}[1]{\ref{#1}}}
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
+\AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
 \numberwithin{equation}{section}
   % \RequirePackage[
   %     a4paper,

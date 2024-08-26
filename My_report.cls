@@ -1,3 +1,4 @@
+
 \ProvidesClass{My_report}[2022/07/02 My_report]
 \NeedsTeXFormat{LaTeX2e}
 \DeclareOption{print}{\def\@cv@print{}}
