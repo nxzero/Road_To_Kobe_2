@@ -33,6 +33,7 @@ proper: clean
 	-rm microstructure_kin.pdf
 	-rm fintzi_lhuillier_piersonICMF2025.pdf
 	-rm closure_ellipsoidal.pdf
+	-rm ictam.pdf
 
 diff: clean
 	latexpand microstructure.tex > microstructure_new.tex

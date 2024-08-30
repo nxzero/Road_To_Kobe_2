@@ -86,7 +86,7 @@ Now, let us apply \ref{eq:ensemble_avg_to_nst} to the quantity of interest, spec
     \textbf{v}_f^\text{nst}
     \textbf{v}_f^\text{nst}
     P_\text{nst}^f
-    d\textbf{y}
+    d\textbf{r}
     d\textbf{w}
     + 
     \int_{\mathbb{R}^6}
@@ -95,12 +95,12 @@ Now, let us apply \ref{eq:ensemble_avg_to_nst} to the quantity of interest, spec
         \textbf{v}_f''
         \textbf{v}_f''
         % \sum_i 
-        % \delta(\textbf{x}+\textbf{y}-\textbf{x}_i)
+        % \delta(\textbf{x}+\textbf{r}-\textbf{x}_i)
         % \delta(\textbf{w}-\textbf{u}_i)
         % h_i
         \delta_\text{nst}
     }
-    d\textbf{y}
+    d\textbf{r}
     d\textbf{w}
     \label{eq:relation_ensemble_nst}
 \end{equation}
@@ -398,83 +398,84 @@ Indeed, in this form $\lim_{|\textbf{x}- \textbf{y}|\to \infty} \textbf{u}^\text
 To settle this issue we follow \citet[Appendix B]{zhang2021ensemble} and propose to solve for an auxiliary problem which is equivalent to the conservation equation of $\textbf{u}_f^\text{nst}[\textbf{x},\textbf{y},\textbf{w},t]$. 
 We introduce the conditionally averaged fields, 
 \begin{equation*}
-    P_\text{nst}^f[\textbf{y},\textbf{w},\textbf{x},t]\textbf{u}^\text{nst}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
-    = \avg{\delta_\text{nst}^f  \textbf{u}^0[\textbf{z},\FF,t]}
-    \label{eq:def_u_z}
+    P_\text{nst}^f[\textbf{y},\textbf{w},\textbf{x},t] (\phi_f^\text{nst}\textbf{u}^\text{nst}_f)[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
+    = \avg{\delta_\text{nst}^f \chi_f \textbf{u}^0_f[\textbf{z},\FF,t]}
 \end{equation*}
 where, $\delta_\text{nst}^f = \chi_f[\textbf{x},t,\FF]\delta_\text{nst}[\textbf{y},\textbf{w}, \FF,t]$. 
-Additionally, we modified slightly the definition of $P_\text{nst}^f$, such that our new definition  is $\phi_f$ times the previous definition made in the preceding section, $P_\text{nst}^f[\textbf{x},\textbf{y},\textbf{w},t] = \phi_f[\textbf{x},t]P_\text{nst}^f[\textbf{y},\textbf{w},t|\textbf{x}]$. 
-% With that definition, $\phi_f^\text{nst}$ is the fluid \textit{nearest neighbor conditionally averaged} fluid phase volume fraction, such that $\phi_f^\text{nst}$ represents the fluid phase volume fraction evaluated at \textbf{z} averaged on all configurations where \textbf{x} is occupied by the fluid phase and $\textbf{y}$ by a particle center of mass, with velocity $\textbf{w}$.  
-$\textbf{u}^\text{nst}$ is the \textit{nearest neighbor conditionally averaged} velocity evaluated at $\textbf{z}$, knowing the fluid phase is also present at $\textbf{x}$ with the nearest neighbor to \textbf{x} being located in \textbf{y} with velocity \textbf{w}. 
-A graphical representation of $\textbf{u}^\text{nst}$ is given \ref{fig:unst}.
+Additionally, we modified slightly the definition of $P_\text{nst}^f$, such that our new definition  is $\phi_f$ times the old definition made in the previous section, $P_\text{nst}^f[\textbf{x},\textbf{y},\textbf{w},t] = \phi_f[\textbf{x},t]P_\text{nst}^f[\textbf{y},\textbf{w},t|\textbf{x}]$. 
+With that definition, $\phi_f^\text{nst}$ is the fluid \textit{nearest neighbor conditionally averaged} fluid phase volume fraction, such that $\phi_f^\text{nst}$ represents the fluid phase volume fraction evaluated at \textbf{z} averaged on all configurations where \textbf{x} is occupied by the fluid phase and $\textbf{y}$ by a particle center of mass, with velocity $\textbf{w}$.  
+$\textbf{u}^\text{nst}_f$ is the \textit{nearest neighbor conditionally averaged} continuous phase velocity evaluated at $\textbf{z}$, knowing the fluid phase is also present at $\textbf{x}$ with the nearest neighbor to \textbf{x} being located in \textbf{y} with velocity \textbf{w}. 
+A graphical representation of $\textbf{u}^\text{nst}_f$ is given \ref{fig:unst}. 
 With that definition we have the following boundary condition far from the particle free region, 
 \begin{align*}
     \lim_{|\textbf{z} - \textbf{y}|\to \infty}
-    \textbf{u}^\text{nst}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
-    = \textbf{u}[\textbf{z},t]
-    % \lim_{|\textbf{z} - \textbf{y}|\to \infty}
-    % \phi^\text{nst}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
-    % = \phi[\textbf{z},t],
+    \textbf{u}^\text{nst}_f[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
+    = \textbf{u}_f[\textbf{z},t]\\
+    \lim_{|\textbf{z} - \textbf{y}|\to \infty}
+    \phi^\text{nst}_f[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
+    = \phi_f[\textbf{z},t],
     \label{eq:boundary}
 \end{align*}
 since far from the particle free region the effect of the particle located at \textbf{y} has no impact on the averaged quantities. 
-Thus, $\textbf{u}^\text{nst}$ has the advantage of having proper boundary condition at infinity and is related to $\textbf{u}_f^\text{nst}$ such that, $\textbf{u}^\text{nst}[\textbf{x},t|\textbf{x},\textbf{y},\textbf{w}] = \textbf{u}_f^\text{nst}[\textbf{x},t|\textbf{y},\textbf{w}]$ since only the fluid phase is present at \textbf{x} by definition of $\textbf{u}^\text{nst}$. 
+Thus, $\textbf{u}^\text{nst}_f$ has the advantage of having proper boundary condition at infinity and is related to $\textbf{u}_f^\text{nst}$ such that, $\textbf{u}^\text{nst}_f[\textbf{x},t|\textbf{x},\textbf{y},\textbf{w}] = \textbf{u}_f^\text{nst}[\textbf{x},\textbf{y},\textbf{w}]$ since only the fluid phase is present at \textbf{x} by definition of $\textbf{u}^\text{nst}_f$. 
 
-We also introduce the disturbance fields $\textbf{v}^\text{nst} = \textbf{u}^\text{nst} - \textbf{u}$, which follows the condition at infinity, 
+We also introduce the disturbance fields $\textbf{v}_f^\text{nst} = \textbf{u}_f^\text{nst} - \textbf{u}_f$, which follows the condition at infinity, 
 \begin{equation}
     \lim_{|\textbf{z} - \textbf{y}|\to \infty}
-    \textbf{v}^\text{nst}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
+    \textbf{v}^\text{nst}_f[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
     = 0,
 \end{equation}
-while the boundary condition at the surface of the particle is given by, 
+while the velocity at the surface of the particle is given by, 
 \begin{equation}
-    \textbf{v}^\text{nst}\cdot \textbf{n}
+    \textbf{v}^\text{nst}_f\cdot \textbf{n}
     = 
-    (\textbf{w} - \textbf{u}[\textbf{z},t])\cdot \textbf{n}
+    (\textbf{w} - \textbf{u}_f[\textbf{z},t])\cdot \textbf{n}
     = 
     \left\{
         \textbf{w}
-        - \textbf{u}
-        - (\textbf{y} - \textbf{z})\cdot \grad\textbf{u}
+        - \textbf{u}_f
+        - (\textbf{y} - \textbf{z})\cdot \grad\textbf{u}_f
         + \ldots 
     \right\}
     \;\;\; \forall \textbf{z}\in \left\{ |\textbf{z} - \textbf{y}| = a  \right\}. 
     \label{eq:bounday2}
 \end{equation}
-Notice that these boundaries conditions and the one derived in \ref{chap:daniel2} for the \textit{Single-point conditionally averaged} Navier-Stokes equations  are exactly the same but applied on the bulk velocity rather than on the continuous phase velocity.
+Notice that these boundaries conditions and the one derived in \ref{chap:daniel2} for the \textit{Single-point conditionally averaged} Navier-Stokes equations  are exactly the same.
+Thus, the difference between this problem, for $\textbf{v}_f^\text{nst}$ and the one for $\textbf{u}_f^{1d}$ yields in the conservation equation as we see now. 
 
-Instead of using the fluid phase formulation of the mass and momentum local conservation equations, \eqref{eq:local_equations}, we use the \textit{single-fluid}, mass and momentum equations, namely, 
-\begin{align}
-    \pddz \cdot \textbf{u}^0 = 0 \\
-    \pddt (\rho^0\textbf{u}^0_f)
-    + \pddz\cdot 
-    (\rho^0\textbf{u}^0\textbf{u}^0 
-    -\bm\sigma^0)
-    &= 
-    + \rho^0 \textbf{g}. 
-    \label{eq:local_equations_bulk}
-\end{align}
-Multiplying these equations by $(\delta_\text{nst}^f - P_\text{nst}^f)$ and averaging overall configurations yields the Navier-Stokes equations for the distance fields $\textbf{v}^\text{nst}$, namely,
-\begin{equation}
-    \pddz \cdot \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \textbf{u}^0}
-    = 0,
-    \label{eq:mass_nst_d}
-\end{equation}
-and,
+Multiplying the local mass, and momentum conservation \eqref{eq:local_equations} by $(\delta_\text{nst}^f - P_\text{nst}^f)$ and averaging overall configurations yields the Navier-Stokes equations for the distance fields $\textbf{v}_\text{nst}^f$, namely,
 \begin{multline}
-    \pddt \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\rho^0\textbf{u}^0}
-    + \pddz\cdot \avg{ (\delta_\text{nst}^f - P_\text{nst}^f) ( \rho^0  \textbf{u}^0 \textbf{u}^0 - \bm\sigma^0)}\\
-    +  \pddx \cdot \avg{(\delta_\text{nst}^f \textbf{u}_f^0 - P_\text{nst}^f\textbf{u}_f^\text{nst}) \rho^0 \textbf{u}^0}
-    +  \pddy \cdot \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \textbf{w} \textbf{u}^0 \rho^0}
-    +  \pddw \cdot \avg{(\delta_\text{nst}^f \textbf{a}_i - P_\text{nst}^f \textbf{a}_p^\text{nst})\textbf{u}^0 \rho^0 }\\
+    \pddt \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\chi_f}
+    +  \pddz \cdot \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \chi_f\textbf{u}^0_f}
+    +  \pddx \cdot \avg{(\delta_\text{nst}^f \textbf{u}_f^0 - P_\text{nst}^f\textbf{u}_f^\text{nst}) \chi_f}\\
+    +  \pddy \cdot \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \textbf{w} \chi_f}
+    +  \pddw \cdot \avg{(\delta_\text{nst}^f \textbf{a}_i - P_\text{nst}^f \textbf{a}_p^\text{nst}) \chi_f}
+    = \avg{
+        \chi_f
+        S_\text{nst}'
+    },
+    \label{eq:mass_nst_d}
+\end{multline}
+\begin{multline}
+    \pddt \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\rho_f\chi_f\textbf{u}_f^0}
+    + \pddz\cdot \avg{ (\delta_\text{nst}^f - P_\text{nst}^f) (\chi_f \rho_f \textbf{u}_f^0 \textbf{u}^0_f + \chi_f \bm\sigma_f^0)}\\
+    +  \pddx \cdot \avg{(\delta_\text{nst}^f \textbf{u}_f^0 - P_\text{nst}^f\textbf{u}_f^\text{nst}) \chi_f}
+    +  \pddy \cdot \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \textbf{w} \chi_f}
+    +  \pddw \cdot \avg{(\delta_\text{nst}^f \textbf{a}_i - P_\text{nst}^f \textbf{a}_p^\text{nst}) \chi_f}\\
     = 
-    % - \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\delta_\Gamma \bm\sigma_f^0 \cdot \textbf{n}_d }
-    + \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\rho^0 \textbf{g}} 
+    - \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\delta_\Gamma \bm\sigma_f^0 \cdot \textbf{n}_d }
+    + \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\chi_f\rho_f\textbf{g}} 
     + 
-    \avg{\rho^0 \textbf{u}^0 S'_\text{nst} },
+    \avg{\chi_f \textbf{u}_f^0 S'_\text{nst} },
     \label{eq:momentum_nst_d}
 \end{multline}
-where we have defined $S_\text{nst}'$ as the source term due to the interchanges of the nearest particles,
+with, 
+\begin{equation}
+    \bm\sigma_\text{nst}^\text{eq}=
+    \avg{\rho_f\delta_\text{nst}^f \chi_f \textbf{u}''_f\textbf{u}''_f} 
+    - \phi_f P_\text{nst}^f \phi^\text{nst}_f\bm\sigma^\text{nst}_f. 
+\end{equation}
+and where we have defined $S_\text{nst}'$ as the source term due to the interchanges of the nearest particles, namely
 \begin{multline}
     S_\text{nst}'
     =
@@ -496,265 +497,160 @@ where we have defined $S_\text{nst}'$ as the source term due to the interchanges
 \end{multline}
 In this quite general form these equations may seem complicated, therefore let us describe in details the meaning of each term. 
 We start by the conditional ``mass'' conservation equation \eqref{eq:mass_nst_d}. 
-The term within the divergence sign can be written,  
+The term within the time derivative can be written,  
 \begin{equation}
-    \avg{(\delta_\text{nst}^f - P_\text{nst}^f )\textbf{u}^0}
-    = P_\text{nst}^f (\textbf{u}^\text{nst} - \textbf{u})
-    = P_\text{nst}^f \textbf{v}^\text{nst}
+    \avg{(\delta_\text{nst}^f - P_\text{nst}^f )\chi_f}
+    = P_\text{nst}^f(
+        \phi_f^\text{nst}[\textbf{z}|\textbf{x},\textbf{y},\textbf{w},t]
+        - \phi_f[\textbf{z}]
+    )
+    = P_\text{nst}^f \phi_f^\text{nst-d},
 \end{equation}
-Since $P_\text{nst}$ is not a function of \textbf{z}, we have shown that $\textbf{v}^\text{nst}$ is divergence free, regardless of the flow regime. 
+where we introduced the superscript $-d$ to denote the \textit{disturbance} since $\phi_f^\text{nst-d}$ is a disturbance field that vanish at large $\textbf{z}$ according to \ref{eq:boundary}. 
+Thus, $\avg{(\delta_\text{nst}^f - P_\text{nst}^f)\chi_f}$ quantities the difference between the ensemble average volume fraction $\phi_f$ at \textbf{z} and the averaged volume fraction $\phi_f^\text{nst}$, which is averaged on all configuration with a particle free-zone at $\textbf{x}$.
+These two volume fraction significantly differ for $|\textbf{z} - \textbf{x}| <|\textbf{y} - \textbf{x}|$ since in the particle-free zone $\phi_f^\text{nst} = 1$ while $\phi_f$ stays what it is. 
+Then, the four remaining terms on the left-hand side of \ref{eq:mass_nst_d} are the phase space derivative of the disturbance field volume fraction $\avg{(\delta_\text{nst}^f - P_\text{nst}^f)\chi_f}$.
+Lastly, as mentioned above, $S'_\text{nst}$ is the source term due to the interchanges of the nearest neighbor to \textbf{x}. 
+In other worlds it quantifies how the interchanges of nearest neighbors impact the value of $\chi_f[\textbf{z},\FF,t]$ on average. 
 
 Regarding the \textit{nearest neighbor conditionally averaged} equations \eqref{eq:momentum_nst_d} we may reformulate the first term on the right-hand side such as, 
 \begin{equation}
-    \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\rho^0 \textbf{u}^0}
+    \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\rho_f\chi_f\textbf{u}_f^0}
     = P_\text{nst}^f [
-        \rho^\text{nst}\textbf{u}_m^\text{nst}
+        \phi_f^\text{nst}\textbf{u}_f^\text{nst}
         - 
-        \rho \textbf{u}_m
+        \phi_f\textbf{u}_f
     ]
     = P_\text{nst}^f [
-        \rho^\text{nst-d}\textbf{v}^\text{nst}_m
-        + \rho^\text{nst-d}\textbf{u}_m
-        + \rho \textbf{v}^\text{nst}_m
+        \phi_f^\text{nst-d}\textbf{v}_f^\text{nst}
+        + \phi_f^\text{nst-d}\textbf{u}_f
+        + \phi_f \textbf{v}_f^\text{nst}
     ]
 \end{equation}
-where we recall that $\rho \textbf{u}_m = \avg{\rho_f\chi_f \textbf{u}_f + \rho_d\chi_f  \textbf{u}_d}$ is the weighted or Favre average.
-We introduced the superscript $-d$ on $\rho^\text{nst-d}$ to denote the \textit{disturbance} since $\phi_f^\text{nst-d}$ is a disturbance field that vanish at large $\textbf{z}$ according to \ref{eq:boundary}. 
+where we recall that $\textbf{v}_f^\text{nst} = \textbf{v}_f^\text{nst} = \textbf{u}_f^\text{nst} - \textbf{u}_f$ is the disturbance velocity fields satisfying \ref{eq:boundary}. 
 Therefore, \ref{eq:momentum_nst_d} is an equation of conservation for the disturbance velocity field generated by the droplet at \textbf{y} which is the nearest neighbor to a point \textbf{x} in the fluid phase. 
 The remaining terms on the left-hand side of \ref{eq:momentum_avg_nst} correspond to the advective terms over the phase space coordinate, plus the \textit{nearest neighbor conditionally averaged } disturbance viscous stress, namely, 
 \begin{equation}
-    \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \bm\sigma^0}
-    = P_\text{nst} \bm\sigma^\text{nst}
+    \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\chi_f \bm\sigma_f^0}
+    = P_\text{nst} \left(
+        \phi_f^\text{nst}\bm\sigma^\text{nst}_f
+        - \phi_f\bm\sigma_f
+    \right). 
 \end{equation}
-Note that since both fluids are considered Newtonian $\bm\sigma_k^0 = -p_k^0\bm\delta + \mu_k (\grad \textbf{u}_k^0 + \grad \textbf{u}_k^0)$, therefore,
-\begin{align}
-    \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \bm\sigma^0}
-    &=
-    \avg{(\delta_\text{nst}^f - P_\text{nst}^f) 
-    \left[
-    - p^0 \bm\delta 
-    + \mu_f(\grad \textbf{u}^\dagger + (\grad \textbf{u}^0)^\dagger )
-    + \chi_d (\mu_d-\mu_f)\textbf{e}_d^0 
-    + \delta_\Gamma \gamma (\bm\delta - \textbf{nn})
-    \right]
-    }\nonumber \\
-    &=
-    P_\text{nst}^f\left\{
-        -p^\text{nst-d}\bm\delta 
-        + \mu_f [\pddz \textbf{u}^\text{nst-d}+^\dagger\pddz \textbf{u}^\text{nst-d}]
-    \right\}\nonumber\\
-   &+  \avg{(\delta_\text{nst}^f - P_\text{nst}^f)[
-    \chi_d  2 (\mu_d-\mu_f)\textbf{e}_d^0 
-    + \delta_\Gamma \gamma (\bm\delta - \textbf{nn})]
-    }
-\end{align}
-Where the term on the last line is the conditional stress contribution from the particle phase compared to the mean particle contribution to the stress. 
 This stress also satisfy the property to vanish at large distance to the particle-free zone.
 
 On the right-hand side of \ref{eq:momentum_nst_d} we recover the ``disturbance source terms'' one of which is the Buoyancy force, but conditionally averaged, namely, 
 \begin{equation*}
-    \avg{(\delta_\text{nst} - P_\text{nst}^f) \chi_f \rho^0 \textbf{g}}
+    \avg{(\delta_\text{nst} - P_\text{nst}^f) \chi_f \rho_f \textbf{g}}
     = 
-    P_\text{nst}^f \rho^\text{nst-d} \textbf{g}. 
+    P_\text{nst}^f \phi_f^\text{nst-d} \textbf{g}. 
 \end{equation*}
 The momentum source due to exchange with the disperse phase can be express in the same way. 
 The last term on the right-hand side also corresponds to the change of momentum generated by changes of nearest neighbors to \textbf{x}. 
-\tb{explain the meaning of $\rho^\text{nst-d}$ }
 
-To summary \ref{eq:mass_nst_d} and \ref{eq:momentum_nst_d} together with the boundary conditions formed by \ref{eq:boundary} and \ref{eq:bounday2}, constitute a system of conditionally averaged equation, to be solved for the disturbance velocity fields, $\textbf{v}^\text{nst}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]$ and the disturbance density, $\rho^\text{nst-d}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]$.
+
+To summary \ref{eq:mass_nst_d} and \ref{eq:momentum_nst_d} together with the boundary conditions formed by \ref{eq:boundary} and \ref{eq:bounday2}, constitute a system of conditionally averaged equation, to be solved for the disturbance velocity fields, $\textbf{v}_f^\text{nst}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]$ and the disturbance volume fraction fields, $\phi_f^\text{nst-d}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]$.
 However, due to the complexity of the problem, arising due to the consideration of a phase space with  13 dimension ($\textbf{z},t,\textbf{x},\textbf{y},\textbf{w}$), we must now consider some simplifying hypothesis.
 
 \subsection{Simplifying assumptions}
 
-Due to the challenging theoretical aspect of the problem we must now, take some simplifying hypotheses that are not rigorous. 
-Indeed, from now on we consider these unfounded assumptions :
-% At this stage we must perform some restrictive assumptions in order to make theoretical advancement. 
+At this stage we must perform some restrictive assumptions in order to make theoretical advancement. 
 Firstly, we consider a stationary, inertialess problem, implying that we neglect the time derivatives and advective terms in \ref{eq:mass_nst_d} and \ref{eq:momentum_nst_d}. 
-Indeed, under this form the advective terms are all proportional to $\textbf{v}^\text{nst}\textbf{v}^\text{nst}$, which is itself proportional to the relative velocity between the particle and the continuous phase. 
-Therefore, these terms are of $\mathcal{O}(Re)$ or higher, with $Re$ is the Reynolds number based on the relative phase velocity.
-
+Indeed, under this form the advective terms are all proportional to $\textbf{v}_f^\text{nst}$, which is itself proportional to the relative velocity between the particle and the continuous phase. 
+Therefore, these terms are of $\mathcal{O}(Re)$ or higher, with $Re$ is the Reynolds number based on the relative phase velocity. 
 Likewise, we will consider the dilute regime meaning that we neglect all the terms of $\mathcal{O}(\phi)$ or higher. 
-And finally, we will consider that the suspension is homogeneous, such that the ensemble averaged quantities are uniform, meaning that they are not function of $\textbf{z}$. 
+And finally, we will consider that the suspension is homogeneous, such that the ensemble averaged quantities are constant, meaning that they are not function of $\textbf{z}$. 
 
 
-Regarding the density disturbance fields, $\rho^\text{nst-d}$, we assume the following form in the dilute regime, 
+Regarding the volume fraction disturbance fields, $\phi_f^\text{nst-d}$, we assume the following form, 
 \begin{equation*}
-    \rho^\text{nst-d}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
-    = \phi_d (\rho_f - \rho_d) H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
+    \phi_f^{nst-d}[\textbf{z},t|\textbf{x},\textbf{y},\textbf{w}]
+    = \phi_d H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
 \end{equation*}
-Meaning that in the particle free-region $\rho^\text{nst} = \rho_f$ and outside the particle free region $\rho^\text{nst} = \phi_d\rho_d + \phi_f\rho_f= \rho$, since we consider the values of the effective medium outside this region \ref{fig:unst}. 
+Meaning that in the particle free-region $\phi_f^\text{nst} = 1$ and outside the particle free region $\phi_f^\text{nst} = \phi_f$ since we consider the values of the effective medium. 
 Notice that this definition applies only to the points \textbf{z} exterior to the particle since inside the particle we consider the classic stokes equations. 
-Thus, the buoyancy source term is given by, 
+
+At this stage the source term $S_\text{nst}'$ is hard to model however it seems that it is negligible at $\mathcal{O}(\phi)$ \citet{zhang2021ensemble}. 
+Indeed, this term is non-zero only when a second-nearest neighbor is present, meaning that it is proportional to a pairs' probability density which is or order $\phi$ higher than the other terms. 
+
+The momentum exchange terms, $\avg{\delta_\text{nst}^f \delta_\Gamma \bm\sigma_f^0 \cdot \textbf{n}}$ represent the fluctuations of the local momentum compared to the ensemble averaged momentum which at order $\phi$ is given by Hadamar-Ribinsky formulas.
+Thus, in the effective medium outside of the particle free-zone it can be considered as null while inside the particle free-zone, it reads as, 
+\begin{equation}
+    \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \delta_\Gamma \bm\sigma_f^0 \cdot \textbf{n}}
+    = - P_\text{nst}^f [\textbf{x},\textbf{y},\textbf{w},t]
+    \avg{\delta_\Gamma \bm\sigma_f^0 \cdot \textbf{n}}[\textbf{z},t]
+    H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|) 
+\end{equation}
+since, in the particle free-zone, no interfaces are present, by definition. 
+Roughly the same thing applies for the Buoyancy source term is given by, 
 \begin{equation*}
     \avg{(\delta_\text{nst} - P_\text{nst}^f) \chi_f \rho_f \textbf{g}}
     = 
     P_\text{nst}^f [\textbf{x},\textbf{y},\textbf{w},t]
-    \phi_d[\textbf{z},t] 
-    \textbf{g}
-    (\rho_f - \rho_d) H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|), 
+    \phi_d [\textbf{z},t]
+    \textbf{g} H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|), 
 \end{equation*}
 outside the particle domain. 
-Where we made explicit the dependency of each variable, to point-out the fact that for example in a uniform and steady-state medium $\phi_d[\textbf{z},t] = \phi$ is constant. 
 Again in these definitions applies only to the point \textbf{z} outside the particle how's center is located at \textbf{y}. 
 
-At this stage the source term $S_\text{nst}'$ is hard to model however it seems that it is negligible at $\mathcal{O}(\phi)$ \citet{zhang2021ensemble}. 
-Indeed, this term is non-zero only when a second-nearest neighbor is present, meaning that it is proportional to a pairs' probability density which is or order $\phi$ higher than the other terms. 
-It seems also reasonable to neglect the particle contribution to the bulk stress as this terms becomes of $\mathcal{O}(\phi^2)$, thus we may write, 
-\begin{equation}
-    \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \bm\sigma^0}
-    =
-    P_\text{nst}^f\left\{
-        -p^\text{nst-d}\bm\delta 
-        + \mu_f [\pddz \textbf{u}^\text{nst-d}+^\dagger\pddz \textbf{u}^\text{nst-d}]
-    \right\}
-\end{equation}
-The particle contribution to the suspension stress may be written in this case, 
-\begin{align}
-    {\chi_d  2 (\mu_d-\mu_f)\textbf{e}_d^0 
-    + \delta_\Gamma \gamma (\bm\delta - \textbf{nn})}
-    &\approx
-    \frac{1}{2}
-     \intS{
-        \left[(\textbf{r}\bm\sigma_f^0 
-        + \bm\sigma_f^0 \textbf{r}
-        - \frac{2}{3}\bm\sigma_f^0 \cdot \textbf{r}
-        )\cdot \textbf{n} 
-        - 2\mu_f (
-            \textbf{u}_f^0 \textbf{n}
-            + \textbf{n}\textbf{u}_f^0 
-        )\right]
-    }
-    % \nonumber\\
-    % &- \pddz \cdot \left[
-    %     \intS{
-    %     \textbf{rr}(\bm\sigma_f^0 \cdot \textbf{n} )}
-    %     - 2\mu_f\intO{\textbf{re}_d^0}
-    % \right]
-\end{align}
-where we have neglected the higher order moments and considered $\chi_d = \delta_p v_\alpha$. 
-Notice that this corresponds exactly to the Stresslet quantity. 
-According to \ref{fig:unst} we can assume that, 
-\begin{align}
-    &\avg{(\delta_\text{nst}^f - P_\text{nst}^f)[\chi_d  2 (\mu_d-\mu_f)\textbf{e}_d^0 
-    + \delta_\Gamma \gamma (\bm\delta - \textbf{nn})]}\nonumber \\
-    &\approx
-    -\frac{1}{2}
-     \pSavg{
-        \left[(\textbf{r}\bm\sigma_f^0 
-        + \bm\sigma_f^0 \textbf{r}
-        - \frac{2}{3}\bm\sigma_f^0 \cdot \textbf{r}
-        )\cdot \textbf{n} 
-        - 2\mu_f (
-            \textbf{u}_f^0 \textbf{n}
-            + \textbf{n}\textbf{u}_f^0 
-        )\right]
-    }
-    H(|\textbf{y}- \textbf{x}| - |\textbf{z} -\textbf{x}|)\nonumber \\
-    &= -\textbf{S}_p[\textbf{z},t]
-    H(|\textbf{y}- \textbf{x}| - |\textbf{z} -\textbf{x}|)
-    % \nonumber\\
-    % &- \pddz \cdot \left[
-    %     \intS{
-    %     \textbf{rr}(\bm\sigma_f^0 \cdot \textbf{n} )}
-    %     - 2\mu_f\intO{\textbf{re}_d^0}
-    % \right]
-\end{align}
-where we considered that the \textit{nearest neighbor averaged} Stresslet where zero in the particle free zone and that it takes the value of the ensemble averaged stresslet $\textbf{S}_p$ outside the particle free zone.
-We therefore neglected the particle-partcile interactions and the influence of the details of the flow on this contribution. 
-It is clear that, $\textbf{S}_p \sim \textbf{e}$, here we do not consider the mean shearing motion therefore this contribution can be neglected. 
-\tb{however the moment of order two might be accounted for  ! !! ! ! ! }
 
-Considering all of these hypotheses we may re-write the mass and momentum conditionally averaged equations of the bulk phases on the domain outside the particle at \textbf{y}, as follows,
-\begin{equation}
+
+Considering all of these hypotheses we may re-write the mass and momentum conditionally averaged equations in the domain outside the particle free-zone as, 
+\begin{multline}
     % \pddt \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\chi_f}
-    \pddz \cdot \textbf{v}^\text{nst}
+    +  \pddz \cdot (P_\text{nst}^f [
+    \phi_f  \textbf{v}_f^\text{nst} 
+    +\phi_f^\text{nst-d}  \textbf{v}_f^\text{nst} 
+    +\phi_f^\text{nst-d}  \textbf{u}_f 
+    ])
+    +  \pddx \cdot \avg{P_\text{nst}^f\textbf{u}_f^\text{nst} \phi_f^\text{nst-d}}\\
+    +  \pddy \cdot \avg{P_\text{nst}^f \textbf{w} \phi_f^\text{nst-d}}
+    +  \pddw \cdot \avg{P_\text{nst}^f \textbf{a}_p^\text{nst} \phi_f^\text{nst-d}}
     = 0
     \label{eq:mass_nst_d_stokes}
-\end{equation}
+\end{multline}
 \begin{equation}
-    - \pddz p^\text{nst-d} 
-    + \mu_f \pddz^2 \textbf{u}^\text{nst-d}
+    % \pddt \avg{(\delta_\text{nst}^f - P_\text{nst}^f)\rho_f\chi_f\textbf{u}_f^0}
+    + \pddz\cdot \avg{ (\delta_\text{nst}^f - P_\text{nst}^f) \chi_f \bm\sigma_f^0}
+    % +  \pddx \cdot \avg{(\delta_\text{nst}^f \textbf{u}_f^0 - P_\text{nst}^f\textbf{u}_f^\text{nst}) \chi_f}
+    % +  \pddy \cdot \avg{(\delta_\text{nst}^f - P_\text{nst}^f) \textbf{w} \chi_f}
+    % +  \pddw \cdot \avg{(\delta_\text{nst}^f \textbf{a}_i - P_\text{nst}^f \textbf{a}_p^\text{nst}) \chi_f}\\
     = 
-    \phi
-    \textbf{g}
-    (\rho_f - \rho_d) H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
+    P_\text{nst}^f 
+    H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
+    [
+        \phi_d \textbf{g}
+        + 
+        \avg{\delta_\Gamma \bm\sigma_f^0 \cdot \textbf{n}}
+    ]
     \label{eq:momentum_nst_d_stokes}
 \end{equation}
-In summary, following our rigorous averaging method we demonstrated that $\textbf{v}^\text{nst}$ followed the forces Stokes equations. 
-This equation are in agreement with \citet{zhang2021ensemble} how provided no proof for his derivation. 
-Additionally, \citet{zhang2021ensemble} carried the derivation for $\textbf{u}^\text{nst}$ and not $\textbf{v}^\text{nst}$, this is the reason why an additional uniform source term is present on the left-hand side of his Equation (B 1). 
-While this difference seems a detail, it is of major importance since only the disturbance fields $\textbf{v}^\text{nst}$ follows the Stokes equations in the general case, not $\textbf{u}^\text{nst}$. 
-Indeed, the latter include the macroscopic fields $\textbf{u}$ how follow in general the Navier-Stokes equations including the inertial terms. 
 
-We argue however that the particle free-zone as defined by \citep{zhang2021ensemble} is incomplete. 
-Indeed, inside the spherical shell of radius $2a$ centered at $\textbf{y}$ no center of mass of particle is found due to the impenetrability of the droplets. 
-Thus, to be consistent the right-hand side of \ref{eq:momentum_nst_d_stokes} must be modified to include the source terms $\phi
-\textbf{g}
-(\rho_f - \rho_d) H(2a - |\textbf{z} - \textbf{y}|)$. 
+\subsection{Assumption}
 
+Due to the challenging theoretical aspect of the problem we must now, take some simplifying hypotheses that are not rigorous. 
+Indeed, from now on we consider these unfounded assumptions : 
+\begin{enumerate}
+    \item The velocity fields $\textbf{v}_f^\text{nst}$ is governed by the Stoeks equation of the disturbance velocity fields of an isolated droplet, if we neglect the terms $\sim \mathcal{O}(\phi^2)$ or higher. 
+    \item The second term on the right-hand side of \ref{eq:relation_ensemble_nst} is also considered of $\mathcal{O}(\phi^2)$ or higher. 
+    \item The distribution $P_\text{nst}^f$ follows the random and dilute regime, and is therefore given by $P_\text{nst}^f = \frac{3\phi}{4\pi} e^{-\phi(r^3 -1)}$ \citep{zhang2021ensemble}. 
+\end{enumerate}
+Although we have no theoretical demonstration to prove the two first statements, it will be shown in the next section that they are probably accurate as the final result obtain good agreement with the DNS. 
 
-
-\subsection{The solution at $\mathcal{O}(\phi^{2/3})$ ? } 
-
-% Let us present the solution of \ref{eq:momentum_nst_d_stokes}. 
-We consider in the first place \ref{eq:momentum_nst_d_stokes} without forcing terms on the right-hand side which is of $\mathcal{O}(\phi)$ higher than the other and is therefore negligible. 
-In this situation, \ref{eq:momentum_nst_d_stokes}, corresponds to the Stokes equations for the disturbance fields of an isolated translating droplet located at \textbf{y}. 
-In this situation we may write, 
+With these assumptions in place, we can compute the \textit{Reynolds stress} using, \ref{eq:relation_ensemble_nst} which reduces to the following formula, 
 \begin{equation}
-    \textbf{v}^\text{nst}[\textbf{z},t|\textbf{x},\textbf{w},\textbf{y}]
+    \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
     = 
-    \frac{3}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
-        \frac{2+3\lambda}{3(1+\lambda)}
-        +
-        \frac{\lambda}{6(1+\lambda)}\pddz^2 
-    \right]\mathcal{G}(\textbf{z},\textbf{y}),
-    \label{eq:solution_isolated}
+    \frac{3\phi}{4\pi}
+    \int_{\mathbb{R}^6}
+    \textbf{v}_f^\text{nst}
+    \textbf{v}_f^\text{nst}
+     e^{-\phi(r^3 -1)}
+    d\textbf{r}
+    d\textbf{w},
+    \label{eq:step_one}
 \end{equation}
-where $\mathcal{G}(\textbf{r})$ represents the Oseen tensor, namely, 
-\begin{equation}
-    \mathcal{G}(\textbf{r})
-    = \frac{\bm\delta}{r}
-    + \frac{\textbf{rr}}{r^3},
-\end{equation}
-where $\textbf{r} = \textbf{z} - \textbf{y}$ and $r = |\textbf{z} - \textbf{y}|$, 
-Note that all the distances have been made dimensionless with the radius of the particle. 
-We recall that the quantity of interest  is $\textbf{v}^\text{nst}_f[\textbf{x},t,\textbf{y},\textbf{w}]$, not $\textbf{v}^\text{nst}[\textbf{y}+\textbf{r},t|\textbf{x},\textbf{w},\textbf{y}]$, see \ref{eq:relation_ensemble_nst}. 
-Thus, with this first approximation the final result yields,
-\begin{equation}
-    \textbf{v}^\text{nst}_f[\textbf{x},t,\textbf{y},\textbf{w}]
-    = 
-    \textbf{u}^\text{nst}[\textbf{x},t|\textbf{x},\textbf{w},\textbf{y}]
-    - \textbf{u}_f[\textbf{x},t]
-    = 
-    \textbf{v}^\text{nst}[\textbf{x},t|\textbf{x},\textbf{w},\textbf{y}]
-    + \phi(\textbf{u}_d - \textbf{u}_f)[\textbf{x},t]
-    \label{eq:reformulation}
-\end{equation}
-where $\textbf{v}^\text{nst}$ is given by \ref{eq:solution_isolated}
-Thus, using \ref{eq:solution_isolated} we obtain, 
-\begin{equation}
-    \textbf{v}^\text{nst}_f[\textbf{x},t,\textbf{y},\textbf{w}]
-    = 
-    \frac{3}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
-        \frac{2+3\lambda}{3(1+\lambda)}
-        +
-        \frac{\lambda}{6(1+\lambda)}\pddx^2 
-    \right]\mathcal{G}(\textbf{x})
-    + \mathcal{O}(\phi),
-    \label{eq:solution_isolated_at_x}
-\end{equation}
-where we neglected the term $\phi(\textbf{u}_d - \textbf{u}_f)$ in \ref{eq:reformulation} due to the presence of $P_\text{nst}^f$ in  \ref{eq:relation_ensemble_nst} which implies that $P_\text{nst}^f\phi(\textbf{u}_d - \textbf{u}_f)\sim \mathcal{O}(\phi^2)$ which is indeed negligible. 
-
-
-Now that we obtained an explicit closure for $\textbf{v}^\text{nst}_f$ let us focus 
-on the distribution $P_\text{nst}^f$. 
-In the dilute regime it can be shown that $P_\text{nst}^f$ follows the random and dilute regime, and is therefore given by the expression\citep{zhang2021ensemble}: 
-\begin{equation}
-    P_\text{nst}^f[\textbf{x},\textbf{y},\textbf{w},t]
-    = \phi_f[\textbf{x},t] \frac{3\phi}{4\pi} e^{-\phi(r^3 -1)}
-    \label{eq:Pnst_explicit}
-\end{equation} 
-where $r = |\textbf{y} - \textbf{x}|/a$ is the dimensionless distance from the point \textbf{x},  and $\phi[\textbf{w},\textbf{x}] = \frac{4}{3}\pi a^3 n_p[\textbf{x},\textbf{w}]$ is the volume fraction of particle at \textbf{x} with velocity \textbf{w}. 
+where it must be understood that $\textbf{v}_f^\text{nst}$ is given by \ref{eq:stokes_sol}. 
 Notice that the presence of the term $e^{-\phi(r^3 -1)}$ within the integral will ensure the good convergence of the integration, in opposition to \ref{eq:error}. 
 A physical explanation of the behavior of $P_\text{nst}^f$ is provided \ref{fig:P_nst_f}. 
 \begin{figure}[h!]
@@ -822,27 +718,13 @@ Indeed, it implies that no particles are present within the sphere of radius $4a
 }
 \label{fig:P_nst_f}
 \end{figure}
-With these assumptions in place, we can compute the \textit{Reynolds stress} using, \ref{eq:relation_ensemble_nst} which reduces to the following formula, 
-\begin{equation}
-    \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
-    = 
-    \frac{3\phi}{4\pi}
-    \int_{\mathbb{R}^6}
-    \textbf{v}_f^\text{nst}
-    \textbf{v}_f^\text{nst}
-     e^{-\phi(r^3 -1)}
-    d\textbf{r}
-    d\textbf{w},
-    \label{eq:step_one}
-\end{equation}
-where it must be understood that $\textbf{v}_f^\text{nst}$ is given by \ref{eq:stokes_sol}. 
 
 
-Before computing the integration for Stokes flows we would like to apply this formulation to re-compute the \textit{Reynolds stress} of translating bubbles in potential flows. 
-Indeed, it can be show that \ref{eq:solution_isolated_at_x} also hols for the \textit{nearest neighbor conditionally averaged} momentum equations in potential flows, thus in that case $\textbf{v}^\text{nst}_f \approx \textbf{u}_f^{1d}$ where we recall that $ \textbf{u}_f^{1d}$ is given by \ref{eq:potential_sol}
+
+Before computing teh integration for Stokes flows we would like to apply this formulation to re-compute the \textit{Reynolds stress} of translating bubbles in potential flows. 
 Therefore, we carry out the direct integration of \ref{eq:step_one} using \ref{eq:potential_sol} and obtain, 
 \begin{equation}
-    \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+    \avg{\chi_f \rho_f \textbf{u}_f'\textbf{u}_f'}
     = \Gamma_\text{inc}(-1,\phi)\phi^2 e^\phi \left\{
         \frac{1}{20}[\textbf{u}_{fp}\textbf{u}_{fp}+ \frac{1}{n_p}\pavg{\textbf{u}_\alpha\textbf{u}_\alpha}]
         + 
@@ -855,8 +737,8 @@ According to \ref{eq:potential_nst} our results differ with \ref{eq:van_wingarde
 Nevertheless, this inconsistency is easily solved noticing that $\Gamma_\text{inc}(-1,\phi)\phi^2 e^\phi \sim \phi + \mathcal{O}(\phi^2)$. 
 Thus, we conclude that at the leading order, our methodology seem consistent with the classical conditional average methodology introduced by \citet{batchelor1972sedimentation}. 
 
-Now that we have all the tools in hand, let us carry out the direct integration of \ref{eq:step_one} for the wake of a spherical droplet in stokes flows. 
-Indeed, using \ref{eq:solution_isolated_at_x} and \ref{eq:Pnst_explicit} in \ref{eq:step_one} gives, in dimensionless form,  
+Now that we have all the tools, let us carry out the direct integration of \ref{eq:step_one} for the wake of a spherical droplet in stokes flows. 
+In dimensionless form \ref{eq:step_one} gives, 
 \begin{equation}
     \avg{\chi_f  \textbf{u}_f'\textbf{u}_f'}^*
     = \phi    
@@ -897,131 +779,4 @@ Consequently, in agreement with the previous statements, the normalized \textit{
 Finally, as it is not the \textit{Reynolds stress} divided by $\phi$ that matter, but $\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}$ it self, notice that at the leading order in $\phi$ we obtain,  $\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}\sim\phi^{2/3}$. 
 Notably, this  trend in $\sim\phi^{2/3}$ is not new and agree with previous studies found in the literature, this will be examined in the next section. 
 
-
-
-\subsection{The solution at higher order. }
-
-Although we chose to neglect the source term in \ref{eq:momentum_nst_d_stokes} how can we be certain that it was indeed negligible ? 
-Even though this term is $\mathcal{O}(\phi)$ higher than the others in $\textbf{v}^\text{nst}$, it does not necessarily imply that it will contribute at $\mathcal{O}(\phi)$ higher than the other terms in $\avg{\rho_f\chi_f \textbf{u}_f'\textbf{u}_f'}$. 
-Indeed, in \citet{zhang2021ensemble}, while carrying similar derivation foundout that the terms of $\mathcal{O}(\phi)$ in $\textbf{v}^\text{nst}$ contributed to $\mathcal{O}(\phi^{1/3})$ in their final results. 
-In other worlds, this is not as straightforward as in the \textit{single-particles conditional averaged} equations. 
-
-Anyhow, regardless of the right-hand side of \ref{eq:momentum_nst_d_stokes} the boundary condition at the surface of the particle, located at \textbf{y}, will generate the velocity fields\citep{pozrikidis1992boundary}, 
-\begin{equation}
-    \textbf{v}^\text{nst}_p[\textbf{z},t|\textbf{x},\textbf{w},\textbf{y}]
-    = 
-    \frac{a}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
-        \frac{2+3\lambda}{1+\lambda}
-        +
-        a^2\frac{\lambda}{2(1+\lambda)}\pddz^2 
-    \right]\mathcal{G}(\textbf{z},\textbf{y}).
-    \label{eq:solution_isolated2}
-\end{equation}
-Where $\mathcal{G}(\textbf{z},\textbf{y})$ is still the Ossen tensor, or Green function of the stokes equations. 
-
-Now let us turn our attention to the source term on the right-hand side of \ref{eq:momentum_nst_d_stokes}. 
-Following \citet{zhang2021ensemble}, we remark that the contribution to the velocity field, generated by the particle free zone, can be written as a sum of \textit{Stokeslets} of magnitude $\phi\Delta \rho |\textbf{g}|$.
-Indeed, the velocity field evaluated at \textbf{z} generated by the point force:  $\phi\Delta \rho \textbf{g}$, located at a generic point $\textbf{x}'$, can be written \citep{pozrikidis1992boundary}, 
-\begin{equation}
-    \frac{\phi\Delta \rho \textbf{g}}{8\pi \mu_f}\cdot \mathcal{G}(\textbf{z},\textbf{x}')
-\end{equation}
-Consequently, the velocity fields generated by the particle-free zone, as given in \ref{fig:unst}, can be written \citep{zhang2021ensemble}, 
-\begin{equation}
-    \textbf{v}_b^\text{nst}[\textbf{z},t|\textbf{y},\textbf{w},\textbf{x}]
-    = 
-    \frac{\phi\Delta \rho \textbf{g}}{8\pi \mu_f}\cdot 
-    \int_{|\textbf{x}'-\textbf{x}|< |\textbf{y}- \textbf{x}|}
-    \mathcal{G}(\textbf{z},\textbf{x}')
-    d\textbf{x}'
-    \label{eq:v_b_sol}
-\end{equation}
-where we used the subscript $_b$ to denote the particle free zone contribution. 
-Due to the linearity of the Stokes equations, the total velocity field is thus the sum of \ref{eq:solution_isolated2} and \ref{eq:v_b_sol}. 
-% Likewise, the stress generated by the particle free-zone might be written \citep{pozrikidis1992boundary},
-% \begin{equation}
-%     \bm\sigma_b^\text{nst}[\textbf{z},t|\textbf{y},\textbf{w},\textbf{x}]
-%     = 
-%     \frac{\phi\Delta \rho \textbf{g}}{8\pi}\cdot 
-%     \int_{|\textbf{x}'-\textbf{x}|< |\textbf{y}- \textbf{x}|}
-%     \mathcal{T}(\textbf{z},\textbf{x}')
-%     d\textbf{x}'
-%     \label{eq:sigma_b_sol}
-% \end{equation}
-% with, 
-% \begin{equation}
-%     \mathcal{T}(\textbf{z},\textbf{x}')
-%     = - 6\frac{\textbf{rrr}}{r^5}. 
-% \end{equation}
-% Here, $\textbf{r} = \textbf{z} - \textbf{x}'$. 
-
-Therefore, the total velocity field $\textbf{v}^\text{nst}_f$ at the point $\textbf{x}$, can be obtained using \ref{eq:v_b_sol} and \ref{eq:solution_isolated2} evaluated at the point \textbf{x}, and  \ref{eq:reformulation}, which yields,  
-\begin{multline}
-    \textbf{v}^\text{nst}_f [\textbf{x},\textbf{w},\textbf{y},t]
-    =
-    \frac{a}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
-        \frac{2+3\lambda}{1+\lambda}
-        +
-        a^2\frac{\lambda}{2(1+\lambda)}\grad^2 
-    \right]\mathcal{G}(\textbf{x},\textbf{y})\\
-    +
-    \phi(\textbf{u}_d - \textbf{u}_f)
-    + 
-    \frac{\phi\Delta \rho \textbf{g}}{8\pi \mu_f}\cdot 
-    \int_{|\textbf{x}'-\textbf{x}|< |\textbf{y}- \textbf{x}|}
-    \mathcal{G}(\textbf{x},\textbf{x}')
-    d\textbf{x}',
-\end{multline}
-Carrying out the integral on the second line gives directly,
-\begin{equation}
-    \int_{|\textbf{x}'-\textbf{x}|< |\textbf{y}- \textbf{x}|}
-    \mathcal{G}(\textbf{x},\textbf{x}')
-    d\textbf{x}'
-    = \frac{8\pi}{3}|\textbf{x}- \textbf{y}|^2\bm\delta
-\end{equation}
-which finally gives the result, 
-\begin{multline}
-    \textbf{v}^\text{nst}_f
-    =
-    \frac{a}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
-        \frac{2+3\lambda}{1+\lambda}
-        +
-        a^2\frac{\lambda}{2(1+\lambda)}\grad^2 
-    \right]\mathcal{G}(\textbf{x},\textbf{y})
-    + 
-    \frac{\phi\Delta \rho \textbf{g}}{3\mu_f} |\textbf{x}-\textbf{y}|^2
-    +
-    \phi(\textbf{u}_d - \textbf{u}_f)
-    \label{eq:final_sol_v_nst}
-\end{multline}
-In this expression we clearly identify $3$ distinct contributions. 
-Indeed, the first two terms on the right-hand side of \ref{eq:final_sol_v_nst} correspond to the disturbance field generated by an isolated droplet, which was the only contribution in \ref{eq:solution_isolated_at_x}. 
-The third term corresponds to the ``back flow velocity'' as called by \citet{zhang2021ensemble}, it refers to the flow generated by the particle-free zone. 
-Finally, the last term ensure that we stay in the right reference frame. 
-Notice that in \citet[Appendix A]{zhang2021ensemble} they carried out nearly the same calculation for solid particles.
-Apart from that, one can note a small differences between \ref{eq:final_sol_v_nst} with $\lambda = \infty$ and his Equation (B 4), indeed, while we have got$(\textbf{w}- \textbf{u}_f[\textbf{y},t])$ as factor of the first term, he obtained $(\textbf{w}- \textbf{u}_f - \textbf{v}_b^\text{nst})$. 
-This is due to the different reference frame used for the velocity fields, indeed, while we have got only one source term at the right-hand side of \ref{eq:momentum_nst_d_stokes} he has a supplementary, constant source term. 
-This is the reason for the presence of his $\textbf{v}_b'$ which is not in \ref{eq:final_sol_v_nst}. 
-Thus, everything is well consistent, Additionally we generalized and demonstrated his results for droplets. 
-
-
-For a better physical understanding we present know the dimensionless form of \ref{eq:final_sol_v_nst}. 
-The lengths are made dimensionless using the radius of the particle $a$, the velocity vector $\textbf{w} - \textbf{u}_f$ is made dimensionless with its norm $U = |\textbf{w} - \textbf{u}_f|$ such that, $\textbf{e} = \textbf{w} - \textbf{u}_f/. 
-We obtain,  
-\begin{multline}
-    \textbf{v}^\text{nst}_f
-    =
-    \frac{1}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
-        \frac{2+3\lambda}{1+\lambda}
-        +
-        \frac{\lambda}{2(1+\lambda)}\grad^2 
-    \right]\mathcal{G}(\textbf{x},\textbf{y})
-    + \frac{\phi Ga^2}{12 Re} |\textbf{x}-\textbf{y}|^2 \frac{\textbf{g}}{g}
-    +\phi(\textbf{u}_d - \textbf{u}_f)
-\end{multline}
-We recall that $Ga$ is the \textit{Galileo} number and $Re$ the \textit{Reynolds} number, defined as,  
-\begin{align*}
-    Re= \frac{\rho_f U 2a}{\mu_f},
-    &&
-    Ga = \frac{\sqrt{\rho_f \Delta\rho g (2a)^3}}{\mu_f},
-\end{align*}
-respectively. 
+% of \citet{hill2001first} and \which computed the \textit{Reynolds stress} term in ordered and random array of solid spheres. 

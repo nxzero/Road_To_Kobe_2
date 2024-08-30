@@ -142,16 +142,19 @@
 \newcommand{\pddt}{\frac{\partial}{\partial t}}
 \newcommand{\Dt}{D_t}
 \newcommand{\pddx}{\frac{\partial}{\partial \textbf{x}}}
+\newcommand{\pddz}{\frac{\partial}{\partial \textbf{z}}}
 \newcommand{\pddr}{\frac{\partial}{\partial \textbf{r}}}
 \newcommand{\pddy}{\frac{\partial}{\partial \textbf{y}}}
 \newcommand{\pddw}{\frac{\partial}{\partial \textbf{w}}}
 \newcommand{\pddu}{\frac{\partial}{\partial \textbf{u}}}
 \renewcommand{\pddx}{{\partial_\textbf{x}}}
+\renewcommand{\pddz}{{\partial_\textbf{z}}}
 \renewcommand{\pddr}{{\partial_\textbf{r}}}
 \renewcommand{\pddy}{{\partial_\textbf{y}}}
 \renewcommand{\pddw}{{\partial_\textbf{w}}}
 \renewcommand{\pddu}{{\partial_\textbf{u}}}
 \renewcommand{\pddx}{{\grad_\textbf{x}}}
+\renewcommand{\pddz}{{\grad_\textbf{z}}}
 \renewcommand{\pddr}{{\grad_\textbf{r}}}
 \renewcommand{\pddy}{{\grad_\textbf{y}}}
 \renewcommand{\pddw}{{\grad_\textbf{w}}}
