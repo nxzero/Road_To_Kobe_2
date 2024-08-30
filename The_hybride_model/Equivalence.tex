@@ -8,7 +8,7 @@ To model the dispersed phase, there are two distinct approaches.
 We can either use \ref{eq:avg_dt_chi_f} with $k=d$, or we can employ the particle-averaged equations \ref{eq:avg_dt_dq_alpha_tot}, \ref{eq:avg_dt_dQ_alpha_tot} and potentially the higher moments equations found in \ref{ap:Moments_equations}.
 Consequently, it is important to address the compatibility between these two formalisms.
 It has been demonstrated in various studies \citep{buyevich1979flow,lhuillier1992ensemble,jackson1997locally,zhang1994averaged}, that phase-averaged quantities can be expressed as a Taylor series expansion of particle-averaged quantities. 
-Indeed, the dispersed phase indicator function $\chi_d(\textbf{x},t)$ can be expressed as a sum of phase indicator function, $\chi_d(\textbf{x},t) = \sum_\alpha\chi_\alpha(\textbf{x},t)$ where $\chi_\alpha =1$ in the particle domain $\Omega_\alpha(t)$ and $0$ otherwise. 
+Indeed, the dispersed phase indicator function $\chi_d$ can be expressed as a sum of phase indicator function, $\chi_d = \sum_\alpha\chi_\alpha$ where $\chi_\alpha =1$ in the particle domain $\Omega_\alpha$ and $0$ otherwise. 
 Moreover any quantity related to the dispersed phase can be expressed as follows
 %Then, notice that any dispersed phase quantity can be written as, 
 % \JL{Il faut absolument aussi citer le papier de Daniel : fluid dynamics of particulate suspension selected topics - qui fait quelque chose de tres similaire.
@@ -177,44 +177,56 @@ where the expressions for $\mathcal{M}^{(0)}$ and $\mathcal{M}^{(1)}$ are given 
         + f_f^0 (\textbf{u}_\Gamma ^0-\textbf{u}_f^0)
     \right]\cdot \textbf{n}_d  }.
 \end{align}
-In the presence of \ref{eq:scheme_equivalence}, we reach the major conclusion of this work. 
-Indeed, we can observe that $\mathcal{M}_0$ and $\mathcal{M}_1$ represent the zeroth and first order moments equations, respectively. 
-Additionally, it is shown in \ref{ap:Moments_equations} that the coefficient $\mathcal{M}_n$ in \ref{eq:scheme_equivalence} correspond to the $n^{th}$ order moment particle-averaged conservation equation. 
-From \ref{eq:scheme_equivalence} we conclude that the combination of \ref{eq:avg_dt_chi_f} for $k=d$ and  encompasses the particles moments equations through a Taylor expansion around the particle center of mass. 
-Thus, it is evident that one can use an arbitrary order of particles moments equations to achieve an arbitrarily accurate description of the dispersed phase, regardless of the properties of the multiphase flow.
-In \cite{lhuillier2000bilan} they reached a similar conclusion when comparing the phase-averaged area density and particle-averaged area density equations for spherical particles. 
+Using \ref{eq:scheme_equivalence}, we reach one of the main conclusion of this study. 
+We observe that $\mathcal{M}^{(0)}$ and $\mathcal{M}^{(1)}$ correspond to the zeroth and first-order moment equations, respectively. 
+Additionally, as demonstrated in \ref{ap:Moments_equations} the coefficient $\mathcal{M}^{(n)}$ in \ref{eq:scheme_equivalence} represents the $n^{th}$ order moment in the particle-averaged conservation equation. 
+From \ref{eq:scheme_equivalence} we conclude that combining \ref{eq:avg_dt_chi_f} for $k=d$ and \ref{eq:avg_dt_delta_f} effectively captures the particle moment equations through a Taylor expansion around the particle center of mass. 
+%Thus, it is evident that one can use an arbitrary order of particles moments equations to achieve an arbitrarily accurate description of the dispersed phase, regardless of the properties of the multiphase flow.
+Therefore, it is clear that by considering an arbitrary order of particle moments equations, one can achieve a highly accurate description of the dispersed phase.
+
+
+The particle-averaged equations ($\mathcal{M}^{(0)}$\ldots $\mathcal{M}^{(n)}$) form a system with $n$ equations, one for each moment. In contrast, the phase-averaged equations ($\mathcal{C}_d$ and $\mathcal{C}_\Gamma$) consist of only two equations, which aggregate all the particle-averaged equations. 
+This indicates that the particle-averaged formalism provides more detailed information since it yields a separate equation for each moment, as opposed to the phase-averaged equations, which are limited to just two. 
+This enhanced level of detail is achieved by considering the topology of the dispersed phase as demonstrated in the previous sections.
+%Therefore, the particle-averaged formalism encompasses more information since it provides one equation for each moment, in opposition to the phase averaged equations which are only two. 
+%Note that this gain in information has been possible through the consideration of the topology of the dispersed phase. 
+
+
+
+
 %In \ref{ap:Moments_equations} we provide the expression for each $\mathcal{M}_n$ as well as the complete derivation of \ref{eq:scheme_equivalence}. 
 
-Another approach is to notice that $\mathcal{M}_n=0$ for all $n$ since \ref{eq:dt_Q_n} holds for all $n$. 
-Thus, we can rewrite \ref{eq:scheme_equivalence} such that all moments equations vanish, except $\mathcal{M}_0$ (which is arbitrary), this gives, 
-\begin{equation}
-    \mathcal{C}_d 
-    + \mathcal{C}_\Gamma 
-    = \mathcal{M}^{(0)} = 0.
-    \label{eq:proof2}
-\end{equation}
-This implies that equation \ref{eq:avg_dt_chi_f} with the surface transport equation \ref{eq:avg_dt_delta_f} is rigorously equivalent to \ref{eq:avg_dt_dq_alpha_tot}.
-\citet[Appendix A]{zhang1997momentum} provided evidences that the particle-averaged momentum equation is as legitimate as the phase-averaged momentum equation, which is consistent with \ref{eq:proof2}. 
-Additionally, \citet[Appendix A]{nott2011suspension} derived a similar expression than \ref{eq:proof2}, also in the case of the averaged momentum equation for suspension of solid spherical particles.
-Thus, in light of \ref{eq:proof2}, we generalize the conclusion of these authors and demonstrated that this is also true for all conservation laws regardless of the dispersed phase nature.  
-Considering the Lagrangian equations derived in \ref{sec:Lagrangian} this conclusion is not surprising at all since the phase-averaged and particle-averaged equations are all built on \ref{eq:dt_f_k} and \ref{eq:dt_f_I}.
-However, if one does not consider a proper derivation of the lagrangian balance equations as it is done in \ref{sec:Lagrangian} it might not be as obvious, even if \ref{eq:proof2} should remain true as demonstrated by \citet{zhang1997momentum,nott2011suspension}.
-Nevertheless, it is important to note that the conclusion given by \ref{eq:proof2} is not entirely objective since following the same procedure we could show equally that $\mathcal{C}_d+\mathcal{C}_\Gamma  = -\div\mathcal{M}^{(1)}=0$ and $\mathcal{C}_d+\mathcal{C}_\Gamma  = \frac{1}{2}\grad\grad:\mathcal{M}^{(2)}=0$ and so on. 
-Thus, it is more appropriate to examine the problem from the perspective of \ref{eq:scheme_equivalence}. 
-Namely, the particle-averaged equations ($\mathcal{M}^{(1)}$\ldots $\mathcal{M}^{(n)}$) constitute a system of equations with $n$ equations, one equation for each moment, while the phase-averaged equations ($\mathcal{C}_d$ and $\mathcal{C}_\Gamma$) is a system of two equations made of all the particle-averaged equations.
-Therefore, the particle-averaged formalism encompasses more information since it provides one equation for each moment, in opposition to the phase averaged equations which are only two. 
-Note that this gain in information has been possible through the consideration of the topology of the dispersed phase. 
+%Another approach is to notice that $\mathcal{M}_n=0$ for all $n$ since \ref{eq:dt_Q_n} holds for all $n$. 
+%Thus, we can rewrite \ref{eq:scheme_equivalence} such that all moments equations vanish, except $\mathcal{M}_0$ (which is arbitrary), this gives, 
+%\begin{equation}
+%    \mathcal{C}_d 
+%    + \mathcal{C}_\Gamma 
+%    = \mathcal{M}^{(0)} = 0.
+%    \label{eq:proof2}
+%\end{equation}
+%This implies that equation \ref{eq:avg_dt_chi_f} with the surface transport equation \ref{eq:avg_dt_delta_f} is rigorously equivalent to \ref{eq:avg_dt_dq_alpha_tot}.
+%\citet[Appendix A]{zhang1997momentum} provided evidences that the particle-averaged momentum equation is as legitimate as the phase-averaged momentum equation, which is consistent with \ref{eq:proof2}. 
+%Additionally, \citet[Appendix A]{nott2011suspension} derived a similar expression than \ref{eq:proof2}, also in the case of the averaged momentum equation for suspension of solid spherical particles.
+%Thus, in light of \ref{eq:proof2}, we generalize the conclusion of these authors and demonstrated that this is also true for all conservation laws regardless of the dispersed phase nature.  
+%Considering the Lagrangian equations derived in \ref{sec:Lagrangian} this conclusion is not surprising at all since the phase-averaged and particle-averaged equations are all built on \ref{eq:dt_f_k} and \ref{eq:dt_f_I}.
+%However, if one does not consider a proper derivation of the lagrangian balance equations as it is done in \ref{sec:Lagrangian} it might not be as obvious, even if \ref{eq:proof2} should remain true as demonstrated by \citet{zhang1997momentum,nott2011suspension}.
+%Nevertheless, it is important to note that the conclusion given by \ref{eq:proof2} is not entirely objective since following the same procedure we could show equally that $\mathcal{C}_d+\mathcal{C}_\Gamma  = -\div\mathcal{M}^{(1)}=0$ and $\mathcal{C}_d+\mathcal{C}_\Gamma  = \frac{1}{2}\grad\grad:\mathcal{M}^{(2)}=0$ and so on. 
+%Thus, it is more appropriate to examine the problem from the perspective of \ref{eq:scheme_equivalence}. 
+%Namely, the particle-averaged equations ($\mathcal{M}^{(1)}$\ldots $\mathcal{M}^{(n)}$) constitute a system of equations with $n$ equations, one equation for each moment, while the phase-averaged equations ($\mathcal{C}_d$ and $\mathcal{C}_\Gamma$) is a system of two equations made of all the particle-averaged equations.
+%Therefore, the particle-averaged formalism encompasses more information since it provides one equation for each moment, in opposition to the phase averaged equations which are only two. 
+%Note that this gain in information has been possible through the consideration of the topology of the dispersed phase. 
 
 
 
 
-\subsection{The system of equations.}
+\subsection{Conservation equations}
 
-As the purpose of this work is not only to prove the equivalence, but also to provide a general framework to work with dispersed two-phase flows, we now expose \textit{The hybrid model}.
-
-Let us assume that we are interested by a macroscopic quantity $f$ that follows \ref{dt_f} at the local scale, (here $f^0$ could be the mass, momentum, concentration of chemical species etc \ldots) . 
-Then the system of equations to solve to conserve $f$ is constituted from one equation describing the fluid phase, meaning the conservation of $f_f$ and $n$ equations describing the dispersed phase, i.e. the conservation of the $\textbf{Q}_p^{(n)}$.  
-In all its generality the hybrid description of $f$ might be written,
+Given that the aim of this work is not only to demonstrate the equivalence but also to establish a comprehensive framework for analyzing dispersed two-phase flows, we now present \textit{the hybrid} set of conservation equations.
+%Let us assume that we are interested by a macroscopic quantity $f$ that follows \ref{dt_f} at the local scale, (here $f^0$ could be the mass, momentum, concentration of chemical species etc \ldots) . 
+The system of equations governing a macroscopic quantity $f$ consists of one equation for the fluid phase, which ensures the conservation of $f_f$ and $n$ equations for the dispersed phase, representing the conservation of the quantities $\textbf{Q}_p^{(n)}$.  
+In its most general form, the hybrid description of $f$ can be expressed as
+%The system of equations for a macroscopic quantity $f$ is constituted from one equation describing the fluid phase, meaning the conservation of $f_f$ and $n$ equations describing the dispersed phase, i.e. the conservation of the $\textbf{Q}_p^{(n)}$.  
+%In all its generality the hybrid description of $f$ may be written,
 \begin{align}
     \pddt (\phi_f f_f)
     +\div (\phi_f f_f \textbf{u}_f - \mathbf{\Phi}_f^\text{eff})
@@ -244,8 +256,8 @@ In all its generality the hybrid description of $f$ might be written,
         % }
         % + \pSavg{ \pri{1}{n} (\textbf{s}_\Gamma^0)_k }\nonumber\\
         % +\pSavg{ \pri{1}{n} ([\bm\Phi_f^0 + \textbf{f}_f^0 \left(\textbf{u}_\Gamma^0 - \textbf{u}_f^0\right)]\cdot \textbf{n}_d)_k }.
-        \pddt (n_pQ_p)
-        + \div (n_p Q_p \textbf{u}_p + \pavg{\textbf{u}_\alpha' Q_\alpha'})
+        \pddt (n_p\text Q_p)
+        + \div (n_p \text Q_p \textbf{u}_p + \pavg{\textbf{u}_\alpha' \text Q_\alpha'})
         &= \pOavg{ s_d^0 }
         + \pSavg{ s_\Gamma^0 }\nonumber\\
         &+ \pSavg{ \left[\mathbf{\Phi}_f^0 + f_f^0 (\textbf{u}_\Gamma^0-\textbf{u}_f^0) \right] \cdot \textbf{n}_d },
@@ -266,13 +278,13 @@ In all its generality the hybrid description of $f$ might be written,
         &+ \pSavg{ \textbf{r} \left[
             \mathbf{\Phi}_f^0
             + f_f^0 (\textbf{u}_\Gamma^0-\textbf{u}_f^0)
-        \right]\cdot \textbf{n}_d  }.
+        \right]\cdot \textbf{n}_d  },
         \label{eq:avg_hybrid_q_1}
         \\\nonumber
         \vdots
 \end{align}
-With the effective continuous phase non-convective flux term written as, 
-\begin{align*}
+where the effective continuous phase non-convective flux term reads 
+\begin{align}
     \mathbf{\Phi}_f^\text{eff}
     = \avg{\chi_f f_f' \textbf{u}_f'}
     - \avg{\chi_f \bm\Phi_f^0}
@@ -285,9 +297,10 @@ With the effective continuous phase non-convective flux term written as,
         \right)
     \right]
     \cdot \textbf{n}_d}
-    + \div[\ldots]
-\end{align*}
-The only modification compared to what is already presented, is that in the continuous phase conservation \eqref{eq:avg_hybrid_dt_chi_f} we expanded the exchange term $\avg{\delta_\Gamma \left[
+    + \div[\ldots].
+\end{align}
+%and \eqref{eq:avg_hybrid_dt_chi_f} is that in
+The only difference in the conservation equation for the continuous phase between \eqref{eq:avg_dt_chi_f} and \eqref{eq:avg_hybrid_dt_chi_f} is the expansion of the exchange term $\avg{\delta_\Gamma \left[
     \mathbf{\Phi}_f^0
     + f_f^0
     \left(
@@ -295,39 +308,23 @@ The only modification compared to what is already presented, is that in the cont
         - \textbf{u}_f^0
     \right)
 \right]
-\cdot \textbf{n}_d}$ in a taylor series according to \ref{eq:f_exp}. 
-Notice the terms $\div[\ldots]$ in the expression for  $\mathbf{\Phi}_f^\text{eff}$ indicates the presence of the higher moments of interphase exchange term. 
-Likewise, the three verticals dots below \ref{eq:avg_hybrid_q_1} indicates that one might eventually add an arbitrary number of dispersed phase equations of any $n^{th}$ order moment $\textbf{Q}_p^{(n)}$, which are given by \ref{eq:dt_Q_n}. 
-Under this form we can notice that the exchange term on the right-hand side of \ref{eq:avg_hybrid_dt_chi_f} is exactly the one appearing on the right-hand side of \ref{eq:avg_hybrid_q}. 
-Additionally, in the effective flux $\mathbf{\Phi}_f^\text{eff}$ one see appear the exchange term of \ref{eq:avg_hybrid_q_1} and so on for the higher moments equations. 
-Consequently, the zeroth order exchange term makes the transfer between $Q_\alpha^{(0)}$ and plays the role of a source term for $f_f$, while the first and higher order exchange terms act as a source for the $\textbf{Q}_p^{(n)}$, and play the role of an effective non-convective fluxes for $f_f$. 
+\cdot \textbf{n}_d}$ into a Taylor series in a similar way to \ref{eq:f_exp}. 
+The presence of the terms $\div[\ldots]$ in the expression for  $\mathbf{\Phi}_f^\text{eff}$ suggests that higher-order moments of the interphase exchange term are involved.
+Similarly, the ellipsis below \ref{eq:avg_hybrid_q_1} implies that an arbitrary number of dispersed phase moment equations can be introduced. In this format, it becomes evident that the exchange term on the right-hand side of \ref{eq:avg_hybrid_dt_chi_f} is identical to that on the right-hand side of \ref{eq:avg_hybrid_q}. 
+Additionally, in the effective flux $\mathbf{\Phi}_f^\text{eff}$ the exchange term from  \ref{eq:avg_hybrid_q_1} appears, and this property continues for higher-order moments.  
+Consequently, the zeroth order exchange term in the equation for $\text Q_\alpha^{(0)}$ plays the role of a source term for $f_f$, while the first and higher order exchange terms act as a source into the higher moment equations, and contribute to the effective non-convective fluxes for $f_f$. 
 
 
-The system is composed of $n+1$ equations for $n+1$ unknown that are : $f_f$, $\textbf{Q}_p^{(1)}$\ldots$\textbf{Q}_p^{(n)}$. 
-Notice that one might include $\phi_f$ and $n_p$ as unknowns by adding an equation for these terms, this is done by setting $f_f=1$ and $Q_\alpha^{(n)} =1$ in \ref{eq:avg_hybrid_dt_chi_f} and \ref{eq:avg_hybrid_q}.
-Then, the closure problem consists in finding an explicit expression for all the term of the form $\avg{\ldots}$ in terms of the unknowns of the problem, i.e. 
-$f_f$, $Q_\alpha$, $Q_\alpha^{(1)}$ \ldots $Q_\alpha^{(n)}$.  
-Once that is done the equations can be solved for $f_f$,  $Q_\alpha$, $\textbf{Q}_p^{(1)}$\ldots$\textbf{Q}_p^{(n)}$. 
 
-The question that we would like to address now is the following : in which cases the higher moments $\textbf{Q}_p^{(n)}$ is needed in this system of equations ?
-In fact there is two reason for which the moment $\textbf{Q}_p^{(n)}$ could be needed, these are : 
-(1) because $\textbf{Q}_p^{(n)}$ could be an information that we seek to obtain as it is.
-For instance think of the orientation of fibers in a flow, which correspond to the second moment of the distribution of mass of the particles.  
-This information might be the goal of the whole study, as one seek to understand how the orientation of fiber evolve in the flow for industrial purposes. 
-(2) because $\textbf{Q}_p^{(n)}$ is essential to compute one of the closure in the above equations. 
-Again, the particle orientation is a good example, as even if the user isn't particularily interested in that information, it might be relevant, or even essential to have this information to model accurately the closure terms. 
-Another example might be the particle angular velocity, which corresponds to the first order moment of momentum. 
-This information is often not the final objective of the study, nevertheless it is essential to well model the closure terms of \textit{The hybrid model}, especially the effective stress of the suspenison, or the inter-phase drag force. 
-Thus, we can conclude that the higher moments $\textbf{Q}_p^{(n)}$ is needed uniquely if the closure terms are highly dependent on this moment, or if the information given by $\textbf{Q}_p^{(n)}$ is the final objective of the study. 
+The system of equations presented here offers a clear understanding of the roles of the dispersed phase non-convective flux terms, $\bm\Phi_d$ and $\bm\Phi_\Gamma$, in the particle phase conservation equation. 
+As evidenced in \ref{eq:avg_hybrid_q}, $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$  do not influence the lowest order particle-phase averaged conservation equation, i.e. the equation of $n_p \text Q_p$. 
+However, \ref{eq:avg_dt_chi_f} (for $k = d$) and \ref{eq:avg_dt_delta_f}, show that the phase-averaged quantities $f_d$ and $f_\Gamma$, are affected by the non-convective fluxes at the particle surface and internally, since $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ appear in these equations.
+This may seem contradictory at first, but it is important to note that $\bm{\Phi}_d^0$ and $\bm{\Phi}_\Gamma^0$ serve as source terms in the conservation equations for higher moments such as $\textbf{Q}^{(1)}_p$ \ldots $\textbf{Q}^{(n)}_p$, which are related to $f_d$ and $f_\Gamma$ through \ref{eq:f_exp}.
+In summary, the non-convective fluxes $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$  are not explicitly related to $\text Q_p$, regardless of particle nature or volume fraction. 
+Instead, their influence on $\text Q_p$ is mediated through the closure terms in equation \ref{eq:avg_hybrid_q}, which depend on the higher moments $\textbf{Q}^{(1)}_p$ \ldots $\textbf{Q}^{(n)}_p$. These moments, in turn, explicitly depend on $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ as indicated by \ref{eq:avg_hybrid_q_1}. 
+%Consequently, it must be understood that the kinetic-like equations (\ref{eq:avg_dt_dq_alpha_tot}) is formally exact and apply for any type of particle and particle volume fraction, as long as the closure terms are well modeled and that the Taylor expansion used in these expressions reaches a convergence on the scale of the particles as discussed below.
+%The reader is invited to interpret this expression for the specific case of the momentum conservation law. 
 
-The clear and general exposition of system of equations exposed here enables us to better understand the role of the dispersed phase non-convective flux term $\bm\Phi_d$ and $\bm\Phi_\Gamma$, in the particle phase conservation equation. 
-As evidenced by \ref{eq:avg_hybrid_q}, $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ do not play any role in the particle-phase averaged conservation, i.e. the equation of $n_pQ_p$. 
-However, as shown in \ref{eq:avg_dt_chi_f} (for $k = d$) and \ref{eq:avg_dt_delta_f}, the phase averaged quantities $f_d$ and $f_\Gamma$, are subject to the particle surface and internal non-convective fluxes, since $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ are present in these equations.
-These facts may seem in contradiction, however, remark that $\bm{\Phi}_d^0$ and $\bm{\Phi}_\Gamma^0$ play the role of source term in the conservation equation of the higher moments : $\textbf{Q}^{(1)}_p$ \ldots $\textbf{Q}^{(n)}_p$, which are related to $f_d$ and $f_\Gamma$ through \ref{eq:f_exp}.
-In brief, the non-convective fluxes $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$  are not explicitly related to $Q_p$, and that regardless of the particles nature and volume fraction. 
-Consequently, the influence of $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ on $Q_p$ is made solely through the dependence of closure term present in \ref{eq:avg_hybrid_q} with the higher moments : $\textbf{Q}^{(1)}_p$ \ldots $\textbf{Q}^{(n)}_p$, which are them self explicitly dependent on $\bm{\Phi}_d$ and $\bm{\Phi}_\Gamma$ through \ref{eq:avg_hybrid_q_1}. 
-Consequently, it must be understood that the kinetic-like equations (\ref{eq:avg_dt_dq_alpha_tot}) is formally exact and apply for any type of particle and particle volume fraction, as long as the closure terms are well modeled and that the Taylor expansion used in these expressions reaches a convergence on the scale of the particles as discussed below.
-The reader is invited to interpret this expression for the specific case of the momentum conservation law. 
 
 
 
