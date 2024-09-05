@@ -16,7 +16,6 @@
 \RequirePackage{empheq}
 
 \RequirePackage{bm}
-% \RequirePackage{mdframed}
 \RequirePackage[
   colorlinks=true
 ]{hyperref}
@@ -27,14 +26,12 @@
     citecolor = green!50!black,
     urlcolor=cyan,
 }
-%\RequirePackage[doublespacing]{setspace}
 \RequirePackage{natbib}
 \bibliographystyle{apalike}
 
 \RequirePackage{url}
 \RequirePackage{authblk}
 \RequirePackage{multirow}
-\renewcommand\Affilfont{\itshape\small}
 
 \RequirePackage{stmaryrd}
 
@@ -45,36 +42,15 @@
 \usepackage{xcolor}
 
 \usepackage{listings}
-% \RequirePackage{ragged2e}
-% \RequirePackage{times}
-
-% \RequirePackage{newtxtext}
 \RequirePackage{float}
 \RequirePackage{mathtools}% it load amsmath 
 \RequirePackage{tikz}
 \RequirePackage{todonotes}
-% \setlength{\marginparwidth}{3.5cm}
-% \usepackage[bmargin=2cm,tmargin=2cm,lmargin=2cm,rmargin=2cm]{geometry}
 \RequirePackage{csquotes}
-% \RequirePackage{titlesec}
-% \RequirePackage{fontspec}
-% Define title format
-% % \titleformat{\chapter}[display]
-%   {\normalfont\Huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}{\thesection}{1em}{}
-
-% \titleformat{\subsection}
-%   {\normalfont\large\bfseries}{\thesubsection}{1em}{}
-
-% \titleformat{\subsubsection}
-%   {\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
-
-
 
 \usetikzlibrary{arrows.meta,
                 chains,
+                calc,
                 positioning,
                 shapes.geometric}
 \RequirePackage{pgfplots}
@@ -82,19 +58,14 @@
 \usepgfplotslibrary{polar}
 \pgfplotsset{compat=newest}
 \RequirePackage{graphicx}
-% \RequirePackage{gnuplot-lua-tikz}
-% \RequirePackage{etoolbox}
-% \RequirePackage{tocloft}
 \RequirePackage{etoc}
 
-% \newcommand{\chaptertoc}{
-%     \begingroup
-%     \let\clearpage\relax
-%     \let\cleardoublepage\relax
-%     \tableofcontents
-%     \endgroup
-%     \addtocontents{toc}{\protect\contentsline{chapter}{}{}}
-% }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \newcommand{\size}{0.22\textwidth}
 \newcommand{\avg}[1]{\left<#1\right>}
@@ -194,7 +165,6 @@
 % \newcommand{\numref}[1]{\ref{#1}}
 \renewcommand{\ref}[1]{\autoref{(#1)}}
 
-\usetikzlibrary{calc}
 
 
 

@@ -1,4 +1,4 @@
-\section{Nearest particle statistics}
+\section{Closure with the Nearest particle statistics}
 
 To circumvent this issue of diverging integral we introduce the \textit{Nearest neighbor statistic} in the form introduced \citet{zhang2021ensemble}. 
 As the computation of the wake of the particle requires the knowledge of its velocity, we modify slightly the \textit{Nearest neighbor statistics} of \citet{zhang2021ensemble} to include a condition on the \textit{test } particle center of mass velocity.
@@ -15,9 +15,11 @@ Therefore, in the first place we introduce the \textit{Nearest neighbor velocity
 \end{equation}
 where,
 \begin{align}
+    \label{eq:h_i_def}
     h_i[\textbf{x},\FF,t]
     = \frac{1}{N[\textbf{x},t,\FF]}
     \prod_j H(|\textbf{x}_j[\FF,t] - \textbf{x}| - |\textbf{x}_i[\FF,t] - \textbf{x}|)\\
+    \label{eq:N_def}
     N[\textbf{x},t,\FF]
     = \sum_i\prod_jH(|\textbf{x}_j[\FF,t] - \textbf{x}| - |\textbf{x}_i[\FF,t] - \textbf{x}|).
 \end{align}
@@ -703,7 +705,7 @@ In this situation we may write,
 \begin{equation}
     \textbf{v}^\text{nst}[\textbf{z},t|\textbf{x},\textbf{w},\textbf{y}]
     = 
-    \frac{3}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
+    \frac{3}{4}(\textbf{w}- \textbf{u}[\textbf{y},t])\cdot\left[
         \frac{2+3\lambda}{3(1+\lambda)}
         +
         \frac{\lambda}{6(1+\lambda)}\pddz^2 
@@ -730,8 +732,8 @@ Thus, with this first approximation the final result yields,
     + \phi(\textbf{u}_d - \textbf{u}_f)[\textbf{x},t]
     \label{eq:reformulation}
 \end{equation}
-where $\textbf{v}^\text{nst}$ is given by \ref{eq:solution_isolated}
-Thus, using \ref{eq:solution_isolated} we obtain, 
+where $\textbf{v}^\text{nst}$ is given by \ref{eq:solution_isolated}. 
+Thus, using \ref{eq:reformulation} we obtain, 
 \begin{equation}
     \textbf{v}^\text{nst}_f[\textbf{x},t,\textbf{y},\textbf{w}]
     = 
@@ -740,11 +742,21 @@ Thus, using \ref{eq:solution_isolated} we obtain,
         +
         \frac{\lambda}{6(1+\lambda)}\pddx^2 
     \right]\mathcal{G}(\textbf{x})
-    + \mathcal{O}(\phi),
+    + \phi(\textbf{u}_d - \textbf{u}_f)[\textbf{x},t].
     \label{eq:solution_isolated_at_x}
 \end{equation}
-where we neglected the term $\phi(\textbf{u}_d - \textbf{u}_f)$ in \ref{eq:reformulation} due to the presence of $P_\text{nst}^f$ in  \ref{eq:relation_ensemble_nst} which implies that $P_\text{nst}^f\phi(\textbf{u}_d - \textbf{u}_f)\sim \mathcal{O}(\phi^2)$ which is indeed negligible. 
-
+According to \ref{eq:bounday2} and \ref{eq:reformulation}, we might also reformulate the boundary condition for $\textbf{v}^\text{nst}_f$ at the surface of the particle. 
+It yields, 
+\begin{equation*}
+    \textbf{v}^\text{nst}_f\cdot \textbf{n}
+    = \left[
+        \textbf{w} - \textbf{u} + \phi (\textbf{u}_p - \textbf{u}_f)
+    \right]\cdot \textbf{n}
+    = \left(
+        \textbf{w} - \textbf{u}_f
+    \right)\cdot \textbf{n}.
+\end{equation*}
+Thus, the relative velocity of interest is still $\textbf{w} - \textbf{u}_f$. 
 
 Now that we obtained an explicit closure for $\textbf{v}^\text{nst}_f$ let us focus 
 on the distribution $P_\text{nst}^f$. 
@@ -862,7 +874,7 @@ Indeed, using \ref{eq:solution_isolated_at_x} and \ref{eq:Pnst_explicit} in \ref
     = \phi    
     C_1
     \left\{
-        \textbf{u}_{fp}\textbf{u}_{fp}+ \frac{1}{n_p}\pavg{\textbf{u}_\alpha\textbf{u}_\alpha}
+        \textbf{u}_{fp}\textbf{u}_{fp}+ \frac{1}{n_p}\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
         -\frac{1}{3} (\textbf{u}_{fp}\cdot \textbf{u}_{fp} + 2k_p)\bm\delta
     \right\},    
     + \phi C_2
@@ -882,6 +894,7 @@ with,
         - (3+10\lambda +8\lambda^2)
     \right].
 \end{align*}
+\tb{maybe remove order phi terms}
 We have decomposed the \textit{Reynolds stress} tensor into two contribution. 
 The first one being, a traceless symmetric tensor, proportional to the functional $C_1$. 
 The second contribution is the isotropic part of the \textit{Reynolds stress} tensor, which is proportional to $C_2$. 
@@ -906,11 +919,13 @@ Even though this term is $\mathcal{O}(\phi)$ higher than the others in $\textbf{
 Indeed, in \citet{zhang2021ensemble}, while carrying similar derivation foundout that the terms of $\mathcal{O}(\phi)$ in $\textbf{v}^\text{nst}$ contributed to $\mathcal{O}(\phi^{1/3})$ in their final results. 
 In other worlds, this is not as straightforward as in the \textit{single-particles conditional averaged} equations. 
 
-Anyhow, regardless of the right-hand side of \ref{eq:momentum_nst_d_stokes} the boundary condition at the surface of the particle, located at \textbf{y}, will generate the velocity fields\citep{pozrikidis1992boundary}, 
+\subsubsection{The velocity fields singularity solution}
+
+Regardless of the right-hand side of \ref{eq:momentum_nst_d_stokes} the boundary condition at the surface of the particle, located at \textbf{y}, will generate the velocity fields\citep{pozrikidis1992boundary}, 
 \begin{equation}
     \textbf{v}^\text{nst}_p[\textbf{z},t|\textbf{x},\textbf{w},\textbf{y}]
     = 
-    \frac{a}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
+    \frac{a}{4}(\textbf{w}- \textbf{u}[\textbf{y},t])\cdot\left[
         \frac{2+3\lambda}{1+\lambda}
         +
         a^2\frac{\lambda}{2(1+\lambda)}\pddz^2 
@@ -918,6 +933,7 @@ Anyhow, regardless of the right-hand side of \ref{eq:momentum_nst_d_stokes} the 
     \label{eq:solution_isolated2}
 \end{equation}
 Where $\mathcal{G}(\textbf{z},\textbf{y})$ is still the Ossen tensor, or Green function of the stokes equations. 
+\tb{En principe la vitesse relative est forme avec la bulk velocity }
 
 Now let us turn our attention to the source term on the right-hand side of \ref{eq:momentum_nst_d_stokes}. 
 Following \citet{zhang2021ensemble}, we remark that the contribution to the velocity field, generated by the particle free zone, can be written as a sum of \textit{Stokeslets} of magnitude $\phi\Delta \rho |\textbf{g}|$.
@@ -958,7 +974,7 @@ Therefore, the total velocity field $\textbf{v}^\text{nst}_f$ at the point $\tex
 \begin{multline}
     \textbf{v}^\text{nst}_f [\textbf{x},\textbf{w},\textbf{y},t]
     =
-    \frac{a}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
+    \frac{a}{4}(\textbf{w}- \textbf{u}[\textbf{y},t])\cdot\left[
         \frac{2+3\lambda}{1+\lambda}
         +
         a^2\frac{\lambda}{2(1+\lambda)}\grad^2 
@@ -982,7 +998,7 @@ which finally gives the result,
 \begin{multline}
     \textbf{v}^\text{nst}_f
     =
-    \frac{a}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
+    \frac{a}{4}(\textbf{w}- \textbf{u}[\textbf{y},t])\cdot\left[
         \frac{2+3\lambda}{1+\lambda}
         +
         a^2\frac{\lambda}{2(1+\lambda)}\grad^2 
@@ -1005,23 +1021,280 @@ Thus, everything is well consistent, Additionally we generalized and demonstrate
 
 
 For a better physical understanding we present know the dimensionless form of \ref{eq:final_sol_v_nst}. 
-The lengths are made dimensionless using the radius of the particle $a$, the velocity vector $\textbf{w} - \textbf{u}_f$ is made dimensionless with its norm $U = |\textbf{w} - \textbf{u}_f|$ such that, $\textbf{e} = \textbf{w} - \textbf{u}_f/. 
-We obtain,  
-\begin{multline}
-    \textbf{v}^\text{nst}_f
+The lengths are made dimensionless using the radius of the particle $a$, the velocity vector $\textbf{w} - \textbf{u}$ is made dimensionless the norm $U = |\textbf{w} - \textbf{u}_f|$, 
+Indeed, we have the relation, 
+\begin{equation*}
+    \frac{\textbf{w} - \textbf{u}}{|\textbf{w} - \textbf{u}_f|}
+    = \textbf{e} + \phi \textbf{e}
+\end{equation*}
+where we introduced the unit vector: $\textbf{e} = \textbf{w} - \textbf{u}_f/U$. 
+Likewise, the gravity acceleration vector is made dimensionless using its norm, such that the unit vector in the direction of the acceleration of gravity is given by $\textbf{k} = \textbf{g} / g$, with $g = |\textbf{g}|$. 
+Dividing \ref{eq:final_sol_v_nst} by $U$ and using these definitions yields directly the dimensionless expression for the disturbance velocity field, 
+\begin{equation}
+    \frac{\textbf{v}^\text{nst}_f}{U}
     =
-    \frac{1}{4}(\textbf{w}- \textbf{u}_f[\textbf{y},t])\cdot\left[
+    \frac{1}{4}(\textbf{e}+ \phi \textbf{e})\cdot\left[
         \frac{2+3\lambda}{1+\lambda}
         +
         \frac{\lambda}{2(1+\lambda)}\grad^2 
     \right]\mathcal{G}(\textbf{x},\textbf{y})
-    + \frac{\phi Ga^2}{12 Re} |\textbf{x}-\textbf{y}|^2 \frac{\textbf{g}}{g}
-    +\phi(\textbf{u}_d - \textbf{u}_f)
-\end{multline}
-We recall that $Ga$ is the \textit{Galileo} number and $Re$ the \textit{Reynolds} number, defined as,  
+    + \phi A |\textbf{x}-\textbf{y}|^2 \textbf{k}
+    +\phi \textbf{e}
+    \label{eq:v_nst_solution_adim}
+\end{equation}
+where we kept the same notation for all the distances, they are assumed implicitly dimensionless. 
+At the leading order, notice that the terms proportional to $\phi \textbf{e}$ in \ref{eq:v_nst_solution_adim} are negligible, however we keep them for the purpose of generality. 
+Additionally, we introduced the dimensionless number, 
+\begin{equation}
+    A = \frac{Ar}{12 Re}=\frac{\Delta \rho g (2a)^2}{12 \mu_f U}
+    \label{eq:A_general}
+\end{equation}
+where we recall that $Ar$ is the \textit{Galileo} number and $Re$ the \textit{Reynolds} number, defined as,  
 \begin{align*}
     Re= \frac{\rho_f U 2a}{\mu_f},
     &&
-    Ga = \frac{\sqrt{\rho_f \Delta\rho g (2a)^3}}{\mu_f},
+    Ar = \frac{\rho_f \Delta\rho g (2a)^3}{\mu_f^2},
 \end{align*}
 respectively. 
+Upon considering specific scenarios, such as a steady state rising droplet due to the acceleration of gravity, one is able to relate $Ge$ and $Re$ and give explicit closure instead of $A$. 
+As mentionned in \citet{zhang2021ensemble} this approaches can be generalized to other body forces fields, such as electromagnetic forces, in order to obtain the influence of the latter on the resulting velocity field.
+
+\subsubsection{The pseudo turbulent tensor closure}
+
+From \ref{eq:sol_dimenisonless_results} we may already compute the integral in \ref{eq:step_one}. 
+However, as $\textbf{e}$ and $\textbf{k}$ in \ref{eq:sol_dimenisonless_results}  are not necessarily collinear vectors the functional form of the resulting stress tensor is not trivial. 
+% Thus, in the first place we clarify the expected functional form of $\avg{\rho_f \textbf{u}_f'\textbf{u}_f'}$. 
+Indeed, since $\textbf{v}_f^\text{nst}\sim \textbf{e}$ or $\textbf{g}$, the final results must be a tensor built from sum of product of these two vectors.  
+Additionally, since $\avg{\rho_f \textbf{u}_f'\textbf{u}_f'}$ is a symmetric tensor, the result must be a symmetric tensor as well. 
+Since, the only second order symmetric tensors that can be constructed from the  two arbitrary vectors: $\textbf{e}$ and $\textbf{k}$ are, 
+\begin{align*}
+    \textbf{ee}
+    && (\textbf{e}\cdot \textbf{e})\bm\delta, 
+    && \textbf{kk},
+    && (\textbf{k}\cdot \textbf{k})\bm\delta,
+    && \textbf{ke}+\textbf{ek},
+    && (\textbf{k}\cdot \textbf{e})\bm\delta, 
+\end{align*}
+we deduce that the volume integral of \ref{eq:step_one}, have the form, 
+\begin{align}
+    \frac{1}{U^2}
+    \frac{3\phi}{4\pi}\int_{\mathbb{R}^3}
+    \textbf{v}_f^\text{nst}
+    \textbf{v}_f^\text{nst}
+     e^{-\phi(r^3 -1)}
+    d\textbf{r}
+    &= C^{(1)}_e \left[
+        \textbf{ee}
+         - \frac{1}{3}(\textbf{e}\cdot \textbf{e})\bm\delta
+    \right]
+    + C^{(2)}_e 
+    (\textbf{e}\cdot \textbf{e})\bm\delta \nonumber \\
+    &+ C^{(1)}_k \left[
+        \textbf{kk}
+         - \frac{1}{3}(\textbf{k}\cdot \textbf{k})\bm\delta
+    \right]
+    + C^{(2)}_k 
+    (\textbf{k}\cdot \textbf{k})\bm\delta \nonumber \\
+    &+ C^{(1)}_{ek} \frac{1}{2}\left[
+        (\textbf{ek}  + \textbf{ke})
+         - \frac{2}{3}(\textbf{k}\cdot \textbf{e})\bm\delta
+    \right]
+    + C^{(2)}_{ek} 
+    (\textbf{e}\cdot \textbf{k})\bm\delta 
+    \label{eq:functional_form}
+\end{align}
+where the first term of each line correspond to symmetric traceless tensors, and the second term of each line to the corresponding isotropic contribution. 
+Then, the first two constant, $C^{(1)}_e$ and $C^{(2)}_e$ can be obtained setting $\textbf{g}= 0$ in \ref{eq:sol_dimenisonless_results} and performing the integration. 
+Likewise, $C^{(1)}_k$ and $C^{(2)}_k$ can be obtained setting $\textbf{e}=0$ in \ref{eq:sol_dimenisonless_results}. 
+The constants, $C^{(1)}_{ek}$ and $C^{(2)}_{ek}$ can be obtained setting $\textbf{g} = 0$ in of the $\textbf{v}_f^\text{nst}$ on the left-hand side of \ref{eq:functional_form} and $\textbf{e}=0$ in the other $\textbf{v}_f^\text{nst}$. 
+Thus, we directly, obtain at the leading order, 
+\begin{align}
+    C_e^{(1)} =
+    % \frac{9(2+3\lambda)^2 \Gamma(\frac{1}{3})}{80(\lambda+1)^2}\phi^{2/3}
+    \frac{27}{10}
+    C_e^{(2)}
+    % + \mathcal{O}(\phi)
+    &&  C_e^{(2)} =
+    \frac{(2+3\lambda)^2 \Gamma(\frac{1}{3})}{24(\lambda+1)^2}\phi^{2/3}
+    + \mathcal{O}(\phi)
+    \\
+    C_k^{(1)} =
+    % A^2 \Gamma\left(7/3\right)\phi^{2/3}
+    3
+    C_k^{(2)}
+    % + \mathcal{O}(\phi^{5/3})
+    && C_k^{(2)} =
+    A^2 \frac{\Gamma(\frac{7}{3})}{3}\phi^{2/3}
+    + \mathcal{O}(\phi^{5/3})
+    \\
+    C_{eg}^{(1)} =
+    3
+    C_{eg}^{(2)}
+    % A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{3 (\lambda+1)}\phi^{2/3}
+    % + \mathcal{O}(\phi^{4/3})
+    && C_{eg}^{(2)} =
+    A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{9(\lambda+1)}\phi^{2/3}
+    + \mathcal{O}(\phi^{4/3})
+    \label{eq:constants}
+\end{align}
+As can be seen, the leading order contribution from the back flow velocity generated due to the acceleration of gravity is $\sim \phi^{2/3}$. 
+It is therefore non-negligible in this general framework. 
+\tb{include the orer phi terms .  ?  ? ? }
+
+
+Following \ref{eq:step_one} to obtain the \textit{Reynolds stress} tensor we now integrate  \ref{eq:functional_form} over the $\textbf{w}$, which yield the final form of our \textit{Pseudo turbulent} tensor model, namely, 
+\begin{align}
+    \frac{\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}}{U^2}
+    &= 
+    C^{(1)}_e \left[
+        \textbf{e}_p\textbf{e}_p
+        + \frac{\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}{n_p U^2}
+         - \frac{1}{3}(\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta
+    \right]
+    + C^{(2)}_e 
+    (\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta \nonumber \\
+    &+ C^{(1)}_k  \left[
+        \textbf{kk}
+         - \frac{1}{3}(\textbf{k}\cdot \textbf{k})\bm\delta
+    \right]
+    +C^{(2)}_k 
+    (\textbf{k}\cdot \textbf{k})\bm\delta \nonumber \\
+    &+ C^{(1)}_{ek} \left[
+        \frac{1}{2}
+        (\textbf{e}_p\textbf{k}  + \textbf{k} \textbf{e}_p)
+         - \frac{1}{3}(\textbf{k}\cdot \textbf{e}_p)\bm\delta
+    \right]
+    + C^{(2)}_{ek}
+    (\textbf{e}_p\cdot \textbf{k})\bm\delta 
+    \label{eq:functional_form_avg}
+\end{align}
+In this expression $\textbf{e}_p = \int \textbf{e} d\textbf{w} $ represents the mean direction of the mean relative phase velocity $\textbf{u}_{pf}$ such that $\textbf{u}_{pf} = U \textbf{e}_p$, in opposition to $\textbf{e}$ which represented the direction of a single particle relative velocity. 
+
+
+
+In summary, the only additional terms appearing due to the integration over the velocity phase space is the addition of the particle fluctuation contribution to the \textit{Reynolds stress}. 
+However, it is likely that $k_p/U^2 \sim \phi$ at least, therefore at $\mathcal{O}(\phi)$ this term might be safely neglected. 
+However, for purpose of generality we keep these terms. 
+
+\subsubsection{Steady-state rising droplet}
+
+Let us now study the case where $\textbf{k} = - \textbf{e} = \textbf{e}_z$, meaning that the droplet rises in the opposite direction of gravity which is aligned with the vertical direction denoted by $\textbf{e}_z$.  
+At $\mathcal{O}(\phi)$ and in Stokes flow regime, the drag applied on an isolated spherical droplet is given by Hadamard-Ribczynski formula, thus at steady-state the rising velocity of a droplet is given by, 
+\begin{equation}
+    U = \Delta \rho \frac{g (2a)^2}{6 \mu_f }\left(\frac{1+\lambda}{2+3\lambda}\right).
+    \label{eq:U_isolated}
+\end{equation}
+% \begin{equation}
+%     2a \pi \mu_f \left(\frac{3\lambda +2}{\lambda +1}\right) 
+%     U
+%     = 
+%     \frac{4}{3}\pi a^3 
+%     \Delta \rho
+%     g,
+% \end{equation}
+We deduce from this relation that in this specific situation, i.e. when the direction of the relative velocity \textbf{e} is aligned with the gravity acceleration direction, we have, 
+\begin{equation}
+    A = \frac{1}{2}\left(\frac{3\lambda +2}{\lambda +1}\right). 
+    \label{eq:closure_A}
+\end{equation}
+Injecting this expression into \ref{eq:v_nst_solution_adim} gives us an explicit expression of the velocity field $\textbf{v}^\text{nst}_f$. 
+
+To give a better idea of the meaning of $\textbf{v}_f^\text{nst}$, we display 
+in \ref{vnst_vertical} the streamlines generated by the field $\textbf{v}_f^\text{nst}(\textbf{r})$ in the cross-section, given by the plane formed by the vectors $(\textbf{e}_x,\textbf{e}_z)$. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_0.pdf}
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_1.pdf}
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_5.pdf}
+    % \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_10.pdf}
+    \caption{Streamlines of the disturbance velocity field $\textbf{v}^\text{nst}(\textbf{r}_f)$ \eqref{eq:v_nst_solution_adim}  in the cross-section given by the plane $(\textbf{e}_x,\textbf{e}_z)$, for multiples volume fraction $\phi = 0, 0.01$ and $0.05$ at $\lambda = 10$.  
+    The color map indicates the magnitude of the velocity, from black which corresponds to a velocity magnitude of 0, to the color at the interface which corresponds to 1.
+    In this situation $\textbf{e} = \textbf{e}_z$ and $\textbf{k} = -\textbf{e}_z$}
+    \label{fig:vnst_vertical}
+\end{figure}
+We can observe on \ref{fig:vnst_vertical} (left) that $\textbf{v}^\text{nst}_f(\phi =0)$ corresponds to the disturbance field of an isolated particle in Stokes flow. 
+This is easily understandable considering that the last two terms on the right-hand side of \ref{eq:v_nst_solution_adim} cancel for $\phi=0$, thus leading to \ref{eq:solution_isolated} which is the solution for isolated particle. 
+At finite volume fraction, $\phi =0.01$, we  observe in \ref{fig:vnst_vertical} (middle), that a downstream velocity start to appear at large distance from the particle center.  
+As discussed previously, this ``back flow velocity'' is given by the term $\phi A |\textbf{x}- \textbf{y}|^2 \textbf{k}$ in \ref{eq:solution_isolated}.
+The particle is thus surrounded by a spherical shell within which the disturbance field has a positive vertical velocity, and outside which the velocity is negative.
+In the following discussion we call this spherical shell the \textit{confinement zone}.   
+For higher volume fractions $\phi = 0.05$, the backflow velocity is even stronger leading to a smaller confinement zone around the particle. 
+
+Let us discuss the form of \ref{eq:functional_form_avg} in the specific case displayed in \ref{fig:vnst_vertical}, i.e. spherical droplets rising in stokes flow. 
+Since $\textbf{e}_p = - \textbf{k}$ we have $\textbf{e}_p\textbf{k} = - \textbf{kk}$. 
+Additionally, one can use \ref{eq:closure_A} into the expression for $C_k^{(1)}$ and $C_{ek}^{(1)}$. 
+In this specific case, by carrying out the calculation, we obtain, 
+\begin{equation}
+    C_k^{(1)} \textbf{kk} + C_{ek}^{(1)} \textbf{ke}_p
+    = 0. 
+    \label{eq:cancelation1}
+\end{equation}
+Applying the same reasoning, one can also deduce that, 
+\begin{equation}
+    C_k^{(2)} \textbf{k}\cdot \textbf{k} + C_{ek}^{(2)} \textbf{k}\cdot \textbf{e}_p
+    = 0. 
+    \label{eq:cancelation2}
+\end{equation}
+Consequently, we must deduce that the contribution from the gravity acceleration to the \textit{Reynolds stress} tensor, remains negligible in this simplified situation. 
+This, might seem surprising considering the seemingly non-negligible action of the gravity on the velocity field displayed \ref{eq:vnst_vertical}. 
+However, we must understand from this fact, that the velocity variance generated by the back flow velocity, also induce a decrease of the velocity variance generated by the particle motion compared to the isolated case.
+In other word, the back flow velocity generate at the boundaries of the confinement zone a low velocity variance, which is exactly balanced by the velocity variance generated by the back flow at the exterior of the confinement zone.    
+Notice that this explanation is only true when, $\textbf{k} = - \textbf{e}_p$. 
+Thus, we may examine now situations were the velocity of the dispersed phase is not in the opposite direction of gravity. 
+
+
+
+\subsubsection{Horizontal motions}
+
+We now consider the case were $\textbf{e}_p = \textbf{e}_x$, and $\textbf{k} = - \textbf{e}_z$, where $\textbf{e}_z$ is still the vertical unit vector and $\textbf{e}_x$ the Horizontal unit vector. 
+Of course in the steady-state isolated regime $\textbf{e}_p$, could not be otherwise than vertical. 
+However, in a more general case, consider an Euler-Euler framework for example, $\textbf{e}_p$ have absolutely no reason to be in the vertical direction, due to boundaries or transient effects. 
+In this case $A$ is given by \ref{eq:A_general} and requires the norm of the relative velocity $U$ which is supposed known in the Euler-Euler simulation. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_H_l_10_0.pdf}
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_H_l_10_1.pdf}
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_H_l_10_5.pdf}
+    % \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_10.pdf}
+    \caption{Streamlines of the disturbance velocity field $\textbf{v}^\text{nst}(\textbf{r}_f)$  \eqref{eq:v_nst_solution_adim} in the cross-section given by the plane $(\textbf{e}_x,\textbf{e}_z)$, for multiples volume fraction $\phi = 0, 0.01$ and $0.05$ at $\lambda = 10$.  
+    The color map indicates the magnitude of the velocity, from black which corresponds to a velocity magnitude of 0, to the color at the interface which corresponds to 1.
+    In this situation $\textbf{e} = \textbf{e}_x$ and $\textbf{k} = -\textbf{e}_z$.
+    The constant $A$ have been arbitrarily set to $1$. }
+    \label{fig:vnst_horizontal}
+\end{figure}
+In \ref{fig:vnst_horizontal} we display the streamlines generated by the velocity field $\textbf{v}_f^\text{nst}$ in this situation. 
+As before, we remark that at $\phi = 0$, $\textbf{v}_f^\text{nst}$ corresponds to the disturbance velocity field of an isolated droplet translating Horizontally in Stokes flow. 
+At $\phi = 0.01$, see \ref{fig:vnst_horizontal} (middle), the effect of gravity induce a downstream flow, which is, this time not in the opposite direction of the disturbance velocity of the drop, resulting into a global down-right flow. 
+At higher volume fraction this down stream flow is stronger, and the confinement zone around the particle smaller. 
+In summary, we observe the same phenomenon as in the previous situation reported on \ref{fig:vnst_vertical}, except that the droplet disturbance field is not in the opposite direction of the back flow velocity, but normal to it.
+
+This difference has a significant impact on the \textit{Reynolds stress} closure, as the relation \ref{eq:cancelation1} and \ref{eq:cancelation2} are not true anymore. 
+Indeed, in this case the functional form of the \textit{Reynolds stress} is given by, 
+\begin{equation}
+    \frac{\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}}{U^2}
+    = 
+    C^{(1)}_e 
+    \textbf{e}_x\textbf{e}_x
+    % + \frac{\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}{n_p U^2}
+    +C^{(1)}_k    
+    \textbf{e}_z\textbf{e}_z
+    - C^{(1)}_{ek} 
+        \frac{1}{2}
+        (\textbf{e}_x\textbf{e}_z+ \textbf{e}_z \textbf{e}_x)
+    + [C^{(2)}_e + C^{(2)}_k - (C^{(1)}_k + C^{(1)}_e )/3 ]  \bm\delta. 
+\end{equation}
+Thus, the contribution from the wake of the particles is still present and given by $C_e^{(1)}$ and $C_e^{(2)}$. 
+Regarding the buoyancy forces, it provides additional contributions that are on the vertical direction. 
+Finally, the cross term $\textbf{e}_p \textbf{k}$ provides off-diagonal terms. 
+The isotropic part of this tensor is the sum of the aforementioned contributions. 
+
+\subsection{Discussion}
+
+In this section we have considered the translating motion of a spherical droplet in stokes flow. 
+In this regime we have shown that the ambient body force field $\textbf{g}$ plays a non-negligible role on the \textit{Nearest Neighbor Conditional Averaged} disturbance fields. 
+Consequently, the \textit{Reynolds stress} closure obtained is a function of $\textbf{u}_{fp}$ the relative phase velocity and the direction of $\textbf{g}$ which is considered vertical. 
+
+To extend this model one might consider a more general ambient field, not only a uniform velocity field as demonstrated now. 
+This is the purpose of the last section of this chapter. 
+However, as this theoretical approaches is for the most of it new, we focus on the section on the numerical validation of this model. 
