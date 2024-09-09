@@ -123,16 +123,16 @@
 
 % TITLE IN CAPITAL LETTERS
 \begin{center}
-{\large {\bf Theoretical calculation of the droplet induced agitation (or pseudoturbulence) in mono disperse buoyant emulsions for low inertia and dilute regime.}}
+{\large {\bf Theoretical calculation of the droplet induced agitation (or pseudoturbulence) in mono disperse buoyant emulsions for low inertia and dilute regimes}}
 \vspace{10pt}
 
 % AUTHORS
 
-\underline{Nicolas Fintzi}$^1$, Daniel Lhuillier$^2$, Jean-Lou Pierson$^1$\\
+\underline{Nicolas Fintzi}$^1$, Jean-Lou Pierson$^1$, and St\'ephane Popinet$^2$\\
 % AFFILIATIONS
 {\it
-$^1$IFP Energies Nouvelles, Solaize, 69360, France,jean-lou.pierson@ifpen.fr\\
-$^2$Affiliation of second author: University, School, Department, Institute, City, Country, E-mail\\
+$^1$IFP Energies Nouvelles, Solaize, 69360, France, nicolas.fintzi@ifpen.fr, jean-lou.pierson@ifpen.fr\\
+$^2$Sorbonne Universit\'e, Institut Jean le Rond $\partial$'Alembert, 75252 Paris, France, popinet@basilisk.fr\\
 %$^3$Affiliation of third author: University, School, Department, Institute, City, Country, E-mail\\
 }
 \end{center}
@@ -143,15 +143,17 @@ Buoyancy-driven droplet flows are encountered in many chemical engineering proce
 The usual engineering practice to model such facilities is to use the averaged Navier-Stokes equations. 
 The present work focuses on the velocity fluctuations tensor, also known as the \textit{Reynolds stress} tensor, or Pseudo-turbulent tensor, which is a crucial closure term in these equations.
 Formally, this stress is defined as $\avg{ \textbf{u}' \textbf{u}'}_f$, where $\textbf{u}'$ is the fluid velocity fluctuation, and $\avg{\ldots}_f$ denotes an ensemble average procedure applied over the continuous phase. 
-The \textit{Reynolds stress} can be separated into two contributions : (1) The agitation generated due to the averaged wakes around the particles; (2) All other sources of fluctuations, such as those generated through particle interactions, and single-phase turbulence \cite{du2022analysis}.
+The \textit{Reynolds stress} can be separated into two contributions : (1) The agitation generated due to the averaged wakes around the particles; (2) All other sources of fluctuations, such as those generated through particle interactions, and single-phase turbulence. % \cite{du2022analysis}.
 This study only considers the first contribution. 
 Specifically we compute $\avg{ \textbf{u}' \textbf{u}'}_f$, for buoyant rising droplets in an otherwise quiescent fluid. 
 The derivation is restricted to spherical droplets (of radius $a$), at small particle Reynolds number, and low particle volume fraction ($\phi$). 
     \vspace{10pt}
 
-\noindent{{\bf Keywords}}: PTKE equations, hybrid model, Averaged equations, dispersed multiphase flows
+\noindent{{\bf Keywords}}: Reynolds stress, pseudoturbulence, averaged equations, dispersed multiphase flows, droplets. 
 
+\vspace{10pt}
 
+% \noindent{\bf {\large Problematic}}:
 
 For buoyant inviscid bubbly flows under the dilute assumption, it is known since the study of \cite{van1982bubble} that the \textit{Reynolds stress} can be written as
 \begin{equation}
@@ -164,50 +166,68 @@ For buoyant inviscid bubbly flows under the dilute assumption, it is known since
     \label{eq1}
 \end{equation}
 where $n_p$ is the number of particles per unit of volume, $\textbf{U}$ is the averaged particle velocity, and $\textbf{v}$ is the disturbance velocity field of an isolated particle. 
-The integral in Equation (\ref{eq1}) could be computed since $\textbf{v} \sim \mathcal{O}(r^{-3})$, with $r =|\textbf{r}|$ in the case of potential flows. 
-However, the disturbance velocity field of a translating droplet in Stokes flows (see Figure \ref{fig:wake}) decays as $\sim \mathcal{O}(r^{-1})$. 
+The integral in Equation (\ref{eq1}) can be computed since $\textbf{v} \sim \mathcal{O}(r^{-3})$, with $r =|\textbf{r}|$ in the case of potential flows. 
+However, the disturbance velocity field of a translating droplet in Stokes flows (see Figure \ref{fig:wake} (left)) decays as $\sim \mathcal{O}(r^{-1})$. 
 Therefore, the integral in Equation (\ref{eq1}) cannot be computed for Stokes flows. 
-This is the main reason why no theoretical model exists for $\avg{\textbf{u}'\textbf{u}'}_f$ in the limit of low Reynolds number. 
+This is the main reason why no theoretical model exists for $\avg{\textbf{u}'\textbf{u}'}_f$ in the limit of low Reynolds numbers. 
+% \vspace{10pt}
 
+% \noindent{\bf {\large Theoritical solution with The Nearest Particle Statistics}}:
+ 
 To bypass the problem of divergent integrals we make use of the  \textit{Nearest Particle Statistics} framework recently revisited by \cite{zhang2021ensemble}. 
 In this context we can express the \textit{Reynolds stress} in terms of nearest-particles averaged quantities, which yields
-\begin{equation*}
+\begin{equation}
     \avg{\textbf{u}'\textbf{u}'}_f(\textbf{x},t)
     \approx
-    \int_{r >a}  \textbf{v}  \textbf{v} P_\text{nst}^f(\textbf{r}|\textbf{x},t) d\textbf{r}.
-\end{equation*}
-\tb{maybe include v nst instead}
+    \int_{r >a}  \textbf{v}_\text{nst}  \textbf{v}_\text{nst} P_\text{nst}^f(\textbf{r}|\textbf{x},t) d\textbf{r}.
+    \label{eq:eq2}
+\end{equation}
 Where $P_\text{nst}^f(\textbf{r}|\textbf{x},t)$ is the probability that the nearest particle's center of mass is located at \textbf{r}, conditionally on the point \textbf{x} being occupied by the continuous phase.
+And $\textbf{v}_\text{nst}$ is the disturbance velocity field evaluated at a point \textbf{x} in the continuous phase, knowing the nearest particle center of mass is at location \textbf{r}. 
 In the homogeneous and dilute regime $P_\text{nst}^f(\textbf{r}|\textbf{x},t) = n_p e^{- \phi [(r/a)^3 - 8]}$ \cite{zhang2021ensemble}.
-The rapid decay of $P_\text{nst}^f$ at large $r$ enables us to compute the integral of the disturbance velocity fields even in low inertia regimes. 
-Carrying out the integration yields directly 
+Under this hypothesis, and neglecting the effect of inertia, it is possible to compute $\textbf{v}_\text{nst}$ by solving the \textit{nearest neighbor conditionally averaged} Stokes equations \cite{zhang2021ensemble}. 
+The rapid decay of $P_\text{nst}^f$ at large $r$ enables us to compute the integral of the disturbance velocity fields, even in low inertia and dilute regimes. 
+Taking the trace of (2) and carrying the integration, provides the expression for the trace of the Reynolds stress, namely,
 \begin{equation}
-    \frac{\avg{\textbf{u}'_y\textbf{u}'_y}_f}{U^2}
-    = \frac{\phi}{5(\lambda +1)^2}\left[
-        \frac{7 \Gamma\left(1/3\right)}{12}(3\lambda+2)^2    \phi^{-1/3}
-        - (17\lambda^2+22\lambda+7)
-        \right]
-        + \mathcal{O}(\phi^{4/3})
+    \avg{\textbf{u}'\cdot \textbf{u}'}_f/3
+    = \frac{(2+3\lambda)^2}{(\lambda+1)^2}\frac{\Gamma(1/3)}{24} 
+        \phi^{2/3}
+        (\textbf{u}_pf\cdot \textbf{u}_{pf})
+        + \mathcal{O}(\phi),
         \label{eq:results}
 \end{equation}
-\tb{results fr the trace }
-where $\Gamma(1/3) = \int_0^\infty t^{z-1} e^{-t} dt$ is the Gamma function with $\Gamma(1/3)= 2.678$, $\lambda$ is the viscosity ratio between the dispersed and continuous phase, and $y$ is the direction of gravity. 
+where $\Gamma(z) = \int_0^\infty t^{z-1} e^{-t} dt$ is the Gamma function, with $\Gamma(1/3)= 2.678$, $\lambda$ is the viscosity ratio between the dispersed and continuous phase, and $\textbf{u}_{pf}$ is the relative averaged phase velocity. 
 \begin{figure}[h!]
     \centering
     \includegraphics[height=0.25\textwidth]{image/Rising_Stokes.png}
     \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS_final/CA/KFliterature.pdf}
-    \caption{(left) Streamlines of a translating droplet in Stokes flow. 
-            (right) Dimensionless Reynolds stress for rising bubbly flows in the direction of gravity. 
-            (dots) Experimental results of \cite{cartellier2009induced}. 
-            Equation (\ref{eq1}) : Potential flow theory \cite{van1982bubble}. 
-            Equation (\ref{eq:results}) Stokes flow theory. 
+    \caption{\small
+        (left) Streamlines of a translating droplet in Stokes flow. 
+            (right) Dimensionless continuous phase pseudo turbulent energy, $k_f/U^2 = \avg{\textbf{u}'_y\cdot\textbf{u}'_y}_f/ |\textbf{u}_{pf}|^2$ in terms of the volume fraction $\phi$.
+            (Symbols) DNS and experimental results of: 
+            ($\pmb\square$)  Particle-resolved DNS
+            of fixed solid spherical particle assemblies at $20< Re < 100$  by \cite{wang2021numerical}; 
+            ($\pmb\lozenge$) DNS of rising deformable bubbles at $Re \approx 30$ \cite{loisy2016direct}
+            ($\pmb\triangle$) DNS of rising spherical bubbles by \cite{bunner2002dynamics}. 
+            ($\pmb\bigcirc$) Experiment of rising spherical bubbles in water by \cite{martinez2007measurement} at $Re \approx 30$. 
+            (dot dashed lines) Semi-empirical formula (\ref{eq:semi-emprical}) at $Re \approx 30$ with $\lambda = 0$. 
+            (dashed lines)  Semi-empirical formula (\ref{eq:semi-emprical}) at $Re \approx 30$ with $\lambda = \infty$.
             }
     \label{fig:wake}
 \end{figure}
-As can be observed on Figure \ref{fig:wake}, the present theory is in very good agreement with the experimental results of \cite{cartellier2009induced}.  
-Direct numerical simulations of rising buoyant emulsions have also been performed (with the code \texttt{http://basilisk.fr}) for $\lambda = 0.1,1,10$. Good agreement is also obtained. 
 
-In conclusion we provided a \textit{Reynolds stress} closure valid in the dilute Stokes flow regime for arbitrary viscosity ratios. 
+Direct Numerical Simulations (DNS) of rising buoyant emulsions have also been performed (with the code \texttt{http://basilisk.fr}) for $\lambda = 0.1,1,10$. 
+Based on the numerical results we could validate (2) by direct comparison, and extend the domain of validity of this closure to finite Reynolds number $Re$ and higher $\phi$. 
+We propose the following formula fitted on the numerical results: 
+\begin{equation}
+    \avg{\textbf{u}'_y\cdot \textbf{u}'_y}_f
+    =
+    \avg{\textbf{u}'_y\cdot \textbf{u}'_y}_f^{Re = 0}
+    \left(e^{-Re} +1\right)/2. 
+    \label{eq:semi-emprical}
+\end{equation}
+As can be observed on Figure (\ref{fig:wake}), Equation (3) is in very good agreement with both, experimental and numerical results of the literature.  
+In conclusion, we developed a semi-empirical \textit{Reynolds stress} model derived in the low-inertia and dilute limit for arbitrary $\lambda$, and extended it to account for finite inertial effects using DNS data.
 
  
 
