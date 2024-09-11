@@ -255,31 +255,37 @@ In other words, a closure model for the particle phase velocity variance should 
 
 \subsection{Extension to higher inertial effects. }
 
-In this subsection we extend our model to higher inertial number $Re$. 
+In this subsection we extend our model to higher inertial number $Re$ by making use of the DNS results. 
 We assume the following properties for the creation of our semi-empirical model: 
 (1) In the low inertial regime ($Re=0$) and low volume fraction ($\phi=0$) the \textit{Reynolds stress} must be given by the expression \ref{eq:functional_form_avg}. 
 (2) The functional form given by \ref{eq:functional_form_avg} is preserved at finite $Re$. 
-Meaning that the scalar $C_e^{(1)}$ and $C_e^{(2)}$ are the only allowed degree of freedom. 
-(3) The empirical fit of the constant  $C_e^{(1)}$ and $C_e^{(2)}$ should not take in account the effect of the particle phase velocity fluctuation, since these are already taken in account through the terms $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ and $k_p$ in \ref{eq:functional_form_avg}. 
+Meaning that the scalar $C_e^{(1)}$ and $C_e^{(2)}$ are the only allowed degree of freedom for including the finite inertial effects. 
+(3) The empirical fit of the constant  $C_e^{(1)}$ and $C_e^{(2)}$ should not take in account the effect of the particle phase velocity fluctuation. 
+Indeed, these are already taken in account through the terms $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ and $k_p$ in \ref{eq:functional_form_avg}. 
 This, means that we must perform the fit on the numerical data while including the particle velocity fluctuation obtained in our DNS in the formula \eqref{eq:functional_form_avg}.
-That way $C_e^{(1)}$ and $C_e^{(2)}$ will represent only the modification of the pseudo turbulence due to the averaged wakes.  
+That way $C_e^{(1)}$ and $C_e^{(2)}$ represents only the modification of the pseudo turbulence due to the averaged wakes for higher inertia effects.  
+
 
 According to \ref{eq:functional_form_avg} the pseudoturbulence kinetic energy of the fluid at $Re = 0$ is given by,
 \begin{equation}
     k_f^{Re = 0}
     = 
     C_e^{(0)}  \left(\frac{1}{2}  + 3 k_p^*\right)  
+    \label{eq:TKE}
 \end{equation}
+We recall that in the situation studied here $C_k^{(2)} = C_{ek}^{(2)}$ and therefore cancel out. 
+As shown in \ref{fig:kf} the semi-empirical formula, 
 \begin{equation}
     k_f
     = 
     k_f^{Re = 0}
-    \cdot \frac{\left(e^{-Re} +1\right)}{2}
+    \cdot \frac{\left(e^{-Re} +1\right)}{2},
     \label{eq:semi_empirical}
 \end{equation}
-As shown in \ref{fig:kf}
-
-\tb{inertial effect of sedimenting susp + tennet }
+seems to fit all of our numreical results regardless of the viscosity ratio, \textit{Reynolds} number and volume fraction.  
+It appears that the contribution of finite inertia leads to a reduction by a factor of 2 in the magnitude of the fluid phase kinetic energy. 
+Surprisingly the dependence with $\phi$ and $\lambda$ do not seem to be affected by greater \textit{Reynolds} number. 
+The explanation of this factor is yet unclear to us. 
 \begin{figure}
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/KF2_l_0.pdf}
@@ -297,14 +303,27 @@ As shown in \ref{fig:kf}
     \label{fig:kf}
 \end{figure}
 
-
-Regarding the deviatoric part of the tensor it is actually accounted through the constant $b_f = \frac{27}{10}$ in the expression: $C_e^{(1)} = b_f C_e^{(2)}$ \ref{eq:constants}. 
-Following, \citet{mehrabadi2015pseudo} we remark on \ref{fig:bf} that this constant is microstructure dependents. 
-We choose, 
+\ref{eq:semi_empirical} capture the isotropic part of the \textit{Reynolds stress} for all $\lambda$, $Re$ and $\phi$. 
+Regarding the deviatoric part of the  \textit{Reynolds stress} tensor it is accounted with 
+From \ref{eq:functional_form_avg} we define the Deviatoric normalized part of the \textit{Reynolds Stress}, as, 
 \begin{equation*}
-    b_k = \frac{27}{10}  \text{exp}\left\{- 3\left(\phi^{5/6} + \frac{10^{-3}}{\lambda+1}Re\right)\right\}
+    \textbf{D} =
+    \frac{3\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}}{2 k_f} - 1
+    = 
+    b_f^{Re,\phi = 0} \left[
+        \textbf{e}_p\textbf{e}_p
+        + \frac{\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}{n_p U^2}
+         - \frac{1}{3}(\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta
+    \right]
 \end{equation*}
+Where the constant $b_f^{Re,\phi =0} = \frac{27}{10}$ from  \ref{eq:constants}. 
+In \citet{mehrabadi2015pseudo} they show that this constant is \textit{Reynolds number} and volume fraction dependents. 
 
+
+In \ref{fig:bf} we display the principal components of $\textbf{D}$ and demonstrate that a good fit for $b_f$ is, 
+\begin{equation*}
+    b_k = \frac{27}{10}  \text{exp}\left\{- 3\left(\phi^{5/6} + \frac{10^{-3}}{\lambda+1}Re\right)\right\}. 
+\end{equation*}
 \begin{figure}
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/D2_l_0.pdf}
@@ -321,16 +340,29 @@ We choose,
     }
     \label{fig:bf}
 \end{figure}
+This time we clearly observe that the dependence of $\textbf{D}$ in $\phi$ and $\lambda$ is Reynolds number dependents. 
+Specifically, for $\lambda = 10$ we observe that $\textbf{D}$ seem not $Re$ dependents. 
+Hence, in  \ref{eq:fit_bf} we included a linear term in  $Re$ which vanish for $\lambda \to \infty$. 
+This may be in contradiction with the results of \ref{mehrabadi2015pseudo} as his fitted constant $b_f$ is $Re$ dependent for solid sphere. 
+This dispersencies in the results is still unclear to us, however we could argue that our rang.  
 
 
-
-
+Although the proposed fit do not match the numerical results perfectly we take part to not overfit our results and kept a simplify fit. 
+Overall with the constant $b_f$ and $k_f$ fitted on our numerical results we extended our \textit{Reynolds stress} model for higher $Re$, $\phi$ and $\lambda$. 
+It must be kept in mind that since we studied only vertically rising buoyant bubbly flow we only extended the validity of this fit in this specific configuration. 
 
 
 
 \subsection{Final validation}
 
+We would like to ed this chapter by a series of validation comparing our final model to experimental and numerical results at finite \textit{Reynolds number}. 
 
+On \ref{fig:trygvason} we first display the pseudoturbulence kinetic energy Vs. a series of numerical results from \citet{bunner2002dynamics,loisy2016direct,wang2021numerical} and experimental results of \citet{martinez2007measurement}.  
+We can observe that the predicted magnitude of $k_f$ is in very good agreement with all these results. 
+These studies concern either fixed arrays of particle either dilute suspension of particles, in both case the particle velocity variance is negligible, thus we consider that $k_p = 0$ in \ref{eq:semi_empirical}. 
+We can observe that setting $\lambda \to\infty$ indeed capture solid particle induced turbulence results from \citet{wang2021numerical}. 
+It also seems to correspond to the pseudo turbulence generated by the experimental results of \citet{martinez2007measurement} which considered rising bubbles in water. 
+We assume that this is due to the fact that they bubbles are probably contaminated inducing no-slip boundary condition at the surface of the bubbles, which hence correspond to solid particle.  
 \begin{figure}
     \centering
     \includegraphics[height = 0.35\textwidth]{image/HOMOGENEOUS_final/CA/KFliterature.pdf}
@@ -346,6 +378,11 @@ We choose,
     }
     \label{fig:trygvason}
 \end{figure}
+In \ref{fig:trygvason} we also compared our analytical formula to the DNS results of \citet{bunner2002dynamics} and \citet{loisy2016direct} which considered rising bubbly flows. 
+As can be seen from the (dashed lines) in \ref{fig:trygvason} our semi-emprical formula capture quantitatively their results. 
+
+As the previous validation concerned well the low but finite \textit{Reynolds number}, we now challange our self and compare our semi-emprical for \ref{eq:semi_empirical} to DNS out of our range of $Re$. 
+In \citet{mehrabadi2015pseudo} they performed DNS of fixed array of spherical solid spheres, from $Re_m = 1$ to $Re_m=300$ where $Re_m = (1- \phi) Re$ is the Reynolds number based on the mean slip velocity. 
 \begin{figure}
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/tenneti.pdf}
@@ -359,13 +396,21 @@ We choose,
     }
     \label{fig:tennet}
 \end{figure}
+It is shown that the results at low Reynolds number corresponds quantitatively, see \ref{eq:semi_empirical} (dot dased lines). 
+However, we can remark that at $Re_m = 300$ the $\phi^{2/3}$ seems wrong for low $\phi$, as evidenced by the empirical formula proposed by \citet{mehrabadi2015pseudo}, see Eq (7.1) of their paper. 
+Nevertheless, it is remarkable that \ref{eq:semi_empirical} still provides a reasonable prediction, even at these high Reynolds number. 
+
+
+Finally, in order to validate the functional form of \ref{eq:functional_form_avg} regarding the inclusion of the particle phase velocity variance, we compare our results to the study of \citet{shajahan2023inertial} which performed DNS of particle sedimentation.  
 \begin{figure}
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/tariq.pdf}
     \caption{Dimensionless vertical velocity varience, in terms of the volume fraction $\phi$. 
-    (Symbols) results of Particle-resolved Direct Numerical Simulations  of gravitational settling of monodisperse solid spheres by \citet{shajahan2023inertial}. 
+    (Symbols) results of Particle-resolved Direct Numerical Simulations  of gravitational settling of monodisperse solid spheres by \citet{shajahan2023inertial} at $Ga = 144$. 
     (dot dashed lines) Semi-empirical formula \ref{eq:} \underline{including} \citet{shajahan2023inertial}'s results for the particle phase velocity fluctuations. 
     (dashed lines) Semi-empirical formula \ref{eq:} \underline{excluding} the particle phase velocity fluctuations. 
     }
     \label{fig:tariq}
 \end{figure}
+We can observe on \ref{fig:tariq} that while our semi-emprical formula provide reasonable result without the consideration of the particle phase velocity fluctuation, it gets even more accurate when including those. 
+We con conclude that the general functional for of \ref{eq:functional_form_avg} seem to capture well the dependence of the \textit{Reynolds stress} with the particle phase velocity variance. 
