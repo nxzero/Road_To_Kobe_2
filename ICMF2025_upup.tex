@@ -123,7 +123,7 @@
 
 % TITLE IN CAPITAL LETTERS
 \begin{center}
-{\large {\bf Theoretical calculation of the droplet induced agitation (or pseudoturbulence) in mono disperse buoyant emulsions for low inertia and dilute regimes}}
+{\large {\bf Droplet induced agitation (or pseudoturbulence) in mono disperse buoyant emulsions}}
 \vspace{10pt}
 
 % AUTHORS
@@ -160,7 +160,7 @@ For buoyant inviscid bubbly flows under the dilute assumption, it is known since
     \avg{\textbf{u}'\textbf{u}'}_f (\textbf{x})
     \approx
     n_p \int_{|\textbf{r}| > a}\textbf{v}\textbf{v}  d\textbf{r}
-    = \phi \left(\frac{3}{20} U^2\textbf{I} + \frac{1}{20} \textbf{UU} \right),
+    = \phi \left(\frac{3}{20} (\textbf{U}\cdot \textbf{U})^2\bm\delta + \frac{1}{20} \textbf{U}\textbf{U} \right),
     % \\+\underbrace{\int_{\mathbb{R}^3} \textbf{R} P_{f}^1(\textbf{x},\textbf{r}) d\textbf{r}}_\text{(2)}
     % - \phi_f \textbf{u}_f\textbf{u}_f,
     \label{eq1}
@@ -192,32 +192,33 @@ Taking the trace of (2) and carrying the integration, provides the expression fo
     \avg{\textbf{u}'\cdot \textbf{u}'}_f/3
     = \frac{(2+3\lambda)^2}{(\lambda+1)^2}\frac{\Gamma(1/3)}{24} 
         \phi^{2/3}
-        (\textbf{u}_pf\cdot \textbf{u}_{pf})
+        (\textbf{U}\cdot \textbf{U})
         + \mathcal{O}(\phi),
         \label{eq:results}
 \end{equation}
-where $\Gamma(z) = \int_0^\infty t^{z-1} e^{-t} dt$ is the Gamma function, with $\Gamma(1/3)= 2.678$, $\lambda$ is the viscosity ratio between the dispersed and continuous phase, and $\textbf{u}_{pf}$ is the relative averaged phase velocity. 
+where $\Gamma(z) = \int_0^\infty t^{z-1} e^{-t} dt$ is the Gamma function, with $\Gamma(1/3)= 2.678$, $\lambda$ is the viscosity ratio between the dispersed and continuous phase.
 \begin{figure}[h!]
     \centering
-    \includegraphics[height=0.25\textwidth]{image/Rising_Stokes.png}
-    \includegraphics[height=0.3\textwidth]{image/HOMOGENEOUS_final/CA/KFliterature.pdf}
+    % \includegraphics[height=0.25\textwidth]{image/Rising_Stokes.png}
+    \includegraphics[height=0.20\textwidth]{image/HOMOGENEOUS_final/CA/kf_Ga_5.pdf}
+    \includegraphics[height=0.25\textwidth]{image/HOMOGENEOUS_final/CA/KFliterature.pdf}
     \caption{\small
-        (left) Streamlines of a translating droplet in Stokes flow. 
-            (right) Dimensionless continuous phase pseudo turbulent energy, $k_f/U^2 = \avg{\textbf{u}'_y\cdot\textbf{u}'_y}_f/ |\textbf{u}_{pf}|^2$ in terms of the volume fraction $\phi$.
-            (Symbols) DNS and experimental results of: 
-            ($\pmb\square$)  Particle-resolved DNS
-            of fixed solid spherical particle assemblies at $20< Re < 100$  by \cite{wang2021numerical}; 
-            ($\pmb\lozenge$) DNS of rising deformable bubbles at $Re \approx 30$ \cite{loisy2016direct}
-            ($\pmb\triangle$) DNS of rising spherical bubbles by \cite{bunner2002dynamics}. 
-            ($\pmb\bigcirc$) Experiment of rising spherical bubbles in water by \cite{martinez2007measurement} at $Re \approx 30$. 
-            (dot dashed lines) Semi-empirical formula (\ref{eq:semi-emprical}) at $Re \approx 30$ with $\lambda = 0$. 
-            (dashed lines)  Semi-empirical formula (\ref{eq:semi-emprical}) at $Re \approx 30$ with $\lambda = \infty$.
+        Dimensionless continuous phase pseudo turbulent energy, $k_f/U^2 = 3/2\avg{\textbf{u}'_y\cdot\textbf{u}'_y}_f/ U^2$ in terms of the volume fraction $\phi$.    
+        (left) Comparison of Eq. \eqref{eq:results} against the velocity variance obtained with DNS at low \textit{Reynolds} number, $Re < 1$. 
+        (Symbols) DNS and experimental results of: 
+        ($\pmb\square$)  Particle-resolved DNS
+        of fixed solid spherical particle assemblies at $20< Re < 100$  by \cite{wang2021numerical}; 
+        ($\pmb\lozenge$) DNS of rising deformable bubbles at $Re \approx 30$ \cite{loisy2016direct}
+        ($\pmb\triangle$) DNS of rising spherical bubbles by \cite{bunner2002dynamics}. 
+        ($\pmb\bigcirc$) Experiment of rising spherical bubbles in water by \cite{martinez2007measurement} at $Re \approx 30$. 
+        (dot dashed lines) Semi-empirical formula (\ref{eq:semi-emprical}) at $Re \approx 30$ with $\lambda = 0$. 
+        (dashed lines)  Semi-empirical formula (\ref{eq:semi-emprical}) at $Re \approx 30$ with $\lambda = \infty$.
             }
     \label{fig:wake}
 \end{figure}
 
 Direct Numerical Simulations (DNS) of rising buoyant emulsions have also been performed (with the code \texttt{http://basilisk.fr}) for $\lambda = 0.1,1,10$. 
-Based on the numerical results we could validate (2) by direct comparison, and extend the domain of validity of this closure to finite Reynolds number $Re$ and higher $\phi$. 
+Based on the numerical results we could validate \eqref{eq:results} by direct comparison (see Figure \ref{fig:wake} (left)), and extend the domain of validity of this closure to finite \textit{Reynolds} number $Re$ and higher $\phi$. 
 We propose the following formula fitted on the numerical results: 
 \begin{equation}
     \avg{\textbf{u}'_y\cdot \textbf{u}'_y}_f
@@ -226,7 +227,7 @@ We propose the following formula fitted on the numerical results:
     \left(e^{-Re} +1\right)/2. 
     \label{eq:semi-emprical}
 \end{equation}
-As can be observed on Figure (\ref{fig:wake}), Equation (3) is in very good agreement with both, experimental and numerical results of the literature.  
+As can be observed on Figure (\ref{fig:wake}) (right), Equation (3) is in very good agreement with both, experimental and numerical results of the literature.  
 In conclusion, we developed a semi-empirical \textit{Reynolds stress} model derived in the low-inertia and dilute limit for arbitrary $\lambda$, and extended it to account for finite inertial effects using DNS data.
 
  
