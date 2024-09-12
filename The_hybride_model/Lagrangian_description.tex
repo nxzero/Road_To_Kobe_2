@@ -8,12 +8,12 @@ Lagrangian-based modeling of the dispersed phase has been explored extensively i
 We define the mass $m_\alpha$, the position of center of mass $\mathbf{x}_\alpha$ and the momentum $\textbf{p}_\alpha$ as
 \begin{align}
     m_\alpha(t,\FF)
-    &= \intO{ \rho_d  }, 
+    &= \intOF{ \rho_d  }, 
     \\
     \textbf{x}_\alpha(t,\FF)
-    &= \frac{1}{m_\alpha }\intO{ \rho_d \textbf{x} }     \label{eq:mass_pos0},
+    &= \frac{1}{m_\alpha }\intOF{ \rho_d \textbf{x} }     \label{eq:mass_pos0},
     \\ \textbf{p}_\alpha(t,\FF)
-    &= \intO{ \rho_d \textbf{u}_d^0 }.
+    &= \intOF{ \rho_d \textbf{u}_d^0 }.
 \end{align}
 % $\Omega_\alpha(t,\FF)$ is the time-dependent domain occupied by the particle $\alpha$ (see \ref{fig:Scheme}). 
 Note that while the mass of the interface might be considered in the center of mass calculation, in practice, the mass within the volume is typically much greater than the mass on the interface. 
@@ -30,37 +30,37 @@ Replacing $\textbf{x}_\alpha$ by its definition (\ref{eq:mass_pos0}) in \ref{eq:
     \textbf{u}_\alpha(t,\FF) = \frac{1}{m_\alpha}
     \frac{d}{dt} 
     \left(
-        \intO{ \rho_d \textbf{x} }
+        \intOF{ \rho_d \textbf{x} }
     \right)
-    - \frac{1}{m_\alpha^2} \frac{d}{dt} \left(\intO{ \rho_d } \right)
-    \intO{ \rho_d \textbf{x} }.
+    - \frac{1}{m_\alpha^2} \frac{d}{dt} \left(\intOF{ \rho_d } \right)
+    \intOF{ \rho_d \textbf{x} }.
 \end{equation}
 %\tb{ A finaliser
 Using \ref{eq:reynolds_transport} for both terms in parentheses and the definition of $\textbf{x}_\alpha(t,\FF)$ in the last term gives
 \begin{align}
-    \textbf{u}_\alpha(t,\FF) &=  \frac{1}{m_\alpha}\intO{
+    \textbf{u}_\alpha(t,\FF) &=  \frac{1}{m_\alpha}\intOF{
         \pddt (\textbf{x}\rho_d ) + \div\left(\textbf{u}_d^0 \textbf{x} \rho_d\right) 
     } 
-    + \frac{1}{m_\alpha}\intS{ \textbf{x} \rho_d(\textbf{u}_I - \textbf{u}_d^0) \cdot \textbf{n}_d } \nonumber\\
-    & - \frac{1}{m_\alpha^2}\intO{
+    + \frac{1}{m_\alpha}\intSF{ \textbf{x} \rho_d(\textbf{u}_I - \textbf{u}_d^0) \cdot \textbf{n}_d } \nonumber\\
+    & - \frac{1}{m_\alpha^2}\intOF{
         \pddt (\rho_d ) + \div\left(\textbf{u}_d^0 \rho_d\right) 
-    } -  \frac{\textbf{x}_\alpha}{m_\alpha}    \intS{ \rho_d(\textbf{u}_I   - \textbf{u}_d^0) \cdot \textbf{n}_d }
-    \label{eq:u_alpha}
+    } -  \frac{\textbf{x}_\alpha}{m_\alpha}    \intSF{ \rho_d(\textbf{u}_I   - \textbf{u}_d^0) \cdot \textbf{n}_d }
+    \label{eq:u_alpha2}
 \end{align}
-Making use of the conservation of mass the firt term on the second line of \ref{eq:u_alpha} vanishes. This yields,%(\ref{eq:dt_rho}) and the definition of $\textbf{x}_\alpha(t,\FF)$ in the last term, gives
-\begin{equation}
+Making use of the conservation of mass, the first term on the second line of \ref{eq:u_alpha2} vanishes. This yields,%(\ref{eq:dt_rho}) and the definition of $\textbf{x}_\alpha(t,\FF)$ in the last term, gives
+\begin{multline}
     \textbf{u}_\alpha(t,\FF) = 
-    \frac{1}{m_\alpha}\intO{ \left[
+    \frac{1}{m_\alpha}\intOF{ \left[
         \pddt (\textbf{x}\rho_d ) + \div\left(\textbf{u}_d^0 \textbf{x} \rho_d\right) 
     \right]} \\
-    + \frac{1}{m_\alpha}\intS{ \textbf{x} \rho_d(\textbf{u}_\Gamma^0   - \textbf{u}_d^0) \cdot \textbf{n}_d }
-    -  \frac{\textbf{x}_\alpha}{m_\alpha}    \intS{ \rho_d(\textbf{u}_\Gamma^0   - \textbf{u}_d^0) \cdot \textbf{n}_d }
-\end{equation}
+    + \frac{1}{m_\alpha}\intSF{ \textbf{x} \rho_d(\textbf{u}_\Gamma^0   - \textbf{u}_d^0) \cdot \textbf{n}_d }
+    -  \frac{\textbf{x}_\alpha}{m_\alpha}    \intSF{ \rho_d(\textbf{u}_\Gamma^0   - \textbf{u}_d^0) \cdot \textbf{n}_d }
+\end{multline}
 Then by considering the mass conservation for the first term and noticing that $\grad \textbf{x} = \bm\delta$ gives%for the second term gives, 
 \begin{equation}
     \textbf{u}_\alpha(t,\FF) = \frac{1}{m_\alpha(t,\FF)} \left(
         \textbf{p}_\alpha(t,\FF)
-        +  \intS{\rho_d \textbf{r} (\textbf{u}_\Gamma^0 - \textbf{u}_d^0)\cdot \textbf{n}_d }
+        +  \intSF{\rho_d \textbf{r} (\textbf{u}_\Gamma^0 - \textbf{u}_d^0)\cdot \textbf{n}_d }
         \right),
         \label{eq:dt_y_alpha}
 \end{equation}
@@ -94,7 +94,7 @@ We assign to a particle indexed, $\alpha$, occupying the domain $\Omega_\alpha$ 
     + \intS{ f_d^0 \textbf{u}_\Gamma^0\cdot \textbf{n}_d }.
     \label{eq:reynolds_transport0}
 \end{equation}
-Using the divergence theorem the last equation may be rewritten as
+Adding and subtracting $f_d^0 \textbf{u}_d^0\cdot \textbf{n}_d$ in the last integral of this equation and using the divergence theorem, yields
  %for volume integral which gives for material domains, here the particle volume \citep{leal2007},
 \begin{equation}
     \ddt  \intO{f_d^0}
@@ -168,7 +168,7 @@ The surface divergence theorem applied to closed surfaces  reads \citep{nadim199
 where $F$ is an arbitrary field.
 This theorem demonstrates that any surface property parallel to the tangential plane of $\Gamma$, such as $\bm\Phi_{I||}$, fulfills the condition $\intS{\divI \bm\Phi_{I||}^0}
 = 0$.
-This yields,%explains why $\bm\Phi_{I||}$ does not appear in \ref{eq:dt_q_I_alpha}. 
+Therefore \ref{eq:dt_q_I_alpha} yields,%explains why $\bm\Phi_{I||}$ does not appear in \ref{eq:dt_q_I_alpha}. 
 
 \begin{equation}
     \ddt  \text q_{\Gamma\alpha}
@@ -201,7 +201,7 @@ By summing \ref{eq:dt_q_alpha} and \ref{eq:dt_q_I_alpha} we directly obtain
 \end{equation}
 This equation is the general form of the linear conservation law for the quantity $\text Q_\alpha$.
 It applies to any particle immersed in a continuous phase following the conservation laws given by \ref{eq:dt_f_k} and \ref{eq:dt_f_I}.
-We refer to this equation as the zeroth-order conservation equation, or alternatively, the linear conservation law for the particle $\alpha$.
+We refer to this equation as the zeroth-order conservation equation of $f_d^0$, or alternatively, the linear conservation law of $f_d^0$, for the particle $\alpha$.
 We would like to highlight that due to the consideration of closed surface, the non-convective flux $\mathbf{\Phi}_{\Gamma||}^0$, does not appear in \ref{eq:dt_q_alpha_tot}.
 Consequently, for the conservation of linear momentum, the surface stresses does not contribute to the momentum balance of a particle.
 %Therefore, in the case of the linear momentum conservation law, the contribution of the surface non-convective flux will not contribute to the momentum balance of a particle.
@@ -371,7 +371,7 @@ Likewise, conservation laws can be derived for the $n^{th}$ order moments of vol
          \underbrace{\textbf{rr}\ldots \textbf{rr}}_{n\text{ times}}
         f_d^0 },
         && \text{and} &&
-    \textbf{q}^{(1)}_{\Gamma\alpha}
+    \textbf{q}^{(n)}_{\Gamma\alpha}
     = \intS{
          \underbrace{\textbf{rr}\ldots \textbf{rr}}_{n\text{ times}}
     f_\Gamma^0 },
@@ -382,7 +382,8 @@ Instead, they only involve the $n^{th}$ order moments of the existing terms.
 %It can be shown that the derivative with time of $\textbf{q}^{(1)}_{\alpha n}$ and $\textbf{q}^{(1)}_{\Gamma\alpha n}$ do not involve any additional terms than in \ref{eq:dt_Q_alpha} and \ref{eq:dt_Q_I_alpha}, but rather just the $n^{th}$ order moments of the already presented terms.
 We provide the full derivation of $\ddt{ \textbf{q}^{(n)}_{\alpha}}$ in \ref{ap:Moments_equations}.
 The higher-order moments characterize the distributions of the local quantities $f_d^0$ and $f_\Gamma^0$ within the regions $\Omega_\alpha$ and $\Gamma_\alpha$​, respectively. 
-To precisely reconstruct the fields $f_d^0$ and $f_\Gamma^0$​ within $\Omega_\alpha$ and $\Gamma_\alpha$​, an infinite number of moments would theoretically be required. 
+To precisely reconstruct the fields $f_d^0$ and $f_\Gamma^0$ within $\Omega_\alpha$ and $\Gamma_\alpha$​, an infinite number of moments would theoretically be required. 
+Nevertheless, as pointed out by \citet[Appendix A]{zhang1997momentum}, when the degrees of freedom of the particles are limited (solid particles, spherical droplets in stokes flows\ldots), only a finite number of moments are necessary to reconstruct $f_d^0$ and $f_\Gamma^0$. 
 %Therefore, with knowledge of an arbitrary number of moments for a given quantity, one can achieve an arbitrary level of accuracy.
 %These higher order moments describe the distributions of the local quantities $f_d^0$ and $f_\Gamma^0$ inside the domain $\Omega_\alpha$ and $\Gamma_\alpha$, respectively.
 %Consequently, an infinite number of moments would be theoretically necessary to recover the fields $f_d^0$ and $f_\Gamma^0$ within $\Omega_\alpha$ and $\Gamma_\alpha$. 
