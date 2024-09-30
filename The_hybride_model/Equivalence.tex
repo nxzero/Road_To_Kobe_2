@@ -8,79 +8,67 @@ To model the dispersed phase, there are two distinct approaches.
 We can either use \ref{eq:avg_dt_chi_f} with $k=d$, or we can employ the particle-averaged equations \ref{eq:avg_dt_dq_alpha_tot}, \ref{eq:avg_dt_dQ_alpha_tot} and potentially the higher moments equations found in \ref{ap:Moments_equations}.
 Consequently, it is important to address the compatibility between these two formalisms.
 It has been demonstrated in various studies \citep{buyevich1979flow,lhuillier1992ensemble,jackson1997locally,zhang1994averaged}, that phase-averaged quantities can be expressed as a Taylor series expansion of particle-averaged quantities. 
-\tb{
-Indeed, the dispersed phase indicator function $\chi_d$ can be expressed as a sum of phase indicator function, $\chi_d(\textbf{x},t,\FF) = \sum_\alpha\chi_\alpha(\textbf{x},t,\FF)$ where $\chi_\alpha =1$ in the particle domain $\Omega_\alpha(\FF,t)$ and $0$ otherwise. 
-Thus, any dispersed phase quantity can be written as, 
+
+The aforementioned studies used the single-particle conditionally averaged approach to demonstrate this equivalence.  
+In this work we use instead the ``distributional'' approach of \citet{pahtz2023general} since, as shown below it yields more general and simpler formulation. 
+The dispersed phase indicator function $\chi_d$ can be expressed as a sum of phase indicator function, $\chi_d(\textbf{x},t,\FF) = \sum_\alpha\chi_\alpha(\textbf{x},t,\FF)$ where $\chi_\alpha =1$ in the particle domain $\Omega_\alpha(\FF,t)$ and $0$ otherwise. 
+Thus, any dispersed phase quantity pertaining to a single particle can be written as, 
 \begin{equation}
-   f^0_d \chi_d(\textbf{x},t,\FF)
-   = \sum_\alpha f^0_d \chi_\alpha(\textbf{x},t,\FF) 
-%    = \sum_\alpha f^0_d \chi_\alpha(\textbf{x},t,\FF) \int_{\mathbb{R}^3} \delta(\textbf{x}_\alpha - \textbf{y}) d\textbf{y}
+   f^0_d \chi_\alpha(\textbf{x},t,\FF)
    = 
-   \sum_\alpha 
    \int_{\mathbb{R}^3} 
-    f^0_d \chi_\alpha(\textbf{x},t,\FF)\delta(\textbf{x}_\alpha(\FF,t) - \textbf{y}) 
-    d\textbf{y} 
+    f^0_d \chi_\alpha(\textbf{x}_\alpha + \textbf{r},t,\FF)\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) 
+    d\textbf{r} 
    \label{eq:taylor_f_d}
 \end{equation}
-Where we have noticed that, 
-\begin{equation}
-    \int_{\mathbb{R}^3}\delta(\textbf{x}_\alpha(\FF,t) - \textbf{y}) d\textbf{y} = 1. 
-\end{equation}
-Additionally, in the integral on the left-hand side of \ref{eq:taylor_f_d}, notice that $\textbf{x} = \textbf{x}_\alpha + \textbf{r}$ with $\textbf{r} = (\textbf{x} - \textbf{x}_\alpha) = \textbf{x} - \textbf{y}$,
-where replaced $\textbf{x}_\alpha$ by \textbf{y} in the last identity since the Dirac delta function reduce the integration on the configurations where $\textbf{x}_\alpha = \textbf{y}$.
-Thus, without approximation we write, 
-\begin{equation}
-    f^0_d \chi_d(\textbf{x},t,\FF) = 
-    \sum_\alpha 
-    \int_{\mathbb{R}^3} 
-     f^0_d \chi_\alpha(\textbf{x}_\alpha + \textbf{r},t,\FF)\delta(\textbf{x}_\alpha(\FF,t) - \textbf{y}) 
-     d\textbf{y} 
-    \label{eq:f_d_reform}
-\end{equation}
-Likewise, we assume that the interface indicator function $\delta_\Gamma$ can be partitioned into $N$ interface indicator function such that $\delta_\Gamma = 
-\sum_\alpha  \delta_{\Gamma\alpha}$.
+Likewise, we assume that the interface indicator function $\delta_\Gamma$ can be partitioned into $N$ interface indicator function such that $\delta_\Gamma =  \sum_\alpha  \delta_{\Gamma\alpha}$.
 In that case any surface-averaged quantities may be written, 
 \begin{equation}
     f_\Gamma^0 \delta_\Gamma(\textbf{x},t,\FF) = 
     \sum_\alpha 
     \int_{\mathbb{R}^3} 
-     f_\Gamma^0 \delta_{\Gamma\alpha}(\textbf{x}_\alpha + \textbf{r},t,\FF)\delta(\textbf{x}_\alpha(\FF,t) - \textbf{y}) 
-     d\textbf{y}. 
-    \label{eq:f_G_reform}
+     f_\Gamma^0 \delta_{\Gamma\alpha}(\textbf{x}_\alpha + \textbf{r},t,\FF)\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) 
+     d\textbf{r}. 
+    \label{eq:taylor_f_I}
 \end{equation}
-Notice that the product of the two distribution is allowed since $\delta_{\Gamma\alpha}$ is evaluated according to the variable $\textbf{x}$, while $\delta(\textbf{x}_\alpha - \textbf{y})$ has its singularity at the point \textbf{y}. 
-Upon using the Taylor expansion of the Dirac delta function $\delta(\textbf{x}_\alpha - \textbf{y}) = \delta(\textbf{x}_\alpha - \textbf{x}- \textbf{r})$ in the neighborhood of $\textbf{r}=0$ one obtain
+% Notice that \ref{eq:taylor_f_d} and \ref{eq:taylor_f_I} are well-defined in the distributional sense since the integral on the right-hand side of both equations correspond to a convolution product.
+Notice that the integral on the right-hand side of \ref{eq:taylor_f_d} and \ref{eq:taylor_f_I} correspond to a convolution product.
+Additionally, since the Dirac distribution $\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})$, is the unit of convolution \ref{eq:taylor_f_d} is verified (see \citet[Chapter 9]{appel2007}).
+The convolution product of the Dirac delta and the derivative of the Heaviside distribution is also well-defined, see \citet[Chapter 9]{appel2007}.
+It follows that \ref{eq:taylor_f_d} and \ref{eq:taylor_f_I} are well-defined in the distributional sense. 
+Upon using the Taylor expansion of the Dirac delta function $\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})$ in the neighborhood of $\textbf{r}=0$ one obtain,
 \begin{equation}
-\delta(\textbf{x}_\alpha - \textbf{x}-\textbf{r}) 
-= \delta(\textbf{x}_\alpha - \textbf{x}) 
-- \textbf{r}\cdot\grad \delta(\textbf{x}_\alpha - \textbf{x}) 
-+ \frac{\textbf{rr}}{2}:\grad\grad\delta(\textbf{x}_\alpha- \textbf{x}) - \ldots.
+\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})
+= \delta(\textbf{x} - \textbf{x}_\alpha)
+- \textbf{r}\cdot\grad \delta(\textbf{x} - \textbf{x}_\alpha)
++ \frac{\textbf{rr}}{2}:\grad\grad\delta(\textbf{x} - \textbf{x}_\alpha) 
+- \ldots.
 % + \ldots
 \label{eq:exp_delta}
 \end{equation}
-Injecting \ref{eq:exp_delta} into \ref{eq:f_d_reform} and \ref{eq:f_G_reform}, and noticing that the indicator functions, $\chi_\alpha$ and $\delta_\Gamma$, reduce the domain of integration to, $\Omega_\alpha$ and $\Gamma_\alpha$, respectively,  gives, 
+Injecting \ref{eq:exp_delta} into \ref{eq:taylor_f_d} and \ref{eq:taylor_f_I}, and noticing that the indicator functions, $\chi_\alpha$ and $\delta_\Gamma$, reduce the domain of integration from $\mathbb{R}^3$ to, $\Omega_\alpha$ and $\Gamma_\alpha$, respectively,  yields: 
 \begin{align}
-    f^0_d \chi_d(\textbf{x},t)
+    f^0_d \chi_d
     =\delta_p\intO{f^0_d}
     - \div\left(\delta_p\intO{\textbf{r} f^0_d}\right)
     + \frac{1}{2}\grad\grad :\left(\delta_p\intO{\textbf{rr} f^0_d}\right)
     \ldots 
     \label{eq:fd_asympt}
    \\
-   f_\Gamma^0 \delta_\Gamma (\textbf{x},t)
+   f_\Gamma^0 \delta_\Gamma 
    =\delta_p\intS{f^0_\Gamma}
    - \div\left(\delta_p\intS{\textbf{r} f^0_\Gamma}\right)
    + \frac{1}{2}\grad\grad :\left(\delta_p\intS{\textbf{rr} f^0_\Gamma}\right)
    \ldots 
    \label{eq:fG_asympt}
 %    \\
-\end{align}
-respectively. 
+\end{align} 
 Where we recognize the zeroth, first and second order moments of $f_d^0$ and $f_\Gamma^0$, into \ref{eq:fd_asympt} and \ref{eq:fG_asympt}, respectively. 
-Notice that even before applying any kind of averaging procedure \ref{eq:fd_asympt} and \ref{eq:fG_asympt} illustrates the connection between the dispersed phase fields, of the form $\chi_d(\ldots)$ or $\delta_\Gamma(\ldots)$ , and the particle fields of the form $\delta_p(\ldots)$. 
-It is interesting to notice that this relation hols even if it may seem counterintuitive. 
-}
-Averaging \ref{eq:fd_asympt} and \ref{eq:fG_asympt} over all configurations, we obtain the general relations that link phase-averaged and particle-averaged fields, namely \citep{lhuillier1992ensemble,lhuillier1998,lhuillier2000bilan}, 
+Notice that even before applying any kind of averaging procedure \ref{eq:fd_asympt} and \ref{eq:fG_asympt} illustrates the connection between the dispersed phase fields, of the form $\chi_d(\ldots)$ or $\delta_\Gamma(\ldots)$, and the particle fields of the form $\delta_p(\ldots)$. 
+It is interesting to notice that these relations hold in a distributional sense at a local level. 
+
+
+Applying similar considerations to the interface indicator function $\delta_\Gamma$, and averaging over all configurations, we obtain the general relations that link continuous-averaged and particle-averaged fields, namely \citep{lhuillier1992ensemble,lhuillier1998,lhuillier2000bilan}, 
 \begin{align}
     \avg{\chi_df_d^0} 
     &=  \pavg{\text q_\alpha}
@@ -104,9 +92,9 @@ Summing \ref{eq:f_exp_chi} and \ref{eq:f_exp_delta} we obtain
     + \frac{1}{2} \grad\grad : \pavg{\textbf{Q}_{\alpha}^{(2)}}
     + \ldots  \label{eq:f_exp}
 \end{equation}
-When considering an infinite number of terms in \ref{eq:f_exp} one might eventually obtain a converged approximation of $\chi_d f_d^0+\delta_\Gamma  f_\Gamma ^0$. 
+When considering an infinite number of terms in \ref{eq:f_exp} one might eventually obtain a converged approximation of $\avg{\chi_d f_d^0+\delta_\Gamma  f_\Gamma ^0}$. 
 However, it is important to note that Taylor series have what is known as a \textit{radius of convergence} beyond which adding more terms does not necessarily improve the approximation \citep[Chapter 1]{appel2007}. 
-In particular, for distances beyond a certain limit \textbf{r} the series might diverges depending on the behavior of the function $\avg{\chi_d f_d^0+\delta_\Gamma  f_\Gamma ^0}$ near the point $\textbf{x}_\alpha$. 
+In particular, for distances beyond a certain limit \textbf{r} the series might diverges depending on the behavior of the function $\avg{\chi_d f_d^0+\delta_\Gamma  f_\Gamma ^0}$ near the point $\textbf{x}$. 
 For the purposes of this article, we will assume that the Taylor series has an infinite radius of convergence, although this assumption warrants further investigation.%function $f_d^0$ evaluated at a point $\textbf{x}_\alpha$ is greater than the particle size, then \ref{eq:f_exp} might converges and provides a good approximation.
 %\JL{j'ai vraiment raccourci cette partie, car meme si je la trouve pertinente il y a des elements que je trouvais peu claire:
 %\begin{itemize}
@@ -222,8 +210,9 @@ From \ref{eq:scheme_equivalence} we conclude that combining \ref{eq:avg_dt_chi_f
 Therefore, it is clear that by considering an arbitrary order of particle moments equations, one can achieve a highly accurate description of the dispersed phase.
 
 
-The particle-averaged equations ($\mathcal{M}^{(0)}$\ldots $\mathcal{M}^{(n)}$) form a system with $n$ equations, one for each moment. In contrast, the phase-averaged equations ($\mathcal{C}_d$ and $\mathcal{C}_\Gamma$) consist of only two equations, which aggregate all the particle-averaged equations. 
-This indicates that the particle-averaged formalism provides more detailed information since it yields a separate equation for each moment, as opposed to the phase-averaged equations, which are limited to just two. 
+The particle-averaged equations ($\mathcal{M}^{(0)}$\ldots $\mathcal{M}^{(n)}$) form a system with $n$ equations, one for each moment. 
+In contrast, the dispersed phase-averaged equations ($\mathcal{C}_d$ and $\mathcal{C}_\Gamma$) consist of only two equations, which aggregate all the particle-averaged equations. 
+This indicates that the particle-averaged formalism provides more information since it yields a separate equation for each moment, as opposed to the phase-averaged equations, which are limited to just two. 
 This enhanced level of detail is achieved by considering the topology of the dispersed phase as demonstrated in the previous sections.
 %Therefore, the particle-averaged formalism encompasses more information since it provides one equation for each moment, in opposition to the phase averaged equations which are only two. 
 %Note that this gain in information has been possible through the consideration of the topology of the dispersed phase. 
@@ -266,7 +255,7 @@ In its most general form, the hybrid description of $f$ can be expressed as
 %In all its generality the hybrid description of $f$ may be written,
 \begin{align}
     \pddt (\phi_f f_f)
-    +\div (\phi_f f_f \textbf{u}_f - \mathbf{\Phi}_f^\text{eff})
+    +\div (\phi_f f_f \textbf{u}_f + \mathbf{\Phi}_f^\text{eff})
     &= 
     \phi_f s_f
     - \pSavg{\left[

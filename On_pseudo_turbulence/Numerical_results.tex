@@ -1,7 +1,7 @@
 \section{Numerical experiments. }
 
-In this section we present the result of the DNS introduced in the previous chapter. 
-We recall that we are working with a set of simulations covering the parameters ranges display in \ref{tab:simulations_recall}. 
+In this section, we compare theoretical results, to the results obtained with the DNS introduced in the previous chapter. 
+We recall that we are working with a set of simulations covering the parameter ranges displayed in \ref{tab:simulations_recall}. 
 \begin{table}[h!]
     \centering
     \caption{Dimensionless parameter range investigated in this work.}
@@ -16,44 +16,44 @@ We recall that we are working with a set of simulations covering the parameters 
         \end{tabular}
     \label{tab:simulations_recall}
 \end{table}
-In a first step we are seeking for a validation of the theoretical results with the DNS. 
-Thus, we will make use of the DNS at $Ga = 5$ which are considered to be comparable to the Stokes regime used for the theory. 
-However, note that at $Ga = 5$, $Re \approx 1$ consequently inertial effects are actually already present. 
-Nevertheless, due to numerical constraint lower \textit{Reynolds} numbers could not be reached. 
+In the first step, we will make use of the DNS at $Ga = 5$ which is considered to be comparable to the Stokes regime used for the theory. 
+However, note that at $Ga = 5$, $Re \approx 1$ consequently inertial effects are already present. 
+Nevertheless, due to numerical constraints lower \textit{Reynolds} numbers could not be reached. 
 
 The two main results that we are seeking to validate are, the disturbance fields expression \eqref{eq:v_nst_solution_adim} and the \textit{Reynolds} stress closure tensor, \eqref{eq:functional_form_avg}. 
-Consequently, in the first part of this section we focus on the comparison of $\textbf{v}_f^\text{nst}$ obtained with the DNS to the solution given by \ref{eq:v_nst_solution_adim}.
+Consequently, in the first part of this section, we focus on the comparison of $\textbf{v}_f^\text{nst}$ obtained with the DNS to the solution given by \ref{eq:v_nst_solution_adim}.
 Then, we compare the numerical value of $\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$ with the prediction of \ref{eq:functional_form_avg}. 
-And finally, we try to extend \ref{eq:functional_form_avg} to non-negligible inertial effect, i.e. for higher $Re$. 
+Finally, our goal will be to extend \ref{eq:functional_form_avg} to non-negligible inertial effect and volume fraction effects, i.e. to higher $Re$ and $\phi$. 
 
-\subsection{The nearest neighbors conditionally averaged disturbance velocity field}
+\subsection{The nearest neighbors conditionally averaged disturbance velocity}
 
-In order to reconstruct $\textbf{v}_f^\text{nst}$ with the DNS we must discretize \ref{eq:def_f_nst}. 
+To reconstruct $\textbf{v}_f^\text{nst}$ with the DNS we must discretize \ref{eq:def_f_nst}. 
 We proceed as follows: 
-(1) We consider all simulations time step and location in the mesh as an independent configuration $\FF$. 
-(2) Thus we consider that $\textbf{u}_f^0[\textbf{x},\FF,t]$ is given by any $\textbf{u}[c,t]$ where $c$ is the label of a given cell in the mesh and $t$ the time step of the simulation. 
-It must be understood that $\FF$ corresponds to all combination of $c$ and $t$. 
-(2) Finally, we discretize the distance $\textbf{r}$ from a point in the mesh to the center of mass of a nearest neighbor in $n^{th}$ intervals, with centering value of $\textbf{r}_k$ of $\textbf{r}_k = 1,\ldots,n$. 
-Under this hypothesis, the \textit{nearest neighbors conditionally averaged} velocity fields, $\textbf{u}_f^\text{nst}$, can be obtained numerically as, 
+(1) We consider all simulations time steps and locations in the mesh as an independent configuration $\FF$.
+That holds since the system is homogeneous and statistically steady in time.  
+Thus, we consider that the field $\textbf{u}_f^0[\textbf{x},\FF,t]$ is given by the field $\textbf{u}[c,t]$, where $c$ is the label of a given cell in the mesh and $t$ the time step of the simulation. 
+Here, it must be understood that $\FF$ corresponds to all different combinations of $c$ and $t$. 
+(2) Finally, we discretize the distance vector $\textbf{r}$ from a point in the mesh to the center of mass of the nearest neighbor, in $n^{th}$ intervals, with the location of the center of the $k^{th}$ interval denoted by $\textbf{r}_k$, where $\textbf{r}_k = 1,\ldots,n$. 
+Under these hypotheses, the \textit{nearest neighbors conditionally averaged} velocity fields, $\textbf{u}_f^\text{nst}$, can be obtained numerically as, 
 \begin{equation}
     \textbf{u}_f^\text{nst}(\textbf{r}_k)
     = 
     \frac{1}{E_k}
     \sum_{\FF_k}^{E_k}
     \sum_i^N
-    \textbf{u}[c,t] h_i[c,t]
+    \textbf{u}[c,t] h_i[c,t],
     \label{eq:vnst_DNS}
 \end{equation}
-where $E_k$ corresponds to the total number of events and $N$ to the total number of particle in the flow.
-$h_i[c,t]$ corresponds to the function $h_i[\textbf{x},t,\FF]$ defined with \ref{eq:h_i_def} evaluated at time step $t$ and at the center of cell $c$. 
-Thus, $h_i[c,t] = 1$ when teh $i^{th}$ droplet is the nearest neighbor to the location of the cell center $c$. 
-This function depends on course of the center of mass of the droplets, which are obtained using the same approach as in the previous chapters.
+where $E_k$ corresponds to the total number of events and $N$ to the total number of particles in the flow.
+$h_i[c,t]$ corresponds to the function $h_i[\textbf{x},t,\FF]$  (see \ref{eq:h_i_def}), evaluated at time step $t$ and at the center of cell $c$. 
+Thus, $h_i[c,t] = 1$ when the $i^{th}$ droplet is the nearest neighbor to the location of the cell center $c$. 
+$h_i[c,t]$ is a function of the droplet's center of mass positions, which are obtained using the same approach as in the previous chapters.
 Then, to recover $\textbf{v}_f^\text{nst}/U$ from $\textbf{u}_f^\text{nst}$, we simply measure the mean relative phase velocity $U$ within the DNS, and use the formula: $\textbf{v}_f^\text{nst} /  U = \textbf{u}_f^\text{nst} / U -1 $. 
 
 
 
-In \ref{fig:vnst_DNS} we display the reconstructed the velocity fields based on the DNS, according to \ref{eq:vnst_DNS}. 
-Because, our DNS results of rising droplets form a homogeneous emulsion rising in the direction of buoyancy, our results are to be compared with the theoretical prediction displayed on \ref{fig:vnst_vertical}. 
+Because our DNS represents rising droplets in the direction of buoyancy, our results are to be compared with the theoretical prediction displayed on \ref{fig:vnst_vertical}. 
+Thus, in \ref{fig:vnst_DNS} we display the reconstructed velocity fields based on the DNS, according to \ref{eq:vnst_DNS}, against the theoretical prediction given by \ref{eq:v_nst_solution_adim}. 
 \begin{figure}
     \centering
     \includegraphics[width = 0.32\textwidth]{image/HOMOGENEOUS_final/Stream/Stream_PHI_1_Ga_5_l_10.pdf}
@@ -66,47 +66,41 @@ Because, our DNS results of rising droplets form a homogeneous emulsion rising i
     The color map indicates the magnitude of the velocity, from black which corresponds to a velocity magnitude of 0, to the color at the interface of the droplet which corresponds to a magnitude of 1.}
     \label{fig:vnst_DNS}
 \end{figure}
-The common points that shears the velocity fields from \ref{eq:vnst_DNS} to the one displayed in \ref{eq:vnst_vertical} are the following: 
+As seen on \ref{fig:vnst_DNS}, the common points that shear the velocity fields from the DNS to the theoretical prediction are the following: 
 (1) both exhibit approximately the same wake close to the interface of the droplet. 
 That is the wake of an isolated rising vertical droplet. 
-(2) For a distance large enough  from the droplets center we see appear the downstream flows, which is generated due to buoyancy forces. 
+(2) For a distance large enough from the droplet center we see the downstream flow appears.
 (3) The confinement zone, delimited by the null normal velocity, follows the same trends as the theoretical prediction, i.e. the radius is smaller for higher $\phi$. 
-Additionally, the radius of the confinement zone have approximately the same size for both cases. 
+Additionally, the radii of the confinement zones have approximately the same size for both cases where $Ga = 5$. 
 
-Regarding the differences, we can notice that for the case $\phi = 0.01$, displayed on \ref{fig:vnst_DNS} (middle) the wake of the particle is slightly asymmetric, while the theoretical solution is purely symmetric. 
+Regarding the differences, we can notice that for the case $\phi = 0.01$, displayed on \ref{fig:vnst_DNS} (left) the wake of the particle is slightly asymmetric, while the theoretical solution is purely symmetric. 
 The fore-aft symmetry of the wake of a particle as displayed in \ref{fig:vnst_vertical} is typically due to the absence of inertial effect. 
-Thus, the non fore-aft symmetry observed on the plot, \ref{fig:vnst_DNS} (right), is due to the non-negligible inertial effect present for this case. 
+Thus, the non-fore-aft symmetry observed on the plot, \ref{fig:vnst_DNS} (left), is due to the non-negligible inertial effect present for this case. 
 Indeed, as reported in \ref{tab:simulations_recall} the \textit{Reynolds} number for this case is $Re \approx 1$, implying that the inertial effects cannot be neglected. 
-In opposition at $\phi = 0.05$ the numerical results exhibit a nearly fore-aft symmetric wake. 
-Which is consistent with the previous remark since for this case $Re < 1$. 
+In opposition at $\phi = 0.05$, the numerical results exhibit a nearly fore-aft symmetric wake. 
+This is consistent with the previous remark since for this case $Re < 1$. 
 
-To extends our understanding we have also display on \ref{eq:vnst_DNS} (right) a high inertial case, with  $Ga = 80$. 
-In this case we clearly see that the wake exhibit fore-aft asymmetry, which confirm that this trends comes with inertial effects. 
-Additionally, we can notice that the top boundary corresponding to the confinement zone is approximately at the same location as the theoretical prediction. 
-However, the downstream boundary is clearly different from the one predicted by the theoretical prediction, again that is because the fore-aft symmetry of the flow is broken.  
-
-Although, the effect of inertial generate a for-aft asymmetry, it will not necessarily impact the velocity variance. 
-Indeed, the variance is independent of the asymmetric behavior of the distribution. 
-Absolutely, the asymmetry is measured by the triple velocity correlation $\avg{\chi_f\textbf{u}_f'\cdot \textbf{u}_f' \textbf{u}_f'}$ appearing in the pseudo turbulent energy equation, not by the \textit{Reynolds} stress. 
-However, this is out the scope of the present work. 
+To extend our understanding we have also displayed on \ref{eq:vnst_DNS} (right) a high inertial case, with  $Ga = 80$. 
+In this case, we see that the wake exhibits fore-aft asymmetry, which confirms that this trend comes with inertial effects. 
+Additionally, we can notice that the top boundary of the confinement zone is approximately at the same location as the theoretical prediction. 
+However, the downstream boundary is different from the one predicted by the theoretical prediction, again that is because the fore-aft symmetry of the flow is broken.  
+The asymmetry of the particle wake is measured by the triple velocity correlation $\avg{\chi_f\textbf{u}_f'\cdot \textbf{u}_f' \textbf{u}_f'}$ appearing in the pseudo turbulent energy equation, not by the \textit{Reynolds} stress. 
+Thus, the effect of inertia generating a for-aft asymmetry on the particle's wake, will not necessarily impact the velocity variance. 
 
 
+To conclude, we can state that \ref{eq:v_nst_solution_adim} is well representative of the velocity field reconstructed with the DNS. 
+Therefore, we can be confident regarding the accuracy of our \textit{Reynolds} stress closure at least for low \textit{Galileo} numbers. 
 
-% \begin{figure}
-%     \centering
-%     \includegraphics[width = 0.33\textwidth]{image/HOMOGENEOUS_NEW/Stream/Stream_PHI_5_Ga_100_l_10.pdf}
-%     \includegraphics[width = 0.33\textwidth]{image/HOMOGENEOUS_NEW/Stream/Stream_PHI_1_Ga_100_l_10.pdf}
-%     \caption{Streamlines of the disturbance velocity field $\textbf{v}^\text{nst}(\textbf{r}_f)$  reconstructed from the DNS, in the cross-section given by the plane $(\textbf{e}_x,\textbf{e}_z)$, for two volume fraction $\phi = 0, 0.01$ and $0.05$ at $\lambda = 10$.  
-%     The color map indicates the magnitude of the velocity, from black which corresponds to a velocity magnitude of 0, to red which corresponds to the maximum velocity at the droplet boundary.}
-%     \label{fig:vnst_DNS}
-% \end{figure}
+
+
 
 \subsection{Vertical velocity variance}
 
-As discussed in the previous section, in the situation reproduced by the DNS, the velocity variance is given by \ref{eq:functional_form_avg} without the contribution of gravity (see \eqref{eq:cancelation1} and \ref{eq:cancelation2}). 
-Additionally, at $Re \approx 1$ we assert that the particle vertical velocity variance $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}_{yy}$ is negligible. 
-In the next subsection we show that this assumption will be shown to be invalid for the horizontal velocity variance. 
-Under these conditions, the vertical component of the velocity variance given by \ref{eq:functional_form_avg} is expressed by the following formula, 
+As discussed in the previous section, in the situation reproduced by the DNS, the velocity variance is given by \ref{eq:functional_form_avg} without the contribution of the buoyancy term (see \eqref{eq:cancelation1} and \ref{eq:cancelation2}). 
+Additionally, at $Re \approx 1$ or $Ga =5$ we assert that the particle vertical velocity variance $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}_{yy}$ is negligible. 
+In the next subsections, we show that this assumption is indeed confirmed by the DNS results. 
+However, for the horizontal velocity variance, we will observe that it is not necessarily a valid assumption. 
+Under these conditions, the vertical component of the velocity variance given by \ref{eq:functional_form_avg} is expressed as, 
 \begin{equation}
     \frac{\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}_{zz}}{U^2}
     = \phi^{2/3} \left(
@@ -115,17 +109,19 @@ Under these conditions, the vertical component of the velocity variance given by
     = 
     \phi^{2/3}\Gamma\left(\frac{1}{3}\right) \frac{7}{60}\frac{(2+3\lambda)^2 }{(\lambda+1)^2}
     % \left(e^{-Re} - 1 \right)/2
-    + \mathcal{O}(\phi) 
+    + \mathcal{O}(\phi), 
     % . 
     \label{eq:theoritical_simplified}
 \end{equation}
-
+where we recall that $\Gamma(1/3) \approx 2.67894$. 
 
 \subsubsection{Statistics computations within DNS}
 
-Following \citet{du2022analysis} we consider ergodicity at all time of the numerical experiment.
-Thus, the ensemble average of a quantity $X$ can be approximated by a spatial average $\Xavg{X}$ and a time average $\Tavg{X}$ such that $\int X d\PP = \avg{X} \approx \Xavg{\Tavg{X}} = \Tavg{\Xavg{X}}$.
-Consequently, the ensemble average of a numerical field, $X$, is taken through space and time such that,
+In this section, we briefly recall how to compute the \textit{Reynolds} stress tensor based on the DNS. 
+
+Following \citet{du2022analysis} we consider \textit{ergodicity} at all times of the numerical experiment.
+Thus, the ensemble average of an arbitrary quantity $X$ can be approximated by a spatial average $\Xavg{X}$ followed by a time average $\Tavg{X}$. 
+Specifically, the ensemble average of a numerical field, $X$, is taken through space and time following,
 \begin{equation}
     \avg{X}
     = \Tavg{\Xavg{X}}
@@ -139,15 +135,16 @@ where,
     X(\textbf{x},t) d\textbf{x}
 \end{equation}
 where $L$ is the length of the cubic domain.
-$t_0$ and $t_{end}$ is the starting time of sampling and the time duration of the simulation, respectively.
-In practice, we take $t_0$ such that the simulation reach a statistically steady regime for $t>t_0$.  
-Both $t_{end} $ and $t_0$ are given in \ref{ap:A} after several validations studies. 
+$t_0$ and $t_{end}$ are the starting and ending times of sampling, respectively.
+In practice, we take $t_0$ such that the simulation reaches a statistically steady regime.  
+It has been observed that $t_0$ is reached at about $50 \sqrt{g/d}$. 
 
-Therefore, to compute the phase average of the local phase velocity $\textbf{u}_k^0$, we simply perform an integration over space and time, 
+To compute the continuous phase average of the local phase velocity $\textbf{u}_f^0$, we simply perform an integration over space and time, 
 \begin{equation*}
-    \textbf{u}_k = \frac{1}{\phi_k} \Tavg{\Xavg{\chi_k \textbf{u}_k^0}}
+    \textbf{u}_f = \frac{1}{\phi_f} \Tavg{\Xavg{\chi_f \textbf{u}_f^0}}. 
 \end{equation*}
-To compute continuous phase averaged quantities such as \ref{eq:def_uuc} it is a little more complicated, we obtain
+Here the $\chi_f$ is approximated by the color function solved by the VOF solver. 
+To compute the ensemble average of the continuous phase velocity variance, we obtain
 \begin{equation}
     \avg{\chi_f\textbf{u}_f' \textbf{u}_f'}
     % = \Tavg{\Xavg{\chi_f \textbf{u}_f' \textbf{u}_f'}}
@@ -156,18 +153,17 @@ To compute continuous phase averaged quantities such as \ref{eq:def_uuc} it is a
     -  \phi_f  \textbf{u}_f \textbf{u}_f.
     \label{eq:def_uuf_num} 
 \end{equation}
-where the indicator funciton $\chi_f$ must be understood as its approximation in the DNS, i.e the color function $1 - \alpha_d$. 
-Consequently, \ref{eq:def_uuc_num} indicate that we must take the average of the product of the velocities, and then we retrieve the mean velocities' product.  
+Consequently, \ref{eq:def_uuf_num} indicates that we must take the average of the product of the velocities of the continuous phase domain, and then we retrieve the mean velocities' product.  
+
 
 
 
 \subsubsection{Comparison with the DNS}
-In \ref{fig:uuyy} (right) we compared \ref{eq:theoritical_simplified} to the numerical result.
+
+In \ref{fig:uuyy} we compared the vertical velocity variance given by \ref{eq:theoritical_simplified} to the numerical results.
 At low volume fraction and for all $\lambda$ very good agreements are obtained. 
-As expected as $\phi$ increase, the gap between the value predicted by \ref{eq:theoritical_simplified} and the DNS becomes larger.
-Specifically, the theoretical value tends to overestimate the velocity variance.   
-Interestingly at $\lambda = 10$ \ref{eq:theoritical_simplified} seems to predict a good estimation for the Reynolds stress regardless of the volume fraction $\phi$. 
-However, since no interaction terms of any kind were considered in the theory, this good agreement is likely coincidental.
+Interestingly for all $\lambda$, \ref{eq:theoritical_simplified} seems to provide a good estimation for the Reynolds stress even at high volume fraction $\phi$, especially viscous droplets ($\lambda = 10$). 
+Since no particle interaction terms of any kind are considered in the theory, this good agreement is likely coincidental.
 \begin{figure}
     \centering
     % \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/cartellier.pdf}
@@ -178,18 +174,18 @@ However, since no interaction terms of any kind were considered in the theory, t
     }
     \label{fig:uuyy}
 \end{figure}
-The red-dashed line in \ref{fig:uuyy} (right) represents the potential flow solution of \citet{van1998pseudo} given by \ref{eq:van_wingarden_sol}. 
-As a matter of fact, this model underpredicts largely the magnitude of the vertical pseudo-turbulence.
-
+The red dashed line in \ref{fig:uuyy} (right) represents the potential flow solution of \citet{van1998pseudo} given by \ref{eq:van_wingarden_sol}. 
+This model underpredicts the magnitude of the vertical pseudo-turbulence.
+We deduce that the velocity variance produced by particles in Stokes flow is largely superior to in potential regime. 
 
 
 \subsubsection{Comparison with the literature}
 
-In \ref{fig:uuyy2} (left) we compare our results to the  experimental measurement of \citet{cartellier2009induced}. 
-Again, we observe reasonable agreements from $\phi = 10^{-3}$ to moderate volume fraction ($\phi \approx 0.03$). 
+In \ref{fig:uuyy2}  we compare \ref{eq:theoritical_simplified} with $\lambda = 0$ to the  experimental measurements of \citet{cartellier2009induced}. 
+We observe reasonable agreements from $\phi = 10^{-3}$ to moderate volume fraction ($\phi \approx 0.03$). 
 In the low volume fraction regime \citet{cartellier2009induced} found that $\avg{\chi_f\textbf{u}_f'\textbf{u}_f'} / U^2 \sim \phi^{0.7 \pm 0.03}$,  while \ref{eq:theoritical_simplified} with $\lambda = 0$ predicts, $\avg{\chi_f\textbf{u}_f'\textbf{u}_f'} / U^2 \sim 1.25017 \cdot \phi^{2/3} $. 
 Thus, our results overestimate \citet{cartellier2009induced} best fits by $25\%$. 
-This can be explained by the non-negligible inertial effects present in \citet{cartellier2009induced} experiments, indeed they measured a $Re \approx 10$. 
+This can be explained by the non-negligible inertial effects present in \citet{cartellier2009induced} experiments, indeed they measured $Re \approx 10$ while our theory is valid in Stokes flow. 
 \begin{figure}
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/cartellier.pdf}
@@ -201,11 +197,12 @@ This can be explained by the non-negligible inertial effects present in \citet{c
     \label{fig:uuyy2}
 \end{figure}
 
-Considering the good agreements obtained with both, the numerical results and \citet{cartellier2009induced} experiments, we can state that \ref{eq:theoritical_simplified} is validated. 
-Indeed, it is reasonable to assume that the slight disparities observed between these results and the theory is due to the inertial effects or a non-negligible volume fraction. 
+It is reasonable to assume that the slight disparities observed between these results and the theory are due to the inertial effects or a non-negligible volume fraction effect. 
+Thus, Considering the good agreements obtained with both, the numerical results and \citet{cartellier2009induced} experiments, we can state that \ref{eq:theoritical_simplified} is validated. 
 
 \subsection{The Horizontal velocity variance}
 
+Now that the vertical component of the velocity variance is validated, we turn our attention to the validation of the components in the normal direction to the gravity. 
 Using the general formulation \ref{eq:functional_form_avg}, we write the horizontal component of the \textit{Reynolds} as, 
 \begin{equation}
     \frac{\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}}{U^2}
@@ -219,11 +216,9 @@ Using the general formulation \ref{eq:functional_form_avg}, we write the horizon
     \frac{2k_p}{U^2}  
     \label{eq:Horizontal_varience}
 \end{equation}
-Notice how the first term on the right-hand side of \ref{eq:Horizontal_varience} is smaller than the one provided by \ref{eq:theoritical_simplified}. 
+Notice how the first term on the right-hand side of \ref{eq:Horizontal_varience} is smaller than the one provided by \ref{eq:theoritical_simplified} ($1/240$ Vs. $7/60$). 
 This means that the horizontal velocity variance produced by the mean vertical motion of the droplets is significantly lower than the vertical velocity variance. 
 Additionally, in this formulation we have kept the terms related to the particle center of mass velocity variance. 
-The reason for this choice will be clarified latter. 
-% Thus, in this situation we might expect that the particle center of mass velocity variance is non-negligible, compared to the first contribution of \ref{eq:Horizontal_varience}. 
 
 
 In \ref{fig:uuxx} (right) we display the numerical values of the horizontal velocity variance against the theoretical results provided by, \ref{eq:Horizontal_varience}. 
@@ -237,55 +232,75 @@ In \ref{fig:uuxx} (right) we display the numerical values of the horizontal velo
     }
     \label{fig:uuxx}
 \end{figure}
-It is seen that for all $\phi$ and $\lambda$ the theoretical predictions given by \ref{eq:Horizontal_varience}, when neglecting the particle phase velocity, i.e.  $k_p =0$ and $ \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}_{xx} = 0 $, is underestimating the particle phase velocity. 
-Since, the velocity variance produced by a Stokes disturbance fields will be alway larger (in dimenisonless form) than the disturbance field given by an inertial partilce, we must conclude that the lake of velocity varience predicted by the theortry is due to the non-inclusion of the particle phase velocity. 
-In other word, the effect of inertia is to lower the dimensionless \textit{Reynolds} stress, thus if we underpredict it it must comes from other reason than inertia. 
-According to \ref{fig:vnst_DNS} it seems that we rather well predict the effect of confinement, i.e. the effect of the volume fraction, at $Ga = 5$.
-Thus, the only reason why the fluid phase velocity variance is underestimated is because of the neglected particle phase velocity variance.  
+It is seen that for all $\phi$ and $\lambda$ the theoretical predictions given by \ref{eq:Horizontal_varience}(right), when neglecting the particle phase velocity, i.e.  $k_p =0$ and $ \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}_{xx} = 0 $, is underestimating the continuous phase velocity variance. 
+Since the velocity variance produced by a Stokes disturbance field will be always larger (in dimensionless form) than the disturbance field given by an inertial particle, we must conclude that the lake of velocity variance predicted by the theory is due to the non-inclusion of the particle phase velocity variance. 
+Indeed, according to \ref{fig:vnst_DNS} it seems that we can predict the effect of volume fraction on the averaged wake of the particle \eqref{eq:Horizontal_varience}.
+Thus, the only reason why the fluid phase velocity variance is underestimated must be because of the absence of the particle phase velocity variance in this first approximation.  
 
-On \ref{fig:uuxx} (left) we display the numerical values of the horizontal velocity variance against the theoretical results provided by, \ref{eq:Horizontal_varience}, including the values of $k_p$ and $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}_{xx}$ that are obtained numerically. 
-The prediction in the dense regime ($\phi = 0.2$) seem greatly improved. 
-In the dilute regime we still obtain a significant error of about $20\%$. 
-At this stage it is hard to explain where does these differences come from. 
+On \ref{fig:uuxx} (left) we display the numerical values of the horizontal velocity variance against the theoretical results provided by, \ref{eq:Horizontal_varience}, including the values of $k_p$ and $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}_{xx}$ that is obtained with the DNS. 
+The prediction in the dense regime ($\phi = 0.2$) seems greatly improved, while not many changes can be observed for the dilute regime. 
+Indeed, in the dilute regime, we still obtain a significant error. 
+At this stage it is hard to explain where does these differences come from however we can stipulate that the predicted magnitude of the velocity variance is greatly improved when including the particle phase center of mass variance. 
 
-We conclude that due to the relatively low magnitude of the horizontal velocity variance of the average wake of particles, the particle phase variance can no longer be neglected and must be accounted for. 
-Furthermore, when developing an algebraic model for the \textit{Pseudo-turbulent} tensor, it is essential to consider the impact of the particle phase velocity variance. 
-In other words, a closure model for the particle phase velocity variance should be constructed first and incorporated into the \textit{Reynolds stress} model as outlined in \ref{eq:functional_form_avg}. 
+We can suppose that due to the relatively low magnitude of the horizontal velocity variance of the average wake of particles, the particle phase variance can no longer be neglected and must be accounted for. 
+Thus, when developing an algebraic model for the \textit{Pseudo-turbulent} tensor, it is essential to consider the impact of the particle phase velocity variance, at least in the horizontal direction. 
+Thus, a closure model for the particle phase velocity variance should be constructed first and incorporated into the \textit{Reynolds stress} model as outlined in \ref{eq:functional_form_avg} to remain consistent.
+
+Nevertheless, in this chapter, we focus only on the modeling of the continuous phase velocity variance. 
+We will model the particle phase velocity variance in the next chapter. 
+Thus, in the subsequent sections, we make use of the particle center of mass velocity variance collected with the DNS to ensure a consistent modeling of the continuous phase \textit{Reynolds} stress.    
 
 
 \subsection{Extension to higher inertial effects. }
 
-In this subsection we extend our model to higher inertial number $Re$ by making use of the DNS results. 
-We assume the following properties for the creation of our semi-empirical model: 
-(1) In the low inertial regime ($Re=0$) and low volume fraction ($\phi=0$) the \textit{Reynolds stress} must be given by the expression \ref{eq:functional_form_avg}. 
-(2) The functional form given by \ref{eq:functional_form_avg} is preserved at finite $Re$. 
-Meaning that the scalar $C_e^{(1)}$ and $C_e^{(2)}$ are the only allowed degree of freedom for including the finite inertial effects. 
-(3) The empirical fit of the constant  $C_e^{(1)}$ and $C_e^{(2)}$ should not take in account the effect of the particle phase velocity fluctuation. 
-Indeed, these are already taken in account through the terms $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ and $k_p$ in \ref{eq:functional_form_avg}. 
-This, means that we must perform the fit on the numerical data while including the particle velocity fluctuation obtained in our DNS in the formula \eqref{eq:functional_form_avg}.
-That way $C_e^{(1)}$ and $C_e^{(2)}$ represents only the modification of the pseudo turbulence due to the averaged wakes for higher inertia effects.  
+In this subsection, we extend our model to higher \textit{Reynolds} numbers by making use of the DNS results. 
+We assume the following properties to construct our semi-empirical model: 
+(1) In the low inertial regime ($Re=0$) and low volume fraction ($\phi=0$) the \textit{Reynolds stress} must be given by  \ref{eq:functional_form_avg}. 
+(2) The functional form given by \ref{eq:functional_form_avg} is preserved at finite $Re$ for the non-buoyancy terms. 
+This means that the scalar $C_e^{(1)}$ and $C_e^{(2)}$ are the only degrees of freedom that we can use to include the finite inertial effects. 
+(3) The semi-empirical expression  $C_e^{(1)}$ and $C_e^{(2)}$ should not take into account the effect of the particle phase velocity variance. 
+Indeed, these are already taken into account through the terms $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ and $k_p$ in \ref{eq:functional_form_avg}. 
+This means that we must perform a fit of $C_e^{(1)}$ and $C_e^{(2)}$ on the numerical data while including the particle velocity variance in \ref{eq:functional_form_avg}, that is directly obtained with the DNS.
+In the subsequent chapter, we seek an analytical expression for $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ to close entirely \ref{eq:functional_form_avg} based on theoretical analysis.
 
+In \ref{eq:functional_form_avg} the effects of inertia could be captured directly through the constant $A = Ga^2 /(12 Re)$. 
+However, it has been found that this method yields no suitable results. 
+This is because the formulation of $A$ is only valid in the Stokes flows. 
+Indeed, \ref{eq:v_b_sol} is a singularity solution only valid in Stokes flows. 
+Thus, we still consider that $C_k^{(2)}$ and $C_{ek}^{(2)}$ cancel-out according to \ref{eq:cancelation1} and \ref{eq:cancelation2} and play on the other parameters, i.e. $C_e^{(1)}$ and $C_e^{(2)}$,  to include inertial effects. 
 
-According to \ref{eq:functional_form_avg} the pseudoturbulence kinetic energy of the fluid at $Re = 0$ is given by,
+In the following we first focus on the modeling of the trace of the \textit{Reynolds} stress, then once it is done we concentrate on the deviatoric part of this tensor. 
+
+\subsubsection{The pseudo turbulent kinetic energy}
+
+According to \ref{eq:functional_form_avg} the pseudo turbulent kinetic energy of the continuous phase can be written at $Re = 0$ and $\phi = 0$ by,
 \begin{equation}
     k_f^{Re = 0}
     = 
-    C_e^{(0)}  \left(\frac{1}{2}  + 3 k_p^*\right)  
+    C_e^{(0)}  \left( U^2 + 2 k_p\right)  \frac{3}{2}
+    % + \frac{3}{2} (C_k^{(2)} + C_{ek}^{(2)})
     \label{eq:TKE}
 \end{equation}
-We recall that in the situation studied here $C_k^{(2)} = C_{ek}^{(2)}$ and therefore cancel out. 
-As shown in \ref{fig:kf} the semi-empirical formula, 
+We recall that in the stokes flow regime $C_k^{(2)}$ and $C_{ek}^{(2)}$ cancel-out. 
+We propose the following semi-empirical formulation to express the fluid phase kinetic energy: 
 \begin{equation}
     k_f
     = 
     k_f^{Re = 0}
-    \cdot \frac{\left(e^{-Re} +1\right)}{2},
+    \cdot \frac{\left(e^{-Re} +1\right)}{2}.
     \label{eq:semi_empirical}
 \end{equation}
-seems to fit all of our numreical results regardless of the viscosity ratio, \textit{Reynolds} number and volume fraction.  
-It appears that the contribution of finite inertia leads to a reduction by a factor of 2 in the magnitude of the fluid phase kinetic energy. 
-Surprisingly the dependence with $\phi$ and $\lambda$ do not seem to be affected by greater \textit{Reynolds} number. 
-The explanation of this factor is yet unclear to us. 
+
+
+In  \ref{fig:kf} we display the values of $k_f$ obtained with the DNS against the semi-empirical formula given by \ref{eq:semi_empirical} with (dot-dashed lines) and without (dashed lines) the particle phase velocity variance. 
+We can observe that \ref{eq:semi_empirical} with the particle phase velocity variance included, fit reasonably all of our numerical results. 
+We notice that \ref{eq:semi_empirical} without $k_p$ (dashed lines) seem to underpredict the fluid phase velocity variance for $\phi = 0.2$. 
+At lower volume fraction it is not clear whether it improves the predictions or not. 
+Anyhow, for $\phi \le 0.1$ the particle phase velocity variance seems negligible compared to the averaged wake contribution. 
+
+Consequently, this rather simple formula \eqref{eq:semi_empirical},  fits nicely all of our numerical results regardless of the viscosity ratio, \textit{Reynolds} numbers, and volume fraction.  
+Thus, according to \ref{eq:semi_empirical}, it appears that the contribution of finite inertial effect leads to a reduction by a factor of 2 in the magnitude of the fluid phase kinetic energy when the \textit{Reynolds} number is large enough. 
+Surprisingly, the dependence with $\phi$ and $\lambda$ do not seem to be affected by greater \textit{Reynolds} number, as witnessed by the absence of $\phi$ and $\lambda$ in \ref{eq:semi_empirical}. 
 \begin{figure}
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/KF2_l_0.pdf}
@@ -297,16 +312,18 @@ The explanation of this factor is yet unclear to us.
     (right) $\lambda = 10$
     (Symbols) DNS results computed according to \ref{eq:def_uuf_num}
     ($\pmb\bigcirc$) $\phi = 0.01$; ($\pmb\triangle$) $ \phi = 0.05$; ($\pmb\square$) $\phi = 0.1$ ($\pmb\lozenge$) $\phi = 0.2$.
-    (dot dashed lines) Semi-empirical formula \ref{eq:semi_empirical} \underline{including} the results of the DNS for the particle phase velocity fluctuations. 
+    (dot-dashed lines) Semi-empirical formula \ref{eq:semi_empirical} \underline{including} the results of the DNS for the particle phase velocity fluctuations. 
     (dashed lines) Semi-empirical formula \ref{eq:semi_empirical} \underline{excluding} the particle phase velocity fluctuations. 
     }
     \label{fig:kf}
 \end{figure}
 
-\ref{eq:semi_empirical} capture the isotropic part of the \textit{Reynolds stress} for all $\lambda$, $Re$ and $\phi$. 
-Regarding the deviatoric part of the  \textit{Reynolds stress} tensor it is accounted with 
+
+\subsubsection{Deviatoric part of the Reynolds stress tensor}
+
+
 From \ref{eq:functional_form_avg} we define the Deviatoric normalized part of the \textit{Reynolds Stress}, as, 
-\begin{equation*}
+\begin{equation}
     \textbf{D} =
     \frac{3\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}}{2 k_f} - 1
     = 
@@ -315,54 +332,61 @@ From \ref{eq:functional_form_avg} we define the Deviatoric normalized part of th
         + \frac{\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}{n_p U^2}
          - \frac{1}{3}(\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta
     \right]
-\end{equation*}
-Where the constant $b_f^{Re,\phi =0} = \frac{27}{10}$ from  \ref{eq:constants}. 
-In \citet{mehrabadi2015pseudo} they show that this constant is \textit{Reynolds number} and volume fraction dependents. 
+    \label{eq:D_def}
+\end{equation}
+Where the constant $b_f^{Re,\phi =0} = \frac{27}{10}$ in the Stokes and dilute regime \eqref{eq:constants}. 
+To extend the domain of validity of \textbf{D} we must adjust the scalar $b_f^{Re,\phi = 0}$ to higher $Re$, and $\phi$.  
 
 
-In \ref{fig:bf} we display the principal components of $\textbf{D}$ and demonstrate that a good fit for $b_f$ is, 
-\begin{equation*}
-    b_k = \frac{27}{10}  \text{exp}\left\{- 3\left(\phi^{5/6} + \frac{10^{-3}}{\lambda+1}Re\right)\right\}. 
-\end{equation*}
+In \ref{fig:bf} we display the vertical (hollow symbols) and horizontal (filled symbols) components of $\textbf{D}$. 
+It is shown that a good semi-empirical fit for $b_f$ is given by, 
+\begin{equation}
+    b_f = \frac{27}{10}  \text{exp}\left\{- 3\left(\phi^{5/6} + \frac{10^{-3}}{\lambda+1}Re\right)\right\}. 
+    \label{eq:b_f}
+\end{equation}
 \begin{figure}
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/D2_l_0.pdf}
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/D2_l_1.pdf}
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/D2_l_10.pdf}
-    \caption{Deviatoric \textit{Reynolds stress} tensor $\textbf{D}_f$, in terms of the \textit{Galileo} number for multiple viscosity ratios:
+    \caption{Deviatoric part of the \textit{Reynolds stress} tensor, $\textbf{D}$, in terms of the \textit{Galileo} number for multiple viscosity ratios:
     (left) $\lambda = 0.1$,
     (middle) $\lambda = 1$,
     (right) $\lambda = 10$. 
-    (Symbols) DNS results computed according to \ref{eq:def_uuf_num}
+    (Symbols) DNS results computed according to \ref{eq:def_uuf_num}, (hollow symbols) $\textbf{D}_{yy}$ and (filled symbols) $\textbf{D}_{xx}$. 
+    (dot-dashed lines) Values of $\textbf{D}_{xx}$ given by \ref{eq:D_def} using \ref{eq:b_f}, including the particle phase velocity fluctuations obtained with the DNS. 
+    (dashed lines) Values of $\textbf{D}_{yy}$ given by \ref{eq:D_def} using \ref{eq:b_f}
     ($\pmb\bigcirc$) $\phi = 0.01$; ($\pmb\triangle$) $ \phi = 0.05$; ($\pmb\square$) $\phi = 0.1$ ($\pmb\lozenge$) $\phi = 0.2$.
-    (dot dashed lines) Semi-empirical formula \ref{eq:} \underline{including} the results of the DNS for the particle phase velocity fluctuations. 
-    (dashed lines) Semi-empirical formula \ref{eq:} \underline{excluding} the particle phase velocity fluctuations. 
     }
     \label{fig:bf}
 \end{figure}
-This time we clearly observe that the dependence of $\textbf{D}$ in $\phi$ and $\lambda$ is Reynolds number dependents. 
-Specifically, for $\lambda = 10$ we observe that $\textbf{D}$ seem not $Re$ dependents. 
-Hence, in  \ref{eq:fit_bf} we included a linear term in  $Re$ which vanish for $\lambda \to \infty$. 
-This may be in contradiction with the results of \ref{mehrabadi2015pseudo} as his fitted constant $b_f$ is $Re$ dependent for solid sphere. 
-This dispersencies in the results is still unclear to us, however we could argue that our rang.  
+We clearly observe that $b_f/b_f^{Re,\phi = 0}$ varies with $\phi$, $\lambda$ and the $Re$, while $k_f/k_f^{Re = 0}$ where just a function of $Re$. 
+Specifically, for $\lambda = 10$ we observe that $b_f$ depends weakly on $Re$ or $Ga$, where it is a lot more dependent for bubbles. 
+
+% This may be in contradiction with the results of \citet{mehrabadi2015pseudo} as his fitted constant $b_f$ is $Re$ dependent for solid sphere, i.e. $\lambda = \infty$. 
+% Indeed, they $b_f$ reads in our notation as, 
+% \begin{equation*}
+%     \frac{0.523}{1+0.305 e^{-0.114}} \text{Exp}\left\{\frac{-3.511}{1+1.801 e^{-0.005Re(1-\phi)}}\right\}
+% \end{equation*}
+% This dispersencies in the results is still unclear to us.  
 
 
-Although the proposed fit do not match the numerical results perfectly we take part to not overfit our results and kept a simplify fit. 
-Overall with the constant $b_f$ and $k_f$ fitted on our numerical results we extended our \textit{Reynolds stress} model for higher $Re$, $\phi$ and $\lambda$. 
-It must be kept in mind that since we studied only vertically rising buoyant bubbly flow we only extended the validity of this fit in this specific configuration. 
+Although \ref{eq:b_f} and \ref{eq:semi_empirical} do not match exactly the numerical results, we prefer not to overfit our results and kept a rather simple fit for $b_f$ and $k_f$. 
+In summary, with the constant $b_f$ and $k_f$ fitted on our numerical results we extended our \textit{Reynolds stress} model for higher $Re$, $\phi$, and $\lambda$. 
+It must be remembered that since we studied only vertically rising buoyant bubbly flow we only extended the validity of this fit in this specific configuration. 
 
 
 
 \subsection{Final validation}
 
-We would like to ed this chapter by a series of validation comparing our final model to experimental and numerical results at finite \textit{Reynolds number}. 
+We would like to end this section with a series of validations comparing our final model to the experimental and numerical results at finite \textit{Reynolds number}. 
 
 On \ref{fig:trygvason} we first display the pseudoturbulence kinetic energy Vs. a series of numerical results from \citet{bunner2002dynamics,loisy2016direct,wang2021numerical} and experimental results of \citet{martinez2007measurement}.  
 We can observe that the predicted magnitude of $k_f$ is in very good agreement with all these results. 
-These studies concern either fixed arrays of particle either dilute suspension of particles, in both case the particle velocity variance is negligible, thus we consider that $k_p = 0$ in \ref{eq:semi_empirical}. 
-We can observe that setting $\lambda \to\infty$ indeed capture solid particle induced turbulence results from \citet{wang2021numerical}. 
+These studies concern either fixed arrays of particles or dilute suspensions of particles, in both cases the particle velocity variance is negligible, thus we consider that $k_p = 0$ in \ref{eq:semi_empirical}. 
+We can observe that setting $\lambda \to\infty$ in \ref{eq:semi_empirical}, captures quantitatively the results of \citet{wang2021numerical} for solid particle fixed array. 
 It also seems to correspond to the pseudo turbulence generated by the experimental results of \citet{martinez2007measurement} which considered rising bubbles in water. 
-We assume that this is due to the fact that they bubbles are probably contaminated inducing no-slip boundary condition at the surface of the bubbles, which hence correspond to solid particle.  
+We assume that, because their bubbles are contaminated this can be considered as a no-slip boundary condition at the surface of the bubbles, which hence correspond to solid particles, i.e. $\lambda \to \infty$.  
 \begin{figure}
     \centering
     \includegraphics[height = 0.35\textwidth]{image/HOMOGENEOUS_final/CA/KFliterature.pdf}
@@ -373,16 +397,16 @@ We assume that this is due to the fact that they bubbles are probably contaminat
     ($\pmb\lozenge$) Direct numerical simulation (DNS) of rising deformable bubbles at $Re \approx 30$ \citep{loisy2016direct}
     ($\pmb\triangle$) DNS of rising spherical bubbles by \citet{bunner2002dynamics}. 
     ($\pmb\bigcirc$) Experiment of rising spherical bubbles in water by \citet{martinez2007measurement} at $Re \approx 30$. 
-    (dot dashed lines) Semi-empirical formula \ref{eq:} at $Re \approx 30$ with $\lambda = 0$. 
-    (dashed lines)  Semi-empirical formula \ref{eq:} at $Re \approx 30$ with $\lambda = \infty$.
+    (dot-dashed lines) Semi-empirical formula \ref{eq:semi_empirical} at $Re \approx 30$ with $\lambda = 0$. 
+    (dashed lines)  Semi-empirical formula \ref{eq:semi_empirical} at $Re \approx 30$ with $\lambda = \infty$.
     }
     \label{fig:trygvason}
 \end{figure}
 In \ref{fig:trygvason} we also compared our analytical formula to the DNS results of \citet{bunner2002dynamics} and \citet{loisy2016direct} which considered rising bubbly flows. 
-As can be seen from the (dashed lines) in \ref{fig:trygvason} our semi-emprical formula capture quantitatively their results. 
+As can be seen from the (dashed lines) in \ref{fig:trygvason} our semi-empirical formula captures quantitatively their results. 
 
-As the previous validation concerned well the low but finite \textit{Reynolds number}, we now challange our self and compare our semi-emprical for \ref{eq:semi_empirical} to DNS out of our range of $Re$. 
-In \citet{mehrabadi2015pseudo} they performed DNS of fixed array of spherical solid spheres, from $Re_m = 1$ to $Re_m=300$ where $Re_m = (1- \phi) Re$ is the Reynolds number based on the mean slip velocity. 
+As the previous validation concerned the low but finite \textit{Reynolds number} regime, we now challenge ourselves and compare our semi-empirical formula \eqref{eq:semi_empirical} to DNS out of our range of \textit{Reynolds} numbers. 
+In \citet{mehrabadi2015pseudo} they performed DNS of a fixed array of spherical solid spheres, from $Re_m = 1$ to $Re_m=300$ where $Re_m = (1- \phi) Re$ is the Reynolds number based on the mean slip velocity. 
 \begin{figure}
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/tenneti.pdf}
@@ -391,26 +415,29 @@ In \citet{mehrabadi2015pseudo} they performed DNS of fixed array of spherical so
     results of Particle-resolved Direct Numerical Simulations
     of fixed particle assemblies by \citet{mehrabadi2015pseudo}
     ($\pmb\bigcirc$) $Re_m = (1-\phi) \approx 1$; ($\pmb\triangle$) $Re_m \approx 300$;
-    (dot dashed lines) Semi-empirical formula \ref{eq:} at $Re_m = 1$
+    (dot-dashed lines) Semi-empirical formula \ref{eq:} at $Re_m = 1$
     (dashed lines) Semi-empirical formula \ref{eq:} at $Re_m= = 300$
     }
     \label{fig:tennet}
 \end{figure}
-It is shown that the results at low Reynolds number corresponds quantitatively, see \ref{eq:semi_empirical} (dot dased lines). 
-However, we can remark that at $Re_m = 300$ the $\phi^{2/3}$ seems wrong for low $\phi$, as evidenced by the empirical formula proposed by \citet{mehrabadi2015pseudo}, see Eq (7.1) of their paper. 
-Nevertheless, it is remarkable that \ref{eq:semi_empirical} still provides a reasonable prediction, even at these high Reynolds number. 
+As shown in \ref{fig:tennet} (dot-dashed line), the results at low Reynolds number ($Re_m=1$) of \citet{mehrabadi2015pseudo}  correspond quantitatively to \eqref{eq:semi_empirical}. 
+However, we can remark that at $Re_m = 300$, the relation $k_f \sim \phi^{2/3}$, seems not valid anymore, even at low $\phi$. 
+This is evidenced by the empirical formula proposed by \citet{mehrabadi2015pseudo}, see Eq (7.1) of their paper. 
+Nevertheless, it is remarkable that \ref{eq:semi_empirical} still provides a reasonable quantitative prediction, even at $Re_m = 300$. 
 
 
-Finally, in order to validate the functional form of \ref{eq:functional_form_avg} regarding the inclusion of the particle phase velocity variance, we compare our results to the study of \citet{shajahan2023inertial} which performed DNS of particle sedimentation.  
+Finally, to validate the functional form of \ref{eq:functional_form_avg} regarding the inclusion of the particle phase velocity variance, we compare our results to the study of \citet{shajahan2023inertial}. 
+They performed DNS of free arrays of solid particles under sedimentation.  
 \begin{figure}
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/tariq.pdf}
     \caption{Dimensionless vertical velocity varience, in terms of the volume fraction $\phi$. 
     (Symbols) results of Particle-resolved Direct Numerical Simulations  of gravitational settling of monodisperse solid spheres by \citet{shajahan2023inertial} at $Ga = 144$. 
-    (dot dashed lines) Semi-empirical formula \ref{eq:} \underline{including} \citet{shajahan2023inertial}'s results for the particle phase velocity fluctuations. 
-    (dashed lines) Semi-empirical formula \ref{eq:} \underline{excluding} the particle phase velocity fluctuations. 
+    (dot-dashed lines) Semi-empirical formula \underline{including} \citet{shajahan2023inertial}'s results for the particle phase velocity fluctuations. 
+    (dashed lines) Semi-empirical formula \underline{excluding} the particle phase velocity fluctuations. 
     }
     \label{fig:tariq}
 \end{figure}
-We can observe on \ref{fig:tariq} that while our semi-emprical formula provide reasonable result without the consideration of the particle phase velocity fluctuation, it gets even more accurate when including those. 
-We con conclude that the general functional for of \ref{eq:functional_form_avg} seem to capture well the dependence of the \textit{Reynolds stress} with the particle phase velocity variance. 
+We can observe on \ref{fig:tariq} (dashed lines) that the semi-emprical formula slightly underestimates the result when we neglect the particle phase velocity variance. 
+When we include the contribution of the particle phase velocity variance (that we obtained in their study), we can notice that the prediction improved a lot. 
+We conclude that the general functional form of \ref{eq:functional_form_avg} seems to capture the dependence of the \textit{Reynolds} stress with the particle phase velocity variance. 

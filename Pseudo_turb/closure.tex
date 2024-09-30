@@ -1,58 +1,262 @@
+\section{Methodology}
+
 \subsection{The closure problem}
-Objectives
-\begin{itemize}
-    \item Introduce the closure problem and the form of the closure terms. 
-    \item Focus only on the drag force and velocity fluctuations. 
-\end{itemize}
 To clarify the role of the different forces and stresses in a multiphase flow model we start by listing the averaged momentum equations for dispersed two-phase flows obtained by an ensemble averaging procedure.
-For mono disperse fluid particles they read as \citep{zhang1997momentum,jackson1997locally}
+For mono-disperse emulsion the momentum equations of the continuous phase and dispersed phase can be written \citep{zhang1997momentum,jackson1997locally}
 \begin{align}
     \pddt (\phi_f\rho_f \textbf{u}_f)
-    + \div \left(\phi_f\rho_f \textbf{u}_f\textbf{u}_f + \phi_f  \bm{\sigma}_f^{\text{Re}} - n_p\textbf{M}_p \right)
+    + \div \left(\phi_f\rho_f \textbf{u}_f\textbf{u}_f + \bm{\sigma}_f^{\text{eff}}\right)
     &= \phi_f 
     \left(\div \bm{\sigma}_f
     + \rho_f \textbf{g}\right)
-    - n_p \textbf{f}_p 
-    \label{eq:dt_uc}
+    - n_p \textbf{f}_p, 
+    \label{eq:dt_uf}
     \\
-    \pddt (\phi_d\rho_d \textbf{u}_p)
-    + \div \left(\phi_d\rho_d \textbf{u}_p\textbf{u}_p+ \phi_d \bm{\sigma}_p^{\text{Re}}\right)
+    \pddt (n_m  m_p  \textbf{u}_p)
+    + \div \left(n_p m_p  \textbf{u}_p\textbf{u}_p
+    +  \bm{\sigma}_p^{\text{eff}}\right)
     &= 
-    \phi_d \left(\div \bm{\sigma}_f
+    n_p v_p \left(\div \bm{\sigma}_f
     + \rho_d \textbf{g}\right)
-    + n_p \textbf{f}_p 
-    \label{eq:dy_up}
+    + n_p \textbf{f}_p, 
+    \label{eq:dt_up}
 \end{align}
-where the subscript $c$ and $p$ denote continuous and particle phase averaged quantities, respectively.
-$\phi$ is the volume fraction, $n_p$ the particle number density, \textbf{u} the averaged velocity, $\bm{\sigma}$ the averaged stress tensor, $\bm{\sigma}^{\text{Re}}$ the stress due to velocity fluctuation or pseudo turbulent stress.
-Additionally, due to the presence of the particles we have the interphase drag force term : $\textbf{f}_p$, and the interphase stress or first moment : $\textbf{M}_p$. 
+respectively. 
+The subscript $f$ and $p$ refer to continuous phase and particle phase averaged quantities, respectively.
+$\phi_f$ is the volume fraction of the continuous phase, $n_p$ the particle number density, $\textbf{u}_f$ (resp. $\textbf{u}_p$) the averaged velocity of the fluid (resp. dispersed) phase, $\bm{\sigma}_f$ the averaged continuous phase stress tensor.
+$\bm{\sigma}^{\text{eff}}_p$ and $\bm{\sigma}^{\text{eff}}_f$ are the effective stresses of the dispersed and continuous phase, respectively.  
+Finally, $\textbf{f}_p$ represents the interphase momentum exchange, or drag force density term. 
 
-
-In this study we focus on three of these closure terms, namely the interphase drag force : $\textbf{f}_p$, and the Reynolds stresses : $\bm{\sigma}^{\text{Re}}_f$ and $\bm{\sigma}^{\text{Re}}_p$. 
-Using the statistical average formalism on all configuration of the flow termed by $\CC$, we can define these quantities as,  
+Both momentum equations are completed by a transport equation for $\phi_f$ and a volume conservation laws, namely, 
 \begin{align}
-    \textbf{f}_p (\textbf{x},t) &= \
-    \frac{1}{n_p}\int \sum_i \delta(\textbf{x} - \textbf{x}_\alpha(t,\CC)) \textbf{f}_\alpha d\PP\\
-    \label{eq:f_alpha}
-    \text{with} \;\;\; &\textbf{f}_\alpha(t,\CC) = \int_{S_\alpha} \bm{\sigma}_f'(\textbf{x},t,\CC) \cdot \textbf{n} dS \\
-    \bm{\sigma}^{\text{Re}}_p(\textbf{x},t) &=\frac{1}{n_p} \int \sum_i \delta(\textbf{x} - \textbf{x}_\alpha(t,\CC)) \rho_d \textbf{u}_\alpha'\textbf{u}_\alpha' d\PP\\
-    \label{eq:def_uuc}
-    \bm{\sigma}^{\text{Re}}_f(\textbf{x},t) &= \frac{1}{\phi_f}\int \rho_f\chi_f \textbf{u}_f' \textbf{u}_f'd\PP
+    % \phi_d \approx  \\
+    \phi_f + n_pv_p  - \frac{v_\alpha d^2 }{20}\grad n_p \approx 1\\
+    \pddt \phi_f + \div (\textbf{u}_f \phi_f)= 1
 \end{align}
-where $d\PP$ is a probability measure. 
-$\textbf{x}_\alpha$ is the center of mass of a particle labeled $\alpha$, $\chi_f(\textbf{x},t\CC)$ is teh phase indicator function of the continuous phase, and $\delta$ the Dirac delta function. 
-The superscript $'$ indicate the relative values of a quantity with respect to its phasic mean values, specifically $\bm{\sigma}_f' = \bm{\sigma}_f^0(\textbf{x},t, \CC)  - \bm{\sigma}_f(\textbf{x},t)$, $\textbf{u}_\alpha' = \textbf{u}_\alpha(t,\CC) - \textbf{u}_p(\textbf{x},t)$ and $\textbf{u}_f' = \textbf{u}_f^0(\textbf{x},t, \CC)  -\textbf{u}_f(\textbf{x},t)$, with $\bm{\sigma}_f^0 $, $\textbf{u}_f^0$ and $\textbf{u}_\alpha$ being the local stress of the fluid phase, the local velocity of the fluid phase and the velocity of the center of mass of the particle $\alpha$, respectively. 
+where we have introduced, $d$, as the diameter of the droplets. 
+We recall that the first equation is only an approximation, that has been derived using the relation between volume fraction and number density\citep{zhang1997momentum}. 
+
+The number density, continuous phase volume fraction, drag force density, effective stresses of the dispersed, and continuous phase can be expressed as ensemble average of local-non averaged quantities and read as, 
+\begin{align}
+    n_p &= \pavg{}
+    \label{eq:n_p}\\
+    \phi_f &= \avg{\chi_f}
+    \label{eq:chi_f}\\
+    \bm\sigma_f &= p_f \bm\delta + \mu_f (\grad \textbf{u}_f + \dagger \grad \textbf{u}_f) - \frac{\mu_f}{\phi_f} \avg{\delta_\Gamma (\textbf{u}_f' \textbf{n}+ \textbf{n}\textbf{u}_f')}
+    \label{eq:sigma_f}\\
+    n_p \textbf{f}_p  &= \pSavg{\bm\sigma'_f\cdot \textbf{n}}
+    \label{eq:f_alpha}
+    \\
+    \bm{\sigma}_f^{\text{eff}} &= \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    \label{eq:def_uup}
+    \\
+    \bm{\sigma}^{\text{eff}}_f &= \avg{\chi_f \textbf{u}_f'\textbf{u}_f'} - \pSavg{\textbf{r}\bm\sigma'_f\cdot \textbf{n}}
+    + \frac{1}{2}\div\pSavg{\textbf{rr}\bm\sigma'_f\cdot \textbf{n}}
+    \label{eq:def_sigma_eff_f}
+\end{align}
+respectively. 
+Where we introduced: $\avg{\ldots}$ as an ensemble average procedure, 
+$\textbf{u}_\alpha$ is the center of mass velocity of a particle labeled $\alpha$, $\chi_f$ is the phase indicator function of the continuous phase, and $\delta_p$ the Dirac delta function pointing on the particle center of masses, $\delta_\Gamma$ the interface indicator function, and \textbf{n} the normal of the surface pointing toward the continuous phase. 
+The superscript $'$ indicates the relative values of a quantity with respect to its phasic mean values. 
+Specifically $\bm{\sigma}_f' = \bm{\sigma}_f^0  - \bm{\sigma}_f$, 
+$\textbf{u}_\alpha' = \textbf{u}_\alpha - \textbf{u}_p$ and $\textbf{u}_f' = \textbf{u}_f^0  -\textbf{u}_f$, with $\bm{\sigma}_f^0 $ and $\textbf{u}_f^0$ being the local stress of the continuous phase, the local velocity of the continuous phase, respectively. 
+
+In the present situation, i.e. where the mixture is only governed by conservation of mass and momentum,  the ``closure problem'' consist in finding explicit expressions for the terms of the form $\avg{\ldots}$ in \ref{eq:sigma_f}, \ref{eq:f_alpha}, \ref{eq:def_uup} and \ref{{eq:def_sigma_eff_f}} in terms of the unknown of the problem, i.e. $n_p$, $\phi_f$, $\textbf{u}_p$ and $\textbf{u}_f$. 
+Notice that since 
+
+
+\subsection{ The momentum balance in homogeneous sedimentation}
+
+In this work we restrict our attention to the homogeneous emulsion of buoyant droplets. 
+Additionally, we will focus on the closure given by \ref{eq:f_alpha}. 
+
+By statdy-state and ``homogeneous'', we imply that the ensemble averaged quantities, $\textbf{u}_p$, $\textbf{u}_f$, $n_p$ and $\phi_f$ are not function of space and time variables, i.e. $\textbf{x}$ and $t$. 
+However, notice  that the mean continuous phase pressure, $p_f$, may be a function of $\textbf{x}$, even in the homogeneous case. 
+Since every closure terms present in \ref{eq:dt_uf} and \ref{eq:dt_up} are ensemble average of fluctuating quantities they cannot be a function of the mean hydrostatic pressure, $p_f$.
+Consequently, from \ref{eq:n_p} to \ref{eq:def_sigma_eff_f} the only space dependent quantity is $p_f$. 
+
+In this situation, the averaged momentum conservation equations \ref{eq:dt_uf} and \ref{eq:dt_uf} can be re-written as, 
+\begin{align}
+    % \pddt (\phi_f\rho_f \textbf{u}_f)
+    % + \div \left(\phi_f\rho_f \textbf{u}_f\textbf{u}_f + \phi_f  \bm{\sigma}_f^{\text{Re}} - n_p\textbf{M}_p \right)
+    0 
+    &= \phi_f 
+    \left(\grad p_f
+    + \rho_f \textbf{g}\right)
+    - n_p \textbf{f}_p, 
+    \label{eq:dt_uf_steady}
+    \\
+    % \pddt (\phi_d\rho_d \textbf{u}_p)
+    % + \div \left(\phi_d\rho_d \textbf{u}_p\textbf{u}_p+ \phi_d \bm{\sigma}_p^{\text{Re}}\right)
+    0
+    &= 
+    \phi_d \left(\grad p_f
+    + \rho_d \textbf{g}\right)
+    + n_p \textbf{f}_p. 
+    % \label{eq:dy_up}
+    \label{eq:dt_up_steady}
+\end{align}
+where we have used the relation $n_p v_p = \phi_d$, which is not an approximation anymore since $\grad n_p = 0$ in this specific case.
+Our goal is to build a model for the force density closure $\textbf{f}_p$, then \ref{eq:dt_uf_steady} and \ref{eq:dt_up_steady} represent out starting point to accomplish this task. 
 
 
 
+Multiplying \ref{eq:dt_uf_steady} by $\phi_d$ and \ref{eq:dt_up_steady} by $\phi_f$, and subtracting the resulting equations, gives directly the equilibrium between buoyancy and drag force density, namely, 
+\begin{align}
+     \textbf{f}_p
+    &= 
+    \frac{4}{3}\frac{d^3 \pi}{8}\ \phi_f (\rho_f -\rho_d ) \textbf{g}. 
+    \label{eq:f_p_buoyant}
+\end{align}
+% In  mono-disperse suspension of droplets $n_p = \phi_d / v_p$ with $v_p =4/3\pi d^3/8$ the volume of a particle which yields the final results, 
+% \begin{equation*}
+%     \textbf{f}_p
+%     = 
+%     \frac{4}{3}\pi\frac{d^3}{8}\phi_f (\rho_f -\rho_d ) \textbf{g}
+%     \label{eq:drag}
+% \end{equation*}
+% It is convinient to make dimensionless this force with Hadamard-Ribczynski formula, which is, 
+% \begin{equation*}
+%     \textbf{f}^0_p = \pi \mu_f d A \textbf{u}_{pf}
+% \end{equation*}
+% Dividing one by the other gives the dimensionless force
+% \begin{equation*}
+%     \textbf{f}^*_p 
+%     = 
+%     \frac{4}{3A}\frac{d^2 \phi_f (\rho_f -\rho_d ) \textbf{g}}{8 u_{pf}\mu_f}
+% \end{equation*}
+% This can be made dimensionless with $\phi_f$
+Let us assume that the force density can be written in the form, 
+\begin{equation*}
+    \textbf{f}_p = C_d  \pi \rho_f \frac{d^2}{8} u_{pf}^2
+    \label{eq:f_p_def}
+\end{equation*}
+where $C_d$ is a dimensionless coefficient, and $u_{pf}^2 = (\textbf{u}_p - \textbf{u}_f)\cdot (\textbf{u}_p - \textbf{u}_f)$, is the relative mean phase velocity squared. 
+Using \ref{eq:f_p_buoyant}  and \ref{eq:f_p_def} we can show that $C_d$ is related to the mean phase relative velocity with, 
+\begin{equation}
+    C_d  
+    = 
+    \frac{4}{3}
+    \frac{d \phi_f (\rho_f -\rho_d ) \textbf{g}}{\rho_f u_{pf}^2}
+    \label{eq:C_d}
+\end{equation}
+The right-hand side of \ref{eq:C_d} can be reformulated according to three dimensionless groups, it yields, 
+\begin{equation}
+    C_d = 
+    \frac{4\phi_f}{3} \left(\frac{Ga}{Re}\right)^2
+    \label{eq:C_d_adim}
+\end{equation}
+where $Ga$ is the \textit{Galileo} number and $Re$ the \textit{Reynolds} number, namely, 
+\begin{align}
+    Ga^2 = \frac{
+    d^3
+    \rho_f
+    (\rho_f -\rho_d ) g
+}{\mu_f^2},
+&& 
+Re =   \frac{\rho_f d u_{pf}}{\mu_f}.
+\end{align}
+
+In summary, the force density term, $\textbf{f}_p$, can be written in terms of the dimensionless constant $C_d$, which can itself be written in terms of $Ga$, $\phi_f$ and $Re$ in the present context. 
+The \textit{Galileo} number and the volume fraction $\phi_f$ are known parameters in our problem, indeed they are only function of the physical and geometrical properties of the mixture.
+Consequently, the closure problem for $\textbf{f}_p$ consist in measuring the \textit{Reynolds} number or the mean relative motion between phases, knowing $\phi_f$ and $Ga$ a priori. 
+The mean relative motion between phases, can be obtained either experimentally, theoretically or numerically. 
+In this work, we combine experimental measures and theoretical results from the literature to provide the most complete model for $C_d$.
+Then, based on the DNS presented in the following section we will be able to validate and see the limitation of our model. 
+
+% \tb{
+% This can be directly computed into our DNS. 
+% \begin{equation*}
+%     C_d  \phi_f^2 \frac{\rho_f^2 d^2 u_{pf}^2}{\mu_f^2}
+%     = 
+%     \frac{4}{3}
+%     \phi_f^3 
+%     \frac{
+%         d^3
+%         \rho_f
+%         (\rho_f -\rho_d ) g
+%     }{\mu_f^2}
+% \end{equation*}
+% Let us define the Galileo number as $Ga^2 = \frac{
+%     d^3
+%     \rho_f
+%     (\rho_f -\rho_d ) g
+% }{\mu_f^2}$ and the Reynolds number based on the drift velocity as, $Re =  \phi_f \frac{\rho_f d u_{pf}}{\mu_f}$,
+% Then, the relation between the Reynolds and Galileo is given by, 
+% \begin{equation*}
+%     Re
+%     = 
+%     Ga
+%     \sqrt{\frac{4\phi_f^3}{3 C_d}}
+% \end{equation*}
+% This the relative velocity is given by, 
+% In stokes and dilute regime the $C_d$ noted $D_c^0$ is given by Hadamard-Ribczynski solution and reads, 
+% \begin{equation*}
+%     C_d^0 = \frac{8}{Re} \left(\frac{3\lambda +2 }{\lambda +1}\right)
+%     = \frac{8}{Re}A
+% \end{equation*}
+% where we introduced the constant $A = \left(\frac{3\lambda +2 }{\lambda +1}\right)$. 
+% Thus, the Reynolds number obtained for a given \textit{Galileo} number in stokes regime is, 
+% \begin{equation*}
+%     Re^0
+%     = 
+%     \frac{Ga^2}{6 A}
+%     % \phi_f^3  
+% \end{equation*}
+% Since this is valid for an isolated particle we fixed $\phi_f=1$, this will be our renormalization constant. 
+% \begin{equation*}
+%     Re^*
+%     = 
+%     \frac{6A}{Ga}
+%     \sqrt{\frac{4\phi_f^3}{3 C_d}}
+% \end{equation*}
+ 
+% \paragraph{Relation between Galileo and Reynolds numbers :}
+% From the two previous expressions we can write the equality, 
+% \begin{equation*}
+%     \textbf{f}_p = C_d  \pi \rho_f \frac{d^2}{8} u_{pf}^2
+% \end{equation*} 
+% The hadamar ribinsky formula reads, 
+% \begin{equation*}
+%     \textbf{f}_p^0 =\pi \mu_f d A \textbf{u}_{pf}
+% \end{equation*}
+% dividing one by the other and by $\phi_f^2$ gives directly, 
+% \begin{equation*}
+%     \textbf{f}_p^* =   \frac{C_d  Re}{8 A} = \frac{C_d}{C_d^*}
+% \end{equation*}
+% }
+\subsection{Computational methodology}
 
 
+To represent a statistically steady-state and homogeneous buoyant emulsion we carry out DNS of tri-periodic rising droplets. 
+Notice that for the statistics to converge, the domain have to be large enough, and the simulation time long enough. 
 
-\section{Computational methodology}
+% We display in \ref{tab:dimensionless_numbers} the dimensionless numbers explored in this work. 
+% \begin{table}[h!]
+%     \centering
+%     \caption{Dimensionless parameter range investigated in this work.}
+%     \label{tab:dimensionless_numbers}
+%     \begin{tabular}{|ccccccc|ccc|}
+%         \hline
+%         \multicolumn{7}{|c}{Primary parameters} & \multicolumn{3}{||c|}{Secondary parameters}\\ \hline
+%         \multicolumn{1}{|c|}{$Ga$}                               & \multicolumn{1}{c|}{$Bo$}                   & \multicolumn{1}{c|}{$\phi$} & \multicolumn{1}{c|}{$\lambda$}                    & \multicolumn{1}{c|}{$\zeta$}                & \multicolumn{1}{c|}{$N_b$} & $t^*_\text{end}$ & \multicolumn{1}{||c|}{$\mathcal{L}/d$} & \multicolumn{1}{c|}{$Re$}  & $We$   \\ \hline
+%         \multicolumn{1}{|c|}{\multirow{4}{*}{$5\rightarrow 80$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.5$}} & \multicolumn{1}{c|}{$1\%$}  & \multicolumn{1}{c|}{\multirow{4}{*}{$10$ \& $1$\&$0.1$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.9$}} & \multicolumn{1}{c|}{$160$} & $400$           & \multicolumn{1}{||c|}{$20$}            & \multicolumn{1}{c|}{$1.3\to 110$} & {$0.03\to 0.95$} \\ 
+%         \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$5\%$}  & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$800$} & $400$           & \multicolumn{1}{||c|}{$20$}            & \multicolumn{1}{c|}{$1.0\to 92$} &  {$0.02\to 0.67$}\\ 
+%         \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$10\%$} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$200$} & $1000$           & \multicolumn{1}{||c|}{$10$}            & \multicolumn{1}{c|}{$1.9\to 77$}&  {$0.01\to 0.47$}\\ 
+%         \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$20\%$} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$400$} & $1000$           & \multicolumn{1}{||c|}{$10$}            & \multicolumn{1}{c|}{$1.7\to 62$}&  {$9\cdot 10^{-3}\to 0.31$}\\ \hline
+%         \end{tabular}
+% \end{table}
 
-We have considered the same set of data and configuration than in our previous study. 
-except that we extended our data to $3$ viscosity ratios, namely $\lambda =10,1,0.1$.
-Thus, our rage of study becomes, 
+
+The study's primary objective is to measure the mean relative velocity between the droplets and the continuous phase.
+Thus, obtaining a sufficient number of DNS samples is crucial to ensure a good statistical convergence of these mean quantities. 
+Also, the physical quantities measured in the simulations must remain independent of the domain size. 
+Regarding the grid spacing $\Delta$, we show in \ref{ap:convergence}  that using a definition of $d/\Delta = 25$ is enough to obtain representative results for $Re$. 
+We set $\mathcal{L}/d = 10$, which is roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
+Likewise, we use a number of particles per domain of at least $N_b = 160$ for all our cases, which introduces the need for a larger domain ($\mathcal{L}/d = 20$) for the dilute cases, so that the  $d/\Delta = 25$ is respected. 
+Each DNS lasts for a time: $t^*_\text{end} = 400 \sqrt{d/g}$ for the larger domains ($\mathcal{L}/d=20$) and $t^*_\text{end} = 1000 \sqrt{d/g}$ for the smaller domain.
+% It is shown in \ref{ap:validation} that these parameters are sufficient to obtain well converged statistics.  
+It is shown in \citet{fintzi2024buoyancy} and \ref{ap:convergence} that these parameters are sufficient to obtain well converged statistics. 
 \begin{table}[h!]
     \centering
     \caption{Dimensionless parameter range investigated in this work.}
@@ -60,17 +264,37 @@ Thus, our rage of study becomes,
         \hline
         \multicolumn{7}{|c}{Primary parameters} & \multicolumn{3}{||c|}{Secondary parameters}\\ \hline
         \multicolumn{1}{|c|}{$Ga$}                               & \multicolumn{1}{c|}{$Bo$}                   & \multicolumn{1}{c|}{$\phi$} & \multicolumn{1}{c|}{$\lambda$}                    & \multicolumn{1}{c|}{$\zeta$}                & \multicolumn{1}{c|}{$N_b$} & $t^*_\text{end}$ & \multicolumn{1}{||c|}{$\mathcal{L}/d$} & \multicolumn{1}{c|}{$Re$}  & $We$   \\ \hline
-        \multicolumn{1}{|c|}{\multirow{4}{*}{$5\rightarrow 80$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.5$}} & \multicolumn{1}{c|}{$1\%$}  & \multicolumn{1}{c|}{\multirow{4}{*}{$10$ \& $1$\&$0.1$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.9$}} & \multicolumn{1}{c|}{$160$} & $400$           & \multicolumn{1}{||c|}{$20$}            & \multicolumn{1}{c|}{$1.3\to 110$} & {$0.03\to 0.95$} \\ 
+        \multicolumn{1}{|c|}{\multirow{4}{*}{$5\rightarrow 80$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.5$}} & \multicolumn{1}{c|}{$1\%$}  & \multicolumn{1}{c|}{\multirow{4}{*}{$10$ $\to$ $0.1$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.9$}} & \multicolumn{1}{c|}{$160$} & $400$           & \multicolumn{1}{||c|}{$20$}            & \multicolumn{1}{c|}{$1.3\to 110$} & {$0.03\to 0.95$} \\ 
         \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$5\%$}  & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$800$} & $400$           & \multicolumn{1}{||c|}{$20$}            & \multicolumn{1}{c|}{$1.0\to 92$} &  {$0.02\to 0.67$}\\ 
         \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$10\%$} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$200$} & $1000$           & \multicolumn{1}{||c|}{$10$}            & \multicolumn{1}{c|}{$1.9\to 77$}&  {$0.01\to 0.47$}\\ 
         \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$20\%$} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$400$} & $1000$           & \multicolumn{1}{||c|}{$10$}            & \multicolumn{1}{c|}{$1.7\to 62$}&  {$9\cdot 10^{-3}\to 0.31$}\\ \hline
         \end{tabular}
+    \label{tab:simulations}
 \end{table}
+This study presents DNS results with dimensionless parameters in ranges outlined in \ref{tab:simulations}.
+In summary, we investigated $5$ \textit{Galileo} number $Ga = 5,10,25,50,80$, $4$ different volume fractions $\phi = 0.01,0.05,0.1,0.2$, and three viscosity ratios $\lambda =0.1,1,10$ with $Bo = 0.5$ and $\zeta = 0.9$.
+This makes a total of $60$ representative simulations.
 
-\subsection{Statistics computations}
+Due to numerical constraint we used a slightly higher \textit{Bond} number ($Bo = 0.5$) in this study, compared to the previous set of DNS used in \ref{chap:microstructure}. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height = 0.3\textwidth]{image/HOMOGENEOUS_final/PA/chi.pdf}
+    \caption{Mean aspect ratio of the droplets $\chi_p$, as a function of the \textit{Galileo} number, and the volume faction $\phi$,  for two different viscosity ratios.  
+    The symbols correspond to different volume fraction ($\pmb\bigcirc$) $\phi = 0.01$; ($\pmb\triangle$) $ \phi = 0.05$; ($\pmb\square$) $\phi = 0.1$ ($\pmb\lozenge$) $\phi = 0.2$.
+    The hollow symbols correspond to $\lambda = 1$, the filled symbols to $\lambda = 10$, and the small symbol to $\lambda = 0.1$.
+    The nearly imperceptible vertical bars on each symbol, represent the standard deviation around the mean.  }
+    \label{fig:chi2}
+\end{figure}
+To verify that the droplets remain in average approximately spherical we plotted in \ref{fig:chi2} the mean aspect ratio $\chi_p$ of the droplet for all of our simulation. 
+A rigorous definition of this aspect ratio is given in \citet{fintzi2024buoyancy} or \citet{bunner2003effect}. 
+Anyhow, at $Bo = à.5$ the maximum mean droplet deformation $\chi_p$ represents about $4\%$ of deformation, compared to the $2\%$ obtained for $Bo = 0.2$. 
+This means that the droplet shape deviate approximately of $4\%$ from their original spherical shape. 
+
+
+\subsection{Approximation of the ensemble average}
 
 Following \citet{du2022analysis} we consider ergodicity at all time of the numerical experiment.
-Thus, the ensemble average of a quantity $X$ can be approximated by a spatial average $\Xavg{X}$ and a time average $\Tavg{X}$ such that $\int X d\PP = \avg{X} \approx \Xavg{\Tavg{X}} = \Tavg{\Xavg{X}}$.
+Thus, the ensemble average of a quantity $X$ can be approximated by a spatial average $\Xavg{X}$ and a time average $\Tavg{X}$ such that $\avg{X} \approx \Xavg{\Tavg{X}} = \Tavg{\Xavg{X}}$.
 Consequently, the ensemble average of a numerical field, $X$, is taken through space and time such that,
 \begin{equation}
     \avg{X}
@@ -84,35 +308,24 @@ where,
     = \frac{1}{L^3}\int 
     X(\textbf{x},t) d\textbf{x}
 \end{equation}
-where $L$ is the length of the cubic domain.
-$t_0$ and $t_{end}$ is the starting time of sampling and the time duration of the simulation, respectively.
-In practice, we take $t_0$ such that the simulation reach a statistically steady regime for $t>t_0$.  
-Both $t_{end} $ and $t_0$ are given in \ref{ap:A} after several validations studies. 
+where $L$ is the length of one side of the cubic numerical domain.
+$t_0$ and $t_{end}$ are the starting time of sampling, and the ending time of sampling which is also the ending time of the simulation, respectively.
+In practice, we take $t_0$ such that the simulation reach a statistically steady regime. 
+It has been found that $t_0 < 50\sqrt{g/d}$.  
+% $t_{end}$ is given in \ref{tab:simulations} and is shown to be sufficient as demonstrated in \ref{ap:convergence}. 
 
-Therefore, to compute the phase average of the local phase velocity $\textbf{u}_k^0$, we simply perform an integration over space and time, 
-\begin{equation*}
-    \textbf{u}_k = \frac{1}{\phi_k} \Tavg{\Xavg{\chi_k \textbf{u}_k^0}}
-\end{equation*}
-To compute continuous phase averaged quantities such as \ref{eq:def_uuc} it is a little more complicated,
+To compute the phase average of the local phase velocity $\textbf{u}_k^0$, we simply perform an integration over space and time, 
 \begin{equation}
-    \phi_f \bm{\sigma}^{\text{Re}}_f /\rho_f
-    % = \Tavg{\Xavg{\chi_f \textbf{u}_f' \textbf{u}_f'}}
-    = \Tavg{\Xavg{\chi_f (\textbf{u}_f^0 -\textbf{u}_f ) (\textbf{u}_f^0 -\textbf{u}_f)}}
-    = \Tavg{\Xavg{\chi_f \textbf{u}_f^0 \textbf{u}_f^0}}
-    -  \phi_f  \textbf{u}_f \textbf{u}_f.
-    \label{eq:def_uuc_num} 
+    \textbf{u}_k = \frac{1}{\phi_k} \Tavg{\Xavg{\chi_k \textbf{u}_k^0}}
 \end{equation}
-where the indicator funciton $\chi_f$ must be understood as its approximation in the DNS, i.e the color function $1 - \alpha_d$. 
-Consequently, \ref{eq:def_uuc_num} indicate that we must take the average of the product of the velocities, and then we retrieve the mean velocities' product. 
-% Additionally,  note that the Reynolds stress can be decomposed by such as : 
-% \begin{align*}
-%     \phi_f \bm{\sigma}^{\text{Re}}_f /\rho_f
-%     &= 
-%     \Tavg{\Xavg{\chi_f (\textbf{u}_f^0 -\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f} ) (\textbf{u}_f^0 -\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f} )}}\\
-%     &+ \Tavg{\Xavg{\chi_f} (\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f} - \textbf{u}_f ) (\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f} - \textbf{u}_f)}\\
-% \end{align*}
-% where the first term is the space fluctuation relative to the instantaneous mean velocity of the fluid $\Xavg{\chi_f\textbf{u}_f^0} / \Xavg{\chi_f}$, and the second is the time fluctuation of the instantaneous mean velocity of the fluid. 
+where the indicator function $\chi_f$ must be understood as its approximation in the DNS, which is the color function used by the code \url{http://basilisk.fr}. 
 
-Similar expression can be derived for the particular phase by integrating the property over the volume of the particle which is done throught the use of the \texttt{tag.h} function as explaine in the preceding chapter, then we average on each particle at all time.
+Since the homogeneous and statistically steady-state hypothesis are supposed to be true, the mean of the droplet center of mass velocity is equivalent to the dispersed phase phasic mean velocity, $\textbf{u}_d$.
+Thus, we may compute the ensemble average relative velocity used in \ref{eq:C_d} with the operation, 
+\begin{equation}
+    \textbf{u}_{pf} = 
+    \frac{1}{\phi_d} \Tavg{\Xavg{\chi_d \textbf{u}_d^0}}
+    - \frac{1}{\phi_f} \Tavg{\Xavg{\chi_f \textbf{u}_f^0}}. 
+\end{equation} 
 
-Regarding the averaged surface quantities such as the mean drag force, we demonstrate now that it is possible to compute it directly through the difference of relative velocities. 
+Now that we have all the tools in hand, we present in the next section our generalized model for the drag force adapted to droplet of arbitrary viscosity. 

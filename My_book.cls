@@ -38,7 +38,7 @@
 \AtBeginDocument{\newcommand{\refn}[1]{\ref{#1}}}
 \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
 \numberwithin{equation}{section}
-\usepackage[bmargin=2cm,tmargin=2cm,lmargin=2cm,rmargin=2cm]{geometry}
+\usepackage[bmargin=2cm,tmargin=2cm,lmargin=2.5cm,rmargin=2.5cm]{geometry}
 \usepackage{xcolor}
 
 \usepackage{listings}
@@ -58,7 +58,27 @@
 \usepgfplotslibrary{polar}
 \pgfplotsset{compat=newest}
 \RequirePackage{graphicx}
-\RequirePackage{etoc}
+\RequirePackage{setspace}
+\newcommand{\chapabstract}[1]{
+    \begin{quote}
+      \singlespacing\small
+      \textbf{Abstract}
+        \rule{12.1cm}{1pt}
+        % \fbox{
+        %   \parbox{\textwidth}{
+            #1
+          % }}
+        \vskip-4mm
+        \rule{14cm}{1pt}
+  \end{quote}
+}
+
+% \RequirePackage{etoc}
+
+
+\usepackage[k-tight,tight]{minitoc} 
+\setcounter{secnumdepth}{3}
+% \renewcommand{\minitoc}{\minitoc\newpage}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

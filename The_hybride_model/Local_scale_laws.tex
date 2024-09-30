@@ -89,6 +89,7 @@ where $\textbf{u}^0_\Gamma(\textbf{x},t,\FF)$ is the velocity of the interface a
 More specifically the distribution $\delta_\Gamma$ is defined as \citep{appel2007}
 \begin{equation}
 <\delta_\Gamma,\phi> =\int_{\Gamma} \phi d\Gamma 
+\label{eq:def_surf_distribution}
 \end{equation}  
 where $\phi$ is a function with compact support. %in space-time
 %\color{blue}
@@ -142,7 +143,11 @@ We now introduce the local conservation laws that govern the fluid inside bulk p
 % \subsubsection{Generic formulation}
 % We present generic conservation laws within the volumes and at the interfaces. 
 Let $f_k^0$ denote a volumetric quantity of arbitrary tensorial order defined in $\Omega_k$.
-Similarly, let $f_\Gamma^0$ represent an arbitrary surface property defined on $\Gamma$. The subscript $_{||}$ is used to denote the projection of a field onto the plane tangential to the surface $\Gamma$. Specifically, for an arbitrary quantity $\textbf{g}$ defined on $\Gamma$, its tangential projection is given by $\textbf{g}_{||} = \bm\delta_{||}\cdot \textbf{g}$ where $\bm\delta_{||} = (\bm\delta-\textbf{nn})$ is a tangential projection operator and $\bm\delta$ is the identity tensor. This definition also extends to the gradient operator, where $\gradI= \bm\delta _{||}\cdot \grad$ is referred to as the surface gradient operator. In addition we may define the surface divergence operator as $\gradI \cdot ()= (\bm\delta _{||}\cdot \grad)\cdot()$.
+Similarly, let $f_\Gamma^0$ represent an arbitrary surface property defined on $\Gamma$. 
+Notice that $f_\Gamma^0$ can be defined as a volumetric quantity integrated over the thickness of the interfaces \citet[Chapter 2]{ishii2010thermo}. 
+Therefore, if $f_k^0$ has units $[x]$, then $f_I^0$ has the unit $[x.L]$, where $L$ is the unit of a length. 
+The subscript $_{||}$ is used to denote the projection of a field onto the plane tangential to the surface $\Gamma$. Specifically, for an arbitrary quantity $\textbf{g}$ defined on $\Gamma$, its tangential projection is given by $\textbf{g}_{||} = \bm\delta_{||}\cdot \textbf{g}$ where $\bm\delta_{||} = (\bm\delta-\textbf{nn})$ is a tangential projection operator and $\bm\delta$ is the identity tensor. 
+This definition also extends to the gradient operator, where $\gradI= \bm\delta _{||}\cdot \grad$ is referred to as the surface gradient operator. In addition we may define the surface divergence operator as $\gradI \cdot ()= (\bm\delta _{||}\cdot \grad)\cdot()$.
 
 %We use the subscript  $_{||}$ to indicate the projection of a field onto the plane tangential to the surface $\Gamma$. Specifically, for an arbitrary quantity $\textbf{g}$ defined on $\Gamma$, we denote its tangential projection as $\textbf{g}_{||} = (\bm\delta-\textbf{nn})\cdot \textbf{g}$. The previous definition also applies to the divergence operator, meaning that $\gradI= (\bm\delta-\textbf{nn})\cdot \grad$ is referred to as the surface divergence operator. 
 
@@ -247,18 +252,20 @@ Although \ref{eq:dt_f_I} and \ref{eq:dt_delta_I_f_I} appear similar in many resp
 This distinction holds significant importance, as the formulation of \ref{eq:dt_delta_I_f_I} proves to be more practical for the numerical modeling of quantities on deformable interfaces \citep{teigen2009}. %methods %\citep{scorsim2021particle}. 
 The set of equations formed by \ref{eq:dt_chi_k_f_k} for $k = f,d$ and the surface transport equation or \textit{jump condition} (\ref{eq:dt_delta_I_f_I}) is commonly known as the \textit{two-fluid} formulation of multiphase flows \citep{morel2015mathematical,tryggvason2011direct,drew1983mathematical,kataoka1986local}. 
 
-Let us define a \textit{bulk} property $f^0$ as $f^0 = \sum_{k} \chi_k f_k^0 + \delta_\Gamma  f_\Gamma^0$ where $f^0$ represents any property of the flow of arbitrary tensorial order.
+According to \ref{eq:def_surf_distribution} the distribution  $\delta_\Gamma$ has the dimension of the inverse of a length, $[L^{-1}]$ \citep{appel2007}. 
+Thus, assuming that $f_k^0$ has the dimension of $[x]$, implies that $f_\Gamma^0$ is of dimension $[x.L]$, and therefore also means that the product $\delta_\Gamma f_\Gamma^0$ is of unit $[x]$.
+Consequently, we define a \textit{bulk} property $f^0$ as $f^0 = \sum_{k} \chi_k f_k^0 + \delta_\Gamma  f_\Gamma^0$ where $f^0$ represents any property of the flow of arbitrary tensorial order.
 Then by summing \ref{eq:dt_chi_k_f_k} for $k=f,d$ and \ref{eq:dt_delta_I_f_I}, one obtain the \textit{bulk} formulation of multiphase flows, namely,%\textit{single-fluid} formulation of multiphase flows, namely,
 \begin{equation}
    \pddt f^0
    + \div (
-       \mathbf{F}^0
+       f^0\textbf{u}^0
        -  \mathbf{\Phi}^0 
     )
    = s^0. 
    \label{eq:dt_f}
 \end{equation}
-where $\mathbf{F}^0 = \sum_{k} \chi_k \mathbf{f}_k^0\textbf{u}_k^0 + \delta_\Gamma  \mathbf{f}_\Gamma^0\textbf{u}_\Gamma^0$, $\mathbf{\Phi}^0 = \sum_{k} \chi_k \mathbf{\Phi}_k^0 + \delta_\Gamma  \mathbf{\Phi}_\Gamma^0$ and $s^0 = \sum_{k} \chi_k s_k^0 + \delta_\Gamma  s_\Gamma^0$. 
+where $f^0 \textbf{u}^0 = \sum_{k} \chi_k {f}_k^0\textbf{u}_k^0 + \delta_\Gamma  {f}_\Gamma^0\textbf{u}_\Gamma^0$, $\mathbf{\Phi}^0 = \sum_{k} \chi_k \mathbf{\Phi}_k^0 + \delta_\Gamma  \mathbf{\Phi}_\Gamma^0$ and $s^0 = \sum_{k} \chi_k s_k^0 + \delta_\Gamma  s_\Gamma^0$. 
 In the literature, the \textit{single-fluid} formulation is characterized by summing only the quantities within the two phases, while the interfacial components are treated as source terms \citep{tryggvason2011direct,morel2015mathematical}.
 %It should be noted that in the literature, the so called \textit{single-fluid} formulation is defined by summing only the quantities within the two phases while the interfacial components are treated as source terms in \ref{eq:dt_f} \citep{morel2015mathematical,tryggvason2011direct,drew1983mathematical}.  %with quantities as $f^0 = \sum_k \chi_k f_k^0$, while the interfacial components are treated as source terms in \ref{eq:dt_f} \citep{morel2015mathematical,tryggvason2011direct,drew1983mathematical}. 
 Nevertheless, we want to point out here that our definition of $f^0$ yields a straightforward transport equation for $f^0$ thereby ensuring the consistency of the entire system of equations.

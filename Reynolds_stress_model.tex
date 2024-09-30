@@ -219,9 +219,49 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
     =\infty 
   \end{align*}
   \underline{\textbf{The integral diverges}  ! (beacause $\textbf{u}_\text{stokes} \sim r^{-1}$).}
-
-
-
+\end{frame}
+\begin{frame}
+  \frametitle{Why does the integral diverges }
+  Batchelor (1972)'s  formula can be written without approximation as: 
+  \begin{align}
+    \avg{\chi_f \textbf{u}_f' \textbf{u}_f'}[\textbf{x},t] =
+    % \int_{\mathbb{R}^6}
+    % \avg{\delta_1\chi_f \textbf{u}_f' \textbf{u}_f'}[\textbf{x},t]
+    % d\textbf{y}
+    % d\textbf{w}\\
+    % &= 
+    \int_{\mathbb{R}^6}
+    \textbf{u}_\text{Stokes}
+    \textbf{u}_\text{Stokes}
+    P_{1f}
+    d\textbf{y}
+    d\textbf{w}
+    + 
+    \int_{\mathbb{R}^6}
+    % \textbf{u}_f^{1d}
+    % \textbf{u}_f^{1d}
+    \avg{\delta_1 \chi_f\textbf{u}_f'' \textbf{u}_f''}
+    d\textbf{y}
+    d\textbf{w}
+    +
+    \text{Error}
+    \label{eq:batchlor_avg}
+\end{align}
+with, 
+\begin{equation}
+    \text{Error}
+    = 
+    \int_{\mathbb{R}^6}
+    \textbf{u}_\text{Stokes}
+    \textbf{u}_\text{Stokes}
+    \cdot\mathcal{O}(|\textbf{r}|)
+    d\textbf{r}
+    d\textbf{w}
+    \label{eq:error}
+\end{equation}
+  \underline{Thus the integral diverges because when $\textbf{u}_\text{stokes} \sim r^{-1}$ the Error term is infinite.}
+\hfil
+$\to$ We conclude that this method is unable to provide physical result. 
 \end{frame}
 
 
@@ -335,59 +375,237 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
 \end{frame}
 
 
+\begin{frame}
+  \frametitle{How to find the nearest neighbor velocity field $\textbf{u}_f^{nst}$ ? }
 
+  Conditionally averaging the stokes equations at a point \textbf{z}, knowing the fluid is present at \textbf{x} with its nearest neighbor at \textbf{y}, yields, 
+  \begin{equation*}
+    % \pddt \avg{(\delta_\text{nst-f} - P_\text{nst-f})\chi_f}
+    \grad \cdot \textbf{u}^\text{nst}_f
+    = 0
+    \label{eq:mass_nst_d_stokes}
+\end{equation*}
+\begin{equation*}
+    - \grad p^\text{nst} 
+    + \mu_f \grad^2 \textbf{u}^\text{nst}_f
+    = 
+    \phi
+    \textbf{g}
+    \Delta\rho H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|). 
+    \label{eq:momentum_nst_d_stokes}
+\end{equation*}
 
+\textbf{The solution : }
+\begin{equation}
+  \frac{\textbf{v}^\text{nst}_f}{U}
+  =
+  \frac{1}{4}\textbf{e}\cdot\left[
+      \frac{2+3\lambda}{1+\lambda}
+      +
+      \frac{\lambda}{2(1+\lambda)}\grad^2 
+  \right]\mathcal{G}(\textbf{x},\textbf{y})
+  + \phi A |\textbf{x}-\textbf{y}|^2 \textbf{k}
+  + \mathcal{O}(\phi). 
+  \label{eq:v_nst_solution_adim}
+\end{equation}
+\begin{equation*}
+  \mathcal{G}(\textbf{r})
+  = \frac{\bm\delta}{r}
+  + \frac{\textbf{rr}}{r^3},
+\end{equation*}
+\begin{align*}
+  \textbf{e} = \textbf{w} - \textbf{u}_f/U
+  && 
+  \textbf{k} = \textbf{g}/|\textbf{g}|
+  &&
+  A = \frac{Ga^2}{12 Re}=\frac{\Delta \rho g (2a)^2}{12 \mu_f U}
+  \label{eq:A_general}
+\end{align*}
+\end{frame}
 
 \begin{frame}
-  \frametitle{Stokes flow solution with NPS}
-  \begin{small}
-    \begin{equation*}
-      \textbf{u}_\text{stokes} 
-      = \left(\frac{ \textbf{I}}{r} + \frac{\textbf{rr}}{r^3}\right)  \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right) a \textbf{U}
-      - \left(-\frac{\textbf{I}}{r^3} + \frac{3 \textbf{rr} }{r^5}\right)  \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right) a^3 \textbf{U}
-    \end{equation*}
-  \end{small}
-  In the dilute regime we can write $\textbf{u}_f^\text{nst} = \textbf{u}_\text{stokes}$ thus,  :
-  \begin{equation*}
-    \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)
-    = 
-    {\int \textbf{u}_\text{stokes} \textbf{u}_\text{stokes}  
-    P_\text{nst}(r) d\textbf{r} }
-    + \mathcal{O}(\phi^2)
-  \end{equation*}\pause
-  \begin{equation*}
-    % - \phi_f \textbf{u}_f\textbf{u}_f\\
-    \boxed{
-    \begin{aligned}
-    &=  \frac{(2+3\lambda)^2\Gamma(1/3)}{80(\lambda+1)^2}\left(
-      9 \textbf{UU}
-      + \frac{1}{3}U^2 \textbf{I}
-    \right)\phi^{2/3}\\
-    &- 
-    \frac{1}{20(\lambda+1)^2}\left[
-      (27+82\lambda + 62\lambda^2) \textbf{UU}
-      + (1+6\lambda + 6\lambda^2) U^2 \textbf{I}
-    \right]\phi+ \mathcal{O}(\phi^2)
-    \end{aligned}
-    }
-    % \left(\frac{9(2+3\lambda)^2 \Gamma(1/3)}{80 (\lambda +1)^2}\phi^{2/3} 
-    % - \frac{27+82\lambda + 62\lambda^2}{20(\lambda + 1)^2}\phi \right)\textbf{UU}\\
-    % + \left(\frac{(2+3\lambda)^2 \Gamma(1/3)}{240 (\lambda +1)^2}\phi^{2/3} 
-    %  - \frac{1+6\lambda + 6\lambda^2}{20(\lambda + 1)^2}\phi \right)U^2\textbf{I} 
-  \end{equation*}
-  \begin{itemize}
-    % \item  \textbf{Hypothesis 1} :$P_\text{nst}(\textbf{r}|\textbf{x}) = \frac{3\phi}{4\pi}
-    % e^{ - \phi (r^3 - 1) }$
-    % \item \textbf{Hypothesis 2} : We considered $\textbf{u}^\text{nst} = \textbf{u}_\text{stokes}$ since it is equivalent in the dilute regime
-    \item Thanks to the fast decay of $P_\text{nst} \sim e^{-\phi (r^3-1)}$ the integral converges ! 
-  \end{itemize}
-  \begin{enumerate}
-    \item $\Gamma(a) = \int_0^\infty t^{a-1} e^{-t} dt $ is the gamma  function. 
-    \item  Notice that $\lim_{\phi \to 0} \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)/\phi \sim\phi^{-1/3} =\infty$. 
-    \item We found that $\avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)\sim\phi^{2/3}$.  
-  \end{enumerate}
-    
+  \frametitle{Flow lines around a non-isolated droplet}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_0.pdf}
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_1.pdf}
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_5.pdf}
+    % \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_10.pdf}
+    \caption{Streamlines of the disturbance velocity field $\textbf{u}^\text{nst}_f(\textbf{r}_f)$ \eqref{eq:v_nst_solution_adim}  in the cross-section given by the plane $(\textbf{e}_x,\textbf{e}_z)$, for multiples volume fraction $\phi = 0, 0.01$ and $0.05$ at $\lambda = 10$.  
+    The color map indicates the magnitude of the velocity, from black which corresponds to a velocity magnitude of 0, to the color at the interface which corresponds to 1.
+    In this situation $\textbf{e} = \textbf{e}_z$ and $\textbf{k} = -\textbf{e}_z$}
+    \label{fig:vnst_vertical}
+\end{figure}
+  
+
 \end{frame}
+\begin{frame}
+  \frametitle{Flow lines around a non-isolated droplet}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_H_l_10_0.pdf}
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_H_l_10_1.pdf}
+    \includegraphics[height = 0.33\textwidth]{image/Vnst_H_l_10_5.pdf}
+    % \includegraphics[height = 0.33\textwidth]{image/Vnst_l_10_10.pdf}
+    \caption{Streamlines of the disturbance velocity field $\textbf{v}^\text{nst}(\textbf{r}_f)$  \eqref{eq:v_nst_solution_adim} in the cross-section given by the plane $(\textbf{e}_x,\textbf{e}_z)$, for multiples volume fraction $\phi = 0, 0.01$ and $0.05$ at $\lambda = 10$.  
+    The color map indicates the magnitude of the velocity, from black which corresponds to a velocity magnitude of 0, to the color at the interface which corresponds to 1.
+    In this situation $\textbf{e} = \textbf{e}_x$ and $\textbf{k} = -\textbf{e}_z$.
+    The constant $A$ have been arbitrarily set to $1$. }
+    \label{fig:vnst_horizontal}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+  {General solution}
+  \begin{align}
+    \frac{\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}}{U^2}
+    &= 
+    C^{(1)}_e \left[
+        \textbf{e}_p\textbf{e}_p
+        + \frac{\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}{n_p U^2}
+         - \frac{1}{3}(\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta
+    \right]
+    + C^{(2)}_e 
+    (\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta \nonumber \\
+    &+ C^{(1)}_k  \left[
+        \textbf{kk}
+         - \frac{1}{3}(\textbf{k}\cdot \textbf{k})\bm\delta
+    \right]
+    +C^{(2)}_k 
+    (\textbf{k}\cdot \textbf{k})\bm\delta \nonumber \\
+    &+ C^{(1)}_{ek} \left[
+        \frac{1}{2}
+        (\textbf{e}_p\textbf{k}  + \textbf{k} \textbf{e}_p)
+         - \frac{1}{3}(\textbf{k}\cdot \textbf{e}_p)\bm\delta
+    \right]
+    + C^{(2)}_{ek}
+    (\textbf{e}_p\cdot \textbf{k})\bm\delta 
+\end{align}
+\begin{align*}
+  C_e^{(1)} =
+  % \frac{9(2+3\lambda)^2 \Gamma(\frac{1}{3})}{80(\lambda+1)^2}\phi^{2/3}
+  \frac{27}{10}
+  C_e^{(2)}
+  % + \mathcal{O}(\phi)
+  &&  C_e^{(2)} = \frac{(2+3\lambda)^2 \Gamma(\frac{1}{3})}{24(\lambda+1)^2}\phi^{2/3} \\
+  C_k^{(1)} =
+  3
+  C_k^{(2)}
+  && C_k^{(2)} = A^2 \frac{\Gamma(\frac{7}{3})}{3}\phi^{2/3} \\
+  C_{ek}^{(1)} =
+  3
+  C_{ek}^{(2)}
+  % A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{3 (\lambda+1)}\phi^{2/3}
+  % % + \mathcal{O}(\phi^{4/3})
+  && C_{ek}^{(2)} =
+  A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{9(\lambda+1)}\phi^{2/3}
+  % + \mathcal{O}(\phi^{4/3})
+\end{align*}
+\end{frame}
+
+\begin{frame}
+  {General solution}
+  \begin{align}
+    \frac{\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}}{U^2}
+    &= 
+    C^{(1)}_e \left[
+        \textbf{e}_p\textbf{e}_p
+        + \frac{\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}{n_p U^2}
+         - \frac{1}{3}(\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta
+    \right]
+    + C^{(2)}_e 
+    (\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta \nonumber \\
+    &+ C^{(1)}_k  \left[
+        \textbf{kk}
+         - \frac{1}{3}(\textbf{k}\cdot \textbf{k})\bm\delta
+    \right]
+    +C^{(2)}_k 
+    (\textbf{k}\cdot \textbf{k})\bm\delta \nonumber \\
+    &+ C^{(1)}_{ek} \left[
+        \frac{1}{2}
+        (\textbf{e}_p\textbf{k}  + \textbf{k} \textbf{e}_p)
+         - \frac{1}{3}(\textbf{k}\cdot \textbf{e}_p)\bm\delta
+    \right]
+    + C^{(2)}_{ek}
+    (\textbf{e}_p\cdot \textbf{k})\bm\delta 
+\end{align}
+\begin{align*}
+  C_e^{(1)} =
+  % \frac{9(2+3\lambda)^2 \Gamma(\frac{1}{3})}{80(\lambda+1)^2}\phi^{2/3}
+  \frac{27}{10}
+  C_e^{(2)}
+  % + \mathcal{O}(\phi)
+  &&  C_e^{(2)} = \frac{(2+3\lambda)^2 \Gamma(\frac{1}{3})}{24(\lambda+1)^2}\phi^{2/3} \\
+  % C_k^{(1)} =
+  % 3
+  % C_k^{(2)}
+  % && C_k^{(2)} = A^2 \frac{\Gamma(\frac{7}{3})}{3}\phi^{2/3} \\
+  % C_{ek}^{(1)} =
+  % 3
+  % C_{ek}^{(2)}
+  % A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{3 (\lambda+1)}\phi^{2/3}
+  % % + \mathcal{O}(\phi^{4/3})
+  % && C_{ek}^{(2)} =
+  % A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{9(\lambda+1)}\phi^{2/3}
+  % + \mathcal{O}(\phi^{4/3})
+\end{align*}
+\begin{enumerate}
+  \item $\Gamma(a) = \int_0^\infty t^{a-1} e^{-t} dt $ is the gamma  function. 
+  \item  Notice that $\lim_{\phi \to 0} \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)/\phi \sim\phi^{-1/3} =\infty$. 
+  \item We found that $\avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)\sim\phi^{2/3}$.  
+\end{enumerate}
+\end{frame}
+
+% \begin{frame}
+%   \frametitle{Stokes flow solution with NPS}
+%   \begin{small}
+%     \begin{equation*}
+%       \textbf{u}_\text{stokes} 
+%       = \left(\frac{ \textbf{I}}{r} + \frac{\textbf{rr}}{r^3}\right)  \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right) a \textbf{U}
+%       - \left(-\frac{\textbf{I}}{r^3} + \frac{3 \textbf{rr} }{r^5}\right)  \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right) a^3 \textbf{U}
+%     \end{equation*}
+%   \end{small}
+%   In the dilute regime we can write $\textbf{u}_f^\text{nst} = \textbf{u}_\text{stokes}$ thus,  :
+%   \begin{equation*}
+%     \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)
+%     = 
+%     {\int \textbf{u}_\text{stokes} \textbf{u}_\text{stokes}  
+%     P_\text{nst}(r) d\textbf{r} }
+%     + \mathcal{O}(\phi^2)
+%   \end{equation*}\pause
+%   \begin{equation*}
+%     % - \phi_f \textbf{u}_f\textbf{u}_f\\
+%     \boxed{
+%     \begin{aligned}
+%     &=  \frac{(2+3\lambda)^2\Gamma(1/3)}{80(\lambda+1)^2}\left(
+%       9 \textbf{UU}
+%       + \frac{1}{3}U^2 \textbf{I}
+%     \right)\phi^{2/3}\\
+%     &- 
+%     \frac{1}{20(\lambda+1)^2}\left[
+%       (27+82\lambda + 62\lambda^2) \textbf{UU}
+%       + (1+6\lambda + 6\lambda^2) U^2 \textbf{I}
+%     \right]\phi+ \mathcal{O}(\phi^2)
+%     \end{aligned}
+%     }
+%     % \left(\frac{9(2+3\lambda)^2 \Gamma(1/3)}{80 (\lambda +1)^2}\phi^{2/3} 
+%     % - \frac{27+82\lambda + 62\lambda^2}{20(\lambda + 1)^2}\phi \right)\textbf{UU}\\
+%     % + \left(\frac{(2+3\lambda)^2 \Gamma(1/3)}{240 (\lambda +1)^2}\phi^{2/3} 
+%     %  - \frac{1+6\lambda + 6\lambda^2}{20(\lambda + 1)^2}\phi \right)U^2\textbf{I} 
+%   \end{equation*}
+%   \begin{itemize}
+%     % \item  \textbf{Hypothesis 1} :$P_\text{nst}(\textbf{r}|\textbf{x}) = \frac{3\phi}{4\pi}
+%     % e^{ - \phi (r^3 - 1) }$
+%     % \item \textbf{Hypothesis 2} : We considered $\textbf{u}^\text{nst} = \textbf{u}_\text{stokes}$ since it is equivalent in the dilute regime
+%     \item Thanks to the fast decay of $P_\text{nst} \sim e^{-\phi (r^3-1)}$ the integral converges ! 
+%   \end{itemize}
+%   \begin{enumerate}
+%     \item $\Gamma(a) = \int_0^\infty t^{a-1} e^{-t} dt $ is the gamma  function. 
+%     \item  Notice that $\lim_{\phi \to 0} \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)/\phi \sim\phi^{-1/3} =\infty$. 
+%     \item We found that $\avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)\sim\phi^{2/3}$.  
+%   \end{enumerate}
+    
+% \end{frame}
 
 \section{Comparison with DNS and experiment}
 
@@ -480,12 +698,28 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
 % \end{frame}
 
 \begin{frame}
+  \frametitle{Comparison with DNS}
+  \begin{figure}
+    \centering
+    \includegraphics[width = 0.32\textwidth]{image/HOMOGENEOUS_final/Stream/Stream_PHI_1_Ga_5_l_10.pdf}
+    \includegraphics[width = 0.32\textwidth]{image/HOMOGENEOUS_final/Stream/Stream_PHI_5_Ga_5_l_10.pdf}
+    \includegraphics[width = 0.32\textwidth]{image/HOMOGENEOUS_final/Stream/Stream_PHI_5_Ga_80_l_10.pdf}
+    \caption{\footnotesize
+      Streamlines of the disturbance velocity field $\textbf{v}^\text{nst}$, in the cross-section given by the plane $(\textbf{e}_x,\textbf{e}_z)$, for two volume fractions $\phi = 0.01$ (left) and $\phi = 0.05$ (middle) at $\lambda = 10$ and $Ga = 5$.
+    (right) plot of the inertial case $Ga = 80$. 
+    The left side of the panel ($x/a < 0$), we have re-plotted the theoretical solution provided by \ref{eq:v_nst_solution_adim}.   
+    The right side of the panel ($x/a > 0$), we have reconstructed the streamlines obtained with the DNS, using \ref{eq:vnst_DNS}. 
+    The color map indicates the magnitude of the velocity, from black which corresponds to a velocity magnitude of 0, to the color at the interface of the droplet which corresponds to a magnitude of 1.}
+    \label{fig:vnst_DNS}
+\end{figure}
+\end{frame}
+  \begin{frame}
   \frametitle{Comparison with DNS results and experiments}
   \begin{figure}[h!]
     \centering    
     % \includegraphics[height = 0.25\textwidth]{image/upupexp.png}
-    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_NEW/CA/cartellier.pdf}
-    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_NEW/CA/UUyy.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/cartellier.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/UUyy_Ga_5.pdf}
     \caption{
        Dimensionless vertical component of the Reynolds stress :
        (left) Comparison with the rising bubbles experiment of Cartellier (2009) with $Re \approx 10$. 
@@ -499,7 +733,90 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Extension to finite inertial numbers}
+  \begin{figure}
+    \centering
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/KF2_l_0.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/KF2_l_1.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/KF2_l_10.pdf}
+    \caption{\footnotesize
+      Dimensionless continuous phase pseudo turbulent energy, $k_f/U^2$ in terms of the \textit{Galileo} number.
+    (left) $\lambda = 0.1$
+    (middle) $\lambda = 1$
+    (right) $\lambda = 10$
+    (Symbols) DNS results. 
+    ($\pmb\bigcirc$) $\phi = 0.01$; ($\pmb\triangle$) $ \phi = 0.05$; ($\pmb\square$) $\phi = 0.1$ ($\pmb\lozenge$) $\phi = 0.2$.
+    (dot-dashed lines) Semi-empirical formula (\ref{eq:semi_empirical}) \underline{including} the results of the DNS for the particle phase velocity fluctuations. 
+    (dashed lines) Semi-empirical formula (\ref{eq:semi_empirical}) \underline{excluding} the particle phase velocity fluctuations. 
+    }
+    \label{fig:kf}
+\end{figure}
+\begin{equation}
+  k_f
+  = 
+  \underbrace{C_e^{(0)}  \left( U^2 + 2 k_p\right)  \frac{3}{2}}_\text{Theoritical solution}
+  \underbrace{\frac{1}{2}\left(e^{-Re} +1\right)}_{\text{empirical factor}}.
+  \label{eq:semi_empirical}
+\end{equation}
 
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Validation at higher inertial effects }
+
+  \begin{figure}
+    \centering
+    \includegraphics[height = 0.35\textwidth]{image/HOMOGENEOUS_final/CA/KFliterature.pdf}
+    \caption{\footnotesize
+      Dimensionless continuous phase pseudo turbulent energy, $k_f/U^2$ in terms of the \textit{Galileo} number.
+    (Symbols) DNS and experimental results of: 
+    ($\pmb\square$)  Particle-resolved Direct Numerical Simulations (PR-DNS)
+    of fixed solid spherical particle assemblies at $20< Re < 100$  by \citet{wang2021numerical}; 
+    ($\pmb\lozenge$) Direct numerical simulation (DNS) of rising deformable bubbles at $Re \approx 30$ \citep{loisy2016direct}
+    ($\pmb\triangle$) DNS of rising spherical bubbles by \citet{bunner2002dynamics}. 
+    ($\pmb\bigcirc$) Experiment of rising spherical bubbles in water by \citet{martinez2007measurement} at $Re \approx 30$. 
+    (dot-dashed lines) Semi-empirical formula (6) at $Re \approx 30$ with $\lambda = 0$. 
+    (dashed lines)  Semi-empirical formula (6) at $Re \approx 30$ with $\lambda = \infty$.
+    }
+    \label{fig:trygvason}
+\end{figure}
+
+\end{frame}
+\begin{frame}
+  \frametitle{Validation at higher inertial effects }
+
+  \begin{figure}
+    \centering
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/tenneti.pdf}
+    \caption{Dimensionless continuous phase pseudo turbulent energy, $k_f/U^2$ in terms of the volume fraction $\phi$.
+    (Symbols) 
+    results of Particle-resolved Direct Numerical Simulations
+    of fixed particle assemblies by \citet{mehrabadi2015pseudo}
+    ($\pmb\bigcirc$) $Re_m = (1-\phi) \approx 1$; ($\pmb\triangle$) $Re_m \approx 300$;
+    (dot-dashed lines) Semi-empirical formula \ref{eq:} at $Re_m = 1$
+    (dashed lines) Semi-empirical formula \ref{eq:} at $Re_m= = 300$
+    }
+    \label{fig:tennet}
+\end{figure}
+
+\end{frame}
+\begin{frame}
+  \frametitle{Validation at higher inertial effects }
+
+  \begin{figure}
+    \centering
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/tariq.pdf}
+    \caption{Dimensionless vertical velocity varience, in terms of the volume fraction $\phi$. 
+    (Symbols) results of Particle-resolved Direct Numerical Simulations  of gravitational settling of monodisperse solid spheres by \citet{shajahan2023inertial} at $Ga = 144$. 
+    (dot-dashed lines) Semi-empirical formula \underline{including} \citet{shajahan2023inertial}'s results for the particle phase velocity fluctuations. 
+    (dashed lines) Semi-empirical formula \underline{excluding} the particle phase velocity fluctuations. 
+    }
+    \label{fig:tariq}
+\end{figure}
+
+\end{frame}
 \begin{frame}
   {Going further}
   Toward a more complete model of \textbf{Drops induced turbulence} : 
@@ -556,8 +873,113 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
 
 % \end{frame}
 
+\section{Droplets center of mass velocity variance}
 
+\begin{frame}
+  \frametitle{Reformulation of the fluctuation tensor }
+
+  \begin{equation}
+    \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    = 
+    n_p[\textbf{x},t]
+    \int_{\mathbb{R}^3}
+    (\textbf{v}^\text{nst}_p
+    \textbf{v}^\text{nst}_p)
+    P_\text{nst}
+    d\textbf{y}
+    + 
+    \mathcal{O}(\phi^2)
+\end{equation}
+\begin{itemize}
+  \item $\textbf{u}_\alpha' = \textbf{u}_\alpha - \textbf{u}_p$ relative particle velocity
+  \item $P_\text{nst}$ probability of finding a particle center of mass at \textbf{x} with its nearest neighbor at \textbf{y}
+  \item $\textbf{v}^\text{nst}_p$ mean center of mass velocity of the particles conditionally on having a nearest neighbor at \textbf{y}. 
+\end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Method of reflections}
+Velocity field at the point \textbf{x} induced by the nearest neighboring buoyant spherical droplet located at \textbf{y}: 
+  \begin{equation}
+    \textbf{v}_2 = 
+    \underbrace{\textbf{b} \cdot \left[
+        1
+        + \frac{\lambda}{2(3\lambda +2)}\grad^2
+    \right]\frac{\mathcal{G}(\textbf{z},\textbf{y})}{8a\pi\mu_f}}_\text{Wake of an isolated droplet}
+    - 
+    \underbrace{\phi \frac{\textbf{b}}{4 \pi \mu_f a} |\textbf{z} - \textbf{y}|^2}_\text{Backflow velocity}
+\end{equation}
+With \textbf{b} the weight of the particle and $\mathcal{G}$ the Ossen tensor. 
+
+\end{frame}
+\begin{frame}
+  \frametitle{Method of reflections}
+According to the Faxen law the mean droplet velocity of a particle located at the point \textbf{x} knowing its nearest neighbor is located at \textbf{y} is given by, 
+\begin{align}
+  2 \pi \mu_f a \textbf{v}_p^\text{nst}
+  = \left(1 + \frac{\lambda}{2(3\lambda +2)}\grad^2\right)\textbf{v}_2|_{\textbf{z} = \textbf{x}}
+\end{align}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Comparaison with DNS}
+
+  \begin{figure}
+    \includegraphics[height = 0.4\textwidth]{image/Vnst_p_l_1_5.pdf}
+    \includegraphics[height = 0.4\textwidth]{image/HOMOGENEOUS_final/Dist/U_l_1_Ga_10_PHI_5.pdf}
+    \caption{Theoretical values of $\textbf{v}_p^\text{nst}$, (left) Vs. DNS (right) }
+  \end{figure}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{<title>}
+  \begin{equation*}
+    \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    = 
+    n_p[\textbf{x},t]
+    \int_{\mathbb{R}^3}
+    (\textbf{v}^\text{nst}_p
+    \textbf{v}^\text{nst}_p)[\textbf{x},\textbf{y},t]
+    P_\text{nst}[\textbf{y}|\textbf{x},t]
+    d\textbf{y}
+    = 
+    C_1[\textbf{UU} - \frac{1}{3}U^2\bm\delta] 
+    + C_2U^2\bm\delta
+\end{equation*}
+\begin{align}
+  C_1 = \frac{1}{960}\left(\frac{2+3\lambda}{\lambda+1}\right)^2 \left[
+    108\Gamma(1/3)
+    - 80\Gamma (4/3)
+    +15\Gamma(7/3)
+  \right]\phi^{2/3}\\
+  C_2 = \frac{1}{576}\left(
+    \frac{2+3\lambda}{\lambda+1}\right)^2 \left[
+    24\Gamma(1/3)
+    - 16\Gamma (4/3)
+    +3\Gamma(7/3)
+  \right]\phi^{2/3}
+\end{align}
+  \begin{figure}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/UUyy_Ga_5.pdf}
+  \end{figure}
+\end{frame}
+\begin{frame}
+  \frametitle{Comparaison with expe}
+\begin{figure}
+  \includegraphics[height = 0.4\textwidth]{image/guazzeli.png}
+\end{figure}
+  
+For solid particle we find $1.52\phi^{1/3}$ instead of $2$ or $3$ so we underestimates the fluctuations. 
+
+
+\end{frame}
 \backmatter
+\begin{frame}
+  \bibliography{Bib/bib_bulles.bib}
+
+  
+
+\end{frame}
 \begin{frame}
   {Going further}
    Model for \textbf{Drops induced dissipation rate} : 

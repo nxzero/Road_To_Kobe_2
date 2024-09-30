@@ -1,10 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Define Article %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[12pt,a4paper,onehalfspacing,oneside,openany]{My_book}
+\documentclass[12pt,a4paper,oneside,openany]{My_book}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \usepackage{booktabs}
-% \usepackage{setspace}
 % \onehalfspacing
 
 
@@ -25,6 +24,8 @@
 
 \begin{document}
 
+\dominitoc
+
 \frontmatter
 \pagestyle{plain}
 \input{parts/titlepage}
@@ -39,10 +40,27 @@
 
 \part{Statistical modeling of dispersed two phase flows}
 
+% \etocsettocstyle{}{} % from now on only local tocs
 %%%%%%%%%%%%%%%%%%%%%%%%%   CHAPITRE 1
+\adjustmtc
 \chapter{Averaged equations for disperse two-phase flow with interfacial transport}
-% \localtableofcontents
 \label{chap:daniel1}
+\chapabstract{
+    This chapter provides a derivation of the averaged equations governing the motion of dispersed two-phase flows with interfacial transport. 
+    We begin by revisiting the two-fluid formulation, as well as the distributional form of the interfacial transport equation which holds on the entire domain. 
+    Following this, a general Lagrangian model is introduced, which accounts for the effects of both internal and interfacial properties of the dispersed inclusions (bubbles, droplets, or particles) within a continuous phase.
+    This is achieved by deriving of conservation laws for particle surface and volume-integrated properties. 
+    By summing the internal and interfacial conservation laws, we derive a conservation equation for an arbitrary Lagrangian property associated with the inclusion. 
+    % The key advantage of this formulation is that the non-convective flux inside the inclusion does not appear in the conservation law. 
+    Notably, the non-convective flux inside the inclusion does not appear in the conservation law using this formulation. 
+    %We then proceed to derive the the lesser-known conservation equations for the moments related to an arbitrary Lagrangian property.
+    We then proceed by deriving the lesser-known conservation equations for the moments of the volume and surface distribution of an arbitrary Lagrangian property.  
+    Next, the averaged equations for the dispersed phase are derived through two distinct approaches: the particle-averaged (or Lagrangian) formalism, and the phase-averaged method. 
+    The main conclusion of this work is the demonstration of the equivalence between the particle-averaged and phase-averaged equations. 
+    We show that the dispersed phase-averaged equations can be interpreted as a series expansion of the particle-averaged moment equations. 
+    The paper concludes by presenting a "hybrid" set of equations, consisting of phase-averaged equations for the continuous fluid phase, complemented by an arbitrary number of moment conservation equations for the dispersed phase.
+}
+\minitoc
 \input{The_hybride_model/introduction.tex}
 \input{The_hybride_model/Local_scale_laws.tex}
 \input{The_hybride_model/Averaged_twofluid.tex}
@@ -54,25 +72,47 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%   CHAPITRE 2
 \chapter{Equations for isothermal dispersed two phases flows system}
-% \localtableofcontents 
+\chapabstract{
+    In this chapter we propose to expose and analyze the minimal set of equations to describe emulsions. 
+}
+\minitoc
+
 \input{The_hybride_model/Ap_hypothesis.tex}
 \input{The_hybride_model/fundamental_properties.tex}
 \input{The_hybride_model/App_particle_equaitons.tex}
 \input{The_hybride_model/App_twofluid_model.tex}
 \input{The_hybride_model/Bulk_stress.tex}
+\input{The_hybride_model/App.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%% CHAPTER 3
 \chapter{Closure for spherical droplets in stokes flow regime. }
 \label{chap:daniel2}
-% \localtableofcontents
-\input{The_hybride_model/App.tex}
+\chapabstract{In this chapter we revisit the closure problem for spherical droplets in Stokes flows. 
+We propose a generic routine to derive \textit{conditional averaged} Navier-Stokes equations and show that it is consistent with the previous studies in the literature. 
+Additionally, we demonstrate that our method can be extended to more complicated situation. 
+} 
+\minitoc
+
 \input{The_hybride_model/The_closure_poblem.tex}
 \input{The_hybride_model/closure_stokes_spherical.tex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% CHAPITRE 4
 \chapter{Averaged equations for deformable ellipsoidal fluid particles : Stress in homogeneous buoyant rising deformable bubbles suspension }
-% \localtableofcontents
+
+\chapabstract{
+In this work we propose to derive an averaged set of equations for deformable droplets. 
+It is assumed that the droplets shape remains ellipsoidal. 
+Specifically, we demonstrate how to derive \textit{shape} and orientation equations based on the \textit{moment of momentum} and second moment of mass of the particle. 
+This model constitutes the first results of the paper. 
+As an application we propose to evaluate theoretically the contribution to the stress from uniformly translating spheroidal particles. 
+It is demonstrated that due to the effect of small inertia, the \textit{stresslet} term present in the effective stress of the continuous phase momentum equation, has a contribution proportional to the mean relative velocity of the dispersed phase. 
+Therefore, relative translation between phase generate effective stress, regardless of the pseudo turbulence term. 
+In addition, using the particle deformation equation we are able to show that the \textit{stresslet} term is at the origin of the droplets' deformation. 
+Finally, we give an explicit formula for the droplet deformation based on the particle Stresslet in steady state regime. 
+}
+\minitoc
+
 
 \input{Closure_hybrid/introduction.tex}
 \input{Closure_hybrid/Local_scale_laws_simple.tex}
@@ -86,7 +126,13 @@
 
 \chapter{Getting the closure terms though Direct Numerical simulations}
 \label{chap:DNS}
-% \localtableofcontents
+\chapabstract{
+    In this chapter we introduce a novel algorithm that effectively prevents numerical coalescence between drops while maintaining a reasonable computational cost. 
+    This algorithm is integrated into the Volume of Fluid (VoF) method and implemented using the open-source code \href{http://basilisk.fr}{http://basilisk.fr}. 
+    Then, we present our recent work on the Basilisk C pre-compiler. 
+}
+\minitoc
+
 
 \input{parts/part3_intro}
 \input{parts/part3s1}
@@ -95,7 +141,6 @@
 \input{microstructure/no_coalesence.tex}
 \input{parts/einstein_sum.tex}
 
-\subsubsection{The reduction macos ? }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PART 3 %%%%%%%%%%%%%%%
@@ -103,7 +148,19 @@
 % \part{Buoyancy driven motion of non-coalescing inertial drops}
 
 \chapter{Microstructure modeling with nearest particle statistics}
-% \localtableofcontents
+\chapabstract{
+    In this study, we analyze the various arrangements that droplets can form within dispersed buoyant emulsions, which we refer to as the study of microstructure. 
+    We perform Direct Numerical Simulations (DNS) of statistically steady state mono-disperse buoyant emulsion over a broad range of dimensionless parameters, including the particle volume fraction ($\phi$), the Galileo number ($Ga$) and the viscosity ratio ($\lambda$). 
+    We make use of nearest particle statistics to quantify the microstructure properties.  
+    As predicted by \citet{zhang2023evolution}, it is demonstrated that the second moment of the nearest particle pair distribution can effectively quantify microstructural features such as particle clusters and layers. 
+    Specifically, the findings are: (1) In moderately inertial flows ($Ga=10$), droplets form isotropic clusters. 
+    In high inertial regimes ($Ga=100$), non-isotropic clusters, such as horizontal layers, are more likely to form. 
+    (3) The viscosity ratio plays a significant role in determining the microstructure, with droplets that are less viscous or equally viscous as the surrounding fluid tending to form layers preferentially. 
+    Overall, our study provides a quantitative measure of the microstructure 
+     in terms of $Ga$, $\phi$ and $\lambda$. 
+}
+\minitoc
+
 \input{microstructure/Introduction.tex}
 \input{microstructure/The_nearest_particle_statistics.tex}
 \input{microstructure/Non_Inertial.tex}
@@ -112,7 +169,20 @@
 
 
 \chapter{Analysis and modeling of the microstructure kinematic}
-% \localtableofcontents
+\chapabstract{
+In this study, we provide a comprehensive analysis of the timescale that govern the droplets' interaction as well as the global microstructure in buoyant emulsions. 
+It is shown  in \citep{fintzi2024buoyancy} that as predicted by \citet{zhang2023evolution}, the second moment of the nearest particle pair distribution, noted \textbf{R}, has the capability to quantify microstructure's features such as clusters and layers of particles.
+In this study we propose to analyze the microstructure kinematic through the derivation of a transport equation for \textbf{R} within the framework of kinematic theory. 
+We conducted Direct Numerical Simulations (DNS) of statistically steady state mono-disperse buoyant emulsion, over a broad range of \textit{Galileo} number ($Ga$), particle volume fraction ($\phi$), and viscosity ratio ($\lambda$). 
+The density ratio and the \textit{Bond} number are kept constant, $\zeta = 1.11$ and  $Bo = 0.2$, respectively. 
+By a rigorous theoretical and numerical analysis we could show that :
+(1) the time of relaxation of $\textbf{R}(\textbf{x},t)$, is the mean age of interaction of the  nearest particles pairs $\tau_p(\textbf{x},t)$;
+(2) The particle normal approach velocity scale as $\tau_p n_p^{1/3}$ with $n_p$ the number density, and has also a relaxation time of $\tau_p$.
+(3) We could evaluate the different source terms in the transport equation for $\textbf{R}$ in terms of the dimensionless parameters. 
+Overall the mean time of interaction $\tau_p$ seem to be a crucial quantity in the modeling of the particle relative kinematic of dispersed two phase flows. 
+}
+\minitoc
+
 
 \input{age/Introduction.tex}
 \input{age/The_nearest_particle_statistics.tex}
@@ -126,19 +196,40 @@
 
 \chapter{Drag force term modeling}
 \label{chap:mono-disperse}
-% \localtableofcontents
+\chapabstract{
+    This article present a numerical analysis of the interphase drag force in inertial buoyant rising emulsion of droplet. 
+    In the view of feeding averaged Navier-Stokes model it is crucial to obtain this terms. 
+    In this work an algorithm which prevent coalescence between VOF tracer has been used.
+    This enables us to perform statistically steady state simulations of mono-disperse buoyant droplets for various \textit{Galileo} number $Ga = 5 \rightarrow 10$, volume fraction $\phi =1\% \rightarrow 20\%$ and viscosity ratio $\lambda = 0.1,1,10$. 
+    Based on previous numerical and experimental studies found in the literature we propose a new drag force model valid for  arbitrary volume fraction $\phi$, Reynolds number $Re$ and viscosity ratio $\lambda$. 
+    This model is then validated on the DNS datas. 
+}
+\minitoc
+
 
 \input{Pseudo_turb/Introduction.tex}
 \input{Pseudo_turb/closure.tex}
 \input{Pseudo_turb/rising_velocity.tex}
+\input{Pseudo_turb/Conclusion.tex}
+
 
 \chapter{Theoretical calculation of the droplet induced agitation (or pseudoturbulence) in mono disperse buoyant emulsions for low inertia and dilute regime.}
-% \localtableofcontents
+\chapabstract{
+    In this study we derive an analytical expression for the continuous phase \textit{Reynolds stress} tensor. 
+    This derivation is restricted to the dilute regime where the dispersed phase volume fraction labeled $\phi$ is vanishingly small and for particle Reynolds number $Re \ll 1$. 
+    In this context we derive an analytical formula for the pseudoturbulence generated by translating bubbles or droplets inside a Newtonian fluid. 
+    To by-pass the integral convergence difficulties generated due to the $\mathcal{O}(r^{-1})$ decay of the disturbance velocity field we make use of the Nearest-Particle-Statistical (NPS) as it is introduced in \citet{zhang2023evolution}. 
+}
+\minitoc
 
 \input{On_pseudo_turbulence/Introduction.tex}
 \input{On_pseudo_turbulence/Classic_pair_stat.tex}
 \input{On_pseudo_turbulence/Nearest_stats.tex}
 \input{On_pseudo_turbulence/Numerical_results.tex}
+\input{On_pseudo_turbulence/Going_further.tex}
+\input{On_pseudo_turbulence/Conclusion.tex}
+
+
 % \section{The Reynolds stress}
 % \input{Pseudo_turb/Reynolds_stress.tex}
 
@@ -177,6 +268,7 @@
 \input{age/validation.tex}
 \input{age/AgeAP.tex}
 
+\input{Pseudo_turb/Appendix1.tex}
 
 \addcontentsline{toc}{chapter}{Bibliography}
 \bibliography{Bib/bib_bulles.bib}
