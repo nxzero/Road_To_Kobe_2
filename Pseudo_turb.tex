@@ -15,10 +15,10 @@
 %\title{Reynolds stress and inertial interphase force in buoyant emulsion.}
 %\title{Buoyancy-driven motion of inertial monodisperse suspension of drops}
 %\title{Velocity and nearest particle statistics %Buoyancy-driven motion of inertial monodisperse suspension of drops}
-\title{Yet another drag force closure}
+\title{Yet another drag force model}
 
 \author[1,2]{Nicolas Fintzi}
-\author[2]{Stephane Popinet}
+\author[2]{St\'ephane Popinet}
 \author[1]{Jean-Lou Pierson}
 \affil[1]{IFP Energies Nouvelles, Rond-point de l’changeur de Solaize, 69360 Solaize}
 \affil[2]{Sorbonne Université, Institut Jean le Rond d’Alembert, 4 place Jussieu, 75252 PARIS CEDEX 05, France}
@@ -28,33 +28,22 @@
 \maketitle
 
 \begin{abstract}
-    % We performed direct numerical simulation (DNS) of mono disperse rising droplets. 
-    This article present a numerical analysis of the interphase drag force in inertial buoyant rising emulsion of droplet. 
-    In the view of feeding averaged Navier-Stokes model it is crucial to obtain this terms. 
-    In this work an algorithm which prevent coalescence between VOF tracer has been used.
-    This enables us to perform statistically steady state simulations of mono-disperse buoyant droplets for various \textit{Galileo} number $Ga = 5 \rightarrow 10$, volume fraction $\phi =1\% \rightarrow 20\%$ and viscosity ratio $\lambda = 0.1,1,10$. 
-    Based on previous numerical and experimental studies found in the literature we propose a new drag force model valid for  arbitrary volume fraction $\phi$, Reynolds number $Re$ and viscosity ratio $\lambda$. 
-    This model is then validated on the DNS datas. 
+    In this brief study, we propose a new model for the interphase drag force term to be used in the averaged Navier-Stokes equations. 
+    This model is restricted to homogeneous and steady-state, mono-disperse multiphase flows. 
+    Drawing upon previous numerical and experimental studies in the literature, we develop a drag force model that accounts for arbitrary viscosity ratios between the dispersed and continuous phase, noted $\lambda$. 
+    Most prior models have focused on sedimentation involving solid particles or buoyant rising bubbles. 
+    Following \citet{rivkind1976flow}, we interpolate between these two class of models to create a robust formulation that remains valid for intermediate values of $\lambda$, across all Reynolds numbers $Re$ and volume fractions $\phi$.
+    Specifically, we employ the models of \citet{schiller1933} and \citet{mei1994} to describe the drag force on solid sphere and spherical bubbles, respectively.
+    Then we incorporate a Richardson-Zaki law made for solid particles to account for the volume fraction ($\phi$), at arbitrary \textit{Reynolds} numbers ($Re$) \citep{kramer2019improvement}.
+    To account for the variable $\lambda$, we adjust the Richardson-Zaki exponent based on experimental observations in the Stokes regime \citep{ishii1979drag}. 
+    The \texttt{no-coalesence.h} algorithm presented in our last study enables us to perform statistically steady-state simulations of mono-disperse buoyant droplets for various \textit{Galileo} number $Ga = 5 \rightarrow 10$, volume fraction $\phi =1\% \rightarrow 20\%$ and viscosity ratio $\lambda = 0.1,1,10$. 
+    From these DNS simulations, we could measure the drag coefficient and compare it to the semi-empirical prediction developed in this study. 
+    By comparing our literature-based model with DNS results, we successfully validate this new drag force coefficient in the intermediate $\lambda$ regime.
 \end{abstract}
 
 
 
 
-\JL{TO DO LIST :
-- dans la partie validation regarder l'influence du nombre d egoutte pr les petits Ar
-- relire la partie numerique
-- garder les ordered arrays ?
-- ajouter les collisions ? why not
-- comment ecrire les termes de flux ? comme une viscosite avec une trace et une partie deviatorique ? a voir
-- pr les fluctuatsions presenter cela en plusieurs parties
-== stokes normalement les fluctutations divergent suaf pr les arguments données par Gauzelli
-== regime intermediaire : trouver de resultats DNS (dans les faits je pense qu'il faudrait que l'on aille plus loin sur cette idée de superposition de sillage)
-== regime potentiel : on a la solution théorique de van wijgaarden
-- faire un point notation (u pr la vitesse fluide moyennee ?)
-- verifier que la figure 2 et bien basee sur la vitesse relative
-- imprimer ou retrouver le papier de wang 2021 (et celui de Lhuillier 2009 ?)
-- utiliser Tavashanad pour comparer nos resultats à lambda =10 (force et pseudo turbulence ?)
-}
 
 \input{Pseudo_turb/Introduction.tex}
 \input{Pseudo_turb/closure.tex}

@@ -1,44 +1,23 @@
 \section{Introduction}
-\textbf{Objetcives : }
 
-\begin{enumerate}
-    \item Compute closure terms for buoyant emulsion
-    \item Needs Statistically steady numerical experience to be representative 
-    \item Therefore we introduce the no-calesence algorithm to obtain be statistically steady
-    \item Allowing us to carry out massive DNS to compute closures terms. 
-\end{enumerate}
-\vspace*{1cm}
-\textbf{notes}
-\begin{itemize}
-    \item biblio Lhuillier
-    \item In the perspective of macroscopic modeling we have to close some terms 
-    \begin{itemize}
-        \item oil water processes
-        \item vapour water process mu r = 6 
-    \end{itemize}
-    \item In the literature there is absolutely nothing for emulsion 
-    \item Thus we study $Bo = 1$ $\mu_r = 0.1$ and $\rho_r = 1.11$. 
-    \item Within the framework of hybrid model averaged equations in a mono-disperse case 
-    \item Present theritical : 
-     \begin{itemize}
-        \item Momentum averaged equation for fluid particle two-fluid formulation. 
-        \item Closure terms. (Merabahdi good intro)
-    \end{itemize}
-\end{itemize}
+In the context of Euler-Euler models, this study focuses on the momentum exchange term in the averaged Navier-Stokes equations, or the drag force density term. 
+The objective of this work is to quantify the drag force in a ``homogeneous'' and steady-state configuration.
+This means that we consider only a constant and uniform relative motion between the dispersed and continuous phase and a constant mean volume fraction of droplets. 
 
-The configuration is also influenced by particle inertia. Citer Yin et Koch ... plus les papiers sur les ecoulements à bulles (Bunner et Tryggvason, Loisy)
+In this configuration, a drag force correlation should predict the mean drag force density as a function of the local \textit{Reynolds} number based on the particle size, denoted as $Re$, and the volume fraction of the dispersed phase, $\phi$. Additionally, since we are considering droplets with a constant density ratio ($\zeta$) but arbitrary viscosity, the model must account for the viscosity ratio, $\lambda$. 
+To the authors' knowledge, no existing model in the literature comprehensively describes the dependence of drag force density in terms of $Re$, $\phi$, and $\lambda$. 
+Therefore, we aim to address this gap by proposing a new model incorporating these dependencies.
+For isolated spherical droplets, \citet{magnaudet1997forces} proposed a semi-empirical formula based on the well-known models of \citet{schiller1933} for solid particles and \citet{mei1994} for spherical bubbles, which accurately predict the drag force as a function of both the \textit{Reynolds} number and the viscosity ratio.
+Meanwhile, \citet{richardson1954} introduced robust empirical relations to predict the sedimentation velocity of solid particles in terms of volume fraction $\phi$ at low \textit{Reynolds} numbers. 
+The Richardson-Zaki laws can be written as $u_p/u_0 = (1-\phi)^n$, where $u_p$ is the dispersed phase velocity and $u_0$ is the terminal velocity of an isolated particle. 
+The exponent $n$ is an empirical constant known as the Richardson-Zaki exponent. 
+\citet{ishii1979drag} extended the values of the Richardson-Zaki exponent for spherical bubbles in the Stokes regime. 
+More recently, \citet{kramer2019improvement} proposed an accurate relation to model the Richardson-Zaki exponent for solid particles, for arbitrary \textit{Reynolds} numbers. 
 
-Eventuellement citer quelques papiers en regime potentiel ? Discuter plus en details de la microstrucutre a la Jacques ?
+In this work, we utilized the findings of these authors and combined their models to construct a robust model applicable at intermediate values of $\lambda$.
+Since \citet{magnaudet1997forces} introduced a model valid for intermediate $\lambda$ at $\phi = 0$, and \citet{ishii1979drag} proposed corrections to the Richardson-Zaki exponent for droplets at $Re \approx 0$, the real challenge here is to accurately model the $\phi$ dependency of the drag force for finite Reynolds numbers, at intermediate $\lambda$.
 
-Pour une sphere solide regime de Stokes on a n (R-Z) a ecrire. Pour des bulles ? experience a bas Re pour des bulles spheriques et non contaminees ?
-
-
-Dans la suite il faut liste la biblio pour les differentes femetures ci apres
-
-
-
-
-%has a long history even in the Stokes regime. 
-
-
-
+The organization of this study is as follows:
+In \ref{sec:methodology_drag} we present the theoretical and numerical methodology adopted to express the drag force in terms of the buoyancy force or the relative velocity of the dispersed and continuous phase within the averaged Navier-Stokes equations framework.
+In \ref{sec:model_drag} we outline the theoretical development that leads to the creation of our new drag force model. 
+Finally in \ref{sec:validation_drag} we demonstrate the validity of our model by comparing its predictions, for the drag force and sedimentation velocity, with the DNS results at intermediates values of $\lambda$.
