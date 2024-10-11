@@ -870,12 +870,22 @@ Thus, applying the operation $\avg{\delta_1 \ldots}$ on \ref{eq:dt_rho_I2} and \
 where we recall that $\bm{\Sigma}_k^1 = -p_k^1\bm\delta + \mu_k (\grad \textbf{u}_k^1 + (\grad \textbf{u}_k^1)^\dagger)$. 
 Note that inside and at the surface exterior of the particle $\phi_d^1 = 1$ and $\phi_d^1 =0$, respectively, thus one may replace $p_k^1$ and $\textbf{u}_k^1$ by $p^1$ and $\textbf{u}^1$. 
 
-At this stage the physical significance of the terms in \ref{eq:conditional_eqs} is not explicit. 
-Nevertheless, we state that \ref{eq:conditional_eqs} corresponds to an equation for the fluid phase velocity disturbance fields, $\textbf{u}_f^{1d}$, and that \ref{eq:conditional_eqs_mass} is an equation for the disturbance fields of the fluid phase volume fraction, $\phi_f^{1d}$. 
-In all generality these equations needs to be completed by a set of equations for the dispersed phases, which will be coupled with \ref{eq:conditional_eqs} and \ref{eq:conditional_eqs_mass} through the exchange term $\avg{(\delta_1 - P_1)\delta_\Gamma \bm\sigma_f \cdot \textbf{n}_d}$. 
-However, as we see now, the restricted assumption made in this work allows us to neglect completely the particle phases conditionally-averaged equations. 
 
-\tb{Does $\textbf{u}'$ depends on relative motion as suggest the BC ?? ? ?? }
+
+The main take-away of the derivation carried up to know is that the closure terms may be expressed unconditionally in terms of the fields $\textbf{u}^1$ and $p^1$. 
+These fields can be computed based on the \textit{single-particle} conditionally-averaged equations.
+Specifically, \ref{eq:conditional_eqs} and \ref{eq:conditional_eqs_mass} are averaged Navier-Stokes equaitons for, $\textbf{u}^{1d}$ and $\phi^{1d}$. 
+These equations are completed by the correct boundary conditions \ref{eq:dt_rho_I3}. 
+
+One of the main implication of this finding is the following.
+Let us consider the closure: 
+\begin{equation}
+    \pSavg{\bm\sigma_f^0 \cdot \textbf{n}}. 
+\end{equation}
+Such term, can be computed by either solving for all the details of the flow with DNS for example, hence obtaing $\bm\sigma_f^0$ for a sufficient number of configuration. 
+Or by re-expessing this term in terms of $\bm\sigma_f^1$ and computing the \textit{single-particle} conditionally averaged equaitons.
+This means that the drag on a single particle immersed in an equivalent medium, described by $\textbf{u}^1$, $\phi_d^1$ etc\ldots is the same as the statistical average of the drag applied on each particle in a dispersed two-phase flow. 
+Notably, complex feature of the flow such as particle phase gradient or mean fluid phase gradient can be taken in account through the ensemble averaged variable appearing in the conditionally averaged equations. 
 
 \subsection{The finite particle Reynolds number dilute regime}
 In the first place we consider the situation where the particle volume fraction is relatively small. 
@@ -884,46 +894,46 @@ To better understand what this implies notice that inside the volume of the part
 However, when $|\textbf{y} - \textbf{x}| >a$ we are in the mixture phase and $\phi_f^1 \approx \phi_f$.
 Therefore, neglecting the $\mathcal{O}(\phi_d^2)$ terms  implies assuming that $P_1 \phi_f \approx P_1$ and that $P_1^2 = 0$. 
 Notice that $\phi_f^{1d} = -\phi_d^1 + \phi_d$ which means that $\phi_f^{1d} \sim \phi_d$ when $|\textbf{y} -\textbf{y}| > a$ therefore at  $\mathcal{O}(\phi_d^2)$ we have also $\phi_f^{1d} P_1= 0$. 
-Additionally, since $\avg{\delta_\Gamma}\sim \phi_d$, we have $\avg{\delta_\Gamma(\delta_1-P_1)}\sim \phi_d^2$ if we exclude the point $\textbf{y}\in \{|\textbf{y}-\textbf{x}| = a\}$. 
+% Additionally, since $\avg{\delta_\Gamma}\sim \phi_d$, we have $\avg{\delta_\Gamma(\delta_1-P_1)}\sim \phi_d^2$ if we exclude the point $\textbf{y}\in \{|\textbf{y}-\textbf{x}| = a\}$. 
 Applying these considerations, we may rewrite the conditionally-averaged terms in \ref{eq:conditional_eqs} and \ref{eq:conditional_eqs_mass}  $\forall \textbf{y}\in \{|\textbf{y}-\textbf{x}| = a\}$ as, 
 \begin{align*}
-    \avg{(\delta_1 - P_1)\rho_f\chi_f}
-    &=0 \\ 
-    \avg{(\delta_1 - P_1)\rho_f\chi_f\textbf{u}^0_f}
-    &= P_1 \rho_f \textbf{u}_f^{1d},\\
+    % \avg{(\delta_1 - P_1)\rho_f\chi_f}
+    % &=0 \\ 
+    \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0}
+    &= P_1 \rho_f \textbf{u}^{1d},\\
     % + \phi_f^{1d} \bm\sigma_f
     % + \phi_f^{1d} \bm\sigma_f^{1d} ]. 
-    \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0_f\textbf{u}^0_f}
+    \avg{(\delta_1 - P_1)\rho^0\textbf{u}^0\textbf{u}^0}
     &=
     P_1\rho_f[
-        \textbf{u}^{1d}_f\textbf{u}_f
-        + \textbf{u}_f\textbf{u}_f^{1d}
-        + \textbf{u}^{1d}_f\textbf{u}_f^{1d}
+        \textbf{u}^{1d}\textbf{u}
+        + \textbf{u}\textbf{u}^{1d}
+        + \textbf{u}^{1d}\textbf{u}^{1d}
     ]
     + \avg{\delta_1\rho_f\chi_f\textbf{u}_f''\textbf{u}_f''}
     - P_1 \avg{\rho_f\chi_f\textbf{u}_f'\textbf{u}_f'}\\
-    \avg{\chi_f \bm\sigma^0_f(\delta_1 - P_1)} 
+    \avg{\chi_f \bm\sigma^0(\delta_1 - P_1)} 
     &= 
-    P_1 \bm\sigma^{1d}_f 
+    P_1 \bm\sigma^{1d} 
     = 
-    -P_1  p_f^{1d} 
-    +P_1 \mu_f [\pddy \textbf{u}_f^{1d}+(\pddy \textbf{u}_f^{1d})^\dagger ]
+    -P_1  p^{1d} 
+    +P_1 \mu_f [\pddy \textbf{u}^{1d}+(\pddy \textbf{u}^{1d})^\dagger ]
 \end{align*}
 
 Using these approximations we can re-write \ref{eq:conditional_eqs} still for $|\textbf{y}-\textbf{x}| > a$, this reads,  
 \begin{align}
-    P_1 \pddy \cdot \textbf{u}^{1d}_f &= 0 \\
-    \pddt (P_1 \rho_f \textbf{u}_f^{1d})
+    P_1 \pddy \cdot \textbf{u}^{1d} &= 0 \\
+    \pddt (P_1 \rho \textbf{u}^{1d})
     + P_1 \pddy\cdot (
-    \rho_f \textbf{u}^{1d}_f\textbf{u}_f^{1d} 
-    + \textbf{u}_f\textbf{u}_f^{1d}
-    + \textbf{u}^{1d}_f\textbf{u}_f
-    + \bm\sigma^\text{Re}_f)\nonumber\\
-    + \pddx\cdot (P_1 \textbf{u}_f^{1d}\rho_f\textbf{w}) 
+    \rho \textbf{u}^{1d}\textbf{u}^{1d} 
+    + \textbf{u}\textbf{u}^{1d}
+    + \textbf{u}^{1d}\textbf{u}
+    + \bm\sigma^\text{Re})\nonumber\\
+    + \pddx\cdot (P_1 \textbf{u}^{1d}\rho\textbf{w}) 
     + \pddw\cdot \avg{(\delta_1 \textbf{a}_i- P_1 \textbf{a}_p)\rho^0\textbf{u}^0 }
     &= P_1 (
-        \mu_f \pddy^2 \textbf{u}^{1d}_f  
-        - \pddy p_f^{1d} 
+        \mu \pddy^2 \textbf{u}^{1d}  
+        - \pddy p^{1d} 
     )
 \end{align}
 with, 
@@ -932,17 +942,17 @@ with,
     = 
     % + \textbf{u}_f\textbf{u}_f^{1d}
     % + \textbf{u}^{1d}_f\textbf{u}_f^{1d}
+    - P_1 \bm\sigma^{1d}
     + \avg{\delta_1\rho_f\chi_f\textbf{u}_f''\textbf{u}_f''}
     - P_1 \avg{\rho_f\chi_f\textbf{u}_f'\textbf{u}_f'}
 \end{equation*}
 This is the conservative form of the dilute conditioned averaged Navier stokes equations. 
 For reason that will be clear latter we would like to write the conservative form of this equation.
-To do so we first notice that the averaged volume conservation equation of $\phi_f$ multiplied by $P_1$ gives, 
+To do so we first notice that the averaged volume conservation equation of \textbf{u} multiplied by $P_1$ gives, 
 \begin{equation*}
-    P_1\pddy \cdot \textbf{u}_f = 0.
+    P_1\pddy \cdot \textbf{u} = 0.
 \end{equation*}
-Therefore, at $\mathcal{O}(\phi_d)$ the field $P_1\textbf{u}_f$ is divergence free, it does not imply that $\textbf{u}_f$. 
-Additionally, in the dilute regime is it reasonable to assume that $\pddt P_1$ and $\pddx P_1$ are completely negligible compared to the other contributions. 
+Additionally, in the dilute regime is it reasonable to assume that $\pddt P_1$ and $\pddy P_1$ are completely negligible compared to the other contributions. 
 Alternatively, we may assume a complete homogeneous system such that $P_1(\textbf{x},\textbf{w},t) = P_1(\textbf{w})$. 
 Under these assumptions one can write based on physical arguments that $\pddx \textbf{u}_f^{1d}[\textbf{y},\textbf{x},\textbf{w},t] = - \pddy \textbf{u}^{1d}[\textbf{y},\textbf{x},\textbf{w},t]$.
 In that case, we reach the final form of the conditionally-averaged Navier-Stokes equations in the dilute regime  namely, 
