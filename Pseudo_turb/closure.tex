@@ -4,12 +4,12 @@ This section present the theoretical, as well as the numerical approach, to comp
 
 \subsection{The closure problem}
 To clarify the role of the different forces and stresses in a multiphase flow model we start by listing the averaged momentum equations of the dispersed and continuous phases obtained by an ensemble averaging procedure.
-For mono-disperse emulsion, the momentum equations of the continuous phase and dispersed phase can be written \citep{zhang1997momentum,jackson1997locally}
+For mono-disperse emulsion, the momentum equations of the continuous phase and dispersed phase can be written based on the decomposition of the stress proposed in \citet{chap:daniel2}
 \begin{align}
     \pddt (\phi_f\rho_f \textbf{u}_f)
     + \div \left(\phi_f\rho_f \textbf{u}_f\textbf{u}_f + \bm{\sigma}_f^{\text{eff}}\right)
     &= \phi_f 
-    \left(\div \bm{\sigma}_f
+    \left(\div \bm{\Sigma}_f
     + \rho_f \textbf{g}\right)
     - n_p \textbf{f}_p, 
     \label{eq:dt_uf}
@@ -18,7 +18,7 @@ For mono-disperse emulsion, the momentum equations of the continuous phase and d
     + \div \left(n_p m_p  \textbf{u}_p\textbf{u}_p
     +  \bm{\sigma}_p^{\text{eff}}\right)
     &= 
-    n_p v_p \left(\div \bm{\sigma}_f
+    n_p v_p \left(\div \bm{\Sigma}_f
     + \rho_d \textbf{g}\right)
     + n_p \textbf{f}_p, 
     \label{eq:dt_up}
@@ -26,9 +26,10 @@ For mono-disperse emulsion, the momentum equations of the continuous phase and d
 respectively. 
 The subscript $f$ and $p$ refer to continuous phase and particle phase averaged quantities, respectively.
 The vector $\textbf{g}$ is the acceleration of gravity and $\rho_k$ is the density of the phase $k$. 
-$\phi_f$ is the volume fraction of the continuous phase, $n_p$ the particle number density, $\textbf{u}_f$ (resp. $\textbf{u}_p$) the averaged velocity of the fluid (resp. dispersed) phase, $\bm{\sigma}_f$ the averaged continuous phase stress tensor.
+$\phi_f$ is the volume fraction of the continuous phase, $n_p$ the particle number density, $\textbf{u}_f$ (resp. $\textbf{u}_p$) the averaged velocity of the fluid (resp. dispersed) phase, $\bm{\Sigma}_f$ the mean Newtonian stress of the continuous phase stress tensor.
 $\bm{\sigma}^{\text{eff}}_p$ and $\bm{\sigma}^{\text{eff}}_f$ are the effective stresses of the dispersed and continuous phase, respectively.  
 Finally, $\textbf{f}_p$ represents the interphase momentum exchange, or drag force density term. 
+Note that the formulation given by \ref{eq:dt_uf} and \ref{eq:dt_up} differs from the usual momentum expression \citep{wang2021numerical,wang2024effect} in their decomposition of the mean fluid phase stress. 
 
 The momentum equations are completed by a transport equation for $\phi_f$ and a volume conservation law, namely, 
 \begin{align}
@@ -45,15 +46,18 @@ The number density, continuous phase volume fraction, drag force density, and ef
     \label{eq:n_p}\\
     \phi_f &= \avg{\chi_f}
     \label{eq:chi_f}\\
-    \bm\sigma_f &= p_f \bm\delta + \mu_f (\grad \textbf{u}_f + \dagger \grad \textbf{u}_f) - \frac{\mu_f}{\phi_f} \avg{\delta_\Gamma (\textbf{u}_f' \textbf{n}+ \textbf{n}\textbf{u}_f')}
+    \bm\Sigma_f &= - p_f \bm\delta + \mu_f [\grad \textbf{u}_f +  (\grad \textbf{u}_f)^\dagger ] 
     \label{eq:sigma_f}\\
     n_p \textbf{f}_p  &= \pSavg{\bm\sigma'_f\cdot \textbf{n}}
     \label{eq:f_alpha}
     \\
-    \bm{\sigma}_f^{\text{eff}} &= \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    \bm{\sigma}_p^{\text{eff}} &= \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
     \label{eq:def_uup}
     \\
-    \bm{\sigma}^{\text{eff}}_f &= \avg{\chi_f \textbf{u}_f'\textbf{u}_f'} - \pSavg{\textbf{r}\bm\sigma'_f\cdot \textbf{n}}
+    \bm{\sigma}^{\text{eff}}_f 
+    =& \avg{\chi_f \textbf{u}_f'\textbf{u}_f'} 
+    + \mu_f \avg{\delta_\Gamma (\textbf{u}_f' \textbf{n}+ \textbf{n}\textbf{u}_f')} \nonumber \\
+    &- \pSavg{\textbf{r}\bm\sigma'_f\cdot \textbf{n}}
     + \frac{1}{2}\div\pSavg{\textbf{rr}\bm\sigma'_f\cdot \textbf{n}}
     \label{eq:def_sigma_eff_f}
 \end{align}
@@ -61,8 +65,8 @@ respectively.
 The operator $\avg{\ldots}$ corresponds to an ensemble average procedure, 
 $\textbf{u}_\alpha$ is the center of mass velocity of a particle labeled $\alpha$, $\chi_f$ is the phase indicator function of the continuous phase, and $\delta_p$ the Dirac delta function pointing on the particle center of masses, $\delta_\Gamma$ the interfaces' indicator function, and \textbf{n} the normal of the surface pointing outward the droplets. 
 The superscript $'$ indicates the relative values of a quantity with respect to its phase-averaged value. 
-Specifically $\bm{\sigma}_f' = \bm{\sigma}_f^0  - \bm{\sigma}_f$, 
-$\textbf{u}_\alpha' = \textbf{u}_\alpha - \textbf{u}_p$ and $\textbf{u}_f' = \textbf{u}_f^0  -\textbf{u}_f$, with $\bm{\sigma}_f^0 $, and $\textbf{u}_f^0$, the local stress of the continuous phase and the local velocity of the continuous phase, respectively. 
+Specifically $\bm{\sigma}_f' = \bm{\sigma}_f^0  - \bm{\Sigma}_f$, 
+$\textbf{u}_\alpha' = \textbf{u}_\alpha - \textbf{u}_p$ and $\textbf{u}_f' = \textbf{u}_f^0  -\textbf{u}_f$, with $\bm{\sigma}_f^0 = -p_f^0 + \mu_f [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger] $, and $\textbf{u}_f^0$, the local stress of the continuous phase and the local velocity of the continuous phase, respectively. 
 
 In the present situation, i.e. where the mixture is only governed by conservation of mass and momentum,  the ``closure problem'' consist in finding explicit expressions for the terms of the form $\avg{\ldots}$ in \ref{eq:sigma_f}, \ref{eq:f_alpha}, \ref{eq:def_uup} and \ref{{eq:def_sigma_eff_f}} in terms of the unknown of the problem, i.e. $n_p$, $\phi_f$, $p_f$, $\textbf{u}_p$ and $\textbf{u}_f$. 
 

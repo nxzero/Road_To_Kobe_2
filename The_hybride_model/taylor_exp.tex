@@ -1,0 +1,167 @@
+\section{Proof of the multipole expansion}
+
+Let us first prove the equality, 
+\begin{equation}
+    (f^0_d \chi_\alpha)[\textbf{x}]
+    =
+    (f^0_d \chi_\alpha * \delta)[\textbf{x}]
+    =
+    \int_{\mathbb{R}^3} 
+     (f^0_d \chi_\alpha)[\textbf{x}_\alpha + \textbf{r}]\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) 
+     d\textbf{r},
+    \label{ap:eq:taylor_f_d}
+\end{equation}
+in the distributional sense, by applying the left-hand side and right-hand side on a test function $\phi$.
+We have used the notation $*$ to represent the convolution product. 
+The left-hand side of \ref{ap:eq:taylor_f_d} on a test function gives, 
+\begin{equation}
+    < (f^0_d \chi_\alpha)[\textbf{x}], \phi[\textbf{x}]>
+    = \int_{\mathbb{R}^3}
+    (f^0_d \chi_\alpha)[\textbf{x}] \phi[\textbf{x}]
+    d\textbf{x}
+    = \intO{
+        f^0_d [\textbf{x}] \phi[\textbf{x}]
+        }
+\end{equation}
+The left-hand side of \ref{ap:eq:taylor_f_d} on a test function yields, 
+\begin{align}
+    <   (f^0_d \chi_\alpha *\delta)[\textbf{x}]
+    , \phi[\textbf{x}]>
+    &= 
+    \int_{\mathbb{R}^3}
+    (f^0_d \chi_\alpha)[\textbf{x}_\alpha + \textbf{r}]
+    \int_{\mathbb{R}^3} 
+     \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) 
+     \phi[\textbf{x}]
+     d\textbf{x}
+     d\textbf{r}\\
+    &= 
+    \int_{\mathbb{R}^3}
+    (f^0_d \chi_\alpha)[\textbf{x}_\alpha + \textbf{r}]
+     \phi[\textbf{x}_\alpha + \textbf{r}]
+     d\textbf{r}
+    \\
+    &=\intO{
+        f^0_d [\textbf{x}_\alpha + \textbf{r}]
+        \phi[\textbf{x}_\alpha + \textbf{r}]
+    }
+    \label{eq:second_equality}
+\end{align}
+In both case we end up integrating $f_d^0$ over the particle volume so the equality \ref{ap:eq:taylor_f_d} is true. 
+
+
+Now let us prove the validity of \ref{eq:fd_asympt} in the distributional sense. 
+We start from \ref{eq:second_equality} and Taylor expand $\phi[\textbf{x}_\alpha +\textbf{r}]$ around the particle center, which is allowed since $\phi$ is smooth. 
+Injecting $\phi[\textbf{x}_\alpha +\textbf{r}] = \phi[\textbf{x}_\alpha] + \textbf{r} \cdot \grad \phi|_{\textbf{x}_\alpha} + \ldots$ in \ref{eq:second_equality} gives, 
+\begin{align}
+    <   (f^0_d \chi_\alpha *\delta)[\textbf{x}]
+    , \phi[\textbf{x}]> 
+    &= 
+    % \intO{
+    %     f^0_d [\textbf{x}_\alpha + \textbf{r}]
+    %     \phi[\textbf{x}_\alpha + \textbf{r}]
+    % }\\
+    % &= 
+    \phi[\textbf{x}_\alpha]
+    \intO{
+    f^0_d[\textbf{x}_\alpha + \textbf{r}]
+     }
+    + 
+    \grad\phi|_{\textbf{x}_\alpha}
+    \cdot 
+    \intO{
+    \textbf{r}
+    f^0_d[\textbf{x}_\alpha + \textbf{r}]
+     }
+    + \ldots
+    \label{eq:third_step}
+\end{align}
+Note that since the Dirac delta $\delta_\alpha = \delta(\textbf{x}- \textbf{x}_\alpha)$ is a unit of convolution we might as well note that, 
+\begin{align*}
+    \phi[\textbf{x}_\alpha]
+    &= \int_{\mathbb{R}^3} 
+    \delta(\textbf{x} - \textbf{x}_\alpha)
+    \phi[\textbf{x}]
+    d\textbf{x}
+    =  <\delta_\alpha, \phi[\textbf{x}]>
+    \\
+    \grad\phi|_{\textbf{x}_\alpha}
+    &= 
+    \int_{\mathbb{R}^3} 
+    \delta(\textbf{x} - \textbf{x}_\alpha)
+    \grad\phi|_{\textbf{x}}
+    d\textbf{x}
+    = <
+    \delta_\alpha,
+    \grad\phi|_{\textbf{x}}
+    >
+    = <
+    \grad\delta_\alpha|_{\textbf{x}},
+    \phi
+    >
+\end{align*}
+where the last relation is true since $\phi$ is a well-defined test-function \citet{appel2007}.
+Substituting this last expression into \ref{eq:third_step} yields the relation, 
+\begin{align}
+    <   (f^0_d \chi_\alpha *\delta)[\textbf{x}]
+    , \phi[\textbf{x}]> 
+    &= 
+    <\delta_\alpha
+    \intO{
+        f^0_d[\textbf{x}_\alpha + \textbf{r}]
+    }
+    , \phi[\textbf{x}]>
+    + < \grad\delta_\alpha
+    \cdot 
+    \intO{
+    \textbf{r}
+    f^0_d[\textbf{x}_\alpha + \textbf{r}]
+     }
+     , \phi[\textbf{x}]>
+    + \ldots
+    \label{eq:last_step}
+\end{align}
+
+Acknowledging \ref{ap:eq:taylor_f_d}, and \ref{eq:last_step} we finally arrive at the result, 
+\begin{align}
+    <   (f^0_d \chi_\alpha)[\textbf{x}]
+    , \phi[\textbf{x}]> 
+    = 
+    <\delta_\alpha
+    \intO{
+        f^0_d
+    }
+    , \phi[\textbf{x}]>
+    + < \grad\delta_\alpha
+    \cdot 
+    \intO{
+    \textbf{r}
+    f^0_d
+     }
+     , \phi[\textbf{x}]>
+    + \ldots
+    \label{eq:last2_step}
+\end{align}
+With a slight abuse of notation we might deduce the relations, 
+\begin{equation}
+    (f^0_d \chi_\alpha)[\textbf{x}]
+    = 
+    \delta_\alpha
+    \intO{
+        f^0_d
+    }
+    + \grad\delta_\alpha
+    \cdot 
+    \intO{
+    \textbf{r}
+    f^0_d
+     }
+    + \ldots
+\end{equation}
+\begin{equation}
+    \delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r})
+    = 
+    \delta(\textbf{x}- \textbf{x}_\alpha)
+    - \textbf{r}\cdot \grad\delta(\textbf{x}- \textbf{x}_\alpha)
+    + \ldots
+\end{equation}

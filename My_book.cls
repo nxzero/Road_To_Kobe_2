@@ -35,9 +35,12 @@
 
 \RequirePackage{stmaryrd}
 
+\RequirePackage[nameinlink,capitalize]{cleveref}
 \AtBeginDocument{\newcommand{\refn}[1]{\ref{#1}}}
-\AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
+% \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
+\AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
 \numberwithin{equation}{section}
+
 \usepackage[bmargin=2cm,tmargin=2cm,lmargin=2.5cm,rmargin=2.5cm]{geometry}
 \usepackage{xcolor}
 
