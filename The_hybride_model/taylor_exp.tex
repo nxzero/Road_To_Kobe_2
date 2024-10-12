@@ -166,6 +166,80 @@ With a slight abuse of notation we might deduce the relations,
     + \ldots
 \end{equation}
 
+\subsection{Nicolas proof V2}
+
+We first provide a concise proof of \ref{eq:exp_delta} which is wildly used in statistical physics. 
+Let first write the application of the Dirac delta: $\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})$, on a test function $\varphi[\textbf{x}]$, it yields
+\begin{align*}
+    < \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}), \varphi[\textbf{x}]> 
+    =
+    \varphi[\textbf{x}_\alpha + \textbf{r}]  
+\end{align*}
+Taking the Taylor expansion of the test function $\varphi[\textbf{x}_\alpha + \textbf{r}]$ in the neighborhood of $\textbf{r} = 0$ together , 
+\begin{equation}
+    < \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}), \varphi[\textbf{x}]> 
+    =
+    \varphi[\textbf{x}_\alpha] 
+    + \textbf{r} \cdot \grad \varphi|_\alpha
+    + \ldots
+    \label{eq:first_step}
+\end{equation}
+By definition of the Dirac delta $\delta_\alpha = \delta(\textbf{x}-\textbf{x}_\alpha)$ we can write \citep{appel2007}, 
+\begin{align}
+    \varphi[\textbf{x}_\alpha] &=  <\delta_\alpha, \varphi> \\
+    \grad\varphi|_{\textbf{x}_\alpha} &=  - <\grad\delta_\alpha, \varphi>.  
+\end{align}
+Using these definitions into \ref{eq:first_step} we deduce that in the distributional sense we have, 
+\begin{align}
+    \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})
+    =
+    \delta_\alpha - \textbf{r}\cdot \grad \delta_\alpha + \ldots
+    \label{eq:exp_delta2}
+\end{align}
+which is exactly the relation given by \ref{eq:exp_delta}. 
+
+Now let us focus on the demonstration of \ref{eq:taylor_f_d}. 
+We first note the basic relations, 
+\begin{align}
+    <(f_d^0\chi_d)[\textbf{x}],\varphi[\textbf{x}]>
+    &= <(f_d^0\chi_d)[\textbf{x}_\alpha+\textbf{r}],\varphi[\textbf{x}_\alpha+\textbf{r}]>\\
+    &= 
+    <(f_d^0\chi_d)[\textbf{x}_\alpha + \textbf{r}] ,<\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}), \varphi[\textbf{x}]>>
+    \label{eq:second_equality}
+    \\
+    &= 
+    <(f_d^0\chi_d)[\textbf{x}_\alpha + \textbf{r}] \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}), \varphi[\textbf{x}]>
+\end{align}
+The first equality is obtained simply by using the change of variable $\textbf{x} \to \textbf{x}_\alpha + \textbf{r}$. 
+The second equality is verified by definition of the Dirac delta function. 
+Finally, the third equality is obtained by noticing that the inner application of \ref{eq:second_equality} is along $\textbf{x}$ while the outer along the variable $\textbf{r}$. 
+Using \ref{eq:exp_delta2} in the previous relation leads us to, 
+\begin{equation}
+    <(f_d^0\chi_d)[\textbf{x}],\varphi[\textbf{x}]>
+    = 
+    <\delta_\alpha (f_d^0\chi_d)[\textbf{x}_\alpha + \textbf{r}]  - \div\{\delta_\alpha (\textbf{r} f_d^0\chi_d)[\textbf{x}_\alpha + \textbf{r}] \}, \varphi[\textbf{x}]>
+    + \ldots
+\end{equation}
+
+We deduce the relation,
+\begin{equation}
+    (f^0_d \chi_\alpha)[\textbf{x}]
+    = 
+    \delta_\alpha
+    \int_{\mathbb{R}^3}
+        f^0_d\chi_\alpha
+    d\textbf{r}
+    + \div\left(    
+    \delta_\alpha
+    \int_{\mathbb{R}^3}
+    \textbf{r}
+    f^0_d\chi_\alpha
+    d\textbf{r}
+    \right)
+    + \ldots
+\end{equation}
+which directly prooves \ref{eq:taylor_f_d} when we sum over all particles. 
+
 
 \subsection{Jean-Lou proof}
 We first make the following change of variable $\textbf{x} = \textbf{x} ' - \textbf{x}_\alpha$. Then,  
@@ -178,6 +252,8 @@ f^0_d(\mathbf{x}) \chi_\alpha (\mathbf{x}) &= f^0_d(\textbf{x} ' - \textbf{x}_\a
                                &= \int_{\mathbb{R}^3} f^0_d(\textbf{x}') \chi_\alpha(\textbf{x}')\phi(\textbf{x'}+\textbf{x}_\alpha)d\textbf{x'} \\
                                &= \int_{V_\alpha} f^0_d(\textbf{x}')\phi(\textbf{x'}+\textbf{x}_\alpha)d\textbf{x'}
 \end{align}
+
+
 Then performing a Taylor expansion, $\phi[\textbf{x}_\alpha +\textbf{x}'] = \phi[\textbf{x}_\alpha] + \textbf{x}' \cdot \grad \phi|_{\textbf{x}_\alpha} + \ldots$ we get
 
 \begin{align}
