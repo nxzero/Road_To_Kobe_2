@@ -1,202 +1,218 @@
-\section{Proof of the multipole expansion}
-\subsection{Nicolas proof}
-Let us first prove the equality, 
-\begin{equation}
-    (f^0_d \chi_\alpha)[\textbf{x}]
-    =
-    (f^0_d \chi_\alpha * \delta)[\textbf{x}]
-    =
-    \int_{\mathbb{R}^3} 
-     (f^0_d \chi_\alpha)[\textbf{x}_\alpha + \textbf{r}]\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) 
-     d\textbf{r},
-    \label{ap:eq:taylor_f_d}
-\end{equation}
-in the distributional sense, by applying the left-hand side and right-hand side on a test function $\phi$.
-We have used the notation $*$ to represent the convolution product. 
-The left-hand side of \ref{ap:eq:taylor_f_d} on a test function gives, 
-\begin{equation}
-    < (f^0_d \chi_\alpha)[\textbf{x}], \phi[\textbf{x}]>
-    = \int_{\mathbb{R}^3}
-    (f^0_d \chi_\alpha)[\textbf{x}] \phi[\textbf{x}]
-    d\textbf{x}
-    = \intO{
-        f^0_d [\textbf{x}] \phi[\textbf{x}]
-        }
-\end{equation}
-The left-hand side of \ref{ap:eq:taylor_f_d} on a test function yields, 
-\begin{align}
-    <   (f^0_d \chi_\alpha *\delta)[\textbf{x}]
-    , \phi[\textbf{x}]>
-    &= 
-    \int_{\mathbb{R}^3}
-    (f^0_d \chi_\alpha)[\textbf{x}_\alpha + \textbf{r}]
-    \int_{\mathbb{R}^3} 
-     \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) 
-     \phi[\textbf{x}]
-     d\textbf{x}
-     d\textbf{r}\\
-    &= 
-    \int_{\mathbb{R}^3}
-    (f^0_d \chi_\alpha)[\textbf{x}_\alpha + \textbf{r}]
-     \phi[\textbf{x}_\alpha + \textbf{r}]
-     d\textbf{r}
-    \\
-    &=\intO{
-        f^0_d [\textbf{x}_\alpha + \textbf{r}]
-        \phi[\textbf{x}_\alpha + \textbf{r}]
-    }
-    \label{eq:second_equality}
-\end{align}
-In both case we end up integrating $f_d^0$ over the particle volume so the equality \ref{ap:eq:taylor_f_d} is true. 
+%\section{Proof of the multipole expansion}
+\section{Expansion of phase and surface quantities as series of moments}%Expansion of phase and surface quantities in terms of moments series}%Moment expansions of phase and surface quantities}
+
+% \subsection{Nicolas proof}
+% Let us first prove the equality, 
+% \begin{equation}
+%     (f^0_d \chi_\alpha)[\textbf{x}]
+%     =
+%     (f^0_d \chi_\alpha * \delta)[\textbf{x}]
+%     =
+%     \int_{\mathbb{R}^3} 
+%      (f^0_d \chi_\alpha)[\textbf{x}_\alpha + \textbf{r}]\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) 
+%      d\textbf{r},
+%     \label{ap:eq:taylor_f_d}
+% \end{equation}
+% in the distributional sense, by applying the left-hand side and right-hand side on a test function $\phi$.
+% We have used the notation $*$ to represent the convolution product. 
+% The left-hand side of \ref{ap:eq:taylor_f_d} on a test function gives, 
+% \begin{equation}
+%     < (f^0_d \chi_\alpha)[\textbf{x}], \phi[\textbf{x}]>
+%     = \int_{\mathbb{R}^3}
+%     (f^0_d \chi_\alpha)[\textbf{x}] \phi[\textbf{x}]
+%     d\textbf{x}
+%     = \intO{
+%         f^0_d [\textbf{x}] \phi[\textbf{x}]
+%         }
+% \end{equation}
+% The left-hand side of \ref{ap:eq:taylor_f_d} on a test function yields, 
+% \begin{align}
+%     <   (f^0_d \chi_\alpha *\delta)[\textbf{x}]
+%     , \phi[\textbf{x}]>
+%     &= 
+%     \int_{\mathbb{R}^3}
+%     (f^0_d \chi_\alpha)[\textbf{x}_\alpha + \textbf{r}]
+%     \int_{\mathbb{R}^3} 
+%      \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}) 
+%      \phi[\textbf{x}]
+%      d\textbf{x}
+%      d\textbf{r}\\
+%     &= 
+%     \int_{\mathbb{R}^3}
+%     (f^0_d \chi_\alpha)[\textbf{x}_\alpha + \textbf{r}]
+%      \phi[\textbf{x}_\alpha + \textbf{r}]
+%      d\textbf{r}
+%     \\
+%     &=\intO{
+%         f^0_d [\textbf{x}_\alpha + \textbf{r}]
+%         \phi[\textbf{x}_\alpha + \textbf{r}]
+%     }
+%     \label{eq:second_equality}
+% \end{align}
+% In both case we end up integrating $f_d^0$ over the particle volume so the equality \ref{ap:eq:taylor_f_d} is true. 
 
 
-Now let us prove the validity of \ref{eq:fd_asympt} in the distributional sense. 
-We start from \ref{eq:second_equality} and Taylor expand $\phi[\textbf{x}_\alpha +\textbf{r}]$ around the particle center, which is allowed since $\phi$ is smooth. 
-Injecting $\phi[\textbf{x}_\alpha +\textbf{r}] = \phi[\textbf{x}_\alpha] + \textbf{r} \cdot \grad \phi|_{\textbf{x}_\alpha} + \ldots$ in \ref{eq:second_equality} gives, 
-\begin{align}
-    <   (f^0_d \chi_\alpha *\delta)[\textbf{x}]
-    , \phi[\textbf{x}]> 
-    &= 
-    % \intO{
-    %     f^0_d [\textbf{x}_\alpha + \textbf{r}]
-    %     \phi[\textbf{x}_\alpha + \textbf{r}]
-    % }\\
-    % &= 
-    \phi[\textbf{x}_\alpha]
-    \intO{
-    f^0_d[\textbf{x}_\alpha + \textbf{r}]
-     }
-    + 
-    \grad\phi|_{\textbf{x}_\alpha}
-    \cdot 
-    \intO{
-    \textbf{r}
-    f^0_d[\textbf{x}_\alpha + \textbf{r}]
-     }
-    + \ldots
-    \label{eq:third_step}
-\end{align}
-Note that since the Dirac delta $\delta_\alpha = \delta(\textbf{x}- \textbf{x}_\alpha)$ is a unit of convolution we might as well note that, 
+% Now let us prove the validity of \ref{eq:fd_asympt} in the distributional sense. 
+% We start from \ref{eq:second_equality} and Taylor expand $\phi[\textbf{x}_\alpha +\textbf{r}]$ around the particle center, which is allowed since $\phi$ is smooth. 
+% Injecting $\phi[\textbf{x}_\alpha +\textbf{r}] = \phi[\textbf{x}_\alpha] + \textbf{r} \cdot \grad \phi|_{\textbf{x}_\alpha} + \ldots$ in \ref{eq:second_equality} gives, 
+% \begin{align}
+%     <   (f^0_d \chi_\alpha *\delta)[\textbf{x}]
+%     , \phi[\textbf{x}]> 
+%     &= 
+%     % \intO{
+%     %     f^0_d [\textbf{x}_\alpha + \textbf{r}]
+%     %     \phi[\textbf{x}_\alpha + \textbf{r}]
+%     % }\\
+%     % &= 
+%     \phi[\textbf{x}_\alpha]
+%     \intO{
+%     f^0_d[\textbf{x}_\alpha + \textbf{r}]
+%      }
+%     + 
+%     \grad\phi|_{\textbf{x}_\alpha}
+%     \cdot 
+%     \intO{
+%     \textbf{r}
+%     f^0_d[\textbf{x}_\alpha + \textbf{r}]
+%      }
+%     + \ldots
+%     \label{eq:third_step}
+% \end{align}
+% Note that since the Dirac delta $\delta_\alpha = \delta(\textbf{x}- \textbf{x}_\alpha)$ is a unit of convolution we might as well note that, 
+% \begin{align*}
+%     \phi[\textbf{x}_\alpha]
+%     &= \int_{\mathbb{R}^3} 
+%     \delta(\textbf{x} - \textbf{x}_\alpha)
+%     \phi[\textbf{x}]
+%     d\textbf{x}
+%     =  <\delta_\alpha, \phi[\textbf{x}]>
+%     \\
+%     \grad\phi|_{\textbf{x}_\alpha}
+%     &= 
+%     \int_{\mathbb{R}^3} 
+%     \delta(\textbf{x} - \textbf{x}_\alpha)
+%     \grad\phi|_{\textbf{x}}
+%     d\textbf{x}
+%     = <
+%     \delta_\alpha,
+%     \grad\phi|_{\textbf{x}}
+%     >
+%     = <
+%     \grad\delta_\alpha|_{\textbf{x}},
+%     \phi
+%     >
+% \end{align*}
+% where the last relation is true since $\phi$ is a well-defined test-function \citet{appel2007}.
+% Substituting this last expression into \ref{eq:third_step} yields the relation, 
+% \begin{align}
+%     <   (f^0_d \chi_\alpha *\delta)[\textbf{x}]
+%     , \phi[\textbf{x}]> 
+%     &= 
+%     <\delta_\alpha
+%     \intO{
+%         f^0_d[\textbf{x}_\alpha + \textbf{r}]
+%     }
+%     , \phi[\textbf{x}]>
+%     + < \grad\delta_\alpha
+%     \cdot 
+%     \intO{
+%     \textbf{r}
+%     f^0_d[\textbf{x}_\alpha + \textbf{r}]
+%      }
+%      , \phi[\textbf{x}]>
+%     + \ldots
+%     \label{eq:last_step}
+% \end{align}
+
+% Acknowledging \ref{ap:eq:taylor_f_d}, and \ref{eq:last_step} we finally arrive at the result, 
+% \begin{align}
+%     <   (f^0_d \chi_\alpha)[\textbf{x}]
+%     , \phi[\textbf{x}]> 
+%     = 
+%     <\delta_\alpha
+%     \intO{
+%         f^0_d
+%     }
+%     , \phi[\textbf{x}]>
+%     + < \grad\delta_\alpha
+%     \cdot 
+%     \intO{
+%     \textbf{r}
+%     f^0_d
+%      }
+%      , \phi[\textbf{x}]>
+%     + \ldots
+%     \label{eq:last2_step}
+% \end{align}
+% With a slight abuse of notation we might deduce the relations, 
+% \begin{equation}
+%     (f^0_d \chi_\alpha)[\textbf{x}]
+%     = 
+%     \delta_\alpha
+%     \intO{
+%         f^0_d
+%     }
+%     + \grad\delta_\alpha
+%     \cdot 
+%     \intO{
+%     \textbf{r}
+%     f^0_d
+%      }
+%     + \ldots
+% \end{equation}
+% \begin{equation}
+%     \delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r})
+%     = 
+%     \delta(\textbf{x}- \textbf{x}_\alpha)
+%     - \textbf{r}\cdot \grad\delta(\textbf{x}- \textbf{x}_\alpha)
+%     + \ldots
+% \end{equation}
+
+%\subsection{Nicolas proof V2}
+
+We first provide a concise proof of the following relation
+\begin{equation}
+    \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})
+    = \delta(\textbf{x} - \textbf{x}_\alpha)
+    - \textbf{r}\cdot\grad \delta(\textbf{x} - \textbf{x}_\alpha)
+    + \frac{1}{2}\textbf{rr}:\grad\grad\delta(\textbf{x} - \textbf{x}_\alpha) 
+    - \ldots.
+    % + \ldots
+    \label{eq:exp_delta}
+    \end{equation}
+ which is widely used in the literature \citep{zhang2023evolution}. 
+We begin by applying the Dirac delta function $\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})$, to a test function $\varphi(\textbf{x})$.
+This results in the following expression,
 \begin{align*}
-    \phi[\textbf{x}_\alpha]
-    &= \int_{\mathbb{R}^3} 
-    \delta(\textbf{x} - \textbf{x}_\alpha)
-    \phi[\textbf{x}]
-    d\textbf{x}
-    =  <\delta_\alpha, \phi[\textbf{x}]>
-    \\
-    \grad\phi|_{\textbf{x}_\alpha}
-    &= 
-    \int_{\mathbb{R}^3} 
-    \delta(\textbf{x} - \textbf{x}_\alpha)
-    \grad\phi|_{\textbf{x}}
-    d\textbf{x}
-    = <
-    \delta_\alpha,
-    \grad\phi|_{\textbf{x}}
-    >
-    = <
-    \grad\delta_\alpha|_{\textbf{x}},
-    \phi
-    >
-\end{align*}
-where the last relation is true since $\phi$ is a well-defined test-function \citet{appel2007}.
-Substituting this last expression into \ref{eq:third_step} yields the relation, 
-\begin{align}
-    <   (f^0_d \chi_\alpha *\delta)[\textbf{x}]
-    , \phi[\textbf{x}]> 
-    &= 
-    <\delta_\alpha
-    \intO{
-        f^0_d[\textbf{x}_\alpha + \textbf{r}]
-    }
-    , \phi[\textbf{x}]>
-    + < \grad\delta_\alpha
-    \cdot 
-    \intO{
-    \textbf{r}
-    f^0_d[\textbf{x}_\alpha + \textbf{r}]
-     }
-     , \phi[\textbf{x}]>
-    + \ldots
-    \label{eq:last_step}
-\end{align}
-
-Acknowledging \ref{ap:eq:taylor_f_d}, and \ref{eq:last_step} we finally arrive at the result, 
-\begin{align}
-    <   (f^0_d \chi_\alpha)[\textbf{x}]
-    , \phi[\textbf{x}]> 
-    = 
-    <\delta_\alpha
-    \intO{
-        f^0_d
-    }
-    , \phi[\textbf{x}]>
-    + < \grad\delta_\alpha
-    \cdot 
-    \intO{
-    \textbf{r}
-    f^0_d
-     }
-     , \phi[\textbf{x}]>
-    + \ldots
-    \label{eq:last2_step}
-\end{align}
-With a slight abuse of notation we might deduce the relations, 
-\begin{equation}
-    (f^0_d \chi_\alpha)[\textbf{x}]
-    = 
-    \delta_\alpha
-    \intO{
-        f^0_d
-    }
-    + \grad\delta_\alpha
-    \cdot 
-    \intO{
-    \textbf{r}
-    f^0_d
-     }
-    + \ldots
-\end{equation}
-\begin{equation}
-    \delta(\textbf{x}- \textbf{x}_\alpha - \textbf{r})
-    = 
-    \delta(\textbf{x}- \textbf{x}_\alpha)
-    - \textbf{r}\cdot \grad\delta(\textbf{x}- \textbf{x}_\alpha)
-    + \ldots
-\end{equation}
-
-\subsection{Nicolas proof V2}
-
-We first provide a concise proof of \ref{eq:exp_delta} which is wildly used in statistical physics. 
-Let first write the application of the Dirac delta: $\delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})$, on a test function $\varphi[\textbf{x}]$, it yields
-\begin{align*}
-    < \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}), \varphi[\textbf{x}]> 
+    < \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}), \varphi(\textbf{x})> 
     =
-    \varphi[\textbf{x}_\alpha + \textbf{r}]  
+    \varphi(\textbf{x}_\alpha + \textbf{r}).  
 \end{align*}
-Taking the Taylor expansion of the test function $\varphi[\textbf{x}_\alpha + \textbf{r}]$ in the neighborhood of $\textbf{r} = 0$ together , 
+By applying the Taylor expansion to the test function $\varphi(\textbf{x}_\alpha + \textbf{r})$ around the point $\textbf{r} = 0$ , we obtain the following expression
 \begin{equation}
-    < \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}), \varphi[\textbf{x}]> 
+    < \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r}), \varphi(\textbf{x})> 
     =
-    \varphi[\textbf{x}_\alpha] 
-    + \textbf{r} \cdot \grad \varphi|_\alpha
+    \varphi(\textbf{x}_\alpha) 
+    + \textbf{r} \cdot \grad \varphi|_{\textbf{x}_\alpha}
+    + \frac{1}{2}\textbf{r}\textbf{r} : \grad\grad \varphi|_{\textbf{x}_\alpha}
     + \ldots
     \label{eq:first_step}
 \end{equation}
-By definition of the Dirac delta $\delta_\alpha = \delta(\textbf{x}-\textbf{x}_\alpha)$ we can write \citep{appel2007}, 
-\begin{align}
-    \varphi[\textbf{x}_\alpha] &=  <\delta_\alpha, \varphi> \\
-    \grad\varphi|_{\textbf{x}_\alpha} &=  - <\grad\delta_\alpha, \varphi>.  
-\end{align}
+By definition of the Dirac delta and its derivative \citep{appel2007}  %$\delta_\alpha = \delta(\textbf{x}-\textbf{x}_\alpha)$ we can write \citep{appel2007}, 
+%\begin{align}
+$\varphi(\textbf{x}_\alpha) =  <\delta_\alpha, \varphi>$% \\
+$\grad\varphi|_{\textbf{x}_\alpha} =  - <\grad\delta_\alpha, \varphi>$
+$...$  
+%\end{align}
 Using these definitions into \ref{eq:first_step} we deduce that in the distributional sense we have, 
-\begin{align}
-    \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})
-    =
-    \delta_\alpha - \textbf{r}\cdot \grad \delta_\alpha + \ldots
-    \label{eq:exp_delta2}
-\end{align}
-which is exactly the relation given by \ref{eq:exp_delta}. 
+%\begin{align}
+%    \delta(\textbf{x} - \textbf{x}_\alpha - \textbf{r})
+%    =
+%    \delta_\alpha - \textbf{r}\cdot \grad \delta_\alpha + \ldots
+%    \label{eq:exp_delta2}
+%\end{align}
+%which is exactly 
+the relation given by \ref{eq:exp_delta}. 
 
 Now let us focus on the demonstration of \ref{eq:taylor_f_d}. 
 We first note the basic relations, 
