@@ -1077,7 +1077,7 @@ While this may seem as a detail it turns out to be of most importance since in t
 
 As a perspective, we might consider deriving the conditional averaged equation at $\mathcal{O}(\phi^2_d)$ instead of $\mathcal{O}(\phi_d)$. 
 Nevertheless, before doing such consideration we first present the closure terms based on \ref{eq:conditional_avg_eq_final_stokes} for the momentum equation. 
-\tb{
+
 \subsection{Effect of volume fraction gradient }
 
 Now we would like to study the effect of finite volume fraction on the conditionally-averaged equations. 
@@ -1089,14 +1089,14 @@ In the steady-state stoke regime we can write based on the general formulation \
     P_1 \div \textbf{u}^{1d}
     % + \pddx\cdot (P_1 \rho_f \phi_f^{1d} \textbf{w})
     % + \pddw\cdot \avg{(\delta_1\textbf{a}_i - P_1\textbf{a}_p)\rho_f \chi_f }
-    = 0 
+    &= 0 
     \label{eq:single_fluid_conditional_eqs_mass}
     \\
     % \pddt \avg{(\delta_1 - P_1)\rho_f \chi_f \textbf{u}^0_f}
      \div \avg{\bm\sigma^0 (\delta_1 - P_1)}
     % + \pddx\cdot \avg{(\delta_1 - P_1)\rho_f \chi_f \textbf{u}^0_f\textbf{w}}
     % + \pddw\cdot \avg{(\delta_1\textbf{a}_i - P_1\textbf{a}_p)\rho_f \chi_f \textbf{u}^0_f}
-    = 0 
+    &= P_1 (\rho_d - \rho_f)\phi_d^{1d} 
     \label{eq:single_fluid_conditional_eqs}
 \end{align}
 Notice that in this situation the disturbance velocity field $\textbf{u}_f^{1d}$ is not incompressible and follows a non-trivial transport equation.
@@ -1110,14 +1110,14 @@ The body force term,
     = 
     P_1 (\rho_d - \rho_f)\phi_d^{1d} 
 \end{align}
-Assuming that $\phi_d^1 = \phi_d[\textbf{y}]  + \grad \phi_d$, we deduce that $\phi_d^{1d} =0 $ in the aera of interest 
-which when, $\phi_f^1 =1  - \phi_d^1 = \phi_d  + \textbf{r}\cdot \grad \phi_d$ thus, $\phi_f^{1d} = (1 - \phi_d^1) - (1 - \phi_d) = \phi_d^{1d} = 0$, gives, 
-\begin{align}
-    \avg{(\delta_1 - P_1)\rho^0}
-    =
-    0
-\end{align}
-which is valid at $|\textbf{x} - \textbf{y}| >2a$. 
+% Assuming that $\phi_d^1 = \phi_d[\textbf{y}]  + \grad \phi_d$, we deduce that $\phi_d^{1d} =0 $ in the aera of interest 
+Note that $\phi_f^1 =1  - \phi_d^1$  and $\phi_f = 1 -\phi_d$ thus, $\phi_f^{1d} = (1 - \phi_d^1) - (1 - \phi_d) = \phi_d^{1d} $. 
+% \begin{align}
+%     \avg{(\delta_1 - P_1)\rho^0}
+%     =
+%     0
+% \end{align}
+% which is valid at $|\textbf{x} - \textbf{y}| >2a$. 
 This can be taken in account through Stokeslet. 
 The  conditionally-averaged stress $\avg{\chi_f \bm\sigma^0_f (\delta_1 - P_1)}$ can be further written as, 
 \begin{align*}
@@ -1127,43 +1127,81 @@ The  conditionally-averaged stress $\avg{\chi_f \bm\sigma^0_f (\delta_1 - P_1)}$
     + \avg{\chi_d \bm\sigma^0_d (\delta_1 - P_1)}\\
     &= 
     - P_1 [
-        \phi_f p_f^{1d} 
-        +\phi_f^{1d} p_f^{1d}
-        +\phi_f^{1d} p_f 
+        \phi_f^1 p_f^1
+        - \phi_f p_f
     ]\bm\delta
     + P_1 \mu_f [\grad \textbf{u}^{1d}+(\grad \textbf{u}^{1d})^\dagger] \\
     &+ \avg{[\chi_d (\bm\sigma_d^0 - 2 \mu_f \textbf{e}^0_d ) + \chi_\Gamma \bm\sigma_\Gamma ]  (\delta_1 - P_1)}\\
     &= 
     - P_1 [
-         p_f^{1d} 
-        +(\phi_d^{1d} - \phi_d ) p_f^{1d}
-        +\phi_d^{1d} p_f 
+        p_f^{1d}
+        - \phi_d^1 p_f^1
+        + \phi_d p_f
     ]\bm\delta
     + P_1 \mu_f [\grad \textbf{u}^{1d}+(\grad \textbf{u}^{1d})^\dagger] \\
     &+ \avg{[\chi_d (\bm\sigma_d^0 - 2 \mu_f \textbf{e}^0_d ) + \chi_\Gamma \bm\sigma_\Gamma ]  (\delta_1 - P_1)}
 \end{align*}
-Since $\phi_d^{1d} -\phi_d  = \phi_d^1 - 2 \phi_d$. 
-Thus, outside the particle free zone we have,  $\phi_d = \phi_d + \textbf{r}\cdot \grad \phi_d$ and $\phi_d^{1d} = 0$ thus this reduce to 
+
+Now let us assume a pure linear function for the conditional particle volume fraction gradient we obtain, 
 \begin{align}
-    \avg{\bm\sigma^0 (\delta_1 - P_1)}
+    \phi_d[\textbf{x}]
     = 
+    \phi_d
+    + \textbf{r} \cdot \grad \phi_d 
+\end{align}
+In the zone $|\textbf{r}|>2a$ we assume, 
+\begin{align*}
+    \phi_d^1 =  \phi_d[\textbf{x}]
+    = 
+    \phi_d
+    + \textbf{r} \cdot \grad \phi_d \\
+    \phi_d^{1d} = 0
+\end{align*}
+Consequently, in the particle free zone we have $a<|r|<2a$
+\begin{align*}
+    \phi_d^1 =  0 \\
+    \phi_d^{1d} = - \phi_d
+    + \textbf{r} \cdot \grad \phi_d
+\end{align*}
+
+Thus, the closure might be written in $|r|>2a$, 
+\begin{align}
+    \avg{(\delta_1 - P_1)\rho^0}
+    &=
+    0\\
+    \avg{\bm\sigma^0 (\delta_1 - P_1)}
+    &= 
     - P_1 [
-         p_f^{1d} 
-        - (\phi_d + \textbf{r}\cdot \grad \phi_d) p_f^{1d}
+        p_f^{1d}
+        - (\phi_d + \textbf{r}\cdot \grad \phi_d ) p_f^{1d}
+    ]\bm\delta
+    + P_1 \mu_f [\grad \textbf{u}^{1d}+(\grad \textbf{u}^{1d})^\dagger] \\
+    &+ \avg{[\chi_d (\bm\sigma_d^0 - 2 \mu_f \textbf{e}^0_d ) + \chi_\Gamma \bm\sigma_\Gamma ]  (\delta_1 - P_1)}
+\end{align}
+and 
+\begin{align}
+    \avg{(\delta_1 - P_1)\rho^0}
+    &=
+    P_1 (\rho_d - \rho_f) (- \phi_d + \textbf{r} \cdot \grad \phi_d) \\
+    \avg{\bm\sigma^0 (\delta_1 - P_1)}
+    &= 
+    - P_1 [
+        p_f^{1d}
+        + (\phi_d + \textbf{r}\cdot \grad \phi_d ) p_f
     ]\bm\delta
     + P_1 \mu_f [\grad \textbf{u}^{1d}+(\grad \textbf{u}^{1d})^\dagger] \\
     &+ \avg{[\chi_d (\bm\sigma_d^0 - 2 \mu_f \textbf{e}^0_d ) + \chi_\Gamma \bm\sigma_\Gamma ]  (\delta_1 - P_1)}
 \end{align}
 
+
 with the assumption of constant gradient we might write, 
 \begin{align*}
-    - P_1 \grad p_f^{1d} 
+    - P_1 (1 - \phi_d - \textbf{r} \cdot \grad\phi)\grad p_f^{1d} 
     + \mu_f P_1 \grad^2  \textbf{u}^{1d}
     % + \pddw\cdot \avg{(\delta_1\textbf{a}_i - P_1\textbf{a}_p)\rho_f \chi_f \textbf{u}^0_f}
     &= 
-    - P_1 \phi_d \grad p_f^{1d}
     - P_1 \grad\phi_d  p_f^{1d}
-    - P_1 \grad\phi_d \cdot \textbf{r} \grad p_f^{1d} \\
+    \\
     &-\div \avg{[\chi_d (\bm\sigma_d^0 - 2 \mu_f \textbf{e}^0_d ) + \chi_\Gamma \bm\sigma_\Gamma ]  (\delta_1 - P_1)}
     0 
 \end{align*}
@@ -1185,5 +1223,3 @@ Theoretically if we consider the point sufficiently far from $\textbf{x}$ we hav
 Thus it is the stresslet terms. 
 
 
-
-}

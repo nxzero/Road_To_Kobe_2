@@ -144,7 +144,7 @@ Indeed, summing \ref{eq:dt_avg_rho_k}, \ref{eq:dt_avg_rhou_k} and \ref{eq:dt_avg
     )
     &= 
     0,\\
-    \label{eq:dt_avg_rhou}
+    \label{eq:dt_avg_rhou_m}
     \pddt ( \rho\textbf{u}_m)  
     + \div (
          \rho\textbf{u}_m\textbf{u}_m
@@ -186,12 +186,14 @@ In these equations, we have made use of the subscript $_m$ to denote the Favre a
 \begin{align*}
     \rho \textbf{u}_m
     = \avg{\rho^0 \textbf{u}^0}
+    = \avg{\rho_f \textbf{u}^0_f
+    + \rho_d \textbf{u}_d^0}
     &&
     \rho E_m
-    = \avg{\rho^0 \textbf{u}^0}
+    = \avg{\rho^0 E^0}
     &&
     \rho e_m
-    = \avg{\rho^0 \textbf{u}^0}
+    = \avg{\rho^0 e^0}
 \end{align*}
 Likewise, the fluctuating quantities are defined following, 
 \begin{equation}
@@ -206,12 +208,36 @@ In \ref{eq:dt_avg_rhoE} we have defined the bulk total energy as the average of 
 \end{equation}
 with, $e_m = \avg{\sum_k \rho_k\phi_k e_k + \phi_\Gamma \gamma}$ and $k = \avg{\rho^0 \textbf{u}_m'\cdot \textbf{u}_m'}/2$. 
 
-Additionally, it is interesting to note that while $\textbf{u}_m$ is not divergence-free \eqref{eq:dt_avg_rho}, the volume-averaged velocity fields $\textbf{u} = \phi_f \textbf{u}_f + \phi_d \textbf{u}_d $ is. 
+Additionally, it is interesting to note that while $\textbf{u}_m$ is not divergence-free \eqref{eq:dt_avg_rho}. 
+However,  the volume-averaged bulk velocity fields $\textbf{u} = \avg{\chi_f \textbf{u}_f^0 + \chi_d \textbf{u}_d^0} $ is. 
 Indeed, adding $\pddt \chi_k + \div \textbf{u}_k^0\chi_k =0$ for $k=f,d$ and ensemble averaging the resulting expression leads to 
 \begin{equation}
     \div\textbf{u}=0.
 \end{equation}
-Thus, one might either solve the \textit{single-fluid} formulation for $\textbf{u}_m$ or reformulate the problem in terms of $\textbf{u}$, in which case the velocity fields become divergence-free. 
+Thus, one might prefer to solve the system for $\textbf{u}$ instead of $\textbf{u}_m$ since he can use a classic non-compressible solver for forcing terms instead of a compressible solver. 
+The momentum equation for \textbf{u} can be obtained by adding \ref{eq:dt_avg_rhou_k} with $k=d$, with \ref{eq:dt_avg_uI} divided by $\rho_d$, to \ref{eq:dt_avg_rhou_k} for $k=f$, which gives, 
+\begin{equation}
+    \pddt \textbf{u}  
+    + \div (
+        \textbf{u}\textbf{u}
+        + \bm{\sigma}^\text{eq}
+    )
+    = 
+    \textbf{g} 
+    +  \avg{\delta_I \bm{\sigma}_f^0 \cdot \textbf{n}} \left(\frac{1}{\rho_d}  - \frac{1}{\rho_f}\right)
+    \label{eq:dt_avg_rhou}
+\end{equation}
+with, 
+\begin{equation}
+    \bm\sigma^\text{eq} = 
+    \avg{ \textbf{u}'\textbf{u}'}
+    - \frac{\phi_f}{\rho_f}\bm\sigma_f
+    - \frac{\phi_d}{\rho_d}\bm\sigma_d
+    - \frac{\phi_\Gamma}{\rho_d} \bm\sigma_\Gamma. 
+\end{equation}
+Note that in opposition to the Favre averaged momentum equation \eqref{eq:dt_avg_rhou_m} the phase momentum exchange term on the right-hand side of \ref{eq:dt_avg_rhou} does not cancel exactly. 
+However, we argue that the same term will be required for the dispersed phase momentum equation.
+
 
 These equations are particularly interesting from an experimental point of view. 
 For example, in a Rheometer we can measure only for the \textit{Bulk stress} $\bm\sigma^\text{eq}_m$ and not $\bm\sigma^\text{eq}_f$ and $\bm\sigma^\text{eq}_d$ separately, as it measures the stress response from the mixture phases. 

@@ -31,13 +31,51 @@ Note that a quadratic background flow contribution could be taken into account s
 \end{figure}
 
 We recall that all along this section we consider spherical droplet of radius $a$ with viscosity ratio $\lambda = \mu_d /\mu_f$ and density ratio $\zeta =\rho_d /\rho_f$. 
+Thus the problem \ref{eq:conditional_avg_eq_final_stokes} can be easily solved and have the solutions, 
+\begin{align}
+    \label{eq:singularity_solution_out}
+    \textbf{u}_\text{out}^{1d}[\textbf{r},\textbf{w}]
+    &= 
+    \mathcal{U}_\text{out}[\textbf{r}] \cdot \textbf{u}
+    + \mathcal{E}_\text{out}[\textbf{r}]: \textbf{E}_{f}\\
+    \textbf{u}_\text{in}^{1d}[\textbf{r},\textbf{w}]
+    &= 
+    \mathcal{U}_\text{in}[\textbf{r}] \cdot \textbf{u}_{fw}
+    + \mathcal{E}_\text{in}[\textbf{r}] : \textbf{E}_{f}
+    \label{eq:singularity_solution_in}
+\end{align}
+where $\textbf{r} = \textbf{x} - \textbf{y}$, $\textbf{u}_{fw} = \textbf{u}_f - \textbf{w}$, the subscript ``in'' indicates that the solution is valid inside the domain $|\textbf{r}| <a$, and the subscript ``out'' in $|\textbf{r}|>a$. 
+$\textbf{E}_f = \grad \textbf{u}_f + (\grad \textbf{u}_f)^\dagger$ is the shear rate tensor of the continuous phase. 
+The second and third order tensor $\mathcal{U}_\text{out},\mathcal{U}_\text{in},\mathcal{E}_\text{out}$ and $\mathcal{E}_\text{in}$ read as, 
+\begin{align}
+    (\mathcal{U}_{\text{out}})_{ik} &= 
+    \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right)
+    \left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right) 
+    + 
+    \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right)
+    \left(\frac{\delta_{ik}}{r^3} - \frac{3r_ir_k}{r^5}\right),  \\
+    (\mathcal{E}_{\text{out}})_{ijk}
+    &=
+    %  \bm\delta\textbf{r}
+    -\frac{\lambda}{(\lambda + 1)r^5} \bm\delta\textbf{r}
+    -\left(\frac{5\lambda +2}{2(\lambda +1 )r^5} - \frac{5\lambda}{2(\lambda+1)r^7}\right) \textbf{rrr},\\
+    (\mathcal{U}_{ik})_\text{in} &= 
+    \frac{1}{2}\left(\frac{2\lambda +3}{\lambda +1}\right)\bm\delta
+    -\frac{1}{2} (2r^2 \bm\delta - \textbf{rr})
+    \left(\frac{1}{\lambda +1}\right),\\
+    (\mathcal{E}_{ijk})_\text{in}
+    &=
+    \frac{5r^2 -3}{2(\lambda +1)} \textbf{r}\bm\delta
+    - \frac{1}{\lambda+1}\textbf{rrr}. 
+\end{align}
+
 
 \subsection{Moment of force traction}
 
 Let us present the closures for the momentum exchange term present in of \ref{eq:dt_hybrid_rhou_f} for dilute suspension of spherical droplets. 
 % Specifically, we consider an isolated spherical non-rotating droplet of viscosity $\lambda \mu_f$ immersed in an arbitrary linear flow. 
 % Most of the term present in \ref{eq:dt_hybrid_rhou_f} are discussed in\ref{ap:two-fluid_model}, thus let focus on the three exchangek terms.  
-It is found that the first three moment of the hydrodynamic forces are related to the mean fluid phase velocity field as, 
+Using \ref{eq:singularity_solution_out} and \ref{eq:drag_final2} it is found that the first three moment of the hydrodynamic forces are related to the mean fluid and particle phase velocity field as, 
 \begin{align}
     \label{eq:zeroth_mom}
     \pSavg{\bm{\sigma}_f^0\cdot \textbf{n}_d} &= 
@@ -85,77 +123,72 @@ Another contribution to the stress is the pseudo-turbulent tensor $\avg{\chi_f \
 Note that in stokes regime this term is more likely to be negligible, nevertheless it is still interesting to provide its closure based on the Stokes solution as it gives the first order inertial contribution, which is of course non-negligible at finite particle Reynolds number.
 
 In \ref{ap:solution_singularity} we compute this closure based on \ref{eq:Batchelor2}, following the rigorous methodology presented in the previous section.  
-The methodology is as follows:
-In the Stokes regime $\textbf{u}_f'$ is proportional to $\textbf{u}_{fp}$ and $\textbf{E}_f$. 
+In brief the methodology is as follows:
+According to \ref{eq:Batchelor2} we may reformulate $\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$ in terms of an integral of $\textbf{u}_\text{out}^{1d}\textbf{u}_\text{out}^{1d}$ over all the particle velocity $\textbf{w}$ and position $\textbf{y}$. 
+In the Stokes regime $\textbf{u}_\text{out}^{1d}$ is proportional to $\textbf{u}_{fw} = \textbf{u}_f - \textbf{w}$ and $\textbf{E}_f$, see \ref{eq:singularity_solution_out}. 
 Since, $\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$ is a symmetric second order tensor, the final closure must remain symmetric and second order.
-Additionally, the only possible combination of tensor, $\textbf{u}_{fp}$ and $\textbf{E}_f$, which can form a symmetric second order tensor are, 
+Additionally, the only possible combination of tensor, $\textbf{u}_{fw}$ and $\textbf{E}_f$, which can form a symmetric second order tensor are, 
 \begin{align}
-    \textbf{u}_{fp}
-    \textbf{u}_{fp}
+    \textbf{u}_{fw}
+    \textbf{u}_{fw}
     &&
     \textbf{E}_f\cdot \textbf{E}_f
     && 
-    \frac{1}{2}(\textbf{E}_f\cdot \textbf{u}_{fp} \textbf{u}_{fp})
+    (\textbf{u}_{fw}\cdot 
+    \textbf{u}_{fw})\bm\delta
+    &&
+    (\textbf{E}_f : \textbf{E}_f)\bm\delta. 
 \end{align}
-and the unit tensor $\bm\delta$. 
-Consequently, we conclude that the functional form of $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}$ must be , 
+Notice that it is impossible to obtain a second order tensor based on combination of one vector ($\textbf{u}_{fw}$), and one second-order tensor ($\textbf{E}_f$). 
+Therefore, we deduce that at the leading order in Reynolds number and particle volume fraction no correlation exist between the wake of a particle in translation and its distance field in shearing motion. 
+Note that at higher Reynolds number we might found terms proportional to $Re \textbf{u}_{fw}\textbf{u}_{fw} \cdot \textbf{E}_f$. 
+
+We conclude that the functional form of $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}$ must be of the form, 
 \begin{multline}
      \avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}
      =
-     C_{uu}^1 \textbf{u}_{fp} \textbf{u}_{fp}
-     + C_{EE}^1 \textbf{E}_f\cdot \textbf{E}_f
-     + C_{uE}^1 \frac{1}{2}\left(\textbf{E}_f\cdot \textbf{u}_{fp} \textbf{u}_{fp}+ \textbf{u}_{fp} \textbf{u}_{fp}\cdot \textbf{E}_f\right) \\
+     C_{uu}^1 [\textbf{u}_{fp} \textbf{u}_{fp}+ \pavg{\textbf{u}_\alpha' \textbf{u}_\alpha'}]
+     + C_{EE}^1 \textbf{E}_f\cdot \textbf{E}_f \\
      + \left[ 
-         C_{uu}^2 (\textbf{u}_{fp}\cdot  \textbf{u}_{fp})
+         C_{uu}^2 (\textbf{u}_{fp}\cdot  \textbf{u}_{fp} + 2k_p)
          +  C_{EE}^2 (\textbf{E}_f : \textbf{E}_f)
-        +  C_{uE}^2 ( \textbf{u}_{fp}\cdot \textbf{E}_f\cdot \textbf{u}_{fp})
     \right]\bm\delta
     \label{eq:Reynolds_stress_functional_form}
 \end{multline}
-where $C_{uu}^1,C_{EE}^1,C_{uE}^1,C_{uu}^2,C_{EE}^2$ and $C_{uE}^2$ are yet unknown scalar function. 
-Note that the term on the second lines represents the isotropic part of the Reynolds stress tensor  which is the pseudo-turbulent energy, $k_f$. 
-Physically \ref{eq:Reynolds_stress_functional_form} means that droplets in a flow, induces pseudo turbulence through they relative linear motion, i.e. which is exactly the wake on \ref{fig:flowlines} (left), and the wake when mean linear motions acts around the droplets, see  \ref{fig:flowlines} (right). 
+where $C_{uu}^1,C_{EE}^1,C_{uu}^2$ and $C_{EE}^2$ are yet unknown scalar function. 
+Note that the particle center of mass velocity variance $\pavg{\textbf{u}_\alpha' \textbf{u}_\alpha'}$ and $2k_p = \pavg{\textbf{u}_\alpha' \cdot \textbf{u}_\alpha'}$ are present in \ref{eq:Reynolds_stress_functional_form} because, 
+\begin{equation}
+    n_p[\textbf{x},t]\int_{\mathbb{R}^3} \textbf{u}_{fw}\textbf{u}_{fw} P[\textbf{w}|\textbf{x},t] d\textbf{w}
+    =  
+    \avg{\textbf{u}_\alpha'\textbf{u}_\alpha'}. 
+\end{equation}
+Physically \ref{eq:Reynolds_stress_functional_form} means that each droplet in a flow, induces pseudo turbulence through their relative linear motion $\textbf{u}_{fw}$, i.e. which is exactly the wake on \ref{fig:flowlines} (left), and the wake when mean linear motions acts around the droplets, see  \ref{fig:flowlines} (right). 
+Note also that the terms on the second line represent the isotropic part of the Reynolds stress tensor,  which is $3/2$ of the pseudo-turbulent energy: $k_f$. 
 
-The disturbance fields of a droplet in translation is proportional to $r^{-1}$ thus the computation of the integral of $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}$ in the case of translation diverges if we use \ref{eq:Batchelor2}.
+
+The disturbance fields of a droplet in translation is proportional to $r^{-1}$ (see \ref{eq:singularity_solution_out}) thus the computation of the integral of $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}$ in the case of translation diverges if we use \ref{eq:Batchelor2}.
+This divergence issue is well known in fluid mechanics \citep{caflisch1985variance}, therefore at this stage we are unable to compute the coefficient $C_{uu}^1$ and $C_{uu}^2$ that are related to translational motions. 
 As mentioned in the previous section, (see also \ref{chap:pseudoturbulence}), this divergence issue arise because \ref{eq:Batchelor2} is unable to provide physical results in this regime. 
-Nevertheless, since the disturbance field of a droplet in translation is proportional to the relative velocity $\textbf{u}_{fp}$ the functional form of this tensor cannot be otherwise that proportional to $\textbf{u}_{fp} \textbf{u}_{fp}$ and $(\textbf{u}_{fp}\cdot \textbf{u}_{fp})\bm\delta$.
-To support that hypothesis, note that for spherical bubbles in potential flow, the pseudo turbulent tensor have the same functional form as the second line of \ref{eq:Reynolds_stress1} (see equation (5.7) of \citet{zhang1994ensemble}). 
-Additionally, for ordered array of spheres immersed in a uniform non-inertial flow we found $C_1(\phi) \sim \phi^{2/3}$ \citet{hill2001first}.
-It is therefore reasonable to expect the same trend for random array, since in the dilute regime both random and ordered array are supposed to be equivalent. 
-Consequently, at this stage we suppose that \ref{eq:Reynolds_stress1} 
+Nevertheless, as stated above the functional form of this tensor cannot be otherwise that proportional to $\textbf{u}_{fw} \textbf{u}_{fw}$ and $(\textbf{u}_{fw}\cdot \textbf{u}_{fw})\bm\delta$.
+To support that hypothesis, note that when only considering the translational motion ($\textbf{E}_f = 0$), for spherical bubbles in potential flow, the pseudo turbulent tensor have the same functional form as \ref{eq:Reynolds_stress_functional_form} (see equation (5.7) of \citet{zhang1994ensemble}). 
+Additionally, for ordered array of spheres immersed in a uniform non-inertial flow we found that $C_{uu}(\phi) \sim \phi^{2/3}$ \citet{hill2001first}.
+It is therefore reasonable to expect the same trend for random array.
+In \ref{chap:pseudoturbulence} we provide a novel strategy to compute $C_{uu}^1$ and $C_{uu}^2$ based on a different statistical framework. 
 
 
-Since $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}$ is a symmetric second order tensor with independent components is can be computed with at least $6$ scalar integral. 
-
-
-
-
-\begin{multline}
-    \avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}
-    =
-    \frac{\phi_d a^2 \rho_f}{105 (\lambda +1)^2 }\left[
-        (129\lambda^2+108\lambda+24)\textbf{E}_f\cdot \textbf{E}_f
-        + (20\lambda^2 +20\lambda + 6)
-        (\textbf{E}_f : \textbf{E}_f)\bm\delta
-    \right]\\
-    + C_1(\phi,\lambda) [\textbf{u}_{fp} \textbf{u}_{fp}
-    + \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} ]
-    + C_2(\phi,\lambda) [\textbf{u}_{fp}\cdot \textbf{u}_{fp} + 2 n_p k_p]\bm\delta
-    \label{eq:Reynolds_stress1}
-\end{multline}
-Where $C_1$ and $C_2$ are yet unknown constant.
-Indeed, 
-
-
-A droplet immersed in a linear flow also produce pseudo-turbulence. 
-The contribution from the mean shear flow to the pseudo turbulent tensor is also derived in \ref{ap:solution_singularity} and reads as the first line of \ref{eq:Reynolds_stress1}. 
+The contribution from the mean shear flow $\textbf{E}_f$ to the pseudo turbulent tensor is derived in \ref{ap:solution_singularity} based on \ref{eq:Batchelor2}, which works fine in this case. 
+Indeed, as the wake of a particle in pure linear flow decay as $\mathcal{O}(r^{-3})$ the error in \ref{eq:Batchelor2} remains finite providing physical results. 
+Carrying out the integration we directly obtain, 
+\begin{align*}
+    C_E^1  = \frac{\phi_d a^2 \rho_f}{105 (\lambda +1)^2 } (129\lambda^2+108\lambda+24)\\
+    C_E^2 = \frac{\phi_d a^2 \rho_f}{105 (\lambda +1)^2 } (20\lambda^2 +20\lambda + 6)
+\end{align*}
 In  \citet{raja2010inertial} they study theoretically the stress in a neutrally buoyant suspensions of droplets. 
 In the dilute limit they compute the deviatoric part of $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}$ based on the stokes flow solution. 
-It is observed that the first term on the right-hand side of \ref{eq:Reynolds_stress1} is consistent with equation (3.15) of \citet{raja2010inertial}.
-Regarding the second term of \ref{eq:Reynolds_stress1} it corresponds to the  isotropic contribution of the Reynolds stress.
-This term seems new  
+It is observed that $C_E^1$ is consistent with equation (3.15) of \citet{raja2010inertial}.
+Regarding $C_E^2$ it corresponds to the  isotropic contribution of the Reynolds stress.
+To the knowledge of the author this result has never been presented in the literature.
 
-finally
 
 \subsection{The fluid phase equivalent stress}
 % In this section we focus on the formulation of the averaged fluid phase equivalent stress tensor $\bm{\sigma}_f^\text{Re}$. 
@@ -185,19 +218,18 @@ Upon developing $\phi_d \textbf{e}_d$ multipolar series using \ref{eq:f_exp}, th
     \label{eq:sigma_eq_0}
 \end{multline} 
 It is worth noting that $\textbf{e} = \grad \textbf{u} + (\grad \textbf{u})^\dagger$. 
-
-Nevertheless, the bulk velocity \textbf{u} is not part of our unknown instead we solve for $\textbf{u}_f$, $\textbf{u}_p$, $\textbf{P}_p$ and eventually the higher moments. 
+Nevertheless, the bulk velocity \textbf{u} is not part of our unknown in the ``hybrid model'', instead we solve for $\textbf{u}_f$, $\textbf{u}_p$, $\textbf{P}_p$ and eventually the higher moments. 
 Therefore, in all rigor we must write 
 \begin{equation}
     \textbf{e}
     = 
-    \grad \textbf{U} + (\grad \textbf{U})^\dagger
+    \textbf{E}
     - \grad (\div (n_p \textbf{P}_p))
     - (\grad \div (n_p \textbf{P}_p))^\dagger
     + \ldots
     \label{eq:rate_of_strain}
 \end{equation}
-where $\textbf{U} = \phi_f \textbf{u}_f + n_p v_p \textbf{u}_p$ is equivalent to the bulk velocity \textbf{u} uniquely in an homogeneous medium. 
+where $\textbf{E} = \grad \textbf{U} + (\grad \textbf{U})^\dagger$ with $\textbf{U} = \phi_f \textbf{u}_f + n_p v_p \textbf{u}_p$ is equivalent to the bulk velocity \textbf{u} uniquely in an homogeneous medium. 
 
 % The fluid phase averaged stress is therefore composed of : 
 % (1) the pseudo turbulent contribution $\rho_f\avg{\chi_f  \textbf{u}_f' \textbf{u}_f'}$ which can be decomposed in an isotropic part $2 k_f = \avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'}:\bm\delta$ that contribute to the effective pressure, and a deviatoric part defined as $\avg{\chi_f \rho_f \textbf{u}_f' \textbf{u}_f'} - 2 k_f\bm\delta$. 
@@ -206,12 +238,11 @@ where $\textbf{U} = \phi_f \textbf{u}_f + n_p v_p \textbf{u}_p$ is equivalent to
 % (4) the particle first moment of the hydrodynamic forces $\pSavg{\textbf{r}\bm{\sigma}_f^0\cdot \textbf{n}_d}$. 
 % (5) and the higher order moments of forces and internal shear.  
 
-At this point if one want to write the fluid phase averaged stress as an equivalent Newtonian stress with effective pressure $p^{eff}$ and effective viscosity $\mu^{eff}$ he needs to express each of the closure terms mentioned above as a function of isotropic tensor which will contribute to the effective pressure, or as a linear function of  $\textbf{e}$ which will contribute to the effective viscosity. 
+At this point if one want to write the fluid phase averaged stress as an equivalent Newtonian stress with effective pressure $p^{eff}$ and effective viscosity $\mu^{eff}$ he needs to express each of the closure terms mentioned above as a function of an isotropic tensor which will contribute to the effective pressure, or as a linear function of  $\textbf{e}$ which will contribute to the effective viscosity. 
 Note that this is not always possible, indeed, according to \ref{eq:second_mom} the second order moment of the hydrodynamic stress is a function of the relative velocity and not of the mean shear rate. 
 Thus, in addition to the Newtonian behavior of the averaged fluid one must be prepared to find non-Newtonian terms purely related to the dispersed nature of the flow. 
 
-Once again it is useful to consider the stokes flow regime to provide a closed form of the fluid phase stresses. 
-To that end notice that the internal shear rate inside the particles minus the external fluid traction for isolated spherical droplets in an arbitrary linear flow can be written, 
+To that end we compute the fourth last terms on the right-hand side of \ref{eq:sigma_eq_0} and find (see \ref{ap:solution_singularity}), 
 % \begin{align}
 %     \pOavg{\textbf{e}_d^0}
 %     = 
@@ -240,7 +271,7 @@ To that end notice that the internal shear rate inside the particles minus the e
     &= 
     \phi_d p_f\bm\delta
     - \frac{5\lambda +2}{\lambda +1}
-    \textbf{e}_f \phi \mu_f
+    \textbf{E}_f \phi \mu_f
     \\
     \frac{1}{2}\pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_kr_l}} -
     2\pSavg{{\mu(\textbf{e}_d^0)_{ik} r_l}} 
@@ -252,12 +283,12 @@ To that end notice that the internal shear rate inside the particles minus the e
         +  u_{fp,l}\delta_{ki}
     \right]. 
 \end{align*}
-Considering this relation together with \ref{eq:sigma_eq_0}, \ref{eq:second_mom} and \ref{eq:first_mom} we can re-write the effective stress of the suspension as, 
+Considering this relation together with \ref{eq:sigma_eq_0} we can re-write the effective stress of the suspension as, 
 \begin{multline}
     \bm{\sigma}^\text{eq}_{f,ik} =
     + \rho_f\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}_{ik} 
     + p_f \bm\delta
-    - 2 \mu_f \textbf{e}\left[
+    - 2 \mu_f \textbf{E}\left[
         1
         +\frac{\phi_d}{2}\left(
             \frac{5\lambda +2}{\lambda +1}
@@ -272,6 +303,7 @@ Considering this relation together with \ref{eq:sigma_eq_0}, \ref{eq:second_mom}
         [\div (\phi_d\textbf{u}_{fp,l})]\bm\delta_{ki}
     \right]
 \end{multline} 
+where the \textit{Reynolds stress} tensor is given by \ref{eq:Reynolds_stress_functional_form}, in which $C_E^1$ and $C_E^2 = \mathcal{O}(Re)$ and are therefore negligible compared to the first moment, while $C_{uu}^1$ and $C_{uu}^2$ are still unknown constant. 
 This expression is in agreement with \citet[Appendix A]{zhang1997momentum}. 
 In order to highlight that the stress tensor is symmetric we add and remove the term $ \grad \textbf{u}_{fp,i}^\dagger$  to the stress and notice that only the symmetric part in the indices $kl$ remain under the application of the double gradient operator present in the momentum equation. 
 Based on similar arguments than \ref{eq:sym_proof} we can show that it gives, 
@@ -279,7 +311,7 @@ Based on similar arguments than \ref{eq:sym_proof} we can show that it gives,
     \bm{\sigma}^\text{eq}_{f,ik} =
     + \rho_f\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}_{ik} 
     + p_f \bm\delta
-    - 2\mu^\text{eff} \textbf{e}
+    - 2\mu^\text{eff} \textbf{E}
     + \\
     \mu_\text{U}^\text{eff}
     \left[
@@ -289,7 +321,7 @@ Based on similar arguments than \ref{eq:sym_proof} we can show that it gives,
     \right]
     \label{eq:fluid_phase_stress}
 \end{multline} 
-The equivalent viscosity of the fluid are given by 
+Where the equivalent viscosity of the fluid are given by 
 \begin{align*}
     \mu^\text{eff} = \mu_f \left[
         1
@@ -300,28 +332,32 @@ The equivalent viscosity of the fluid are given by
     \mu^\text{eff}_\text{U}
     = \mu_f\frac{ 3\lambda}{4(\lambda +1) }
 \end{align*}
-Thus, in linear dilute stokes flow the equivalent stress is not Newtonian since it has an additional contribution arising from the relative phase velocity appears. 
-Additionally, we can predict that the term $\rho_f\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}$ will induce non-Newtonian behavior as well as an effective pressure contribution. 
+We conclude that, neglecting the terms of $\mathcal{O}(Re,\phi^2_d)$, and considering that $\textbf{u}_f$ is purely linear at the scale of the particle, the equivalent stress is not Newtonian since it has an additional contribution arising from the relative phase velocity appears. 
+
 
 \subsection{Energy exchange terms}
 
+The energy exchange terms in \ref{eq:dt_hybrid_rhoE_f} and \ref{eq:dt_hybrid_Ep} come either from a heat source or form mechanical work. 
+As the former contribution is not treated in this study we rather focus on the mechanical work exchange terms. 
+Thus, let us focus in the first place on the last term of \ref{eq:exergysource}.
 
-Now let us focus on the last term of \ref{eq:exergysource}.
-As mentioned above this term represents the source of pseudo turbulent energy in the fluid phase due to the presence of the particles. 
-As a first approximation one might consider that in average a particle in the flow posses the surface velocity of an isolated particle in an arbitrary linear flow stokes flow with relative velocity  $\textbf{u}_{fp}$ and mean shear $\textbf{E}_f$.
-In this case the \textit{inner velocity} evaluated at the surface of the particle $\alpha$ can be written as (see \ref{ap:Closure_problem})
-% \begin{equation*}
-%     \textbf{w}_d^0 (\textbf{x}_\alpha + \textbf{r})
-%     = \left(\frac{\lambda + \frac{1}{2}}{\lambda +1} - 1\right)
-%     (\textbf{u}_{f} - \textbf{u}_\alpha) 
-%     + 
-%     \frac{1}{2a^2}\left(\frac{1}{\lambda +1}\right)
-%     \textbf{rr} \cdot (\textbf{u}_{f} - \textbf{u}_\alpha) 
-%     + \left[1-\frac{\lambda}{(\lambda + 1)}\right]\textbf{E}_f\cdot\textbf{r}
-%     -\frac{1}{a^2}\left(\frac{1}{\lambda +1 } \right) \textbf{r} \textbf{E}_f:\textbf{rr}. 
-% \end{equation*}
+As mentioned above this term represents the source of pseudo turbulent energy in the fluid phase due to the work done locally on the surface of the particle through the local velocity $\textbf{w}_d^0$ and the local stresses $(\bm\sigma_f^0 \cdot \textbf{n})$.
+Reformulating this term in terms of \textit{single-particle} conditionally average velocity field, leads us to, 
+\begin{equation}
+    \pavg{ \intS{\textbf{w}_d^0 \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+    \approx
+    \int_{\mathbb{R}^3} \int_{|\textbf{r}| = a}
+    [(\textbf{u}^1_f - \textbf{w})\cdot \bm\sigma_f^1\cdot \textbf{n} ]
+    d\textbf{r}
+    P_1[\textbf{x},\textbf{w}]
+    d\textbf{w} 
+    \label{eq:reformulation_wsigma_n}
+\end{equation} 
+Notice that this is only an approximation, since in all rigor, a correlation term appear due to the ensemble average of the product $\textbf{w}_d^0 \cdot \bm{\sigma}_f^0$ transformed in product of averaged terms. 
+However, going into deeper complexity is out of the context of this work.  
+The velocity field in \ref{eq:reformulation_wsigma_n} can be obtained directly from \ref{eq:singularity_solution_in}  evaluated at the surface of the particle test, thus we can write that,
 \begin{equation*}
-    \textbf{w}_d^0 (\textbf{x}_\alpha + \textbf{r})
+    \textbf{u}^1_f - \textbf{w}
     = 
     \frac{1}{\lambda +1} \left[\left(
         -\frac{\bm\delta}{2}
@@ -332,13 +368,15 @@ In this case the \textit{inner velocity} evaluated at the surface of the particl
     -\frac{1}{a^2}\textbf{rrr}\right)\cdot \textbf{E}_f
     \right].
 \end{equation*}
+Note that this fields is a combination of the fields displayed in \ref{fig:flowlines} (left) and (right), evaluated at the surface of the droplets. 
 The contributions of the velocity field factor of $\textbf{u}_{fp}$ represents the famous hill's vortex reticulation inside a spherical droplet. 
-The second contribution is the motion generated due to a mean shear flow. 
-Injecting this expression into the Last term on the right-hand side of \ref{eq:exergysource} gives, 
+The second contribution is the motion at the surface of the droplet generated due to a mean shear flow. 
+
+Injecting this expression into \ref{eq:reformulation_wsigma_n} gives, 
 \begin{align}
-    \pSavg{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0\cdot\textbf{n}_2}
-    &=  
-    \frac{1}{\lambda+1}\textbf{u}_{fp} \cdot \left[
+    &\pSavg{\textbf{w}_2^0 \cdot \bm{\sigma}_1^0\cdot\textbf{n}_2}
+    =  \\
+    &\frac{1}{\lambda+1}\textbf{u}_{fp} \cdot \left[
         -\frac{1}{2}\pSavg{ \bm{\sigma}_1^0\cdot\textbf{n}_2}
         % + \pavg{\textbf{u}_{\alpha}' \cdot \intS{ \bm{\sigma}_1^0\cdot\textbf{n}_2} }
         + \frac{1}{2a^2}
@@ -365,7 +403,7 @@ Injecting this expression into the Last term on the right-hand side of \ref{eq:e
          \right]
     \label{eq:energy_term}
 \end{align}
-\tb{maybe explicite those terms and disscus and compare with L. M. Liljegren (1996) for solid particles; say that he neglect all of the first moments }
+% \tb{maybe explicite those terms and disscus and compare with L. M. Liljegren (1996) for solid particles; say that he neglect all of the first moments }
 In this expression we clearly identify the zero, first and second order moments of the surface force traction provided by \ref{eq:first_mom}. 
 Additionally, notice that we did not consider rotation of droplets consequently the mean fluid vorticity nor the particles angular velocity appears in this expression. 
 One can also notice that taking the limit $\lambda \to \infty$ gives zero for \ref{eq:energy_term}. 
@@ -380,13 +418,20 @@ Same comments can be made regarding the consideration of the droplets internal m
 As a matter of fact the consideration of the internal motion of particles such as hill's vortex have a very significant impact regarding the magnitude of the pseudo turbulent exchange terms, especially when one is considering bubbly flow. 
 The physical explanation of the decrease of the coefficient in front of the exchange terms for bubbles, can be due to the facts that the fluid slip on the bubbles or droplet's surface induce less work exchange than if the fluid followed the particle's surface as it is the case for solid particles. 
 
-\subsection{Particles induced dissipation}
+In the literature it is customary to use a ``Modulation parameter'' that account for the fact that not all the kinetic energy is transmitted form the dispersed to the continuous phase due to slip at the bubbles surfaces of the particles.
+Specifically this parameter ``that controls the fraction of interfacial turbulence transferred.'' \citep{magolan2019quantitative}. 
+Even, if there is no direct equivalence between the ``Modulation parameter'' and the above analysis we may argue that the latter is partly driven by the slip velocity at the interface. 
+While many empirical models have been proposed (see Table 1 of \citet{magolan2019quantitative}) it seems that none of them make use of theoretical arguments as it is presented here.
+However, our ``Modulation parameter'' is of $1/2$ for bubbles while the empirical studies shown that it should be $0.25$, which is quite close.
+
+
+\subsection{Particles induced dissipation in the continuous phase}
 
 Another closure of upmost importance in the pseudo turbulent equation is the fluid phase dissipation $\avg{\chi_f \bm\sigma_f^0 :\grad\textbf{u}_f^0}$. 
-Here we propose to compute this term based on the stokes flow solution given in \ref{ap:Closure_problem}. 
-Thus, we only consider here, what we call the \textit{particle induced dissipation}.
+Here we propose to compute this term based on  methodology presented in \ref{ap:Closure_problem}. 
+Thus, we only consider, what we call the \textit{particle induced dissipation} and not the dissipation due to single-phase turbulence for example.
 This means that we consider only the dissipation in the fluid phase that is due to particle relative motions. 
-This reads, 
+Using the same methodology as for the \textit{Reynolds stress} closure, we find using \ref{eq:singularity_solution_out} the following expression: 
 \begin{multline}
     \avg{\chi_f \bm\sigma_f^0 :\grad\textbf{u}_f^0}
     =
@@ -398,24 +443,24 @@ This reads,
     \frac{(5\lambda^2 + 4\lambda +4)}{(\lambda + 1)^2}
     \textbf{E}_f:\textbf{E}_f
     +2 \phi_f \textbf{E}_f:\textbf{E}_f
+    \label{eq:dissipation_term}
 \end{multline}
 We can observe that the first two terms are related to the particle relative translation with the continuous phase. 
 The second term is the contribution to the fluid phase dissipation due to the  disturbance field of particle in linear flow. 
-To the authors' knowledge this closure term is original and must be used as a theoretical ground to extend closure in other regime. 
-\tb{notice that the term in factor of the relative vel is the drag}
+As for the Reynolds stress, notice that the terms of the for $\textbf{u}_{pf}$ times $\textbf{E}_f$ are not present in this equation since it is impossible to form a scalar which is linear with a vector and a second order tensor. 
+
 
 
 The remaining closures in the equation of $k_p$, i.e. $\rho_f \avg{\chi_f \textbf{u}_f' k_f}$ and $\avg{\chi_f \textbf{u}_f' \cdot \bm{\sigma}_f^0}$, are in fact null in stokes flow. 
 This is because these terms are by nature produced due to the asymmetry of the disturbance fields. 
 
-\tb{ajouter les termes croisées}
+To the authors' knowledge this closure \eqref{eq:dissipation_term} is original and must be used as a theoretical ground to develop more sophisticated closure for the dissipation term in multiphase flow.
 
-\subsection{Internal kinetic energy and dissipation}
+\subsection{Particles internal kinetic energy and dissipation}
 % Most of the closure terms present in these expressions also appear in the continuous phase. 
 % They have therefore already been discussed. 
-Now we discus the term appearing on the right-hand side of \ref{eq:dt_hybrid_Wp} which appears only in the particle-phase equations. 
-It is interesting to mention that in the context of unreformable sphere in stokes flows the internal energy term as well as the internal dissipation can in fact be computed directly in terms of the continuous phase unknowns. 
-The details of the calculation is given in \ref{ap:Closure_problem} the result yields, 
+Now we discuss the term appearing on the right-hand side of \ref{eq:dt_hybrid_Wp} which appears only in the particle-phase equations. 
+Based on the velocity field given by \ref{eq:singularity_solution_in} we might compute directly the following closures,
 \begin{align}
     \label{eq:stokes_Wp}
     W_p =  \frac{\rho_d \phi_d}{24 (\lambda +1)^2}
@@ -430,66 +475,66 @@ The details of the calculation is given in \ref{ap:Closure_problem} the result y
     + \frac{3 \phi_d \mu_f \lambda}{(\lambda+1)^2}\textbf{E}_f:\textbf{E}_f
     \label{eq:diff_d}
 \end{align}
-From \ref{eq:stokes_Wp} we deduce that the relative motion between phases $\textbf{u}_{pf}$, as well as the mean gradient of the flow $\textbf{E}_f$ induce an inner circulation inside the droplets. 
-As can be seen under this hypothesis the internal energy is not an unknown anymore, since it is entirely determined by the fluid phase unknown and $\phi_d$. 
-Nevertheless, it is still non-zero at finite Reynolds number and therefor it must be considered in \ref{eq:E_p_def}. 
+From \ref{eq:stokes_Wp} we deduce that the relative motion between phases $\textbf{u}_{pf}$, as well as the mean gradient of the flow $\textbf{E}_f$ induce an inner kinetic energy inside the droplet. 
 The dissipation term given by \ref{eq:diff_d} represents the energy dissipated into heat inside the particles. 
-Due to the finite value of $\mu_d$ this term remains non-null. 
-Since the motion inside the particles is directly determined by $\textbf{u}_{pf}$ and $\textbf{E}_f$ the dissipation rate equally. 
-
-\tb{Ajouter les terms croisées}
+Since the motion inside the particles is directly determined by $\textbf{u}_{pf}$ and $\textbf{E}_f$ the dissipation rate within it is equally. 
+Thus, this term directly witness of the heat induced within the particle directly due from mean phase motion. 
 
 \subsection{Second moment equations closure}
 
 The second moments equations describe the shape and the rate of deformation of the particles.
 In this section we assumed implicitly that the droplets remain spherical due to the low capillary number considered. 
 Therefore, \ref{eq:dt_hybrid_Mp} and the deviatoric part of \ref{eq:dt_hybrid_Sp} is of no use. 
-Moreover, we didn't consider rotation of the particles as well thus \ref{eq:dt_hybrid_mup} cannot be discussed further. 
-Nevertheless, computing the closure terms present in of these equations for spherical droplets still gives us hints of their physical significance that their would have if deformation where considered.
+Moreover, we didn't consider rotation of the particles as well, thus \ref{eq:dt_hybrid_mup} cannot be discussed further. 
+Nevertheless, computing the closure terms present in of these equations for spherical droplets still gives us hints of their physical significance that will have when we will consider deformation in \ref{chap:deformable}. 
 Therefore, for pedagogical purposes we now discuss the terms present in \ref{eq:dt_hybrid_Sp} for droplets in an arbitrary linear flow. 
 
 
-A droplet in an arbitrary linear stokes flow remains spherical at low capillary number due to the competitive contribution of the drop internal stress, the interfacial stress and the surface tension, namely, 
-\begin{align*}
-    \intO{\bm{\sigma}_d^0},
-    &&\frac{1}{2}\intS{(\textbf{r}\bm\sigma_f^0+\bm\sigma_f^0\textbf{r})\cdot \textbf{n}},
-    &&\intS{\gamma(\bm\delta - \textbf{nn})},
-\end{align*}
-respectively. 
-The contribution from the continuous phase stress is given by \ref{eq:first_mom}, the particle internal stress can be computed directly from the singularity solution and reads, 
-\begin{equation*}
-    \pOavg{\bm{\sigma}_d}
-    = \frac{6}{5}\phi \mu_f \frac{1}{1+\lambda} \textbf{E}_f
-\end{equation*}
-From  \ref{eq:Batchelor} we deduce that, 
+% Because of \ref{eq:eq:Batchelor}, a droplet in an arbitrary linear stokes flow remains spherical at low capillary number due to the competitive contribution of the drop internal stress, the interfacial stress and the surface tension, namely, 
+% \begin{align*}
+%     \intO{\bm{\sigma}_d^0},
+%     &&\frac{1}{2}\intS{(\textbf{r}\bm\sigma_f^0+\bm\sigma_f^0\textbf{r})\cdot \textbf{n}},
+%     &&\intS{\gamma(\bm\delta - \textbf{nn})},
+% \end{align*}
+% respectively. 
+
+From  \ref{eq:Batchelor} we deduce that in the Stokes regime, 
 \begin{equation*}
     \pSavg{\gamma(\bm\delta - \textbf{nn})}
     = 
-    \frac{1}{2}\pSavg{(\textbf{r}\bm\sigma_f^0+\bm\sigma_f^0\textbf{r})\cdot \textbf{n}},
+    \frac{1}{2}\pSavg{(\textbf{r}\bm\sigma_f^0+\bm\sigma_f^0\textbf{r})\cdot \textbf{n}}
     - \pOavg{\bm{\sigma}_d^0},
 \end{equation*}
-Indeed, as the singularity solution for a droplet is pur linear flow is obtained in the asymptomatic limit of small deformation the surface tension tensor cannot be computed based on the geometrical consideration in which case this contribution would be isotrope leaving the system unbalanced.
+Thus, a droplet in an arbitrary linear stokes flow remains spherical at low capillary number due to the competitive contribution of the drop internal stress, the interfacial stress and the surface tension
+The contribution from the continuous phase stress is given by \ref{eq:first_mom}, the particle internal stress can be computed directly from the singularity solution and reads, 
+\begin{equation}
+    \pOavg{\bm{\sigma}_d}
+    = \frac{6}{5}\phi \mu_f \frac{1}{1+\lambda} \textbf{E}_f
+\end{equation}
+From that expression and  \ref{eq:first_mom} we might even compute the term $ \pSavg{\gamma(\bm\delta - \textbf{nn})}$ which correspond to the Laplace pressure jump. 
 
 The spherical shape equilibrium is valid in the stokes flow regime. 
 Now what if little inertial effects where to come into account  ?
-Indeed, it is interesting to compute the form of the inertial term appearing in \ref{eq:dt_hybrid_Sp} to evaluate the influence of small inertial effects on the particle shape. 
-At the first order in Reynolds number the inertial terms can be computed based on stokes flow solution. 
-Therefore, based on the singularity solution of stokes flow we obtain, 
-\begin{align*}
+To provide a first glimpse of how inertial effects could impact the droplet shape, we need to find at least the first order correction in $\mathcal{O}(Re)$, of the right-hand side closure terms of \ref{eq:dt_hybrid_Sp}. 
+At the first order in Reynolds number the easiest term that can be computed based on stokes flow solution is the internal advective term. 
+Indeed, based on \ref{eq:singularity_solution_in} we obtain
+\begin{multline}
     \pOavg{\rho_d \textbf{w}_d^0  \textbf{w}_d^0 }
-    &= \frac{\rho_d \phi_d}{140(\lambda +1 )}
+    = \frac{\rho_d \phi_d}{140(\lambda +1 )}
     \left[
         7\textbf{u}_{fp}\textbf{u}_{pf} 
     + (\textbf{u}_{pf}\cdot \textbf{u}_{pf})\bm\delta
     + 7\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}/n_p 
     + 2k_p \bm\delta
     \right]\\
-    &+ \frac{\rho_d \phi_d a^2}{315 (\lambda + 1)^2}[(\textbf{E}_f : \textbf{E}_f)\bm\delta+15\textbf{E}_f\cdot \textbf{E}_f]
+    + \frac{\rho_d \phi_d a^2}{315 (\lambda + 1)^2}[(\textbf{E}_f : \textbf{E}_f)\bm\delta+15\textbf{E}_f\cdot \textbf{E}_f]
     \label{eq:ww_closure}
-\end{align*}
+\end{multline}
 This term represents the contribution form the inertial motion within the droplet to the shape of the particle. 
-We can observe that relative velocity $\textbf{u}_{fp}$ plays a role in the stretching of momentum balance. 
-Therefore, we can state here that the inertia contribution of this term in the stretching of momentum balance \ref{eq:dt_hybrid_Sp} induce a coupling between droplets translation and deformation. 
-Of course, this term is only useful in the context were the first order correction in the Reynolds number are considered for all closure. 
-Nevertheless, this is beyon the scope of this study nevertheless note that in light of \ref{eq:ww_closure} it is reasonable to expect that the stresslet term as well as the particle internal stress might be $\sim \textbf{u}_{fp}\textbf{u}_{pf} $ as well. 
+Therefore, we can state that the contribution of this term in \ref{eq:dt_hybrid_Sp} induces a coupling between droplets translation mean shear and deformation. 
+Of course, this term is only useful in the context were the first order correction in the Reynolds number are considered for all closures. 
+
+We conclude that at finite Reynolds number mean relative motion impact the shape balance of the particle, at least through this term. 
+In light of \ref{eq:ww_closure} and \ref{eq:dt_hybrid_Sp} it is reasonable to expect that the first moment of the hydrodynamic forces as well as the particle internal stress might be $\sim \textbf{u}_{fp}\textbf{u}_{pf} $ as well. 
+
 
