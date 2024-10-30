@@ -96,7 +96,7 @@
 \newcommand{\Exp}[1]{\overline{\overline{#1}}}
 \newcommand{\davg}[1]{\left<#1\right>_d}
 \newcommand{\cavg}[1]{\left<#1\right>_c}
-\newcommand{\pavg}[1]{\avg{\delta_\alpha #1}}
+\newcommand{\pavg}[1]{\avg{\delta_p #1}}
 % \newcommand{\pnavg}[1]{n\left<#1\right>_p}
 
 \newcommand{\avgcond}[1]{\left<#1\right>}

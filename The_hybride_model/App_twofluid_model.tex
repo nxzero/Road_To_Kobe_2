@@ -134,7 +134,11 @@ The second equation represents the amount of energy stored as surface deformatio
 And the last equation witnessed of the continuity of heat flux through the interface. 
 
 \subsection{Averaged single-fluid formulation}
-Lastly, by summing the above formulations we can also derive equations for the bulk quantities. 
+Instead of solving one equation for the dispersed phase, one for the continuous phase and one for the interfaces, one might instead use the \textit{single-fluid} formulation of the averaged equations. 
+In this case one needs to solve an equation for the bulk quantities, another for the dispersed phase and a last one for the continuous phase. 
+
+
+By summing the above formulations we can also derive equations for the bulk quantities. 
 Indeed, summing \ref{eq:dt_avg_rho_k}, \ref{eq:dt_avg_rhou_k} and \ref{eq:dt_avg_rhoE_k} for $k=f,d$ with the surface equations one obtains the bulk conservation equations, 
 \begin{align}
     \label{eq:dt_avg_rho}
@@ -224,7 +228,7 @@ The momentum equation for \textbf{u} can be obtained by adding \ref{eq:dt_avg_rh
     )
     = 
     \textbf{g} 
-    +  \avg{\delta_I \bm{\sigma}_f^0 \cdot \textbf{n}} \left(\frac{1}{\rho_d}  - \frac{1}{\rho_f}\right)
+    + \left(\frac{1-\zeta}{\rho_f\zeta}\right) \avg{\delta_I \bm{\sigma}_f^0 \cdot \textbf{n}} 
     \label{eq:dt_avg_rhou}
 \end{equation}
 with, 
@@ -235,8 +239,10 @@ with,
     - \frac{\phi_d}{\rho_d}\bm\sigma_d
     - \frac{\phi_\Gamma}{\rho_d} \bm\sigma_\Gamma. 
 \end{equation}
+Where we introduced the density ratio, $\zeta = \rho_d  / \rho_f$. 
 Note that in opposition to the Favre averaged momentum equation \eqref{eq:dt_avg_rhou_m} the phase momentum exchange term on the right-hand side of \ref{eq:dt_avg_rhou} does not cancel exactly. 
-However, we argue that the same term will be required for the dispersed phase momentum equation.
+However, we argue that the momentum exchange term will still be required for the dispersed phase momentum equation in all cases, hence this does not actually add more complexity into the problems.
+On the other hand, the body force term $\textbf{g}$ is a constant field, in opposition to$\rho \textbf{g}$ in \eqref{eq:dt_avg_rhou_m} which depends on the local volume fraction $\phi_d$. 
 
 
 These equations are particularly interesting from an experimental point of view. 

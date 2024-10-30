@@ -5,7 +5,7 @@
 	pdflatex $@
 
 clean:
-	-rm *.nlo *.nls  *.ilg *.nav *.toc *.snm *.aux *.bbl *.blg *.log *.out *.vrb *.tdo *.mw 
+	-rm *.nlo *.nls  *.ilg *.nav *.toc *.snm *.aux *.bbl *.blg *.log *.out *.vrb *.tdo *.mw *.mt* *.ma*
 	-rm Appendix/*.log Appendix/*.blg Appendix/*.bbl Appendix/*.aux 
 	-rm parts/*.log parts/*.blg parts/*.bbl parts/*.aux 
 	-rm section_paper/*.log section_paper/*.blg section_paper/*.bbl section_paper/*.aux *synctex.g *pdf *synctex.gz *.lof *.lot parts/*aux
@@ -34,6 +34,7 @@ proper: clean
 	-rm fintzi_lhuillier_piersonICMF2025.pdf
 	-rm closure_ellipsoidal.pdf
 	-rm ictam.pdf
+	-rm EulerEuler.pdf
 
 diff: clean
 	latexpand microstructure.tex > microstructure_new.tex
