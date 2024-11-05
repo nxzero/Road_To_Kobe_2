@@ -1,8 +1,16 @@
 \section{Additional details on the algorithms}
-\tb{make small intro here}
-\subsection{ Einstein summation notation}
+In addition to the developments above, implementing the algorithm required further modifications to the \texttt{Basilisk C} source code. 
+Specifically, since computing the closure terms involves extensive tensor algebra, we implemented a new macro in the \texttt{Basilisk C} compiler that enables users to write code directly using Einstein summation convention. 
+Additionally, we introduced a new standard struct, \texttt{mat3}, alongside the existing \texttt{coord} struct. 
+The \texttt{mat3} struct represents second-order tensors, while \texttt{coord} is used for vectors. 
+By incorporating these two structs into the Basilisk C language, we developed an automated macro allowing \texttt{MPI} reduction directly on \texttt{coord} and \texttt{mat3} structures. 
 
-This header file contains the functions related to the Einstein summation macro implemented by the $\texttt{Basilisk C}$ preprocessor. This macro allows the user to write tensor algebra in index notation using $\texttt{Basilisk C}$ code. The syntax follows the famous \href{https://en.wikipedia.org/wiki/Einstein\_notation}{Einstein summation convention}.
+Overall, we provided all necessary tools in the Basilisk pre-compiler to enable programming directly with tensor algebra.
+Below is a brief description of the main functionality of the so-called, \texttt{Einstein\_sum}$(\ldots)$ macro.
+
+\subsection{Einstein summation notation}
+
+This \href{http://basilisk.fr/src/ast/einstein_sum.h}{header file} contains the functions related to the Einstein summation macro implemented by the $\texttt{Basilisk C}$ preprocessor. This macro allows the user to write tensor algebra in index notation using $\texttt{Basilisk C}$ code. The syntax follows the famous \href{https://en.wikipedia.org/wiki/Einstein\_notation}{Einstein summation convention}.
 
 \subsubsection{ Mathematical definitions}
 
@@ -24,32 +32,25 @@ For a more complete and rigourous definition of the Einstein summation conventio
 \subsubsection{ User interface}
 
 To write a scalar product in $\texttt{Basilisk C}$ one needs first to define vector and second-order tensor-like structures. The default vector structure is the `coord` struct. The second or higher-order structures must be defined by the user. 
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 typedef struct {
 coord x,y,z;
 } mytensor;
 mytensor A,B,C; 
 \end{lstlisting}
-
 Note that the name `mytensor` is arbitrary. However, the name of the structure members must be $x$, $y$ and $z$. Following the Einstein summation convention the scalar product introduced in the previous paragraph can be written in $\texttt{Basilisk C}$ as
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 einstein_sum(i,j,k) {
   C.i.j = A.i.k*B.k.j; 
 }
 \end{lstlisting}
-
 With this macro, the preprocessor of $\texttt{Basilisk C}$ interprets all lines of code within the braces as tensor operations. The letters given within the parenthesis indicate the indices on which the Einstein summation takes place. In this case a summation will be applied on the index $k$ and permutations will be performed on the indices $i$ and $j$. 
 To verify that the $\texttt{Basilisk C}$ preprocessor gives the desired results, one can precompile the $\texttt{Basilisk C}$ file with the command line
-
 \begin{lstlisting}
 qcc -source my_file.c
 \end{lstlisting}
-
 The results of the precompilation stored in \texttt{\_my\_file.c} will be
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 {
   C.x.x = A.x.x*B.x.x+ A.x.y*B.y.x+ A.x.z*B.z.x;
   C.x.y = A.x.x*B.x.y+ A.x.y*B.y.y+ A.x.z*B.z.y;
@@ -62,7 +63,6 @@ The results of the precompilation stored in \texttt{\_my\_file.c} will be
   C.z.z = A.z.x*B.x.z+ A.z.y*B.y.z+ A.z.z*B.z.z;
 }
 \end{lstlisting}
-
 Note that the preprocessor duplicated the lines for each permutation of $i$ and $j$ and applied a summation over the index $k$. This macro also applies to $\texttt{Basilisk C}$ vector fields (such as the velocity field `u.x[]`) and any other user-defined structures with members named $x$, $y$ and $z$.
 
 For higher-order rank tensors one can note that these expressions become quite cumbersome.
@@ -74,29 +74,22 @@ For more examples one can check the test file \href{einstein\_sum.c}{/src/test/e
 As long as the user follows the rules mentioned above, the desired result will be obtained. 
 However, the \texttt{einstein\_sum} macro is somewhat more permissive than the original rules of the convention. 
 For example the code
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 U.i = M.i.j*u.j*v.j;
 \end{lstlisting}
-
 which is **not defined correctly** will still be compiled, and in $2D$ will give
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 U.x = M.x.x*u.x*v.x + M.x.y*u.y*v.y;
 U.y = M.y.x*u.x*v.x + M.y.y*u.y*v.y;
 \end{lstlisting}
-
 The use of C functions within the macro is also allowed. 
 Let `function(args)` be an arbitrary C function. 
 Then the expression, 
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 U.i = function (M.i.j*u.j*v.j);
 \end{lstlisting}
-
 will be expanded to
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 U.x = function (M.x.x*u.x*v.x + M.x.y*u.y*v.y);
 U.y = function (M.y.x*u.x*v.x + M.y.y*u.y*v.y);
 \end{lstlisting}
@@ -105,32 +98,25 @@ The summation is applied at the lowest level of the expression where all the ind
 Here the summation takes place inside the parenthesis since all indices \texttt{j} are contained within them. 
 
 A useful example of the use of a function is the computation of the L2 norm of the second-order tensor $\textbf C$
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 L2 = sqrt (C.i.j*C.i.j);
 \end{lstlisting}
-
 Lastly, if no equality sign is identified, the preprocessor will not perform any summation operations. It will only carry the permutation on the current line of code. For example if one wants to print the content of a tensor one may write 
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 einstein_sum (i,j) {
   fprintf (stderr, "%g\n", C.i.j);
 }
 \end{lstlisting}
-
 which gives in $2D$
-
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
   fprintf (stderr, "%g\n", C.x.x);
   fprintf (stderr, "%g\n", C.x.y);
   fprintf (stderr, "%g\n", C.y.x);
   fprintf (stderr, "%g\n", C.y.y);
 \end{lstlisting}
 
-\subsubsection{Conclusion}
 
 In summary the \texttt{einstein\_sum} macro follows the following steps:
-
 \begin{enumerate}
     \item  It Identifies if a given line of code is an assignment expression with a "=" sign or not. 
     \begin{enumerate}
@@ -141,8 +127,24 @@ In summary the \texttt{einstein\_sum} macro follows the following steps:
     \item  It then copies the lines of codes and carries permutations on the indices present on the line (excluding the one that has been summed over). 
     \item Steps 1. and 2. are repeated for all lines within the macro. 
 \end{enumerate}
-
 Note that these steps do not follow the original Einstein summation convention rules. 
 Therefore, some expressions may be ambiguous and the user is advised to always check for the pre-compiler results using \texttt{qcc -source my\_file.c} before using the code.
 
-\subsection{The reduction macos ? }
+\subsection{Performing  MPI reduction on list of \texttt{coord} and \texttt{mat3} types ?}
+
+The implementation of the reduction feature is available on \texttt{Basilisk} website by tracking the Darcs update authored by me.
+
+No further comments are necessary regarding this development, as the functionality mirrors that of the existing \texttt{reduction()} macro.
+
+
+
+\section{Concluding remarks}
+
+Now that we have all the tools required to perform DNS, we can proceed to study the closure terms in the next few chapters. Although we may be able to extend the theoretical closures presented in \ref{chap:daniel2}, the reader must be reminded that, with these DNS, we are still confined to a very specific scenario. 
+The effects of polydispersity and non-homogeneous flow regimes cannot be studied within this setup and will therefore be disregarded in the closure modeling. 
+This further highlights the complexity and the actual resources needed to numerically complete the closure of the Navier-Stokes equations.
+
+
+
+
+
