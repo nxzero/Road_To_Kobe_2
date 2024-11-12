@@ -34,11 +34,15 @@
 \input{parts/contents}
 \mainmatter
 
-\part{Introduction}
+% \part*{Introduction}
+% \addcontentsline{toc}{part}{Introduction}
 
+
+\adjustmtc
 \input{parts/intro.tex}
 
 \part{Statistical modeling of dispersed two phases flows made of fluids inclusion with interfacial transport}
+\label{part:one}
 
 % \etocsettocstyle{}{} % from now on only local tocs
 %%%%%%%%%%%%%%%%%%%%%%%%%   CHAPITRE 1
@@ -73,8 +77,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%   CHAPITRE 2
 \chapter{Equations for isothermal dispersed two phases flows system}
+\label{chap:daniel15}
 \chapabstract{
-    In this chapter we propose to expose and analyze the minimal set of equations to describe emulsions made of Newtonian droplets based on the Lagrangian-Eulerian models developed in the preceding Chapter. 
+    In this chapter we propose to expose and analyze the minimal set of equations necessary to describe emulsions made of Newtonian droplets based on the ``hybrid'' models developed in the preceding Chapter. 
+    In short, we expose the ensemble-averaged momentum and energy equations in the ``hybrid'' formalism for arbitrary Newtonian droplet including surface tension properties. 
+    Notably, this derivation allowed us to discuss the energy exchange present in a a dispersed two-phase flow. 
+    Additionally, we provided an explicit and general formulation for the effective stress in an emulsion.  
+    % This discussion 
+    % takes inacounnt of the energy seems to extend our current idea sckect about energy transfer? 
 }
 \minitoc
 
@@ -128,52 +138,57 @@ Finally, we give an explicit formula for the droplet deformation based on the pa
 \input{Closure_hybrid/Ellipsoid_4.tex}
 \input{Closure_hybrid/Conclusion.tex}   
 
-\part{Direct numerical simulations of homogeneous monodisperse emulsion of nearly spherical droplets}
+% \part{Direct numerical simulations of homogeneous monodisperse emulsion of nearly spherical droplets}
 
-\chapter{Getting the closure terms though Direct Numerical simulations}
-\label{chap:DNS}
-\chapabstract{
-    In this chapter we introduce an algorithm that effectively prevents numerical coalescence in DNS of droplets emulsion, while maintaining a reasonable computational cost. 
-    It is termed the \texttt{no-coalescence} algorithm, it has been developed in major part during the PhD. of \citet{mani2021numerical}. 
-    This algorithm is integrated into the Volume of Fluid (VoF) method and implemented using the open-source code \href{http://basilisk.fr}{http://basilisk.fr}. 
-    Then, we present our recent work on the Basilisk C pre-compiler. 
-    \footnote{Most of this chapter has been published in \citet{fintzi2024buoyancy}}
-}
-\minitoc
+% \chapter{Getting the closure terms though Direct Numerical simulations}
+% \label{chap:DNS}
+% \chapabstract{
+%     In this chapter we introduce an algorithm that effectively prevents numerical coalescence in DNS of droplets emulsion, while maintaining a reasonable computational cost. 
+%     It is termed the \texttt{no-coalescence} algorithm, it has been developed in major part during the PhD. of \citet{mani2021numerical}. 
+%     This algorithm is integrated into the Volume of Fluid (VoF) method and implemented using the open-source code \href{http://basilisk.fr}{http://basilisk.fr}. 
+%     Then, we present our recent work on the Basilisk C pre-compiler. 
+%     \footnote{Most of this chapter has been published in \citet{fintzi2024buoyancy}}
+% }
+% \minitoc
 
 
-\input{parts/part3_intro}
-\input{parts/part3s1}
-\input{microstructure/Problem_statement.tex}
-\input{microstructure/Simulation_Setup.tex}
-\input{microstructure/no_coalesence.tex}
-\input{parts/einstein_sum.tex}
+% \input{parts/part3_intro}
+% \input{parts/part3s1}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PART 3 %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \part{Buoyancy driven motion of non-coalescing inertial drops}
-\part{Nearest particle statistics: Analysis and modeling of the microstructure geometry, kinematic and dynamic in buoyant emulsion}
+\part{Nearest particle statistics: Analysis and modeling of the microstructure geometry, kinematic and dynamic in buoyant emulsion of nearly spherical droplets}
 
 
 
 \chapter{Microstructure modeling with nearest particle statistics}
 \chapabstract{
     In this study, we analyze the various arrangements that droplets can form within dispersed buoyant emulsions, which we refer to as the study of microstructure. 
-    We perform Direct Numerical Simulations (DNS) of statistically steady state mono-disperse buoyant emulsion over a broad range of dimensionless parameters, including the particle volume fraction ($\phi$), the Galileo number ($Ga$) and the viscosity ratio ($\lambda$). 
+    To this end, we have developed a novel algorithm that effectively prevents numerical coalescence between drops while maintaining a reasonable computational cost. 
+    This algorithm is integrated into the Volume of Fluid (VoF) method and implemented using the open-source code \href{http://basilisk.fr}{http://basilisk.fr}. 
+    Subsequently, we perform Direct Numerical Simulations (DNS) of statistically steady state mono-disperse buoyant emulsion over a broad range of dimensionless parameters, including the particle volume fraction ($\phi$), the Galileo number ($Ga$) and the viscosity ratio ($\lambda$). 
     We make use of nearest particle statistics to quantify the microstructure properties.  
     As predicted by \citet{zhang2023evolution}, it is demonstrated that the second moment of the nearest particle pair distribution can effectively quantify microstructural features such as particle clusters and layers. 
     Specifically, the findings are: (1) In moderately inertial flows ($Ga=10$), droplets form isotropic clusters. 
     In high inertial regimes ($Ga=100$), non-isotropic clusters, such as horizontal layers, are more likely to form. 
     (3) The viscosity ratio plays a significant role in determining the microstructure, with droplets that are less viscous or equally viscous as the surrounding fluid tending to form layers preferentially. 
     Overall, our study provides a quantitative measure of the microstructure 
-     in terms of $Ga$, $\phi$ and $\lambda$. 
+     in terms of $Ga$, $\phi$ and $\lambda$.  
      \footnote{The entire content of this chapter has been published in \citet{fintzi2024buoyancy}}
 }
 \minitoc
 
 \input{microstructure/Introduction.tex}
+
+\input{microstructure/Problem_statement.tex}
+\input{microstructure/Simulation_Setup.tex}
+\input{microstructure/no_coalesence.tex}
+\input{parts/einstein_sum.tex}
+
 \input{microstructure/The_nearest_particle_statistics.tex}
 \input{microstructure/Non_Inertial.tex}
 \input{microstructure/Inertial.tex}
@@ -205,8 +220,7 @@ Overall the mean time of interaction $\tau_p$ seems to be a crucial quantity in 
 % \input{age/Velocity2.tex}
 \input{age/Conclusion.tex}
 
-\part{Closure terms modeling for mono-disperse buoyant emulsion of droplets}
-
+\part{Extension of the closure terms modeling, for mono-disperse buoyant emulsion of nearly spherical droplets. }
 
 \chapter{Yet another drag force correlation}
 \label{chap:mono-disperse}
@@ -256,7 +270,21 @@ Overall the mean time of interaction $\tau_p$ seems to be a crucial quantity in 
 %################## CHPTER ON PSEUDO TURB 
 
 
-\part{Conclusion and perspective}
+\part*{Conclusion and Perspectives}
+\addcontentsline{toc}{part}{Conclusion and perspectives}
+
+\chapter{The most simple formulation for the modeling of dispersed multiphase flows made of incompressible fluids}
+\chapabstract{
+    To conclude this manuscript we would like to present what we think is the simplest way to solve the averaged equations for a mixture of two incompressible fluids.
+    In the first place we present the ``single-phase-like'' mixture equations, which according to me is the most efficient way to solve the mixture equations since it can use a single phase solver. 
+    Then we incorporate the closure terms presented in this manuscript, inside this system of equation, and present a first glimpse of the methodology to solve numerically the latter equations.
+    Overall the perspective of this novel methodology seem very efficient and simplify greatly the multiphase flow problem.  
+}
+\minitoc
+
+\input{EulerEuler/Incompressible_formulation.tex}
+
+\chapter{Conclusions}
 \input{parts/part5s1}
 
 

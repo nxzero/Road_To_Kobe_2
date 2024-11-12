@@ -31,6 +31,7 @@ And introduce the relation,
     \int_{\mathbb{R}^3}
     \pavg{
         \sum_{j\neq i }
+        \delta_j 
         h_{ij} 
         (\textbf{u}_\alpha'' - \textbf{u}^\text{nst}_p)
         (\textbf{u}_\alpha'' - \textbf{u}^\text{nst}_p)
@@ -40,6 +41,14 @@ where we recall that $P_{nst}$ is the probability of finding the nearest neighbo
 $\textbf{v}^\text{nst}_p = \textbf{u}_p^\text{nst} - \textbf{u}_p$ where $\textbf{u}_p^\text{nst}$ si the mean particle velocities with nearest neighbor at $\textbf{r}$. 
 And $\textbf{u}_\alpha'' = \textbf{u}_\alpha - \textbf{u}^\text{nst}_p$ is the particle velocity fluctuation around the conditional mean $\textbf{u}^\text{nst}_p$. 
 
+where we have defined the conditional velocity, 
+\begin{align}
+    \textbf{u}_p^\text{nst} P_\text{nst}[\textbf{y},\textbf{x},t]
+    &= \frac{1}{v_p} \avg{\sum_{i,j\neq i}^N \delta(\textbf{x}_i - \textbf{x})\delta(\textbf{x}_j - \textbf{y}) h_{ij} \intO[i]{\textbf{u}_d^0[\textbf{z},\FF,t]}(\textbf{z})} \\
+    &= \frac{1}{v_p} \int_{|\textbf{x} - \textbf{z}|<a}\avg{\sum_{i,j\neq i}^N \delta(\textbf{x}_i - \textbf{x})\delta(\textbf{x}_j - \textbf{x} - \textbf{r}) h_{ij} \textbf{u}_d^0[\textbf{z},\FF,t]}d\textbf{z} \\
+    &= \frac{P_\text{nst}[\textbf{x},\textbf{y},t] }{v_p} \int_{|\textbf{x} - \textbf{z}|<a} \textbf{u}_d^\text{nst}[\textbf{z}|\textbf{x},\textbf{r},t] d\textbf{z} \\
+\end{align}
+
 
 \section{How to derive of the conditional particle velocity}
 
@@ -47,8 +56,314 @@ Bring the problem to the two particle conditional field.
 This is done by making a balence between the velocity and the buoyancy. 
 
 
+The eveolution of teh pdf can be obtained as, 
+\begin{align*}
+    \pddt \delta_i + \textbf{u}_i \cdot \grad \delta_i = 0\\
+    \pddt \delta_j + \textbf{u}_i \cdot \grad \delta_j  + \textbf{u}_{ji}\cdot \pddr \delta_j = 0\\
+\end{align*}
+Multiplying one by another and adding the eq gives,  
+\begin{align*}
+    \delta_j(\pddt \delta_i + \textbf{u}_i \cdot \grad \delta_i) + \\
+    \delta_i (\pddt \delta_j + \textbf{u}_i \cdot \grad \delta_j  + \textbf{u}_{ji}\cdot \pddr \delta_j) = 0\\
+\end{align*}
+\begin{equation}
+    (\pddt 
+    + \textbf{u}_i \cdot \grad 
+    % +  \textbf{u}_i \cdot \pddr(\delta_i \delta_j)  
+    + \textbf{u}_{ji} \cdot \pddr) (\delta_i \delta_j) = D_t(\delta_i \delta_j) = 0
+\end{equation}
+including $h_{ij}$ in the eq gives, 
+\begin{equation}
+    D_t(h_{ij} \delta_i \delta_j )
+    = \delta_i \delta_j \pddt h_{ij}
+\end{equation}
+For simplicity we will consider, 
+\begin{equation}
+    \delta_\text{nst}\to 
+    \sum_{i,j\neq i = 1}^N \delta(\textbf{x}_i-\textbf{x})\delta(\textbf{x}_j-\textbf{x} - \textbf{r}) h_{ij}
+\end{equation}
+Averaging this, 
+givesn 
+\begin{equation}
+    \pddt (\delta_\text{nst} - P_\text{nst}) 
+    + \div (\delta_\text{nst} \textbf{u}_i - \textbf{u}_p^\text{nst}P_\text{nst})
+    + \pddr \cdot(\delta_\text{nst} \textbf{u}_{ij} -  \textbf{u}_{pq}^\text{nst}P_\text{nst})
+    = (\delta_i \delta_j \pddt h_{ij} -  \avg{\delta_i \delta_j \pddt h_{ij}})
+\end{equation}
+Note that averaging this equation gives $0$. 
+
+Evaluating the NS equation at \textbf{z} gives, 
+\begin{align}
+    \div \textbf{u}^0 = 0, \\
+    \pddt \textbf{u}^0
+    + \div (\textbf{u}^0\textbf{u}^0 )
+    = 
+    \div \bm\sigma^*
+    + \textbf{g}
+    +\frac{\zeta-1}{\zeta\rho_f}(\bm\sigma_f^0\cdot \textbf{n})\delta_\Gamma,
+\end{align}
+Notice that, 
+\begin{equation}
+    \avg{(\delta_{nst} - P_\text{nst}) \textbf{u}^0}
+    = P_\text{nst}(\textbf{u}^\text{nst}[\textbf{z},\textbf{x},\textbf{y},t] - \textbf{u})
+\end{equation}
+Thus Multiplying by $\delta_{nst} - P_\text{nst}$ and averaging gives the conservation eq for $\textbf{v}^\text{nst}$. 
+
+
+\begin{align}
+    P_\text{nst} \pddz \cdot \textbf{v}^{nst}
+    = 0 
+    \\
+    \pddt (P_\text{nst} \textbf{v}^\text{nst})
+    + \pddz \cdot\avg{(\textbf{u}^0 \textbf{u}^0 )(\delta_\text{nst} - P_\text{nst})} 
+    + \div \avg{(\delta_\text{nst} \textbf{u}_i  - \textbf{u}_p P_\text{nst})\textbf{u}^0 } \nonumber \\ 
+    + \pddy\cdot\avg{(\delta_\text{nst} \textbf{u}_{ij}  - \textbf{u}_{pd} P_\text{nst})\textbf{u}^0 }
+    % + \pddw\cdot \avg{(\delta_\text{nst}\textbf{a}_i - P_\text{nst}\textbf{a}_p) \textbf{u}^0}
+    =  
+    \pddz\cdot\avg{(\delta_\text{nst} - P_\text{nst}) \bm\sigma^*}
+    + \frac{1 - \zeta}{\zeta\rho_f}\avg{ (\delta_\text{nst} - P_\text{nst}) \delta_\Gamma \bm\sigma_f^0\cdot \textbf{n}}
+    + \avg{\textbf{u}^0 S_\text{nst}},
+\end{align}
+The stress might be reformulated as before, 
+\begin{multline}
+    \avg{\bm\sigma^* (\delta_\text{nst} - P_\text{nst})} 
+    = 
+    % \avg{\chi_f \bm\sigma^0_f (\delta_\text{nst} - P_\text{nst})}/\rho_f 
+    % + \avg{[\chi_d \bm\sigma^0_d  + \delta_\Gamma \bm\sigma^0_\Gamma] (\delta_\text{nst} - P_\text{nst})}/\rho_d
+    % \nonumber \\
+    % &= 
+    % - P_\text{nst} [
+    %     \phi_f^\text{nst} p_f^\text{nst}
+    %     - \phi_f p_f
+    % ]\bm\delta
+    % + P_\text{nst} \mu_f [\grad \textbf{v}^\text{nst}+(\grad \textbf{v}^\text{nst})^\dagger] \nonumber \\
+    % &+ \avg{[\chi_d (\bm\sigma_d^0 - 2 \mu_f \textbf{e}^0_d ) + \chi_\Gamma \bm\sigma_\Gamma ]  (\delta_\text{nst} - P_\text{nst})}/\zeta \nonumber \\
+    % &= 
+    - P_\text{nst}  p_{f\rho}^\text{nst-d}\bm\delta
+    + P_\text{nst} \nu_f [\grad \textbf{v}^\text{nst}+(\grad \textbf{v}^\text{nst})^\dagger] \\
+    +P_\text{nst} [\phi_d^\text{nst-d} p_{f\rho}
+    - \phi_d^\text{nst} p_{f\rho}^\text{nst-d}] \bm\delta
+    + \avg{[\chi_d (\bm\sigma_d^0 - 2 \mu_f \textbf{e}^0_d \zeta) + \chi_\Gamma \bm\sigma_\Gamma ]  (\delta_\text{nst} - P_\text{nst})} /\rho_d \nonumber
+\end{multline}
+where $p_{\rho f} = p_f/ \rho_f$ and $\nu_f = \mu_f/\rho_f$. 
+It is clear that all the terms on the left-hand side will vanish in stokes regime,
+
+
+Using the moments equaitons etc ,
+\begin{align}
+    P_\text{nst} \pddz \cdot  \textbf{v}^\text{nst} = 0 \\
+    \pddt (P_\text{nst} \textbf{v}^\text{nst})
+    + P_\text{nst} \pddz \cdot  (
+     \textbf{v}^\text{nst} \textbf{v}^\text{nst}  
+    + \textbf{u} \textbf{v}^\text{nst} 
+    + \textbf{v}^\text{nst} \textbf{u} 
+    )\nonumber\\
+    + \pddx\cdot(P_\text{nst} \textbf{u}_p \textbf{v}^\text{nst} + \avg{\delta_1 \textbf{u}_{i}' \textbf{u}^0} )
+    + \pddr\cdot(P_\text{nst} \textbf{u}_{pq} \textbf{v}^\text{nst} + \avg{\delta_1 \textbf{u}_{ij}' \textbf{u}^0} )\\
+    = \frac{P_\text{nst}}{\rho_f}[
+        - \pddz p_f^\text{nst}
+        + \mu_f \pddz^2 \textbf{v}^\text{nst}
+    ]
+    +\pddz\cdot \bm\sigma_\text{eff}^\text{nst}
+    + \left(\frac{1-\zeta}{\zeta\rho_f}\right) \pavg{ (\delta_\text{nst} - P_\text{nst}) \intO{\bm\sigma_f^0\cdot \textbf{n}}}
+    + \avg{\textbf{u}^0 S_\text{nst}},
+    % \label{eq:NS_dilute_inertiel}
+\end{align}
+\begin{multline*}
+    \bm\sigma^\text{nst}_\text{eff}
+    = + \pavg{\delta_\text{nst} \textbf{u}''\textbf{u}''}
+    - P_\text{nst} \pavg{ \textbf{u}'\textbf{u}'}
+    - \frac{1}{\rho_f }P_\text{nst} [\phi_d^\text{nst-d} p_f
+    - \phi_d^{nst} p_f^\text{nst-d}]\bm\delta \\
+    -  \pavg{(\delta_\text{nst} - P_\text{nst}) \intO{\textbf{w}_d^0\textbf{w}_d^0 }}
+    +  \frac{1}{2}\pavg{(\delta_\text{nst} - P_\text{nst})\frac{d^2}{dt^2} \intO{\textbf{rr}} } \\
+    - \frac{1}{\rho_f}\pavg{(\delta_\text{nst} - P_\text{nst}) \intS{\left[
+        \textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}
+        -  2 \mu_f (\textbf{u}_f^0 \textbf{n} + \textbf{n} \textbf{u}_f^0)
+        \right] 
+    }}
+    + \frac{1}{2}\div\pavg{(\delta_\text{nst} - P_\text{nst} )\ldots}
+\end{multline*}
+
+
+
+\subsubsection*{Stokes and dilute regime}
+
+In the stokes regime the particle phase equaiton directly gives us a closure 
+\begin{equation}
+    \pavg{ (\delta_\text{nst} - P_\text{nst}) \intO{\bm\sigma_f^0\cdot \textbf{n}}}
+    = 
+    -  \pavg{ (\delta_\text{nst} - P_\text{nst}) m_\alpha \textbf{g}}
+    % = 
+    % - \rho_d v_p \textbf{g} \pavg{ (\delta_\text{nst} - P_\text{nst})}
+    = 
+    - \rho_d v_p \textbf{g} n_p^\text{nst-d} P_\text{nst}
+\end{equation}
+where $n_p^\text{nst-d}$ is teh probability of finding a particle in \textbf{z}, knowing that a particle is present in \textbf{x} with its NN at \textbf{y}
+Note that, 
+\begin{equation}
+    - \left(1-\zeta\right)  v_p \textbf{g} n_p^\text{nst-d} P_\text{nst}
+\end{equation}
+
+Then, the final eq is, 
+\begin{align}
+    P_\text{nst} \pddz \cdot  \textbf{v}^\text{nst} = 0 \\
+    \frac{P_\text{nst}}{\rho_f}[
+        - \pddz p_f^\text{nst}
+        + \mu_f \pddz^2 \textbf{v}^\text{nst}
+    ]
+    = 
+    -\pddz\cdot \bm\sigma_\text{eff}^\text{nst}
+    + \left(1-\zeta\right)  v_p \textbf{g} n_p^\text{nst-d} P_\text{nst}
+    \label{eq:NS_dilute_inertiel}
+\end{align}
+\begin{multline*}
+    \bm\sigma^\text{nst}_\text{eff}
+    =
+    - \frac{P_\text{nst}}{\rho_f } [\phi_d^\text{nst-d} p_f
+    - \phi_d^{nst} p_f^\text{nst-d}]\bm\delta \\
+    - \frac{1}{\rho_f}\pavg{(\delta_\text{nst} - P_\text{nst}) \intS{\left[
+        \textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}
+        -  2 \mu_f (\textbf{u}_f^0 \textbf{n} + \textbf{n} \textbf{u}_f^0)
+        \right] 
+    }},
+    + \frac{1}{2}\div\pavg{(\delta_\text{nst} - P_\text{nst} )\ldots}
+\end{multline*}
+note that the stresslet should compensate teh pressure term
+
+
+Note that all of our closure terms / source terms are of the form, 
+\begin{equation}
+    \pavg{(\delta_\text{nst} - P_\text{nst}) \ldots}
+    = \avg{
+        \sum_\alpha^N 
+        \sum_i^N 
+        \sum_{j\neq i}^N
+        \delta(\textbf{x}_\alpha - \textbf{z})
+        \delta(\textbf{x}_i - \textbf{x})
+        \delta(\textbf{x}_j - \textbf{y}) 
+        h_{ij} \ldots
+    }
+\end{equation}
+This can be re-formulated as, 
+\begin{align*}
+    \pavg{\delta_\text{nst} \ldots}
+    &= 
+    \avg{
+        \sum_i^N 
+        \sum_{j\neq i}^N
+        \delta(\textbf{x}_{\alpha = i } - \textbf{z})
+        \delta(\textbf{x}_i - \textbf{x})
+        \delta(\textbf{x}_j - \textbf{y}) 
+        h_{ij} \ldots
+    } \\
+    &+ 
+    \avg{
+        \sum_i^N 
+        \sum_{j\neq i}^N
+        \delta(\textbf{x}_{\alpha = j} - \textbf{z})
+        \delta(\textbf{x}_i - \textbf{x})
+        \delta(\textbf{x}_j - \textbf{y}) 
+        h_{ij} \ldots
+    } \\
+    &+ 
+    \avg{
+        \sum_{\alpha=i,j}^N 
+        \sum_i^N 
+        \sum_{j\neq i}^N
+        \delta(\textbf{x}_\alpha - \textbf{z})
+        \delta(\textbf{x}_i - \textbf{x})
+        \delta(\textbf{x}_j - \textbf{y}) 
+        h_{ij} \ldots
+    } \\
+    &= 
+    \delta(\textbf{x} - \textbf{z})
+    \avg{
+        \sum_i^N 
+        \sum_{j\neq i}^N
+        \delta(\textbf{x}_i - \textbf{x})
+        \delta(\textbf{x}_j - \textbf{y}) 
+        h_{ij} \ldots
+    } \\
+    &+ 
+    \delta(\textbf{y} - \textbf{z})
+    \avg{
+        \sum_i^N 
+        \sum_{j\neq i}^N
+        \delta(\textbf{x}_i - \textbf{x})
+        \delta(\textbf{x}_j - \textbf{y}) 
+        h_{ij} \ldots
+    } 
+    \\
+    &+ 
+    \avg{
+        \sum_{\alpha=i,j}^N 
+        \sum_i^N 
+        \sum_{j\neq i}^N
+        \delta(\textbf{x}_\alpha - \textbf{z})
+        \delta(\textbf{x}_i - \textbf{x})
+        \delta(\textbf{x}_j - \textbf{y}) 
+        h_{ij} \ldots
+    } \\
+\end{align*}
+The first two sum are therefor proportional to $\delta(\textbf{x} - \textbf{y})P_\text{nst}$ and $\delta(\textbf{x} - \textbf{y})P_\text{nst}$ which is not negligible and the last $n_p^\text{nst}P_\text{nst}$,
+Thus at $\mathcal{O}(\phi^2)$ we have, 
+\begin{equation}
+    \left(1-\zeta\right)  v_p \textbf{g} n_p^\text{nst-d} P_\text{nst}
+    \approx 
+    \left(1-\zeta\right)  v_p \textbf{g} P_\text{nst} [\delta(\textbf{z} - \textbf{y}) + \delta(\textbf{z} - \textbf{x}) - n_p H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)]  
+\end{equation}
+Note that while the last term seems $\mathcal{O}((n_p)^3)$ it turns out that it is not since the integrated volume is $\sim L^3$ and can be arbitrary large and s. 
+
+Accounting for that methode we may write, 
+\begin{align*}
+    P_\text{nst} \pddz \cdot  \textbf{v}^\text{nst} = 0 \\
+    \frac{P_\text{nst}}{\rho_f}[
+        - \pddz p_f^\text{nst}
+        + \mu_f \pddz^2 \textbf{v}^\text{nst}
+    ]
+   & = 
+    \left(1-\zeta\right)  v_p \textbf{g} P_\text{nst} [\delta(\textbf{z} - \textbf{y}) + \delta(\textbf{z} - \textbf{x}) - n_p H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)]  \\
+    &+P_\text{nst}\pddz\cdot  [\delta(\textbf{z} - \textbf{x}) \textbf{S}_p^\text{nst-x}
+    +\delta(\textbf{z} - \textbf{x}) \textbf{S}_p^\text{nst-y}
+    - n_p \textbf{S}_p H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
+    ]\\
+    &+P_\text{nst}\frac{1}{2}\pddz\pddz:   [\delta(\textbf{z} - \textbf{x}) \textbf{S}_{2p}^\text{nst-x}
+    +\delta(\textbf{z} - \textbf{x}) \textbf{S}_{2p}^\text{nst-y}
+    - n_p \textbf{S}_{2p} H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
+    ]\\
+   & = 
+    \left(1-\zeta\right)  v_p \textbf{g} P_\text{nst} [\delta(\textbf{z} - \textbf{y}) + \delta(\textbf{z} - \textbf{x}) - n_p H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)]  \\
+    &+P_\text{nst}  [\bm\delta'(\textbf{z} - \textbf{x})\cdot  \textbf{S}_p^\text{nst-x}
+    +\bm\delta'(\textbf{z} - \textbf{x}) \cdot  \textbf{S}_p^\text{nst-y}
+    - n_p \textbf{S}_p \cdot \textbf{H}'(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
+    ]\\
+    &+P_\text{nst}\frac{1}{2}   [\bm\delta''(\textbf{z} - \textbf{x}) :  \textbf{S}_{2p}^\text{nst-x}
+    +\bm\delta''(\textbf{z} - \textbf{x}) : \textbf{S}_{2p}^\text{nst-y}
+    - n_p \textbf{S}_{2p} : \textbf{H}''(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
+    ]\\
+    &= \sum_n [\bm\delta^{(n)}(\textbf{z} - \textbf{x}) \odot   \textbf{S}_{(n)p}^\text{nst-x}
+    + \bm\delta^{(n)}(\textbf{z} - \textbf{y}) \odot   \textbf{S}_{(n)p}^\text{nst-y}
+    + \bm H^{(n)}(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|) \odot   \textbf{S}_{(n)p} n_p]
+\end{align*}
+\begin{multline}
+    % P_\text{nst} \pddz \cdot  \textbf{v}^\text{nst} = 0 
+    \frac{P_\text{nst}}{\rho_f}[
+        - \pddz p_f^\text{nst}
+        + \mu_f \pddz^2 \textbf{v}^\text{nst}
+    ]\\
+    = \sum_n [\bm\delta^{(n)}(\textbf{z} - \textbf{x}) \odot   \textbf{S}_{(n)p}^\text{nst-x}
+    + \bm\delta^{(n)}(\textbf{z} - \textbf{y}) \odot   \textbf{S}_{(n)p}^\text{nst-y}
+    + \bm H^{(n)}(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|) \odot   \textbf{S}_{(n)p} n_p]
+\end{multline}
+The conclusion of this study is that the fields $\textbf{v}^\text{nst}[\textbf{z},\textbf{x},\textbf{y}]$ is equivalent to a forced velocity fields, by to dipole, with the additional boby force related to the partcile free zone. 
+At this stage only the zeroth moment is known but the other might be computed with the method of reflexion. 
+
+
+
 \section{derivation of the conditional average with the method of reflexion}
 
+\tb{we must start from the condiitonal nearest particle equation and explain it reduces to the eq of a single part}
 
 According to \citet{kim2013microhydrodynamics,zhang2021ensemble} teh particle phase velcoity fluctuation can be obtained directly with the faxen laws.
 Following the notation of \citet{kim2013microhydrodynamics} we note $\textbf{v}_1$ and $\textbf{v}_2$ the velocity fields generated by the particle at \textbf{x} and at \textbf{y} respectively. 
@@ -177,3 +492,7 @@ which gives,
     \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} / n_p 
     = 
 \end{equation*}
+
+
+\section*{Comparaison of the distribution}
+\section*{Comparaison of the granular temperature}

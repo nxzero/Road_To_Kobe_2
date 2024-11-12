@@ -864,15 +864,15 @@ Using the local definition of the Newtonian stresses we can write,
     - P_1  p_f^{1d}\bm\delta
     \label{eq:equivalent_stress}
     + P_1 \mu_f [\grad \textbf{u}^{1d}+(\grad \textbf{u}^{1d})^\dagger] \\
-    &+P_1 [\phi_d^{1d} p_f
-    - \phi_d^1 p_f^{1d}]\bm\delta
+    &+P_1 [\phi_d^1 p_f^1
+    - \phi_d p_f]\bm\delta
     + \avg{[\chi_d (\bm\sigma_d^0 - 2 \mu_f \textbf{e}^0_d \zeta) + \chi_\Gamma \bm\sigma_\Gamma ]  (\delta_1 - P_1)} /\zeta \nonumber
 \end{align}
 Where we have demonstrated the first equality by direct us of the density-weighted stress introduced above, the second by using the definition of a Newtonian stress, and the third one by using the identity $\phi_f^1 =1  - \phi_d^1$, $\phi_f = 1 -\phi_d$ and $\phi_f^{1d} = (1 - \phi_d^1) - (1 - \phi_d) = \phi_d^{1d}$. 
 
 According to \ref{eq:equivalent_stress}, the mean stress governing the disturbance field $\textbf{u}^{1d}$ has the form of a Newtonian stress (see the terms of the first lines), and a contribution related to the presence of the particle in the mixture (see the terms on the second lines). 
 Particularly, note that the presence of the term $p_f \phi_d^{1d}$, in the stress indicates that even the absolute pressure $p_f$ plays a role in the behavior of the disturbance fields when $\phi_d^{1d} = \phi_d^1 - \phi_d$ is non-zero. 
-
+However, we can remark that this contribution will be balanced partly by the particle phase contribution. 
 
 The particle exchange of momentum (on the right-hand side of \ref{eq:conditional_eqs}) can be expressed in a hybrid form using the classic Taylor expansion method on the distribution $\delta_\Gamma$, it yields 
 \begin{equation}
@@ -912,11 +912,10 @@ Using that expression,  \ref{eq:drag_force_term} and \ref{eq:equivalent_stress} 
     \avg{\bm\sigma^* (\delta_1 - P_1)} \rho_f - \frac{1-\zeta}{\zeta}\avg{ (\delta_1 - P_1) \delta_p \intO{\textbf{r}\bm\sigma_f^0\cdot \textbf{n}}} = \nonumber \\
     - P_1  p_f^{1d}\bm\delta
     + P_1 \mu_f [\grad \textbf{u}^{1d}+(\grad \textbf{u}^{1d})^\dagger] 
-    +P_1 [\phi_d^{1d} p_f
-    - \phi_d^1 p_f^{1d}]\bm\delta \nonumber  \\
-    + \rho_f \pavg{(\delta_1 - P_1) \intO{\textbf{w}_d^0\textbf{w}_d^0 }}
-    - \rho_f \frac{1}{2}\pavg{(\delta_1 - P_1)\frac{d^2}{dt^2} \intO{\textbf{rr}} } \nonumber \\
-    + \pavg{(\delta_1 - P_1) \intS{\left[
+    +P_1 [[\phi_d^1 p_f^1 - \phi_d p_f]]\bm\delta \nonumber  \\
+    + \rho_f \avg{(\delta_1 - P_1) \intO{\textbf{w}_d^0\textbf{w}_d^0 }}
+    - \rho_f \frac{1}{2}\avg{(\delta_1 - P_1)\frac{d^2}{dt^2} \intO{\textbf{rr}} } \nonumber \\
+    + \avg{(\delta_1 - P_1) \intS{\left[
          \textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}
         -  2 \mu_f (\textbf{u}_f^0 \textbf{n} + \textbf{n} \textbf{u}_f^0)
         \right] 
@@ -952,8 +951,7 @@ with $\bm\Sigma^{1d} \rho_f  = -p_f^{1d} \bm\delta + \mu_f [\grad \textbf{u}^{1d
     P_1\bm\sigma^1_\text{eq}
     = + \avg{\delta_1 \textbf{u}''\textbf{u}''}
     - P_1 \avg{ \textbf{u}'\textbf{u}'}
-    - \frac{1}{\rho_f }P_1 [\phi_d^{1d} p_f
-    - \phi_d^1 p_f^{1d}]\bm\delta \\
+    - \frac{1}{\rho_f }P_1 [[\phi_d^1 p_f^1 - \phi_d p_f]]\bm\delta \\
     -  \pavg{(\delta_1 - P_1) \intO{\textbf{w}_d^0\textbf{w}_d^0 }}
     +  \frac{1}{2}\pavg{(\delta_1 - P_1)\frac{d^2}{dt^2} \intO{\textbf{rr}} } \\
     - \frac{1}{\rho_f}\pavg{(\delta_1 - P_1) \intS{\left[
@@ -963,6 +961,8 @@ with $\bm\Sigma^{1d} \rho_f  = -p_f^{1d} \bm\delta + \mu_f [\grad \textbf{u}^{1d
     }},
 \end{multline*}
 the droplets' contribution to the suspension conditional stress. 
+Note that the pressure terms $- \frac{1}{\rho_f }P_1 [\phi_d^{1d} p_f - \phi_d^1 p_f^{1d}]$ balance exactly the pressure contribution from the stress let terms. 
+
 
 In conclusion, \ref{eq:NS_dilute_inertiel} govern the conditionally averaged fields within the test particle as well as outside the test particle upon choosing the right closure terms and approximation. 
 To complete the problem, one must also derive appropriate boundary conditions for the disturbance fields $\textbf{u}^{1d}$, as well as for the conditional volume fraction fields $\phi_d^1$, which will govern partly the closure terms. 
@@ -987,11 +987,11 @@ By definition given to the ``disturbance'' fields, \ref{eq:conditional_eqs} and 
     - \phi_d[\textbf{x},t] 
     = 0, \\
     \lim_{|\textbf{x}-\textbf{y}|\to\infty} 
-    p^{1d}[\textbf{x},\textbf{w},\textbf{y},t] 
+    p^{1d}_f[\textbf{x},\textbf{w},\textbf{y},t] 
     = 
     \lim_{|\textbf{x}-\textbf{y}|\to\infty} 
-    p^{1}[\textbf{x},\textbf{w},\textbf{y},t] 
-    - p[\textbf{x},t] 
+    p^{1}_f[\textbf{x},\textbf{w},\textbf{y},t] 
+    - p_f[\textbf{x},t] 
     = 0. 
     \label{eq:boundary_at_infinity}
 \end{align}
@@ -1015,9 +1015,9 @@ At first-order accuracy, this yields the following boundary conditions for the c
     + \textbf{r}\cdot \grad \phi_d[\textbf{y},t]  
     + \ldots\\
     % \lim_{|\textbf{x}-\textbf{y}|\to\infty} 
-    p[\textbf{x},t] 
-    &\approx p[\textbf{y},t] 
-    + \textbf{r}\cdot  \grad p[\textbf{y},t] 
+    p_f[\textbf{x},t] 
+    &\approx p_f[\textbf{y},t] 
+    + \textbf{r}\cdot  \grad p_f[\textbf{y},t] 
     + \ldots
     \label{eq:boundary_at_infinity2}
 \end{align}

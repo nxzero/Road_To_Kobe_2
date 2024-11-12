@@ -82,7 +82,8 @@
                 chains,
                 calc,
                 positioning,
-                shapes.geometric}
+                shapes.geometric,
+                backgrounds}
 \RequirePackage{pgfplots}
 \RequirePackage{pgf}
 \usepgfplotslibrary{polar}
@@ -104,7 +105,7 @@
 }
 
 % \RequirePackage{etoc}
-
+\RequirePackage{enumitem}
 
 \usepackage[k-tight,tight]{minitoc} 
 \setcounter{secnumdepth}{3}
