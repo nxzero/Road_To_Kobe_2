@@ -151,7 +151,7 @@ With the effective stress :
 \begin{itemize}
   \item $\phi$ : dispersed phase volume fraction.
   \item $n_p = \frac{3\phi}{4\pi a^3}$ : number density of particles ;
-  \item $\textbf{u}^1(\textbf{r}|\textbf{x})$ : disturbance field produce by a droplet located at \textbf{x}. 
+  \item $\textbf{u}^1(\textbf{r}|\textbf{x})$ : disturbance field evaluated at \textbf{r} produced by a droplet located at \textbf{x}. 
 \end{itemize}
 \end{frame}
 
@@ -191,7 +191,7 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
 
 
 \begin{frame}
-  \frametitle{Stokes flow around a translating spherical drop}
+  \frametitle{Can we do the same but for Stokes flow ?}
   The stokes flow solution of an isolated translating drop is :
   \begin{columns}
     \column{0.6\textwidth}
@@ -221,61 +221,116 @@ Therefore, the Reynolds stress approximation in homogeneous dilute suspension of
   \underline{\textbf{The integral diverges}  ! (beacause $\textbf{u}_\text{stokes} \sim r^{-1}$).}
 \end{frame}
 \begin{frame}
-  \frametitle{Why does the integral diverges }
-  Batchelor (1972)'s  formula can be written without approximation as: 
-  \begin{align}
+  \frametitle{Why does the integral diverges ?}
+
+  Batchelor (1972)'s  formula:
+  \begin{equation*}
+    \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)
+    = 
+    n_p(\textbf{x},t)
+    \int_{|\textbf{r}| > a }
+     \textbf{u}^1\textbf{u}^1(\textbf{r}|\textbf{x}) d\textbf{r}
+    +\mathcal{O}(\phi^2)
+\end{equation*}
+
+  Batchelor (1972)'s  formula \underline{without approximation}: 
+  \begin{equation}
     \avg{\chi_f \textbf{u}_f' \textbf{u}_f'}[\textbf{x},t] =
     % \int_{\mathbb{R}^6}
     % \avg{\delta_1\chi_f \textbf{u}_f' \textbf{u}_f'}[\textbf{x},t]
     % d\textbf{y}
     % d\textbf{w}\\
     % &= 
-    \int_{\mathbb{R}^6}
-    \textbf{u}_\text{Stokes}
-    \textbf{u}_\text{Stokes}
-    P_{1f}
-    d\textbf{y}
-    d\textbf{w}
-    + 
-    \int_{\mathbb{R}^6}
-    % \textbf{u}_f^{1d}
-    % \textbf{u}_f^{1d}
-    \avg{\delta_1 \chi_f\textbf{u}_f'' \textbf{u}_f''}
-    d\textbf{y}
-    d\textbf{w}
-    +
-    \text{Error}
-    \label{eq:batchlor_avg}
-\end{align}
-with, 
-\begin{equation}
-    \text{Error}
-    = 
-    \int_{\mathbb{R}^6}
-    \textbf{u}_\text{Stokes}
-    \textbf{u}_\text{Stokes}
-    \cdot\mathcal{O}(|\textbf{r}|)
+    \int_{|\textbf{r}| > a } \textbf{u}^1\textbf{u}^1(\textbf{r}|\textbf{x}) d\textbf{r}
+    % + 
+    % \int_{\mathbb{R}^6}
+    % \avg{\delta_1 \chi_f\textbf{u}_f'' \textbf{u}_f''}
+    % d\textbf{y}
+    % d\textbf{w}
+    + Error
+  \end{equation}
+  \begin{equation}
+    Error = \int_{|\textbf{r}| > a }    
+    \textcolor{red}{
+    \mathcal{O}(\textbf{u}^1
+    \textbf{u}^1 \times |\textbf{r}|)}
     d\textbf{r}
-    d\textbf{w}
-    \label{eq:error}
-\end{equation}
-  \underline{Thus the integral diverges because when $\textbf{u}_\text{stokes} \sim r^{-1}$ the Error term is infinite.}
-\hfil
-$\to$ We conclude that this method is unable to provide physical result. 
+  \end{equation}
+
+
+$\to$ We conclude that this method is unable to provide physical result when $\textbf{u}^1 \sim \mathcal{O}(r^{-1})$, since in this case the \text{Error} term is infinite. 
+
+$\to$ Since the problem is purely mathematical, we can find a solution using a more ``accurate'' method.
+
 \end{frame}
 
-
+\begin{frame}
+  {Going further}
+   Model for \textbf{Drops induced dissipation rate} : 
+   \begin{multline*}
+    \avg{\chi_f \bm\sigma_f^0 :\grad\textbf{u}_f^0}
+    =
+    \frac{3\mu_f \phi_d}{2a^2}
+    \frac{(3\lambda^2 + 4\lambda +2)}{(\lambda + 1)^2}
+    (\textbf{u}_{fp}\cdot \textbf{u}_{fp} + 2 \avg{\textbf{u}_p'\cdot\textbf{u}_p'}) \\
+    + 
+    \frac{3\mu_f \phi_d}{5}
+    \frac{(5\lambda^2 + 4\lambda +4)}{(\lambda + 1)^2}
+    \textbf{E}:\textbf{E}
+    +2 \phi_f \textbf{E}:\textbf{E}
+\end{multline*}
+\end{frame}
 
 
 
 \section{The Nearest Particle Statistics}
 
+\begin{frame}{The Nearest Particle Statistics (NPS) approach (DZ Zhang, JFM, 2020) Definition}
+  \begin{align*}
+    \phi_f[\textbf{x},t] &= \avg{\chi_f[\textbf{x},\FF,t]}\\
+    (\phi_f \textbf{u}_f)[\textbf{x},t] &= \avg{(\textbf{u}_f^0\chi_f)[\textbf{x},\FF,t]}\\
+    P_\text{nst}[\textbf{r}|\textbf{x},t]\phi_f[\textbf{x},t] &= \avg{\chi_f[\textbf{x},\FF,t]\sum_i^N \delta(\textbf{x}_i[\FF,t] - \textbf{x} - \textbf{r}) h_i[\textbf{x},t,\FF]}\\
+    \textbf{u}_f^\text{nst}[\textbf{r},\textbf{x},t] P_\text{nst}[\textbf{r}|\textbf{x},t]\phi_f[\textbf{x},t] &= \avg{(\textbf{u}_f^0\chi_f)[\textbf{x},\FF,t]\sum_i^N \delta(\textbf{x}_i[\FF,t] - \textbf{x} - \textbf{r}) h_i[\textbf{x},t,\FF]}
+  \end{align*}
+  \begin{itemize}
+    \item $\FF$ random realization of the flow. 
+    \item $\textbf{u}_f^0$ non-averaged local fluid velocity, at \textbf{x} and $t$ for the configuration $\FF$.
+    \item $\chi_f$ phase indicator function of the fluid.
+    \item $\textbf{u}_f$ ensemble averaged fluid velocity, at \textbf{x} and $t$.
+    \item $h_i[\textbf{x},t] = 1$ if the nearest neighbor to \textbf{x} is the particle $i$, 0 otherwise.  
+  \end{itemize}
+\end{frame}
+\begin{frame}{The Nearest Particle Statistics (NPS) approach (DZ Zhang, JFM, 2020) Definition}
+  \begin{align*}
+    \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+    &=
+    \int 
+    \avg{(\textbf{u}_f^0\textbf{u}_f^0\chi_f)[\textbf{x},\FF,t]\sum_i^N \delta(\textbf{x}_i[\FF,t] - \textbf{x} - \textbf{r}) h_i[\textbf{x},t,\FF]} 
+    d\textbf{r} \\
+    &=\phi_f
+    \underbrace{\int 
+      \textbf{u}^\text{nst}_f
+      \textbf{u}^\text{nst}_f 
+      P_\text{nst}(\textbf{r}|\textbf{x}) d\textbf{r} 
+    }_\text{Averaged wake contribution}
+    + \underbrace{ 
+      \int \avg{\delta_i h_i \chi_f \textbf{v}_f''\textbf{v}_f''}  d\textbf{r}
+    % P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    }_{\mathcal{O}(\phi^2)}
+  \end{align*}
 
+  \begin{itemize}
+    \item $\textbf{v}^\text{nst}(\textbf{x}|\textbf{y})$ disturbance velocity evaluated at \textbf{x}, averaged on every configuration where the nearest particle to the point \textbf{x} is located at $\textbf{x} + \textbf{r}$. 
+    \item $\textbf{v}''_f = \textbf{u}^0_f - \textbf{u}^\text{nst}_f$ fluctuating values of the local velocity $\textbf{u}_f^0$ (non-averaged) around $\textbf{u}_f^\text{nst}$.
+    \item $P_\text{nst}(\textbf{r}|\textbf{x})$ is the probability of finding a nearest particle at \textbf{r} knowing \textbf{x} is occupied by the continuous phase.   
+    \item This relation is exact and require no assumption. 
+  \end{itemize}
+\end{frame}
 
 \begin{frame}{The Nearest Particle Statistics (NPS) approach (DZ Zhang, JFM, 2020)}
   Using the relation between ensemble average $\avg{\ldots}$ and NPS average we obtain :
   \begin{equation*}
-    \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}(\textbf{x},t)
+    \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}[\textbf{x},t]
     = \phi_f
     \underbrace{\int 
       \textbf{u}^\text{nst}_f
@@ -289,13 +344,51 @@ $\to$ We conclude that this method is unable to provide physical result.
   \end{equation*}
 
 \begin{itemize}
-  \item $\textbf{u}^\text{nst}(\textbf{x}|\textbf{y})$ disturbance velocity evaluated at \textbf{x}, knowing the nearest particle is located at $\textbf{r}$
+  \item $\textbf{v}^\text{nst}(\textbf{x}|\textbf{y})$ disturbance velocity evaluated at \textbf{x}, averaged on every configuration where the nearest particle to the point \textbf{x} is located at $\textbf{x} + \textbf{r}$. 
   \item $\textbf{v}''_f = \textbf{u}^0_f - \textbf{u}^\text{nst}_f$ fluctuating values of the local velocity $\textbf{u}_f^0$ (non-averaged) around $\textbf{u}_f^\text{nst}$.
   \item $P_\text{nst}(\textbf{r}|\textbf{x})$ is the probability of finding a nearest particle at \textbf{r} knowing \textbf{x} is occupied by the continuous phase.   
   \item This relation is exact and require no assumption. 
 \end{itemize}
 \end{frame}
 
+
+\begin{frame}
+  \frametitle{Graphical representation of $\textbf{u}_f^\text{nst}$ and $P_\text{nst}$ }
+  \begin{equation*}
+    \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}[\textbf{x},t]
+        = \phi_f\underbrace{\int 
+      \textbf{u}^\text{nst}_f
+      \textbf{u}^\text{nst}_f 
+      P_\text{nst}(\textbf{r}|\textbf{x}) d\textbf{r} 
+    }_\text{Averaged wake contribution}
+    + \underbrace{ 
+      \int \avg{\delta_i h_i \chi_f \textbf{v}_f''\textbf{v}_f''}  d\textbf{r}
+    % P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    }_{\mathcal{O}(\phi^2)}
+  \end{equation*}
+  \centering
+  \begin{tikzpicture}[scale=0.8]
+    \filldraw[gray!10](-5,-3) rectangle(9,3);
+    \filldraw[white](0,0) circle (1.8);
+    \filldraw[ gray!10!white](+2.6,0.5)circle (0.5);
+    \filldraw[ gray!10!white](-1.5,2.2)circle (0.5);
+    \draw[dashed](0:1.8) arc (0:360:1.8);
+    % \filldraw[ gray!50!white](0,0) circle (0.5);
+    \filldraw[ gray!50!white](1,1.5)circle (0.5);
+    \filldraw[ gray!10!white](-0.2,2.5)circle (0.5);
+    \draw[->,red](0,0)--++(-1,2)node[midway,left]{$\textbf{u}_f^\text{nst}$};
+    \draw(0,0)node{$\bullet$}node[right]{$\textbf{x}$};
+    \draw[dashed,<->](0,0)--(1,1.5)node[right]{$\textbf{x}+\textbf{r}$};
+    \draw[->,blue!50!black,thick](1,1.5)--++(0.4,-1.6)node[midway,right]{$\textbf{w}$};
+    % \draw[dashed](-0.2,3.5);
+    \node[text width=2cm] (title) at (0.2,-1) {\footnotesize\textit{Particles free region}};
+    % \node[ultra thick] (title) at (-0.5,-1.5) {(\textit{Case 1})};
+    \node[text width=4cm] (title) at (6,-1) {\footnotesize\textit{Effective medium of properties:} $\phi$};
+    \draw[->] (6,1)node{$\bullet$}node[right]{$z$}--++(0.1,1.5)node[right,midway]{$\textbf{u}^\text{nst}[\textbf{z}|\textbf{x},\textbf{y},\textbf{w}]$};
+\end{tikzpicture} 
+  
+
+\end{frame}
 
 \transwipe[direction=90]
 \begin{frame}{The Nearest Particle Statistics (NPS) approach (DZ Zhang, JFM, 2020)}
@@ -377,35 +470,79 @@ $\to$ We conclude that this method is unable to provide physical result.
 
 \begin{frame}
   \frametitle{How to find the nearest neighbor velocity field $\textbf{u}_f^{nst}$ ? }
+  \centering
+  \begin{tikzpicture}[scale=0.8]
+    \filldraw[gray!10](-5,-3) rectangle(9,3);
+    \filldraw[white](0,0) circle (1.8);
+    \filldraw[ gray!10!white](+2.6,0.5)circle (0.5);
+    \filldraw[ gray!10!white](-1.5,2.2)circle (0.5);
+    \draw[dashed](0:1.8) arc (0:360:1.8);
+    % \filldraw[ gray!50!white](0,0) circle (0.5);
+    \filldraw[ gray!50!white](1,1.5)circle (0.5);
+    \filldraw[ gray!10!white](-0.2,2.5)circle (0.5);
+    \draw[->,red](0,0)--++(-1,2)node[midway,left]{$\textbf{u}_f^\text{nst}$};
+    \draw(0,0)node{$\bullet$}node[right]{$\textbf{x}$};
+    \draw[dashed,<->](0,0)--(1,1.5)node[right]{$\textbf{x}+\textbf{r}$};
+    \draw[->,blue!50!black,thick](1,1.5)--++(0.4,-1.6)node[midway,right]{$\textbf{w}$};
+    % \draw[dashed](-0.2,3.5);
+    \node[text width=2cm] (title) at (0.2,-1) {\footnotesize\textit{Particles free region}};
+    % \node[ultra thick] (title) at (-0.5,-1.5) {(\textit{Case 1})};
+    \node[text width=4cm] (title) at (6,-1) {\footnotesize\textit{Effective medium of properties:} $\phi$};
+    \draw[->] (6,1)node{$\bullet$}node[right]{$z$}--++(0.1,1.5)node[right,midway]{$\textbf{u}^\text{nst}[\textbf{z}|\textbf{x},\textbf{y},\textbf{w}]$};
+\end{tikzpicture} 
 
   Conditionally averaging the stokes equations at a point \textbf{z}, knowing the fluid is present at \textbf{x} with its nearest neighbor at \textbf{y}, yields, 
   \begin{equation*}
     % \pddt \avg{(\delta_\text{nst-f} - P_\text{nst-f})\chi_f}
-    \grad \cdot \textbf{u}^\text{nst}_f
+    \grad \cdot \textbf{u}^\text{nst}
     = 0
     \label{eq:mass_nst_d_stokes}
 \end{equation*}
 \begin{equation*}
     - \grad p^\text{nst} 
-    + \mu_f \grad^2 \textbf{u}^\text{nst}_f
+    + \mu_f \grad^2 \textbf{u}^\text{nst}
     = 
-    \phi
+    \underbrace{\phi
     \textbf{g}
-    \Delta\rho H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|). 
+    \Delta\rho H(|\textbf{r}| - |\textbf{z} - \textbf{x}|)}_\text{particle-free zone buoyancy}
+    + \underbrace{\frac{\textbf{w} \mu_f}{a^2} (1 +\grad^2) \delta(\textbf{x}+ \textbf{r} - \textbf{z})}_\text{point forces}
     \label{eq:momentum_nst_d_stokes}
 \end{equation*}
 
-\textbf{The solution : }
+\end{frame}
+
+\begin{frame}
+  \frametitle{How to find the nearest neighbor velocity field $\textbf{u}_f^{nst}$ ? }
+
+  Conditionally averaging the stokes equations at a point \textbf{z}, knowing the fluid is present at \textbf{x} with its nearest neighbor at \textbf{y}, yields, 
+  \begin{equation*}
+    % \pddt \avg{(\delta_\text{nst-f} - P_\text{nst-f})\chi_f}
+    \grad \cdot \textbf{u}^\text{nst}
+    = 0
+    \label{eq:mass_nst_d_stokes}
+\end{equation*}
+\begin{equation*}
+    - \grad p^\text{nst} 
+    + \mu_f \grad^2 \textbf{u}^\text{nst}
+    = 
+    \phi
+    \textbf{g}
+    \Delta\rho H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
+    + \frac{\textbf{w} \mu_f}{a^2} (\delta(\textbf{x} - \textbf{y}) +\grad^2\delta)
+    \label{eq:momentum_nst_d_stokes}
+\end{equation*}
+
+\textbf{The solution : } 
 \begin{equation}
   \frac{\textbf{v}^\text{nst}_f}{U}
   =
-  \frac{1}{4}\textbf{e}\cdot\left[
-      \frac{2+3\lambda}{1+\lambda}
+  \underbrace{\left(\frac{2+3\lambda}{4(1+\lambda)}\right)\textbf{U}\cdot\left[
+      1
       +
-      \frac{\lambda}{2(1+\lambda)}\grad^2 
-  \right]\mathcal{G}(\textbf{x},\textbf{y})
-  + \phi A |\textbf{x}-\textbf{y}|^2 \textbf{k}
-  + \mathcal{O}(\phi). 
+      \frac{\lambda}{2(2+3\lambda)}\grad^2 
+  \right]\mathcal{G}(\textbf{x},\textbf{y})}_\text{particle wake}
+  + \underbrace{\phi A |\textbf{x}-\textbf{y}|^2 \textbf{k}}_\text{downstream flow}
+  % + \mathcal{O}(\phi). 
   \label{eq:v_nst_solution_adim}
 \end{equation}
 \begin{equation*}
@@ -414,7 +551,7 @@ $\to$ We conclude that this method is unable to provide physical result.
   + \frac{\textbf{rr}}{r^3},
 \end{equation*}
 \begin{align*}
-  \textbf{e} = \textbf{w} - \textbf{u}_f/U
+  \textbf{U} = \textbf{w} - \textbf{u}_f/U
   && 
   \textbf{k} = \textbf{g}/|\textbf{g}|
   &&
@@ -457,16 +594,30 @@ $\to$ We conclude that this method is unable to provide physical result.
 
 \begin{frame}
   {General solution}
+  
+  \begin{equation*}
+    \avg{\chi_f \textbf{u}'_f\textbf{u}'_f}[\textbf{x},t]
+    = \phi_f
+    \underbrace{\int 
+      \textbf{u}^\text{nst}_f
+      \textbf{u}^\text{nst}_f 
+      P_\text{nst}(\textbf{r}|\textbf{x}) d\textbf{r} 
+    }_\text{Averaged wake contribution}
+    + \underbrace{ 
+      \int \avg{\delta_i h_i \chi_f \textbf{v}_f''\textbf{v}_f''}  d\textbf{r}
+    % P_{nst}(\textbf{x},t,\textbf{r}) d\textbf{r}
+    }_{\mathcal{O}(\phi^2)}
+  \end{equation*}
   \begin{align}
     \frac{\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}}{U^2}
     &= 
     C^{(1)}_e \left[
-        \textbf{e}_p\textbf{e}_p
+        \textbf{U}\textbf{U}
         + \frac{\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}{n_p U^2}
-         - \frac{1}{3}(\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta
+         - \frac{1}{3}(\textbf{U}\cdot \textbf{U}+2k_p/U^2)\bm\delta
     \right]
     + C^{(2)}_e 
-    (\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta \nonumber \\
+    (\textbf{U}\cdot \textbf{U}+2k_p/U^2)\bm\delta \nonumber \\
     &+ C^{(1)}_k  \left[
         \textbf{kk}
          - \frac{1}{3}(\textbf{k}\cdot \textbf{k})\bm\delta
@@ -475,60 +626,63 @@ $\to$ We conclude that this method is unable to provide physical result.
     (\textbf{k}\cdot \textbf{k})\bm\delta \nonumber \\
     &+ C^{(1)}_{ek} \left[
         \frac{1}{2}
-        (\textbf{e}_p\textbf{k}  + \textbf{k} \textbf{e}_p)
-         - \frac{1}{3}(\textbf{k}\cdot \textbf{e}_p)\bm\delta
+        (\textbf{U}\textbf{k}  + \textbf{k} \textbf{U})
+         - \frac{1}{3}(\textbf{k}\cdot \textbf{U})\bm\delta
     \right]
     + C^{(2)}_{ek}
-    (\textbf{e}_p\cdot \textbf{k})\bm\delta 
+    (\textbf{U}\cdot \textbf{k})\bm\delta 
 \end{align}
-\begin{align*}
-  C_e^{(1)} =
-  % \frac{9(2+3\lambda)^2 \Gamma(\frac{1}{3})}{80(\lambda+1)^2}\phi^{2/3}
-  \frac{27}{10}
-  C_e^{(2)}
-  % + \mathcal{O}(\phi)
-  &&  C_e^{(2)} = \frac{(2+3\lambda)^2 \Gamma(\frac{1}{3})}{24(\lambda+1)^2}\phi^{2/3} \\
-  C_k^{(1)} =
-  3
-  C_k^{(2)}
-  && C_k^{(2)} = A^2 \frac{\Gamma(\frac{7}{3})}{3}\phi^{2/3} \\
-  C_{ek}^{(1)} =
-  3
-  C_{ek}^{(2)}
-  % A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{3 (\lambda+1)}\phi^{2/3}
-  % % + \mathcal{O}(\phi^{4/3})
-  && C_{ek}^{(2)} =
-  A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{9(\lambda+1)}\phi^{2/3}
-  % + \mathcal{O}(\phi^{4/3})
-\end{align*}
+% \begin{align*}
+%   C_e^{(1)} =
+%   % \frac{9(2+3\lambda)^2 \Gamma(\frac{1}{3})}{80(\lambda+1)^2}\phi^{2/3}
+%   \frac{27}{10}
+%   C_e^{(2)}
+%   % + \mathcal{O}(\phi)
+%   &&  C_e^{(2)} = \frac{(2+3\lambda)^2 \Gamma(\frac{1}{3})}{24(\lambda+1)^2}\phi^{2/3} \\
+%   C_k^{(1)} =
+%   3
+%   C_k^{(2)}
+%   && C_k^{(2)} = A^2 \frac{\Gamma(\frac{7}{3})}{3}\phi^{2/3} \\
+%   C_{ek}^{(1)} =
+%   3
+%   C_{ek}^{(2)}
+%   % A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{3 (\lambda+1)}\phi^{2/3}
+%   % % + \mathcal{O}(\phi^{4/3})
+%   && C_{ek}^{(2)} =
+%   A\frac{2 (2+3\lambda) \Gamma(\frac{4}{3})}{9(\lambda+1)}\phi^{2/3}
+%   % + \mathcal{O}(\phi^{4/3})
+% \end{align*}
+$\to$ $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ is the variance of the particle  center of mass velocity
+
+$\to$ $k_p  = \frac{1}{2}\pavg{\textbf{u}_\alpha'\cdot\textbf{u}_\alpha'}$ is the variance of the particle  center of mass velocity
 \end{frame}
 
 \begin{frame}
-  {General solution}
-  \begin{align}
+  {General solution when $\textbf{U} = -\textbf{k}$}
+  \begin{multline}
     \frac{\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}}{U^2}
-    &= 
-    C^{(1)}_e \left[
-        \textbf{e}_p\textbf{e}_p
+    = 
+    \underbrace{C^{(1)}_e \left[
+        \textbf{U}\textbf{U}
         + \frac{\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}}{n_p U^2}
-         - \frac{1}{3}(\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta
-    \right]
-    + C^{(2)}_e 
-    (\textbf{e}_p\cdot \textbf{e}_p+2k_p/U^2)\bm\delta \nonumber \\
-    &+ C^{(1)}_k  \left[
-        \textbf{kk}
-         - \frac{1}{3}(\textbf{k}\cdot \textbf{k})\bm\delta
-    \right]
-    +C^{(2)}_k 
-    (\textbf{k}\cdot \textbf{k})\bm\delta \nonumber \\
-    &+ C^{(1)}_{ek} \left[
-        \frac{1}{2}
-        (\textbf{e}_p\textbf{k}  + \textbf{k} \textbf{e}_p)
-         - \frac{1}{3}(\textbf{k}\cdot \textbf{e}_p)\bm\delta
-    \right]
-    + C^{(2)}_{ek}
-    (\textbf{e}_p\cdot \textbf{k})\bm\delta 
-\end{align}
+         - \frac{1}{3}(\textbf{U}\cdot \textbf{U}+2k_p/U^2)\bm\delta
+    \right]}_\text{deviatoric part}\\
+    + 
+    \underbrace{ C^{(2)}_e  (\textbf{U}\cdot \textbf{U}+2k_p/U^2)\bm\delta}_\text{Isotropic part}
+    % &+ C^{(1)}_k  \left[
+    %     \textbf{kk}
+    %      - \frac{1}{3}(\textbf{k}\cdot \textbf{k})\bm\delta
+    % \right]
+    % +C^{(2)}_k 
+    % (\textbf{k}\cdot \textbf{k})\bm\delta \nonumber \\
+    % &+ C^{(1)}_{ek} \left[
+    %     \frac{1}{2}
+    %     (\textbf{e}_p\textbf{k}  + \textbf{k} \textbf{e}_p)
+    %      - \frac{1}{3}(\textbf{k}\cdot \textbf{e}_p)\bm\delta
+    % \right]
+    % + C^{(2)}_{ek}
+    % (\textbf{e}_p\cdot \textbf{k})\bm\delta 
+\end{multline}
 \begin{align*}
   C_e^{(1)} =
   % \frac{9(2+3\lambda)^2 \Gamma(\frac{1}{3})}{80(\lambda+1)^2}\phi^{2/3}
@@ -642,7 +796,7 @@ $\to$ We conclude that this method is unable to provide physical result.
   \underline{Dimensionless parameters :} 
   \begin{itemize}
     \item \textit{Galileo} number : $Ga =\frac{\sqrt{\rho \Delta\rho g(2a)^3}}{\mu} \in [5, 100]$
-    \item \textit{Bond} number : $Bo = \frac{\Delta \rho g (2a)^2}{\sigma} = 0.1$ 
+    \item \textit{Bond} number : $Bo = \frac{\Delta \rho g (2a)^2}{\sigma} = 0.5$ 
     \item volume fraction of dispersed phase : $\phi = [0.01;0.2]$. 
     \item Density and viscosity ratio, $\rho_r=1.11$ and $\lambda= 0.1, 1, 10$. 
   \end{itemize}
@@ -837,16 +991,16 @@ $\to$ We conclude that this method is unable to provide physical result.
   \pause
   \begin{equation*}
     + \underbrace{\frac{\phi_d a^2 }{105 (\lambda +1)^2 }\left[
-        (129\lambda^2+108\lambda+24)\textbf{E}_f\cdot \textbf{E}_f
+        (129\lambda^2+108\lambda+24)\textbf{E}\cdot \textbf{E}
         + (20\lambda^2 +20\lambda + 6)
-        (\textbf{E}_f : \textbf{E}_f)\textbf{I}
+        (\textbf{E} : \textbf{E})\textbf{I}
     \right]}_\text{Shear Particle Induced Turbulence (S-PIT)}
 \end{equation*}
 \begin{columns}
   \column{0.5\textwidth}
   \begin{itemize}
     \item $\avg{\textbf{u}_p'\textbf{u}_p'}$ Particles center of mass velocity fluctuation.  
-    \item $\textbf{E}_f$ Mean fluid phase shear rate. 
+    \item $\textbf{E}$ Mean fluid phase shear rate. 
   \end{itemize}
   \begin{align*}
     C_{1} = \left(\frac{9(2+3\lambda)^2 \Gamma(1/3)}{80 (\lambda +1)^2}\phi^{2/3} 
@@ -912,8 +1066,8 @@ With \textbf{b} the weight of the particle and $\mathcal{G}$ the Ossen tensor.
 
 \end{frame}
 \begin{frame}
-  \frametitle{Method of reflections}
-According to the Faxen law the mean droplet velocity of a particle located at the point \textbf{x} knowing its nearest neighbor is located at \textbf{y} is given by, 
+  \frametitle{Method of reflections usign Faxen's law}
+According to the Faxen law the velocity of a force free droplet immersed in the disturbance field $\textbf{v}_2$ due to a neighboring droplet is, 
 \begin{align}
   2 \pi \mu_f a \textbf{v}_p^\text{nst}
   = \left(1 + \frac{\lambda}{2(3\lambda +2)}\grad^2\right)\textbf{v}_2|_{\textbf{z} = \textbf{x}}
@@ -932,7 +1086,7 @@ According to the Faxen law the mean droplet velocity of a particle located at th
 \end{frame}
 
 \begin{frame}
-  \frametitle{<title>}
+  \frametitle{The solution }
   \begin{equation*}
     \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
     = 
@@ -964,12 +1118,13 @@ According to the Faxen law the mean droplet velocity of a particle located at th
   \end{figure}
 \end{frame}
 \begin{frame}
-  \frametitle{Comparaison with expe}
+  \frametitle{Comparison with experimental results}
 \begin{figure}
   \includegraphics[height = 0.4\textwidth]{image/guazzeli.png}
 \end{figure}
   
-For solid particle we find $1.52\phi^{1/3}$ instead of $2$ or $3$ so we underestimates the fluctuations. 
+For solid particle we find $1.52\phi^{1/3}$ instead of $2\phi^{1/3}$ or $3\phi^{1/3}$ so we underestimate the fluctuations. 
+This is because this is only a first order approximation. 
 
 
 \end{frame}
@@ -992,8 +1147,8 @@ For solid particle we find $1.52\phi^{1/3}$ instead of $2$ or $3$ so we underest
     + 
     \frac{3\mu_f \phi_d}{5}
     \frac{(5\lambda^2 + 4\lambda +4)}{(\lambda + 1)^2}
-    \textbf{E}_f:\textbf{E}_f
-    +2 \phi_f \textbf{E}_f:\textbf{E}_f
+    \textbf{E}:\textbf{E}
+    +2 \phi_f \textbf{E}:\textbf{E}
 \end{multline*}
 \end{frame}
 
