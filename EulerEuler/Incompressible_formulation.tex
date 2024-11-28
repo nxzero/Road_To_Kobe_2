@@ -1,9 +1,12 @@
-\section{Introduction}
+To conclude this manuscript we would like to present what we think is the simplest way to solve the averaged equations for a mixture of two incompressible fluids.
+In the first place we present the ``single-phase-like'' mixture equations, which according to me is the most efficient way to solve the mixture equations since it can use a single phase solver. 
+Then we incorporate the closure terms presented in this manuscript, inside this system of equation, and present a first glimpse of the methodology to solve numerically the latter equations.
+Overall the perspective of this novel methodology seem very efficient and simplify greatly the multiphase flow problem.  % \subsection{Introduction}
+
 
 
 Our method is similar in many ways to the so-called ``drift flux'' models. 
-These models focus on solving the averaged mixture-phases equations (i.e. solving for $\rho$ and $\textbf{u}_m$) and for the relative velocity between the particles and the mixture velocity $\textbf{u}- \textbf{u}_p$, which is termed the drift fluxes \citep{ishii1977one}.  
-This method differ of the usual methodology which often make use of the two-fluid formulation instead. 
+These models focus on solving the averaged mixture-phases equations (i.e. solving for $\rho$ and $\textbf{u}_m$) and for the relative velocity between the particles and the mixture velocity $\textbf{u}- \textbf{u}_p$, which is termed the drift fluxes \citep{ishii1977one,guazzelli2011}.  
 More recently,  \citet{kriaa2023two} used this formulation to model sediment transport with \texttt{Basilisk}.
 Actually, \citet{kriaa2023two} used an approximation of this formulation, assuming that the ``bulk'' velocity $\textbf{u}$ satisfy Navier-Stokes equations.
 The particles are accounted only though forcing term related to the weight of the particle in the NS equations. 
@@ -22,7 +25,7 @@ As it will be demonstrated due to the divergence free property of \textbf{u} thi
 We conclude this Chapter by a brief demonstration on how we could implement our system of equation into \texttt{Basilisk}. 
 
 
-\section{A ``single phase incompressible''-like formulation for the volume averaged mixture veloicty. }
+\subsection{A ``single phase incompressible''-like formulation for the volume averaged mixture veloicty. }
 
 As described in \ref{chap:daniel15}, \ref{chap:daniel2} and \ref{chap:pseudoturbulence} by adding the local conservative form of the mass and momentum equations we can derive a conservation equation for the volumetric velocity $\textbf{u} =\phi_d\textbf{u}_d + \phi_f \textbf{u}_f$. 
 At the local non averaged scale we have: 
@@ -203,7 +206,7 @@ Thus, these terms vanish if one consider spherical non-deformable particle, they
 Note that the pressure contribution will cancel out with the first and higher moment of hydrodynamic stresses. 
 
 
-\section{Particle phase equations}
+\subsection{Particle phase equations}
 
 As seen in \ref{chap:daniel1,chap:daniel2} one can add to the continuous or mixture phase equations an arbitrary number of equations describing the dispersed phase. 
 If one consider a spherical mono-disperse suspension of droplets at relatively small inertial effects, we may simply just use the number density, $n_p$ and particle momentum $n_pm_p \textbf{u}_p$, conservation equations to describe completely the dispersed phase. 
@@ -229,11 +232,11 @@ We recall that $\textbf{u}_r = \textbf{u} - \textbf{u}_p$ is the drift velocity.
 Under this form \ref{eq:dt_np_final} can be interpreted as an advection of $n_p$ along the mixture phase velocity $\textbf{u}$, plus a source terms accounting for the non-null drift fluxes of particle $\textbf{u}_r$. 
 
 
-% \section{Summary of the available closure developed in this manuscript. }
+% \subsection{Summary of the available closure developed in this manuscript. }
 
 % Although all of the closre presented in this manuscript are valid on wideer or note regime it is good to make a brief summary, 
 
-% \subsubsection{Stokes dilute regime}
+% \subsubsubsection{Stokes dilute regime}
 % \begin{align}
 %     \pavg{\intS{(\bm{\sigma}_f^0 \cdot \textbf{n}_d)_ir_k}} -
 % 2\pSavg{{\mu(\textbf{e}_d^0)_{ik}}} 
@@ -255,15 +258,15 @@ Under this form \ref{eq:dt_np_final} can be interpreted as an advection of $n_p$
 % \label{eq:second}
 % \end{align}
 
-% \subsubsection{Low inertial dilute regime}
+% \subsubsubsection{Low inertial dilute regime}
 % The foreces traction reeads as, 
 % \begin{equation}
 %     \frac{a}{\mu_f U}\pSavg{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}
 %     % - 2 \mu_f \pOavg{\textbf{e}_d^0}
 %     =
 %      \phi Re [C_1
-%     \textbf{u}_{pf}\textbf{u}_{pf} 
-%     + C_2 (\textbf{u}_{pf}\cdot \textbf{u}_{pf}) \bm\delta]
+%     \textbf{u}_{r}\textbf{u}_{r} 
+%     + C_2 (\textbf{u}_{r}\cdot \textbf{u}_{r}) \bm\delta]
 %     + \phi p_f \bm\delta
 % \end{equation}
 % \begin{equation}
@@ -274,7 +277,7 @@ Under this form \ref{eq:dt_np_final} can be interpreted as an advection of $n_p$
 % \end{equation}
 
 
-% \subsubsection{Arbitrary higher regime}
+% \subsubsubsection{Arbitrary higher regime}
 % with $C_d$ the drag devellooped in Chp 8
 
 % \begin{align*}
@@ -298,7 +301,7 @@ Under this form \ref{eq:dt_np_final} can be interpreted as an advection of $n_p$
 
 % but also velocity gradient $\grad \textbf{u}$  and $\textbf{u}_p$
 
-\section{General conclusion on the closure problem}
+\subsection{General conclusion on the closure problem}
 
 According to the general formulation of the closure problem it is clear that all closure terms present in the averaged two phase flow equations can be expressed as a function of the tensors $\textbf{u}_{r} =\textbf{u}- \textbf{u}_p$, $\grad \textbf{u}$, $\grad^2 \textbf{u}$, the dispersed phase volume fraction $\phi =\phi_d$, the viscosity ratio $\lambda$ and  $Re$. 
 
@@ -345,10 +348,13 @@ We deduce that we must add to \ref{eq:darg_force_general} the term,
     \mu_f \phi C_{[E \grad\phi ]} \grad \textbf{u} \cdot \grad \phi + \ldots
     \label{eq:drag_inhomo}
 \end{equation}
-Where we remarked that, the only vector linear with $\textbf{u}$, that can be formed by a combination of $\textbf{u}$ and its derivatives, and $\grad \phi$ is given by \ref{eq:drag_inhomo}. 
-In \citet{wang1999longitudinal} they demonstrate analytically that $C_{[E \grad\phi ]}\neq 0$, hence verifying our assumption. 
-As, stipulated in \citet{wang1999longitudinal} \ref{eq:drag_inhomo} is at the origin of the longitudinal drift velocity of a sheared dilute. 
-Of course other terms might appear if one consider higher gradient in the volume fraction and velocity however we trucated the analysis only the first order derivative. 
+Note the presence of the term $\phi \grad \phi$ and not just $\phi$ in this expression. 
+This is because in the absence of particles, when $\phi=0$, we might still have gradient of volume fraction such that $\grad \phi \neq 0$ however the grad force must remain null thus we make appear explicitly $\phi\grad\phi$ in this expression. 
+Additionally, we remarked that, the only vector linear with $\textbf{u}$, that can be formed by a combination of $\textbf{u}$ and its derivatives, and $\grad \phi$ is given by \ref{eq:drag_inhomo}. 
+In \citet{wang1999longitudinal} they demonstrate analytically that the drift velocity of particle under shear flow is of $\mathcal{O}(a^2 \grad \textbf{u}\cdot \grad \phi)$.
+This results in a drag force term of  $\mathcal{O}( \grad \textbf{u} \cdot \phi \grad \phi)$ which implies that $C_{[E \grad\phi ]} \sim \mathcal{O}(1)$ at the leading order. 
+As, stipulated in \citet{wang1999longitudinal,guazzelli2011} the physical interpretation of \ref{eq:drag_inhomo} is that this force is at the origin of the longitudinal drift velocity of a sheared dilute suspension of spheres. 
+Of course other terms might appear if one consider higher gradient in the volume fraction and velocity however we truncated the analysis only the first order derivative. 
 
 If we now turn our attention to slightly inertial flow, or potential flow, the closures terms are now proportional to $\sim \textbf{uu}$ and its derivatives. 
 In the case of the drag force, there are numerous possibilities to construct a vector based on tensor formed of $\textbf{uu}$, its derivatives, and $\grad \phi$. 
@@ -358,9 +364,9 @@ Hence, here is a non-exhaustive list of the terms that must be added to the drag
     \ldots
     + \phi \rho_f \{  C_{[E u]} \textbf{E} \cdot \textbf{u}_{r} 
     + C_{[\omega u]} \bm\omega_r \cdot \textbf{u}_{r} \}\\
-    + \rho_f a^{-1}  \grad\phi \cdot \{ C_{[uu\grad\phi]}^{(1)} \textbf{u}_{r}\textbf{u}_{r}
+    + \rho_f a^{-1}  \phi \grad\phi \cdot \{ C_{[uu\grad\phi]}^{(1)} \textbf{u}_{r}\textbf{u}_{r}
     +  C_{[uu\grad\phi]}^{(2)} (\textbf{u}_{r}\cdot \textbf{u}_{r})\bm\delta\} \\
-    + a \rho_f \grad\phi \{ C_{[EE\grad\phi]}^{(1)} (\textbf{E} \cdot  \textbf{E}) 
+    + \rho_f a  \phi \grad\phi \cdot \{ C_{[EE\grad\phi]}^{(1)} (\textbf{E} \cdot  \textbf{E}) 
     +  C_{[EE\grad\phi]}^{(2)} (\textbf{E} : \textbf{E})\bm\delta \}
 \end{multline}
 The term on the first lines represent the so-called Magnus effect which arise at finite $Re$, where $\bm\omega_r = \bm\omega_p - \frac{1}{2}(\grad \textbf{u}-\grad \textbf{u}^\dagger)$ the relative rotation between the particles and the vorticity of the bulk. 
@@ -368,6 +374,7 @@ This term seems to have a negligible effect when studying viscous droplet suspen
 The second term represents the collective contribution of inertia and in homogeneity in the drag force. 
 Such contribution have been reported in the recent study of \citet{wang2024effect}, thus the scalars $C_{[uu\grad\phi]}$ might have their importance as to describe the particles' migration fluxes that arise due to volume gradient of concentration. 
 The terms on the last line, proportional to $\textbf{E}\cdot \textbf{E}$, have not yet been reported in the literature, so for instance $C_{[EE\grad\phi]} = ?$. 
+
 
 
 
@@ -400,15 +407,15 @@ Including inertial effects now, we may write that the effective stresses posses 
     \ldots
     % \frac{U^2\rho}
     +\phi \rho_f \{ C_{uu}^{(1)}
-    \textbf{u}_{pf}\textbf{u}_{pf} 
-    + C_{uu}^{(2)} (\textbf{u}_{pf}\cdot \textbf{u}_{pf}) \bm\delta \}
+    \textbf{u}_{r}\textbf{u}_{r} 
+    + C_{uu}^{(2)} (\textbf{u}_{r}\cdot \textbf{u}_{r}) \bm\delta \}
     + 
     \rho_f a^2 \{ C_{EE}^{(1)} \textbf{E}\cdot \textbf{E}
     +  C_{EE}^{(2)} (\textbf{E} : \textbf{E})\bm\delta \}
     \ldots
     \label{eq:stress2}
 \end{multline}
-As seen in \ref{chap:deformable,chap:pseudoturbulence} the first two terms proportional to, $\sim \textbf{u}_{pf}\textbf{u}_{pf}$, find their contribution from the Pseudo-turbulence tensor, either from the continuous or dispersed phase, and from the first moment of surface traction, at finite inertial effect. 
+As seen in \ref{chap:deformable,chap:pseudoturbulence} the first two terms proportional to, $\sim \textbf{u}_{r}\textbf{u}_{r}$, find their contribution from the Pseudo-turbulence tensor, either from the continuous or dispersed phase, and from the first moment of surface traction, at finite inertial effect. 
 Thus, the leading contribution from the $C_{uu}$'s is $\sim \phi^{-1/3}$. 
 In addition, as reported in \citet{zhang2021stress} reported that the functional form of the particle-fluid-particle stress also had this functional form at finite Reynolds number. 
 The third and fourth terms of \ref{eq:stress2} yield their sources in the pseudoturbulence term as shown in \ref{chap:daniel15}. 
@@ -441,13 +448,13 @@ The terms on the second line of \ref{eq:stress_inho} represent the only possible
 Yet no study in the literature reported such contribution, however our analysis seems to suggest that it does exist.
 A simple way to verify that the $C_{Eu \grad \phi}$'s are indeed non-zero would be to compute the second order moment of hydrodynamic force for an isolated bubble in a linear potential flow. 
 
-\section{The general form of the dispersed multiphase flow equaitons.}
+\subsection{The general form of the dispersed multiphase flow equaitons.}
 
 As a first approach one can just consider a slightly inhomogeneous suspension such that all the $\grad^2 \phi$ terms vanish. 
 This means that we consider the $\grad \phi$ terms only in the drag force and neglect those in the effective stress which already appear under the divergence sign. 
-Also, one can consider the following approximation for spherical droplets $\phi = n_pv_p + \textbf{V}_p :\grad^2 \phi \approx \phi$ as we neglected the $\grad^2 \phi$ terms. 
-
-In addition, in a first approximation we consider that $a/L \ll 1$ meaning that all the terms $\sim \mathcal{O}(a^2 \grad^2)$ in the above closure terms are negligible. 
+Also, one can consider the following approximation for spherical droplets $\phi = n_pv_p + \textbf{V}_p :\grad^2 n_p = n_pv_p + \frac{v_p a^2}{5}\grad^2 n_p \approx n_pv_p + \mathcal{O}(a^2/L^2)$.
+Hence, we considered that $a^2\grad^2 n_p=\mathcal{O}(a^2/L^2)=\approx 0$, however we still have $\grad^2 n_p =\mathcal{O}(1/L^2) \neq 0$. 
+In the closure presented above it implies that we neglect all the $\mathcal{O}(a^2/L^2)$ terms. 
 
 Injecting, \ref{eq:darg_force_general,eq:stress_stokes,eq:stres} into the formulation \ref{eq:NS_dispersed,} gives us the final form of the NS equation, 
 \begin{align}
@@ -468,6 +475,7 @@ Injecting, \ref{eq:darg_force_general,eq:stress_stokes,eq:stres} into the formul
     +  \bm{\sigma}_\text{eff} )
     + \kappa \pSavg{ \bm{\sigma}_f^0 \cdot \textbf{n}} 
     + \rho_f \textbf{g} 
+    \label{eq:dtu_bulk}
 \end{align}
 % \begin{align}
 %     \div\textbf{u}=&0, \\
@@ -484,8 +492,8 @@ Injecting, \ref{eq:darg_force_general,eq:stress_stokes,eq:stres} into the formul
 %     C_u \textbf{u}_{r}
 %     +C_{[\grad^2 u]} \grad^2 \textbf{u}
 %     \}\\
-%     &- \div  \{\phi  C_{uu}^{(1)} \textbf{u}_{pf}\textbf{u}_{pf} 
-%     + \phi C_{uu}^{(2)} (\textbf{u}_{pf}\cdot \textbf{u}_{pf}) \bm\delta \}
+%     &- \div  \{\phi  C_{uu}^{(1)} \textbf{u}_{r}\textbf{u}_{r} 
+%     + \phi C_{uu}^{(2)} (\textbf{u}_{r}\cdot \textbf{u}_{r}) \bm\delta \}
 %     \\
 %     \rho_f (\pddt 
 %     + \textbf{u}\cdot \grad)
@@ -509,11 +517,11 @@ Injecting, \ref{eq:darg_force_general,eq:stress_stokes,eq:stres} into the formul
     +\mu_f C_{[\grad^2 u]} \grad^2 \textbf{u}
     \} 
     \\
-    \bm\Sigma &= - p_f + \mu_f \textbf{E}\\
+    \bm\Sigma &= - p_f +2 \mu_f \textbf{E}\\
     \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} &= 
     \phi \{ C_{uu}^{(1)}
-    \textbf{u}_{pf}\textbf{u}_{pf} 
-    + C_{uu}^{(2)} (\textbf{u}_{pf}\cdot \textbf{u}_{pf}) \bm\delta \}
+    \textbf{u}_{r}\textbf{u}_{r} 
+    + C_{uu}^{(2)} (\textbf{u}_{r}\cdot \textbf{u}_{r}) \bm\delta \}
     \\
     \bm\sigma_\text{eff} &= 
     \mu_f \phi 
@@ -522,165 +530,216 @@ Injecting, \ref{eq:darg_force_general,eq:stress_stokes,eq:stres} into the formul
     + C_E  \textbf{E}
     +  C_{\grad u}^{(1)} [\grad \textbf{u}_{r} +(\grad \textbf{u}_{r})^\dagger + C_{\grad u}^{(2)}(\div  \textbf{u}_{r})\bm\delta] \}\\
     &+\phi \rho_f \{ C_{uu}^{(1)}
-    \textbf{u}_{pf}\textbf{u}_{pf} 
-    + C_{uu}^{(2)} (\textbf{u}_{pf}\cdot \textbf{u}_{pf}) \bm\delta \}
+    \textbf{u}_{r}\textbf{u}_{r} 
+    + C_{uu}^{(2)} (\textbf{u}_{r}\cdot \textbf{u}_{r}) \bm\delta \}
 \end{align*}
 where we have included $C_E$ as the equivalent viscosity term. 
+Note that $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ has the same functional form as the pseudo-turbulence stress however the constant are different. 
 
 
 
-Adventage of this formulation: 
-\begin{itemize}
-    \item This can be meusured with experiment
-    \item acctually followi the Navier stokes equaiton + forcing terms 
-    % \item The equivalent pressure can simply put in the mean fluid phase pressure, similar with viscosity 
-    \item In the end only the drag force and deviatoric part of teh RS is needed 
-\end{itemize}
-Since this stress is governing the mixture equation is can be measured with the help of Rheometer which is acctually quite useful in opposition to the continuous phase formulation. 
 
-\section{Simulation of Stokestain  dilute emulsion}
 
-The governing equations for the dispersed phase reads,
+
+
+
+
+
+
+
+
+
+
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+% Uncomment the following if need
+
+\subsection{Simulation of Stokestain  dilute emulsion}
+
+The governing equations for the dispersed phase in stokes regime read,
 \begin{align}
-    (\pddt + \textbf{u} \cdot \grad)n_p = \div[n_p(\textbf{u} - \textbf{u}_p)]\\
+    (\pddt + \textbf{u} \cdot \grad)\phi = \div(\phi \textbf{u}_r)\\
     0 
     = 
     \rho_d \phi \textbf{g}
-    + \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}},
+    + \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}}. 
 \end{align}
-note that we have written the equation for $n_p$ as an advection along the bulk velocity. 
-And from the closure in stokes regime we have, 
+From which we directly deduce the form of the two terms on the right-hand side of \ref{eq:dtu_bulk}, namely, 
+We deduce that the source term in the momentum eq, 
+\begin{equation*}
+    \rho_f \textbf{g} 
+    + \kappa
+    \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+    % =
+    % \textbf{g}
+    % +  
+    % \phi (- 1 + \zeta)
+    % \textbf{g}
+    = \rho_f \textbf{g}(1 + \phi(\zeta-1) ). 
+\end{equation*}
+
+In Stokes regime the relative velocity $\textbf{u}_r$ can be closed algebraically from the dispersed phase momentum equations.  
+Indeed, from the closure in stokes and dilute regime derived in \ref{chap:daniel2} we have, 
 \begin{equation*}
     \pSavg{\bm{\sigma}_f^0\cdot \textbf{n}_d} = 
     \phi_d \div\bm\Sigma
     + \frac{3\phi_d\mu_f}{2 a^2} 
-    \left(\frac{3\lambda+2}{\lambda+1}\right) \textbf{u}_{f p} 
+    \left(\frac{3\lambda+2}{\lambda+1}\right) \textbf{u}_{r} 
     + \frac{3\phi_d\mu_f}{4} \left(\frac{\lambda}{\lambda+1}\right)\grad^2\textbf{u}
     = - 
     \rho_d \phi \textbf{g}
 \end{equation*}
-We deuce that at all times, 
+% We deduce that, 
+% \begin{align*}
+%     \frac{3\phi_d\mu_f}{2 a^2}  
+%     \left(\frac{3\lambda+2}{\lambda+1}\right) \textbf{u}_{f p} 
+%     = 
+%     \phi_d \grad p_f
+%     - \rho_d \phi \textbf{g}
+%     - \phi_d \mu_f \left[
+%         1 + \frac{3}{4} \left(\frac{\lambda}{\lambda+1}\right)
+%     \right]\grad^2 \textbf{u}
+% \end{align*}
+which simplify to 
 \begin{align*}
-    \frac{6\phi_d\mu_f}{d^2} 
-    \left(\frac{3\lambda+2}{\lambda+1}\right) \textbf{u}_{f p} 
+    \frac{3\mu_f}{2 a^2}\left(\frac{3\lambda+2}{\lambda+1}\right)
+   \textbf{u}_{r} 
     = 
-    \phi_d \grad p_f
-    - \rho_d \phi \textbf{g}
-    - \phi_d \mu_f \left[
+    \grad p_f
+    - \rho_f\zeta   \textbf{g}
+    -  \mu_f \left[
         1 + \frac{3}{4} \left(\frac{\lambda}{\lambda+1}\right)
-    \right]\grad^2 \textbf{u}
-\end{align*}
-which simplify to (with $\left(\frac{3\lambda+2}{\lambda+1}\right) = L$), 
-\begin{align*}
-   \textbf{u}_{f p} 
-    = 
-    \frac{d^2}{6\mu_f L }
-    \left\{
-        \grad p_f
-        - \rho_f\zeta   \textbf{g}
-        -  \mu_f \left[
-            1 + \frac{3}{4} \left(\frac{\lambda}{\lambda+1}\right)
-            \right]\grad^2 \textbf{u}
-    \right\}
+        \right]\grad^2 \textbf{u}
 \end{align*}
 
 
-We deduce that the source term in the momentum eq, 
-\begin{equation*}
-    \textbf{g} 
-    + (\kappa/\rho_f)
-    \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}}
-    =
-    \textbf{g}
-    +  
-    \phi (- 1 + \zeta)
-    \textbf{g}
-    = (1 + \phi(\zeta-1) )\textbf{g}
-\end{equation*}
-
-The first and second moment are given by \ref{eq:first} and \ref{eq:second}
-
-\section{Setting up-EulerEuler simulation with basilisk}
-
-
-To summary, we need to solve a forced Navier-Stokes equaiton for \textbf{u}, a momentum equation for $\textbf{u}_p$ and an adevection equaiton for $\phi$. 
-These three steps are done easliy with the \texttt{Basilisk C}. 
-
-We first initialize the gird, the navier-stokes solver and include the Bell-Collela-Glaz advection scheme,  
-\begin{lstlisting}[language=C][language=C]
-    #include "grid/multigrid.h"
-    #include "navier-stokes/centered.h"
-    #include "bcg.h"
-\end{lstlisting}
-
-The we initialize the main parameters and functions 
-\begin{lstlisting}[language=C][language=C]
-    #define zeta 0.9
-    #define G 1. 
-    #define d 1e-3
-    #define rhof 1. 
-    #define lambda 10.
-    #define l             ((2+3*lambda)/(lambda+1))
-    #define Ga 50
-
-    #define muf           (rhof/Ga  * d * sqrt( sqrt(sq(1-zeta))*G*d))
-
-    #define mu_ein(phi)   (muf*(1 + phi / 2 * (5*lambda +2 )/(lambda +1) ) )
-    #define mu_effU       (muf*3*lambda/(4*(lambda+1)))
-\end{lstlisting}
+Using the closure of the first- and second-moment of the hydrodynamic forces derived in \ref{chap:daniel2} we obtain the final set of equation, 
+\begin{align}
+    \div\textbf{u}&=0, \\
+    (\pddt + \textbf{u}\cdot \grad)\phi &= \div(\phi \textbf{u}_r), \\
+    \rho_f (\pddt 
+    + \textbf{u}\cdot \grad)
+    \textbf{u}
+    &= 
+    \div \bm{\sigma}_\text{eff} 
+    % + \kappa \pSavg{ \bm{\sigma}_f^0 \cdot \textbf{n}} 
+    + \rho_f \textbf{g} (1 + \phi(\zeta-1) )\\
+    \frac{3\mu_f}{2 a^2}\left(\frac{3\lambda+2}{\lambda+1}\right)
+   \textbf{u}_{r} 
+    &= 
+    \grad p_f
+    - \rho_f\zeta   \textbf{g}
+    -  \mu_f \left[
+        1 + \frac{3}{4} \left(\frac{\lambda}{\lambda+1}\right)
+        \right]\grad^2 \textbf{u}
+    \\
+    % \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} &= 
+    % \phi \{ C_{uu}^{(1)}
+    % \textbf{u}_{r}\textbf{u}_{r} 
+    % + C_{uu}^{(2)} (\textbf{u}_{r}\cdot \textbf{u}_{r}) \bm\delta \}
+    % \\
+    \bm\Sigma& = 
+    - p_f +2\mu_f  \textbf{E} \left[1 + \frac{\phi}{5}\left(\frac{5\lambda +2}{\lambda +1}\right)\right] \\
+    \bm\sigma_\text{eff} &= \mu_f \phi      
+    \frac{3\lambda}{4(\lambda + 1)}[\grad \textbf{u}_{r} +(\grad \textbf{u}_{r})^\dagger +\frac{2-3\lambda}{3\lambda}(\div  \textbf{u}_{r})\bm\delta] 
+\end{align}
+As one can observe this system reduces to the forced Navier-Stokes equations coupled with a transport equation for $\phi$. 
+It is interesting to notice that \ref{kriaa2023two} used the exact same set of equation, but with $\bm\Sigma + \bm\sigma_\text{eff} \to -p_f +2 \mu_f \textbf{E}$ instead. 
+As their study provided realistic results this demonstrates that the effective stress can be neglected in certain circumstances. 
 
 
-After initializing the domain and initail volume fraction field we go on and add the closure terms to the solver. 
-The first thing to do is to add the Buoyancy force and efffective viscosity to the Navier-Stokes equation, that is easily done by overaloading the acceleration and properties events,  
-\begin{lstlisting}[language=C]
-event acceleration (i++)
-{
-  coord gg = {0,-G};
-  // gravity acceleration 
-  foreach_face(){
-    double phi_face = (PHI[] + PHI[-1])/2. ; 
-    av.x[] += (1 - phi_face  + phi_face * zeta )* gg.x; 
-  }
-event properties (i++) {
-  foreach_face(){
-    double phi_face = (PHI[] + PHI[-1])/2.;
-    muv.x[] =  mu_ein(phi_face);
-  }
-}
-\end{lstlisting}
+% To summary, we need to solve a forced Navier-Stokes equaiton for \textbf{u}, a momentum equation for $\textbf{u}_p$ and an adevection equaiton for $\phi$. 
+% These three steps are done easliy with the \texttt{Basilisk C}. 
 
-Regarding teh dispersed phase we obtain the velocity explicitely with the stokes drag force, 
-\begin{lstlisting}[language=C]
+% We first initialize the gird, the navier-stokes solver and include the Bell-Collela-Glaz advection scheme,  
+% \begin{lstlisting}[language=C][language=C]
+%     #include "grid/multigrid.h"
+%     #include "navier-stokes/centered.h"
+%     #include "bcg.h"
+% \end{lstlisting}
 
-event slip_velocity(i++){
-  coord gg = {0,-G};
+% The we initialize the main parameters and functions 
+% \begin{lstlisting}[language=C][language=C]
+%     #define zeta 0.9
+%     #define G 1. 
+%     #define d 1e-3
+%     #define rhof 1. 
+%     #define lambda 10.
+%     #define l             ((2+3*lambda)/(lambda+1))
+%     #define Ga 50
 
-  foreach_face(){
-    double dDP = alpha.x[]*(p[] - p[-1])/Delta; 
-    double Lx = (uf.x[1] + uf.x[-1] + uf.x[0,1] + uf.x[0,-1] - 4*uf.x[])/(Delta*Delta);
-    ur.x[] =  d*d / (6*muf*l) * (dDP - rhof*zeta*gg.x  - muf*Lx *(1 +3/4*lambda/(lambda+1)) );
-    up.x[] =  (uf.x[] - ur.x[]); //particle phase vel
-  }  
-}
-\end{lstlisting}
+%     #define muf           (rhof/Ga  * d * sqrt( sqrt(sq(1-zeta))*G*d))
 
-and transport the volume fraction fields accordingly, 
+%     #define mu_ein(phi)   (muf*(1 + phi / 2 * (5*lambda +2 )/(lambda +1) ) )
+%     #define mu_effU       (muf*3*lambda/(4*(lambda+1)))
+% \end{lstlisting}
 
-\begin{lstlisting}[language=C]
-event tracer_advection (i++,last) {
-    dt = timestep (up,DT);
-    advection ((scalar *) {PHI}, up, dt);
-}
-\end{lstlisting}
+
+% After initializing the domain and initail volume fraction field we go on and add the closure terms to the solver. 
+% The first thing to do is to add the Buoyancy force and efffective viscosity to the Navier-Stokes equation, that is easily done by overaloading the acceleration and properties events,  
+% \begin{lstlisting}[language=C]
+% event acceleration (i++)
+% {
+%   coord gg = {0,-G};
+%   // gravity acceleration 
+%   foreach_face(){
+%     double phi_face = (PHI[] + PHI[-1])/2. ; 
+%     av.x[] += (1 - phi_face  + phi_face * zeta )* gg.x; 
+%   }
+% event properties (i++) {
+%   foreach_face(){
+%     double phi_face = (PHI[] + PHI[-1])/2.;
+%     muv.x[] =  mu_ein(phi_face);
+%   }
+% }
+% \end{lstlisting}
+
+% Regarding teh dispersed phase we obtain the velocity explicitely with the stokes drag force, 
+% \begin{lstlisting}[language=C]
+
+% event slip_velocity(i++){
+%   coord gg = {0,-G};
+
+%   foreach_face(){
+%     double dDP = alpha.x[]*(p[] - p[-1])/Delta; 
+%     double Lx = (uf.x[1] + uf.x[-1] + uf.x[0,1] + uf.x[0,-1] - 4*uf.x[])/(Delta*Delta);
+%     ur.x[] =  d*d / (6*muf*l) * (dDP - rhof*zeta*gg.x  - muf*Lx *(1 +3/4*lambda/(lambda+1)) );
+%     up.x[] =  (uf.x[] - ur.x[]); //particle phase vel
+%   }  
+% }
+% \end{lstlisting}
+
+% and transport the volume fraction fields accordingly, 
+
+% \begin{lstlisting}[language=C]
+% event tracer_advection (i++,last) {
+%     dt = timestep (up,DT);
+%     advection ((scalar *) {PHI}, up, dt);
+% }
+% \end{lstlisting}
     
 
-With these simples steps we could carry out efficient EulerEuler simulations. 
+% With these simples steps we could carry out efficient EulerEuler simulations. 
 
 
-\section{conclusion}
+% \subsection{conclusion}
 
 
-\begin{enumerate}
-    \item We proposed a easy formulation 
-    \item We then discuss the rheorlogy of teh suspension 
-\end{enumerate}
+% \begin{enumerate}
+%     \item We proposed a easy formulation 
+%     \item We then discuss the rheorlogy of teh suspension 
+% \end{enumerate}
+
+% Perspectives : 
+% \begin{enumerate}
+%     \item Parler des meusure de viscosity
+% \end{enumerate}

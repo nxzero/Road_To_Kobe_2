@@ -84,6 +84,12 @@
                 positioning,
                 shapes.geometric,
                 backgrounds}
+\usetikzlibrary{fit,positioning}
+\usepackage{amsmath,amssymb}
+
+
+
+
 \RequirePackage{pgfplots}
 \RequirePackage{pgf}
 \usepgfplotslibrary{polar}

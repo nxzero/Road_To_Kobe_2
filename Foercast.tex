@@ -1,0 +1,611 @@
+\documentclass{sintefbeamer}
+
+% packages, font, color, and newcommands
+\usepackage{amsfonts, amsmath, oldgerm, lmodern, bm}
+% \usepackage[font={footnotesize}]{caption}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{empheq}
+\usepackage{mdframed}
+\usepackage{bm}
+\usepackage{animate}
+\usepackage{xcolor,colortbl}
+\usepackage{graphicx}
+\usepackage{dot2texi}
+% \usepackage{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+\bibliographystyle{apalike}
+\usefonttheme{serif}
+\usetikzlibrary{calc}
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
+\title{Averaged equations for two-phase flows made of spherical droplets. }
+\subtitle{MUSCATS workshop}
+\author{\underline{N. Fintzi} \footnote{IFP \'Energies Nouvelles, France}$^{,2}$, JL. Pierson$^1$ and S. Popinet\footnote{Sorbonne Universit\'e, France}}
+% \date{Created on May 22, 2022}
+\definecolor{burntorange}{rgb}{0.8, 0.33, 0.0}
+\titlebackground{image/800good.png}
+
+
+% document body
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    % \hspace{1em}%
+    % \vspace{1em}%
+    \insertframenumber/\inserttotalframenumber
+}
+\usepackage{stmaryrd}
+
+
+\begin{document}
+\maketitle
+\section*{}
+
+\begin{frame}
+  \frametitle{Objectives and motivation}
+
+
+
+In the perspective of \textbf{Euler-Euler} framework modeling we : 
+\vfill
+\begin{enumerate}
+  \item Presentation of the \textbf{mass}, \textbf{momentum} and \textbf{pseudo-turbulent} averaged equations for spherical suspension of droplet. 
+  \item Analysis of the momentum effective stress
+  \item Analysis of the pseudo-turbulent energy equation source terms. 
+  \item Proposition of a first minimal model. 
+\end{enumerate}
+
+
+
+
+
+\end{frame}
+
+\section{The continuous phase local scale equations.}
+\section*{}
+
+\begin{frame}
+  \frametitle{Problem statement: local scale equations}
+
+  \begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \foreach \x/\y/\ra/\r/\th in 
+        {1/3/0.4/0.4/20,
+        2.55/2.7/0.4/0.4/0,
+        0.5/0.4/0.4/0.4/10,
+        2/1/0.4/0.4/10,
+        3/1.5/0.4/0.4/0,
+        0.5/1.5/0.4/0.4/10,
+        -0.5/2.5/0.4/0.4/10}{
+            \draw[fill=gray!50,rotate=\th](\x,\y) ellipse(\ra cm and \ra cm);
+        }
+        \draw[dashed](3.2,1.7)circle(0.25);
+        % \draw[thick,->](3.2,1.7)++(0.1767,0.1767)--++(0.4,0.4)--++(1,0);
+        \draw[thick,->](3.2,1.7)++(0.25,0)--++(1,0);
+        \draw(2.55,2.7)node{$\Omega_d$};
+        \draw(1.5,2)node{$\Omega_f$};
+        \draw(2.5,0)node{$\Omega = \Sigma \cup \Omega_f \cup \Omega_d$};
+        % \draw(2.5,-1)node{$\Sigma = \sum_\alpha \Sigma_\alpha$};
+        % \draw(2.5,-0.5)node{$\Omega_d = \sum_\alpha \Omega_\alpha$};
+    \end{tikzpicture}
+    \begin{tikzpicture}%[scale = 0.9]
+        \draw[very thick](0:2)arc(0:90:2)node[above right]{$\Sigma$};
+        \draw[fill=gray!50](0:2)arc(0:90:2)arc(180:270:2);
+        \draw[dashed](2,2)circle(2);
+        \draw[->](1.42,1.42)--++(0.7,0.7)node[below right]{$\textbf{n}_d$};
+        \draw[->](1.73,1)--++(-0.577,-0.333)node[below right]{$\textbf{n}_1$};
+        \draw(2,3)node{$\Omega_f$};
+        \draw(0.8,1.3)node{$\Omega_\alpha$};
+    \end{tikzpicture}
+    \caption{Domain definitions and scheme of the topology of dispersed two-phase flows.
+    $\rho_k$ and $\mu_k$ is the density and viscosity of phase $k$, respectively. }
+    \label{fig:Scheme}
+\end{figure}
+
+The phase and interface indicator functions : 
+\begin{align*}
+  \chi_k(\textbf{x},t) =  \left\{
+    \begin{tabular}{cc}
+      $1 \;\text{if} \;\textbf{x} \in \Omega_k(t)$\\
+      $0 \;\text{if} \;\textbf{x} \notin \Omega_k(t)$
+    \end{tabular}
+    \right.
+    % \text{for $k = 1,2$},
+    % \label{eq:PIF}
+    &&
+  \delta_I(\textbf{x},t) =  \left\{
+    \begin{tabular}{cc}
+      $1 \;\text{if} \;\textbf{x} \in \Sigma(t)$\\
+      $0 \;\text{if} \;\textbf{x} \notin \Sigma(t)$
+    \end{tabular}
+    \right.,
+    \label{eq:PIF_I}
+\end{align*}
+
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Problem statement: local scale equations.}
+  The \underline{mass} ($\rho_f$), \underline{momentum}($\rho_f \textbf{u}_f^0$), and \underline{kinetic energy} ($\rho_f (u_f^0)^2$)  in $\Omega_f$ follow :
+\begin{align}
+  \div  \textbf{u}_f^0
+  &= 
+  0
+  \\
+  \pddt (\rho_f \textbf{u}_f^0)  
+  + \div (
+      \rho_f \textbf{u}_f^0\textbf{u}_f^0
+      - \bm{\sigma}_f^0 
+      )
+  &= 
+  \rho_f \textbf{g}\\
+  \pddt [\rho_f/2(u_f^0)^2]  
+  + \div [\rho_f/2(u_f^0)^2\textbf{u}_f^0 - \textbf{u}_f^0 \cdot \bm{\sigma}_f^0]
+  &=
+  \rho_f\textbf{u}_f^0 \cdot \textbf{g}  
+  -  \bm{\sigma}_f^0 : \grad \textbf{u}_f^0,
+\end{align}
+% And at the interfaces : 
+% \begin{align*}
+%   \Jump {\textbf{u}_k^0}
+%   = 0,\;\;\;
+%   \Jump {\bm{\sigma}_k^0}
+%   = 
+%   %  \gamma\kappa\textbf{n}
+%   0
+%    \;\;\;\; 
+%    \text{at} 
+%    \;\;\;\; 
+%    \Sigma(t)
+% \end{align*}
+\begin{definition}
+  \begin{itemize}
+    % \item $\Jump{\ldots} = \sum_k \ldots$ Jump condition.  
+    \item The superscript $^0$ indicated that it is a local quantity.
+    \item $\rho_k$  density of phase $k$. 
+    \item $\textbf{u}_k$  Velocity of phase $k$.
+    % \item $\textbf{b}_k^0 = \rho_k \textbf{g}$  local body force.  
+    % \item $\gamma$ and $\kappa$  surface tension coefficient and curvature of the surface.  
+    \item $\bm\sigma_k^0 = -p_k^0 \textbf{I} + \mu_k (\grad \textbf{u}_k^0+^\dagger\grad \textbf{u}_k^0)$ Newtonian stress tensor of the fluid phase. 
+    % \item $\bm\sigma_d^0 = \textbf{Udefined}$ Solid phase stress. 
+  \end{itemize}
+\end{definition}
+
+\end{frame}
+
+
+% \begin{frame}
+%   \frametitle{Two-fluid formulation of the momentum equation.}
+% %   Transport of the phase indicator function, 
+% %   \begin{align}
+% %     \pddt \chi_k
+% %     + \textbf{u}_I^0 \cdot \grad \chi_k
+% %     = 0,&&
+% % % \end{align}
+% % % \begin{align}
+% %     \grad \chi_k
+% %     = - \delta_I \textbf{n}_k
+% %   \end{align}
+%   Multiplying the momentum equation by $\chi_k$ gives two-fluid formulation of the momentum equation :
+  
+%   \begin{align}
+%     \label{eq:mass}
+%     \pddt (\chi_k\rho_k)  
+%     + \div (
+%         \chi_k\rho_k \textbf{u}_k^0
+%         )
+%     &= 0\\
+%     \pddt (\chi_k\rho_k \textbf{u}_k^0)  
+%     + \div (
+%         \chi_k\rho_k \textbf{u}_k^0\textbf{u}_k^0
+%         - \chi_k\bm{\sigma}_k^0 
+%         )
+%     &= 
+%     \chi_k\textbf{b}_k^0
+%     + \underbrace{\delta_I \bm{\sigma}_k^0\cdot\textbf{n}_k}_\text{Interphase momentum transfer}
+%     \label{eq:momentim}
+%   \end{align}
+
+%   $\to$ notice that (\ref{eq:mass}) and (\ref{eq:momentim}) are defined over $\Omega$ thanks to $\chi_k$. 
+%   Therefore, we are now able to apply the ensemble average procedure. 
+% \end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Ensemble average definitions}
+Ensemble average: 
+\begin{align*}
+  \phi_f (\textbf{x},t) = \avg{\chi_f }\\
+  \phi_f \rho_f  \textbf{u}_f (\textbf{x},t) = \avg{\chi_f \rho_f \textbf{u}_f^0 }\\
+  \phi_f \bm\sigma_f (\textbf{x},t) = \avg{\chi_f \bm\sigma_f^0 }\\
+  % \phi_k \textbf{b}_k (\textbf{x},t) = \avg{\chi_k \textbf{b}_k^0 }
+  \label{eq:1_avg}
+\end{align*}
+
+
+\begin{definition}
+  \begin{itemize}
+    \item $\avg{\ldots}$ ensemble average operator. 
+    \item  $\phi_f (\textbf{x},t)$ volume fraction of the phase $f$. 
+    \item We dropped the superscript $^0$ on $\textbf{u}^0_k$ to indicate that $\textbf{u}_k$ is a macroscopic quantity. 
+    % \item $n_p (\textbf{x},t) = \avg{\sum_\alpha^N \delta(\textbf{x} - \textbf{x}_\alpha(\FF,t))}$ number density of particles. 
+    % \item  Both are linked through :   $\phi_d \rho_d= m_p n_p + \frac{1}{2}\grad^2 : (n_p\mathcal{M}_p)+\ldots$
+  \end{itemize}
+\end{definition}
+\end{frame}
+\begin{frame}
+  \frametitle{Ensemble average definitions}
+% Ensemble average: 
+% \begin{align*}
+%   \phi_f (\textbf{x},t) = \avg{\chi_f }\\
+%   \phi_f \rho_f  \textbf{u}_f (\textbf{x},t) = \avg{\chi_f \rho_f \textbf{u}_f^0 }\\
+%   \phi_f \bm\sigma_f (\textbf{x},t) = \avg{\chi_f \bm\sigma_f^0 }\\
+%   % \phi_k \textbf{b}_k (\textbf{x},t) = \avg{\chi_k \textbf{b}_k^0 }
+%   \label{eq:1_avg}
+% \end{align*}
+Mean kinetic energy of the continuous phase: 
+\begin{align*}
+  \avg{\rho_f /2 (u_f^0)^2}
+  &=
+  \rho_f u_f^2
+  + 
+  \rho_f/2 \avg{\textbf{u}_f'\cdot \textbf{u}_f'}\\
+  &=
+  \underbrace{\rho_f u_f^2}_\text{Averaged velocity contribution}
+  + 
+  \underbrace{\rho_f k_f}_\text{Fluctuation velocity contribution}
+\end{align*}
+
+
+\begin{definition}
+  \begin{itemize}
+    \item $\avg{\ldots}$ ensemble average operator. 
+    \item  $\phi_f (\textbf{x},t)$ volume fraction of the phase $f$. 
+    \item We dropped the superscript $^0$ on $\textbf{u}^0_k$ to indicate that $\textbf{u}_k$ is a macroscopic quantity. 
+    \item $\textbf{u}_f' = \textbf{u}_f^0 - \textbf{u}_f$ velocity fluctuations. 
+    % \item $n_p (\textbf{x},t) = \avg{\sum_\alpha^N \delta(\textbf{x} - \textbf{x}_\alpha(\FF,t))}$ number density of particles. 
+    % \item  Both are linked through :   $\phi_d \rho_d= m_p n_p + \frac{1}{2}\grad^2 : (n_p\mathcal{M}_p)+\ldots$
+  \end{itemize}
+\end{definition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The averaged continuous phase equations}
+\begin{align*}
+  &\pddt (\phi_f \rho_f)  
+  + \div (
+      \phi_f \rho_f\textbf{u}_f
+  )
+  = 
+  0,\\
+  &\pddt (\phi_f \rho_f\textbf{u}_f)
+  + \div 
+      (\phi_f \rho_f\textbf{u}_f\textbf{u}_f)
+  = 
+  \underbrace{\div \bm\sigma^\text{eff}}_\text{Effective stress}
+  + \phi_f \rho_f \textbf{g} 
+  - \underbrace{\pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}}}_\text{Interphase drag force},
+\end{align*}
+\pause
+\underline{Effective stress: } 
+\begin{equation*}
+  \bm{\sigma}_f^\text{eff}
+  =
+  - \underbrace{\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}}_\text{Reynolds Stress}
+  + \underbrace{\phi_f \bm{\sigma}_f}_\text{Mean Newtonian stress}%- n_p \textbf{M}_p
+   + \underbrace{ {\pSavg{{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}}}}_\text{Stresslet}
+\end{equation*}
+\pause
+
+Reynolds stress decomposition: 
+\begin{equation}
+  \avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}
+  = \text{Deviatoric part}
+  + k_f \bm\delta
+\end{equation}
+
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modeling of $k_f$: first option}
+
+\begin{multline}
+  \pddt (\phi_f\rho_fk_f)  
+    + \div (
+        \phi_f\rho_fk_f\textbf{u}_f
+        )
+        = \\
+      \underbrace{+ \div  \textbf{q}_f^\text{k}}_\text{Effective energy flux}
+    - \underbrace{\avg{\chi_f\bm{\sigma}_f^0 : \grad \textbf{u}_f^0}}_\text{Local scale dissipation}
+    - \underbrace{\bm{\sigma}_f^\text{eff} : \grad \textbf{u}_f}_\text{Macroscopic dissipation}
+    \nonumber \\
+    \underbrace{+ (\textbf{u}_f - \textbf{u}_p)\cdot \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}} 
+    - \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+    - \pavg{ \intS{\textbf{w}_d^0 \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d}},}_\text{Work due to the motion of the dispersed phase}
+\end{multline}
+% \pause
+% Effective kinetic enery fluxes
+% \begin{align*}
+%      \textbf{q}_f^\text{k}
+%     =& \rho_f \avg{\chi_f \textbf{u}_f' k_f} 
+%     - \avg{\chi_f \textbf{u}_f' \cdot \bm{\sigma}_f^0}
+%     + (\textbf{u}_f - \textbf{u}_p)\cdot
+%     \pSavg{{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}}\\
+%     &
+%     - \pavg{ \textbf{u}_\alpha' \cdot \intS{ \textbf{r} \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+%     - \pavg{ \intS{\textbf{r}\textbf{w}_d^0 \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+%     + \div[\ldots]
+% \end{align*}
+
+
+
+\begin{definition}
+  \begin{itemize}
+    \item $\textbf{u}_p$ mean velocity of the droplets center of mass
+    \item $\textbf{u}_\alpha$ center of mass velocity of the droplet $\alpha$ 
+    \item $\textbf{u}_\alpha' = \textbf{u}_\alpha - \textbf{u}_p$.   
+    \item $\textbf{w}_f^0  = \textbf{u}_f^0 - \textbf{u}_\alpha$.  
+  \end{itemize}
+\end{definition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modeling of $k_f$: first option}
+
+\begin{multline}
+  \pddt (\phi_f\rho_fk_f)  
+    + \div (
+        \phi_f\rho_fk_f\textbf{u}_f
+        )
+        = 
+      + \div  \textbf{q}_f^\text{k}
+    - \avg{\chi_f\bm{\sigma}_f^0 : \grad \textbf{u}_f^0}
+    - \bm{\sigma}_f^\text{eff} : \grad \textbf{u}_f
+    \nonumber \\
+    + (\textbf{u}_f - \textbf{u}_p)\cdot \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}} 
+    - \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+    - \pavg{ \intS{\textbf{w}_d^0 \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d}},
+\end{multline}
+% \pause
+Effective kinetic enery fluxes
+\begin{align*}
+     \textbf{q}_f^\text{k}
+    =& \underbrace{\rho_f \avg{\chi_f \textbf{u}_f' k_f} 
+    - \avg{\chi_f \textbf{u}_f' \cdot \bm{\sigma}_f^0}}_\text{Stress and kinetic energy covariance}\\
+    &+ (\textbf{u}_f - \textbf{u}_p)\cdot
+    \pSavg{{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}}\\
+    &
+    \underbrace{- \pavg{ \textbf{u}_\alpha' \cdot \intS{ \textbf{r} \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+    - \pavg{ \intS{\textbf{r}\textbf{w}_d^0 \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+    + \div[\ldots]}_\text{Energy flux generated due to the motion of the interfaces}
+\end{align*}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modeling of $k_f$: first option}
+
+\begin{multline}
+  \pddt (\phi_f\rho_fk_f)  
+    + \div (
+        \phi_f\rho_fk_f\textbf{u}_f
+        )
+        = 
+      + \div  \textbf{q}_f^\text{k}
+    - \avg{\chi_f\bm{\sigma}_f^0 : \grad \textbf{u}_f^0}
+    - \bm{\sigma}_f^\text{eff} : \grad \textbf{u}_f
+    \nonumber \\
+    + (\textbf{u}_f - \textbf{u}_p)\cdot \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}} 
+    - \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+    - \pavg{ \intS{\textbf{w}_d^0 \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d}},
+\end{multline}
+\vfill
+$\to$ Require numerous closure terms which are either due to \underline{single phase} turbulence or \underline{particle-induced} turbulence. 
+
+\end{frame}
+\begin{frame}
+  \frametitle{Modeling of $k_f$: Second option}
+Assuming $k_f$ is quasi-steady: 
+\begin{equation}
+  \pddt (\phi_f\rho_fk_f)  
+    + \div (
+        \phi_f\rho_fk_f\textbf{u}_f
+        )
+        \approx 
+    %   + \div  \textbf{q}_f^\text{k}
+    % - \avg{\chi_f\bm{\sigma}_f^0 : \grad \textbf{u}_f^0}
+    % - \bm{\sigma}_f^\text{eff} : \grad \textbf{u}_f
+    % \nonumber \\
+    % + (\textbf{u}_f - \textbf{u}_p)\cdot \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}} 
+    % - \pavg{ \textbf{u}_\alpha' \cdot \intS{  \bm{\sigma}_f^0 \cdot \textbf{n}_d}}
+    % - \pavg{ \intS{\textbf{w}_d^0 \cdot \bm{\sigma}_f^0 \cdot \textbf{n}_d}},
+    0 
+\end{equation}
+\vfill
+$\to$ We can find instead an algebraic solution for $k_f$ or $\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$. 
+\end{frame}
+
+
+\begin{frame}{Modeling of $k_f$: Second option}
+  \textbf{Objective and limiting hypothesis:}
+  \begin{equation*}
+     \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+     = 
+     \text{Particle induced turbulence}
+     + \text{Single phase turbulence}
+  \end{equation*}
+  \hrule\hrule
+  \pause
+  \begin{itemize}
+    \item 
+    Focus on the \textbf{Particle induced turbulence}. 
+    \item Assuming : 
+    \begin{itemize}
+      \item Negligible inertia (\textbf{Stokes} regime)
+      \item Dilute regime such that $\phi^{2} \approx 0$ 
+      \item Mono-disperse suspension of droplets of radius $a$
+    \end{itemize}
+  \end{itemize}
+\hrule\hrule
+$\to$ In this regime the wake of the droplets is the main contribution to  $\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}$ !
+\hfill
+\centering
+\href{file:///work/fintzin/BUBLLES_PROJECT/movies/layers.mp4}{\beamergotobutton{Play}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The wake of a single droplet in Stokes flow}
+
+ 
+
+  The stokes flow solution of an isolated translating drop is :
+  \begin{columns}
+    \column{0.6\textwidth}
+  \begin{multline*}
+    \textbf{u}_f^0
+    = \left(\frac{ \textbf{I}}{r} + \frac{\textbf{rr}}{r^3}\right)  \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right)  \cdot \textbf{U}\\
+    - \left(-\frac{\textbf{I}}{r^3} + \frac{3 \textbf{rr} }{r^5}\right)  \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right)  \cdot \textbf{U}
+  \end{multline*}
+  \begin{itemize}
+      \item $\lambda$ is the viscosity ratio.
+      \item  $\textbf{U} = \textbf{u}_p - \textbf{u}_f$ Mean relative velocity. 
+  \end{itemize}
+  \column{0.3\textwidth}
+  \begin{figure}
+    % \caption{Disturbance velocity field of an isolated translating spherical droplet}
+    \includegraphics[width=\textwidth]{image/Rising_Stokes.png}
+  \end{figure}
+  \end{columns}
+  
+
+
+\end{frame}
+
+\begin{frame}
+  {
+  Drops induced pseudo turbulence model : 
+  }
+  \small
+  \begin{equation*}
+    \avg{\chi_f  \textbf{u}_f' \textbf{u}_f'}
+    =
+    \underbrace{
+      C_1(\phi,\lambda)\textbf{UU}
+    + C_2(\phi,\lambda)U^2 \bm\delta}_\text{Mean particle Induced Turbulence (PIT)}
+    + \overbrace{C_1(\phi,\lambda)\avg{\textbf{u}_p'\textbf{u}_p'}
+    + C_2(\phi,\lambda)\avg{\textbf{u}_{p}'\cdot \textbf{u}_{p}'}\bm\delta
+    }^{\text{Particle center of mass velocity fluctuations}}
+    % }_\text{Bubble induced turbulence in a uniform flow}
+    % \\
+  \end{equation*}
+  % \pause
+%   \begin{equation*}
+%     + \underbrace{\frac{\phi_d a^2 }{105 (\lambda +1)^2 }\left[
+%         (129\lambda^2+108\lambda+24)\textbf{E}\cdot \textbf{E}
+%         + (20\lambda^2 +20\lambda + 6)
+%         (\textbf{E} : \textbf{E})\bm\delta
+%     \right]}_\text{Shear Particle Induced Turbulence (S-PIT)}
+% \end{equation*}
+% \begin{columns}
+  % \column{0.5\textwidth}
+  \begin{align*}
+    C_{1} = \frac{9(2+3\lambda)^2 \Gamma(1/3)}{80 (\lambda +1)^2}\phi^{2/3} 
+    &&
+    C_2 = \frac{9(2+3\lambda)^2 \Gamma(1/3)}{80 (\lambda +1)^2}\phi^{2/3} 
+    % - \frac{27+82\lambda + 62\lambda^2}{20(\lambda + 1)^2}\phi \right)
+  \end{align*}
+  \begin{itemize}
+    \item $\avg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ Particles center of mass velocity fluctuation.  
+    \item $\textbf{U} = \textbf{u}_p - \textbf{u}_f$ Mean relative velocity. 
+    \item $\lambda$ viscosity ratio between phases
+  \end{itemize}
+  % \column{0.2\textwidth}
+  % \begin{figure}
+  %   \caption{Disturbance velocity field of a droplet immersed in a pure linear flow}
+%   \end{figure}
+%   \column{0.4\textwidth}
+%   \includegraphics[width=0.6\textwidth]{image/Shear_Stokes.png}
+% \end{columns}
+\vfill
+\textbf{Semi-empirical} extension of the model !
+$C_1(\phi, \lambda ) \to C_1(\phi, \lambda ,Re) $ 
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Conclusion \& Perspectives}
+
+  \begin{enumerate}
+    \item The pseudo-turbulent equation for $k_f$ requires a large amount of closure terms. 
+    \begin{itemize}
+      \item 
+      It seems ambitious to close that equations while some closure of the momentum equations are not yet properly closed. 
+    \end{itemize}
+    \item If $k_f$ can be assumed quasi-steady: Then model for $\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}$ can be obtained. 
+  \end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Perspectives: The minimal tools to model the continuous phase for buoyant emulsions}
+
+
+  \begin{align*}
+    &\pddt (\phi_f \rho_f)  
+    + \div (
+        \phi_f \rho_f\textbf{u}_f
+    )
+    = 
+    0,\\
+    &\pddt (\phi_f\rho_f \textbf{u}_f)
+    + \div (\phi_f\rho_f \textbf{u}_f\textbf{u}_f)
+    = \phi_f 
+    \left(\div \bm{\Sigma}_f
+    + \rho_f \textbf{g}\right)
+    + \div  \bm{\sigma}_f^{\text{eff}}
+    - \underbrace{n_p \textbf{f}_p}_\text{drag force},
+  \end{align*}
+  \pause
+  
+Inter-phase Drag force 
+  \begin{align*}
+    n_p \textbf{f}_p  
+    &= 
+    f(Re,\phi, \lambda) \times \textbf{U}
+    % \bm{\sigma}_p^{\text{eff}} &= \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    % 
+  \end{align*}
+Mean Newtonian stress contribution: 
+\begin{align*}
+  \bm\Sigma_f &= - p_f \bm\delta + \mu_f [\grad \textbf{u}_f +  (\grad \textbf{u}_f)^\dagger ] 
+\end{align*}
+Droplets  (or local scale-)  contribution to the stress:
+\begin{align*}
+    \bm{\sigma}^{\text{eff}}_f 
+    &= \underbrace{C_E(Re,\phi,\lambda) \mu_f [\grad \textbf{u}_f +  (\grad \textbf{u}_f)^\dagger ] }_\text{``Einstein viscosity''-like contribution}
+    + 
+    \underbrace{
+      C_1(\phi,\lambda,Re)\textbf{UU}
+    + C_2(\phi,\lambda,Re)U^2 \bm\delta}_\text{Mean particle Induced Turbulence (PIT)}
+\end{align*}
+
+\end{frame}
+\backmatter
+
+
+
+
+\end{document}
