@@ -25,6 +25,459 @@
 \input{Part_vel_var/Faxen.tex}
 \input{Part_vel_var/Stratedgy.tex}
 
+\section*{Pfp stress or stresslet ? }
+
+According to \citet{wang2021numerical} there must be two contribution into the stress. 
+The pfp stress, 
+\begin{equation}
+    \bm\Sigma_{pfp}
+    = 
+    \int_{\mathbb{R}^3}
+    \avg{
+        \sum_i^N
+        \sum_j^N
+        h_{ij}[\FF,t]
+        \delta(\textbf{x}_i[\FF,t] - \textbf{x})
+        \delta(\textbf{x}_j[\FF,t] - \textbf{y})
+        (\textbf{y} - \textbf{x})\intO[i]{\bm\sigma_f'\cdot\textbf{n}}_z
+    }
+    d\textbf{y}
+\end{equation}
+and the stresslet,
+\begin{multline}
+    \avg{
+        \sum_i^N
+        \delta(\textbf{x}_i[\FF,t] - \textbf{x})
+        \intO[i]{\textbf{r}'\bm\sigma_f'\cdot\textbf{n}}
+    }\\
+    = 
+    \int_{\mathbb{R}^3}
+    \avg{
+        \sum_i^N
+        \delta(\textbf{x}_i[\FF,t] - \textbf{x})
+        \sum_j^N 
+        \delta(\textbf{x}_j[\FF,t] - \textbf{y})
+        h_j[\FF,t]
+        \intO[i]{(\textbf{z} - \textbf{x})\bm\sigma_f'\cdot\textbf{n}}_z
+    }d\textbf{y}
+\end{multline}
+Using the fact that the surface integral for sphere can be relplaced by 
+\begin{equation}
+    \delta(|\textbf{x}_\alpha[\FF,t] - \textbf{z}| - a)
+    = \delta(|\textbf{x} - \textbf{z}| - a)
+\end{equation}
+we may rewrite the previous stuff by using, 
+\begin{equation}
+    \bm\Sigma_{pfp}
+    = 
+    \int_{\mathbb{R}^3}
+    \int_{|\textbf{z} - \textbf{x}| = a}
+    \avg{
+        \sum_i^N
+        \sum_j^N
+        h_{ij}[\FF,t]
+        \delta(\textbf{x}_i[\FF,t] - \textbf{x})
+        \delta(\textbf{x}_j[\FF,t] - \textbf{y})
+        (\textbf{y} - \textbf{x})(\bm\sigma_f'\cdot\textbf{n})[\textbf{z},\FF,t]
+    }
+    d\textbf{y}
+    d\textbf{z}
+\end{equation}
+and the stresslet,
+\begin{multline}
+    \avg{
+        \sum_i^N
+        \delta(\textbf{x}_i[\FF,t] - \textbf{x})
+        \intO[i]{\textbf{r}'\bm\sigma_f'\cdot\textbf{n}}
+    }\\
+    = 
+    \int_{\mathbb{R}^3}
+    \int_{|\textbf{z} - \textbf{x}| = a}
+    \avg{
+        \sum_i^N
+        \sum_j^N 
+        \delta(\textbf{x}_i[\FF,t] - \textbf{x})
+        \delta(\textbf{x}_j[\FF,t] - \textbf{y})
+        h_j[\FF,t]
+        (\textbf{z} - \textbf{x})(\bm\sigma_f'\cdot\textbf{n})[\textbf{z},\FF,t]
+    }
+    d\textbf{y}
+    d\textbf{z}
+\end{multline}
+
+As it appears in the stress the final contribution gives, 
+\begin{equation}
+    \bm\Sigma
+    = 
+    \int_{\mathbb{R}^3}
+    \int_{|\textbf{z} - \textbf{x}| = a}
+    \avg{
+        \sum_i^N
+        \sum_j^N 
+        \delta(\textbf{x}_i[\FF,t] - \textbf{x})
+        \delta(\textbf{x}_j[\FF,t] - \textbf{y})
+        h_j[\FF,t]
+        (\textbf{z} - \textbf{y})(\bm\sigma_f'\cdot\textbf{n})[\textbf{z},\FF,t]
+    }
+    d\textbf{y}
+    d\textbf{z}
+\end{equation}
+So the covarience term that really matter in the end is the distance between the surface poi points and the NN !!!!!!!!
+
+\section*{Re-derivation of NNS}
+Drag, 
+\begin{equation}
+    \avg{\sum_i^N  \delta(\textbf{x}_i - \textbf{x}) \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}}
+    = 
+    \int_{\mathbb{R}^3} 
+    \avg{
+        \sum_i^N 
+        \sum_j^N 
+        \delta(\textbf{x}_i - \textbf{x}) 
+        \delta(\textbf{x}_j - \textbf{y}) 
+        \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}_z
+        }
+        d\textbf{y}
+\end{equation}
+This can be evaluated at $\textbf{x} \to \textbf{x} - \textbf{r}_2$, in other world 
+\begin{equation}
+    \delta(\textbf{x}_\alpha - (\textbf{x} - \textbf{r}_2))
+    = \delta(\textbf{x}_\alpha- \textbf{x} )
+    - \textbf{r}_2 \cdot \grad \delta(\textbf{x}_\alpha- \textbf{x} )
+    + \ldots
+\end{equation}
+so that
+\begin{equation}
+    \delta(\textbf{x}_\alpha- \textbf{x} )
+    = \delta(\textbf{x}_\alpha - (\textbf{x} - \textbf{r}_2))
+    + \textbf{r}_2 \cdot \grad \delta(\textbf{x}_\alpha- \textbf{x} )
+    + \ldots
+\end{equation}
+
+\begin{align*}
+    \avg{\sum_i^N  \delta(\textbf{x}_i - \textbf{x}) \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}}
+    &= 
+    \int_{\mathbb{R}^3} 
+    \avg{
+        \sum_i^N 
+        \sum_j^N 
+        \delta(\textbf{x}_i - (\textbf{x} - \textbf{r}_2)) 
+        \delta(\textbf{x}_j - \textbf{y}) 
+        \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}_z
+        }
+        d\textbf{y}\\
+    &+ 
+    \div 
+    \int_{\mathbb{R}^3} 
+    \avg{
+        \sum_i^N 
+        \sum_j^N 
+        \delta(\textbf{x}_i - \textbf{x}) 
+        \delta(\textbf{x}_j - \textbf{y}) 
+        \textbf{r}_2
+        \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}_z
+        }
+        d\textbf{y}
+\end{align*}
+Acctually we can go even more general and say, 
+\begin{align*}
+    \avg{\sum_i^N  \delta(\textbf{x}_i - \textbf{x}) \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}}
+    &= 
+    \avg{
+        \sum_i^N 
+        \delta(\textbf{x}_i - (\textbf{x} - \textbf{r}_2)) 
+        \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}_z
+        }\\
+    &+ 
+    \div 
+    \avg{
+        \sum_i^N 
+        \delta(\textbf{x}_i - \textbf{x}) 
+        \textbf{r}_2
+        \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}_z
+        }
+\end{align*}
+
+If $\textbf{r}_2 = \textbf{y} - \textbf{x}$ then we may use, 
+\begin{multline}
+    \int_{\mathbb{R}^3} 
+    \avg{
+        \sum_i^N 
+        \sum_j^N 
+        \delta(\textbf{x}_i - (\textbf{x} - (\textbf{y} -  \textbf{x}))) 
+        \delta(\textbf{x}_j - \textbf{y}) 
+        \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}_z
+        }
+        d\textbf{y}\\
+        \to
+        \int_{\mathbb{R}^3} 
+        \avg{
+            \sum_i^N 
+            \sum_j^N 
+            \delta(\textbf{x}_i - (\textbf{x} + (\textbf{y} -  \textbf{x})) )
+            \delta(\textbf{x}_j - \textbf{y}) 
+            \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}_z
+            }
+            d\textbf{y}
+\end{multline}
+both are the same so let us add them and divide, 
+
+\begin{equation}
+    \int_{\mathbb{R}^3} 
+    \avg{
+        \sum_i^N 
+        \sum_j^N 
+        [\delta(\textbf{x}_i - (\textbf{x} + (\textbf{y} -  \textbf{x})) )
+         + \delta(\textbf{x}_i - (\textbf{x} + (\textbf{y} -  \textbf{x})) )]
+        \delta(\textbf{x}_j - \textbf{y}) 
+        \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}_z
+        }
+        d\textbf{y}
+\end{equation}
+
+
+\subsection{Better re-derivation of PFP}
+
+Since, 
+\begin{equation}
+    \delta(\textbf{x}_\alpha - \textbf{x} - \textbf{r})
+    = \delta(\textbf{x}_\alpha- \textbf{x} )
+    - \textbf{r} \cdot \grad \delta(\textbf{x}_\alpha- \textbf{x} )
+    + \ldots
+\end{equation}
+so that
+\begin{equation}
+    \delta(\textbf{x}_\alpha - \textbf{x} )
+    = \delta(\textbf{x}_\alpha - \textbf{x} - \textbf{r})
+    + \textbf{r} \cdot \grad \delta(\textbf{x}_\alpha- \textbf{x} )
+    + \ldots
+\end{equation}
+
+Therefore any term such as the drag can be evaluated such that
+\begin{multline}
+    \avg{
+        \sum_\alpha^N 
+        \delta(\textbf{x}_\alpha - \textbf{x})
+        \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+        }
+    =
+    \avg{
+        \sum_\alpha^N 
+        \delta(\textbf{x}_\alpha - \textbf{x} - \textbf{r})
+        \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+        }\\
+    + 
+    \div
+    \avg{
+        \sum_\alpha^N 
+        \delta(\textbf{x}_\alpha - \textbf{x})
+        \textbf{r}
+    \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+    }
+\end{multline}
+
+At this stage \textbf{r} could be any position. 
+That is just a classic taylor exp. 
+including in those, 
+\begin{equation}
+    \int_{\mathbb{R}^3}
+    \sum_{j\neq i }^N 
+    \delta(\textbf{x}_j - \textbf{x} - \textbf{r})
+    h_{ij}
+    d\textbf{y}
+    = 1
+\end{equation}
+or, 
+\begin{equation}
+    \int_{\mathbb{R}^3}
+    \sum_{j\neq i }^N 
+    \delta(\textbf{x}_j - \textbf{x} + \textbf{r})
+    h_{ij}
+    d\textbf{y}
+    = 1
+\end{equation}
+we directly obtain, 
+\begin{multline}
+    \avg{
+        \sum_\alpha^N 
+        \delta(\textbf{x}_\alpha - \textbf{x})
+        \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+        }
+    =
+    \int_{\mathbb{R}^3}
+    \avg{
+        \sum_\alpha^N 
+        \delta(\textbf{x}_\alpha - \textbf{x} - \textbf{r})
+        \sum_{j\neq i }^N 
+        \delta(\textbf{x}_j - \textbf{x} + \textbf{r})
+        h_{ij}
+        \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+    }
+    d\textbf{y}
+    \\
+    + 
+    \div
+    \int_{\mathbb{R}^3}
+    \avg{
+    \sum_\alpha^N 
+    \delta(\textbf{x}_\alpha - \textbf{x})
+    \textbf{r}
+    \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+    }
+    d\textbf{r}
+\end{multline}
+
+I could also say, 
+\begin{multline}
+    \avg{
+        \sum_\alpha^N 
+        \delta(\textbf{x}_\alpha - \textbf{x} - \textbf{r})
+        \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+        }
+    \to 
+    \int_{\mathbb{R}^3}
+    \avg{
+        \sum_i^N 
+        \sum_{j\neq i }^N 
+        \delta(\textbf{x}_i - \textbf{x} - \textbf{r})
+            \delta(\textbf{x}_j - \textbf{x} + \textbf{r})
+            h_{ij}
+        \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+    }
+    d\textbf{r}
+\end{multline}
+The tricks is the of $\textbf{r} \to -\textbf{r}'$ the int gives the same since we integrate on all \textbf{r} so 
+
+\begin{multline}
+    \avg{
+        \sum_\alpha^N 
+        \delta(\textbf{x}_\alpha - \textbf{x})
+        \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+        }
+    =\\
+    \frac{1}{2}
+    \int_{\mathbb{R}^3}
+    \avg{
+        \sum_i^N 
+        \sum_{j\neq i }^N 
+        \{
+            \delta(\textbf{x}_i - \textbf{x} - \textbf{r})
+            \delta(\textbf{x}_j - \textbf{x} + \textbf{r})
+            + \delta(\textbf{x}_i - \textbf{x} + \textbf{r})
+            \delta(\textbf{x}_j - \textbf{x} - \textbf{r})
+        \}
+        h_{ij}
+        \intO[i]{\bm\sigma_f^0 \cdot \textbf{n}}
+    }
+    d\textbf{y}
+    \\
+    + 
+    \div
+    \int_{\mathbb{R}^3}
+    \avg{
+    \sum_\alpha^N 
+    \delta(\textbf{x}_\alpha - \textbf{x})
+    \textbf{r}
+    \intO{\bm\sigma_f^0 \cdot \textbf{n}}
+    }
+    d\textbf{r}
+\end{multline}
+And there we have obtained our pfp without any factor 
+\section*{Rheometry meusurement}
+
+\begin{equation}
+    \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+    = 
+    \phi_f
+    \int_{\mathbb{R}^6}
+    \textbf{v}_f^\text{nst}
+    \textbf{v}_f^\text{nst}
+    P_\text{nst}^f
+    d\textbf{y}
+    d\textbf{w}
+    + 
+    \int_{\mathbb{R}^6}
+    \avg{
+        \chi_f
+        \textbf{u}_f''
+        \textbf{u}_f''
+        % \sum_i 
+        % \delta(\textbf{x}+\textbf{y}-\textbf{x}_i)
+        % \delta(\textbf{w}-\textbf{u}_i)
+        % h_i
+        \delta_\text{nst}
+    }
+    d\textbf{y}
+    d\textbf{w}.
+\end{equation}
+
+reformulaiton of the last term 
+\begin{align*}
+    &\avg{
+        \chi_f
+        \textbf{u}_f^0
+    \textbf{u}_f^0
+    \sum_i^N 
+    \delta(\textbf{x}+\textbf{y}-\textbf{x}_i)
+    \delta(\textbf{w}-\textbf{u}_i)
+    h_i
+    % \delta_\text{nst}
+    }
+    - P_\text{nst-f} 
+    \textbf{u}_f^\text{nst}
+    \textbf{u}_f^\text{nst}
+    \\
+    &= 
+    \int_{\mathbb{R}^3}
+    \avg{
+    \chi_f
+    \textbf{u}_f^0
+    \textbf{u}_f^0
+    \sum_i^N 
+    \sum_{j\neq i}^N 
+    \delta(\textbf{x}+\textbf{r}-\textbf{x}_i)
+    \delta(\textbf{x}+\textbf{r}_2-\textbf{x}_i)
+    \delta(\textbf{w}-\textbf{u}_i)
+    h_i
+    h_j
+    % \delta_\text{nst}
+    }
+    d \textbf{r}_2
+    - P_\text{nst-f} 
+    \textbf{u}_f^\text{nst}
+    \textbf{u}_f^\text{nst}\\
+    \avg{
+        \chi_f
+        \textbf{u}_f''
+        \textbf{u}_f''
+        % \sum_i 
+        % \delta(\textbf{x}+\textbf{y}-\textbf{x}_i)
+        % \delta(\textbf{w}-\textbf{u}_i)
+        % h_i
+        \delta_\text{nst}
+    }
+    &= 
+    \phi_f
+    \int_{\mathbb{R}^6}
+    \textbf{v}_f^\text{2-nst}
+    \textbf{v}_f^\text{2-nst}
+    P_\text{2-nst}^f
+    d\textbf{r}_2
+    + 
+    \int_{\mathbb{R}^3}
+    \avg{
+        \chi_f
+        \textbf{u}_f'''
+        \textbf{u}_f'''
+        % \sum_i 
+        % \delta(\textbf{x}+\textbf{y}-\textbf{x}_i)
+        % \delta(\textbf{w}-\textbf{u}_i)
+        % h_i
+        \delta_\text{2-nst}
+    }
+    d\textbf{r}_2
+\end{align*}
+
 \bibliography{Bib/bib_bulles.bib}
 \appendix
 

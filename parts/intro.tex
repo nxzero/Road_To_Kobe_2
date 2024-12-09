@@ -260,7 +260,7 @@ Essentially, this law allows us to predict the trajectory of one or several part
 
 To model a fluid or gas, essentially an ensemble of particles colliding with each other, Newton's second law becomes impractical due to the vast number of particles present in a unit volume of liquid or gas.
 Thus, instead of modeling all individual particle trajectories, we derive equations for the average particle velocities and trajectories.
-This is achieved through statistical methods, particularly the statistical kinetic theory of gases \cite{hansen2013theory}.
+This is achieved through statistical methods, particularly the statistical kinetic theory of gases \cite{hansen2013theory,kardar2007statistical}.
 For instance, the well-known Boltzmann equation describes the evolution of the one-point probability density function, representing the likelihood of finding a particle at a given location with a specific velocity.
 Averaging this equation, multiplied by the velocity vector, leads to the Maxwell equations, which describe the balance of the averaged velocity of particles in a volume of fluid or gas.
 These equations can be seen as the momentum balance for a fluid or gas.
@@ -327,7 +327,7 @@ These investigations require a combination of theoretical, numerical, and experi
 
 The problem of droplet-droplet interactions leading to coalescence can be addressed either experimentally or by employing Direct Numerical Simulation (DNS) to model the flow within the thin film between two droplets (see \ref{fig:scaling_up} (left)).
 These DNS simulations must account for both the chemical interactions and the flow field within the thin film separating the two interfaces.
-To model the interaction between multiple droplets and the continuous phase, we can use Particle-Resolved Direct Numerical Simulation (PR-DNS) \citep{tryggvason2006direct}, (see \ref{fig:fig:scaling_up} (right)).
+To model the interaction between multiple droplets and the continuous phase, we can use Particle-Resolved Direct Numerical Simulation (PR-DNS) \citep{tryggvason2006direct}, (see \ref{fig:scaling_up} (right)).
 This approach is similar to DNS, however, it does not fully resolve the flow within the film between two interacting particles.
 Indeed, accurately solving the flow around hundreds of droplets while also resolving the flow within the film during droplet collisions would be computationally too expansive.
 In \ref{fig:scaling_up}, we display a schematic representation of the global strategy explained here.
@@ -456,7 +456,7 @@ In this work we classified the closure terms into three groups.
 
 The first group represents the closure terms that are common to any particles type. 
 For example, the momentum exchange term, the Reynolds stress or pseudo-turbulent stress, appear in every averaged model, regardless of the dispersed phase nature and topology. 
-Hence, numerous studies have already been devoted to develop accurate model for these closures.  
+Hence, numerous studies have already develop accurate model for these closures. 
 Nevertheless, while an enormous amount of work have been devoted for solid particles and bubbles, less work have been provided to build model for emulsion. 
 Particularly, the viscosity ratio between the dispersed phase and continuous phase needs to be included as input of these model that either consider one of these extreme.
 
@@ -499,49 +499,63 @@ The text and the box colored in red represent the aspect of the problem treated 
 
 In order to provide a consistent methodology to derive averaged equations and useful closure terms to feed the former equations we partitioned this manuscript into three main parts. 
 
-\ref{part:one} focus solely on the mathematical modeling of dispersed two phase flows, including the development of theoretical closure. 
+\paragraph*{Part I: } 
+The first part focus on the mathematical modeling of dispersed two phase flows, that is the derivation of the averaged equaitons as well as the derivation of the closure problem. 
 
-\ref{chap:daniel1} of \ref{part:one} provides a derivation of the averaged equations governing the motion of dispersed two-phase ﬂows with interfacial transport. 
+The first chapter, (\ref{chap:daniel1}), provides a derivation of the averaged equations governing the motion of dispersed two-phase ﬂows with interfacial transport. 
 We begin by revisiting the two-ﬂuid formulation, as well as the distributional form of the interfacial transport equation which holds on the entire domain. 
 Following this, a general Lagrangian model is introduced, which accounts for the eﬀects of both internal and interfacial properties of the dispersed inclusions (bubbles, droplets, or particles) within a continuous phase.
 We then proceed by deriving the lesser-known conservation equations for the moments of the volume and surface distribution of an arbitrary Lagrangian property.
 The paper concludes by presenting a ”hybrid” set of equations, consisting of phase-averaged equations for the continuous ﬂuid phase, complemented by an arbitrary number of moment conservation equations for the dispersed phase.
 The goal of this chapter was to provide the most general approaches to derive averaged equation so that the reader obtain a wide understanding of the mathematical structure of these equations. 
 
-\ref{chap:daniel15} we expose the minimal set of equations necessary to describe emulsions made of Newtonian droplets based on the ``hybrid'' models developed in the preceding Chapter. 
+\ref{chap:daniel15} we expose the minimal set of equations necessary to describe emulsions made of Newtonian droplets based on the ``hybrid'' formulation developed in the \ref{chap:daniel1}. 
 In short, we expose the ensemble-averaged momentum and energy equations in the ``hybrid'' formalism for arbitrary Newtonian droplet including surface tension properties. 
-Notably, this derivation allowed us to discuss the energy exchange present in a a dispersed two-phase flow. 
+Notably, this derivation allowed us to discuss the energy exchange present in a dispersed two-phase flow. 
 Additionally, we provided an explicit and general formulation for the effective stress in an emulsion. 
-
-\ref{chap:daniel2} we propose to expose a new strategy developed in this Thesis which makes the theoretical links between the closure terms and the closure problem. 
-This methodology is inspired from \citet{hinch1977averaged} and generalized.
-After deriving the closure problem itself we derive the closure terms for spherical droplets in stokes flow.  
 
 Finally, in \ref{chap:deformable} we decide to focus on the modeling of rising ellipsoidal droplets. 
 We propose a set of equations that use the hybrid model to describe ellipsoidal rising droplets' droplet. 
 
 
+\ref{chap:daniel2} we demonstrate how to re-formulated the closure term of the averaged model into conditionally averaged equations. 
+Then, we demonstrate how to derive the corresponding conditionally averaged equations. 
+This methodology is inspired from \citet{hinch1977averaged} and generalized.
+After deriving the closure problem itself we derive the closure terms for spherical droplets in stokes flow.  
 
 
 
-\ref{part:one} was entirely theoretical, hence in \ref{part:two} we propose to introduce Direct-Numerical Simulation of droplets to confrontre our theoritical results with numerical experiment of rising buoyant emulsion of droplets. 
-These simulations are conducted using the open source library \texttt{Basilisk C}. 
 
-\ref{chap:microstructure} we charaterize the particles relative position, that is termed the study of the microstructure of the emulsion. 
+\paragraph*{Part II: } 
+\ref{part:one} was purely theoretical, hence in \ref{part:two} we introduce Particle Resolve Direct-Numerical Simulation (PR-DNS) of buoyant emulsion in a tri-periodic domain. 
+These simulations are conducted using the open source library \texttt{Basilisk C}.
+These will serve as a basis to compare with the subsequent theoretical investigation and extend the validity of the models.  
+
+In \ref{chap:closure-disperse} we solve the conditionally averaged equations in the dilute and Stokes limit to provide theoretical models for the closure terms of the ``hybrid-model''. 
+Following the study of \ref{chap:deformable} we also consider the effect of finite inertia on rising ellipsoidal droplets.
+The effective stress of the suspension is also investigated in this case.  
+
+
+In \ref{chap:mono-disperse} we develop a model for the inter-phase drag force present in the averaged momentum equations. 
+Based on the theory and simulation results we were able to construct a complete model for the inter-phase drag force taking in account an arbitrary ratio of viscosity between phases, volume fraction of droplets and Reynolds number based on the relative velocity between phases. 
+
+In \ref{chap:pseudoturbulence} we focus on what is called the Reynolds stress tensor, that is the variance of the local continuous phase velocity. 
+This velocity fluctuation tensor can be produced by the relative motions of the droplets with the continuous phase (that is the wake of the droplets), and other sources of turbulence. 
+In this chapter we only focus on the former contribution and build a Model taking in account the dispersed phase volume fraction, relative velocity between phases and viscosity ratio between phases. 
+
+
+
+\paragraph*{Part III:} 
+The last part  focus on the study of the relative interaction between droplets among the emulsion. 
+
+
+In \ref{chap:microstructure} we characterize the particles relative position of the droplets, that is termed the study of the microstructure of the emulsion. 
+This is done using the nearest-neighbors distribution of the droplets in the emulsion. 
+
 In \ref{chpa:microstructure_kin} we then study the relative velocity between particles, that is the study of the kinematic of the microstructure. 
-The motivation for these  chapters is to provides useful information for the understanding of how in average pair of droplets interact together. 
-Besides we introduce the nearest particle statistics in these chpater, which will proves useful for the subsequent derivations. 
+The motivation for these  chapters is to provide useful information for the understanding of how in average pair of droplets interact together. 
 
 
-The last part,\ref{part:three},  focus on the actual production of the closure term, which are valid on a wide range of dimensionless parameters, in opposition to the closure presented on the part one which were often limited to stokes flow regime. 
-As building these terms constitues also an enormous task we focus on two main closure terms. 
-
-In \ref{chap:mono-disperse} we develop a model for the inter-phase drag force between the droplets ad teh continous phase. 
-Based on the theory and simulation results we were able to construct a complete model for the inter-phase drag force taking in account an arbitrary ratio of viscosity between phases, volume fraction of droplest and Reynolds number based on teh relative velocity between phases. 
-
-In \ref{chap:pseudoturbulence} we focus on what is called the Reynolds stress tensor, that is the varience of the local continuous phase velocity. 
-These velocity fluctuation can be produced by the relative motions of the droplest with the continous phase, that is the wake of the droplets, and other sources of turbulence. 
-In this chapter we only focus on teh former contribution and build a Model taking in account the droplets volume fraction, relative velocity between phases and viscosity ratio between phases. 
 
 
-Finally to end this manuscript we finish in \ref{chap:perspectives} with perspectives and conclusion on the work that remain to do on the macroscopic Euler-Euler simulations. 
+Finally, we end this manuscript with a chapter on the perspectives and conclusions. 

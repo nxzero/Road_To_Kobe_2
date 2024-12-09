@@ -133,7 +133,7 @@ The first equation represents the contribution of the surface tension stresses t
 The second equation represents the amount of energy stored as surface deformation.
 And the last equation witnessed of the continuity of heat flux through the interface. 
 
-\subsection{Averaged single-fluid formulation}
+\subsection{Averaged bulk-fluid formulation}
 Instead of solving one equation for the dispersed phase, one for the continuous phase and one for the interfaces, one might instead use the \textit{single-fluid} formulation of the averaged equations. 
 In this case one needs to solve an equation for the bulk quantities, another for the dispersed phase and a last one for the continuous phase. 
 
@@ -173,17 +173,17 @@ Where we have introduced the effective stress and heat fluxes namely,
 \begin{align*}
     &\bm{\sigma}^\text{eq}_m
     = 
-    \avg{ \rho^0\textbf{u}'_m\textbf{u}'_m}
+    \avg{ (\rho^0\textbf{u}^0)' \textbf{u}'_m}
       - \phi_f\bm\sigma_f
       - \phi_d\bm\sigma_d
       - \phi_\Gamma\bm\sigma_\Gamma,%- n_p \textbf{M}_p
     &\textbf{q}^\text{eq}_m
     =\textbf{q}^\text{e}_m +\textbf{q}^\text{k}_m,  \\
     &\textbf{q}^\text{e}_m
-    = \avg{\rho^0\textbf{u}_m' e_m'} 
+    = \avg{(\rho^0\textbf{u}^0)' e_m'} 
     + \phi\textbf{q}_m,
     &\textbf{q}^\text{k}_m
-    = \avg{\rho^0 \textbf{u}_m' k_m} 
+    = \avg{(\rho^0 \textbf{u}^0)' k_m'} 
     - \avg{ \textbf{u}_m' \cdot \bm{\sigma}^0}.
 \end{align*}
 In these equations, we have made use of the subscript $_m$ to denote the Favre averaged quantities, such that, 
@@ -212,13 +212,13 @@ In \ref{eq:dt_avg_rhoE} we have defined the bulk total energy as the average of 
 \end{equation}
 with, $e_m = \avg{\sum_k \rho_k\phi_k e_k + \phi_\Gamma \gamma}$ and $k = \avg{\rho^0 \textbf{u}_m'\cdot \textbf{u}_m'}/2$. 
 
-Additionally, it is interesting to note that while $\textbf{u}_m$ is not divergence-free \eqref{eq:dt_avg_rho}. 
+Additionally, it is interesting to note that $\textbf{u}_m \avg{\chi_f\rho_f \textbf{u}_f^0 + \chi_d \rho_d \textbf{u}_d^0} $ is not divergence-free \eqref{eq:dt_avg_rho}. 
 However,  the volume-averaged bulk velocity fields $\textbf{u} = \avg{\chi_f \textbf{u}_f^0 + \chi_d \textbf{u}_d^0} $ is. 
 Indeed, adding $\pddt \chi_k + \div \textbf{u}_k^0\chi_k =0$ for $k=f,d$ and ensemble averaging the resulting expression leads to 
 \begin{equation}
     \div\textbf{u}=0.
 \end{equation}
-Thus, one might prefer to solve the system for $\textbf{u}$ instead of $\textbf{u}_m$ since he can use a classic non-compressible solver for forcing terms instead of a compressible solver. 
+Thus, one might prefer to solve the system for $\textbf{u}$ instead of $\textbf{u}_m$ since in this case we can use a classic non-compressible solver for forcing terms instead of a compressible solver. 
 The momentum equation for \textbf{u} can be obtained by adding \ref{eq:dt_avg_rhou_k} with $k=d$, with \ref{eq:dt_avg_uI} divided by $\rho_d$, to \ref{eq:dt_avg_rhou_k} for $k=f$, which gives, 
 \begin{equation}
     \pddt \textbf{u}  
@@ -247,4 +247,82 @@ On the other hand, the body force term $\textbf{g}$ is a constant field, in oppo
 
 These equations are particularly interesting from an experimental point of view. 
 For example, in a Rheometer we can measure only for the \textit{Bulk stress} $\bm\sigma^\text{eq}_m$ and not $\bm\sigma^\text{eq}_f$ and $\bm\sigma^\text{eq}_d$ separately, as it measures the stress response from the mixture phases. 
-Therefore, it is of interest to describe a bit more in detail the \textit{Bulk stress}, which is the subject of the next section.
+
+\subsection{Mean continuous phase stress}
+
+In this section, we present two formulations of the averaged continuous phase stress $\phi_f\bm\sigma_f$ valid for a Newtonian continuous phase. 
+
+First, recall that $\bm\sigma_f^0 = -p_f^0 \bm\delta +2  \mu_f \textbf{e}_f^0$, where $\textbf{e}_f^0 = (\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger)/2$ is the rate of strain tensor. 
+Thus, the ensemble-averaged stress can be expressed as:
+\begin{equation}
+    \phi_f\bm\sigma_f
+    = 
+    -\phi_f p_f \bm\delta + 2 \mu_f \phi_f \textbf{e}_f. 
+    = 
+    -\phi_f p_f \bm\delta + \mu_f \avg{\chi_f [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger]}. 
+    \label{eq:sigmaf_def}
+\end{equation}
+The second term on the left-hand side can be reformulated in two ways. 
+
+The first formulation is derived using the relation: 
+\begin{equation}
+    \textbf{e}^0
+    = 
+    \chi_f \textbf{e}_f^0
+    + 
+    \chi_d \textbf{e}_d^0
+    \label{eq:first_rel}
+\end{equation}
+which is valid since no shear stresses are considered at the interface, i.e. $\delta_\Gamma\textbf{e}_\Gamma = 0$. 
+Recall that $\textbf{e}^0 = [\grad \textbf{u}^0 + (\grad \textbf{u}^0)^\dagger]/2$ is the local rate of strain of the bulk.  
+Injecting \ref{eq:first_rel} into \ref{eq:sigmaf_def} we obtain the first formulation of the continuous phase stress, 
+\begin{equation}
+    \phi_f\bm\sigma_f
+    % = 
+    % - p_f \bm\delta + \mu_f [\grad \textbf{u} + (\grad \textbf{u})^\dagger]
+    % +\phi_d ( p_f\bm\delta - \textbf{e}_d)
+    = 
+    - p_f \bm\delta + 2 \mu_f \textbf{e}
+    +\phi_d ( p_f\bm\delta - 2 \mu_f \textbf{e}_d), 
+    \label{eq:first_form}
+\end{equation}
+where $\textbf{e} = \avg{\textbf{e}^0} = [\grad \textbf{u} + (\grad \textbf{u})^\dagger]/2$ and $\phi_d \textbf{e}_d = \avg{\chi_d \textbf{e}_d^0}$. 
+Here, the first two terms on the right-hand side represent the mean Newtonian stress contribution, with the pressure field $p_f$ and velocity field $\textbf{u}$.
+The last term, proportional to $\phi_d$ represents the dispersed phase contribution to the stress.
+% Note that $\textbf{e}_d =0$ for solid particle suspensions, as no rate of strain is considered for non-deformable solid particles \citep{jackson1997locally}.
+Under this form we clearly remark that for solid particle $\phi_d \textbf{e}_d = 0$ such that \ref{eq:first_form} corresponds exactly to equations (44) of \citet{jackson1997locally} which reads in our notation : $\bm\sigma_f\phi_f =-\phi_f p_f \bm\delta + 2 \mu_f \textbf{e}$. 
+
+The second formulation is derived using the relation: 
+\begin{equation}
+    \avg{\chi_f \grad \textbf{u}_f^0}
+    = 
+    \div (\phi_f \textbf{u}_f)
+    + \avg{\delta_\Gamma \textbf{n}_f \textbf{u}_f^0}
+    = 
+    \phi_f \div  \textbf{u}_f
+    + \avg{\delta_\Gamma \textbf{n}_f \textbf{u}_f'},
+    \label{eq:second_rel}
+\end{equation}
+where the second equality holds by noting that $\textbf{u}_f \grad \phi_f =\textbf{u}_f \avg{\grad \chi_f} =\avg{\delta_\Gamma \textbf{u}_f \cdot \textbf{n}_f}$. 
+Substituting \eqref{eq:second_rel} into \eqref{eq:sigmaf_def}, we obtain: 
+\begin{equation}
+    \phi_f\bm\sigma_f
+    = 
+    -\phi_f \{
+        p_f \bm\delta 
+        + \mu_f [\grad \textbf{u}_f + (\grad \textbf{u}_f)^\dagger] 
+    \}
+    - \avg{\delta_\Gamma (\textbf{u}_f'\textbf{n}_d + \textbf{n}_d \textbf{u}_f')}. 
+    \label{eq:second_form}
+\end{equation}
+In this formulation, the first two terms on the right-hand side again represent the mean Newtonian stress contribution, but $\phi_f$ acts as a factor, and the mean velocity field is $\textbf{u}_f$ instead of $\textbf{u}$. 
+The dispersed phase contribution now appears as an interfacial term, $\avg{\delta_\Gamma (\textbf{u}_f'\textbf{n}_d + \textbf{n}_d \textbf{u}_f')}$, instead of the volumetric contribution $\textbf{e}_d$. 
+
+Which formulation, (\ref{eq:first_form} or \ref{eq:second_form}) is more appropriate depends on the averaged momentum equation considered in the problem.  
+If one considers \ref{eq:dt_avg_rhou_k} for $k=f$, and hence solve for $\textbf{u}_f$, it makes more sense to use \ref{eq:second_form} which uses the same velocity field.
+However, if the bulk-fluid formulation of momentum or the Favre-averaged momentum equation is used, the obtained velocity field is $\textbf{u}_m$, and neither \ref{eq:first_form} nor \ref{eq:second_form} is ideal. 
+This is why we introduced the volume-averaged momentum conservation equation, \eqref{eq:dt_avg_rhou} which is to be solved for $\textbf{u}$. 
+In this case \ref{eq:first_form} appears to be the more suitable choice since it makes use of $\textbf{u}$. 
+
+
+Following this, in \ref{sec:symetric_stress} we present the complete formulation of the bulk stress tensor $\bm\sigma_m^\text{eq}$ which appear in \ref{eq:dt_avg_rhou_m}. 

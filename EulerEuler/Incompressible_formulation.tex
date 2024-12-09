@@ -10,8 +10,9 @@ These models focus on solving the averaged mixture-phases equations (i.e. solvin
 More recently,  \citet{kriaa2023two} used this formulation to model sediment transport with \texttt{Basilisk}.
 Actually, \citet{kriaa2023two} used an approximation of this formulation, assuming that the ``bulk'' velocity $\textbf{u}$ satisfy Navier-Stokes equations.
 The particles are accounted only though forcing term related to the weight of the particle in the NS equations. 
-this turns out to be valid under certain circumstances  according to Boussinesq, approximation. 
-
+It this turns out to be valid under certain circumstances  according to Boussinesq, approximation. 
+% In \citet{paisant2014modelisation} they stipulate that the volume averaged momentum equation does not actually constitutes an equation for the momentum but rather an equation for the velocity. 
+% That is why it is not used. 
 
 As it can be guessed, it is the most general scenario \textbf{u} satisfy a complex averaged equations with an effective stress and a momentum transfer terms both accounting for the presence of particle in the flow (see \ref{chap:daniel15}).  
 Nevertheless, in this Chapter we demonstrate that when derived properly the volume averaged velocity \textbf{u} indeed satisfy the forced NS equations but with an additional stress and forcing term. 
@@ -19,7 +20,7 @@ Thus, we recover nearly the same system of equation of \citet{kriaa2023two}, wit
 Note that the main difference between our method and \citet{kriaa2023two} methodology, is that we do not make any assumption along the derivation. 
 
 Thus, this derivation leads to an efficient formulation similar to the one of \citet{kriaa2023two}, but without any approximation or hypothesis. 
-However, one must take in account the additional stress generated due ti the presence of particle if he wants to get rid of any approximation such as Boussinesq hypothesis.
+However, one must take in account the additional stress generated due to the presence of particle if he wants to get rid of any approximation such as Boussinesq hypothesis.
 The dispersed phase equations are derived in the usual way and can be express in terms of $\textbf{u}-\textbf{u}_p$ which represents the drift flux. 
 As it will be demonstrated due to the divergence free property of \textbf{u} this formulation is particularly interesting to use  in 1D model. 
 We conclude this Chapter by a brief demonstration on how we could implement our system of equation into \texttt{Basilisk}. 
@@ -319,41 +320,48 @@ The conclusion of that analysis is that in dimensionless form, the term involvin
 % In the mixture momentum equation, the forces and stresses are made dimensionless by dividing the expression by $\frac{\mu_f U_M}{L}$ or . 
 
 
-In Stokes regime, due to the linearity of the Stokes equations, the closure terms must be proportional to $\textbf{u}_{r}$, $\grad \textbf{u}$ or $\grad^2 \textbf{u}$. 
+In Stokes regime, due to the linearity of the Stokes equations, the closure terms must be proportional to $\textbf{u}_{r}$, $\grad \textbf{u}$, $\grad^2 \textbf{u}$, or the mean pressure of the fluid $p_f$. 
 Therefore, based on this argument we might argue that the drag force term, which is a vector, must have the following functional form, 
 \begin{align}
     % \frac{L^2}{\mu_f U_M} 
     \pSavg{\bm\sigma_f\cdot \textbf{n}} &= 
-    \mu_f \phi \{
-    \grad p_f
+    \phi \{
+    \div \bm\Sigma
     + 
     % (L^2/a^2) (U/U_M)  
-    a^{-2}
+    \mu_f a^{-2}
     C_u \textbf{u}_{r}
-    +C_{[\grad^2 u]} \grad^2 \textbf{u}
+    +\mu_f C_{[\grad^2 u]} \grad^2 \textbf{u}
     \} + \ldots
     \label{eq:darg_force_general}
 \end{align}
-since $\grad p_f$, $\sim \textbf{u}_r$ and  $\sim \grad^2 \textbf{u}$ form a vector proportional to the velocity, in opposition to $\grad \textbf{u}$ which form a second order tensor, hence it cannot be part of the closure problem. 
+since $\div \bm\Sigma$, $\sim \textbf{u}_r$ and  $\sim \grad^2 \textbf{u}$ form a vector proportional to the velocity, in opposition to $\grad \textbf{u}$ which form a second order tensor, hence it cannot be part of the closure problem. 
 % Note that the velocity scale have been made dimensionless using $U$ on the left-hand side of the equaiton. 
 In \ref{eq:darg_force_general} we recognize that the dimensionless constant $C_u$ is related to the drag force coefficient developed in \ref{chap:mono-disperse}, hence $C_u$ is a function of $Re$, $\lambda$ and $\phi$.
 We remark the presence of the radius of the particle $a^{-2}$ in front of $\textbf{u}_r$ so that $C_u$ is indeed a dimensionless variable. 
 The constant $C_{[\grad^2 u]}$ correspond to the Fax\'en contribution, its closure is given in \ref{chap:daniel2}.
 While, \ref{eq:darg_force_general} can apply to various situation by including $Re$, $\lambda$ and $\phi$ into those constant, it is still incomplete. 
 Indeed, still considering Stokes regime, one might argue, according to the general form of the closure problem (see \ref{chap:daniel2}) that the vector, $\grad \phi$, can be included into the drag force formulation. 
-We deduce that we must add to \ref{eq:darg_force_general} the term, 
+We deduce that we must add to \ref{eq:darg_force_general} the terms, 
 \begin{equation}
     \ldots 
     +
-    \mu_f \phi C_{[E \grad\phi ]} \grad \textbf{u} \cdot \grad \phi + \ldots
+    \phi C_{[E \grad\phi ]} \grad \textbf{u} \cdot \grad \phi 
+    + \phi C_{[p_f \grad\phi ]} p_f \grad \phi 
+    + \ldots
     \label{eq:drag_inhomo}
 \end{equation}
 Note the presence of the term $\phi \grad \phi$ and not just $\phi$ in this expression. 
 This is because in the absence of particles, when $\phi=0$, we might still have gradient of volume fraction such that $\grad \phi \neq 0$ however the grad force must remain null thus we make appear explicitly $\phi\grad\phi$ in this expression. 
-Additionally, we remarked that, the only vector linear with $\textbf{u}$, that can be formed by a combination of $\textbf{u}$ and its derivatives, and $\grad \phi$ is given by \ref{eq:drag_inhomo}. 
+Additionally, we remarked that, the only vector linear with $\textbf{u}$, that can be formed by a combination of $\textbf{u}$ and its derivatives, and $\grad \phi$ is given by $\bm\Sigma \cdot \grad \phi$.
+Moreover, the functional form $p_f \bm\delta \grad \phi$ which leads to the general formulation  \ref{eq:drag_inhomo}. 
 In \citet{wang1999longitudinal} they demonstrate analytically that the drift velocity of particle under shear flow is of $\mathcal{O}(a^2 \grad \textbf{u}\cdot \grad \phi)$.
 This results in a drag force term of  $\mathcal{O}( \grad \textbf{u} \cdot \phi \grad \phi)$ which implies that $C_{[E \grad\phi ]} \sim \mathcal{O}(1)$ at the leading order. 
 As, stipulated in \citet{wang1999longitudinal,guazzelli2011} the physical interpretation of \ref{eq:drag_inhomo} is that this force is at the origin of the longitudinal drift velocity of a sheared dilute suspension of spheres. 
+Regarding the pressure contribution \citet{du2020bubble} identified a term of the form $p_f \grad \phi$ and called it Laminar dispersion, this confirms that $C_{[p_f \grad\phi ]}\neq 0$. 
+
+
+
 Of course other terms might appear if one consider higher gradient in the volume fraction and velocity however we truncated the analysis only the first order derivative. 
 
 If we now turn our attention to slightly inertial flow, or potential flow, the closures terms are now proportional to $\sim \textbf{uu}$ and its derivatives. 

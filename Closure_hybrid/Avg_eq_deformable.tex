@@ -1,4 +1,4 @@
-\section{The averaged system of equations for slightly deformable particles}
+\section{Averaged system of equations for spheroidal deformable particles}
 \label{sec:averaged_eq}
 
 
@@ -7,12 +7,11 @@ As discussed earlier we decided to describe the droplets based on their orientat
 Consequently, at the cross-grained level we would like to determine the mean, or averaged orientation of the particles, and the average aspect ratio of the particles.  
 To simplify the problem at hand we consider a mono-disperse emulsion, meaning that all droplets have the same volume. 
 
-As will be demonstrated the averaged equation for the orientation corresponds in lots of ways to what is done in fiber media theory. 
+As demonstrated below the averaged equation for the is similar to the one found in fiber media theory. 
 Indeed, we transport a quantity corresponding to the average of the tensor $\textbf{pp}$ which is completed by an equation for the mean angular momentum. 
 The equation for the mean aspect ratio, angular momentum, and averaged rate of strain are then derived, in the particle eigenbasis.
-Due to the complicated nature of the particles, it will be shown that the closure problem becomes quite difficult to solve, therefore not much progress can be made. 
+It will be shown that the closure problem becomes quite difficult to solve. 
 
-% \subsubsection{Averaged equations for the mean deformation in the local basis}
 \subsection{Fundamental averaged properties of the dispersed phase} 
 
 As discussed in the preceding section, we reduced the description of the shape and orientation of a particle, to the scalar $E_I$ and $\chi_I$ and the vector $\textbf{p}$. 
@@ -23,7 +22,7 @@ According to the particle average formalism, the latter quantities are defined a
     n_p \bm\chi_p = \pavg{\bm\chi_\alpha}\\
     n_p \textbf{E}_p = \pavg{\textbf{E}_\alpha}.
 \end{align*}
-Likewise, the average of the main particle's deformation and main rate of strain are defined as, 
+Likewise, the average of the eigenvalues of the particle's deformation and rate of strain are defined as, 
 \begin{align*}
     n_p \chi_p(\textbf{x},t) = \pavg{\chi_I(\textbf{x},t,\FF)},\\
     n_p E_p(\textbf{x},t) = \pavg{E_I(\textbf{x},t,\FF)},
@@ -32,7 +31,7 @@ Likewise, the average of the main particle's deformation and main rate of strain
 respectively. 
 We recall here that all the local non-averaged quantities are a function of the local position, $\textbf{x}$, time $t$, and flow configurations $\FF$. 
 While the averaged quantities are only a function of the position and time. 
-As follows from the definition of $\bm\chi_\alpha$ in the limit of small  deformation (see \ref{eq:chi_I_small_def}),  
+From the definition of $\bm\chi_\alpha$ in the limit of small  deformation (see \ref{eq:chi_I_small_def}), we obtain
 \begin{equation}
     n_p \bm\chi_p
     = \chi_p
@@ -43,32 +42,31 @@ As follows from the definition of $\bm\chi_\alpha$ in the limit of small  deform
     + \frac{3}{2}\avg{(\chi_I - \chi_p) \textbf{pp} }, 
     \label{eq:chi_p_def}
 \end{equation}
-Thus, the mean orientation tensor $\textbf{A}_p = \pavg{\textbf{pp}}$ and mean principal deformation $\chi_p$ are not sufficient to recover the mean deformation tenor $\bm\chi_p$.
+Thus, the mean orientation tensor $\textbf{A}_p = \pavg{\textbf{pp}}$, and mean principal deformation $\chi_p$ are not sufficient to recover the mean deformation tensor $\bm\chi_p$.
 Indeed, as exemplified by \ref{eq:chi_p_def} one needs in addition the covariance term $\avg{(\chi_I - \chi_p) \textbf{pp} }$ which is the correlation between the orientation and deformation. 
 The same comments can be made regarding the shear rate of the particles $\textbf{E}_p$ and the average of its eigenvalues $E_p$. 
 As will be seen, the explicit expression of $\bm\chi_p$ and $\textbf{E}_p$ are not necessarily needed in the other equations of the system. 
 Thus, solving for the particle mean eigenvalue, can be interesting upon having adequate closure terms which are functions of this means eigenvalues instead of the average of the tensor quantities.
-In any case, it must be stated that the mean of the eigenvalues with the mean orientation tensor is surely not equivalent to the whole tensor $\bm\chi_p$. 
-Nevertheless, the gain in computational expenses might make it worth it. 
+% In any case, it must be stated that the mean of the eigenvalues with the mean orientation tensor is surely not equivalent to the whole tensor $\bm\chi_p$. 
+% Nevertheless, the gain in computational expenses might make it worth it. 
 
-Regarding the particle angular rotation vector $\bm\omega_\alpha$, we have demonstrated that in the local basis, it can be expressed as $\bm\omega_\alpha  = \omega^i \textbf{p}^i$ where $\omega^i$ corresponds to the components of the rotation vector on the $i^{th}$ eigenvector of the local basis.
-Additionally, we have seen that solving for the components of $\bm\omega_\alpha$ in the local basis of the particle simplifies the angular momentum equation, see \ref{eq:dt_omega_I}.  
+Regarding the particle angular rotation vector $\bm\omega_\alpha$, we have demonstrated that in the local basis, it can be expressed as $\bm\omega_\alpha  =\sum_{a=1}^3 \omega^a \textbf{p}^a$ where we recall that $\omega^a$ corresponds to the components of the rotation vector on the $a^{th}$ axis of the local basis, i.e. $\textbf{p}^a$.
+Additionally, we have seen that solving for the components of $\bm\omega_\alpha$ in the local basis of the particle simplifies the angular momentum equation, see \ref{eq:dt_omega_a}.  
 This simplification is particularly effective in the case of solid particles. 
-The average of the $\omega^i_p$ are related to $\bm\omega_p$ through the relation, 
-\begin{equation*}
+The average of the $\omega^a_p$ are related to $\bm\omega_p$ through the relation, 
+\begin{equation}
     n_p \bm\omega_p
     = \pavg{\bm\omega_\alpha}
-    =\pavg{\omega^i \textbf{p}^i}
-    =n_p \omega^i_p   \textbf{p}_p^i
-    +\pavg{(\omega^i)' \textbf{p}^i}
+    =\sum_{a=1}^3\pavg{\omega^a \textbf{p}^a}
+    =\sum_{a=1}^3(n_p \omega^a_p   \textbf{p}_p^a
+    +\pavg{(\omega^a)' \textbf{p}^a})
     \label{eq:omega_p_local}
-\end{equation*}
-where $n_p \textbf{p}_p^i = \pavg{\textbf{p}^i}$ is the average orientation vector, this term is therefor $0$ when the particle orientation is random.  
-Unlike $\bm\chi_p$ and $\textbf E_p$ the vector $\bm\omega_p$ appears explicitly in the orientation equation. 
-Thus, as explicated by this equation solving for the average of the particle angular rotation introduces the need for the closure terms $\pavg{(\omega^i)' \textbf{p}^i}$.
-This last observation is clearly inconvenient.
+\end{equation}
+where $n_p \textbf{p}_p^a = \pavg{\textbf{p}^a}$ is the average orientation vector, this term is therefore null when the particle orientation is random.  
+$\pavg{(\omega^a)' \textbf{p}^a}$ represents the covariance between rotation express in the local basis of the droplet and its orientation vector. 
 
-\subsection{Orientation equation.}
+
+\subsection{Orientation equation}
 
 Let us first derive the equation for the mean orientation tensor $\textbf{A}_p = \pavg{\textbf{pp}}$. 
 This is easily done by averaging \ref{eq:dt_pp}, the resulting equation is given by~:
@@ -88,7 +86,7 @@ This is easily done by averaging \ref{eq:dt_pp}, the resulting equation is given
 where $\mathbf{\Sigma} = \pavg{\textbf{u}'_\alpha(\textbf{pp})'}$ is the covariance term between the fluctuation of the velocity and the orientation tensor.
 
 For the purpose of understanding, we now show how this equation is the starting point of the usual equations used in fiber media theory. 
-By assuming torque-free rigid particle into Stokes flow, where we can utilize Jeffery's equation \citep{guazzelli2011} we may use the relation,
+By assuming torque-free rigid particle into Stokes flow, we can use Jeffery's equation \citep{guazzelli2011},
 \begin{equation}
     \omega_\alpha \times \textbf{p}
     = \bm{\Omega}_f\cdot\textbf{p}
@@ -98,13 +96,14 @@ By assuming torque-free rigid particle into Stokes flow, where we can utilize Je
     \right),
     \label{eq:jefferey}
 \end{equation}
-with $\textbf{E}_f$ and $\bm{\Omega}_f$ being the symmetric and antisymmetric parts of the bulk velocity gradient, respectively, such that $\grad\avg{\textbf{u}}=\textbf{E}_f+\bm{\Omega}_f$.
+with $\textbf{E}_f$ and $\bm{\Omega}_f$ being the symmetric and antisymmetric parts of the bulk velocity gradient, respectively, such that $\grad \textbf{u}_f=\textbf{E}_f+\bm{\Omega}_f$.
 The coefficient $\beta$  is a constant related to the aspect ratio of the particle.
 Finally, by substituting the RHS terms of \ref{eq:avg_dt_pp_alpha}, by using \ref{eq:jefferey}, we arrive at the closed form of the second moment of mass equation:
 \begin{equation}
-    \pddt \textbf{A}
+    \pddt \textbf{A}_p
     + \div (
-        \pnnavg{\textbf{u}_\alpha}\textbf{A}
+        \textbf{u}_p\textbf{A}_p
+        + \mathbf{\Sigma}
     )
     =
     \bm{\Omega}_f \cdot \textbf{A}
@@ -114,20 +113,20 @@ Finally, by substituting the RHS terms of \ref{eq:avg_dt_pp_alpha}, by using \re
         -\textbf{A} \cdot \textbf{E}_f
         - \textbf{E}_f : \mathbb{A}
     \right]
-    - \div \mathbf{\Sigma}
     \label{eq:hybrid_avg_dt_pp}
 \end{equation}
 where the fourth-order tensor $\mathbb{A}_p$, is defined as $\mathbb{A}_p = \pavg{\textbf{pppp}}$.
 In this expression, we have removed the fluctuation terms that should appear due to the averaging procedure. 
 In \citet{wang2008objective} they derive \ref{eq:hybrid_avg_dt_pp} by the means of kinetic theory, based on \ref{eq:jefferey} and the fact that $\ddt \textbf{p} = \omega_\alpha \times \textbf{p}$ (Equation (3) of their article).
-Their equation is similar to \ref{eq:hybrid_avg_dt_pp} except that they employ a phenomenological closure for the term, $\div \mathbf{\Sigma}$, which accounts for particle interactions.
-Anyhow, we showed how it is possible to derive the orientation tensor conservation equation, commonly used in fiber field theory, from the second-order moments of mass's equation. 
-However, \ref{eq:jefferey} is only valid in the Stokes regime. 
+Their equation is similar to \ref{eq:hybrid_avg_dt_pp}.
+%  except that they employ a phenomenological closure for the term, $\div \mathbf{\Sigma}$, which accounts for particle interactions.
+Thus, we showed how it is possible to derive the orientation tensor conservation equation, commonly used in fiber field theory, from the second-order moments of mass's equation. 
+However, \ref{eq:jefferey} and \ref{eq:hybrid_avg_dt_pp} are only valid in the Stokes regime. 
 
 
 Therefore, it is indispensable to consider a more general framework when working with inertial particles. 
-Thus, for instance we consider the equation for $\textbf{A}_p$, as, 
-\begin{equation*}
+The equation for $\textbf{A}_p$ in this case reads as, 
+\begin{equation}
     \pddt (n_p\textbf{A})
     + \div (
         n_p\textbf{u}_p\textbf{A}_p
@@ -139,13 +138,13 @@ Thus, for instance we consider the equation for $\textbf{A}_p$, as,
     + \pavg{\textbf{pp} \times \bm\omega_\alpha'}
     + \pavg{\bm\omega_\alpha' \times \textbf{pp}},
     \label{eq:dt_Ap}
-\end{equation*}
+\end{equation}
 where the last two terms on the right-hand side correspond to the covariance between orientation and rotation. 
-The mean particle orientation tensor $\textbf{A}_p$ appearing on the right-hand side of \ref{eq:dt_Ap} is part of the unknown of the problem.
-However, $\bm\omega_p$ is not, since we chose in this work to solve for the components of $\bm\omega_p$ in the local reference frame. 
-Using \ref{eq:omega_p_local} we deduce that two new closure terms appear in this equation namely $\textbf{p}_p^i$ and $\pavg{(\omega^i)' \textbf{p}^i}$. 
-This makes the utility of solving $\bm\omega_p$ in the particle's local basis doubtful. 
-Unfortunately, further discussion on this closure problem is beyond the scope of this work, and we must therefore conclude the discussion on this point.
+% The mean particle orientation tensor $\textbf{A}_p$ appearing on the right-hand side of \ref{eq:dt_Ap} is an unknown of the problem.
+The vector $\bm\omega_p$ in \ref{eq:dt_Ap} is solved with the angular momentum equation, in opposition to the Stokes regime where an algebraic closure is directly provided for $\bm\omega_p$ (i.e. \ref{eq:jefferey}). 
+As suggested by \ref{eq:omega_p_local} and \ref{eq:dt_omega_a}, we may solve for the averaged values expressed in the particles local basis, i.e. for the $\omega^a_p$ instead of the $(\bm\omega_p)_i$.
+However, this may not be practical as one need $\bm\omega_p$ in \ref{eq:dt_Ap} which implies the need for the closure terms $\pavg{(\omega^a)' \textbf{p}^a}$.
+
 
 \subsection{Deformation, rate of strain and angular momentum equations}
 
@@ -177,33 +176,37 @@ Thus, the only closure terms required by these equations is the covariance term 
 Note that if we had considered the deformation and rate of strain equation in the laboratory reference frame this would represent two tensor equations instead of two scalar ones. 
 
 
-To complete entirely this system of equations we may add one equation for each component of the angular velocity, $\omega_p^i$. 
-This is done by averaging \ref{eq:dt_omega_I}, namely,
+To complete entirely this system of equations we may add one equation for each component of the angular velocity, $\omega_p^a$. 
+This is done by averaging \ref{eq:dt_omega_a}, namely,
 \begin{multline}
-    \pddt (n_p \omega^i_p)
+    \pddt (n_p \omega^a_p)
     + \div (
-        n_p \textbf{u}_p \omega^i_p 
-        + \pavg{\textbf{u}_\alpha' \omega^i_p}
-    )\\
+        n_p \textbf{u}_p \omega^a_p 
+        + \pavg{\textbf{u}_\alpha' \omega^a_p}
+    )
     = 
     % I^{ab}\omega^b  \omega^c \epsilon_{jki} p_i^a p_j^c p_k^a
-    \frac{5}{2 m_\alpha a^2}\left[
-        \omega^i_p E^i_p + \pavg{(\omega^i_\alpha)' E^i_p}
+    \frac{5}{2 m_\alpha a^2}\left\{
+        \omega^a_p E^a_p + \pavg{(\omega^a_\alpha)' E^a_p} \phantom{\intS{}} \right. \\ \left.
         +\pavg{
-        \frac{2 \textbf{p}^i}{ (2 - \chi_I)}\cdot 
-        \intS{(\textbf{r}\times\bm\sigma_f^0\cdot \textbf{n})} 
+        \frac{2 \textbf{p}^a}{ (2 - \chi_I)}\cdot 
+        \left[\intS{(\textbf{r}\times\bm\sigma_f^0\cdot \textbf{n})} 
+        - \ddt\intO{\rho_d(\textbf{r}\times \textbf{v}_d^0)}\right]
         }
-    \right]. 
+    \right\}. 
 \end{multline}
-The supplementary closure terms related to the local basis averaging is only $\pavg{(\omega^i_\alpha)' E^i_p}$.
+The additional closure term related to the averaging is $\pavg{(\omega^a_\alpha)' E^a_p}$.
+This represents the covariance between the angular velocity along the axis $\textbf{p}^a$ of the droplet and its rate of deformation along the same axis. 
+For example, in cases where deformation is induced by the rotation of droplets due to centrifugal forces, there is a clear correlation between rotation and deformation that happen along the same axis. 
+As a result, $\pavg{(\omega^a_\alpha)' E^a_p}$ will not be negligible in such scenarios.
 Thus, notice how we drastically reduced the complexity of the equation by expressing it in the local reference frame instead of directly averaging \ref{eq:dt_mu2} which would yield a complicated expression due to the presence of the inertia tensor inside the time derivative.  
 
 Overall, the equations for $E_p$ and $\chi_p$ are relatively straightforward since they are scalar equations. 
-If it's possible to derive appropriate closure terms that only involve $\chi_p$ and $E_p$, bypassing the need for $\bm\chi_p$ and $\textbf{E}_p$, then this approach is clearly the most efficient. 
+If it is possible to derive appropriate closure terms that only involve $\chi_p$ and $E_p$, bypassing the need for $\bm\chi_p$ and $\textbf{E}_p$, then this approach is clearly the most efficient. 
 The challenge in this problem lies in the orientation equation.
 Indeed, determining $\textbf{A}_p$ requires the vector $\bm\omega_p$ in the laboratory reference frame.
 We have demonstrated how to derive the angular momentum equations in the particle's local reference frame. 
-While this approach seems to reduce the complexity of the expression, it introduces the necessity for new closure terms to recover $\bm\omega_p$ from the $\omega^i_p$. 
+While this approach seems to reduce the complexity of the expression, it introduces the necessity for new closure terms to recover $\bm\omega_p$ from the $\omega^a_p$. 
 Thus, it may be more efficient to solve for the mean principal values of $\bm\chi_p$ and $\textbf{E}_p$ reducing tensor equations to scalar ones.
 However, deriving an equation for the mean values of $\bm\omega_p$ appears less practical, given its explicit necessity in the equation for $\textbf{A}_p$. 
 

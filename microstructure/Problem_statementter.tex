@@ -1,0 +1,132 @@
+\section{Numerical methodology}
+\label{sec:methodo}
+
+
+% This section outlines the approach employed for performing simulations to achieve statistically steady states simulations in the context of a rising mono-disperse suspension of droplets within a fully periodic domain.
+% We start by presenting the relevant physical parameters, followed by an overview of the numerical methods employed.
+% Then, we detail the methodology implemented for collecting statistical data on microstructure, which will be presented in the following sections.
+
+%In this section we expose the strategy employed to conduct statistically steady state simulations of rising mono-disperse suspension of droplets in a fully periodic domain. 
+%We start by introducing the physical parameter, followed by a description of the numerical methods.
+%Lastly, we detail the methodology adopted to collect statistics about microstructure, which are presented in the next sections.
+
+%The source code used to perform the DNS is entirely open source.
+%The simulations are running within the \texttt{Basilisk C} framework, (see \href{http://basilisk.fr}{basilisk.fr}), which is an extension of the C programming language, adapted for the solution of partial differential equations on Cartesian meshes. 
+%Note that this section is complemented by the wiki page, \href{http://basilisk.fr/sandbox/fintzin/Rising-Suspension/RS.c}{RS.c}, where the reader can access the source code used to conduct the DNS, as well as comments and notes to help comprehension. 
+
+% \subsection{Problem statement}
+
+% We investigate numerically the dynamics of homogeneous mono-disperse emulsions subject to buoyancy forces in a fully periodic domain. 
+% The dispersed and continuous phases are considered Newtonian fluids defined by viscosity $\mu_d$ (resp. $\mu_f$) and density $\rho_d$ (resp. $\mu_f$).
+% Throughout this work, the subscript $_d$ and $_f$ indicate properties belonging to the dispersed and continuous phases, respectively. 
+% The interface between both fluids is considered infinitely thin, free of impurities, and characterized by a constant surface tension $\gamma$. %with a coefficient  is assumed. 
+% The density and viscosity will be considered constant in each phase.
+% In dimensionless form, this problem is completely characterized by six dimensionless parameters:  the viscosity and density ratio, $\lambda = \mu_d / \mu_f$ and $\zeta = \rho_d / \rho_f$,  
+% the \textit{Galileo} number, 
+% \begin{equation*}
+%     Ga =\frac{\sqrt{\rho_f(\rho_f - \rho_d) g d^3}}{\mu_f},
+% \end{equation*}
+% the \textit{Bond} number, 
+% \begin{equation*}
+%     Bo =\frac{(\rho_f - \rho_d) g d^2}{\gamma},
+% \end{equation*}
+% the number of droplets per domain $N_b$, and the dispersed phase volume fraction $\phi$. 
+% Here, $d$ represents the diameter of a sphere with the same volume as the droplets and $g$ denotes the acceleration of gravity.
+% The \textit{Galileo} number measures the strength of the buoyancy forces relative to the viscous forces, whereas the \textit{Bond} number evaluates the ratio between buoyancy and capillary forces. 
+
+%To provide a brief overview of the range of interest for these numbers in an industrial context, let us consider the example of a vegetable oil/water system.
+%In most liquid-liquid system encountered in industrial processes the diameter of the droplets lies in the range $d = [50 \mu \text{m}, 3 \text{mm}]$. To provide order of magnitude of the quantities of interest let us consider the example of a vegetable oil dispersed in water. The density and viscosity of the continuous phase are approximately $\rho_f = 1000 \text{kg/m}^3$ and $\mu_f = 10^{-3} \text{Pa.s}$, respectively. The density and viscosity of the dispersed phase are close to $\rho_d = 900 \text{kg/m}^3$ and $\mu_d = 10^{-2} \text{Pa.s}$, respectively.
+%We consider the gravitational acceleration on earth, thus $g= 9.81 \text{m.s}^{-2}$.
+% In most liquid-liquid systems encountered in industrial processes, the droplet diameters typically range from 10 micrometers to a few millimeters. To illustrate the order of magnitude of the relevant quantities, consider a scenario where vegetable oil is dispersed in water. The continuous phase (water) has a density of approximately $\rho_f = 1000 \text{kg/m}^3$ and a viscosity of about $\mu_f = 10^{-3} \text{Pa.s}$. In contrast, the dispersed phase (vegetable oil) has a density close to $\rho_d = 900 \text{kg/m}^3$ and a viscosity around $\mu_d = 10^{-2} \text{Pa.s}$.
+% The surface tension of the oil/water system is approximately $\gamma = 0.05 \text{N.m}^{-1}$. The maximum allowable volume fraction is set at $\phi = 0.2$. Beyond this value, particles tend to coalesce easily, leading to a loss of the dispersed flow topology.%The maximum volume fraction is set to $\phi = 0.2$, indeed above such $\phi$ particles coalesce easily and the topology of the flow cannot be considered as dispersed anymore. %\citep{de2015gouttes}. 
+% \begin{table}[h!]
+%     \centering
+%     \caption{Dimensionless parameters of a water/oil system.}
+%     \begin{tabular}{|c||c|c|c|c|c|}
+%         \hline&$Ga$&$Bo$&$\phi$&$\lambda$&$\zeta$\\ \hline
+%         \hline Oil/Water&$[0.35,160]$&$[10^{-5};10^{-1}]$&$<0.2$&$10$&$0.9$\\ \hline
+%     \end{tabular}
+%     \label{tab:parameters_exp}
+% \end{table}
+% \ref{tab:parameters_exp} gives the corresponding dimensionless parameters.  
+% Notice that the \textit{Bond number} is relatively low, indicating that the droplets are nearly spherical in these processes.
+% Following \ref{tab:parameters_exp}, to approach real-life applications, we conducted DNS for four volume fractions, specifically $\phi = 0.01,0.05,0.1,0.2$.
+% In contrast to most previous studies, we keep the number of droplets constant while changing the volume fraction $\phi$. 
+% In this study we keep the particle equivalent diameter $d$ constant for all DNS. 
+% We then modify the domain size $\mathcal{L}$ or the number of particle $N_b$ accordingly to obtain the desired $\phi$. 
+
+
+%Density and viscosity ratio of droplets in real life applications are reported in \citet[Figure 1.]{balla2020effect}.
+%As depicted in \citet[Figure 1.]{balla2020effect}, the viscosity and density ratio of fluid-fluid systems range between, $\lambda \in [10^{-4} : 10^4]$ and $\zeta \in [10^{-1} : 10^1]$, respectively. 
+
+
+The study's primary objective is to investigate the microstructure through the nearest particle pair distribution function.
+Thus, obtaining a sufficient number of DNS samples is crucial to ensure statistical convergence. 
+Also, the physical quantities measured in the simulations must remain independent of the domain size. 
+Therefore, we use a number of particles per domain of $N_b = 125$, roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
+In contrast to most previous studies, we keep the number of droplets constant while changing the volume fraction $\phi$. 
+We then modify the domain size $\mathcal{L}$ accordingly. 
+This introduces another dimensionless parameter of interest: $\mathcal{L}/d$, which measures the confinement of the particles within the finite numerical domain. 
+This parameter is purely determined by $\phi$ and $N_b$, and will thus be refereed as a \textit{secondary parameter}.
+Moreover, each DNS lasts for a time: $t^*_\text{end} = 1500 \sqrt{d/g}$.
+% It is shown in \ref{ap:validation} that these parameters  are sufficient to obtain well converged statistics.  
+\begin{table}[h!]
+    \centering
+    \caption{Dimensionless parameter range investigated in this work.}
+    \begin{tabular}{|ccccccc|ccc|}\hline
+        \multicolumn{7}{|c|}{Primary parameters}&\multicolumn{3}{|c|}{Secondary parameters}\\\hline\hline
+        $Ga$&$Bo$&$\phi$&$\lambda$&$\zeta$&$N_b$&$t^*_\text{end}$&$\mathcal{L}/d$&$Re$&$We$\\ \hline
+        $5\rightarrow 100$&$0.2$&$1\% \rightarrow 20\%$&$10$ \& $1$&$0.9$&$125$&$1500$&$6.7\to 18.7$&$10^{-1}\to 170$&$10^{-4}\to 0.6$\\ \hline
+    \end{tabular}
+    \label{tab:simulations}
+\end{table}
+This study presents DNS results with dimensionless parameters in ranges outlined in \ref{tab:simulations}.
+In summary, we investigated $5$ \textit{Galileo} number $Ga = 5,10,25,50,100$, $4$ different volume fractions $\phi = 0.01,0.05,0.1,0.2$, and two viscosity ratios $\lambda =1,10$ with $Bo = 0.2$ and $\zeta = 0.9$. %In this study we restrict our attention to a single density ratio, $\zeta = 0.9$.
+%Regarding the viscosity ratio, we accomplished DNS for 2 different values, namely $\lambda = 1,10$.
+%Lastly, to explore the effect of inertia on the microstructure, the \textit{Galileo} number will vary within the range $Ga \in [5,100]$.
+This makes a total of $40$ representative simulations of $N_b = 125$ droplets which last for $t= 1500 \sqrt{d/g}$. 
+
+
+As mentioned, the \textit{Bond} numbers of our targeted application is very low.
+Therefore, the \textit{Bond} number is set to $Bo = 0.2$, and it will stay constant throughout this study.
+DNS with lower \textit{Bond} numbers become excessively expensive due to the restrictive capillary timestep constraint. 
+% However, we assert that for $Bo \leq 0.2$, the droplet shape essentially remains spherical, at least for small \textit{Galileo} numbers. 
+Additionally, the ratio between inertia and surface tension forces is given by the \textit{Weber} number, 
+\begin{equation*}
+    We = \frac{\rho U^2d}{\gamma}%\frac{Bo \cdot Re^2}{Ga},
+\end{equation*}
+%where $Re = \frac{\rho_f d U}{\mu_f}$ is the Reynolds number based on 
+where $U$ is the relative velocity which is the difference between the dispersed phase velocity and the continuous velocity. %drift velocity $U$ which is the difference between the dispersed phase velocity and the bulk velocity.
+%Values of \textit{Reynolds} numbers for each DNS are provided in \ref{ap:slip_vel} (\ref{fig:Reall}). 
+Extreme values of $We$ reached in these simulations are displayed in \ref{tab:simulations}. 
+It is clear that for $We=0.6$, we might expect some deformations; nevertheless, in most cases, $We$ stays below these values. 
+Consequently, whether in the viscous or inertial regimes, the droplets are expected to remain spherical according to the values of $Bo$ and $We$.
+This statement is verified in appendix \ref{ap:deformation}. 
+
+
+% The study's primary objective is to investigate the microstructure through the nearest particle pair distribution function.
+% Thus, obtaining a sufficient number of DNS samples is crucial to ensure statistical convergence. 
+% Also, the physical quantities measured in the simulations must remain independent of the domain size. 
+% Therefore, we set $\mathcal{L}/d = 10$, which is roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
+% Likewise, we use a number of particles per domain of at least $N_b = 160$ for all our cases, which introduces the need for a larger domain ($\mathcal{L}/d = 20$) for the dilute cases. 
+% Moreover, each DNS lasts for a time: $t^*_\text{end} = 400 \sqrt{d/g}$ for the larger domains ($\mathcal{L}/d=20$) and $t^*_\text{end} = 1000 \sqrt{d/g}$ for the smaller domain.
+% It is shown in \ref{ap:validation} that these parameters are sufficient to obtain well converged statistics.  
+% \begin{table}[h!]
+%     \centering
+%     \caption{Dimensionless parameter range investigated in this work.}
+%     \begin{tabular}{|ccccccc|ccc|}
+%         \hline
+%         \multicolumn{7}{|c}{Primary parameters} & \multicolumn{3}{||c|}{Secondary parameters}\\ \hline
+%         \multicolumn{1}{|c|}{$Ga$}                               & \multicolumn{1}{c|}{$Bo$}                   & \multicolumn{1}{c|}{$\phi$} & \multicolumn{1}{c|}{$\lambda$}                    & \multicolumn{1}{c|}{$\zeta$}                & \multicolumn{1}{c|}{$N_b$} & $t^*_\text{end}$ & \multicolumn{1}{||c|}{$\mathcal{L}/d$} & \multicolumn{1}{c|}{$Re$}  & $We$   \\ \hline
+%         \multicolumn{1}{|c|}{\multirow{4}{*}{$5\rightarrow 80$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.5$}} & \multicolumn{1}{c|}{$1\%$}  & \multicolumn{1}{c|}{\multirow{4}{*}{$10$ \& $1$}} & \multicolumn{1}{c|}{\multirow{4}{*}{$0.9$}} & \multicolumn{1}{c|}{$160$} & $400$           & \multicolumn{1}{||c|}{$20$}            & \multicolumn{1}{c|}{$1.3\to 110$} & {$0.03\to 0.95$} \\ 
+%         \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$5\%$}  & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$800$} & $400$           & \multicolumn{1}{||c|}{$20$}            & \multicolumn{1}{c|}{$1.0\to 92$} &  {$0.02\to 0.67$}\\ 
+%         \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$10\%$} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$200$} & $1000$           & \multicolumn{1}{||c|}{$10$}            & \multicolumn{1}{c|}{$1.9\to 77$}&  {$0.01\to 0.47$}\\ 
+%         \multicolumn{1}{|c|}{}                                   & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$20\%$} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{$400$} & $1000$           & \multicolumn{1}{||c|}{$10$}            & \multicolumn{1}{c|}{$1.7\to 62$}&  {$9\cdot 10^{-3}\to 0.31$}\\ \hline
+%         \end{tabular}
+%     \label{tab:simulations}
+% \end{table}
+% This study presents DNS results with dimensionless parameters in ranges outlined in \ref{tab:simulations}.
+% In summary, we investigated $5$ \textit{Galileo} number $Ga = 5,10,25,50,80$, $4$ different volume fractions $\phi = 0.01,0.05,0.1,0.2$, and two viscosity ratios $\lambda =1,10$ with $Bo = 0.5$ and $\zeta = 0.9$. %In this study we restrict our attention to a single density ratio, $\zeta = 0.9$.
+% %Regarding the viscosity ratio, we accomplished DNS for 2 different values, namely $\lambda = 1,10$.
+% %Lastly, to explore the effect of inertia on the microstructure, the \textit{Galileo} number will vary within the range $Ga \in [5,100]$.
+% This makes a total of $40$ representative simulations.
