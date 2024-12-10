@@ -340,7 +340,7 @@ From \ref{eq:dt_D_alpha} we can also derive a conservation for the trace of $\bm
     % - \frac{4 }{5 } (\textbf{M}_{\alpha,mm}^* - \textbf{I}_{\alpha,mm})
     \right]
     = 
-    \intS{\textbf{r}_m\cdot\bm\sigma_{1,mk}^0\cdot \textbf{n}_k} 
+    \intS{\textbf{r}_m\cdot\bm\sigma_{f,mk}^0\cdot \textbf{n}_k} 
     + \intO{\rho_d \textbf{v}_{d,m}^0\cdot \textbf{v}_{d,m}^0}
     + \intO{p_d^0} \bm\delta_{mm},
     \label{eq:dt_trM2}
@@ -356,21 +356,21 @@ Indeed, using that expression to cancel out the particle pressure in \ref{eq:dt_
 Therefore, it corresponds to the description of the deviation from the spherical particle's shape $\bm\chi_{\alpha,ij}$. 
 Indeed, injecting \ref{eq:dt_trM2,eq:dt_M2,eq:S_def} into  \ref{eq:dt_S2} one obtain, 
 \begin{align}
-        \frac{1}{2}\ddt^2 \bm\chi_{\alpha,ij}
-        - (\bm\chi_{\alpha,kl} + \bm\delta_{kl})
+        \ddt^2 \bm\chi_{\alpha,ij}
+        - 2(\bm\chi_{\alpha,kl} + \bm\delta_{kl})
         (\bm\Gamma_{\alpha,jl}\bm\Gamma_{\alpha,ik}  
         - \frac{1}{3}
         \bm\Gamma_{\alpha,ml}\bm\Gamma_{\alpha,mk}  
         \bm\delta_{ij}
         )
     &+ 
+    \frac{1}{\tau_\mu}
     \overset{ \triangledown  }{\bm\chi}_\alpha
-    / \tau_\mu
     +
+    \frac{1}{\tau_\gamma^2}
     \bm\chi_{\alpha,ij}
-    / \tau_\gamma^2
     = 
-    \textbf{F}_{ij}
+    10 \textbf{F}_{ij}
     \label{eq:dev}
 \end{align}
 where,
@@ -391,12 +391,12 @@ and,
     +\textbf{F}_{ij}^{vv}
     + \textbf{F}_{ij}^{\sigma}\\
     \textbf{F}_{ij}^h
-    &= \frac{10}{2m_\alpha a^2}\intS{(\textbf{r}\bm\sigma_f^0 + \bm\sigma_f^0\textbf{r} - \frac{2}{3}(\textbf{r}\cdot \bm\sigma_f^0) \bm\delta)\cdot \textbf{n}} \\
+    &= \frac{1}{2m_\alpha a^2}\intS{(\textbf{r}\bm\sigma_f^0 + \bm\sigma_f^0\textbf{r} - \frac{2}{3}(\textbf{r}\cdot \bm\sigma_f^0) \bm\delta)\cdot \textbf{n}} \\
     \textbf{F}_{ij}^{vv}
     &= 
-    \frac{10 \rho_d}{m_\alpha a^2}\intO{(\textbf{v}_{d,i}^0\textbf{v}_{d,j}^0 - \frac{1}{3}\textbf{v}_{d,m}^0\textbf{v}_{d,m}^0 \bm\delta_{ij}) }\\
+    \frac{1}{m_\alpha a^2}\intO{\rho_d(\textbf{v}_{d,i}^0\textbf{v}_{d,j}^0 - \frac{1}{3}\textbf{v}_{d,m}^0\textbf{v}_{d,m}^0 \bm\delta_{ij}) }\\
     \textbf{F}_{ij}^{\sigma}
-    &= - \frac{ 10 \mu_d}{m_\alpha a^2} \intS{(\textbf{n}_i \textbf{v}_{d,j}^0 + \textbf{n}_j \textbf{v}_{d,i}^0)}\nonumber
+    &= - \frac{\mu_d}{m_\alpha a^2} \intS{(\textbf{n}_i \textbf{v}_{d,j}^0 + \textbf{n}_j \textbf{v}_{d,i}^0)}\nonumber
 \end{align}
 where we have gathered all the closures or forcing terms into the tensor $\textbf{F}_{ij}$ which has the unit [s$^{-2}$]. 
 % Notice that $\textbf{E}_{\alpha,ij}$ is related to the \textit{convected} derivative of $\bm\chi_\alpha$ through \ref{eq:dt_M2}. 
@@ -409,7 +409,7 @@ Indeed, the left-hand side terms correspond to the second, first and zeroth orde
 )$, while the right-hand side terms correspond to the forcing terms. 
 
 Although oscillatory harmonic equations are typically scalar, this formulation is more general and holds for the deformation tensor. 
-Notably, the coefficients $\tau_\mu$ and $\tau_\gamma$ in \ref{eq:dev} which appear in front of $\overset{ \triangledown  }{\bm\chi}_\alpha$ and $\bm\chi_\alpha$ respectively, correspond precisely to the damping ratio and the square of the natural frequency of the secondary mode of oscillation for nearly spherical droplets, as described by \citep{lamb1924hydrodynamics}. 
+Notably, the coefficients $\tau_\mu$ and $\tau_\gamma$ in \ref{eq:dev} which appear in front of $\overset{ \triangledown  }{\bm\chi}_\alpha$ and $\bm\chi_\alpha$ respectively, correspond precisely to the damping ratio and the natural time of the secondary mode of oscillation for nearly spherical droplets, as described by \citep{lamb1924hydrodynamics}. 
 Indeed, in the case of freely oscillating droplets, the natural time governing the period of oscillation of droplet deformation is given by $\tau_\gamma = \sqrt{\frac{a^3\rho_d}{8 \gamma }}$ \citep{lamb1924hydrodynamics}. 
 Likewise, the damping coefficient, which corresponds to the timescale over which oscillations decay, is given by  $\tau_\mu = a^2\rho_d/10 \mu_d$ \citep{lamb1924hydrodynamics}. 
 
@@ -420,64 +420,67 @@ To conclude, the system of equations formed by \ref{eq:dt_M2}, \ref{eq:dt_mu2} a
 
 
 To enhance the physical understanding of \ref{eq:dev} we derive in the present section the dimensionless form of this equation. 
-We introduce the timescale, $\tau$ which represents the droplet's natural time of deformation rate in the absence of external influences.
-It is important to note that these scalings are specific to the particular scenarios described and are not applicable to general situations. 
-Consequently, we consider $\tau$ as the characteristic timescale for droplet deformation, acknowledging that its exact definition remains context-dependent.
-Meaning that for example, $|\ddt^2 \bm\chi_{\alpha,ij} |\sim 1/\tau^2$ and $ \overset{ \triangledown  }{\bm\chi}_\alpha \sim 1/\tau$. 
-\tb{in fact that is not true $\pddt \sim 1/ \tau_u$ in podzrikidis}
-
-Additionally, we assume that the forcing terms introduced in \ref{eq:dev} are governed by a timescale independent of the droplet's natural timescale, denoted as $\tau_u$. 
+We assume that the forcing terms introduced in \ref{eq:dev} are governed by a timescale independent of the droplet's natural timescale, denoted as $\tau_u$. 
 This is because the external solicitation timescale is imposed by the ``background flow'' condition and thus is quite independent of the current droplet rate of deformation. 
 For example, the term $\textbf{F}_{ij}^{vv}$ representing the kinetic energy of the internal droplet velocity, is mainly driven by the relative velocity between the droplet's center of mass and the background flow. 
 In fact in \ref{chap:closure-disperse} we compute this term in the situation represented in \ref{fig:flowlines1} (b) and show that $ \textbf{F}^{vv}\sim (\textbf{u}_f - \textbf{u}_p)(\textbf{u}_f - \textbf{u}_p)$. 
-Thus, in this case, the timescale of the forcing term is given by $\tau_u = a /(\textbf{u}_f - \textbf{u}_p)$. 
-This means that the Hill vortices velocity in \ref{fig:flowlines1} (b) are driven by the velocity scale $\textbf{u}_f - \textbf{u}_p$ and therefore the term $\textbf{F}^{vv}$ scale as $1/\tau_u^2$. 
-If the ``background flow'' is not uniform but linear or represents isotropic turbulence, the principle stays the same and $\tau_u$ will be related to the background flow timescale. 
+Thus, in this case, the timescale of the forcing term is given by $\tau_u = a /(\textbf{u}_f - \textbf{u}_p)$ and $\textbf{F}^{vv}$ scale as $a^2/\tau_u^2$. 
+If the ``background flow'' is linear for example,  or if it represents isotropic turbulence, the principle stays the same and $\tau_u$ will be related to the background flow timescale. 
 Consequently, the forcing terms can be defined proportional to the scales: 
-\begin{align*}
+% \begin{align*}
+%     \textbf{F}_{ij}^h
+%     &= \frac{1}{2v_\alpha}\intS{(\textbf{r}\bm\sigma_f^0 + \bm\sigma_f^0\textbf{r} - \frac{2}{3}(\textbf{r}\cdot \bm\sigma_f^0) \bm\delta)\cdot \textbf{n}} 
+%     \sim \mu_f  /\tau_u \\
+%     \textbf{F}_{ij}^{vv}
+%     &= \frac{\rho_d}{v_\alpha}
+%     \intO{(\textbf{v}_{d,i}^0\textbf{v}_{d,j}^0 - \frac{1}{3}\textbf{v}_{d,m}^0\textbf{v}_{d,m}^0 \bm\delta_{ij}) }
+%     \sim  \rho_d a^2  /\tau_u^2 \\
+%     \textbf{F}_{ij}^{\sigma}
+%     &= - \frac{\mu_d}{v_\alpha} \intS{(\textbf{n}_i \textbf{v}_{d,j}^0 + \textbf{n}_j \textbf{v}_{d,i}^0)}
+%     \sim  \mu_d  /\tau_u. 
+% \end{align*}
+\begin{align}
     \textbf{F}_{ij}^h
-    &= \frac{1}{2v_\alpha}\intS{(\textbf{r}\bm\sigma_f^0 + \bm\sigma_f^0\textbf{r} - \frac{2}{3}(\textbf{r}\cdot \bm\sigma_f^0) \bm\delta)\cdot \textbf{n}} 
-    \sim \mu_f  /\tau_u \\
+    &= \frac{1}{2m_\alpha a^2}\intS{(\textbf{r}\bm\sigma_f^0 + \bm\sigma_f^0\textbf{r} - \frac{2}{3}(\textbf{r}\cdot \bm\sigma_f^0) \bm\delta)\cdot \textbf{n}} 
+    \sim\mu_f  /(\tau_u \rho_d a^2)\\
     \textbf{F}_{ij}^{vv}
-    &= \frac{\rho_d}{v_\alpha}
-    \intO{(\textbf{v}_{d,i}^0\textbf{v}_{d,j}^0 - \frac{1}{3}\textbf{v}_{d,m}^0\textbf{v}_{d,m}^0 \bm\delta_{ij}) }
-    \sim  \rho_d a^2  /\tau_u^2 \\
+    &= 
+    \frac{ \rho_d}{m_\alpha a^2}\intO{(\textbf{v}_{d,i}^0\textbf{v}_{d,j}^0 - \frac{1}{3}\textbf{v}_{d,m}^0\textbf{v}_{d,m}^0 \bm\delta_{ij}) }
+    \sim 1/\tau_u^2\\
     \textbf{F}_{ij}^{\sigma}
-    &= - \frac{\mu_d}{v_\alpha} \intS{(\textbf{n}_i \textbf{v}_{d,j}^0 + \textbf{n}_j \textbf{v}_{d,i}^0)}
-    \sim  \mu_d  /\tau_u. 
-\end{align*}
+    &= - \frac{  \mu_d}{m_\alpha a^2} \intS{(\textbf{n}_i \textbf{v}_{d,j}^0 + \textbf{n}_j \textbf{v}_{d,i}^0)}\sim 1 /(\rho_d  a^2  \tau_u^2)
+\end{align}
 Where it has been assumed that the term $\textbf{F}_{ij}^h$ scale as a viscous force. 
-Re-writing \ref{eq:dt_trM2} considering these scales yields the dimensionless tensor equation, 
+Multiplying \ref{eq:dt_trM2} by $\tau_\gamma^2$ and considering these scales yields the dimensionless tensor equation, 
 \begin{multline}
-    \frac{\zeta Re \beta^2}{5}
+    \tau_\gamma^2
     \left[
-        \frac{1}{2}\ddt^2 \bm\chi_{\alpha,ij}
-        -   (\bm\chi_{\alpha,kl} + \bm\delta_{kl})
+        \ddt^2 \bm\chi_{\alpha,ij}
+        -  2 (\bm\chi_{\alpha,kl} + \bm\delta_{kl})
         (\bm\Gamma_{\alpha,jl}\bm\Gamma_{\alpha,ik}  
         - \frac{1}{3}
         \bm\Gamma_{\alpha,ml}\bm\Gamma_{\alpha,mk}  
         \bm\delta_{ij}
         )
     \right]\\
-    + \lambda \beta \overset{ \triangledown  }{\bm\chi}_\alpha
-    + \frac{1}{Ca}
-    \frac{4  }{5} \bm\chi_{\alpha,ij}
-    = (\textbf{F}_{ij}^h )^*
+    + \frac{\tau_\gamma^2}{\tau_\mu} \overset{ \triangledown  }{\bm\chi}_\alpha
+    + \bm\chi_{\alpha,ij}
+    =\frac{5}{4} Ca [
+    (\textbf{F}_{ij}^h )^*
     + \zeta Re (\textbf{F}_{ij}^{vv})^*
-    + \lambda (\textbf{F}_{ij}^{\sigma})^* 
+    + \lambda (\textbf{F}_{ij}^{\sigma})^*
+    ] 
     \label{eq:dev_dim}
 \end{multline}
 where we have defined the following dimensionless groups : 
 \begin{align*}
-    \beta = \frac{\tau_u}{\tau},
-    && \zeta = \rho_d /\rho_f,
+    \zeta = \rho_d /\rho_f,
     && \lambda = \mu_d/\mu_f,
     && Re = \frac{\rho_f a^2 }{ \mu_f \tau_u},
     && Ca = \frac{a \mu_f}{\gamma \tau_u}. 
 \end{align*}
 The superscript $^*$ indicates that the argument is made dimensionless. 
 Each of these dimensionless numbers has a distinct physical signification. 
-Let us start with $\beta$, this number compares the typical timescale of the external contribution with the natural timescale of the droplets' deformation.
 $\zeta$ is the ratio of the carrier fluid density to the droplet density. 
 $\lambda$ is the ratio of the carrier fluid viscosity to the droplet viscosity. 
 The number $Re$ compares the viscous forces to inertial forces. 
@@ -486,7 +489,10 @@ Thus, on the left-hand side of \ref{eq:dev_dim} we identify the inertial terms; 
 The same comments can be made regarding the forcing terms on the right-hand side. 
 
 
-We will now explore specific regimes where this equation simplifies. To provide a clearer physical understanding, we consider four different scenarios: the low Reynolds number regime, the quasi-steady regime, the bubbly flow regime, and the free-oscillating droplet regime. 
+We will now explore specific regimes where this equation simplifies. To provide a clearer physical understanding, we consider two different scenarios: 
+the free-oscillating droplet regime,
+and 
+the steady-state regime. 
 
 
 \subsubsection{Free oscillating droplets}
@@ -496,127 +502,126 @@ This example applies well to viscous droplets in air where the influence of the 
     Note that even $\textbf{F}^{vv}$ can be neglected since it is the external forcing that induces an internal velocity through the droplet interface motion, hence in the absence of external forcing  $\textbf{F}^{vv}=0$.  
 } 
 Thus, \ref{eq:dev_dim} reduce to, 
-\begin{multline}
-    \frac{\zeta Re \beta^2}{5}
+\begin{equation}
+    \tau_\gamma^2
     \left[
-        \frac{1}{2}\ddt^2 \bm\chi_{\alpha,ij}
-        -  ( \bm\chi_{\alpha,kl} +\bm\delta_{kl})
+        \ddt^2 \bm\chi_{\alpha,ij}
+        -  2 (\bm\chi_{\alpha,kl} + \bm\delta_{kl})
         (\bm\Gamma_{\alpha,jl}\bm\Gamma_{\alpha,ik}  
         - \frac{1}{3}
         \bm\Gamma_{\alpha,ml}\bm\Gamma_{\alpha,mk}  
         \bm\delta_{ij}
         )
     \right]
-    + \lambda \beta \overset{ \triangledown  }{\bm\chi}_\alpha
-    + \frac{1}{Ca}
-    \frac{4  }{5} \bm\chi_{\alpha,ij}
-    =
-    0.
-\end{multline}
+    + \frac{\tau_\gamma^2}{\tau_\mu} \overset{ \triangledown  }{\bm\chi}_\alpha
+    + \bm\chi_{\alpha,ij} = 0
+    % =\frac{5}{4} Ca [
+    % (\textbf{F}_{ij}^h )^*
+    % + \zeta Re (\textbf{F}_{ij}^{vv})^*
+    % + \lambda (\textbf{F}_{ij}^{\sigma})^*
+    % ] 
+    % \label{eq:dev_dim}
+\end{equation}
 In this regime, the droplet shape follows a non-linear homogeneous partial differential tensorial equation. 
-As no forcing terms are present in this equation, we can predict that in the steady state $\bm\chi_\alpha = 0$ meaning that the droplet shape will eventually relax into a spherical shape in this regime.
-This holds under the condition that $\lambda$ remains finite.   
+As no forcing terms are present in this equation, we can predict that in the steady state the droplet shape will eventually relax into a spherical shape, such that $\bm\chi_\alpha = 0$.
+This holds under the condition that $1/\tau_\mu$ remains non-zero.   
 % In the following we show that, upon linearizing this equation, we recover the second-order free-oscillatory harmonic equations introduced by \citet{lamb1924hydrodynamics}. 
 
-\subsubsection{Low Reynolds number or viscous dominated regime}
+% \subsubsection{Low Reynolds number or viscous dominated regime}
 
-Now, let us assume that the relative motion between the droplets and the carrier phase is rather viscous such that $Re \ll 1$.
-In this situation \ref{eq:dev_dim} reduces to, 
-\begin{equation*}
-    % \frac{\zeta Re \beta^2}{5}
-    % \left[
-    %     \frac{1}{2}\ddt^2 \bm\chi_{\alpha,ij}
-    %     -   \textbf{M}_{\alpha,kl} 
-    %     (\bm\Gamma_{\alpha,jl}\bm\Gamma_{\alpha,ik}  
-    %     - \frac{1}{3}
-    %     \bm\Gamma_{\alpha,ml}\bm\Gamma_{\alpha,mk}  
-    %     \bm\delta_{ij}
-    %     )
-    % \right]\\
-    \lambda \beta \overset{ \triangledown  }{\bm\chi}_\alpha
-    + \frac{1}{Ca}
-    \frac{4  }{5} \bm\chi_{\alpha,ij}
-    = (\textbf{F}_{ij}^h)^* 
-    % + \zeta Re \textbf{F}_{ij}^{vv}
-    + \lambda (\textbf{F}_{ij}^{\sigma})^*
-    \label{eq:stokes_shape}
-\end{equation*}
-We can observe that in this regime the shape of the particle is governed by a balance of viscous stress due to the rate of current deformation (first term), the surface tension force (second term), the external hydrodynamic contribution (first term on the right-hand side), and finally the particle's internal viscous stresses generated due to the internal re-circulation (second term on the right-hand side). 
-This situation is typically experienced by neutrally buoyant droplets immersed in a shear flow at low $Re$. 
-For example in \citet[Chapter 7]{leal2007advanced} they derive the evolution equation for a deformable droplet in a pure linear flow, in this case, this balance should hold. 
+% Now, let us assume that the relative motion between the droplets and the carrier phase is rather viscous such that $Re \ll 1$.
+% In this situation \ref{eq:dev_dim} reduces to, 
+% \begin{equation*}
+%     % \frac{\zeta Re \beta^2}{5}
+%     % \left[
+%     %     \frac{1}{2}\ddt^2 \bm\chi_{\alpha,ij}
+%     %     -   \textbf{M}_{\alpha,kl} 
+%     %     (\bm\Gamma_{\alpha,jl}\bm\Gamma_{\alpha,ik}  
+%     %     - \frac{1}{3}
+%     %     \bm\Gamma_{\alpha,ml}\bm\Gamma_{\alpha,mk}  
+%     %     \bm\delta_{ij}
+%     %     )
+%     % \right]\\
+%     \lambda \beta \overset{ \triangledown  }{\bm\chi}_\alpha
+%     + \frac{1}{Ca}
+%     \frac{4  }{5} \bm\chi_{\alpha,ij}
+%     = (\textbf{F}_{ij}^h)^* 
+%     % + \zeta Re \textbf{F}_{ij}^{vv}
+%     + \lambda (\textbf{F}_{ij}^{\sigma})^*
+%     \label{eq:stokes_shape}
+% \end{equation*}
+% We can observe that in this regime the shape of the particle is governed by a balance of viscous stress due to the rate of current deformation (first term), the surface tension force (second term), the external hydrodynamic contribution (first term on the right-hand side), and finally the particle's internal viscous stresses generated due to the internal re-circulation (second term on the right-hand side). 
+% This situation is typically experienced by neutrally buoyant droplets immersed in a shear flow at low $Re$. 
+% For example in \citet[Chapter 7]{leal2007advanced} they derive the evolution equation for a deformable droplet in a pure linear flow, in this case, this balance should hold. 
 
-\subsubsection{Quasi-steady state regime}
+\subsubsection{Steady-state regime}
 
-% In certain situations the natural times related to the droplet rate of deformation, $\tau$, is greater than the timescale of the external flow $\tau_u$ which is generally much smaller. 
-Let us consider the situation of rising buoyant droplets or bubbles. 
-In that case, the external contributions are all proportional to the only relative motion present in homogeneous rising flows which is the relative phase velocity $\textbf{u}_p-\textbf{u}_f$ (or the square of that in inertial regime).
-When the droplets reach their terminal rising velocity it is clear that $\tau_u \sim a / \textbf{u}_p-\textbf{u}_f $.
-On the other hand, the natural times related to the droplet rate of deformation might be given either by $1 / \tau \sim \sqrt{\frac{ \gamma }{a^3\rho_d}}$ or $\sim  \mu_d  /(a^2\rho_d)$. 
-Therefore, the Quasi-steady state assumption, $\beta \ll 1$ requires, 
+A steady state situation might be reached for a time $\tau$ sufficiently long such that: this time is way longer that the natural time of oscillation of the droplets $\tau_\gamma$, and that it is also greater than the typical dumping ratio time of the droplet $\tau_\mu$. 
+More rigorously, one can deduce from \ref{eq:dev_dim} the condition,
+\begin{align}
+    \frac{\tau_\gamma^2}{\tau^2}\ll Ca
+    && \frac{\tau_\gamma^2}{\tau_\mu \tau}\ll Ca. 
+    \label{eq:time_constraints}
+\end{align}
+For now, we assume that these conditions are respected for a given time $\tau$, it yields the equation, 
 \begin{equation}
-  1/\beta^2 =  \frac{a\rho_d |\textbf{u}_p-\textbf{u}_f|^2}{\gamma } = \zeta We \gg 1 
-\end{equation}
-Or, 
-\begin{equation}
-    1/\beta = (a\rho_d|\textbf{u}_p-\textbf{u}_f|)/(\mu_d ) = \frac{\zeta Re }{\lambda} \gg 1
-\end{equation}
-
-Thus, in this case, $\beta \ll 1$ and we can neglect the transient effects arising due to the droplets' deformation, which yields, 
-\begin{equation}
-    % \frac{\zeta Re \beta^2}{5}
-    % \left[
-    %     \frac{1}{2}\ddt^2 \bm\chi_{\alpha,ij}
-    %     -   \textbf{M}_{\alpha,kl} 
-    %     (\bm\Gamma_{\alpha,jl}\bm\Gamma_{\alpha,ik}  
-    %     - \frac{1}{3}
-    %     \bm\Gamma_{\alpha,ml}\bm\Gamma_{\alpha,mk}  
-    %     \bm\delta_{ij}
-    %     )
-    % \right]\\
-    % \lambda \beta 2 \textbf{E}_{\alpha,ij}
-    \frac{1}{Ca}
-    \frac{4  }{5} \bm\chi_{\alpha,ij}
-    = (\textbf{F}_{ij}^h)^*
+    \bm\chi_{\alpha,ij}
+    =\frac{5  }{4}  Ca [(\textbf{F}_{ij}^h)^*
     + \zeta Re (\textbf{F}_{ij}^{vv})^*
-    + \lambda (\textbf{F}_{ij}^{\sigma})^*
+    + \lambda (\textbf{F}_{ij}^{\sigma})^*]
     \label{eq:steady}
 \end{equation}
-Consequently, in the quasi-steady-state regime, the droplet deformation is given explicitly by the sum of: the external hydrodynamic contribution; the inertial due to internal particle re-circulation; and the particle internal stresses due to this internal motion. 
+Thus, in the steady-state regime, the droplet deformation is given explicitly by the sum of: the external hydrodynamic contribution; the inertial due to internal particle re-circulation; and the particle internal stresses due to this internal motion. 
 Notice that in \citet{taylor1964deformation} they compute the shape of a steady state rising droplet analytically and consider low but finite inertial effects. 
 In this case \ref{eq:steady} typically governs the shape balance.
  
+Now let us discuss the physical implications of \ref{eq:time_constraints}. 
+The purpose of \ref{eq:dev_dim} is to be solved within an averaged framework of equations to model the mean deformation in an industrial processe. 
+Thus, in such scenarios, the typical timescale $\tau$ governing the flow, is determined by the macroscopic timescale of the process. 
+Consequently, using \ref{eq:steady} to calculate droplet shapes in this framework requires that the timesscale of the macroscale equations satisfies the constraints outlined in \ref{eq:time_constraints}.
+This condition is typically met when a proper separation of scales is ensured. 
 
-\subsubsection{Bubbly flow regime}
-Finally, for bubbly flows where the density and viscosity of the bubbles are negligible compared to those of the carrier fluid, we have $\zeta \ll 1$ and $\lambda \ll 0$. 
-In this particular situation, the shape equation simplifies significantly to:
-\begin{equation}
-    % \frac{\zeta Re \beta^2}{5}
-    % \left[
-    %     \frac{1}{2}\ddt^2 \bm\chi_{\alpha,ij}
-    %     -   \textbf{M}_{\alpha,kl} 
-    %     (\bm\Gamma_{\alpha,jl}\bm\Gamma_{\alpha,ik}  
-    %     - \frac{1}{3}
-    %     \bm\Gamma_{\alpha,ml}\bm\Gamma_{\alpha,mk}  
-    %     \bm\delta_{ij}
-    %     )
-    % \right]\\
-    % \lambda \beta 2 \textbf{E}_{\alpha,ij}
-    \frac{1}{Ca}
-    \frac{4  }{5} \bm\chi_{\alpha,ij}
-    = (\textbf{F}_{ij}^h)^*. 
-    \label{eq:bubbles}
-\end{equation}
-This implies that the shape of a bubble is entirely determined by the external fluid solicitation. 
-The absence of both $\textbf{E}_\alpha$ and the derivative of $\bm\chi_\alpha$ indicates that bubbles adjust their shape instantaneously to the carrier fluid’s forces.
+For example, in \ref{chap:closure-disperse}, we employ \ref{eq:steady} to compute the average droplet deformation in the presence of mean relative motion $\textbf{u}_f-\textbf{u}_p$. 
+It is found that $\bm\chi_p \sim |\textbf{u}_f-\textbf{u}_p|^2$. 
+Here, the macroscopic timescale $\tau$ corresponds to the rate of change of $|\textbf{u}_f-\textbf{u}_p|$.  
+The constraints from \ref{eq:time_constraints} imply that this rate of change must be significantly smaller than $\tau_\gamma$ and $\tau_\mu$. 
+Physically this separation of timescale means that the droplets perceive the background flow as steady-state boundary condition during their deformation, hence reaching a steady state.
+Only under this condition, the closure provided in  \ref{eq:closure-disperse} will be valid within the averaged equations.  
+As a counterexample, consider a scenario where the relative velocity $|\textbf{u}_f-\textbf{u}_p|$ oscillates with an amplitude that varies at a frequency comparable to $1/\tau_\gamma$. 
+In this case, the droplet is continuously excited by the oscillating flow through the forcing terms, preventing it from ever reaching a steady-state configuration. 
+In this case \ref{eq:time_constraints} is clearly not respected, and \ref{eq:steady} cannot be used. 
 
-However, it is known that bubbles in water can still exhibit oscillations due to the added mass effect. 
-This might seem contradictory to \ref{eq:bubbles} as no second-order derivatives of $\bm\chi_\alpha$ are present in this equation. 
-However, the term $\textbf{F}_{ij}^h$ can be proportional to $\ddt^2 \bm\chi_\alpha$ with the proportionality constant being the added mass coefficient, which is related to the first moment of the hydrodynamic forces. 
-In that case, the natural oscillation frequency of the bubbles will be related to added mass effects. 
+% \subsubsection{Bubbly flow regime}
+% Finally, for bubbly flows where the density and viscosity of the bubbles are negligible compared to those of the carrier fluid, we have $\zeta \ll 1$ and $\lambda \ll 0$. 
+% In this particular situation, the shape equation simplifies significantly to:
+% \begin{equation}
+%     % \frac{\zeta Re \beta^2}{5}
+%     % \left[
+%     %     \frac{1}{2}\ddt^2 \bm\chi_{\alpha,ij}
+%     %     -   \textbf{M}_{\alpha,kl} 
+%     %     (\bm\Gamma_{\alpha,jl}\bm\Gamma_{\alpha,ik}  
+%     %     - \frac{1}{3}
+%     %     \bm\Gamma_{\alpha,ml}\bm\Gamma_{\alpha,mk}  
+%     %     \bm\delta_{ij}
+%     %     )
+%     % \right]\\
+%     % \lambda \beta 2 \textbf{E}_{\alpha,ij}
+%     \frac{1}{Ca}
+%     \frac{4  }{5} \bm\chi_{\alpha,ij}
+%     = (\textbf{F}_{ij}^h)^*. 
+%     \label{eq:bubbles}
+% \end{equation}
+% This implies that the shape of a bubble is entirely determined by the external fluid solicitation. 
+% The absence of both $\textbf{E}_\alpha$ and the derivative of $\bm\chi_\alpha$ indicates that bubbles adjust their shape instantaneously to the carrier fluid’s forces.
 
-As stated earlier, the spheroidal shape of a particle can be described uniquely using the scalars $\chi_I$ and $E_I$ since the other components of $\bm\chi_\alpha$ and $\textbf{E}_\alpha$ might be entirely deduced from $\chi_I$ and $E_I$, and the orientation vector \textbf{p}. 
-Therefore, progress can be made to reduce this system of tensor equations to one equation for \textbf{p}, $\bm\omega_\alpha$ and two scalars equations, one for $\chi_I$ and another for $E_I$. 
-This is the purpose of the next subsection. 
+% However, it is known that bubbles in water can still exhibit oscillations due to the added mass effect. 
+% This might seem contradictory to \ref{eq:bubbles} as no second-order derivatives of $\bm\chi_\alpha$ are present in this equation. 
+% However, the term $\textbf{F}_{ij}^h$ can be proportional to $\ddt^2 \bm\chi_\alpha$ with the proportionality constant being the added mass coefficient, which is related to the first moment of the hydrodynamic forces. 
+% In that case, the natural oscillation frequency of the bubbles will be related to added mass effects. 
+
+% As stated earlier, the spheroidal shape of a particle can be described uniquely using the scalars $\chi_I$ and $E_I$ since the other components of $\bm\chi_\alpha$ and $\textbf{E}_\alpha$ might be entirely deduced from $\chi_I$ and $E_I$, and the orientation vector \textbf{p}. 
+% Therefore, progress can be made to reduce this system of tensor equations to one equation for \textbf{p}, $\bm\omega_\alpha$ and two scalars equations, one for $\chi_I$ and another for $E_I$. 
+% This is the purpose of the next subsection. 
 
 
 \subsection{Local reference frame equations}
@@ -840,16 +845,13 @@ We obtained a vector equation for the angular rotation vector in the eigenbasis 
 We now project \ref{eq:dt_S2} onto its first eigenvector $\textbf{p}$.
 This gives a scalar equation for the principal value of the rate of deformation $E_I$, it reads, 
 \begin{equation}
-    \frac{m_\alpha a^2}{5} \left[
         \ddt (E_I (\chi_I+1))
-        - (\chi_I+1)( \Omega^{d0} \Omega^{d0}  - E_I^2) 
-        + \frac{1}{3} \chi^{cd}
+        - 2(\chi_I+1)( \Omega^{d0} \Omega^{d0}  - E_I^2) 
+        + \frac{2}{3} \chi^{cd}
         \Gamma^{ed}\Gamma^{ec}
-    \right]
-    + 2 \mu_d v_\alpha E_I
-    + \frac{\gamma v_\alpha }{a} 
-    \frac{4  }{5} \chi_I
-    = F_{||},
+    + 2 E_I / \tau_\mu
+    +  \chi_I /\tau_\gamma^2
+    = 10 F_{||},
     \label{eq:dt_E_I}
 \end{equation} 
 where we have noted $F_{||} = \textbf{F}: \textbf{pp}$.
@@ -869,16 +871,13 @@ In the objective of averaging the equations, it is more practical to consider \r
 However, for a better physical interpretation, we may combine these two equations to obtain a single second-order equation PDE. 
 This is done by injecting \ref{eq:dt_chi_I} into \ref{eq:dt_E_I}, which gives, 
 \begin{equation}
-    \frac{m_\alpha a^2}{5} \left[
         \ddt^2 \chi_I
-        - (\chi_I+1)( \Omega^{d0} \Omega^{d0}  - E_I^2) 
-        + \frac{1}{3} \chi^{cd}
+        - 2(\chi_I+1)( \Omega^{d0} \Omega^{d0}  - E_I^2) 
+        + \frac{2}{3} \chi^{cd}
         \Gamma^{ed}\Gamma^{ec}
-    \right]
-    +  \mu_d v_\alpha \ddt \ln(\chi_I+1)
-    + \frac{\gamma v_\alpha }{a} 
-    \frac{4  }{5} \chi_I
-    = F_{||}. 
+    + \ddt \ln(\chi_I+1) /\tau_\mu
+    + \chi_I/\tau_\gamma^2
+    = 10 F_{||}. 
     \label{eq:dt2_chi_I2}
 \end{equation} 
 We finally obtained an equation for the droplets' deformation $\chi_I$ in the eigenbasis of the particle.
@@ -896,14 +895,14 @@ We conclude from \ref{eq:dt2_chi_I2} that the equation describing the droplet ma
 By linearizing \ref{eq:dt2_chi_I2} under the assumption of small deformations and neglecting particle rotation, one can derive the following expression:
 \begin{equation}
     \ddt^2 \chi_I
-    +\frac{10 \mu_d}{a^2\rho_d}   \ddt \chi_I
-    + \frac{8 \gamma }{a^3\rho_d} 
-     \chi_I
+    + \ddt \chi_I/\tau_\mu
+    + 
+     \chi_I /\tau_\gamma^2
     = \frac{10}{m_\alpha a^2}F_{||}. ,
     \label{eq:lamb_like_model}
 \end{equation} 
-Under that form, we recognize the second-order harmonic ODE of the deformation of a droplet.
-For free oscillating drops with no forcing term, i.e. $F_{||} = 0$, the natural frequency of the drop is given by $\sqrt{\frac{8 \gamma }{a^3\rho_d}}$ and the damping ratio by $10 \mu_d  /(a^2\rho_d)$. 
+Under that form, we recognize the scalar second-order harmonic ODE of the deformation of a droplet.
+% For free oscillating drops with no forcing term, i.e. $F_{||} = 0$, the natural frequency of the drop is given by $\sqrt{\frac{8 \gamma }{a^3\rho_d}}$ and the damping ratio by $10 \mu_d  /(a^2\rho_d)$. 
 This corresponds to the results obtained by  \citet{lamb1924hydrodynamics} for freely oscillating droplets. 
 As discussed earlier, if one of the components of $F_{||}$ turns out to be proportional to $\ddt^2 \chi_I$ (due to added mass-like effect for example) then the natural frequency may be modified. 
 
