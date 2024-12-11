@@ -1,6 +1,6 @@
 \section{Numerical experiments. }
 
-In this section, we compare theoretical results, to the results obtained with the DNS introduced in the previous chapter. 
+In this section, we compare the theoretical results, to the numerical results obtained with \texttt{Basilisk} introduced in \ref{chap:DNS}. 
 We recall that we are working with a set of simulations covering the parameter ranges displayed in \ref{tab:simulations_recall}. 
 \begin{table}[h!]
     \centering
@@ -16,7 +16,7 @@ We recall that we are working with a set of simulations covering the parameter r
         \end{tabular}
     \label{tab:simulations_recall}
 \end{table}
-In the first step, we will make use of the DNS at $Ga = 5$ which is considered to be comparable to the Stokes regime used for the theory. 
+In the first step, we will make use of the simulation results at $Ga = 5$ which is considered to be comparable to the Stokes regime used for the theory. 
 However, note that at $Ga = 5$, $Re \approx 1$ consequently inertial effects are already present. 
 Nevertheless, due to numerical constraints lower \textit{Reynolds} numbers could not be reached. 
 
@@ -25,12 +25,12 @@ Consequently, in the first part of this section, we focus on the comparison of $
 Then, we compare the numerical value of $\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$ with the prediction of \ref{eq:functional_form_avg}. 
 Finally, our goal will be to extend \ref{eq:functional_form_avg} to non-negligible inertial effect and volume fraction effects, i.e. to higher $Re$ and $\phi$. 
 
-\subsection{The nearest neighbors conditionally averaged disturbance velocity}
+\subsection{Nearest neighbors conditionally averaged disturbance velocity}
 
 To reconstruct $\textbf{v}_f^\text{nst}$ with the DNS we must discretize \ref{eq:def_f_nst}. 
 We proceed as follows: 
 (1) We consider all simulations time steps and locations in the mesh as an independent configuration $\FF$.
-That holds since the system is homogeneous and statistically steady in time.  
+This assumption holds since the system is homogeneous and statistically steady in time.  
 Thus, we consider that the field $\textbf{u}_f^0[\textbf{x},\FF,t]$ is given by the field $\textbf{u}[c,t]$, where $c$ is the label of a given cell in the mesh and $t$ the time step of the simulation. 
 Here, it must be understood that $\FF$ corresponds to all different combinations of $c$ and $t$. 
 (2) Finally, we discretize the distance vector $\textbf{r}$ from a point in the mesh to the center of mass of the nearest neighbor, in $n^{th}$ intervals, with the location of the center of the $k^{th}$ interval denoted by $\textbf{r}_k$, where $\textbf{r}_k = 1,\ldots,n$. 
@@ -61,17 +61,17 @@ Thus, in \ref{fig:vnst_DNS} we display the reconstructed velocity fields based o
     \includegraphics[width = 0.32\textwidth]{image/HOMOGENEOUS_final/Stream/Stream_PHI_5_Ga_80_l_10.pdf}
     \caption{Streamlines of the disturbance velocity field $\textbf{v}^\text{nst}$, in the cross-section given by the plane $(\textbf{e}_x,\textbf{e}_z)$, for two volume fractions $\phi = 0.01$ (left) and $\phi = 0.05$ (middle) at $\lambda = 10$ and $Ga = 5$.
     (right) plot of the inertial case $Ga = 80$. 
-    The left side of the panel ($x/a < 0$), we have re-plotted the theoretical solution provided by \ref{eq:v_nst_solution_adim}.   
-    The right side of the panel ($x/a > 0$), we have reconstructed the streamlines obtained with the DNS, using \ref{eq:vnst_DNS}. 
+    On the left side of the panel ($x/a < 0$), we have re-plotted the theoretical solution provided by \ref{eq:v_nst_solution_adim}.   
+    On the right side of the panel ($x/a > 0$), we have reconstructed the streamlines obtained with the DNS, using \ref{eq:vnst_DNS}. 
     The color map indicates the magnitude of the velocity, from black which corresponds to a velocity magnitude of 0, to the color at the interface of the droplet which corresponds to a magnitude of 1.}
     \label{fig:vnst_DNS}
 \end{figure}
-As seen on \ref{fig:vnst_DNS}, the common points that shear the velocity fields from the DNS to the theoretical prediction are the following: 
-(1) both exhibit approximately the same wake close to the interface of the droplet. 
+As seen on \ref{fig:vnst_DNS}:  %the common points that shear the velocity fields from the DNS to the theoretical prediction are the following: 
+(1) both velocity fields exhibit approximately the same wake close to the interface of the droplet. 
 That is the wake of an isolated rising vertical droplet. 
 (2) For a distance large enough from the droplet center we see the downstream flow appears.
-(3) The confinement zone, delimited by the null normal velocity, follows the same trends as the theoretical prediction, i.e. the radius is smaller for higher $\phi$. 
-Additionally, the radii of the confinement zones have approximately the same size for both cases where $Ga = 5$. 
+(3) The recirculation region, delimited by the null radial velocity (i.e. for the points $\textbf{r}$ following $\textbf{v}^\text{nst}\cdot \textbf{r} = 0$ with $|\textbf{r}|>a$), follows the same trends as the theoretical prediction, i.e. the radius is smaller for higher $\phi$. 
+Additionally, the radii of the recirculation region have approximately the same size for both cases where $Ga = 5$. 
 
 Regarding the differences, we can note that for the case $\phi = 0.01$, displayed on \ref{fig:vnst_DNS} (left) the wake of the particle is slightly asymmetric, while the theoretical solution is purely symmetric. 
 The fore-aft symmetry of the wake of a particle as displayed in \ref{fig:vnst_vertical} is typically due to the absence of inertial effect. 
@@ -82,10 +82,12 @@ This is consistent with the previous remark since for this case $Re < 1$.
 
 To extend our understanding we have also displayed on \ref{eq:vnst_DNS} (right) a high inertial case, with  $Ga = 80$. 
 In this case, we see that the wake exhibits fore-aft asymmetry, which confirms that this trend comes with inertial effects. 
-Additionally, we can note that the top boundary of the confinement zone is approximately at the same location as the theoretical prediction. 
+Additionally, we can note that the top boundary of the recirculation region is approximately at the same location as the theoretical prediction. 
 However, the downstream boundary is different from the one predicted by the theoretical prediction, again that is because the fore-aft symmetry of the flow is broken.  
-The asymmetry of the particle wake is measured by the triple velocity correlation $\avg{\chi_f\textbf{u}_f'\cdot \textbf{u}_f' \textbf{u}_f'}$ appearing in the pseudo turbulent energy equation, not by the \textit{Reynolds} stress. 
-Thus, the effect of inertia generating a for-aft asymmetry on the particle's wake, will not necessarily impact the velocity variance. 
+The symmetry of a distribution can be quantified by the ``skewness'' of the distribution. 
+In the case of the continuous phase velocity distribution it is the triple velocity correlation $\avg{\chi_fk_f  \textbf{u}_f'}$ appearing in the pseudo turbulent energy equation \eqref{eq:dt_hybrid_k1}, that quantify the fore-aft symmetry.
+As demonstrated, in Stokes regime $\avg{\chi_fk_f  \textbf{u}_f'} = 0$ due to the fore-after symmetry of the disturbance fields of spherical particles.  
+Hence, the effect of inertia, which generates a fore-aft asymmetry in the particle's wake, will not necessarily impact the velocity variance but rather the skewness of the velocity distribution. 
 
 
 To conclude, we can state that \ref{eq:v_nst_solution_adim} is well representative of the velocity field reconstructed with the DNS. 
@@ -97,7 +99,7 @@ Therefore, we can be confident regarding the accuracy of our \textit{Reynolds} s
 \subsection{Vertical velocity variance}
 
 As discussed in the previous section, in the situation reproduced by the DNS, the velocity variance is given by \ref{eq:functional_form_avg} without the contribution of the buoyancy term (see \eqref{eq:cancelation1} and \ref{eq:cancelation2}). 
-Additionally, at $Re \approx 1$ or $Ga =5$ we assert that the particle vertical velocity variance $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}_{zz}$ is negligible. 
+Additionally, for instance, we assert that the particle vertical velocity variance $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}_{zz}$ is negligible  at  $Ga =5$. 
 In the next subsections, we show that this assumption is indeed confirmed by the DNS results. 
 However, for the horizontal velocity variance, we will observe that it is not necessarily a valid assumption. 
 Under these conditions, the vertical component of the velocity variance given by \ref{eq:functional_form_avg} is expressed as, 
@@ -114,46 +116,6 @@ Under these conditions, the vertical component of the velocity variance given by
     \label{eq:theoritical_simplified}
 \end{equation}
 where we recall that $\Gamma(1/3) \approx 2.67894$. 
-
-\subsubsection{Statistics computations within DNS}
-
-In this section, we briefly recall how to compute the \textit{Reynolds} stress tensor based on the DNS. 
-
-Following \citet{du2022analysis} we consider \textit{ergodicity} at all times of the numerical experiment.
-Thus, the ensemble average of an arbitrary quantity $X$ can be approximated by a spatial average $\Xavg{X}$ followed by a time average $\Tavg{X}$. 
-Specifically, the ensemble average of a numerical field, $X$, is taken through space and time following,
-\begin{equation}
-    \avg{X}
-    = \Tavg{\Xavg{X}}
-    = \frac{1}{ t_{end} - t_0}\int_{t_0}^{t_{end}} 
-    \Xavg{X}(t) dt
-\end{equation}
-where, 
-\begin{equation}
-    \Xavg{X}(t)
-    = \frac{1}{L^3}\int 
-    X(\textbf{x},t) d\textbf{x}
-\end{equation}
-where $L$ is the length of the cubic domain.
-$t_0$ and $t_{end}$ are the starting and ending times of sampling, respectively.
-In practice, we take $t_0$ such that the simulation reaches a statistically steady regime.  
-It has been observed that $t_0$ is reached at about $50 \sqrt{g/d}$. 
-
-To compute the continuous phase average of the local phase velocity $\textbf{u}_f^0$, we simply perform an integration over space and time, 
-\begin{equation*}
-    \textbf{u}_f = \frac{1}{\phi_f} \Tavg{\Xavg{\chi_f \textbf{u}_f^0}}. 
-\end{equation*}
-Here the $\chi_f$ is approximated by the color function solved by the VOF solver. 
-To compute the ensemble average of the continuous phase velocity variance, we obtain
-\begin{equation}
-    \avg{\chi_f\textbf{u}_f' \textbf{u}_f'}
-    % = \Tavg{\Xavg{\chi_f \textbf{u}_f' \textbf{u}_f'}}
-    = \Tavg{\Xavg{\chi_f (\textbf{u}_f^0 -\textbf{u}_f ) (\textbf{u}_f^0 -\textbf{u}_f)}}
-    = \Tavg{\Xavg{\chi_f \textbf{u}_f^0 \textbf{u}_f^0}}
-    -  \phi_f  \textbf{u}_f \textbf{u}_f.
-    \label{eq:def_uuf_num} 
-\end{equation}
-Consequently, \ref{eq:def_uuf_num} indicates that we must take the average of the product of the velocities of the continuous phase domain, and then we retrieve the mean velocities' product.  
 
 
 
@@ -415,8 +377,8 @@ In \citet{mehrabadi2015pseudo} they performed DNS of a fixed array of spherical 
     results of Particle-resolved Direct Numerical Simulations
     of fixed particle assemblies by \citet{mehrabadi2015pseudo}
     ($\pmb\bigcirc$) $Re_m = (1-\phi) \approx 1$; ($\pmb\triangle$) $Re_m \approx 300$;
-    (dot-dashed lines) Semi-empirical formula \ref{eq:} at $Re_m = 1$
-    (dashed lines) Semi-empirical formula \ref{eq:} at $Re_m= = 300$
+    (dot-dashed lines) Semi-empirical formula \ref{eq:semi_empirical} at $Re_m = 1$
+    (dashed lines) Semi-empirical formula \ref{eq:semi_empirical} at $Re_m = 300$
     }
     \label{fig:tennet}
 \end{figure}

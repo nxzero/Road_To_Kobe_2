@@ -73,43 +73,42 @@ Note that this is of major importance since this study focuses on the relative v
 \subsection{Numerical sampling and statistical convergence}
 
 The age-included nearest-neighbor distribution function presented in the last section requires the particles' center of mass position and the position of its nearest neighbor, along with the current age of interaction.
-Equally, the center of mass velocity of the particles together with the velocity of their nearest neighbor is also needed to reconstruct $\textbf{w}_p^{nst}$. 
-Even though these quantities are basic, they are not evident to measure in DNS.
-Indeed, when several droplets belong to the same VoF tracer it is challenging to distinguish them.
-Therefore, some comments are in order.   
+% Equally, the center of mass velocity of the particles together with the velocity of their nearest neighbor is also needed to reconstruct $\textbf{w}_p^{nst}$. 
+% Indeed, when several droplets belong to the same VoF tracer it is challenging to distinguish them.
+Therefore, we now provide additional comments on the numerical methodology employed to reconstruct these statistics. 
 
-As detailed in \citet{fintzi2024buoyancy} the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm permits us to distinguish the different droplet volumes within a given VoF field. 
-Let define $\texttt{t}_i[\text{c},t]$ as the ``tag'' field corresponding to the droplet $i$, evaluated at the cell ``c'' of the mesh and at time $t$.
-This field is equal to 1 for cells inside the volume of the particle $i$ and 0 outside.
-Then, the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm provides us with $N$ ``tag'' field, i.e. one for each droplet. 
-Based on $\texttt{t}_i$, and on the other fields solved by \ref{eq:dt_C} and \ref{eq:dt_urho}, we can easily define the particles Lagrangian properties mentioned above. 
-The mass, position, and momentum of a particle are then computed as follows 
-\begin{align*}
-    m_i(t)
-    = \sum_{\text{c} = 1}^\text{last cell}
-    \rho [\text{c},t]
-    \texttt{t}_i[\text{c},t]dv[c],
-    \\ 
-    \textbf{x}_i(t)
-    = 
-    \frac{1}{m_i(t)}
-    \sum_{\text{c} = 1}^\text{last cell}
-    \textbf{x} 
-    \rho [\text{c},t]
-    \texttt{t}_i[\text{c},t]dv[c],
-    \\ 
-    \textbf{u}_i(t)
-    = 
-    \frac{1}{m_i(t)}
-    \sum_{\text{c} = 1}^\text{last cell}
-    \textbf{u} [\text{c},t]
-    \rho [\text{c},t]
-    \texttt{t}_i[\text{c},t]dv[c],
-\end{align*}
-where the sum from ``$\text{c} = 1$'' to ``$\text{last cell}$'' denotes a summation over the entire mesh grid, and $\rho[\text{c},t]$ and $\textbf{u}[\text{c},t]$ are the density field and velocity field evaluated at the cell ``c'' and at a simulation time step $t$. 
-Likewise, $\textbf{x}[\text{c}]$ and $dv[c]$ correspond to the Cartesian coordinate and the volume of the cell, respectively. 
+% As detailed in \citet{fintzi2024buoyancy} the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm permits us to distinguish the different droplet volumes within a given VoF field. 
+% Let define $\texttt{t}_i[\text{c},t]$ as the ``tag'' field corresponding to the droplet $i$, evaluated at the cell ``c'' of the mesh and at time $t$.
+% This field is equal to 1 for cells inside the volume of the particle $i$ and 0 outside.
+% Then, the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm provides us with $N$ ``tag'' field, i.e. one for each droplet. 
+% Based on $\texttt{t}_i$, and on the other fields solved by \ref{eq:dt_C} and \ref{eq:dt_urho}, we can easily define the particles Lagrangian properties mentioned above. 
+% The mass, position, and momentum of a particle are then computed as follows 
+% \begin{align*}
+%     m_i(t)
+%     = \sum_{\text{c} = 1}^\text{last cell}
+%     \rho [\text{c},t]
+%     \texttt{t}_i[\text{c},t]dv[c],
+%     \\ 
+%     \textbf{x}_i(t)
+%     = 
+%     \frac{1}{m_i(t)}
+%     \sum_{\text{c} = 1}^\text{last cell}
+%     \textbf{x} 
+%     \rho [\text{c},t]
+%     \texttt{t}_i[\text{c},t]dv[c],
+%     \\ 
+%     \textbf{u}_i(t)
+%     = 
+%     \frac{1}{m_i(t)}
+%     \sum_{\text{c} = 1}^\text{last cell}
+%     \textbf{u} [\text{c},t]
+%     \rho [\text{c},t]
+%     \texttt{t}_i[\text{c},t]dv[c],
+% \end{align*}
+% where the sum from ``$\text{c} = 1$'' to ``$\text{last cell}$'' denotes a summation over the entire mesh grid, and $\rho[\text{c},t]$ and $\textbf{u}[\text{c},t]$ are the density field and velocity field evaluated at the cell ``c'' and at a simulation time step $t$. 
+% Likewise, $\textbf{x}[\text{c}]$ and $dv[c]$ correspond to the Cartesian coordinate and the volume of the cell, respectively. 
 
-For a given time step $t_n$, we compute the position $\textbf{x}_i(t_n)$ and velocity $\textbf{u}_i(t_n)$ of each droplet. 
+For a given time step $t_n$, we compute the position $\textbf{x}_i(t_n)$ and velocity $\textbf{u}_i(t_n)$ of each droplet, as described in \ref{chap:DNS}. 
 Then, by measuring each particle pair distance, we identify the nearest neighbor for each droplet $i$. 
 For convenience, the nearest neighbor of the droplet $i$ is indexed $j$. 
 Once this is done we can compute the relative positions $\textbf{r}_{ij}(n) =\textbf{x}_i - \textbf{x}_j$, and the relative velocities $\textbf{w}_{ij} = \textbf{u}_i - \textbf{u}_j$ with the nearest neighbor for all droplets. 

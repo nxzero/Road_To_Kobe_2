@@ -1,3 +1,115 @@
+\subsection{Numerical approximation of the ensemble average}
+
+In this section, we briefly explain how to compute ensemble averaged quantities based on the DNS results. 
+
+\subsubsection{Continuous averaged quantities}
+
+Following \citet{du2022analysis} we consider \textit{ergodicity} at all times of the numerical experiment.
+Thus, the ensemble average of an arbitrary quantity $X$ can be approximated by a spatial average $\Xavg{X}$ followed by a time average $\Tavg{X}$. 
+Specifically, the ensemble average of a numerical field, $X$, is taken through space and time following,
+\begin{equation}
+    \avg{X}
+    = \Tavg{\Xavg{X}}
+    = \frac{1}{ t_{end} - t_0}\int_{t_0}^{t_{end}} 
+    \Xavg{X}(t) dt
+\end{equation}
+where, 
+\begin{equation}
+    \Xavg{X}(t)
+    = \frac{1}{L^3}\int 
+    X(\textbf{x},t) d\textbf{x}
+\end{equation}
+where $L$ is the length of the cubic domain.
+$t_0$ and $t_{end}$ are the starting and ending times of sampling, respectively.
+In practice, we take $t_0$ such that the simulation reaches a statistically steady regime.  
+It has been observed that $t_0$ is reached at about $50 \sqrt{g/d}$. 
+
+To compute the phase average of the local phase velocity $\textbf{u}_k^0$, we simply perform an integration over space and time, 
+\begin{equation}
+    \textbf{u}_k = \frac{1}{\phi_k} \Tavg{\Xavg{\chi_k \textbf{u}_k^0}}
+\end{equation}
+where the indicator function $\chi_f$ must be understood as its approximation in the DNS, which is the color function used by the CFD code (\url{http://basilisk.fr}). 
+Since the homogeneous and statistically steady-state hypotheses are supposed to be true, the mean of the droplet center of mass velocity is equivalent to the dispersed phase averaged velocity, $\textbf{u}_d$.
+Thus, we may compute the ensemble average relative velocity with the operation, 
+\begin{equation}
+    \textbf{u}_{pf} = 
+    \frac{1}{\phi_d} \Tavg{\Xavg{\chi_d \textbf{u}_d^0}}
+    - \frac{1}{\phi_f} \Tavg{\Xavg{\chi_f \textbf{u}_f^0}}. 
+\end{equation} 
+To compute the ensemble average of the continuous phase velocity variance, we obtain
+\begin{equation}
+    \avg{\chi_f\textbf{u}_f' \textbf{u}_f'}
+    % = \Tavg{\Xavg{\chi_f \textbf{u}_f' \textbf{u}_f'}}
+    = \Tavg{\Xavg{\chi_f (\textbf{u}_f^0 -\textbf{u}_f ) (\textbf{u}_f^0 -\textbf{u}_f)}}
+    = \Tavg{\Xavg{\chi_f \textbf{u}_f^0 \textbf{u}_f^0}}
+    -  \phi_f  \textbf{u}_f \textbf{u}_f.
+    \label{eq:def_uuf_num} 
+\end{equation}
+Consequently, \ref{eq:def_uuf_num} indicates that we must take the average of the product of the velocities of the continuous phase domain, and then we retrieve the mean velocities' product.  
+
+\subsubsection{Computation of Lagrangian quantities}
+
+When several droplets belong to the same VoF tracer it is challenging to distinguish them.
+Therefore, some comments are in order regarding the computation of the Lagrangian quantities such as the mean the center of mass velocity of the particles, center of mass position\ldots   
+
+As detailed above the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm permits us to distinguish the different droplet volumes within a given VoF field. 
+Let define $\texttt{t}_i[\text{c},t]$ as the ``tag'' field corresponding to the droplet $i$, evaluated at the cell ``c'' of the mesh and at time $t$.
+This field is equal to 1 for cells inside the volume of the particle $i$ and 0 outside.
+Then, the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm provides us with $N$ ``tag'' field, i.e. one for each droplet. 
+Based on $\texttt{t}_i$, and on the other fields solved by \ref{eq:dt_C} and \ref{eq:dt_urho}, we can easily define the particles Lagrangian properties mentioned above. 
+The mass, position and momentum of a particle are then computed as follows 
+\begin{align}
+    m_i(t)
+    = \sum_{\text{c} = 1}^\text{last cell}
+    \rho [\text{c},t]
+    \texttt{t}_i[\text{c},t]dv[c],
+    \\ 
+    \textbf{x}_i(t)
+    = 
+    \frac{1}{m_i(t)}
+    \sum_{\text{c} = 1}^\text{last cell}
+    \textbf{x} 
+    \rho [\text{c},t]
+    \texttt{t}_i[\text{c},t]dv[c],
+    \\ 
+    \textbf{u}_i(t)
+    = 
+    \frac{1}{m_i(t)}
+    \sum_{\text{c} = 1}^\text{last cell}
+    \textbf{u} [\text{c},t]
+    \rho [\text{c},t]
+    \texttt{t}_i[\text{c},t]dv[c],
+    \label{eq:Lagrangian_num2}
+\end{align}
+where the sum from ``$\text{c} = 1$'' to ``$\text{last cell}$'' denotes a summation over the entire mesh grid, and $\rho[\text{c},t]$ and $\textbf{u}[\text{c},t]$ are the density field and velocity field evaluated at the cell ``c'' and at a simulation time step $t$. 
+Likewise, $\textbf{x}[\text{c}]$ and $dv[c]$ correspond to the Cartesian coordinate and the volume of the cell, respectively. 
+
+From \ref{eq:Lagrangian_num2} we can compute the second moment of mass of the particles and the first moment of momentum according to the relations, 
+\begin{align*}
+  \textbf{M}_i(t)
+  = 
+  \sum_{\text{c} = 1}^\text{last cell}
+  (\textbf{x} - \textbf{x}_i[t])
+  (\textbf{x} - \textbf{x}_i[t])
+  \rho [\text{c},t]
+  \texttt{t}_i[\text{c},t]dv[c],
+  \\ 
+  \textbf{u}_i(t)
+  = 
+  \sum_{\text{c} = 1}^\text{last cell}
+  (\textbf{x} - \textbf{x}_i[t])
+  \textbf{u} [\text{c},t]
+  \rho [\text{c},t]
+  \texttt{t}_i[\text{c},t]dv[c],
+\end{align*}
+and so on for the other Lagrangian properties. 
+
+The ensemble average of the Lagrangian velocity is then defined as, 
+\begin{equation}
+  \textbf{u}_p = \frac{1}{N_p}\sum^{N_b}_i \textbf{u}_i, 
+\end{equation}
+and so on for the other properties. 
+
 \section{Additional details on the algorithms}
 In addition to the developments above, implementing the algorithm required further modifications to the \texttt{Basilisk C} source code. 
 Specifically, since computing the closure terms involves extensive tensor algebra, we implemented a new macro in the \texttt{Basilisk C} compiler that enables users to write code directly using Einstein summation convention. 

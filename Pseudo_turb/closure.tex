@@ -266,40 +266,5 @@ We recall that $Bo = 0.5$ is the \textit{Bond} number, and $\zeta = 0.9$ is the 
 This makes a total of $60$ representative simulations.
 
 
-\subsection{Numerical approximation of the ensemble average}
 
-Following \citet{du2022analysis} we consider ergodicity at all times of the numerical experiment.
-Thus, the ensemble average of a quantity $X$ can be approximated by a spatial average $\Xavg{X}$ and a time average $\Tavg{X}$ such that $\avg{X} \approx \Xavg{\Tavg{X}} = \Tavg{\Xavg{X}}$.
-Consequently, the ensemble average of a numerical field, $X$, is taken through space and time such that,
-\begin{equation}
-    \avg{X}
-    = \Tavg{\Xavg{X}}
-    = \frac{1}{ t_{end} - t_0}\int_{t_0}^{t_{end}} 
-    \Xavg{X}(t) dt
-\end{equation}
-where, 
-\begin{equation}
-    \Xavg{X}(t)
-    = \frac{1}{L^3}\int 
-    X(\textbf{x},t) d\textbf{x}
-\end{equation}
-Where $L$ is the length of one side of the cubic numerical domain.
-$t_0$ and $t_{end}$ are the starting time of sampling, and the ending time of sampling which is also the ending time of the simulation, respectively.
-In practice, we take $t_0$ such that the simulation reaches a statistically steady regime. 
-It has been found that, in general, for the lowest $Ga$, the criterion $t_0 > 50\sqrt{g/d}$ must be respected.  
 
-To compute the phase average of the local phase velocity $\textbf{u}_k^0$, we simply perform an integration over space and time, 
-\begin{equation}
-    \textbf{u}_k = \frac{1}{\phi_k} \Tavg{\Xavg{\chi_k \textbf{u}_k^0}}
-\end{equation}
-where the indicator function $\chi_f$ must be understood as its approximation in the DNS, which is the color function used by the CFD code (\url{http://basilisk.fr}). 
-Since the homogeneous and statistically steady-state hypotheses are supposed to be true, the mean of the droplet center of mass velocity is equivalent to the dispersed phase averaged velocity, $\textbf{u}_d$.
-Thus, we may compute the ensemble average relative velocity used in \ref{eq:C_d} with the trivial operation, 
-\begin{equation}
-    \textbf{u}_{pf} = 
-    \frac{1}{\phi_d} \Tavg{\Xavg{\chi_d \textbf{u}_d^0}}
-    - \frac{1}{\phi_f} \Tavg{\Xavg{\chi_f \textbf{u}_f^0}}. 
-\end{equation} 
-Then, the relative velocity leads us directly to the numerical approximation of the drag force term using \ref{eq:C_d} and \ref{eq:f_p_def}. 
-
-Now that we have all the tools in hand, we present in the next section our generalized drag force model for buoyant droplets of arbitrary viscosity. 
