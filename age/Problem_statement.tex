@@ -2,77 +2,79 @@
 \label{sec:methodo2}
 
 The DNS results presented in this study are based on the same set of data as our previous work \citet{fintzi2024buoyancy}, where we conducted statistically steady-state simulations of rising mono-disperse suspensions of droplets in a fully periodic domain. 
-This section recall briefly the numerical methods presented in \citet{fintzi2024buoyancy}, with additional information regarding the computation of statistics employed here. 
-Note that the source code of the DNS and the post processes tools used in this section are provided and documented on the wiki page: \href{http://basilisk.fr/sandbox/fintzin/Rising-suspension/RS.c}{RS.c}. 
+This section 
+%recalls briefly the numerical methods presented in \citet{fintzi2024buoyancy}, with 
+presents additional information regarding the post-processing computation of statistics employed here. 
+Note that the source code of the DNS and the post-processing tools used in this section are provided and documented on the wiki page: \href{http://basilisk.fr/sandbox/fintzin/Rising-suspension/RS.c}{RS.c}. 
 
 
 
-\subsection{Problem statement and numerical methods}
+% \subsection{Problem statement and numerical methods}
 
 
-We consider the dynamics of homogeneous mono-disperse emulsions subject to buoyancy forces in a fully periodic domain. 
-Both the dispersed and continuous phase are considered as Newtonian fluids defined by viscosity $\mu_d$ (resp. $\mu_f$) and density $\rho_d$ (resp. $\mu_f$).
-The interface between both fluids is modeled with a constant surface tension coefficient, $\gamma$. 
-Equally, the density and viscosity will be considered constant in each phase.
-In dimensionless form this problem is completely characterized by six dimensionless parameters:  the viscosity and density ratio, $\lambda = \mu_d / \mu_f$ and $\zeta = \rho_d / \rho_f$,  
-the \textit{Galileo} number, 
-\begin{equation*}
-    Ga =\sqrt{\rho_f(\rho_f - \rho_d) g d^3} / \mu_f,
-\end{equation*}
-the \textit{Bond} number, 
-\begin{equation*}
-    Bo =\frac{(\rho_f - \rho_d) g d^2}{\gamma},
-\end{equation*}
-the number of droplets per domain $N_b$, and the dispersed phase volume fraction $\phi$. 
-Here, $d$ represents the diameter of a sphere with the same volume as the droplets, and $g$ denotes the gravitational acceleration.
-The \textit{Galileo} number is a measure of the strength of the buoyancy forces relative to the viscous forces, whereas the \textit{Bond} number evaluates the ratio between buoyancy and capillary forces. 
-We used a number of particles per domain of $N_b = 125$, which is roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
-Moreover, each DNS lasts for a time: $t^*_\text{end} = 1500 \sqrt{d/g}$.
-These parameters are sufficient for to obtain a good statistical convergence \citet{fintzi2024buoyancy}. 
-\begin{table}[h!]
-    \centering
-    \caption{Dimensionless parameter range investigated in this work.}
-    \begin{tabular}{|ccccccc|ccc|}\hline
-        \multicolumn{7}{|c|}{Primary parameters}&\multicolumn{3}{|c|}{Secondary parameters}\\\hline\hline
-        $Ga$&$Bo$&$\phi$&$\lambda$&$\zeta$&$N_b$&$t^*_\text{end}$&$\mathcal{L}/d$&$Re$&$We$\\ \hline
-        $5\rightarrow 100$&$0.2$&$1\% \rightarrow 20\%$&$10$ \& $1$&$0.9$&$125$&$1500$&$6.7\to 18.7$&$10^{-1}\to 170$&$10^{-4}\to 0.6$\\ \hline
-    \end{tabular}
-    \label{tab:simulations}
-\end{table}
-In short, we present DNS with dimensionless parameters lying in ranges outlined in \ref{tab:simulations}.
+% We consider the dynamics of homogeneous mono-disperse emulsions subject to buoyancy forces in a fully periodic domain. 
+% Both the dispersed and continuous phase are considered as Newtonian fluids defined by viscosity $\mu_d$ (resp. $\mu_f$) and density $\rho_d$ (resp. $\mu_f$).
+% The interface between both fluids is modeled with a constant surface tension coefficient, $\gamma$. 
+% Equally, the density and viscosity will be considered constant in each phase.
+% In dimensionless form this problem is completely characterized by six dimensionless parameters:  the viscosity and density ratio, $\lambda = \mu_d / \mu_f$ and $\zeta = \rho_d / \rho_f$,  
+% the \textit{Galileo} number, 
+% \begin{equation*}
+%     Ga =\sqrt{\rho_f(\rho_f - \rho_d) g d^3} / \mu_f,
+% \end{equation*}
+% the \textit{Bond} number, 
+% \begin{equation*}
+%     Bo =\frac{(\rho_f - \rho_d) g d^2}{\gamma},
+% \end{equation*}
+% the number of droplets per domain $N_b$, and the dispersed phase volume fraction $\phi$. 
+% Here, $d$ represents the diameter of a sphere with the same volume as the droplets, and $g$ denotes the gravitational acceleration.
+% The \textit{Galileo} number is a measure of the strength of the buoyancy forces relative to the viscous forces, whereas the \textit{Bond} number evaluates the ratio between buoyancy and capillary forces. 
+% We used a number of particles per domain of $N_b = 125$, which is roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
+% Moreover, each DNS lasts for a time: $t^*_\text{end} = 1500 \sqrt{d/g}$.
+% These parameters are sufficient for to obtain a good statistical convergence \citet{fintzi2024buoyancy}. 
+% \begin{table}[h!]
+%     \centering
+%     \caption{Dimensionless parameter ranges investigated in this work.}
+%     \begin{tabular}{|ccccccc|ccc|}\hline
+%         \multicolumn{7}{|c|}{Primary parameters}&\multicolumn{3}{|c|}{Secondary parameters}\\\hline\hline
+%         $Ga$&$Bo$&$\phi$&$\lambda$&$\zeta$&$N_b$&$t^*_\text{end}$&$\mathcal{L}/d$&$Re$&$We$\\ \hline
+%         $5\rightarrow 100$&$0.2$&$1\% \rightarrow 20\%$&$10$ \& $1$&$0.9$&$125$&$1500$&$6.7\to 18.7$&$10^{-1}\to 170$&$10^{-4}\to 0.6$\\ \hline
+%     \end{tabular}
+%     \label{tab:simulations}
+% \end{table}
+% In short, we present DNS with dimensionless parameters lying in ranges outlined in \ref{tab:simulations}.
 
-The governing equations describe the motion of two immiscible fluids of different densities and viscosities separated by an interface with surface tension. 
-We use the so-called ``one fluid'' formulation of the variable density and viscosity Navier-Stokes equations, which can be expressed as 
-\begin{align}
-    \pddt \rho+ \div(\rho\textbf{u})
-    &= 0,\\
-    \label{eq:dt_urho}
-    \pddt (\rho \textbf{u})
-    + \div (\rho  \textbf{u} \textbf{u} - \bm\sigma)
-    &= (\avg{\rho} - \rho)\textbf{g}
-    + \textbf{f}_\gamma,\\
-    \label{eq:dt_C}
-    \pddt C + \textbf{u}\cdot\grad C  
-    &= 0,
-\end{align}
-i.e. the mass, momentum, and colors function transport equations, respectively. 
-The scalar field $C$, represents the color function, which ranges between $0$ and $1$ to indicate the volumetric proportion of each phase.
-We introduced the fluid velocity vector $\textbf{u}$ and the Newtonian stress tensor $\bm{\sigma} = -p \textbf{I} + \mu (\grad \textbf{u}+ \grad \textbf{u}^\dagger)$ where $p$ is the pressure field and $^\dagger$ represents the transpose operator.
-Note that the material properties, $\rho$, and $\mu$, take the values of each phase in presence, using the arithmetic average: $\rho = (1-C)\rho_f + C \rho_d$ and $\mu = (1-C)\mu_f + C \mu_d$. 
-The capillary force is defined as, $\textbf{f}_\gamma =\textbf{n} \gamma \div \textbf{n} $, where \textbf{n} is the normal to the interface.
-Following  \citep{bunner2002dynamics}, we incorporated the artificial body force term, $\avg{\rho}\textbf{g}$, on the right-hand side of \ref{eq:dt_urho}, to maintain a zero-averaged velocity throughout the entire numerical domain.  
+% The governing equations describe the motion of two immiscible fluids of different densities and viscosities separated by an interface with surface tension. 
+% We use the so-called ``one fluid'' formulation of the variable density and viscosity Navier-Stokes equations, which can be expressed as 
+% \begin{align}
+%     \pddt \rho+ \div(\rho\textbf{u})
+%     &= 0,\\
+%     \label{eq:dt_urho}
+%     \pddt (\rho \textbf{u})
+%     + \div (\rho  \textbf{u} \textbf{u} - \bm\sigma)
+%     &= (\avg{\rho} - \rho)\textbf{g}
+%     + \textbf{f}_\gamma,\\
+%     \label{eq:dt_C}
+%     \pddt C + \textbf{u}\cdot\grad C  
+%     &= 0,
+% \end{align}
+% i.e. the mass, momentum, and colors function transport equations, respectively. 
+% The scalar field $C$, represents the color function, which ranges between $0$ and $1$ to indicate the volumetric proportion of each phase.
+% We introduced the fluid velocity vector $\textbf{u}$ and the Newtonian stress tensor $\bm{\sigma} = -p \textbf{I} + \mu (\grad \textbf{u}+ \grad \textbf{u}^\dagger)$ where $p$ is the pressure field and $^\dagger$ represents the transpose operator.
+% Note that the material properties, $\rho$, and $\mu$, take the values of each phase in presence, using the arithmetic average: $\rho = (1-C)\rho_f + C \rho_d$ and $\mu = (1-C)\mu_f + C \mu_d$. 
+% The capillary force is defined as, $\textbf{f}_\gamma =\textbf{n} \gamma \div \textbf{n} $, where \textbf{n} is the normal to the interface.
+% Following  \citep{bunner2002dynamics}, we incorporated the artificial body force term, $\avg{\rho}\textbf{g}$, on the right-hand side of \ref{eq:dt_urho}, to maintain a zero-averaged velocity throughout the entire numerical domain.  
 
-To solve these equations we first initialized $125$ spherical droplets within a cubic domain with fully periodic boundary conditions. 
-We used the open source code \url{http///basilisk.fr} to discretize the governing equations. 
-Additionally, we used a novel algorithm (discussed in detail in \citep{mani2021numerical,fintzi2024buoyancy}) to prevent coalescence between droplets so that we preserve a mono-disperse population of droplets. 
-This algorithm is based on the Mult-VoF methodology. 
-The key principle is to use different VoF tracers for adjacent droplets, but allow several non-touching droplets to be in the same VoF tracer.
-This algorithm is shown to preserve the kinematic behavior of interfaces that are in close contact, even though we do not resolve the thin liquid film between them \citep{fintzi2024buoyancy}. 
-Note that this is of major importance since this study focuses on the relative velocity of droplets in interaction. 
+% To solve these equations we first initialized $125$ spherical droplets within a cubic domain with fully periodic boundary conditions. 
+% We used the open source code \url{http///basilisk.fr} to discretize the governing equations. 
+% Additionally, we used a novel algorithm (discussed in detail in \citep{mani2021numerical,fintzi2024buoyancy}) to prevent coalescence between droplets so that we preserve a mono-disperse population of droplets. 
+% This algorithm is based on the Mult-VoF methodology. 
+% The key principle is to use different VoF tracers for adjacent droplets, but allow several non-touching droplets to be in the same VoF tracer.
+% This algorithm is shown to preserve the kinematics   behavior of interfaces that are in close contact, even though we do not resolve the thin liquid film between them \citep{fintzi2024buoyancy}. 
+% Note that this is of major importance since this study focuses on the relative velocity of droplets in interaction. 
 
-\subsection{Numerical sampling and statistical convergence}
+% \subsection{Numerical sampling and statistical convergence}
 
-The age-included nearest-neighbor distribution function presented in the last section requires the particles' center of mass position and the position of its nearest neighbor, along with the current age of interaction.
+The age-included nearest-neighbor distribution function presented in the previous section requires the particles' center of mass position and the position of its nearest neighbor, along with the current age of interaction.
 % Equally, the center of mass velocity of the particles together with the velocity of their nearest neighbor is also needed to reconstruct $\textbf{w}_p^{nst}$. 
 % Indeed, when several droplets belong to the same VoF tracer it is challenging to distinguish them.
 Therefore, we now provide additional comments on the numerical methodology employed to reconstruct these statistics. 
@@ -153,14 +155,14 @@ Therefore, in a more general way if $p$ is a scalar property with $\Delta p_k$ i
 \end{equation}
 In this definition, $\FF_{k}$ corresponds to all the events where the nearest neighbors respect the condition, $p \in \Delta p_k$, and $E_{k}$ represents the total number of events fulfilling this constraint. 
 
-Note that due to the average over the macroscopic variables, $\textbf{w}_p^{nst}(\Delta\textbf{r}_k,\Delta a_k)$ and $\textbf{w}^\text{nst}_p(\Delta p_k)$ is dependents on $\textbf{x}$ and $t$. 
+Note that due to the average over the macroscopic variables, $\textbf{w}_p^{nst}(\Delta\textbf{r}_k,\Delta a_k)$ and $\textbf{w}^\text{nst}_p(\Delta p_k)$ are not dependent on $\textbf{x}$ and $t$. 
 In general, this will be the case for all quantities presented in \ref{sec:results}. 
 Therefore, from now on we drop the \textbf{x} and $t$ arguments. 
 
 
 It is clear that to obtain representative averaged quantities, the number of events $E_k$ per interval must be consequent. 
 For 2D-conditioned quantities such as \ref{eq:vec_cond}, we estimated that $100$ samples per bin were sufficient to obtain good qualitative results. 
-Consequently, the plots exposed in \ref{sec:results} have been generated by averaging the quantity of interest (velocity fields, age of interaction) with a minimum threshold of $E_k = 100$ samples for each bin.
+Consequently, the plots displayed in \ref{sec:results} have been generated by averaging the quantity of interest (velocity fields, age of interaction) with a minimum threshold of $E_k = 100$ samples for each bin.
 Regarding the scalar-conditioned fields such as in \ref{eq:scalar_cond}, we gathered $E_k = 1000$ sample per bin to obtain accurate and quantitative results. 
 Lastly, regarding the sampling, we collected data for each Lagrangian quantity every $10$ simulation time step.
 On average, $200,000$ time steps are performed during a simulation with $N_b = 125$ droplets. 

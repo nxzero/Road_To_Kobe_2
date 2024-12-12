@@ -4,7 +4,7 @@ This section present the theoretical, as well as the numerical approach, to comp
 
 \subsection{The closure problem}
 To clarify the role of the different forces and stresses in a multiphase flow model we start by listing the averaged momentum equations of the dispersed and continuous phases obtained by an ensemble averaging procedure.
-For mono-disperse emulsion, the momentum equations of the continuous phase and dispersed phase can be written based on the decomposition of the stress proposed in \ref{chap:daniel2}
+For mono-disperse emulsions, the momentum equations of the continuous phase and dispersed phase can be written based on the decomposition of the stress proposed in \ref{chap:daniel2}
 \begin{align}
     \pddt (\phi_f\rho_f \textbf{u}_f)
     + \div \left(\phi_f\rho_f \textbf{u}_f\textbf{u}_f + \bm{\sigma}_f^{\text{eff}}\right)
@@ -29,7 +29,9 @@ The vector $\textbf{g}$ is the acceleration of gravity and $\rho_k$ is the densi
 $\phi_f$ is the volume fraction of the continuous phase, $n_p$ the particle number density, $\textbf{u}_f$ (resp. $\textbf{u}_p$) the averaged velocity of the fluid (resp. dispersed) phase, $\bm{\Sigma}_f$ the mean Newtonian stress of the continuous phase stress tensor.
 $\bm{\sigma}^{\text{eff}}_p$ and $\bm{\sigma}^{\text{eff}}_f$ are the effective stresses of the dispersed and continuous phase, respectively.  
 Finally, $\textbf{f}_p$ represents the interphase momentum exchange, or drag force density term. 
-Note that the formulation given by \ref{eq:dt_uf} and \ref{eq:dt_up} differs from the usual momentum expression \citep{wang2021numerical,wang2024effect} in their decomposition of the mean fluid phase stress. 
+Note that the formulation given by \ref{eq:dt_uf} and \ref{eq:dt_up} differs from the usual momentum expression \citep{wang2021numerical,wang2024effect}.
+Indeed, we used the decomposition of the momentum exchange term presented in \ref{chap:daniel2}, instead of the classical one.
+   
 
 The momentum equations are completed by a transport equation for $\phi_f$ and a volume conservation law, namely, 
 \begin{align}
@@ -63,12 +65,12 @@ The number density, continuous phase volume fraction, drag force density, and ef
 \end{align}
 respectively. 
 The operator $\avg{\ldots}$ corresponds to an ensemble average procedure, 
-$\textbf{u}_\alpha$ is the center of mass velocity of a particle labeled $\alpha$, $\chi_f$ is the phase indicator function of the continuous phase, and $\delta_p$ the Dirac delta function pointing on the particle center of masses, $\delta_\Gamma$ the interfaces' indicator function, and \textbf{n} the normal of the surface pointing outward the droplets. 
+$\textbf{u}_\alpha$ is the center of mass velocity of a particle labeled $\alpha$, $\chi_f$ is the phase indicator function of the continuous phase, and $\delta_p$ the Dirac delta function pointing on the particle center of mass, $\delta_\Gamma$ the interfaces' indicator function, and \textbf{n} the normal of the surface pointing outward the droplets. 
 The superscript $'$ indicates the relative values of a quantity with respect to its phase-averaged value. 
 Specifically $\bm{\sigma}_f' = \bm{\sigma}_f^0  - \bm{\Sigma}_f$, 
 $\textbf{u}_\alpha' = \textbf{u}_\alpha - \textbf{u}_p$ and $\textbf{u}_f' = \textbf{u}_f^0  -\textbf{u}_f$, with $\bm{\sigma}_f^0 = -p_f^0 + \mu_f [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger] $, and $\textbf{u}_f^0$, the local stress of the continuous phase and the local velocity of the continuous phase, respectively. 
 
-In the present situation, i.e. where the mixture is only governed by conservation of mass and momentum,  the ``closure problem'' consist in finding explicit expressions for the terms of the form $\avg{\ldots}$ in \ref{eq:sigma_f}, \ref{eq:f_alpha}, \ref{eq:def_uup} and \ref{{eq:def_sigma_eff_f}} in terms of the unknown of the problem, i.e. $n_p$, $\phi_f$, $p_f$, $\textbf{u}_p$ and $\textbf{u}_f$. 
+In the present situation, i.e. where the mixture is only governed by conservation of mass and momentum,  the ``closure problem'' consists in finding explicit expressions for the terms of the form $\avg{\ldots}$ in \ref{eq:sigma_f}, \ref{eq:f_alpha}, \ref{eq:def_uup} and \ref{{eq:def_sigma_eff_f}} in terms of the unknown of the problem, i.e. $n_p$, $\phi_f$, $p_f$, $\textbf{u}_p$ and $\textbf{u}_f$. 
 
 
 
@@ -76,9 +78,9 @@ In the present situation, i.e. where the mixture is only governed by conservatio
 
 In this work, we restrict our attention to the homogeneous emulsion of buoyant droplets. 
 Additionally, we will focus on the closure given by \ref{eq:f_alpha}, i.e. the drag force density term. 
-By statdy-state and ``homogeneous'', we imply that the ensemble averaged quantities, $\textbf{u}_p$, $\textbf{u}_f$, $n_p$ and $\phi_f$ are not function of space and time variables, i.e. $\textbf{x}$ and $t$. 
+By steady-state and ``homogeneous'', we imply that the ensemble averaged quantities, $\textbf{u}_p$, $\textbf{u}_f$, $n_p$ and $\phi_f$ are not functions of space and time variables, i.e. $\textbf{x}$ and $t$. 
 However, note that the mean continuous phase pressure, $p_f$, may be a function of $\textbf{x}$, even in the homogeneous case. 
-Since every closure term present in \ref{eq:dt_uf} and \ref{eq:dt_up} are ensemble average of fluctuating quantities (denoted by the superscript $'$) they cannot be a function of the mean hydrostatic pressure, $p_f$.
+Since every closure term present in \ref{eq:dt_uf} and \ref{eq:dt_up} are averaged fluctuating quantities (denoted by the superscript $'$) they cannot be a function of the mean hydrostatic pressure, $p_f$.
 Note that this statement is true only if the particles are made of an incompressible fluid, which is what we assume here. 
 Consequently, from \ref{eq:n_p} to \ref{eq:def_sigma_eff_f} the only space-dependent quantity is $p_f$. 
 
@@ -103,12 +105,12 @@ In this situation, the averaged momentum conservation equations \ref{eq:dt_uf} a
     % \label{eq:dy_up}
     \label{eq:dt_up_steady}
 \end{align}
-where we have used the relation $n_p v_p = \phi$, which is not an approximation anymore since $\grad n_p = 0$ in this specific case thus.
+where we have used the relation $n_p v_p = \phi$, which is not an approximation anymore since $\grad n_p = 0$ in this specific case.
 Since our goal is to build a model for the force density closure $\textbf{f}_p$, \ref{eq:dt_uf_steady} and \ref{eq:dt_up_steady} represent our starting point to accomplish this task. 
 
 
 
-Multiplying \ref{eq:dt_uf_steady} by $\phi$ and \ref{eq:dt_up_steady} by $\phi_f$, and subtracting the resulting equations, gives directly the equilibrium between buoyancy and drag force density, namely, 
+Multiplying \ref{eq:dt_uf_steady} by $\phi$ and \ref{eq:dt_up_steady} by $\phi_f$, and subtracting the resulting equations,  directly gives the equilibrium between drag force density and buoyancy, namely, 
 \begin{align}
      \textbf{f}_p
     &= 
@@ -129,7 +131,7 @@ Using \ref{eq:f_p_buoyant}  and \ref{eq:f_p_def} we can show that $C_d$ is relat
     \frac{d \phi_f (\rho_f -\rho_d ) \textbf{g}}{\rho_f u_{pf}^2}
     \label{eq:C_d}
 \end{equation}
-The right-hand side of \ref{eq:C_d} can be reformulated according to three dimensionless groups, it yields, 
+The right-hand side of \ref{eq:C_d} can be reformulated according to three dimensionless groups, which yields, 
 \begin{equation}
     C_d = 
     \frac{4\phi_f}{3} \left(\frac{Ga}{Re}\right)^2
@@ -151,8 +153,8 @@ In summary, the force density term, $\textbf{f}_p$, can be written in terms of t
 The \textit{Galileo} number and the volume fraction $\phi_f$ are known parameters in our problem, indeed they are only functions of the physical and geometrical properties of the mixture.
 Consequently, the closure problem for $\textbf{f}_p$ consists of determining the \textit{Reynolds} number or the mean relative motion between the phases, given that $\phi_f$ and $Ga$ are known a priori. 
 The mean relative motion between phases, can be obtained either experimentally, theoretically or numerically. 
-In this work, we combine experimental measures and theoretical results from the literature to provide the most general model for $C_d$.
-Then, based on the DNS presented in the following section we will be able to validate and see the limitation of our model. 
+In this work, we combine experimental measurements and theoretical results from the literature to provide the most general model for $C_d$.
+Then, based on the DNS presented in the following section we will be able to validate and check the limitations of our model. 
 % \tb{
 % This can be directly computed into our DNS. 
 % \begin{equation*}
@@ -209,7 +211,7 @@ Then, based on the DNS presented in the following section we will be able to val
 % \begin{equation*}
 %     \textbf{f}_p^0 =\pi \mu_f d A \textbf{u}_{pf}
 % \end{equation*}
-% dividing one by the other and by $\phi_f^2$ gives directly, 
+% dividing one by the other and by $\phi_f^2$  directly gives, 
 % \begin{equation*}
 %     \textbf{f}_p^* =   \frac{C_d  Re}{8 A} = \frac{C_d}{C_d^*}
 % \end{equation*}
@@ -230,14 +232,16 @@ Each DNS lasts for a time: $t_\text{end} = 400 \sqrt{d/g}$ for the larger domain
 It is shown in \citet{fintzi2024buoyancy} and \ref{ap:convergence} that these parameters are sufficient to obtain well-converged statistics. 
 
 
-Due to numerical constraint, we used a slightly higher \textit{Bond} number ($Bo = 0.5$) in this study, compared to the set of DNS used in \citet{fintzi2024buoyancy}. 
+Due to numerical constraints, we used a slightly higher \textit{Bond} number ($Bo = 0.5$) in this study, compared to the set of DNS used in \citet{fintzi2024buoyancy}. 
 \begin{figure}[h!]
     \centering
     \includegraphics[height = 0.3\textwidth]{image/HOMOGENEOUS_final/PA/chi.pdf}
     \caption{Mean aspect ratio of the droplets $\chi_p$, as a function of the \textit{Galileo} number, and the volume faction $\phi$,  for two different viscosity ratios.  
     The symbols correspond to different volume fraction ($\pmb\bigcirc$) $\phi = 0.01$; ($\pmb\triangle$) $ \phi = 0.05$; ($\pmb\square$) $\phi = 0.1$ ($\pmb\lozenge$) $\phi = 0.2$.
     The hollow symbols correspond to $\lambda = 1$, the small filled symbols to $\lambda = 10$, and the big filled symbols to $\lambda = 0.1$.
-    The nearly imperceptible vertical bars on each symbol, represent the standard deviation around the mean.  }
+    The \textit{Bond} number is fixed at $0.5$ and the density ratio $\zeta = 0.9$. 
+    The nearly imperceptible vertical bars on each symbol, represent the standard deviation around the mean.  
+    }
     \label{fig:chi2}
 \end{figure}
 To verify that the droplets remain on average approximately spherical we plotted in \ref{fig:chi2} the mean aspect ratio $\chi_p$ of the droplets for all of our simulations. 
@@ -248,7 +252,7 @@ This means that the droplet shape deviates of approximately $5\%$ from their ori
 
 \begin{table}[h!]
     \centering
-    \caption{Dimensionless parameter range investigated in this work.}
+    \caption{Dimensionless parameter ranges investigated in this work.}
     \begin{tabular}{|ccccccc|ccc|}
         \hline
         \multicolumn{7}{|c}{Primary parameters} & \multicolumn{3}{||c|}{Secondary parameters}\\ \hline
@@ -261,7 +265,7 @@ This means that the droplet shape deviates of approximately $5\%$ from their ori
     \label{tab:simulations}
 \end{table}
 This study presents DNS results with dimensionless parameters in ranges outlined in \ref{tab:simulations}.
-In summary, we investigated $5$ \textit{Galileo} number $Ga = 5,10,25,50,80$, $4$ different volume fractions $\phi = 0.01,0.05,0.1,0.2$, and three viscosity ratios $\lambda =0.1,1,10$. 
+In summary, we investigated $5$ \textit{Galileo} numbers $Ga = 5,10,25,50,80$, $4$ different volume fractions $\phi = 0.01,0.05,0.1,0.2$, and three viscosity ratios $\lambda =0.1,1,10$. 
 We recall that $Bo = 0.5$ is the \textit{Bond} number, and $\zeta = 0.9$ is the density ratio defined as $\rho_d/\rho_f$.
 This makes a total of $60$ representative simulations.
 

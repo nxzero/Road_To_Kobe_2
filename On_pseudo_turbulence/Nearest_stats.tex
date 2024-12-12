@@ -160,33 +160,32 @@ To compute the sedimentation velocity in non-dilute suspensions of hard spheres,
 We present in this section a systematic methodology for deriving these conditionally averaged equations. 
 
 Inspired by the classic conditional average methodology of \citet{hinch1977averaged}, we propose that the \textit{nearest neighbor conditionally averaged} velocity fields, i.e., $\textbf{v}_f^\text{nst}$, can be obtained by conditionally averaging the local-scale mass and momentum equations, and then solving the resulting equations for $\textbf{v}_f^\text{nst}$. 
-Thus, we first recall the local mass and momentum equations, 
-\begin{align}
-    \pddt (\rho_f\chi_f) +  \pddx \cdot (\rho_f\chi_f\textbf{u}^0_f) &= 0 
-    \label{eq:local_equations_mass}
-    \\
-    \pddt (\rho_f\chi_f\textbf{u}^0_f)
-    + \pddx\cdot (\rho_f\chi_f\textbf{u}^0_f\textbf{u}^0_f - \chi_f\bm\sigma^0_f)
-    &= 
-    - \delta_\Gamma \bm\sigma_f^0 \cdot \textbf{n}_d. 
-    + \chi_f \rho_f \textbf{g}
-    \label{eq:local_equations_mom}
-\end{align}
-Note that, at this stage, the inertial terms cannot be neglected since the momentum equation is not yet expressed in the reference frame of the droplet at \textbf{y}. 
+% Thus, we first recall the local mass and momentum equations, 
+% \begin{align}
+%     \pddt (\rho_f\chi_f) +  \pddx \cdot (\rho_f\chi_f\textbf{u}^0_f) &= 0 
+%     \label{eq:local_equations_mass}
+%     \\
+%     \pddt (\rho_f\chi_f\textbf{u}^0_f)
+%     + \pddx\cdot (\rho_f\chi_f\textbf{u}^0_f\textbf{u}^0_f - \chi_f\bm\sigma^0_f)
+%     &= 
+%     - \delta_\Gamma \bm\sigma_f^0 \cdot \textbf{n}_d. 
+%     + \chi_f \rho_f \textbf{g}
+%     \label{eq:local_equations_mom}
+% \end{align}
+% Note that, at this stage, the inertial terms cannot be neglected since the momentum equation is not yet expressed in the reference frame of the droplet at \textbf{y}. 
 Then, note that we can obtain $\textbf{v}_f^\text{nst}$ from $\textbf{u}_f^0$ directly through the averaging procedure: 
 \begin{equation}
-    \textbf{v}_f^\text{nst} P_\text{nst}^f
-    % = 
-    % \textbf{u}_f^\text{nst} P_\text{nst}^f
-    % - \textbf{u}_f P_\text{nst}^f
+    \textbf{v}_f^\text{nst} P_\text{nst}^f\phi_f
     = 
-    \avg{\delta_\text{nst} \chi_f \textbf{u}_f^0}
-    - \textbf{u}_f P_\text{nst}^f
+    (\textbf{u}_f^\text{nst} P_\text{nst}^f
+    - \textbf{u}_f P_\text{nst}^f)\phi_f
+    = 
+    \avg{(\delta_\text{nst}  - P_\text{nst}^f)\chi_f\textbf{u}_f^0}
 \end{equation}
-We deduce that to obtain an equation for $\textbf{u}_f^\text{nst}$ we must multiply, \ref{eq:local_equations_mass} and \ref{eq:local_equations_mom} that are evaluated at \textbf{x}, by $\delta_\text{nst}$ and average over all configurations. 
-This introduces the need for a conservation equation for the distribution $\delta_\text{nst}$ since this distribution does not commute with the time and space derivative. 
+Following the methodology of \ref{chap:daniel2} we deduce that to obtain an equation for $\textbf{v}_f^\text{nst}$ we must multiply the local scale equations evaluated at \textbf{x}, by $(\delta_\text{nst}\chi_f - P_\text{nst}^f\chi_f)$ and average over all configurations. 
+This introduces the need for a conservation equation for the distributions $\delta_\text{nst}$ and $P_\text{nst}^f$ since these distributions does not commute with the time and space derivative. 
 
-\subsubsection{Conditionally mass transport equation}
+\subsubsection{Evolution equation for $\delta_\text{nst}$ and  $P_\text{nst}^f$ }
 
 By taking the partial time derivative of each distribution present in \ref{eq:def_delta_nst} independently, we obtain the conservation equations, 
 \begin{align}
@@ -295,7 +294,7 @@ To derive an equation for $\phi_f P_\text{nst}^f = \avg{\chi_f \delta_\text{nst}
     [(\textbf{u}_k - \textbf{u}_f^0) \cdot \hat{\textbf{r}}_k - (\textbf{u}_i  - \textbf{u}_f^0)\cdot \hat{\textbf{r}}_i],
     \label{eq:dt_delta_nst_chi}
 \end{multline}
-which upon averaging gives directly,
+which upon averaging directly gives,
 \begin{multline}
     \pddt (\phi_fP_\text{nst}^f)
     + 
@@ -332,92 +331,94 @@ We remark that the source terms of (A10) \citet{zhang2023evolution} and \ref{eq:
 Still in \ref{eq:dt_P_nst_chi} the velocity $\textbf{u}_i$ and $\textbf{u}_k$ are evaluated with respect to the local velocity of the fluid $\textbf{u}_f^0$, while in \citet{zhang2023evolution} it is evaluated relative to the velocity of the particles centered at \textbf{x}. 
 
 
-\ref{eq:dt_P_nst_chi} can also be written in ``conservative'' form using the conserving law, 
-\begin{equation}
-    \pddt \phi_f 
-    + \div(
-        \phi_f
-        \textbf{u}_f 
-        ) 
-    = 0, 
-\end{equation}
-which gives, 
-\begin{multline}
-    \pddt P_\text{nst}^f
-    + 
-    \pddx \cdot (
-        P_\text{nst}^f
-        \textbf{u}_f^\text{nst}
-    )
-    + \pddy \cdot (
-        P_\text{nst}^f
-        \textbf{w}
-    )
-    +
-    \pddw \cdot (  
-        P_\text{nst}^f
-        \textbf{a}_p^\text{nst} 
-    )
-    = \\
-    + \frac{1}{\phi_f}\avg{
-    %  \chi_f \textbf{u}_\Gamma \cdot \pddx \delta_\text{nst}
-     \chi_f \delta_\text{nst}
-    \sum_k 
-    \delta(r_k - r_i)
-    [(\textbf{u}_k - \textbf{u}_\Gamma^0) \cdot \hat{\textbf{r}}_k - (\textbf{u}_i- \textbf{u}_\Gamma^0)  \cdot \hat{\textbf{r}}_i]}.
-    \label{eq:dt_Pc_nst_chi}
-\end{multline}
-this equation corresponds to the \textit{nearest neighbor conditional averaged} conservation equation for the continuous phase.
-As the continuous phase density $\rho_f$ is constant, \ref{eq:dt_Pc_nst_chi} also corresponds to the  \textit{nearest neighbor conditional averaged} mass conservation equation.  
+% \ref{eq:dt_P_nst_chi} can also be written in ``conservative'' form using the conserving law, 
+% \begin{equation}
+%     \pddt \phi_f 
+%     + \div(
+%         \phi_f
+%         \textbf{u}_f 
+%         ) 
+%     = 0, 
+% \end{equation}
+% which gives, 
+% \begin{multline}
+%     \pddt P_\text{nst}^f
+%     + 
+%     \pddx \cdot (
+%         P_\text{nst}^f
+%         \textbf{u}_f^\text{nst}
+%     )
+%     + \pddy \cdot (
+%         P_\text{nst}^f
+%         \textbf{w}
+%     )
+%     +
+%     \pddw \cdot (  
+%         P_\text{nst}^f
+%         \textbf{a}_p^\text{nst} 
+%     )
+%     = \\
+%     + \frac{1}{\phi_f}\avg{
+%     %  \chi_f \textbf{u}_\Gamma \cdot \pddx \delta_\text{nst}
+%      \chi_f \delta_\text{nst}
+%     \sum_k 
+%     \delta(r_k - r_i)
+%     [(\textbf{u}_k - \textbf{u}_\Gamma^0) \cdot \hat{\textbf{r}}_k - (\textbf{u}_i- \textbf{u}_\Gamma^0)  \cdot \hat{\textbf{r}}_i]}.
+%     \label{eq:dt_Pc_nst_chi}
+% \end{multline}
+% this equation corresponds to the \textit{nearest neighbor conditional averaged} conservation equation for the continuous phase.
+% As the continuous phase density $\rho_f$ is constant, \ref{eq:dt_Pc_nst_chi} also corresponds to the  \textit{nearest neighbor conditional averaged} mass conservation equation.  
 
-\subsubsection{First form of the conditional averaged momentum equation}
-Now that the transport equation for $\delta_\text{nst}$ and $P_\text{nst}^f$ are properly derived we can derive the \textit{nearest neighbor conditionally averaged} momentum equation. 
-Multiplying \ref{eq:local_equations_mom} by $\delta_\text{nst}$, and making use of \ref{eq:dt_delta_nst} and averaging overall configurations yields, 
-\begin{multline}
-    \pddt (\rho_f\phi_f P_\text{nst} \textbf{u}^\text{nst}_f)
-    + \pddx\cdot (
-        \rho_f\phi_fP_\text{nst}^f \textbf{u}^\text{nst}_f\textbf{u}^\text{nst}_f 
-        +\bm\sigma_\text{nst}^\text{eq})
-    + \pddy\cdot (\phi_fP_\text{nst}^f \textbf{w}\textbf{u}_f^\text{nst} )
-    + \pddw\cdot (\phi_fP_\text{nst}^f \textbf{a}_p^\text{nst} \textbf{u}_f^\text{nst} )\\
-    = 
-    \phi_fP_\text{nst}^f  \rho_f \textbf{g}
-    - \avg{\delta_\text{nst}\delta_\Gamma \bm\sigma_f \cdot \textbf{n}_d} 
-    % - \avg{\chi_f \bm\sigma_f^0 \cdot \grad\delta_\text{nst}}
-    +\avg{
-        \delta_\text{nst}
-        \chi_f \bm\sigma_f^0 \cdot
-        \sum_k 
-        \delta(r_k - r_i)
-        [\hat{\textbf{r}}_k - \hat{\textbf{r}}_i]}\\
-    +\avg{
-        %  \chi_f \textbf{u}_\Gamma \cdot \pddx \delta_\text{nst}
-         \textbf{u}_f^0\chi_f \delta_\text{nst}
-        \sum_k 
-        \delta(r_k - r_i)
-        [(\textbf{u}_k - \textbf{u}_f^0) \cdot \hat{\textbf{r}}_k - (\textbf{u}_i- \textbf{u}_f^0)  \cdot \hat{\textbf{r}}_i]},
-    \label{eq:momentum_avg_nst}
-\end{multline}
-with the effective stress $\bm\sigma_\text{nst}^\text{eq}$ defined as, 
-\begin{equation}
-    \bm\sigma_\text{nst}^\text{eq}=
-    \avg{\rho_f\chi_f\delta_\text{nst} \textbf{u}''_f\textbf{u}''_f} 
-    - P_\text{nst}^f \avg{\rho_f\chi_f\textbf{u}'_f\textbf{u}'_f} 
-    - \phi_f P_\text{nst}^f \bm\sigma^\text{nst}_f. 
-\end{equation}
-The terms on the left-hand side of \ref{eq:momentum_avg_nst} represent the advection of the \textit{nearest neighbor conditional average} momentum along the phase space coordinate, plus the contribution of the \textit{nearest neighbor conditional average} viscous stresses $\bm\sigma^\text{nst}_f$
-The first term on right-hand side of \ref{eq:momentum_avg_nst} corresponds to the momentum exchange between phases, but conditionally averaged. 
-Specifically, $\avg{\delta_\text{nst}\delta_\Gamma \bm\sigma_f \cdot \textbf{n}_d} $ represents the exchange of momentum at \textbf{x}, conditioned on the presence of the interface at \textbf{x} with the nearest neighbor to the point \textbf{x} located at \textbf{y} with velocity \textbf{w}.
-The second and third terms are the additional contribution of the convective and non-convective fluxes due to the birth or death of nearest neighbors. 
+% \subsubsection{First form of the conditional averaged momentum equation}
+% Now that the transport equation for $\delta_\text{nst}$ and $P_\text{nst}^f$ are properly derived we can derive the \textit{nearest neighbor conditionally averaged} momentum equation. 
+% Multiplying \ref{eq:local_equations_mom} by $\delta_\text{nst}$, and making use of \ref{eq:dt_delta_nst} and averaging overall configurations yields, 
+% \begin{multline}
+%     \pddt (\rho_f\phi_f P_\text{nst} \textbf{u}^\text{nst}_f)
+%     + \pddx\cdot (
+%         \rho_f\phi_fP_\text{nst}^f \textbf{u}^\text{nst}_f\textbf{u}^\text{nst}_f 
+%         +\bm\sigma_\text{nst}^\text{eq})
+%     + \pddy\cdot (\phi_fP_\text{nst}^f \textbf{w}\textbf{u}_f^\text{nst} )
+%     + \pddw\cdot (\phi_fP_\text{nst}^f \textbf{a}_p^\text{nst} \textbf{u}_f^\text{nst} )\\
+%     = 
+%     \phi_fP_\text{nst}^f  \rho_f \textbf{g}
+%     - \avg{\delta_\text{nst}\delta_\Gamma \bm\sigma_f \cdot \textbf{n}_d} 
+%     % - \avg{\chi_f \bm\sigma_f^0 \cdot \grad\delta_\text{nst}}
+%     +\avg{
+%         \delta_\text{nst}
+%         \chi_f \bm\sigma_f^0 \cdot
+%         \sum_k 
+%         \delta(r_k - r_i)
+%         [\hat{\textbf{r}}_k - \hat{\textbf{r}}_i]}\\
+%     +\avg{
+%         %  \chi_f \textbf{u}_\Gamma \cdot \pddx \delta_\text{nst}
+%          \textbf{u}_f^0\chi_f \delta_\text{nst}
+%         \sum_k 
+%         \delta(r_k - r_i)
+%         [(\textbf{u}_k - \textbf{u}_f^0) \cdot \hat{\textbf{r}}_k - (\textbf{u}_i- \textbf{u}_f^0)  \cdot \hat{\textbf{r}}_i]},
+%     \label{eq:momentum_avg_nst}
+% \end{multline}
+% with the effective stress $\bm\sigma_\text{nst}^\text{eq}$ defined as, 
+% \begin{equation}
+%     \bm\sigma_\text{nst}^\text{eq}=
+%     \avg{\rho_f\chi_f\delta_\text{nst} \textbf{u}''_f\textbf{u}''_f} 
+%     - P_\text{nst}^f \avg{\rho_f\chi_f\textbf{u}'_f\textbf{u}'_f} 
+%     - \phi_f P_\text{nst}^f \bm\sigma^\text{nst}_f. 
+% \end{equation}
+% The terms on the left-hand side of \ref{eq:momentum_avg_nst} represent the advection of the \textit{nearest neighbor conditional average} momentum along the phase space coordinate, plus the contribution of the \textit{nearest neighbor conditional average} viscous stresses $\bm\sigma^\text{nst}_f$
+% The first term on right-hand side of \ref{eq:momentum_avg_nst} corresponds to the momentum exchange between phases, but conditionally averaged. 
+% Specifically, $\avg{\delta_\text{nst}\delta_\Gamma \bm\sigma_f \cdot \textbf{n}_d} $ represents the exchange of momentum at \textbf{x}, conditioned on the presence of the interface at \textbf{x} with the nearest neighbor to the point \textbf{x} located at \textbf{y} with velocity \textbf{w}.
+% The second and third terms are the additional contribution of the convective and non-convective fluxes due to the birth or death of nearest neighbors. 
 
-In this form \ref{eq:momentum_avg_nst} is hardly solvable. 
+% In this form \ref{eq:momentum_avg_nst} is hardly solvable. 
+
+\subsubsection{Conditional averaged momentum equations}
+
 While, the boundary condition at the surface of the particle (centered at \textbf{y}) for the velocity $\textbf{u}_f^\text{nst}[\textbf{y}+a \textbf{n}, \textbf{y},\textbf{w}]$ is well-defined, there is a lack of boundary conditions infinitely far from the particle. 
-Absolutely, since the velocity field $\textbf{u}_f^\text{nst}$ is conditioned on the velocity of the droplet, we can be certain that $\textbf{u}_f^\text{nst}\cdot \textbf{n} = \textbf{w}\cdot \textbf{n}$ for the points lying on the droplet surface. 
+Indeed, since the velocity field $\textbf{u}_f^\text{nst}$ is conditioned on the velocity of the droplet, we can be certain that $\textbf{u}_f^\text{nst}\cdot \textbf{n} = \textbf{w}\cdot \textbf{n}$ for the points lying on the droplet surface. 
 However, $\lim_{|\textbf{x}- \textbf{y}|\to \infty} \textbf{u}^\text{nst}_f$ is undefined, since in the same limits $P_\text{nst}^f = 0$.
-In other words, infinitely far from the particle's center of mass, the velocity field $\textbf{u}^\text{nst}_f$ has no physical meaning, as the probability of finding the nearest neighbor to a point in the fluid at such a distance is zero.
-This, lack of boundary condition at infinity makes, \ref{eq:momentum_avg_nst} unsolvable regardless of the possible assumption that could be made.
+In other words, infinitely far from the particle's center of mass, the velocity field $\textbf{u}^\text{nst}_f$ has no physical meaning, because the probability of finding the nearest neighbor to a point in the fluid at such a distance is zero.
+% This, lack of boundary condition at infinity makes, \ref{eq:momentum_avg_nst} unsolvable regardless of the possible assumption that could be made.
 
-\subsubsection{Second form of the conditional averaged equations}
 
 To settle this issue we follow \citet[Appendix B]{zhang2021ensemble} and propose to solve for an auxiliary but equivalent problem.
 Indeed, as $\textbf{u}_f^\text{nst}$ lacks a boundary condition at infinity, we choose instead to solve for the field $\textbf{u}^\text{nst}$ which is defined as,  
@@ -1089,7 +1090,7 @@ Therefore, the total velocity field $\textbf{v}^\text{nst}_f$ at the point $\tex
     \mathcal{G}(\textbf{x},\textbf{x}')
     d\textbf{x}',
 \end{multline}
-Carrying out the integral on the second line gives directly,
+Carrying out the integral on the second line directly gives,
 \begin{equation}
     \int_{|\textbf{x}'-\textbf{x}|< |\textbf{y}- \textbf{x}|}
     \mathcal{G}(\textbf{x},\textbf{x}')
