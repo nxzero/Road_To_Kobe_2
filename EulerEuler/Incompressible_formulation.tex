@@ -1,33 +1,23 @@
-To conclude this manuscript we would like to present what we think is the simplest way to solve the averaged equations for a mixture of two incompressible fluids.
-In the first place we present the ``single-phase-like'' mixture equations, which according to me is the most efficient way to solve the mixture equations since it can use a single phase solver. 
-Then we incorporate the closure terms presented in this manuscript, inside this system of equation, and present a first glimpse of the methodology to solve numerically the latter equations.
-Overall the perspective of this novel methodology seem very efficient and simplify greatly the multiphase flow problem.  % \subsection{Introduction}
-
-
+We would like to present what we think is the simplest way to solve the averaged equations for a mixture of two incompressible fluids.
+In the first place, we present the ``single-phase-like'' mixture equations, which seem to be the most efficient way to solve the mixture equations. 
+Then we incorporate the closure terms presented in this manuscript, inside this system of equation.
 
 Our method is similar in many ways to the so-called ``drift flux'' models. 
 These models focus on solving the averaged mixture-phases equations (i.e. solving for $\rho$ and $\textbf{u}_m$) and for the relative velocity between the particles and the mixture velocity $\textbf{u}- \textbf{u}_p$, which is termed the drift fluxes \citep{ishii1977one,guazzelli2011}.  
 More recently,  \citet{kriaa2023two} used this formulation to model sediment transport with \texttt{Basilisk}.
-Actually, \citet{kriaa2023two} used an approximation of this formulation, assuming that the ``bulk'' velocity $\textbf{u}$ satisfy Navier-Stokes equations.
-The particles are accounted only though forcing term related to the weight of the particle in the NS equations. 
+Actually, \citet{kriaa2023two} used an approximation of this formulation, assuming that the ``bulk'' velocity $\textbf{u}$ satisfies Navier-Stokes equations.
+The particles are accounted  only through a forcing term related to the weight of the particle in the NS equations. 
 It this turns out to be valid under certain circumstances  according to Boussinesq, approximation. 
 
-% As it can be guessed, it is the most general scenario \textbf{u} satisfy a complex averaged equations with an effective stress and a momentum transfer terms both accounting for the presence of particle in the flow (see \ref{chap:daniel15}).  
-% Nevertheless, in this Chapter we demonstrate that when derived properly the volume averaged velocity \textbf{u} indeed satisfy the forced NS equations but with an additional stress and forcing term. 
-% Thus, we recover nearly the same system of equation of \citet{kriaa2023two}, with the addition of an effective stresses related to the presence of particle in the NS-like equations, that is not present in the former study.
-% Note that the main difference between our method and \citet{kriaa2023two} methodology, is that we do not make any assumption along the derivation. 
-
-This derivation leads to an efficient formulation similar to the one of \citet{kriaa2023two}, but without any approximation or hypothesis. 
-However, one must take into account the additional stress generated due to the presence of particle if he wants to get rid of any approximation such as Boussinesq hypothesis.
-The dispersed phase equations are derived in the usual way and can be express in terms of $\textbf{u}-\textbf{u}_p$ which represents the drift flux. 
-As it will be demonstrated due to the divergence free property of \textbf{u} this formulation is particularly interesting to use  in 1D model. 
-We conclude this Chapter by a brief demonstration on how we could implement our system of equation into \texttt{Basilisk}. 
+This derivation leads to an efficient formulation similar to the one of \citet{kriaa2023two}, but without any approximation or hypothesis.  
+As it will be demonstrated due to the divergence-free property of \textbf{u} this formulation is particularly interesting to use (even more for one-dimensional model). 
 
 
-\subsection{A ``single phase incompressible''-like formulation for the volume averaged mixture veloicty. }
 
-As described in \ref{chap:daniel15}, \ref{chap:daniel2} and \ref{chap:pseudoturbulence} by adding the local conservative form of the mass and momentum equations we can derive a conservation equation for the volumetric velocity $\textbf{u} =\phi_d\textbf{u}_d + \phi_f \textbf{u}_f$. 
-At the local non averaged scale we have: 
+\subsection{A ``single phase incompressible''-like formulation for the volume-averaged mixture velocity}
+
+As described in \ref{chap:closure-disperse}, \ref{chap:daniel2} and \ref{chap:pseudoturbulence} by adding the local conservative form of the mass and momentum equations we can derive a conservation equation for the volumetric velocity $\textbf{u} =\phi_d\textbf{u}_d + \phi_f \textbf{u}_f$. 
+At the local non-averaged scale we have: 
 \begin{align}
     \label{eq:NSmass0}
     \div \textbf{u}^0 &= 0, \\
@@ -40,9 +30,9 @@ At the local non averaged scale we have:
     \label{eq:NSmomentum0}
 \end{align}
 Where we noted $\textbf{u}^0 = \chi_f \textbf{u}f^0 + \chi_d \textbf{u}_d^0$, $\bm\sigma^* = \chi_f \bm\sigma_f^0/\rho_f  + \chi_d \bm\sigma_d^0/\rho_d + \delta_\Gamma \bm\sigma_\Gamma^0/\rho_d $ referred as the density-weighted stress, $\kappa = (1-\zeta)/\zeta$ and $\zeta$ the density ratio and the equivalent stress defined as.
-We recall that $\bm\sigma_{f,d}^0 = -p_{f,d}\bm\delta + \mu_{f,d}\left[\grad \textbf{u}_{f,d}^0+ (\grad \textbf{u}_{f,d}^0)^\dagger\right]$ and $\bm\sigma_\Gamma^0 = \gamma (\bm\delta - \textbf{nn})$ represents the surface tension stress.
+Recall that $\bm\sigma_{f,d}^0 = -p_{f,d}\bm\delta + \mu_{f,d}\left[\grad \textbf{u}_{f,d}^0+ (\grad \textbf{u}_{f,d}^0)^\dagger\right]$ and $\bm\sigma_\Gamma^0 = \gamma (\bm\delta - \textbf{nn})$ represents the surface tension stress.
 
-Applying the ensemble average operator $\avg{\ldots}$ on \ref{eq:NSmass0} and \ref{eq:NSmomentum0}, yields the averaged volume and acceleration conservation of the mixture phase, 
+Averaging \ref{eq:NSmass0} and \ref{eq:NSmomentum0}, yields the averaged volume and acceleration conservation of the mixture phase, 
 \begin{align}
     \div\textbf{u} &=0,\\
     (\pddt \textbf{u}  
@@ -62,20 +52,17 @@ respectively.
     + \frac{\phi_d}{\rho_d}\bm\sigma_d
     + \frac{\phi_\Gamma}{\rho_d} \bm\sigma_\Gamma. 
 \end{equation}
-At this stage absolutely no assumption has been made on the nature of the phases nor on the flow regime, yet the velocity fields $\textbf{u}$ is divergence free and posses an advective term similar to the one encountered in the classic single phase incompressible NS equations.
+At this stage, absolutely no assumptions have been made on the nature of the phases nor the flow regime, yet the velocity fields $\textbf{u}$ is divergence-free and possesses an advective term similar to the one encountered in the classic single-phase incompressible NS equations.
 This expression can be the starting point to describe a $50\%$ $50\%$ mixture of fluid, that is not necessarily a dispersed multiphase flow. 
 
-If one assume that the phase ``f'' is dominant in the mixture, such that it becomes a continuous phase, he can reformulate the effective stress $\bm\sigma_\text{eff}$ as a macroscopic Newtonian stress, written as $\Sigma = -  p_f \bm\delta  + \mu_f(\grad \textbf{u} + \grad \textbf{u}^\dagger)$, plus another effective stress related to the presence of the phase $d$.
-Indeed, as demonstrated in \ref{chap:daniel15}, \ref{chap:daniel2} and \ref{chap:pseudoturbulence} we can write,
+If one assumes that the phase ``f'' is dominant in the mixture, he can reformulate the effective stress $\bm\sigma_\text{eff}$ as a macroscopic Newtonian stress, written as $\Sigma = -  p_f \bm\delta  + \mu_f(\grad \textbf{u} + \grad \textbf{u}^\dagger)$, plus another effective stress related to the presence of the phase $d$.
+Indeed, as demonstrated in \ref{chap:closure-disperse,chap:daniel2,chap:pseudoturbulence} we can write,
 \begin{equation}
     \phi_f\bm\sigma_f
     = \bm\Sigma
     + \phi_d (p_f\bm\delta - 2\mu_f \textbf{e}_d)
     \label{eq:stress_formulation}
 \end{equation}
-where we recall $\textbf{e}_d = \avg{\chi_d (\grad \textbf{u}_d^0+(\grad \textbf{u}_d^0)^\dagger)}$ is the mean shear rate inside the phase ``d''. 
-Note that the second term $\sim \phi_d$, hence it represents uniquely the contribution from the dispersed phase which must be added to the total effective stress. 
-
 Injecting \ref{eq:stress_formulation} into \ref{eq:NS_firststep} leads to, 
 \begin{align}
     \label{eq:NS_not_dispersed_mass}
@@ -98,12 +85,11 @@ with the effective stress,
     + \frac{\phi_d}{\rho_d}\bm\sigma_d
     + \frac{\phi_\Gamma}{\rho_d} \bm\sigma_\Gamma. 
 \end{equation}
-As can be seen from \ref{eq:NS_not_dispersed}, the equation governing the velocity \textbf{u} is nothing else but the Navier-Stokes equations with fluid properties $\rho_f$ and $\mu_f$, with additional forcing terms related to the presence of the dispersed phase within the mixture. 
-At this stage note that we have not made any assumption on the topology of the flow, if not that we intuitively considered that the volume fraction of phase ``$f$'' were predominant over the phase ``$d$''. 
+As can be seen from \ref{eq:NS_not_dispersed}, the equation governing the velocity \textbf{u} is nothing else but the Navier-Stokes equations with fluid properties $\rho_f$ and $\mu_f$, and additional forcing terms related to the presence of the dispersed phase. 
+At this stage note that we have not made any assumption on the topology of the dispersed phase. 
 
-
-To reformulate the closure terms in the context of dispersed two-phase flow let us consider that the phase "d" is actually a dispersed phase made of solid particles or droplets with yet arbitrary shapes. 
-Upon reformulating the distribution $\chi_d$ and $\delta_\Gamma$ in terms of Dirac distribution at the center of the particles center of mass (see \ref{chap:daniel1}) we can reformulate each of the closures present in \ref{eq:NS_not_dispersed} as, 
+Let us consider that the phase "d" is a dispersed phase made of solid particles or droplets with yet arbitrary shapes. 
+Upon reformulating the distribution $\chi_d$ and $\delta_\Gamma$ in terms of Dirac distributions (see \ref{chap:daniel1}) we obtain, 
 \begin{align}
     \avg{\delta_I \bm{\sigma}_f^0 \cdot \textbf{n}} 
     &= 
@@ -150,8 +136,8 @@ Upon reformulating the distribution $\chi_d$ and $\delta_\Gamma$ in terms of Dir
     % - \textbf{u}_p \div (\textbf{P}_p n_p) 
     % - \div (\textbf{P}_p n_p)\textbf{u}_p  
 \end{align}
-The averaged dispersed phase stresses, $\bm\sigma_d$ and $\bm\sigma_\Gamma.$, can be reformulated into particle volume and surface quantities using the moment of momentum equations, which are given in \ref{chap:daniel1} and \ref{chap:daniel15}. 
-Including all these terms into \ref{eq:NS_not_dispersed_mass} and \ref{eq:NS_not_dispersed} leads to dispersed two-phase flow formulation of the mixture volume and acceleration equation namely, 
+The averaged dispersed phase stresses, $\bm\sigma_d$ and $\bm\sigma_\Gamma$, can be reformulated into particle volume and surface quantities using the moment of momentum equations, which are given in \ref{chap:daniel1} and \ref{chap:closure-disperse}. 
+Including all these terms into \ref{eq:NS_not_dispersed_mass} and \ref{eq:NS_not_dispersed} leads to dispersed two-phase flow formulation of the mixture volume and acceleration equation of the bulk phase, namely, 
 \begin{align}
     \div\textbf{u}&=0, \\
     \rho_f (\pddt 
@@ -192,23 +178,19 @@ with the effective stress re-written as,
     \right\}
     \label{eq:effective_stress}
 \end{multline}
-Each term of the closure term present in the effective stress have a well-understood physical significance, this is discussed in \ref{chap:daniel15}.
-To summary, the terms on the right-hand side of \ref{eq:NS_dispersed} represents the total drag force, the terms on the first line of \ref{eq:effective_stress} represent the stress generated due to the velocity fluctuations, either from the continuous phase, or from the particle center of mass. 
-Note that the fluid phase velocity $\textbf{u}_f$ must be considered as a closure term as we solve the equations for $n_p$ and  $\textbf{u} = \textbf{u}_f \phi_f - \phi_d \textbf{u}_d$.
-Depending on the nature of the particle and the flow regime we may consider that $n_pv_p\textbf{u}_p = \phi_d \textbf{u}_d$ and $n_pv_p = \phi_d$ which directly leads us to $\textbf{u}_f = \textbf{u}- n_pv_p \textbf{u}_p / (1 - v_pn_p)$. 
-Regarding the terms on the second line of \ref{eq:effective_stress}, the first terms represent in contribution of the particle internal shear and the fluid phase pressure.
-Regarding the first terms of the second lines and the first term on the third line, they represent the influence of deformation, or changes in orientation of the particle into the equivalent stress. 
-The second terms of the first and second lines represents the contribution from the first and second momentum of hydrodynamic forces induced on the particles. 
-As seen in \ref{chap:daniel2} the first moment of hydrodynamic force is $\sim \grad \textbf{u}$ and can be interpreted as an additional viscosity contribution from the particle phase to the mixture. 
-But as seen in \ref{chap:deformable}, this term must be interpreted in a broader manner as it can be $\sim \textbf{u}_r \textbf{u}_r$ with $\textbf{u}_r = \textbf{u}- \textbf{u}_p$, for example.
-Thus, these terms vanish if one consider spherical non-deformable particle, they can be either solid particle or spherical bubbles or droplets. 
-Note that the pressure contribution will cancel out with the first and higher moment of hydrodynamic stresses. 
+Each term of the closure term present in the effective stress is discussed in \ref{chap:closure-disperse}.
+To summarize, the terms on the right-hand side of \ref{eq:NS_dispersed} represent the total drag force, and the terms on the first line of \ref{eq:effective_stress} represent the stress generated due to the velocity fluctuations, either from the continuous phase, or from the particle center of mass. 
+Note that the fluid phase velocity $\textbf{u}_f$ must be considered as a closure term as we solve the equations for $n_p$ and  $\textbf{u}$ (the relation between the velocity is given in \citet{zaepffel2012multisize}).
+Regarding the terms on the second line of \ref{eq:effective_stress}, the first terms represent in contribution of the particle's internal shear and the fluid phase pressure.
+Regarding the first terms of the second line and the first term on the third line, they represent the influence of deformation or changes in orientation of the particle. 
+Thus, these terms vanish if one considers spherical non-deformable particles, they can be either solid particles or spherical bubbles or droplets. 
+The second terms of the first and second lines represent the contribution from the first and second momentum of hydrodynamic forces. 
 
 
 \subsection{Particle phase equations}
 
 As seen in \ref{chap:daniel1,chap:daniel2} one can add to the continuous or mixture phase equations an arbitrary number of equations describing the dispersed phase. 
-If one consider a spherical mono-disperse suspension of droplets at relatively small inertial effects, we may simply just use the number density, $n_p$ and particle momentum $n_pm_p \textbf{u}_p$, conservation equations to describe completely the dispersed phase. 
+If one considers a spherical mono-disperse suspension of droplets, we may simply just use the number density, $n_p$, and particle momentum $n_pm_p \textbf{u}_p$, conservation equations. 
 
 According to \ref{chap:daniel1,chap:daniel15} we may write, 
 \begin{align}
@@ -227,8 +209,8 @@ According to \ref{chap:daniel1,chap:daniel15} we may write,
     \right\}.
     \label{eq:dt_up_final}
 \end{align}
-We recall that $\textbf{u}_r = \textbf{u} - \textbf{u}_p$ is the drift velocity. 
-Under this form \ref{eq:dt_np_final} can be interpreted as an advection of $n_p$ along the mixture phase velocity $\textbf{u}$, plus a source terms accounting for the non-zero drift fluxes of particle $\textbf{u}_r$. 
+Where $\textbf{u}_r = \textbf{u} - \textbf{u}_p$ is the drift velocity. 
+Under this form \ref{eq:dt_np_final} can be interpreted as an advection of $n_p$ along the mixture phase velocity $\textbf{u}$, plus a source terms accounting for the non-zero $\textbf{u}_r$. 
 
 
 % \subsection{Summary of the available closure developed in this manuscript. }
@@ -304,21 +286,8 @@ Under this form \ref{eq:dt_np_final} can be interpreted as an advection of $n_p$
 
 According to the general formulation of the closure problem it is clear that all closure terms present in the averaged two phase flow equations can be expressed as a function of the tensors $\textbf{u}_{r} =\textbf{u}- \textbf{u}_p$, $\grad \textbf{u}$, $\grad^2 \textbf{u}$, the dispersed phase volume fraction $\phi =\phi_d$, the viscosity ratio $\lambda$ and  $Re$. 
 
-Note that all the closure presented below involve the velocity fields $\textbf{u}_r$ and $\textbf{u}$. 
-As it has been done up to now let us not $U = |\textbf{u}_r|$ the velocity scale of the relative motion. 
-Regarding the mixture velocity fields $\textbf{u}$ as well as the particles mean velocity field $\textbf{u}_p$, they might scale with other macroscopic length and velocity scale which are driven by the industrial processes that is modeled\citet{jackson1997locally}. 
-Thus let us introduce $U_M$ and $L$ as the macroscopic velocity and length scale of the macroscopic scale, such that $\textbf{u}\sim U_M$ and $\grad \sim 1/L$. 
 
-Consequently, in addition to the Reynolds number based on the radius of the particles $Re$, two additional dimensionless number must be taken into account at the macroscopic scale: The macroscopic Reynolds number,
-\begin{equation*}
-    Re_M = \frac{U_M \rho_f L}{\mu_f}
-\end{equation*}
-and the ratio $a/L$.
-The conclusion of that analysis is that in dimensionless form, the term involving the relative velocity $\textbf{u}_r$ or the radius of the particle $a$ will be factor of the dimensionless ratio $L/a$ and $U/U_M$. 
-% In the mixture momentum equation, the forces and stresses are made dimensionless by dividing the expression by $\frac{\mu_f U_M}{L}$ or . 
-
-
-In Stokes regime, due to the linearity of the Stokes equations, the closure terms must be proportional to $\textbf{u}_{r}$, $\grad \textbf{u}$, $\grad^2 \textbf{u}$, or the mean pressure of the fluid $p_f$. 
+In the Stokes regime, due to the linearity of the Stokes equations, the disturbance fields must be proportional to $\textbf{u}_{r}$, $\grad \textbf{u}$, $\grad^2 \textbf{u}$, or the mean pressure of the fluid $p_f$. 
 Therefore, based on this argument we might argue that the drag force term, which is a vector, must have the following functional form, 
 \begin{align}
     % \frac{L^2}{\mu_f U_M} 
@@ -333,14 +302,14 @@ Therefore, based on this argument we might argue that the drag force term, which
     \} + \ldots
     \label{eq:darg_force_general}
 \end{align}
-since $\div \bm\Sigma$, $\sim \textbf{u}_r$ and  $\sim \grad^2 \textbf{u}$ form a vector proportional to the velocity, in opposition to $\grad \textbf{u}$ which form a second order tensor, hence it cannot be part of the closure problem. 
+since $\div \bm\Sigma$, $\sim \textbf{u}_r$ and  $\sim \grad^2 \textbf{u}$ form a vector proportional to the velocity, in opposition to $\grad \textbf{u}$ which form a second order tensor, hence it cannot be part of the closure. 
 % Note that the velocity scale have been made dimensionless using $U$ on the left-hand side of the equaiton. 
 In \ref{eq:darg_force_general} we recognize that the dimensionless constant $C_u$ is related to the drag force coefficient developed in \ref{chap:mono-disperse}, hence $C_u$ is a function of $Re$, $\lambda$ and $\phi$.
 We remark the presence of the radius of the particle $a^{-2}$ in front of $\textbf{u}_r$ so that $C_u$ is indeed a dimensionless variable. 
 The constant $C_{[\grad^2 u]}$ correspond to the Fax\'en contribution, its closure is given in \ref{chap:daniel2}.
-While, \ref{eq:darg_force_general} can apply to various situation by including $Re$, $\lambda$ and $\phi$ into those constant, it is still incomplete. 
-Indeed, still considering Stokes regime, one might argue, according to the general form of the closure problem (see \ref{chap:daniel2}) that the vector, $\grad \phi$, can be included into the drag force formulation. 
-We deduce that we must add to \ref{eq:darg_force_general} the terms, 
+While, \ref{eq:darg_force_general} can apply to various situations by including $Re$, $\lambda$, and $\phi$ into those constants, it is still incomplete. 
+Indeed, still considering Stokes regime, one might argue, according to the general form of the closure problem (see \ref{chap:daniel2}) that the vector, $\grad \phi$ must be included in the drag force formulation. 
+We deduce that \ref{eq:darg_force_general} also includes the terms, 
 \begin{equation}
     \ldots 
     +
@@ -349,21 +318,18 @@ We deduce that we must add to \ref{eq:darg_force_general} the terms,
     + \ldots
     \label{eq:drag_inhomo}
 \end{equation}
-Note the presence of the term $\phi \grad \phi$ and not just $\phi$ in this expression. 
-This is because in the absence of particles, when $\phi=0$, we might still have gradient of volume fraction such that $\grad \phi \neq 0$ however the grad force must remain null thus we make appear explicitly $\phi\grad\phi$ in this expression. 
-Additionally, we remarked that, the only vector linear with $\textbf{u}$, that can be formed by a combination of $\textbf{u}$ and its derivatives, and $\grad \phi$ is given by $\bm\Sigma \cdot \grad \phi$.
-Moreover, the functional form $p_f \bm\delta \grad \phi$ which leads to the general formulation  \ref{eq:drag_inhomo}. 
-In \citet{wang1999longitudinal} they demonstrate analytically that the drift velocity of particle under shear flow is of $\mathcal{O}(a^2 \grad \textbf{u}\cdot \grad \phi)$.
-This results in a drag force term of  $\mathcal{O}( \grad \textbf{u} \cdot \phi \grad \phi)$ which implies that $C_{[E \grad\phi ]} \sim \mathcal{O}(1)$ at the leading order. 
-As, stipulated in \citet{wang1999longitudinal,guazzelli2011} the physical interpretation of \ref{eq:drag_inhomo} is that this force is at the origin of the longitudinal drift velocity of a sheared dilute suspension of spheres. 
+Note the presence of the term $\phi \grad \phi$ and not simply $\grad \phi$. 
+This is because in the absence of particles when $\phi=0$, we might still have gradient of volume fraction such that $\grad \phi \neq 0$ however, the force term must remain zero thus we must have $\phi\grad\phi$. 
+Where  we remarked that the only vector linear with $\textbf{u}$ or $p_f$ (or their gradients), and $\grad \phi$, is given by $\grad \textbf{u} \cdot \grad \phi$ and $p_f \grad \phi$.
+In \citet{wang1999longitudinal} they demonstrate analytically that the drift velocity of a particle under shear flow is of $\mathcal{O}(a^2 \grad \textbf{u}\cdot \grad \phi)$.
+This means that \citet{wang1999longitudinal} founds a drag force term of  $\mathcal{O}( \grad \textbf{u} \cdot \phi \grad \phi)$ which implies that $C_{[E \grad\phi ]} \sim \mathcal{O}(1)$ at the leading order. 
+As, stipulated in \citet{wang1999longitudinal,guazzelli2011} the physical interpretation of the first term of \ref{eq:drag_inhomo} is that this force is at the origin of the longitudinal drift velocity of a sheared dilute suspension of spheres. 
 Regarding the pressure contribution \citet{du2020bubble} identified a term of the form $p_f \grad \phi$ and called it Laminar dispersion, this confirms that $C_{[p_f \grad\phi ]}\neq 0$. 
 
+Of course, additional terms might appear if one considers higher gradients in the volume fraction and velocity field however we truncated the analysis to only the first-order derivative. 
 
-
-Of course other terms might appear if one consider higher gradient in the volume fraction and velocity however we truncated the analysis only the first order derivative. 
-
-If we now turn our attention to slightly inertial flow, or potential flow, the closures terms are now proportional to $\sim \textbf{uu}$ and its derivatives. 
-In the case of the drag force, there are numerous possibilities to construct a vector based on tensor formed of $\textbf{uu}$, its derivatives, and $\grad \phi$. 
+Let us turn our attention to slightly inertial flows, or potential flows, the disturbance fields are now proportional to $\sim \textbf{uu}$ or $\sim \textbf{u}_r \textbf{u}_r$ and their derivatives. 
+In the case of the drag force, there are numerous possibilities to construct a vector based on tensor formed of $\textbf{uu}$, $\textbf{u}_r\textbf{u}_r$, and $\phi$. 
 Hence, here is a non-exhaustive list of the terms that must be added to the drag force closure, 
 \begin{multline}
     % \frac{U^2 \rho^2}{L}
@@ -375,19 +341,18 @@ Hence, here is a non-exhaustive list of the terms that must be added to the drag
     + \rho_f a  \phi \grad\phi \cdot \{ C_{[EE\grad\phi]}^{(1)} (\textbf{E} \cdot  \textbf{E}) 
     +  C_{[EE\grad\phi]}^{(2)} (\textbf{E} : \textbf{E})\bm\delta \}
 \end{multline}
-The term on the first lines represent the so-called Magnus effect which arise at finite $Re$, where $\bm\omega_r = \bm\omega_p - \frac{1}{2}(\grad \textbf{u}-\grad \textbf{u}^\dagger)$ the relative rotation between the particles and the vorticity of the bulk. 
-This term seems to have a negligible effect when studying viscous droplet suspensions, however no study could be found reporting the values of the scalar $C_{[Eu]}$  and $C_{[\omega u]}$. 
-The second term represents the collective contribution of inertia and in homogeneity in the drag force. 
-Such contribution have been reported in the recent study of \citet{wang2024effect}, thus the scalars $C_{[uu\grad\phi]}$ might have their importance as to describe the particles' migration fluxes that arise due to volume gradient of concentration. 
-The terms on the last line, proportional to $\textbf{E}\cdot \textbf{E}$, have not yet been reported in the literature, so for instance $C_{[EE\grad\phi]} = ?$. 
+The term on the first lines represents the so-called Magnus effect which arises at finite inertia regime, where $\bm\omega_r = \bm\omega_p - \frac{1}{2}(\grad \textbf{u}-\grad \textbf{u}^\dagger)$ the relative rotation between the particles and the vorticity of the bulk. 
+No study could be found reporting the values of the scalar $C_{[Eu]}$  and $C_{[\omega u]}$. 
+The second term represents the collective contribution of inertia and non-homogeneity in the drag force. 
+Such contributions have been reported in the recent study of \citet{wang2024effect}, thus the scalars $C_{[uu\grad\phi]}$ might have their importance as to describe the particles' migration fluxes that arise due to volume gradient of concentration. 
+The terms on the last line, proportional to $\textbf{E}\cdot \textbf{E}$, have not been reported in the literature. 
 
 
 
 
 Let us turns our attention to the effective stress, $\bm\sigma_\text{eff}$. 
-In a first step let us consider the case where the disturbance fields satisfy Stokes equations, and that the particles or droplets are 
-number density form a homogeneous distribution, i.e. $\grad \phi = 0$ 
-Applying the same reasoning than for \ref{eq:darg_force_general}, but for the second order tensors  $\bm\sigma_\text{eff}$, leads us to the following general formulation for the effective suspension stress,  
+In the first step let us consider the case where the disturbance fields satisfy Stokes equations, and $\grad \phi = 0$ 
+Applying the same reasoning as for \ref{eq:darg_force_general}, leads us to the following general formulation for the effective suspension stress,  
 \begin{align}
     % \frac{a}{\mu_f U}
     \bm\sigma_\text{eff} &= 
@@ -399,16 +364,17 @@ Applying the same reasoning than for \ref{eq:darg_force_general}, but for the se
     + \ldots
     \label{eq:stress_stokes}
 \end{align}
-The first scalar $C_E$ represent the response the bulk stress form an applied mean shear $\textbf{E}$. 
-Note that a contribution of the form $\sim[\grad \textbf{u}-(\grad \textbf{u})^\dagger]$ have been removed since as shown in \ref{chap:daniel2} the bulk stress of a suspension must remain symmetric if no body-torque are applied on the droplets. 
-Therefore, $C_E$ simply represents the equivalent viscosity of the bulk coming from the first moment of the hydrodynamic forces, this includes the Einstein equivalent viscosity term for example. 
-The terms $C_{\grad u}^{(1)}$ and $C_{\grad u}^{(2)}$ are also known to be non-zero as they represent in the Stokes flow regime the contribution of the second moment of hydrodynamic forces, where ${\grad u}^{(1)}\sim \mathcal{O}(1)$, on the particles surfaces, (see \ref{chap:daniel15}). 
-On another hand, note that \citet{zhang2021stress} reported an additional stress, called the particle-fluid-particle stress, that arise due to long range interaction which is due to multi particle interactions through the fluid. 
+The first scalar $C_E$ represents the response to the bulk stress from an applied mean shear $\textbf{E}$. 
+Note that a contribution of the form $\sim[\grad \textbf{u}-(\grad \textbf{u})^\dagger]$ has been removed since as shown in \ref{chap:daniel2} the bulk stress of a suspension must remain symmetric if no body-torque are applied on the droplets. 
+Therefore, $C_E$ simply represents the equivalent viscosity of the bulk coming from the first moment of the hydrodynamic forces.
+It includes the Einstein equivalent viscosity term for example. 
+The terms $C_{\grad u}^{(1)}$ and $C_{\grad u}^{(2)}$ represent the contribution of the second moment of hydrodynamic forces (see \ref{chap:closure-disperse}). 
+On another hand, note that \citet{zhang2021stress} reported an additional stress, called the particle-fluid-particle stress, that arises due to long-range interaction which is due to multi-particle interactions through the fluid. 
 This term is also proportional to $\grad \textbf{u}_{r}$. 
-Consequently, in addition to the second hydrodynamic moment, the particle-fluid-particle stress contribute to $C_{\grad u}^{(1)}$ as $\sim \ldots+ \phi^{-1/3}$ according to \citep{zhang2021stress}. 
-Consequently, the leading contribution of $C_{\grad u}$'s isn't $\sim \phi^0$ as suggested by the second moment of hydrodynamic force but rather $\phi^{-1/3}$ due to multi particle interactions. 
+Consequently, in addition to the second hydrodynamic moment, the particle-fluid-particle stress contributes to $C_{\grad u}^{(1)}$ as $\sim \ldots+ \phi^{-1/3}$ according to \citep{zhang2021stress}. 
+Consequently, the leading contribution of $C_{\grad u}$'s isn't $\sim \phi^0$ as suggested by the second moment of hydrodynamic force but rather $\phi^{-1/3}$ due to multi-particle interactions. 
 
-Including inertial effects now, we may write that the effective stresses posses these additional terms,
+Including inertial effects, we may include the terms, 
 \begin{multline}
     \ldots
     % \frac{U^2\rho}
@@ -421,15 +387,14 @@ Including inertial effects now, we may write that the effective stresses posses 
     \ldots
     \label{eq:stress2}
 \end{multline}
-As seen in \ref{chap:deformable,chap:pseudoturbulence} the first two terms proportional to, $\sim \textbf{u}_{r}\textbf{u}_{r}$, find their contribution from the Pseudo-turbulence tensor, either from the continuous or dispersed phase, and from the first moment of surface traction, at finite inertial effect. 
-Thus, the leading contribution from the $C_{uu}$'s is $\sim \phi^{-1/3}$. 
-In addition, as reported in \citet{zhang2021stress} reported that the functional form of the particle-fluid-particle stress also had this functional form at finite Reynolds number. 
-The third and fourth terms of \ref{eq:stress2} yield their sources in the pseudoturbulence term as shown in \ref{chap:daniel15}. 
-Additionally, as shown in \citet{stone2001inertial} the Stresslet term also induce a contribution of this form. 
-At this stage it is yet unknown if multiparticle interaction under shear flow also induce or not a contribution to the $C_{EE}$'s, bu tit is likely if not sure that it is the case. 
+As seen in \ref{chap:deformable,chap:pseudoturbulence} the first two terms proportional to, $\sim \textbf{u}_{r}\textbf{u}_{r}$, represent the Pseudo-turbulence tensor and the first moment of forces contribution. 
+In addition, as reported in \citet{zhang2021stress} the functional form of the particle-fluid-particle stress also has this functional form at finite Reynolds number. 
+Overall, the leading contribution from the $C_{uu}$'s is $\sim \phi^{-1/3}$. 
+The third and fourth terms of \ref{eq:stress2} represent the pseudo-turbulence term as shown in \ref{chap:closure-disperse}. 
+Additionally, as shown in \citet{stone2001inertial} the Stresslet term also includes a contribution of this form. 
 
-If one consider inhomogeneity in the suspension such that $\grad \phi \neq 0$ additional terms appear in the equivalent stress.  
-The list of the second order symmetric tensors that can be build upon that consideration are, 
+If one considers that $\grad \phi \neq 0$ additional terms appear in the equivalent stress.  
+The list of the second order symmetric tensors that can be built upon that consideration are, 
 \begin{multline}
     % \frac{ a}{\mu_f U}\bm\sigma^\text{eq} &= 
     \ldots 
@@ -448,19 +413,15 @@ The list of the second order symmetric tensors that can be build upon that consi
     \}.
     \label{eq:stress_inho}
 \end{multline}
-Among these terms we recognize the terms on the first line to be the contribution of the second order hydrodynamic moment on the particles surfaces. 
-In Stokes regime this is the only additional terms that can be build, as $\grad \phi$ and $\grad \textbf{u}$ cannot form a second order tensor. 
-The terms on the second line of \ref{eq:stress_inho} represent the only possible contribution coming from the combinaison of inhomogeneity and inertial effect. 
-Yet no study in the literature reported such contribution, however our analysis seems to suggest that it does exist.
-A simple way to verify that the $C_{Eu \grad \phi}$'s are indeed non-zero would be to compute the second order moment of hydrodynamic force for an isolated bubble in a linear potential flow. 
+The terms of the first line are the contribution of the second-order moment of force \eqref{chap:closure-disperse}. 
+The terms on the second line represent the only possible contribution coming from the combination of $\phi\phi$ and inertial terms. 
+Yet no study in the literature reported such a contribution.
+A simple way to verify that the $C_{Eu \grad \phi}$'s are indeed non-zero would be to compute the second-order moment of hydrodynamic force for an isolated bubble in a linear potential flow. 
 
-\subsection{The general form of the dispersed multiphase flow equaitons.}
+\subsection{Slightly non-uniform emulsions.}
 
-As a first approach one can just consider a slightly inhomogeneous suspension such that all the $\grad^2 \phi$ terms vanish. 
-This means that we consider the $\grad \phi$ terms only in the drag force and neglect those in the effective stress which already appear under the divergence sign. 
-Also, one can consider the following approximation for spherical droplets $\phi = n_pv_p + \textbf{V}_p :\grad^2 n_p = n_pv_p + \frac{v_p a^2}{5}\grad^2 n_p \approx n_pv_p + \mathcal{O}(a^2/L^2)$.
-Hence, we considered that $a^2\grad^2 n_p=\mathcal{O}(a^2/L^2)=\approx 0$, however we still have $\grad^2 n_p =\mathcal{O}(1/L^2) \neq 0$. 
-In the closure presented above it implies that we neglect all the $\mathcal{O}(a^2/L^2)$ terms. 
+As a first approach, one can just consider a slightly non-uniform suspension such as all the $\mathcal{O}(a^2/L^2) \approx 0$.  
+For example, one can consider the following approximation for spherical droplets $\phi = n_pv_p + \textbf{V}_p :\grad^2 n_p = n_pv_p + \frac{v_p a^2}{5}\grad^2 n_p \approx n_pv_p + \mathcal{O}(a^2/L^2) = n_pv_p$.
 
 Injecting, \ref{eq:darg_force_general,eq:stress_stokes} into the formulation \ref{eq:NS_dispersed,} gives us the final form of the NS equation, 
 \begin{align}
@@ -538,8 +499,7 @@ Injecting, \ref{eq:darg_force_general,eq:stress_stokes} into the formulation \re
     \textbf{u}_{r}\textbf{u}_{r} 
     + C_{uu}^{(4)} (\textbf{u}_{r}\cdot \textbf{u}_{r}) \bm\delta \}
 \end{align*}
-where we have included $C_E$ as the equivalent viscosity term. 
-Note that $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ has the same functional form as the pseudo-turbulence stress however the constant are different. 
+Note that $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ has the same functional form as the pseudo-turbulence stress since it also results from the ensemble average of a disturbance field (that is therefore proportional to $\textbf{u}_r$, $\textbf{u}$, and so on \ldots). 
 
 
 
@@ -568,7 +528,7 @@ Note that $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ has the same functional 
 % Uncomment the following if need
 % Uncomment the following if need
 
-\subsection{Stokestain dilute emulsion}
+\subsection{Slightly non-uniform Stokestain dilute emulsions}
 
 The governing equations for the dispersed phase in stokes regime read,
 \begin{align}
@@ -578,8 +538,7 @@ The governing equations for the dispersed phase in stokes regime read,
     \rho_d \phi \textbf{g}
     + \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}_d}}. 
 \end{align}
-From which we directly deduce the form of the two terms on the right-hand side of \ref{eq:dtu_bulk}, namely, 
-We deduce that the source term in the momentum eq, 
+From which we directly deduce the form of the two terms on the right-hand side of \ref{eq:dtu_bulk}, namely
 \begin{equation*}
     \rho_f \textbf{g} 
     + \kappa
@@ -592,8 +551,8 @@ We deduce that the source term in the momentum eq,
     = \rho_f \textbf{g}(1 + \phi(\zeta-1) ). 
 \end{equation*}
 
-In Stokes regime the relative velocity $\textbf{u}_r$ can be closed algebraically from the dispersed phase momentum equations.  
-Indeed, from the closure in stokes and dilute regime derived in \ref{chap:daniel2} we have, 
+In Stokes regime the relative velocity $\textbf{u}_r$ can be closed algebraically from the dispersed phase momentum equation.  
+From the closure in Stokes and dilute regime derived in \ref{chap:daniel2} we have, 
 \begin{equation*}
     \pSavg{\bm{\sigma}_f^0\cdot \textbf{n}_d} = 
     \phi_d \div\bm\Sigma
@@ -627,7 +586,7 @@ which simplify to
 \end{align*}
 
 
-Using the closure of the first- and second-moment of the hydrodynamic forces derived in \ref{chap:daniel2} we obtain the final set of equation, 
+Using the closure of the first- and second-moment of the hydrodynamic forces derived in \ref{chap:daniel2} we obtain the final set of equations, 
 \begin{align}
     \div\textbf{u}&=0, \\
     (\pddt + \textbf{u}\cdot \grad)\phi &= \div(\phi \textbf{u}_r), \\
@@ -638,14 +597,16 @@ Using the closure of the first- and second-moment of the hydrodynamic forces der
     \div (\bm\Sigma + \bm{\sigma}_\text{eff})
     % + \kappa \pSavg{ \bm{\sigma}_f^0 \cdot \textbf{n}} 
     + \rho_f \textbf{g} (1 + \phi(\zeta-1) )\\
-    \frac{3\mu_f}{2 a^2}\left(\frac{3\lambda+2}{\lambda+1}\right)
-   \textbf{u}_{r} 
+    \textbf{u}_{r} 
     &= 
-    \grad p_f
-    - \rho_f\zeta   \textbf{g}
-    -  \mu_f \left[
-        1 + \frac{3}{4} \left(\frac{\lambda}{\lambda+1}\right)
-        \right]\grad^2 \textbf{u}
+    \frac{2 a^2}{3\mu_f}\left(\frac{\lambda+1}{3\lambda+2}\right)
+    \left\{
+        \grad p_f
+        - \rho_f\zeta   \textbf{g}
+        -  \mu_f \left[
+            1 + \frac{3}{4} \left(\frac{\lambda}{\lambda+1}\right)
+            \right]\grad^2 \textbf{u}
+    \right\}
     \\
     % \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} &= 
     % \phi \{ C_{uu}^{(1)}
@@ -657,7 +618,7 @@ Using the closure of the first- and second-moment of the hydrodynamic forces der
     \bm\sigma_\text{eff} &= \mu_f \phi      
     \frac{3\lambda}{4(\lambda + 1)}[\grad \textbf{u}_{r} +(\grad \textbf{u}_{r})^\dagger +\frac{2-3\lambda}{3\lambda}(\div  \textbf{u}_{r})\bm\delta] 
 \end{align}
-As one can observe this system reduces to the forced Navier-Stokes equations coupled with a transport equation for $\phi$. 
+As we can observe this system reduces to the forced Navier-Stokes equations coupled with a transport equation for $\phi$. 
 It is interesting to note that \citet{kriaa2023two} used the exact same set of equation, but with $\bm\Sigma + \bm\sigma_\text{eff} \to -p_f +2 \mu_f \textbf{E}$ instead. 
 As their study provided realistic results this demonstrates that the effective stress can be neglected in certain circumstances. 
 

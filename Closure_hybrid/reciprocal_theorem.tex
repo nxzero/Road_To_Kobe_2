@@ -2,21 +2,22 @@
 \label{ap:reciprocal}
 
 
-In this section we revisit the methodology of \citet{stone2001inertial} and \citet{raja2010inertial}  to compute the Stresslet and forces on a droplet in a general stokes flow at first order in the Reynolds number. 
-The improvement or differences with the two cited studies which are similar in a lots of way with what is proposed here are : 
-(1) we generalized the work of \citet{stone2001inertial} by considering spherical droplets instead of solid particles. 
-(2) In the work of \citet{raja2010inertial} they already considered droplets, however in opposition to their work we focus on the particles relative motions with the continuous phase where they considered neutrally buoyant particles. 
-Overall we provide a general method greatly inspired based on the work of \citet{stone2001inertial} to compute the closure terms at the first order in $\phi$ and $Re$ for spherical droplets. 
+In this section we revisit the methodology of \citet{stone2001inertial,raja2010inertial,jiang2021inertial}  to compute the first moment of force on a spherical droplet in a uniform linear flow at low but finite inertia effects. 
+In opposition to \citet{stone2001inertial,raja2010inertial} we focus on the particles relative motions with the continuous phase, where they considered only neutrally-buoyant suspension. 
+Overall, we provide a general method greatly inspired from \citet{stone2001inertial} to compute the first moment of force at the first order in $\phi$ and $Re$ for spherical droplets. 
 
 
 \subsection{Introduction of the problem}
 
 We consider a dilute emulsion of spherical droplets at low but finite inertial effects. 
-In this situation, we have shown that the relevant equations to be solved to compute the closure terms of the averaged equations are the disturbance fields equations, or the conditionally averaged equations. 
-For ease of understanding we note here $\textbf{u}_k$ the disturbance fields of the phase $k$ conditionally on the presence of a particle at \textbf{x} with center of mass velocity \textbf{w}.
-In this case $\textbf{u}_k[\textbf{y}|\textbf{x},\textbf{w}] + \textbf{U}_f[\textbf{y}]$ represents the velocity field seen by an observer in the laboratory reference frame, and $\textbf{u}_k[\textbf{y}|\textbf{x},\textbf{w}] + \textbf{U}_f[\textbf{y}] - \textbf{w}$ the velocity field seen by an observer in the particle center of mass reference frame.
-Note that the averaged velocity field $\textbf{U}_f$ can be re-written in terms of a taylor expansion around the particle center of mass such that, $\textbf{U}_f[\textbf{y}] = \textbf{U}_f[\textbf{x}] + \textbf{r} \cdot \grad \textbf{U}_f + \ldots$, nevertheless for purpose of generality we keep the more general notation $\textbf{U}_f[\textbf{y}]$. 
-Thus, in the dilute limit we may write in the dimensionless form the following set of equations (see \ref{chap:daniel2}, \citep{stone2001inertial}) for the fluid phase, 
+In this situation, we have shown that the relevant equations to be solved to compute the closure terms of the averaged equations are the disturbance fields equations, or the conditionally-averaged equations. 
+For ease of notation we note here $\textbf{u}_k$ the disturbance fields of the droplet evaluated in the phase $k$ (corresponding to $\textbf{u}^{1d}$ in \ref{chap:daniel2}). 
+$\textbf{u}_k$ is conditioned on the presence of a droplet at \textbf{y} with center of mass velocity \textbf{w}.
+The ensemble-averaged velocity or ``background flow'' velocity, is written $\textbf{U}_f[\textbf{x},t]$ (corresponding to $\textbf{u}[\textbf{x},t]$ in \ref{chap:daniel2}). 
+In this case $\textbf{u}_k[\textbf{x}|\textbf{y},\textbf{w}] + \textbf{U}_f[\textbf{x}]$ represents the velocity field seen by an observer in the laboratory reference frame (corresponding to $\textbf{u}^1 = \textbf{u}^{1d} + \textbf{u}$ in \ref{chap:daniel2}).
+Note that the averaged velocity field $\textbf{U}_f[\textbf{x},t]$ can be re-written in terms of a Taylor series expansion around the particle center of mass such that, $\textbf{U}_f[\textbf{x}] = \textbf{U}_f[\textbf{y}] + \textbf{r} \cdot \grad \textbf{U}_f|_{\textbf{x} =\textbf{y}} + \ldots$. 
+
+In the dilute limit and out of the volume of the droplet centered at \textbf{y}, we may write the single-particle conditionally averaged Navier-Stokes equations as (see \ref{chap:daniel2} or \citet{stone2001inertial}),  
 \begin{align*}
     \div\bm\sigma_f
     = 
@@ -40,40 +41,42 @@ and,
     = \frac{\zeta}{\lambda}Re \textbf{f}_d\\
     \div \textbf{u}_d = 0
 \end{align*}
-for the dispersed phase. 
-We recall that $Re = \frac{\rho_f d U}{\mu_f}$ is the Reynolds number, $\zeta = \rho_d / \rho_f$ the density ratio and $\lambda = \mu_d / \mu_f$ the viscosity ratio, with $U = |\textbf{U}_f[\textbf{x}] - \textbf{w}|$. 
-The boundary conditions valid at the particle surface are, 
+in the domain of the droplet centered at $\textbf{y}$. 
+Where, $\bm\sigma_{f,d} = -p_{f,d}\bm\delta + (\grad \textbf{u}_{f,d} + \textbf{u}_{f,d})$ is the dimensionless disturbance stress, with $p_k$ the disturbance pressure field (corresponding to $p^{1d}$ in the main text). 
+We recall that $Re = \frac{\rho_f a U}{\mu_f}$ is the Reynolds number based on the droplet radius $a$, $\zeta = \rho_d / \rho_f$ the density ratio and $\lambda = \mu_d / \mu_f$ the viscosity ratio, with $U = |\textbf{U}_f[\textbf{y}] - \textbf{w}|$. 
+Note that the distances have been made dimensionless using the droplet radius $a$. 
+The boundary conditions at the droplet surface ($i.e. |\textbf{r}| = |\textbf{x} - \textbf{y}| = 1$) are, 
 \begin{align}
     \textbf{n}\cdot\textbf{u}_f
-    &= \{\textbf{w} - \textbf{U}_f[\textbf{y},t]\}\cdot \textbf{n} 
-    = \textbf{U}[\textbf{y},t]\cdot \textbf{n} \\
+    &= \{\textbf{w} - \textbf{U}_f[\textbf{x},t]\}\cdot \textbf{n} 
+    = \textbf{U}[\textbf{x},t]\cdot \textbf{n} \\
     \textbf{u}_f &= \textbf{u}_d\\
     (\bm\sigma_f\cdot\textbf{n})\cdot (\bm\delta - \textbf{nn})
-    &= \lambda (\bm\sigma_d\cdot \textbf{n})(\bm\delta - \textbf{nn}),
+    &= \lambda (\bm\sigma_d\cdot \textbf{n})\cdot (\bm\delta - \textbf{nn}),
     \label{eq:bc_stress_orig}
 \end{align}
-which are completed by the following boundary condition at infinity,
+Where we introduced the relative velocity field $\textbf{U}[\textbf{x},t] = \textbf{w} - \textbf{U}_f[\textbf{x},t]$. 
+These boundary conditions are completed by the following boundary conditions far from the droplet,
 \begin{align*}
-    \lim_{|\textbf{r}|\to\infty }\textbf{u}_f[\textbf{y}|\textbf{x}] = 0. 
+    \lim_{|\textbf{r}|\to\infty }\textbf{u}_f[\textbf{x}|\textbf{y}] = 0,\\
+    \lim_{|\textbf{r}|\to\infty }p_f[\textbf{x}|\textbf{y}] = 0. 
 \end{align*}
-We introduced the relative velocity field $\textbf{U}[\textbf{y},t]$. 
-It is clear that solving this problem into all its generality is not feasible theoretically.
-Thus, we now perform some simplifying hypothesis. 
 
-\subsection{The low Reynolds number expansion method}
+\subsection{Regular expansion in $Re$ for low but finite inertial flows}
 
-To simplify the problem we now consider small \textit{Reynolds} numbers perturbation methods. 
-It is well known that when performing expansion methods one must perform an ``outer'' and an ``inner'' expansion to obtain the correct correction on the drag force at the leading order \citet{proudman1957expansions}. 
-However, as shown in \citet{masoud2019reciprocal} the ``outer'' solution provides only an $\mathcal{O}(Re^{3/2})$ on the closure terms of interest in our work.
-Therefore, as done in \citet{raja2010inertial} we may completely disregard the ``outer'' solution and only focus on the ``inner'' expansion thereby obtaining a result accurate at $\mathcal{O}(Re)$ with an error of $\mathcal{O}(Re^{3/2})$. 
+To simplify the problem we now consider small \textit{Reynolds} numbers perturbations. 
+When performing expansion methods one must use an ``outer'' and an ``inner'' expansion \citet{proudman1957expansions}. 
+% However, as shown in \citet{masoud2019reciprocal} the ``outer'' solution provides only an $\mathcal{O}(Re^{3/2})$ on the closure terms of interest in our work.
+However, as done in \citet{stone2001inertial,raja2010inertial,jiang2021inertial} we may completely disregard the ``outer'' solution and only focus on the ``inner'' expansion thereby obtaining a result accurate at $\mathcal{O}(Re)$. 
+This is because we aim to compute the first moment of the hydrodynamic forces and not the drag force on the droplet (which requires the outer expansion \citep{proudman1957expansions}). 
+More details will be given below for instance just retain that only a regular expansion in $Re$ is necessary.
 
-Anyhow, the disturbance velocity field of phase $k$ may be re-written as an expansion around $Re \approx 0$ namely, 
+The disturbance velocity field of phase $k$ may be re-written as an expansion around $Re \approx 0$ namely, 
 \begin{equation*}
     \textbf{u}_k = \textbf{u}_k^{(0)} + Re \textbf{u}_k^{(1)} + \ldots
 \end{equation*}
 with similar expression for the fields $\bm\sigma_k$ and $\textbf{f}_k$. 
-Substituting these expansions into the governing equations gives two system of equations, one for the zeroth order terms $\textbf{u}^{(0)}_k$, and another for the first order terms $\textbf{u}^{(1)}_k$. 
-Consequently, the governing equations for the continuous phase yield, 
+Substituting these expansions into the governing equations gives,
 \begin{align}
     \div\bm\sigma_f^{(0)}
     = 0,
@@ -84,10 +87,8 @@ Consequently, the governing equations for the continuous phase yield,
     =  \textbf{f}_f^{(0)},
     && \div \textbf{u}_f^{(1)} = 0.  
     \label{eq:first_order_NS_f}
-    \\
-    &&\vdots
 \end{align}
-While in the dispersed phase we have, 
+While in the dispersed phase we obtain, 
 \begin{align}
     \div\bm\sigma_d^{(0)}
     = 0,
@@ -98,60 +99,59 @@ While in the dispersed phase we have,
     = \frac{\zeta}{\lambda} \textbf{f}_d^{(0)},
     && \div \textbf{u}_d^{(1)} = 0. 
     \label{eq:first_order_NS_f}
-    \\
-    &&\vdots
 \end{align}
-The three verticals dots indicates that one might eventually add an arbitrary number of equations for the $\textbf{u}^{(n)}_k$. 
-However, as mentioned above if one do so he would then need to solve for the ``outer'' field  expansion. 
-Thus, in the present study only the zeroth and first order equations are relevant. 
-The velocity boundary condition can also be written as, 
+Where we truncated the expansion at $\mathcal{O}(Re)$.  
+The boundary conditions can also be written as, 
 \begin{align}
     \textbf{n}\cdot\textbf{u}_f^{(0)}
-    = \textbf{U}[\textbf{y},t]\cdot \textbf{n} \\
+    &= \textbf{U}[\textbf{x},t]\cdot \textbf{n} \\
     \textbf{n}\cdot\textbf{u}_f^{(1)}
-    = 0
+    &= 0, \\
+    \label{eq:bc_non_inertia}
+    (\bm\sigma_f^{(0)}\cdot\textbf{n})\cdot (\bm\delta - \textbf{nn})
+    &= \lambda (\bm\sigma_d^{(0)}\cdot \textbf{n})\cdot (\bm\delta - \textbf{nn}),\\
+    (\bm\sigma_f^{(1)}\cdot\textbf{n})\cdot (\bm\delta - \textbf{nn})
+    &= \lambda (\bm\sigma_d^{(1)}\cdot \textbf{n})\cdot (\bm\delta - \textbf{nn}). 
     \label{eq:bc_inertial}
 \end{align}
-Indeed, by identification we deduce that since $\textbf{u}_f^{(0)}$ must match exactly the undisturbed velocity field at the particle surface the first Reynolds correction projected on the normal of the surface is simply zero.
 
-\subsection{A non-inertial spherical droplet in linear flows.}
 
-The Reciprocal theorem requires the use of a similar known solution of the Navier Stokes equation.
-We call that solution the \textit{tool} solution as its only purpose is to compute the \textit{real} solutions of the equations introduced above. 
-We note the tool velocity and stress fields of phase $k$ as $\hat{\textbf{u}}_k$ and $\hat{\bm\sigma}_k$. 
-Originally, as a tool solution one consider the situation of a fixed particle immersed in a velocity field generated by a point force on its exterior, in which case the Reciprocal theorem end up giving the famous Faxen laws.
-Instead, we adopt a method similar to \citet{stone2001inertial} and use as a tool solution, the solution of the problem of a non-inertial spherical droplet immersed in a linear flows. 
+\subsection{The ``test'' solution}
 
-In this situation the velocity and stress fields are governed by, 
-\begin{align*}
-    \div \hat{\bm\sigma}_k = 0 
-    && \div \hat{\textbf{u}}_k = 0 
-    \label{eq:tool_sol}
-\end{align*}
+The Reciprocal theorem requires the use of a known solution.
+We call that solution the \textit{test} solution, as its only purpose is to compute the \textit{real} solution of the equations introduced above. 
+We note the test velocity and stress fields $\hat{\textbf{u}}_k$ and $\hat{\bm\sigma}_k$, respectively. 
+For the test problem we consider:
+\begin{align}
+    \div \hat{\textbf{u}}_k = 0 
+    && \div \hat{\bm\sigma}_k = 0 
+    \label{eq:test_sol}
+\end{align}
 in phase $k$ and, 
 \begin{align}    
-    \textbf{n}\cdot \hat{\textbf{u}}=  \textbf{n}\cdot(\textbf{w} - \hat{\textbf{U}}_f) = \textbf{n}\cdot \hat{\textbf{U}} + \textbf{r}\cdot \textbf{E}_f \cdot \textbf{n}\\
+    \textbf{n}\cdot \hat{\textbf{u}}=  \textbf{n}\cdot(\textbf{w} - \hat{\textbf{U}}_f) = \textbf{n}\cdot \hat{\textbf{U}} + \textbf{r}\cdot \hat{\textbf{E}} \cdot \textbf{n}\\
     \hat{\textbf{u}_f} = \hat{\textbf{u}_d}\\
     (\hat{\bm\sigma_f}\cdot \textbf{n}) \cdot (\bm\delta - \textbf{nn})
     = 
     \lambda (\hat{\bm\sigma_d}\cdot \textbf{n}) \cdot (\bm\delta - \textbf{nn}) \label{eq:bc_stress}
 \end{align} 
-on the interface. 
-Where we recall that $\hat{\textbf{U}} = \textbf{w} - \hat{\textbf{U}}_f$, and that $\hat{\textbf{U}}_f$ is linear with $\textbf{r}$ such that $ \hat{\textbf{U}}_f[\textbf{y}] = \hat{\textbf{U}}_f[\textbf{x}]+\textbf{r}\cdot \hat{\textbf{E}}_f[\textbf{x}]$ in opposition to $\textbf{U}_f$ which were not assumed linear but rather arbitrary. 
+on the interface of the droplet centered at the origin. 
+Furthermore, we note $\hat{\textbf{U}} = \textbf{w} - \hat{\textbf{U}}_f$, with $\hat{\textbf{U}}_f$ a linear with $\textbf{r}$ such that $ \hat{\textbf{U}}_f[\textbf{y}] = \hat{\textbf{U}}_f[\textbf{x}]+\textbf{r}\cdot \hat{\textbf{E}}[\textbf{x}]$  where \textbf{x} is the position of the droplet center of mass and \textbf{y} a point in the domain.
+Note that $\hat{\textbf{U}}$ and $\hat{\textbf{U}}_f$ are both linear function of position, i.e. we do not consider quadratic background velocity for the ``test''  problem. 
 
-This problem has been treated extensively in the literature, \citet{pozrikidis1992boundary,leal2007advanced},  the solutions read, 
+This problem has been treated extensively in the literature, \citet{pozrikidis1992boundary,leal2007advanced,kim2013microhydrodynamics}, the solutions read, 
 \begin{align}
-    \hat{\textbf{u}}_k = \mathcal{U}_k\cdot \hat{\textbf{U}}+ \mathcal{E}_k : \textbf{E}_f\\
-    \hat{p}_k = \mathcal{U}_k^p\cdot \hat{\textbf{U}}+ \mathcal{E}_k^p : \textbf{E}_f\\
-    \hat{\textbf{e}}_k = \mathcal{U}_k^e\cdot \hat{\textbf{U}}+ \mathcal{E}_k^e : \textbf{E}_f\\
-    \hat{\bm\sigma}_k = \mathcal{U}_k^\sigma\cdot \hat{\textbf{U}}+ \mathcal{E}_k^\sigma : \textbf{E}_f
+    \hat{\textbf{u}}_k = \mathcal{U}_k\cdot \hat{\textbf{U}}+ \mathcal{E}_k : \hat{\textbf{E}}\\
+    \hat{p}_k = \mathcal{U}_k^p\cdot \hat{\textbf{U}}+ \mathcal{E}_k^p : \hat{\textbf{E}}\\
+    \hat{\textbf{e}}_k = \mathcal{U}_k^e\cdot \hat{\textbf{U}}+ \mathcal{E}_k^e : \hat{\textbf{E}}\\
+    \hat{\bm\sigma}_k = \mathcal{U}_k^\sigma\cdot \hat{\textbf{U}}+ \mathcal{E}_k^\sigma : \hat{\textbf{E}}
     \label{eq:solution_hat}
 \end{align}
 with, 
 \begin{align*}
     (\mathcal{U}_{f})_{ik} &= 
-    \delta_{ik}
-    + \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right)
+    % \delta_{ik}
+     \frac{1}{4}\left(\frac{3\lambda + 2}{\lambda +1}\right)
     \left(\frac{\delta_{ik}}{r} + \frac{r_ir_k}{r^3}\right) 
     + 
     \frac{1}{4}\left(\frac{\lambda}{\lambda +1}\right)
@@ -159,26 +159,26 @@ with,
     (\mathcal{E}_{f})_{ijk}
     &=
     %  \bm\delta\textbf{r}
-    -\frac{\lambda}{(\lambda + 1)r^5} \bm\delta\textbf{r}
+    -\frac{\lambda}{(\lambda + 1)r^5} \delta_{ij} r_k
     -\left(
         5\lambda +2
         - \frac{5\lambda}{r^2}
         \right) 
-    \frac{\textbf{rrr}}{2(\lambda+1)r^5}\\
+    \frac{r_ir_jr_k}{2(\lambda+1)r^5}\\
     (\mathcal{U}_{d})_{ik} &= 
-    \frac{1}{2}\left(\frac{2\lambda +3}{\lambda +1}\right)\bm\delta
-    -\frac{1}{2} (2r^2 \bm\delta - \textbf{rr})
+    \frac{1}{2}\left(\frac{2\lambda +3}{\lambda +1}\right)\delta_{ij}
+    -\frac{1}{2} (2r^2 \delta_{ij} - r_ir_j)
     \left(\frac{1}{\lambda +1}\right)\\
     (\mathcal{E}_{d})_{ijk}
-    &= -\bm\delta \textbf{r}
-    + \frac{5r^2 -3}{2(\lambda +1)} \textbf{r}\bm\delta
-    - \frac{1}{\lambda+1}\textbf{rrr}\\
-    \mathcal{U}_f^p &= 
-      \frac{1}{2}\left(\frac{3\lambda + 2}{\lambda +1}\right) \frac{\textbf{r}}{r^3}\\
-     \mathcal{U}_d^p &= 
-    - 5 \left(\frac{1}{\lambda +1}\right) \textbf{r}\\
-    \mathcal{E}_f^p &= - \frac{(5\lambda+2)}{(\lambda+1)r^5}\textbf{rr}\\
-    \mathcal{E}_d^p &= \frac{21\lambda}{2(\lambda+1)} \textbf{rr}\\
+    &= -\delta_{ij} r_k
+    + \frac{5r^2 -3}{2(\lambda +1)} r_i\delta_{jk}
+    - \frac{1}{\lambda+1}r_ir_jr_k\\
+    (\mathcal{U}_f^p)_i &= 
+      \frac{1}{2}\left(\frac{3\lambda + 2}{\lambda +1}\right) \frac{r_i}{r^3}\\
+     (\mathcal{U}_d^p)_i &= 
+    - 5 \left(\frac{1}{\lambda +1}\right) r_i\\
+    (\mathcal{E}_f^p)_{ij} &= - \frac{(5\lambda+2)}{(\lambda+1)r^5}r_ir_j\\
+    (\mathcal{E}_d^p)_{ij} &= \frac{21\lambda}{2(\lambda+1)} r_ir_j\\
     (\mathcal{U}_k^e)_{ijk}
     &= 
     \frac{1}{2}(
@@ -212,38 +212,31 @@ with,
      + 2(\mathcal{E}_k)_{ijkl}
 \end{align*}
 Particularly, note the linearity of the velocity, pressure and stress fields with the relative velocity $\hat{\textbf{U}}$ and the shear rate $\hat{\textbf{E}}$. 
-We can also gives the exact expression, 
-% \begin{align*}
-%     (\mathcal{U}_k^e)_{ijk}
-%     = - \frac{1}{2}\left(\frac{1}{1+\lambda}\right)(
-%         \frac{3}{2}\delta_{ik} r_j
-%         + \frac{3}{2}\delta_{jk} r_i
-%         - r_k \delta_{ij} 
-%         )
-% \end{align*}
-% Or, 
+We also give the expression, 
 \begin{equation*}
     (\mathcal{U}_d^e)_{ijk} 
     % = 
     % 3(-4\delta_{ik} r_j + \delta_{ij} r_k + \delta_{kj} r_i)
     % + 10 r_j  \delta_{ik}
     = 
-    - \frac{1}{2\lambda}\left(\frac{1}{1+\lambda}\right)(-2 \delta_{ik} r_j + 3\delta_{ij} r_k + 3\delta_{kj} r_i) 
+    - \frac{1}{2\lambda}\left(\frac{1}{1+\lambda}\right)(-2 \delta_{ik} r_j + 3\delta_{ij} r_k + 3\delta_{kj} r_i) ,
 \end{equation*}
+which will be useful for the following. 
 
-\subsection{The general form of the reciprocal theorem for stokes flows}
 
-In a first step we consider only the calculation of the closure based on $\textbf{u}^{(0)}_k$ meaning for a spherical drop immersed in an arbitrary stokes flow fields. 
+\subsection{Reciprocal theorem for droplets in Stokes flows}
 
-\subsubsection{The continuous phase integral relation}
+As an example, we consider in a first step the reciprocal theorem applied to a situation where the ``real'' field also follow stokes equations such that $\textbf{u}_k =\textbf{u}_k^{(0)}$. 
 
-Let us take the dot product of \ref{eq:zeroth_order_NS_f} with $\hat{\textbf{u}}_f$ and \ref{eq:tool_sol} (with $k = f$) with $\textbf{u}_k^{(0)}$, then subtracting both expressions gives, 
+\subsubsection{Continuous phase integral relation}
+
+Let us take the dot product of \ref{eq:zeroth_order_NS_f} with $\hat{\textbf{u}}_f$ and \ref{eq:test_sol} (with $k = f$) with $\textbf{u}_k^{(0)}$, then subtracting both expressions gives, 
 \begin{equation*}
     \hat{\textbf{u}}_f\cdot \div\bm\sigma_f^{(0)}
     =
     \textbf{u}_k^{(0)} \cdot \div \hat{\bm\sigma}_k, 
 \end{equation*}
-Upon integrating over $\Omega_f$ we obtain the following relation, 
+Upon integrating over $\Omega_f$ which is the domain outside the droplet at \textbf{y},  we obtain the following relation, 
 \begin{equation*}
     \intS{\hat{\textbf{u}}_f\cdot  \bm\sigma_f^{(0)} \cdot \textbf{n}}
     % \intOf{\hat{\textbf{u}}_f\cdot  (\div \bm\sigma_f^{(0)})}
@@ -251,9 +244,10 @@ Upon integrating over $\Omega_f$ we obtain the following relation,
     \intS{\textbf{u}_f^{(0)}\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}
     % \intOf{\textbf{u}_f^{(0)}\cdot ( \div \hat{\bm\sigma}_f)}
 \end{equation*}
-For solid particle this relation constitute the basis to compute the stress distribution on the particle, whihc corresponds to the left-hand side term. 
-However, note that for droplets the velocity fields $\textbf{u}_f^{(0)}$ is unknown.
-Thus, using the identity $\textbf{u}_f = \textbf{u}_f +\textbf{U}_f-\textbf{U}_f$ we reformulate the reciprocal theorem as, 
+For solid particle this relation constitutes the basis to compute the stress distribution projected on the particle surface normal (which corresponds to the left-hand side term). 
+However, note that for droplets the velocity fields $\textbf{u}_f^{(0)}$ is in principle unknown.
+Therefore, we must use a ``tricks''. 
+Using the identity $\textbf{u}_f = \textbf{u}_f +\textbf{U}_f-\textbf{U}_f$ we reformulate the reciprocal theorem as, 
 \begin{equation}
     \intS{\hat{\textbf{U}}\cdot  \bm\sigma_f^{(0)} \cdot \textbf{n}}
     + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(0)} \cdot \textbf{n}}
@@ -262,16 +256,15 @@ Thus, using the identity $\textbf{u}_f = \textbf{u}_f +\textbf{U}_f-\textbf{U}_f
     + \intS{(\textbf{u}_f^{(0)} - \textbf{U})\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}
     \label{eq:reciprocal_f}
 \end{equation}
-The first integral on the left-hand side will be the results of this study, the order integral remains to be calculated. 
-However, note that the unkown, $\bm\sigma_f^{(0)}$ appears on the  left-hand side of this equation. 
-As the solution can not include itself one needs to reformulate this integral. 
-In this objective, we note that both term $(\textbf{u}_f^{(0)} - \textbf{U})$ and $(\hat{\textbf{u}}_f - \hat{\textbf{U}})$ are by definition tangent vector to the particle surface. 
-Considering the boundary condition \ref{eq:bc_stress} and \ref{eq:bc_stress_orig} way deduce that $(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(0)} = \lambda (\hat{\textbf{u}}_d - \hat{\textbf{U}})\cdot  \bm\sigma_d^{(0)}$ and  $({\textbf{u}}_f^{(0)} - \hat{\textbf{U}})\cdot  \hat{\bm\sigma}_f = \lambda (\hat{\textbf{u}}_d^{(0)} - \hat{\textbf{U}})\cdot  \hat{\bm\sigma}_d$
-This introduces the needs for a reciprocal theorem on the droplets internal volume. 
+The first integral on the left-hand side is the result of this study, the other integrals remain to be calculated. 
+% However, note that the unknown, $\bm\sigma_f^{(0)}$ appears on the  left-hand side of this equation. 
+Then, note that both term $(\textbf{u}_f^{(0)} - \textbf{U})$ and $(\hat{\textbf{u}}_f - \hat{\textbf{U}})$ are by definition tangent vectors to the particle surface (i.e. vectors of the form $\sim (\bm\delta - \textbf{nn})$). 
+Considering the boundary condition \ref{eq:bc_stress} and \ref{eq:bc_stress_orig} we deduce that $(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(0)} = \lambda (\hat{\textbf{u}}_d - \hat{\textbf{U}})\cdot  \bm\sigma_d^{(0)}$ and  $({\textbf{u}}_f^{(0)} - \hat{\textbf{U}})\cdot  \hat{\bm\sigma}_f = \lambda (\hat{\textbf{u}}_d^{(0)} - \hat{\textbf{U}})\cdot  \hat{\bm\sigma}_d$. 
+To determine the stress within the droplet we now use a reciprocal theorem within the droplet volume. 
 
-\subsubsection{The dispersed phase integral relation}
+\subsubsection{Dispersed phase integral relation}
 
-We take the dot product of \ref{eq:zeroth_order_NS_d} with $\hat{\textbf{u}}_d - \hat{\textbf{U}}$ and \ref{eq:tool_sol} (with $k=d$) with $\textbf{u}_d^{(0)} -\textbf{U}$, then subtracting both expressions gives, 
+We take the dot product of \ref{eq:zeroth_order_NS_d} with $\hat{\textbf{u}}_d - \hat{\textbf{U}}$ and \ref{eq:test_sol} (with $k=d$) with $\textbf{u}_d^{(0)} -\textbf{U}$, then subtracting both expressions gives, 
 \begin{equation*}
     (\hat{\textbf{u}}_d - \hat{\textbf{U}})\cdot \div\bm\sigma_d^{(0)}
     =
@@ -285,21 +278,22 @@ which can be reformulated as,
     \div [\hat{\bm\sigma}_d \cdot (\textbf{u}_d^{(0)} - \textbf{U})], 
     - \hat{\bm\sigma}_d : \grad ({\textbf{u}}_d^{(0)} - \textbf{U})
 \end{equation*}
-Noticing that $- \hat{\bm\sigma}_d : \grad ({\textbf{u}}_d^{(0)} - \textbf{U}) + \bm\sigma_d^{(0)} : \grad (\hat{\textbf{u}}_d - \hat{\textbf{U}}) = 2 \hat{\textbf{e}}_d : \grad \textbf{U} - 2 \textbf{e}_d^{(0)} : \grad \hat{\textbf{U}}$, and integrating over the volume of the particle yields, 
+Noticing that $- \hat{\bm\sigma}_d : \grad ({\textbf{u}}_d^{(0)} - \textbf{U}) + \bm\sigma_d^{(0)} : \grad (\hat{\textbf{u}}_d - \hat{\textbf{U}}) = 2 \hat{\textbf{e}}_d : \grad \textbf{U} - 2 \textbf{e}_d^{(0)} : \grad \hat{\textbf{U}}$, 
+(recall that $\hat{\textbf{e}}_d = (\grad \hat{\textbf{u}}_d + ^\dagger \grad \hat{\textbf{u}}_d)/2$ and ${\textbf{e}^{(0)}}_d = (\grad {\textbf{u}^{(0)}}_d + ^\dagger \grad {\textbf{u}^{(0)}}_d)/2$ ), and integrating over the volume of the particle yields, 
 \begin{equation}
     \intS{(\hat{\textbf{u}}_d - \hat{\textbf{U}})\cdot \bm\sigma_d^{(0)} \cdot \textbf{n}}
     + 2\intO{\textbf{e}_d^{(0)} : \grad \hat{\textbf{U}}}
     =
     \intS{(\textbf{u}_d^{(0)} - \textbf{U}) \cdot  \hat{\bm\sigma}_d\cdot \textbf{n} }
-    + 2\intO{\hat{\textbf{e}}_d : \grad \textbf{U}} 
+    + 2\intO{\hat{\textbf{e}}_d : \grad \textbf{U}}. 
     \label{eq:reciprocal_d}
 \end{equation}
-This relation indicates that the of surface forces traction is balanced by the internal shearing motion. 
+
 
 
 \subsubsection{First form of the reciprocal theorem for stokes flows}
 
-Making use of the relation \ref{eq:reciprocal_d} into \ref{eq:reciprocal_d} yields the final form of the reciprocal theorem, 
+Making use of the relation \ref{eq:reciprocal_d} into \ref{eq:reciprocal_f} yields the first formulation of the reciprocal theorem for droplets, namely  
 \begin{equation}
     \intS{\hat{\textbf{U}}\cdot  \bm\sigma_f^{(0)} \cdot \textbf{n}}
     - \lambda 2\intO{\textbf{e}_d^{(0)} : \grad \hat{\textbf{U}}}
@@ -308,58 +302,76 @@ Making use of the relation \ref{eq:reciprocal_d} into \ref{eq:reciprocal_d} yiel
     -\lambda  2\intO{\hat{\textbf{e}}_d : \grad \textbf{U}}. 
     \label{eq:reciprocal_all}
 \end{equation}
-As evidenced by the second term on the left-had side, we are only able to compute the force traction minus the internal shear with this method, since $\textbf{e}^{(0)}$ is also part of the solution.
-However, it turns out that it is exactly the closure that we are looking for.  
+As evidenced by the second term on the left-had side, this expression  allows one to compute the force traction (integral of $\bm\sigma_f^{(0)} \cdot \textbf{n}$) minus the internal shear of the droplet (integral of $\textbf{e}_d^{(0)}$) based on the test solution given by $\hat{\bm\sigma}_f$ and $\hat{\textbf{e}}_d$ (since the \textbf{U} will be related to the boundary conditions).
+However, it is not possible to compute one of the terms independently of the other, i.e. either the integral of $\textbf{e}_d^{(0)}$ or the integral of $\bm\sigma_f^{(0)} \cdot \textbf{n}$. 
+This introduces the need for a second formulation of the reciprocal theorem. 
 
-
-\subsubsection{Another formulation of the reciprocal theorem? }
+\subsubsection{The second formulation of the reciprocal theorem}
 It will be useful in the following to use a second normalization for this reciprocal theorem. 
-The stress condition at the boundary of the particle is written, for the disturbance fields as, 
-\begin{equation*}
+The boundary condition of the stresses at the interface of the droplet is written,
+\begin{equation}
     (\bm\sigma_f\cdot\textbf{n})\cdot (\bm\delta - \textbf{nn})
-    = \lambda (\bm\sigma_d\cdot \textbf{n})(\bm\delta - \textbf{nn})
-\end{equation*}
-However, note that this boundary condition must also hold for the complete velocity field $\textbf{u}_k - \textbf{U}$, thus we may also write, 
-\begin{equation*}
+    = \lambda (\bm\sigma_d\cdot \textbf{n})\cdot (\bm\delta - \textbf{nn})
+    \label{eq:BCCCCCCCCCC}
+\end{equation}
+Recall that $\bm\sigma_{f,d}$ are the disturbance stresses, i.e. they are computed based on the disturbance velocity fields: $\textbf{u}_f$ and $\textbf{u}_d$ and disturbance pressure field. 
+Nevertheless, note that \ref{eq:BCCCCCCCCCC} must also hold for the  stress fields, $\bm\sigma_f+ (\grad \textbf{U}_f+\grad \textbf{U}_f)$ (corresponding to $\bm\sigma^1$ in the main text).
+Since the velocity $\textbf{w}$ is a constant we may also write,
+\begin{equation}
     [\bm\sigma_f
     - (\grad \textbf{U}+\grad \textbf{U})
     ]\cdot \textbf{n}\cdot  (\bm\delta - \textbf{nn})
     = 
-    \lambda [\bm\sigma_d\cdot \textbf{n}
+    \lambda [\bm\sigma_d
     - (\grad \textbf{U}+\grad \textbf{U})
     ]\cdot \textbf{n}\cdot (\bm\delta - \textbf{nn})
-\end{equation*}
-The same boundary condition holds for the test problem. 
-Then we may reformulate the volume integral on the left-hand side of \ref{eq:reciprocal_all} using, 
-\begin{align*}
+    \label{eq:BCCCCCCCCCC2}
+\end{equation}
+Recall that $\textbf{U} = \textbf{w} - \textbf{U}_f$ hence including a minus sing in this expression. 
+Similarly, for the test problem we can derive the boundary condition, 
+\begin{equation}
+    [\hat{\bm\sigma}_f
+    - (\grad \hat{\textbf{U}}+\grad \hat{\textbf{U}})
+    ]\cdot \textbf{n}\cdot  (\bm\delta - \textbf{nn})
+    = 
+    \lambda [\hat{\bm\sigma}_d
+    - (\grad \hat{\textbf{U}}+\grad \hat{\textbf{U}})
+    ]\cdot \textbf{n}\cdot (\bm\delta - \textbf{nn})
+    \label{eq:BCCCCCCCCCC3}
+\end{equation}
+
+The volume integral on the left-hand side of \ref{eq:reciprocal_all} can be reformulated as,
+\begin{align}
     \intO{ 2\textbf{e}_d^{(0)} : \grad \hat{\textbf{U}} }
-    &=\intO{ \grad \textbf{u}_d^{(0)} : (\grad \hat{\textbf{U}} +^\dagger \grad \textbf{U}) }
-    =
-    \intS{  \textbf{u}_d^{(0)} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}\\
+    &=\intO{ \grad \textbf{u}_d^{(0)} : (\grad \hat{\textbf{U}} +^\dagger \grad \hat{\textbf{U}}) }\\
+    &=
+    \intS{  \textbf{u}_d^{(0)} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
+    - \intO{  \textbf{u}_d^{(0)} \cdot \div(\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})}
+    \label{eq:relation_utile}
+    \\
     &=
     \intS{  \textbf{U} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
     + \intS{  (\textbf{u}_d^{(0)} - \textbf{U})\cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
-    % -\intO{\textbf{u}_d^{(0)} \cdot \grad^2 \hat{\textbf{U}} }
-    \\
-\end{align*}
-Note that the first integral on the left-hand side is entirely known, since it corresponds to integrals of the undisturbed fields.
-One could also write, 
-\begin{multline}
-    \intO{ 2\hat{\textbf{e}}_d : \grad {\textbf{U}} }
-    =\intO{ \grad \hat{\textbf{u}}_d : (\grad {\textbf{U}} +^\dagger \grad \textbf{U}) }\\
-    =
-    \intS{  \hat{\textbf{u}}_d \cdot (\grad {\textbf{U}} + ^\dagger\grad {\textbf{U}})  \cdot \textbf{n}}
-    -\intO{\hat{\textbf{u}}_d \cdot \grad^2 {\textbf{U}} }
-\end{multline}
-Combining this relation with \ref{eq:reciprocal_d} gives,
+    \label{eq:relation_utile2}
+\end{align}
+Where we have used the property that ``test'' background flow $\hat{\textbf{U}}$ where at most a linear function of \textbf{r}, hence $\grad\grad \hat{\textbf{U}} = 0$. 
+% Likewise, the second integral on the right-hand side of \ref{eq:reciprocal_all} can be written, 
+% \begin{equation}
+%     \intO{ 2\hat{\textbf{e}}_d : \grad {\textbf{U}} }
+%     % =\intO{ \grad \hat{\textbf{u}}_d : (\grad {\textbf{U}} +^\dagger \grad \textbf{U}) }\\
+%     =
+%     \intS{  \hat{\textbf{u}}_d \cdot (\grad {\textbf{U}} + ^\dagger\grad {\textbf{U}})  \cdot \textbf{n}}
+%     % -\intO{\hat{\textbf{u}}_d \cdot \grad^2 {\textbf{U}} }
+% \end{equation}
+Injecting \ref{eq:relation_utile2} into \ref{eq:reciprocal_d} gives the expression
 \begin{multline}
     \intS{(\hat{\textbf{u}}_d - \hat{\textbf{U}})\cdot \bm\sigma_d^{(0)} \cdot \textbf{n}}
     =
     - \intS{  \textbf{U} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}\\
     + \intS{(\textbf{u}_d^{(0)} - \textbf{U}) \cdot  [\hat{\bm\sigma}_d -(\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})]\cdot \textbf{n} }
-    + 2\intO{\hat{\textbf{e}}_d : \grad \textbf{U}} 
+    + 2\intO{\hat{\textbf{e}}_d : \grad \textbf{U}}. 
 \end{multline}
-Multiplying this expression by $\lambda$ and using the boundary condition finally gives us the relation,
+Multiplying this expression by $\lambda$ and using the boundary condition given by \ref{eq:bc_non_inertia} on the left-hand side term and the boundary condition given by \ref{eq:BCCCCCCCCCC2} for the first term on the right-hand side gives us the relation,
 \begin{multline}
     \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot \bm\sigma_f^{(0)} \cdot \textbf{n}}
     =
@@ -367,72 +379,94 @@ Multiplying this expression by $\lambda$ and using the boundary condition finall
     + \intS{(\textbf{u}_f^{(0)} - \textbf{U}) \cdot  [\hat{\bm\sigma}_f -(\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})]\cdot \textbf{n} }
     + 2\lambda\intO{\hat{\textbf{e}}_d : \grad \textbf{U}} 
 \end{multline}
-where only the integral $+ 2\lambda\intO{\hat{\textbf{e}}_d : \grad \textbf{U}} $ appears. 
-Thus, making use of this new relation gives, 
+Injecting this relation in \ref{eq:reciprocal_f} yields, 
 \begin{multline}
     \intS{\hat{\textbf{U}}\cdot  \bm\sigma_f^{(0)} \cdot \textbf{n}}
-    - \intS{(\textbf{u}_f^{(0)}\textbf{n}+\textbf{nu}_f^{(0)})  : \grad \hat{\textbf{U}} }
     % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(0)} \cdot \textbf{n}}
+    - \intS{\textbf{u}_f^{(0)}\cdot  (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})\cdot \textbf{n} }
     = 
     \intS{\textbf{U}\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}\\
-    +(\lambda -1) \intS{  (\textbf{U} \textbf{n}+ \textbf{n} \textbf{U}) : \grad \hat{\textbf{U}}  }
-    - 2\lambda\intO{\hat{\textbf{e}}_d : \grad \textbf{U}}
+    % + \intS{(\textbf{u}_f^{(0)} - \textbf{U})\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}
+    + (\lambda - 1)\intS{  \textbf{U} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
+    - 2\lambda\intO{\hat{\textbf{e}}_d : \grad \textbf{U}}. 
+    \label{eq:reci}
+\end{multline}
+Using \ref{eq:relation_utile} and noting that $\textbf{u}_f = \textbf{u}_d$ on the surface of the droplet we can re-formulate the second integral on the left-hand of \ref{eq:reci}, which reads,  
+\begin{multline}
+    \intS{\hat{\textbf{U}}\cdot  \bm\sigma_f^{(0)} \cdot \textbf{n}}
+    % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(0)} \cdot \textbf{n}}
+    - \intO{ 2\textbf{e}_d^{(0)} : \grad \hat{\textbf{U}} }
+    = 
+    \intS{\textbf{U}\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}\\
+    % + \intS{(\textbf{u}_f^{(0)} - \textbf{U})\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}
+    + (\lambda - 1)\intS{  \textbf{U} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
+    - 2\lambda\intO{\hat{\textbf{e}}_d : \grad \textbf{U}}. 
     \label{eq:reciprocal_f2}
 \end{multline}
-We will see latter than upon making the good choice for $\hat{\textbf{U}}$ the left-hand side term corresponds identically to the stress let quantity. 
+Note that the left-hand side of \ref{eq:reciprocal_f2} is identically the same as the left-hand side of \ref{eq:reciprocal_all} except that the constant $\lambda$ is absent from the former and present in the latter expression. 
+As a result we will see latter that, upon making the good choice for $\hat{\textbf{U}}$, the left-hand side of \ref{eq:reciprocal_f2} corresponds identically to the stress let quantity appearing in the averaged equation. 
+
+Finally, subtracting  \ref{eq:reciprocal_f} to \ref{eq:reciprocal_f2} gives,
+\begin{equation}
+    % (1-\lambda) 
+    \intO{ 2\textbf{e}_d^{(0)} : \grad \hat{\textbf{U}} }
+    = 
+    % + (\lambda - 1)
+    \intS{  \textbf{U} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
+    = 
+    \intO{  (\grad {\textbf{U}} + ^\dagger\grad {\textbf{U}}) : \grad \hat{\textbf{U}} }
+\end{equation}
+Hence, in Stokes flow regime, the volume integral on the droplet volume of the internal rate of strain can be directly computed from the integral of the ensemble averaged velocity or ``background flow'' $\textbf{U}$. 
 
 
 \subsubsection{Calculation of the drag force in arbitrary stokes flows:}
-To derive an expression for the drag force we simply consider that $\hat{\textbf{U}}$ is uniform, i.e. that $\hat{\textbf{E}}_f = 0$. 
-We are allowed to do that as $\hat{\textbf{U}}$ is part of the \textit{tool} problem and is therefore completely arbitrary. 
+
+We propose here to compute the Faxen correction to the drag on a spherical droplet to verify that the above relation are consistent. 
+To compute the drag force on a translating droplet in a uniform background flow we must consider that  $\hat{\textbf{U}}$ is a uniform vector and that  ${\textbf{U}}$ is a quadratic field. 
 In this situation, we can express the fields $\hat{\textbf{u}}_k$, $\hat{\bm\sigma}_k$ and $\hat{\textbf{e}}_k$ using \ref{eq:solution_hat} and retaining only the terms proportional to $\hat{\textbf{U}}$. 
-Additionally, we recall that the undisturbed fields $\textbf{U}[\textbf{y}] = \textbf{w} - \textbf{U}_f[\textbf{x}] - \textbf{r}\cdot \grad \textbf{U}_f[\textbf{x}] - \textbf{rr}:\grad\grad \textbf{U}_f[\textbf{x}] + \ldots =  \textbf{w} - \textbf{U}_f[\textbf{x}] - \textbf{r}\cdot \textbf{E}_f - \frac{1}{2}\textbf{rr}: \textbf{K}_f + \ldots$.
-We deduce form all these remarks and the relation  given by \ref{eq:reciprocal_all} that the zeroth-order drag force on a spherical droplet is given by, 
-\begin{multline*}
-    \left(
-        \intS{\bm\sigma_f^{(0)} \cdot \textbf{n}}
-    \right)_m\\
+Additionally, we introduce the notation $\textbf{U}[\textbf{x}] = \textbf{w} - \textbf{U}_f[\textbf{y}] - \textbf{r}\cdot \grad \textbf{U}_f[\textbf{y}] - \textbf{rr}:\grad\grad \textbf{U}_f[\textbf{y}] =  \textbf{w} - \textbf{U}_f[\textbf{y}] - \textbf{r}\cdot \textbf{E}_f - \frac{1}{2}\textbf{rr}: \textbf{K}_f $ for the ``background flow'' derivatives.
+Injecting the expression of \textbf{U} and $\hat{\textbf{U}}$ and using \ref{eq:solution_hat} in \ref{eq:reciprocal_all} gives an explicit formula for the drag force on a spherical droplet immersed in a quadratic flow, namely
+\begin{multline}
+\intS{(\bm\sigma_f^{(0)} \cdot \textbf{n})_m}
     = 
     U_i  \intS{  (\mathcal{U}_f^\sigma)_{ilm}  n_l }
     % + \partial_k U_i  \intS{ r_k (\mathcal{U}_f^\sigma)_{ilm}  n_l }
-    + \frac{1}{2}\partial_k\partial_j U_i \intS{ r_kr_j (\mathcal{U}_f^\sigma)_{ilm}  n_l }
+    + \frac{1}{2}\partial_k\partial_j U_i \intS{ r_kr_j (\mathcal{U}_f^\sigma)_{ilm}  n_l }\\
     % + \ldots
     % \\
     % -2\lambda  \partial_j U_i \intO{(\mathcal{U}_d^e)_{ijm} }. 
     -\lambda \partial_k\partial_j U_i  \intO{ r_k (\mathcal{U}_d^e)_{ijm} }. 
     + \ldots
     \label{eq:reciprocal_drag}
-\end{multline*}
-We obtained a relation that is entirely computable form the explicit expression given by \ref{eq:solution_hat}. 
-Indeed, it can be shown using \ref{eq:solution_hat} that, 
+\end{multline}
+Carrying out the integration gives,
+% \begin{align*}
+%     \left(
+%         \intS{\bm\sigma_f^{(0)} \cdot \textbf{n}}
+%     \right)_m
+%     = 
+%     - 2\pi\left(\frac{3\lambda +2 }{\lambda +1}\right)
+%     U_m  
+%     - \pi \left(\frac{\lambda +2/5 }{\lambda +1}\right)\partial^2 U_m 
+%     + \frac{2 \pi}{5} \left(\frac{1}{1+\lambda}\right) 
+%      \partial^2 U_m 
+% \end{align*}
 \begin{align*}
-    \left(
-        \intS{\bm\sigma_f^{(0)} \cdot \textbf{n}}
-    \right)_m
-    = 
-    - 2\pi\left(\frac{3\lambda +2 }{\lambda +1}\right)
-    U_m  
-    - \pi \left(\frac{\lambda +2/5 }{\lambda +1}\right)\partial^2 U_m 
-    + \frac{2 \pi}{5} \left(\frac{1}{1+\lambda}\right) 
-     \partial^2 U_m 
-\end{align*}
-It can be shown that the first term on the right-hand side, proportional to the relative velocity $\textbf{U}$ is the Hadamard-Ribczynski contribution. 
-The terms proportional to $\textbf{E}_f$ can be shown to be zero and the one proportional to $\textbf{K}_f$ are the Faxen contribution. 
-In tensor notation this gives, 
-\begin{align*}
-    \left(
-        \intS{\bm\sigma_f^{(0)} \cdot \textbf{n}}
-    \right)_m
+\intS{(\bm\sigma_f^{(0)} \cdot \textbf{n})_m}
     = 
      2\pi\left(\frac{3\lambda +2 }{\lambda +1}\right)
-    \textbf{u}_{fp}  
-    + \pi \left(\frac{\lambda }{\lambda +1}\right)\partial^2 \textbf{u}_f
+    (\textbf{u}_{fp}  )_m
+    + \pi \left(\frac{\lambda }{\lambda +1}\right)\partial^2 (\textbf{u}_f)_m
     % + \frac{2 \pi}{5} \left(\frac{1}{1+\lambda}\right) 
     %  \partial^2 U_m 
 \end{align*}
-We thus recovered Faxen law. 
+where we used the notation of the main text. 
+The first term on the right-hand side is the Hadamard-Ribczynski contribution. 
+The second term is exactly the Faxen contribution \citep{kim2013microhydrodynamics}. 
+
 Note that this method, in this context, is less efficient than the method used originally to derive the Faxen relations \citet{kim2013microhydrodynamics}. 
-Indeed, in the former method we have no clue about the value of the higher order unless we compute them, while the relations form Faxen explicitly state that the force must have the same functional form as the disturbance fields given by \ref{eq:solution_hat} thereby implying that the higher order terms are zeroth. 
+Indeed, in the former method we have do not know a priori if the higher order terms (in the expansion of $\textbf{U}$) are zero.
+In opposition Faxen laws explicitly state that the force must have the same functional form as the disturbance fields given by \ref{eq:solution_hat}, thereby implying that the higher order terms proportional to $\sim \grad^4 \textbf{U}$ are zeroth. 
 
 % \subsubsection{Calculation of the stresslet in arbitrary stokes flows:}
 % To compute the stresslet term we make use of the second formulation and assume that $\hat{\textbf{U}} = \hat{\textbf{E}}\cdot \textbf{r}$, in which case \ref{eq:reciprocal_f2} yields, 
@@ -458,50 +492,49 @@ Indeed, in the former method we have no clue about the value of the higher order
 %     \label{eq:reciprocal_f2}
 % \end{equation}
 
-\subsection{Reciprocal theorem to compute the first order inertial correction}
+\subsection{Reciprocal theorem at first order in Reynolds number}
 
 To compute the first order correction in $Re$ we apply the same methodology but on the first order equaitons. 
-As before we start by the continuous phase integral relation by taking the dot product of \ref{eq:first_order_NS_f} with $\hat{\textbf{u}}_f$ and \ref{eq:tool_sol} (with $k = f$) with $\textbf{u}_k^{(0)}$, then subtracting both expressions gives, 
+As before we start by deriving a relation for the domain outside the droplet.
+By taking the dot product of \ref{eq:first_order_NS_f} with $\hat{\textbf{u}}_f$ and \ref{eq:test_sol} (with $k = f$) with $\textbf{u}_k^{(0)}$, and subtracting both expressions gives, 
 \begin{equation*}
     \hat{\textbf{u}}_f\cdot \div\bm\sigma_f^{(1)}
     =
-    \textbf{u}_k^{(1)} \cdot \div \hat{\bm\sigma}_k, 
+    \textbf{u}_f^{(1)} \cdot \div \hat{\bm\sigma}_f, 
     + \hat{\textbf{u}}_f\cdot  \textbf{f}^{(0)}_f
 \end{equation*}
-Carrying an integration on the whole continuous phase domain directly gives the relation, 
-\begin{equation*}
+Carrying an integration on the exterior domain of the droplet, and using $\hat{\textbf{u}}_f =\hat{\textbf{u}}_f  - \hat{\textbf{U}} + \hat{\textbf{U}}$ gives, 
+\begin{equation}
     \intS{\hat{\textbf{U}}\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
     + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
     = 
     \intS{\textbf{u}_f^{(1)}\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}
     - \intOf{\hat{\textbf{u}}_f\cdot  \textbf{f}^{(0)}_f}
     % \intOf{\textbf{u}_f^{(0)}\cdot ( \div \hat{\bm\sigma}_f)}
-\end{equation*}
-From \ref{eq:bc_inertial} we deduce that $\textbf{u}_f^{(1)}$ has only a tangential component allowing us to directly use the boundary condition on the tangential stress in order to substitute the integral on the left-hand side of this expression. 
-However, the integral on left-hand side still needs to be decomposed into a normal and tangential components. 
+    \label{eq:stepone}
+\end{equation}
+From \ref{eq:bc_inertial} we deduce that $\textbf{u}_f^{(1)} \cdot \textbf{n} = 0$, allowing us to directly use the boundary condition on $\hat{\bm\sigma}_f$ for the first integral on the right-hand side. 
 
-As before we apply the Reciprocal theorem on the interior of the drop,
-but this time we multiply \ref{eq:tool_sol} (with $k = f$) with $\textbf{u}_k^{(1)}$ instead of $\textbf{u}_k^{(0)} - \textbf{U}$ since $\textbf{u}_k^{(1)}$ is already a tangent vector to the surface, this yield,
+As before we apply the Reciprocal theorem on the interior of the drop to substitute the second term on the left-hand side of \ref{eq:stepone}. 
+We multiply \ref{eq:test_sol} (with $k = f$) with $\textbf{u}_d^{(1)}$ and \ref{eq:first_order_NS_f} by $(\hat{\textbf{u}}_d - \hat{\textbf{U}})$, subtracting both expressions gives
 \begin{equation*}
      \div [\bm\sigma_d^{(1)} \cdot (\hat{\textbf{u}}_d - \hat{\textbf{U}})]
      +2 \textbf{e}_d^{(1)} : \grad \hat{\textbf{U}}
-    - 
-    \frac{\zeta}{\lambda}(\hat{\textbf{u}}_d - \hat{\textbf{U}}) \cdot \textbf{f}_d^{(0)}
-    =
+     =
      \div [\hat{\bm\sigma}_d \cdot \textbf{u}_d^{(1)}]
+     + \frac{\zeta}{\lambda}(\hat{\textbf{u}}_d - \hat{\textbf{U}}) \cdot \textbf{f}_d^{(0)}
 \end{equation*}
 Integrating on the volume of the particle gives, 
-\begin{equation*}
+\begin{equation}
     \intS{ (\hat{\textbf{u}}_d - \hat{\textbf{U}})\cdot \bm\sigma_d^{(1)} \cdot \textbf{n}}
     + 2 \intO{ \textbf{e}_d^{(1)} : \grad \hat{\textbf{U}} }
-    - \frac{\zeta}{\lambda} \intO{(\hat{\textbf{u}}_d - \hat{\textbf{U}}) \cdot \textbf{f}_d^{(0)}}
     =
-    \intS{
-         \textbf{u}_d^{(1)}\cdot\hat{\bm\sigma}_d \cdot \textbf{n}
-    }. 
-\end{equation*}
-Subtracting this equation times $\lambda$ and using the boundary conditions  for the interface stress and velocity finally gives the final form of the Reciprocal theorem, namely, 
-\begin{equation*}
+    \intS{\textbf{u}_d^{(1)}\cdot\hat{\bm\sigma}_d \cdot \textbf{n}} 
+    + \frac{\zeta}{\lambda} \intO{(\hat{\textbf{u}}_d - \hat{\textbf{U}}) \cdot \textbf{f}_d^{(0)}}
+    \label{eq:reci_interior}
+\end{equation}
+Multiplying this equation by $\lambda$, using the boundary conditions  for the interface stress and velocity fields, and then subtracting it to \ref{eq:stepone} gives the first form of the Reciprocal theorem for the first order inertial correction on spherical droplets, namely,
+\begin{equation}
     \intS{\hat{\textbf{U}}\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
     -\lambda 2 \intO{ \textbf{e}_d^{(1)} : \grad \hat{\textbf{U}} }
     % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
@@ -511,151 +544,159 @@ Subtracting this equation times $\lambda$ and using the boundary conditions  for
     % \intS{\textbf{u}_f^{(1)}\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}
     % \intOf{\textbf{u}_f^{(0)}\cdot ( \div \hat{\bm\sigma}_f)}
     \label{eq:reciprocal_f_one}
-\end{equation*}
-As one can see we are constrained to obtain a formula for the interface stress minus the internal shear, these cannot be separated. 
+\end{equation}
+As the Stokes flow relation we are constrained to obtain a formula for the interface stress minus the internal shear.
+Thus, one cannot get an independent results either for the surface stress or the internal rate of strain of the droplet.  
+It motivates us to derive the second formulation of the reciprocal theorem.
 
-This formula will prove useful in the following however as mentioned since we are also interested in the stress let quantity we may use the relation 
-\begin{align*}
+We start by noting that, 
+\begin{equation}
     \intO{ 2\textbf{e}_d^{(1)} : \grad \hat{\textbf{U}} }
-    &=\intO{ \grad \textbf{u}_d^{(1)} : (\grad \hat{\textbf{U}} +^\dagger \grad \textbf{U}) }
+    =\intO{ \grad \textbf{u}_d^{(1)} : (\grad \hat{\textbf{U}} +^\dagger \grad \hat{\textbf{U}}) }
     =
-    \intS{  \textbf{u}_d^{(1)} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}\\
+    \intS{  \textbf{u}_d^{(1)} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
     % &=
     % \intS{  \textbf{U} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
     % + \intS{  (\textbf{u}_d^{(1)} - \textbf{U})\cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
     % -\intO{\textbf{u}_d^{(0)} \cdot \grad^2 \hat{\textbf{U}} }
-\end{align*}
-which means that the reciprocal theroem on the inside of the particle may equally be written as, 
+\end{equation}
+Again, we used the property $\grad\grad \hat{\textbf{U}} = 0$. 
+Injecting this formula into \ref{eq:reci_interior} yields,
 \begin{equation*}
     \intS{ (\hat{\textbf{u}}_d - \hat{\textbf{U}})\cdot \bm\sigma_d^{(1)} \cdot \textbf{n}}
-    - \frac{\zeta}{\lambda} \intO{(\hat{\textbf{u}}_d - \hat{\textbf{U}}) \cdot \textbf{f}_d^{(0)}}
     =
+    \frac{\zeta}{\lambda} \intO{(\hat{\textbf{u}}_d - \hat{\textbf{U}}) \cdot \textbf{f}_d^{(0)}}
     % \intS{  \textbf{u}_d^{(1)} \cdot (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})  \cdot \textbf{n}}
-    \intS{
+    + \intS{
          \textbf{u}_d^{(1)}\cdot[\hat{\bm\sigma}_d  - (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})]\cdot \textbf{n}
     }
 \end{equation*}
-which, by considering the boundary condition on $\hat{\bm\sigma}_d  - (\grad \hat{\textbf{U}} + ^\dagger\grad \hat{\textbf{U}})$ gives the final form of the reciprocal theorem, namely, 
-\begin{equation*}
+Multiplying this expression by $\lambda$, considering the boundary conditions \ref{eq:BCCCCCCCCCC3,eq:bc_inertial}, and subtracting the resulting expression to \ref{eq:stepone} gives,
+\begin{equation}
     \intS{\hat{\textbf{U}}\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
-    - \intS{(\textbf{u}_f^{(1)} \textbf{n} + \textbf{n} \textbf{u}_f^{(1)})\cdot :\grad \hat{\textbf{U}} }
+    - \intO{
+        2\textbf{e}_d^{(1)}:\grad \hat{\textbf{U}} 
+   }
     = 
     - \zeta \intO{(\hat{\textbf{u}}_d - \hat{\textbf{U}}) \cdot \textbf{f}_d^{(0)}}
-    - \intOf{\hat{\textbf{u}}_f\cdot  \textbf{f}^{(0)}_f}
+    - \intOf{\hat{\textbf{u}}_f\cdot  \textbf{f}^{(0)}_f}. 
     % \intOf{\textbf{u}_f^{(0)}\cdot ( \div \hat{\bm\sigma}_f)}
     \label{eq:reciprocal_f2_one}
-\end{equation*}
-from this relation and a good choice for $\hat{\textbf{U}}$ one is able to determine the stresslet. 
-Note that the right-hand side of \ref{eq:reciprocal_f_one} and \ref{eq:reciprocal_f2_one} is similar. 
-Therefore, we must conclude that the first order Reynolds correction,
-\begin{equation*}
-    \intS{(\textbf{u}_f^{(1)} \textbf{n} + \textbf{n} \textbf{u}_f^{(1)})}
-    = \lambda \intS{(\textbf{u}_f^{(1)} \textbf{n} + \textbf{n} \textbf{u}_f^{(1)})}
-\end{equation*}
-Since $\lambda$ is an arbitrary constant we deduce that, 
-\begin{equation*}
-    \intS{(\textbf{u}_f^{(1)} \textbf{n} + \textbf{n} \textbf{u}_f^{(1)})}= 0
-\end{equation*}
+\end{equation}
+This equation is the one that will be used to compute the \textit{Stresslet} tensor. 
+Note that subtracting \ref{eq:reciprocal_f_one} to \ref{eq:reciprocal_f2_one} yields, 
+% Since $\lambda$ is an arbitrary constant we deduce that, 
+\begin{equation}
+    (1-\lambda)\intO{
+        2\textbf{e}_d^{(1)}:\grad \hat{\textbf{U}} 
+   }
+    = 0. 
+    \label{eq:shearrrrr}
+\end{equation}
+Recall that this relation is only valid when  $\hat{\textbf{U}}$ is a linear field, which is assumed here. 
 
 \subsubsection{Computations of the inertial stresslet for a particle in steady state translation}
 
-The objective of this study is to determine the effect of inertial translation of a drop on the deformation.
-To do so we have shown that it is necessary to compute the first moments of the hydrodynamic forces as well as the droplets internal inertia and velocity. 
-To this end we assume that $\hat{\textbf{U}} = - \textbf{r} \cdot \hat{\textbf{E}}_f$ meaning  that the \textit{tool} far field flow is purely linear, and since we consider only relative translation we set $\textbf{U}[\textbf{y}] = \textbf{U}[\textbf{x}] = \textbf{w} - \textbf{U}_f$. 
-Choosing the appropriate velocity field as a tool solution we conclude that, 
-\begin{equation*}
-    \intS{r_i (\bm\sigma_f^{(1)} \cdot \textbf{n})_j}
-    -\lambda 2 \intO{ (\textbf{e}_d^{(1)})_{ij}  }
-    % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
-    = 
-    + \zeta\intO{(\mathcal{E}_d + \textbf{r}\bm\delta) \cdot \textbf{f}_d^{(0)}}
-    + \intOf{\mathcal{E}_f \cdot  \textbf{f}^{(0)}_f}
-    % \intS{\textbf{u}_f^{(1)}\cdot  \hat{\bm\sigma}_f \cdot \textbf{n}}
-    % \intOf{\textbf{u}_f^{(0)}\cdot ( \div \hat{\bm\sigma}_f)}
-\end{equation*}
-These integrals requires the calculation of integrals in terms of $\textbf{f}^{(0)}_k$, which are known fields since it is solely function of the $\textbf{u}^{(0)}_k$. 
-In the case considered here, meaning considering only particle relative translation we have, 
-\begin{align*}
-    \intOf{\mathcal{E}_f \cdot  (\textbf{f}^{(0)}_f)}
-    &=
-    \intOf{\mathcal{E}_f \cdot  \pddt \textbf{u}_f^{(0)}}
-    + \intOf{\mathcal{E}_f \cdot (\textbf{u}_f^{(0)}\cdot \grad \textbf{u}_f^{(0)})}\\
-    &+ \intOf{\mathcal{E}_f \cdot (\textbf{u}_f^{(0)}\cdot \grad (\textbf{U}_f - \textbf{w}))}
-    + \intOf{\mathcal{E}_f \cdot ((\textbf{U}_f - \textbf{w})\cdot \grad \textbf{u}_f^{(0)})}.
-\end{align*}
-Since $\textbf{U}_f - \textbf{w}$ is a constant vector its gradient vanish. 
-Besides, since $ \textbf{u}_f \sim \textbf{U}_f - \textbf{w}$  and that $\textbf{U}_f - \textbf{w}$ is not function of time as well, the partial time derivative of $\textbf{u}_f$ vanish as well. 
-Approximately the same remarks can be made regarding the  dispersed phase integral.
-This leads us to the relations, 
-\begin{align*}
-    \intOf{\mathcal{E}_f \cdot  (\textbf{f}^{(0)}_f)}
-    &=
-    \intOf{(\mathcal{E}_f)_{ijm} \cdot (\textbf{u}_f^{(0)}\cdot \grad \textbf{u}_f^{(0)})_i}\\
-    % + \intOf{(\mathcal{E}_f)_{ijm} \cdot (\textbf{u}_f^{(0)}\cdot \grad (\textbf{U}_f^{(0)} - \textbf{w}))}
-    &+ \intOf{(\mathcal{E}_f)_{ijm} \cdot ((\textbf{U}_f - \textbf{w})\cdot \grad \textbf{u}_f^{(0)})_i}.\\
-    \intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} \cdot (\textbf{f}_d^{(0)})_m}
-    &=
-    \intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} \cdot (\textbf{u}_d^{(0)}\cdot \grad \textbf{u}_d^{(0)})_m}\\
-    % + \intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} \cdot (\textbf{u}_d^{(0)}\cdot \grad (\textbf{U}_d^{(0)} + \textbf{w}))}
-    &+ \intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} \cdot ((\textbf{U}_f - \textbf{w})\cdot \grad \textbf{u}_d^{(0)})_m}
-    =0.
-\end{align*}
-Where we have used indices notation to get rid of any confusions. 
-The integral inside the particle can be shown to vanish. 
-The integrals on the fluid domain are entirely convergent and can be computed. 
-
-Since we can use the stokes flow solution for $\textbf{u}^{(0)}_f$ we may write, 
-\begin{equation}
-    (\textbf{u}^{(0)}_f)_i = (\mathcal{U}_f)_{ij} U_j
-\end{equation}
-And since $(\textbf{U}_f - \textbf{w}) = - \textbf{U}$ we obtain the following relation, 
+To compute the first moment of force, for a droplet in translation we set $\hat{\textbf{U}} = - \textbf{r} \cdot \hat{\textbf{E}}_f$, and $\textbf{U}[\textbf{y}] = \textbf{U}[\textbf{x},t] = \textbf{w} - \textbf{U}_f[\textbf{y}]$. 
+Injecting these expressions into \ref{eq:shearrrrr,eq:reciprocal_f2_one} leads us to
 \begin{align}
-    \intOf{(\mathcal{E}_f)_{ijk} (\textbf{f}^{(0)}_f)_i }
-    &= 
-    \intOf{(\mathcal{E}_f)_{ijk} \cdot (\textbf{u}_f^{(0)} - \textbf{U})_l \partial_l (\textbf{u}_f^{(0)})_i}\\
-    &=
-    \intOf{(\mathcal{E}_f)_{ijk} \cdot ((\mathcal{U}_f)_{lm} - \delta_{lm}) \partial_l (\mathcal{U}_f)_{in} }
-    U_m U_n
-\end{align}
-
-The only traceless symmetric second order tensor that can be formed with a combinaison of $\textbf{U}$ is $\textbf{UU} - (\textbf{U}\cdot \textbf{U})\bm\delta /3$. 
-This implies that only one scalar integration is necessary to determine the tensor form of the  stress, this yields,
-% \begin{align*}
-%     \intS{r_i (\bm\sigma_f^{(1)} \cdot \textbf{n})_j}
-%     -\lambda 2 \intO{ (\textbf{e}_d^{(1)})_{ij}  }
-%     % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
-%     = 
-%     A
-%     [
-%         \textbf{UU} - \frac{1}{3}(\textbf{U}\cdot \textbf{U})\bm\delta 
-%     ]\\
-%     A= - \frac{345 \lambda^{3} + 928 \lambda^{2} + 856 \lambda + 272}{320 \left(\lambda + 1\right)^{3}}
-%     + \frac{\zeta \left(12 \lambda + 13\right)}{20 \left(\lambda + 1\right)^{2}}
-% \end{align*}
-\begin{align*}
-    \pSavg{r_i (\bm\sigma_f^{(1)} \cdot \textbf{n})_j}
+    - \intO{
+        2(\textbf{e}_d^{(1)})_{ij}
+   }
+    &= 0, \\
+    \intS{r_i (\bm\sigma_f^{(1)} \cdot \textbf{n})_j}
     % -\lambda 2 \intO{ (\textbf{e}_d^{(1)})_{ij}  }
-    % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
-    = 
-    \phi A
+    &= 
+    + \zeta\intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} (\textbf{f}_d^{(0)})_k }
+    + \intOf{(\mathcal{E}_f )_{ijk}  (\textbf{f}^{(0)}_f)_k}
+    \label{eq:stresslet}
+    \\
+\end{align}
+Where it is implied that both side of the equation actually represents the symmetric traceless part of what is written.
+These integrals require the calculation of integrals in terms of $\textbf{f}^{(0)}_k$. 
+According to the definition of $\textbf{f}_k$ we may write, 
+\begin{align}
+    \label{eq:eq111}
+    \zeta\intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} (\textbf{f}_d^{(0)})_k }
+    &=
+    \zeta\intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} 
+    (
+    \pddt \textbf{u}_f^{(0)}
+    - \textbf{u}_f^{(0)} \cdot \grad \textbf{U}
+    + (\textbf{u}_f^{(0)} - \textbf{U})\cdot \grad \textbf{u}_f^{(0)}
+    )_k }\\
+    \intOf{(\mathcal{E}_f )_{ijk}  (\textbf{f}^{(0)}_f)_k}
+    &=
+    \intOf{(\mathcal{E}_f )_{ijk}  
+    (\pddt \textbf{u}_f^{(0)}
+    - \textbf{u}_f^{(0)} \cdot \grad \textbf{U}
+    + (\textbf{u}_f^{(0)} - \textbf{U})\cdot \grad \textbf{u}_f^{(0)}
+    )_k}
+    \label{eq:eq222}
+\end{align}
+Using symmetry arguments, similar to \ref{eq:symmetryargs} and noting that  \textbf{U} is a uniform field, we may already remove the terms $\sim \pddt \textbf{u}^{(0)}_k$ and $\sim \grad \textbf{U}$ (i.e. the first two terms on the right-hand side of \ref{eq:eq222,eq:eq111}). 
+Consequently, the expression that have to be computed read
+\begin{align}
+    \zeta\intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} (\textbf{f}_d^{(0)})_k }
+    &=
+    \zeta\intO{(\mathcal{E}_d + \textbf{r}\bm\delta)_{ijk} 
+    ( (\textbf{u}_f^{(0)} - \textbf{U})\cdot \grad \textbf{u}_f^{(0)}
+    )_k },
+    \label{eq:eq111222}
+    \\
+    \intOf{(\mathcal{E}_f )_{ijk}  (\textbf{f}^{(0)}_f)_k}
+    &=
+    \intOf{(\mathcal{E}_f )_{ijk}  
+    ((\textbf{u}_f^{(0)} - \textbf{U})\cdot \grad \textbf{u}_f^{(0)}
+    )_k}. 
+    \label{eq:eq222222222}
+\end{align}
+The velocity field $\textbf{u}_f^{(0)}$ satisfies the Stokes equations, hence one can use \ref{eq:solution_hat} and write $(\textbf{u}_f^{(0)})_k = (\mathcal{U}_k)_{ij}(\textbf{U})_j$ to compute the above integrals. 
+
+Carrying the integration for  \ref{eq:eq111222} returns zero. 
+The remaining integral \eqref{eq:eq222222222} can be computed and injected into \ref{eq:stresslet}, then taking the symmetric traceless part of the equation gives, 
+\begin{multline}
+    \frac{1}{2}\intS{(\bm\sigma_f^{(1)} \textbf{r} + \textbf{r} \bm\sigma_f^{(1)} -\frac{2}{3}(\textbf{r} \cdot \bm\sigma_f^{(1)} )\bm\delta)\cdot \textbf{n}}
+    = \\
+    - \frac{4\pi}{3}\frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 \left(\lambda + 1\right)^{3}}
     [
         \textbf{UU} - \frac{1}{3}(\textbf{U}\cdot \textbf{U})\bm\delta 
+    ]
+\end{multline}
+Therefore, at first order in $Re$ we obtain the dimensionless expression, 
+\begin{align}
+    \frac{1}{2}\pSavg{ (\bm\sigma_f \textbf{r} + \textbf{r} \bm\sigma_f -\frac{2}{3}(\textbf{r} \cdot \bm\sigma_f )\bm\delta) \cdot \textbf{n}}
+    % -\lambda 2 \intO{ (\textbf{e}_d^{(1)})_{ij}  }
+    % + \intS{(\hat{\textbf{u}}_f - \hat{\textbf{U}})\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
+    &= 
+    Re \phi C_1
+    [
+        \textbf{u}_{pf}^*\textbf{u}_{pf}^* - \frac{1}{3}(\textbf{u}_{pf}^*\cdot \textbf{u}_{pf}^*)\bm\delta 
     ]\\
-    A= - \frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 \left(\lambda + 1\right)^{3}}
-\end{align*}
-It must be understand from this expression that we only determined the traceless symmetric part of the left-hand side due to the specific choice made for $\hat{\textbf{U}}_f$. 
+    &+ Re \phi  C_1 
+    [
+        \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}^* - \frac{2}{3}k_p^*\bm\delta 
+    ],\\
+    \label{eq:sol1} 
+\end{align}
+with, 
+\begin{equation}
+    C_1 = - \frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 \left(\lambda + 1\right)^{3}}. 
+\end{equation}
+Where we have noted $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}^* = \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}/(n_p U^2)$ and $k_p^* = k_p/U^2$. 
+ 
 
 \subsubsection{Trace of the first moment.}
 
 Following, \citet{stone2001inertial} we now use the test problem of a point source of strength $Q$ located at the center of the sphere, in this case the test velocity  and stress fields, reads, 
 \begin{align*}
-    \hat{\textbf{u}} = \frac{Q}{4\pi} \frac{\textbf{r}}{r^3}
-    && \hat{\bm\sigma} = \mu_f \frac{Q}{2\pi}\left(
+    \hat{\textbf{u}}_f = \frac{Q}{4\pi} \frac{\textbf{r}}{r^3}
+    && \hat{\bm\sigma}_f = \mu_f \frac{Q}{2\pi}\left(
         \frac{\bm\delta}{r^3}
         - \frac{3 \textbf{rr}}{r^5}
     \right)
 \end{align*}
-Using, this solution in \ref{eq:reciprocal_f2_one} gives, 
+Using, this solution in \ref{eq:stepone} gives, 
 \begin{align*}
     \intS{ \textbf{r}\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
     = 
@@ -665,16 +706,38 @@ Using, this solution in \ref{eq:reciprocal_f2_one} gives,
     \right) \cdot \textbf{n}}
     - \intOf{ \frac{\textbf{r}}{r^3}\cdot  \textbf{f}^{(0)}_f}
     = 
-    % \intS{\textbf{u}_f^{(1)}\textsc{ \cdot  \mu_f \frac{1}{2\pi}\left(
-    %     \bm\delta
-    %     - 3 \textbf{rr}
-    % \right) \cdot \textbf{n}}}
-    - \intOf{ \frac{\textbf{r}}{r^3}\cdot  \textbf{f}^{(0)}_f}\\
-    % \intOf{\textbf{u}_f^{(0)}\cdot ( \div \hat{\bm\sigma}_f)}
+    - \intOf{ \frac{\textbf{r}}{r^3}\cdot  \textbf{f}^{(0)}_f}
 \end{align*}
 Since $\intS{\textbf{u}^{(1)} \cdot \textbf{n}} =0$ due to the divergence free property of $\textbf{u}^{(0)}$. 
-When $\textbf{u}^{(0)} = \textbf{U}\cdot \mathcal{U}_f$ correspond to the disturbance velocity fields of a droplet in stokes flow we obtain, 
+Setting $\textbf{u}^{(0)} = \textbf{U}\cdot \mathcal{U}_f$, we obtain, 
 \begin{equation*}
     \pSavg{ \textbf{r}\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
-    = \phi \frac{3\lambda^2 + 6\lambda + 4}{16(\lambda +1 )^2} (\textbf{u}_{pf}\cdot \textbf{u}_{pf})
+    = \phi \frac{3\lambda^2 + 6\lambda + 4}{16(\lambda +1 )^2} (\textbf{u}_{pf}^* \cdot \textbf{u}_{pf}^*
+    + 2 k_p^*).
+    \label{eq:sol2} 
 \end{equation*}
+
+\subsubsection{Why have we neglected the ``outer solution''  ?}
+
+We end this appendix with some comments regarding the assumption of neglecting the outer field contribution in the first moment of the forces.
+Our justification is similar to the one made in \citet{stone2001inertial,raja2010inertial,jiang2021inertial}.  
+
+In the general case (before any kind of Taylor expansions), we may compute the \textit{Stresslet} term based on the integral of $\mathcal{E}_f (\textbf{u}_f - \textbf{U})\grad \textbf{u}_f$ on the whole domain exterior to the drop. 
+According to the singularity solution \eqref{eq:solution_hat} $\mathcal{O}((\textbf{u}_f - \textbf{U})\grad \textbf{u}_f \sim r^{-2})$, since $\textbf{U} \sim \mathcal{O}(1)$ and $\textbf{u}_f\sim \mathcal{O}(r^{-1})$. 
+Likewise, $\mathcal{E}_f \sim r^{-2}$ hence $\mathcal{O}(\mathcal{E}_f (\textbf{u}_f - \textbf{U})\grad \textbf{u}_f) = r^{-4}$. 
+Additionally, the outer solution domain range form $|\textbf{r}| > Re^{-1}$ to $|\textbf{r}|\to \infty$ for a droplet in translation\citet{proudman1957expansions}.
+Consequently, the outer solution contribution to the first moment is given by\citep{stone2001inertial}, 
+\begin{equation}
+    \lim_{Re \to 0 }
+    \int_{Re^{-1}}^\infty
+    \mathcal{E}_f (\textbf{u}_f - \textbf{U})\grad \textbf{u}_f
+    d\Omega
+    =
+    \lim_{Re \to 0 }
+    \int_{Re^{-1}}^\infty
+    \mathcal{O}(r^{-2})
+    dr
+    = \mathcal{O}(Re). 
+\end{equation}
+Since this term is already factor of $Re$ in the expression of the first moment we are allowed to neglect the outer field contribution. 
+Consequently, \ref{eq:sol1,eq:sol2} are accurate with an error of $\mathcal{O}(Re^2)$. 

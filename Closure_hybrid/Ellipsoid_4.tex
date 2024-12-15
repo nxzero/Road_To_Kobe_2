@@ -308,6 +308,7 @@ where,
         % - (3+10\lambda +8\lambda^2)
     % \right],
 \end{align*}
+Where we assumed that the center of mass velocity variance was negligible at  $\phi<0.1$ based on the findings of \ref{chap:pseudoturbulence}. 
 Note that the constant $C^{Re}_2$ and $C^{Re}_1$ are still function of $\phi$ due to the non-linear relation of $\avg{\rho_f\chi_f\textbf{u}_f'\textbf{u}'_f}$ with the volume fraction. 
 Additionally, we have decomposed the right-hand side terms of \ref{eq:Reynolds_stress}, such that the first term, proportional to $C^{Re}_1$, corresponds to a traceless symmetric tensor, and the second term proportional to $C^{Re}_2$, represents the isotropic contribution.  
 Note the constants on the left-hand side of \ref{eq:Reynolds_stress} that are present to obtain a dimensionless result proportional to $Re$. 
@@ -336,6 +337,7 @@ with,
     C_2  = \frac{3\lambda^2 + 6\lambda + 4}{48(\lambda +1 )^2}
 \end{align}
 Where the constant $C_1$ is the same as in \ref{eq:closure_sigma_e}, and the constant $C_2$ is computed in  \ref{ap:reciprocal}. 
+% We have also assumed that the droplets center of mass velocity variance is negligible at small $\phi$ in this expression. 
 In the same way as for the \textit{Reynolds stress} term, we have decomposed the \textit{Stresslet} into an isotropic and symmetric traceless tensor, proportional to $C_2$ and $C_1$, respectively. 
 Note that in opposition to \ref{eq:Reynolds_stress}, $C_1$ and $C_2$ are not functions of the volume fraction for the \textit{Stresslet} term. 
 As specified in the previous section and demonstrated in \ref{ap:reciprocal}, the last term of \ref{eq:sigma_eq_f} is null even at $\mathcal{O}(Re)$. 
@@ -496,8 +498,12 @@ and,
     \label{eq:stresslet_iso}
 \end{multline}
 respectively. 
-In \ref{eq:stresslet_iso} and \ref{eq:stresslet_dev} only volume integrals are required, the only exceptions are the last term of \ref{eq:stresslet_dev,eq:stresslet_iso}.
-However, these terms are geometrical they do not involve dynamical quantities (such as the local stress $\bm\sigma_f^0$) hence it can be computed relatively easily. 
+In \ref{eq:stresslet_iso} and \ref{eq:stresslet_dev} only volume integrals are required.
+The only exceptions are the last term of \ref{eq:stresslet_dev,eq:stresslet_iso}.
+However, these terms are geometrical, i.e. they do not involve dynamical quantities (such as the local stress $\bm\sigma_f^0$) hence it can be computed relatively easily with \texttt{Basilisk}\footnote{In \texttt{Basilisk} we use PLIC method (see \ref{chap:DNS} or \citet{tryggvason2011direct}) to reconstruct the droplets interfaces. 
+Therefore, one can easily obtain the normal \textbf{n} and the surface area of the interfaces within each cell of the numerical domain.}.
+
+
 
 Based on \ref{eq:stresslet_dev,eq:stresslet_iso} we are then able to compute the values of the whole first moment of force in our DNS and recover the values of the scalar $C_1$ and $C_2$ appearing in \ref{eq:stresslet_trans}. 
 As discussed above it is interesting to compare these constants to $- C_2^{Re}$ and $-C_1^{Re}$ as they appear (with opposite sign) in the averaged effective stress \eqref{eq:stress_closed}. 
@@ -505,13 +511,14 @@ However, the values of $C_2^{Re}$ and $C_1^{Re}$ presented in \ref{eq:Reynolds_s
 Hence, in this section, we use the values of $C_2^{Re}$ and $C_1^{Re}$ that are directly measured within the DNS (see \ref{chap:pseudoturbulence}). 
 
 On \ref{fig:Sdev_DNS} we display the values of $-C_1$ and $C_1^{Re}$, hence comparing the deviatoric part of the first moment of force and the Reynolds stress tensor, respectively. 
-First, it is seen that \ref{eq:stresslet_trans} agrees relatively well with the DNS results, even though it overpredicts the DNS results in its range of validity ($Re < 1$ and $\phi \ll 1$). 
-Surprisingly, we can observe that the $C_1$ measured with the DNS remains constant for all $Re$ and $\phi$ presented here, ( except for the case $\lambda = 10$).
-We conclude that the stresslet quantity is $\sim Re\phi$, as predicted by \ref{eq:stresslet_trans} when $\lambda = 1$ or $0.1$. 
-Now let us compare the values of $C_1$ and the ones of the Reynolds stress deviatoric part given by $C_1^{Re}$. 
+First, it is seen that \ref{eq:stresslet_trans} agrees relatively well with the DNS results in its range of validity ($Re < 1$ and $\phi \ll 1$). 
+Surprisingly, we can observe that the $C_1$ measured with the DNS remains approximately constant for all $Re$ and $\phi$ presented here, (except for the case $\lambda = 10$ where larger variations are observed).
+We conclude that the stresslet quantity is $\sim Re\phi$ in the whole ranges of parameters presented here. 
+Now let us compare the values of $C_1$ and the values of the deviatoric part of the Reynolds stress tensor. 
 The first remark is that, as predicted by the theory, both contributions have opposite signs ($C_1 <0$ and $C_1^{Re} > 0$), hence providing both positive contributions to the averaged stress $\bm\sigma_f^\text{eq}$. 
-Then, we can observe that as discussed above $C_1^{Re} \ll C_1$ for the dilute regime ($\phi =0.01$). 
-However, as $\phi$ increases $C_1^{Re}$ decreases (because of the $\phi^{1/3}$ scaling) and therefore in the dense scenarios ($\phi =0.2$) both contributions become comparable ($C_1 \approx C_1^{Re}$). 
+Then, we can observe that $C_1^{Re} \ll C_1$ for the dilute regime ($\phi =0.01$). 
+However, as $\phi$ increases $C_1^{Re}$ decreases (because of the $\phi^{-1/3}$ scaling) and therefore in the dense scenarios ($\phi =0.2$) both contributions become comparable.
+Particularly, note that for $\lambda = 0.1$, $Re >10$ and $\phi =0.2$ we obtain $2 C_1 \approx  C_1^{Re}$. 
 \begin{figure}[h!]
     \centering
     \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_l_1.pdf}
@@ -592,6 +599,6 @@ Let us highlight the key advancements:
     When considering only relative translation this term is in competition with the \textit{Reynolds stress} term, which is shown to be comparable to the \textit{Stresslet} term. 
     As the Reynolds stress term is shown to be $\sim \phi^{2/3}$ while the \textit{Stresslet} is $\sim \phi$ we might expect the latter negligible in the dilute regime but dominant in the dense regime. 
     At $\phi = 0.05$ we state that the contribution of the \textit{Stresslet} is about 10\% of the \textit{Reynolds stress} contribution. 
-    We then confirmed with the DNS results that the \textit{Stresslet} approximately reaches the \textit{Reynolds stress} term for high volume fractions $\phi=0.2$. 
+    We then confirmed with the DNS results that the \textit{Stresslet} approximately reaches the \textit{Reynolds stress} term for high volume fractions ($\phi=0.2$). 
 \end{enumerate}
-In summary, more work is needed to provide accurate closure for the first moment of forces that must be included in the averaged models. 
+% In summary, more work is needed to provide accurate closure for the first moment of forces that must be included in the averaged models. 
