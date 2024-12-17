@@ -1,11 +1,11 @@
 \ProvidesClass{My_book}[2022/07/02 My_book]
 \NeedsTeXFormat{LaTeX2e}
 % \DeclareOption{print}{\def\@cv@print{}}
-\DeclareOption*{
-  \PassOptionsToClass{\CurrentOption}{book}
-}
+
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions\relax
 \LoadClass{book}
+
 \RequirePackage{graphicx}
 % \RequirePackage{tikz}
 
