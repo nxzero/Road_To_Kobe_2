@@ -4,15 +4,15 @@ Dispersed two-phase flows play a critical role in numerous natural phenomena and
 These flows involve the interaction of a dispersed phase, such as droplets, bubbles, or solid particles, with a continuous phase, typically a gas or a liquid. 
 For example, in environmental science, aerosols and pollutants in the atmosphere involve tiny particles dispersed in the air. 
 Microplastic rods or fibers, as pollutants in water, represent a dispersed solid phase in a liquid continuous phase. 
-Sediment transport in rivers, rain and snowflakes in air, are also examples of dispersed two-phase flows systems. 
+Sediment transport in rivers, rain, and snowflakes in air, are also examples of dispersed two-phase flow systems. 
 In energy and chemical engineering, fluidized bed reactors involve solid particles suspended in a continuous phase (gas or liquid flow),  while boiling flows in the nuclear industry deal with vapor bubbles dispersed in water. 
 In Biomedical sciences, the modeling of blood flow also requires the study of dispersed two-phase flows as red blood cells (dispersed phase) are suspended in plasma (continuous phase). 
 
 In the industry, sedimentation of particles falling or rising under the action of gravity is an efficient way to separate solid particles or droplets from the surrounding fluid. 
-The clarification of waste water makes use of such physics, the particles or droplets rise due to buoyancy forces, afterward they are removed from the mixture.
+The clarification of wastewater makes use of such physics, the particles or droplets rise due to buoyancy forces, afterward they are removed from the mixture.
 Even though numerous experimental and theoretical studies have been conducted on this topic, models are still limited in accuracy
  \citep{paisant2014modelisation,gemello2018modelling}. 
-Therefore, this PhD work focuses on the theoretical and numerical modeling of buoyancy-driven droplet suspensions,  within the broader context of dispersed two-phase flow modeling.  
+Therefore, this PhD work focuses on the theoretical and numerical modeling of buoyancy-driven droplets suspensions,  within the broader context of dispersed two-phase flow modeling.  
 
 Let us now take the example of two processes of interest for IFP Energies Nouvelles, highlighting their physical implications and key challenges.  
 
@@ -111,7 +111,7 @@ Thus, in this process, the size distribution of the dispersed phases and their v
 
 
 To summarize, in order to model and optimize the flotation process, one must be able to accurately model the microscale interactions, such as the bubbles-particle interactions, across the entire vessel, which is typically on the order of several meters. 
-Although the flotation process differs significantly from liquid-liquid separation, both processes share a common point: they involve modeling small bubbles, droplets, or solid particles immersed in a continuous phase that fills the vessel, with sizes on the order of $\sim 1000$ droplets-size. 
+Although the flotation process differs significantly from liquid-liquid separation, both processes share a common point: they involve modeling small bubbles, droplets, or solid particles immersed in a continuous phase that fills the vessel, with sizes on the order of $\sim 1000$ droplet-size. 
 In this PhD work, we focus on modeling the interactions between droplets and the continuous phase, as well as between droplets themselves, while neglecting the interactions with smaller particles, for example. 
 % The multi-scale nature of both the flotation and liquid-liquid extraction processes presents a major challenge in their modeling.
 
@@ -136,7 +136,7 @@ This highlights the importance of understanding and modeling the multiscale natu
 
 To conclude, we can identify three scales in this problem:
 (1) The macroscopic scale (macroscale): This is the scale of the vessel, where the medium is treated as a homogeneous mixture. 
-At this scale, the entire flow can be approximated as a mixture of two-homogeneous flows with effective properties related to the dispersed and continuous phase which account for the behavior of the dispersed droplets and surrounding continuos phase.
+At this scale, the entire flow can be approximated as a mixture of two-homogeneous flows with effective properties related to the dispersed and continuous phase which account for the behavior of the dispersed droplets and surrounding continuous phase.
 (2) The mesoscopic scale (mesoscale): This scale concerns the individual droplets and the hydrodynamic forces that drive their motion and interactions. It involves studying the relative velocities between droplets and the continuous phase, as well as the interactions between droplets themselves.
 (3) The film scale (microscale): At this scale, we focus on the colloidal interactions that occur at the interfaces between droplets. 
 % This includes van der Waals forces, surfactant effects, and mass transfer at the droplet surfaces, all of which influence the coalescence behavior, droplet size distribution, and other microscopic phenomena. 
@@ -259,7 +259,7 @@ In this type of flow, the mixture consists of a continuous dominant phase, with 
 
 \subsubsection{Links with the kinetic theory of gases}
 
-We would like to begin our presentation with the smallest scale possible: the scale of the molecules that constitutes a fluid or gas.
+We would like to begin our presentation with the smallest scale possible: the scale of the molecules that constitute a fluid or gas.
 In a very simplistic approach, at this scale, molecules can be modeled as spheres colliding with each other \citep{kardar2007statistical}. 
 The behavior of a single molecule can be described using Newton's second law, which states that the sum of all forces acting on a particle is equal to its mass multiplied by its acceleration, $\sum\textbf{F} = m \textbf{a}$. 
 Essentially, this law allows us to predict the trajectory of one or several particles over time. 
@@ -272,7 +272,7 @@ For instance, the well-known Boltzmann equation describes the evolution of the o
 Averaging this equation, multiplied by the velocity vector, leads to the Maxwell equations, which describe the balance of the averaged velocity of particles in a volume of fluid or gas.
 These equations can be seen as the momentum balance for a fluid or gas.
 It is important to note that they still represent the average velocity of all particles within the fluid.
-Through this averaging procedure, fluid or gas, despite being composed of discrete particles, are viewed as continuous media at the microscopic scale.
+Through this averaging procedure, fluids or gases, despite being composed of discrete particles, are viewed as continuous media at the microscopic scale.
 Then, their specific behavior (Newtonian, non-Newtonian, shear-thinning, elastic, etc.) arises as a consequence of subscale interactions, which are captured through ``constitutive laws'' or ``closure terms''.
 In other words, in the averaged equations describing the properties of the fluid, these closure terms represent the subscale physics that is needed to obtain a realistic model of the fluid.
 By assuming the fluid is at thermodynamic equilibrium and exhibiting Newtonian behavior, for example, the equations governing fluid motion reduce to the Navier-Stokes equations. 
@@ -282,7 +282,7 @@ The upscaling strategy for modeling liquid-liquid separation and flotation proce
 At a scale of approximately $1000$ droplet sizes, the Navier-Stokes equations become computationally expensive to solve numerically.
 To address this, we rely on averaged equations that describe the mean motion of the dispersed and continuous phase.
 This is referred to as the ``two-fluid'' model, initially developed by \citet{drew1983mathematical}.
-In this framework, we require two sets of equations: one set to describe the dispersed phase (droplets or bubbles) and another to describe the motion of the continuous phase.
+In this framework, we require two sets of equations: one set to describe the dispersed phase (droplets or bubbles) and another to describe the motion of the continuous phases.
 The parallel with kinetic theory can be extended further, as the centers of mass of the droplets or bubbles obey Newton's second law of motion, similar to the particles that constitute fluids and gases.
 
 
@@ -304,7 +304,7 @@ To be representative, these equations require information about the sub-scales (
 As discussed above, the ``closure terms'' are mathematical expressions present in these averaged equations to account for the influence of subscale physics on the macroscale behavior. 
 By ``mesostate'' we refer to the set of parameters describing the local properties of an emulsion at the droplet scale.
 This includes:  droplet sizes, droplet shapes, droplet positions, droplet velocities, the velocity and pressure fields of the continuous phase around the droplets\footnote{
-    The term ``mesostate'' is inspired by the concept of ``microstate'' commonly used in statistical mechanics, which refers to the instantaneous list of parameters describing the state of a system at the molecular level. Specifically, a microstate includes the molecule positions and velocities at a given moment
+    The term ``mesostate'' is inspired by the concept of ``microstate'' commonly used in statistical mechanics, which refers to the instantaneous list of parameters describing the state of a system at the molecular level. Specifically, a microstate includes the molecule positions and velocities at a given moment.
     }. 
 As an example, the closure terms can include the averaged drag force between the phases, the local velocity fluctuations, and the averaged Newtonian stress, all of which may be expressed in terms of the macroscopic unknowns ($\textbf{u}_p$, $\phi_d$, and $\textbf{u}_f$) to close the problem.
 Consequently, solving these equations numerically requires a precise expression of the closure terms as a function of the macroscopic properties and, of course, an efficient solver to run the macroscale simulation and model the process.
@@ -320,36 +320,33 @@ Similarly, \citet{zhang1997momentum} developed a set of averaged equations for a
 
 
 The preceding authors considered monodisperse suspensions; however, another crucial challenge for averaged equations is the modeling of the local size distribution of droplets within a given volume containing the emulsion.
-The size distribution can be influenced by the migration of particles which possess different rising velocities due to their size variations, and by coalescence and breakup phenomena, which are governed by mechanical and colloidal interactions.
-% As previously mentioned, the particle size distribution is of significant importance because it directly impacts mass transfer, and the probability of attachment which are crucial properties that we need to predict for the above processes.
+The size distribution can be influenced by the migration of particles that possess different rising velocities due to their size variations, and by coalescence and breakup phenomena, which are governed by mechanical and colloidal interactions.
 The modeling of polydisperse flows involves the use of what are called Population Balance Equations (PBE), a related but distinct system of equations than the two-fluid averaged Navier-stokes equations.
-% A comprehensive review of polydisperse flow modeling is provided by  \citet{marchisio2013computational}. 
 
 
 To summarize, we have demonstrated that modeling the above processes involves using averaged conservation laws that require ``closure terms''. 
 These terms account for the mesostate and microstate behaviors of the emulsion. 
 This upscaling methodology avoids the computational expense of directly solving the detailed flow and chemical interactions throughout the entire vessel.
 To construct models, one must first study the interactions between multiple droplets and the continuous phase. 
-In a second step, it is necessary to examine droplet-droplet interactions to better predict coalescence and breakup phenomena. % ,  consequently, the droplet size distribution.
+In a second step, it is necessary to examine droplet-droplet interactions to better predict coalescence and breakup phenomena. 
 
-These investigations require a combination of theoretical, numerical, and experimental data. %, leading to the development of models and a comprehensive understanding of the multiscale problem. 
+
+These investigations require a combination of theoretical, numerical, and experimental data. 
 The problem of droplet-droplet interactions leading to coalescence (i.e. the film drainage problem) can be addressed either experimentally or by employing Direct Numerical Simulation (DNS)  (see \ref{fig:scaling_up} (left)).
-% These DNS simulations must account for both the chemical interactions and the flow field within the thin film separating the two interfaces.
 To model the interaction between multiple droplets and the continuous phase, we can use Particle-Resolved Direct Numerical Simulation (PR-DNS) \citep{tryggvason2006direct}, (see \ref{fig:scaling_up} (right)).
 This approach is similar to DNS, however, it does not fully resolve the flow within the film between two interacting particles.
 Indeed, accurately solving the flow around hundreds of droplets while also resolving the flow within the film during droplet collisions would be computationally too expansive.
-% In \ref{fig:scaling_up}, we display a schematic representation of the global strategy explained here.
 
 
 
 
 \subsubsection{Mathematical formulations}
 
-We would now like to provide a general picture of the different methodologies employed to model dispersed flows, whether it is for two-fluid flows or for granular material or (as it is the case in kinetic theory) molecules. 
+We would now like to provide a general picture of the different methodologies employed to model dispersed flows, whether it is for two-fluid flows, for granular material, or (as it is the case in kinetic theory) molecules. 
 On \ref{fig:diagram2} we represent these different modeling strategies with a study of reference for each category. 
-Firstly, we can identify two main area on \ref{fig:diagram2}, namely, the ``Lagrangian-'' and ``Eulerian-'' based models. 
+Firstly, we can identify two main areas on \ref{fig:diagram2}, namely, the ``Lagrangian-'' and ``Eulerian-'' based models. 
 The former corresponds to the models that use Lagrangian laws to describe the dispersed phase, and that are then averaged to obtain a macroscopic equation. 
-In opposition the ``Eulerian-based model'' use an ``Eulerian'' approach to describe either the continuous or dispersed phase, and then we employ an average procedure to derive the macroscopic equations. 
+In opposition, the ``Eulerian-based models'' use an ``Eulerian'' approach to describe either the continuous or dispersed phase, and then we employ an average procedure to derive the macroscopic equations. 
 Our classification identified four main categories, ``Kinetic-Theory'', ``Population-Balance-Models'' (PBE or PBM), ``Euler-Euler Two-fluid models'' (or just ``Two-fluid models''), and finally ``hybrid models''. 
 % \begin{figure}[h!]
 %     % \begin{tikzpicture}[thick, scale=0.5]
@@ -421,48 +418,46 @@ Our classification identified four main categories, ``Kinetic-Theory'', ``Popula
 \end{figure}
 
 
-The area denoted by ``Kinetic-Theory'' represent the studies dedicated to the modeling of Gases and liquid \citep{hansen2013theory,kardar2007statistical}, however  
+The area denoted by ``Kinetic-Theory'' represents the studies dedicated to the modeling of Gases and liquid \citep{hansen2013theory,kardar2007statistical}, however  
 ``Kinetic-Theory'' can also be used to describe elongated particles \citet{curtiss1956kinetic}, which is useful to model material constituted with orientable structures of molecules.
 It can also be used to describe more macroscopic phenomena such as granular materials \citet{rao2008introduction}.  
-Extending this theory to poly-disperse assemblies of particles and one obtains the so-called PBE. 
+Extending this theory to poly-disperse assemblies of particles one obtains the so-called PBE. 
 The only aspect that changes is that PBE includes equations to be solved for the probability distribution of the particle size, or the moments of that distribution \citep{fox2023generalized,randolph2012theory}. 
 The former two modeling approaches focused mainly on the modeling of the dispersed phase.
 The continuous phase (when there is one) is treated by averaging the Eulerian conservation laws of the fluid. 
-However, the mathematical relation between the dispersed phase and continuous phase is made somewhat empirically since the equations of both phase are derived independently. 
+However, the mathematical relation between the dispersed phase and continuous phase is made somewhat empirically since the equations of both phases are derived independently. 
 That is the reason why the ``Kinetic-Theory'' and PBE models are not included in the ``Eulerian-based'' models. 
 
 Let us focus on a liquid-liquid system such as an emulsion. 
 In this case, the majority of averaged two-fluid models are based on the framework proposed by \citet{drew1983mathematical}, where the equations for both the dispersed and continuous phases are derived by averaging the local Eulerian conservation laws governing the fluid in each phase.
 Despite its versatility allowing applications beyond dispersed flows, such as stratified or slug flow, the physical interpretation of the closure terms remains difficult \citep{drew1983mathematical}.
-Additionally, the droplets-size distribution (which is highly relevant for the industrial processes mentioned above) cannot be determined with these models, because by definition ``Two-fluids models'' do not assume that one of the phase is dispersed within the other.
-Nevertheless, one advantage of this model compared to ``Population-balance-equations'' or ``Kinetic-Theory'', is that the term of exchanges between phases are consistent. 
+Additionally, the droplet-size distribution (which is highly relevant for the industrial processes mentioned above) cannot be determined with these models, because by definition ``Two-fluids models'' do not assume that one of the phase is dispersed within the other.
+Nevertheless, one advantage of this model compared to ``Population-balance-equations'' or ``Kinetic-Theory'', is that the terms of exchanges between phases are consistent. 
 Meaning that we recover the exact same terms in the equations of the dispersed phase and in the equation of the continuous phase. 
 
 Consequently, to model emulsions, we need a model  which is able to describe the topology of the flow, such as the size distribution of droplets, their deformation and so on, and that is properly linked with the continuous phase, so that the global set of equations remains consistent. 
 Such a model is termed ``Hybrid model'' since it is a Lagrangian- / Eulerian- based model.
-The difference with the previous models is that the Eulerian-based exchange terms in the continuous phase equations are termed into Lagrangian-based exchange terms, which correspond exactly to the exchange terms appearing in the Lagrangian-based equations describing the dispersed phase. %makes the whole system consistent. 
+The difference with the previous models is that the Eulerian-based exchange terms in the continuous phase equations are termed into Lagrangian-based exchange terms, which correspond exactly to the exchange terms appearing in the Lagrangian-based equations describing the dispersed phase. 
 
 Many previous studies that used the ``hybrid'' formalism have focused on solid particles \citep{buyevich1979flow,jackson1997locally}. 
 Notable exceptions include \citet{zhang1994ensemble}, who investigated spherical bubbles with time-varying radii, and \citet{zhang1997momentum}, who examined spherical droplets. 
 Despite these advances, the question remains: how can different inclusion shapes, internal fluid motion, and surface transport equations be incorporated into such Lagrangian models? 
 To the best of our knowledge, important surface properties, such as variable or constant surface tension, the arbitrary shape of fluid particles, and the distribution of surfactants, have not yet been fully incorporated into current averaged ``hybrid models''.  
-% While the Lagrangian formulation of the interfacial area equation is well established \citep{lhuillier2000bilan}, its application to define general Lagrangian quantities for a dispersed phase is still not fully explored. 
 A good review of the ``hybrid model'' for bubbly flows can be found in \citet{paisant2014modelisation,morel2015mathematical}. 
-% Anyhow, it seems that there is a need for a comprehensive ``hybrid model'' that encompasses all relevant physical aspects, including surface properties and arbitrarily shaped particles.
 
-Overall a model relating kinetic-theory-like equations while taking in account the fluid nature of the droplets seems absence from the literature. 
-In this manuscript we propose a general framework able to describe a dispersed phase of arbitrary nature with surface properties while being consistent with the kinetic-theory-like model.
+Overall a model relating kinetic-theory-like equations while taking into account the fluid nature of the droplets seems absent from the literature. 
+In this manuscript, we propose a general framework able to describe a dispersed phase of arbitrary nature with surface properties while being consistent with the kinetic-theory-like model.
 
 \subsection{The closure problem}
 
 Either it is for PBE, Kinetic-Theory, Two-fluid or Hybrid  models, one needs accurate closure terms. 
-In this work we classified the closure terms into three groups. 
+In this work, we classified the closure terms into three groups. 
 
 
 \subsubsection{First group}
-The first group represents the closure terms that are common to any particles type. 
-For example, the drag force term, the Reynolds stress (or pseudo-turbulent stress), and the first moment of force term, appear in every averaged model, regardless of the dispersed phase nature (solid particles, bubbles or droplets \ldots). 
-Hence, numerous studies have already develop models for these closures. 
+The first group represents the closure terms that are common to any dispersed phase type. 
+For example, the drag force term, the Reynolds stress (or pseudo-turbulent stress), and the first moment of force term, appear in every averaged model, regardless of the dispersed phase nature (solid particles, bubbles, or droplets \ldots). 
+Hence, numerous studies have already developed models for these closures. 
 
 In our configuration, a drag force correlation should predict the mean drag force density as a function of the local \textit{Reynolds} number based on the particle size, denoted as $Re$, and the volume fraction of the dispersed phase, $\phi$. 
 Additionally, since we are considering droplets with a constant density ratio ($\zeta$) but arbitrary viscosity, the model must account for the viscosity ratio, $\lambda$. 
@@ -472,13 +467,13 @@ Based on these two coefficients \citet{magnaudet1997forces} proposed a drag forc
 To take into account the volume fraction of droplets into the drag coefficient it is customary to multiply the ``isolated'' drag coefficient by a ``swarm factor''. 
 A large number of studies have been devoted to build ``swarm factors'' for solid particle and bubble suspensions. % \citep{simonin2016drag,tenneti2011drag,chen2023review}.
 Reviews, discussions, and benchmarks can be found in \citet{simonin2016drag,tenneti2011drag,chen2023review}. 
-However, fewer studies on ``swarm factors'' in droplet suspensions can be found in the literature. 
+However, fewer studies on ``swarm factors'' in droplets suspensions can be found in the literature. 
 The theoretical analysis of \citet{wacholder1973,haber1981} although providing a drag force correlation for sedimenting assembly of spherical droplets (valid for arbitrary $\lambda$), is limited to $\phi \ll 1$ (but non-zero) and $Re =0$. 
 The pioneering study of \citet{richardson1954} proposed to model the ``swarm factor'' using the formulation:  $(1-\phi)^n$, where $n$ is an empirical constant.  
-\citet{ishii1979drag} by compiling various experiments found in the literature proposed values for this coefficient adapted to droplet suspensions, hence providing a drag force coefficient valid for arbitrary $\phi$, $Re$ and $\lambda\approx 1$.
+\citet{ishii1979drag} by compiling various experiments found in the literature proposed values for this coefficient adapted to droplets suspensions, hence providing a drag force coefficient valid for arbitrary $\phi$, $Re$ and $\lambda\approx 1$.
 Nevertheless, no existing model in the literature comprehensively describes the dependence of drag force density in terms of $Re$, $\phi$, and arbitrary $\lambda$. 
 
-Reynolds stress (or pseudo-turbulence) models are considerably less frequently proposed in the literature. 
+Reynolds stress (i.e. the variance of the local continuous phase velocity) models are considerably less frequently proposed in the literature. 
 In the first place, theoretical analysis have been conducted on particles immersed in potential flows ($Re\to\infty$), and in the dilute regime ($\phi=0$) \citet{van1998pseudo}. 
 Then, based on DNS and experiments \citet{mehrabadi2015pseudo,almeras2021statistics,xia2022improved} proposed different models for the Reynolds stress tensor, all focusing on suspension of solid spherical particles. 
 Even though their models span a wide range of $Re$ and $\phi$ (sufficient for our applications) it still misses the $\lambda$ dependency. 
@@ -494,22 +489,22 @@ However, no study could be found regarding the modeling of the averaged Stressle
 
 \subsubsection{Second group}
 
-The second group corresponds to the closure that appear solely because the dispersed phase is made of fluid inclusions. 
-This includes, the droplets internal kinetic energy, the droplets internal viscous dissipation and so on. 
+The second group corresponds to the closure terms that appear solely because the dispersed phase is made of fluid inclusions. 
+This includes the droplets internal kinetic energy, the droplets internal viscous dissipation, and so on. 
 % For example the internal viscous dissipation within the droplets is a closure term.
 These terms appear in the equations only because we will consider an ``hybrid'' formulation of the averaged equations, and because the dispersed phase is made of fluid particles. 
 As mentioned above, the ``hybrid'' formulations dealing with fluid particles are not common. 
 Hence, these closure terms are rarely studied. 
-Thus, a clear lack of understanding to models these terms is present.  
+Thus, a clear lack of understanding to model these terms is present.  
 
 \subsubsection{Third group}
 
 The third and final group is the PBE-related closure terms. 
-These include the coalescence and break-up kernels that act as source term in the size-distribution equaiton. 
+These include the coalescence and break-up kernels that act as source terms in the size-distribution equation. 
 There is an extensive body of literature on coalescence. 
 A review of this literature can be found in the works of \citet{chesters1991modelling}. 
 However, due to the multi-physics and multi-scale nature of the problem, there is currently no predictive model that has achieved consensus in the literature \citep{liao2010literature}. 
-Thus, even if enormous effort have been devoted to the development of these kernels, major advancement still remain to be done. 
+Thus, even if enormous efforts have been devoted to the development of these kernels, major advancements still remain to be made. 
 
 
 
@@ -522,79 +517,56 @@ As the complete problem constitutes an enormous task this PhD focuses on two mai
 (1) The mathematical modeling of dispersed two-phase flow, this includes the development of ``hybrid models'' adapted to the modeling of emulsions, 
 (2) the derivation of closure terms in the limit of dilute and Stokes flows regime,  
 and (3) the numerical modeling of the Particle Resolve Direct-Numerical Simulations (PR-DNS) to feed this ``hybrid model'' and extend the domain of validity of the closure terms. 
-Note that the closure terms are still restricted to mono-disperse stead-state buoyant emulsions. 
+Despite the use of PR-DNS note that the closure terms developed in this study are still restricted to mono-disperse stead-state buoyant emulsions. 
 
 Additionally, in this work we study only the momentum and mechanical energy equations and related closure terms. 
-Meaning that we won't dive into the chemical aspect of the problem that is needed to model the liquid-liquid extraction processes. 
-We also restrict the study to the particle-scale modeling, hence we won't dive into the film-drainage problem and its modeling.   
+Meaning that we will not dive into the chemical aspect of the problem. % that is needed to model the liquid-liquid extraction processes. 
+We also restrict the study to the particle-scale modeling, hence we will not treat the film-drainage problem and its modeling.   
 Nevertheless, we still provide indispensable information regarding the ``Constrained'' or ``input'' parameters that are useful for the film drainage problem. 
 
-In \ref{fig:scaling_up} we present a diagram that summarize to whole modeling strategy of this PhD work. 
-The text and the box colored in red represent the aspect of the problem treated in this manuscript. 
+In \ref{fig:scaling_up} we present a diagram that summarizes the whole modeling strategy adopted in this PhD work. 
+The text and the box colored in red represent the topics treated in this manuscript. 
 
 
 \section{Outline of the manuscript}
 
 
-In order to provide a consistent methodology to derive averaged equations and useful closure terms to feed the former equations we partitioned this manuscript into three main parts. 
+We partitioned this manuscript into three parts. 
+% The first one provides a consistent methodology to derive averaged equations, the second part proposes closure models for the averaged equations, and the last part focuses on the droplet-droplet interactions. 
 
-\paragraph*{Part I:} 
-The first part focus on the statistical modeling of dispersed two phase flows, that is the derivation of the averaged equations as well as the derivation of the closure problem. 
+% \paragraph*{Part I:} 
+The first part focuses on the derivation of the averaged equations as well as the derivation of the closure problem. 
 
-The first chapter, (\ref{chap:daniel1}), provides a derivation of the averaged equations governing the motion of dispersed two-phase flows with interfacial transport. 
-We begin by revisiting the two-fluid formulation, as well as the distributional form of the interfacial transport equation which holds on the entire domain. 
-Following this, a general Lagrangian model is introduced, which accounts for the effects of both internal and interfacial properties of the dispersed inclusions (bubbles, droplets, or particles) within a continuous phase.
-We then proceed by deriving the lesser-known conservation equations for the moments of the volume and surface distribution of an arbitrary Lagrangian property.
-The paper concludes by presenting a ``hybrid'' set of equations, consisting of phase-averaged equations for the continuous fluid phase, complemented by an arbitrary number of moment conservation equations for the dispersed phase.
-The goal of this chapter is to provide a general approach to derive averaged equations so that the reader obtain an understanding of the mathematical structure of these equations. 
-
-\ref{chap:daniel15} we expose the minimal set of equations necessary to describe emulsions made of Newtonian droplets based on the ``hybrid'' formulation developed in the \ref{chap:daniel1}. 
-In short, we expose the ensemble-averaged momentum and energy equations in the ``hybrid'' formalism for arbitrary Newtonian droplet including surface tension properties. 
-Notably, this derivation allowed us to discuss the energy exchange present in a dispersed two-phase flow. 
-Additionally, we provided an explicit and general formulation for the effective stress in an emulsion. 
-
-Finally, in \ref{chap:deformable} we decide to focus on the modeling of rising ellipsoidal droplets. 
-We propose a set of equations that use the hybrid model to describe ellipsoidal rising droplets' droplet. 
+\ref{chap:daniel1} provides a derivation of the averaged equations governing the motion of a dispersed two-phase flow with interfacial transport. 
+% The goal of this chapter is to provide a general approach to derive averaged equations, so that the reader obtains an understanding of the mathematical structure of these equations. 
+In \ref{chap:daniel15} we consider emulsions made of Newtonian droplets immersed in a Newtonian fluid and derive the mass, momentum, and energy conservation laws for each phase. 
+\ref{chap:deformable} specifically focuses on the modeling of rising spheroidal droplets. 
 
 
-\ref{chap:daniel2} we demonstrate how to re-formulated the closure term of the averaged model into conditionally averaged equations. 
-Then, we demonstrate how to derive the corresponding conditionally averaged equations. 
-This methodology is inspired from \citet{hinch1977averaged}.
-After deriving the closure problem itself we derive the closure terms for spherical droplets in stokes flow.  
+In \ref{chap:daniel2} we demonstrate how to re-formulate the closure terms of the ``hybrid'' model into \textit{single-particle} conditionally averaged terms. 
+Then, we demonstrate how to derive the corresponding conditionally averaged equations to obtain these terms. 
 
 
 
 
-\paragraph*{Part II:} 
-\ref{part:one} was purely theoretical, hence in \ref{part:two} we introduce PR-DNS of buoyant emulsion in a tri-periodic domain. 
+
+% \paragraph*{Part II:} 
+In the second part we propose closure models for the averaged equations. 
+
+\ref{chap:DNS} introduces PR-DNS of buoyant emulsions in tri-periodic domains. 
 These simulations are conducted using the open source library \texttt{Basilisk C}.
-These will serve as a basis to compare with the subsequent theoretical investigation and extend the validity of the models.  
 
-In \ref{chap:closure-disperse} we solve the conditionally averaged equations in the dilute and Stokes limit to provide theoretical models for the closure terms of the ``hybrid-model''. 
-Following the study of \ref{chap:deformable} we also consider the effect of finite inertia on rising ellipsoidal droplets.
-The effective stress of the suspension is also investigated in this case.  
-
-
-In \ref{chap:mono-disperse} we develop a model for the interphase drag force present in the averaged momentum equations. 
-Based on the theory and simulation results we were able to construct a complete model for the interphase drag force taking in account an arbitrary ratio of viscosity between phases, volume fraction of droplets and Reynolds number based on the relative velocity between phases. 
-
-In \ref{chap:pseudoturbulence} we focus on what is called the Reynolds stress tensor, that is the variance of the local continuous phase velocity. 
-This velocity fluctuation tensor can be produced by the relative motions of the droplets with the continuous phase (that is the wake of the droplets), and other sources of turbulence. 
-In this chapter we only focus on the former contribution and build a Model taking in account the dispersed phase volume fraction, relative velocity between phases and viscosity ratio between phases. 
+In \ref{chap:closure-disperse} we derive closure laws by solving the conditionally averaged equations in the dilute and Stokes flow limit. 
+\ref{chap:mono-disperse} and \ref{chap:pseudoturbulence} address the problem of deriving the interphase drag force and the Reynolds stress models, respectively. 
+Based on the theory and simulation results we build models taking into account arbitrary $\lambda$, $Re$ ($< 100$), and $\phi$ ($< 0.2$). 
 
 
 
-\paragraph*{Part III:} 
-The last part  focus on the study of the relative interaction between droplets among the emulsion. 
+% \paragraph*{Part III:} 
+The last part focuses on the study of the droplet-droplet interactions. 
+
+In \ref{chap:microstructure} we characterize the droplet relative positions, which we refer to as the study of the microstructure of the emulsion. 
+Then, in \ref{chap:microstructure_kin} we study the relative velocity between droplets, i.e. the kinematics of the microstructure. 
 
 
-In \ref{chap:microstructure} we characterize the particles relative position of the droplets, that is termed the study of the microstructure of the emulsion. 
-This is done using the nearest-neighbors distribution of the droplets in the emulsion. 
-
-In \ref{chap:microstructure_kin} we then study the relative velocity between particles, that is the study of the kinematics   of the microstructure. 
-The motivation for these  chapters is to provide useful information for the understanding of how in average pair of droplets interact together. 
-
-
-
-
-% Finally, we end this manuscript with a chapter on the perspectives and conclusions. 
+We conclude this manuscript with a chapter summarizing the main conclusions and perspectives drawn from the above studies. 

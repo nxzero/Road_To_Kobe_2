@@ -28,7 +28,7 @@ Note that the source code of the DNS and the post-processing tools used in this 
 % the number of droplets per domain $N_b$, and the dispersed phase volume fraction $\phi$. 
 % Here, $d$ represents the diameter of a sphere with the same volume as the droplets, and $g$ denotes the gravitational acceleration.
 % The \textit{Galileo} number is a measure of the strength of the buoyancy forces relative to the viscous forces, whereas the \textit{Bond} number evaluates the ratio between buoyancy and capillary forces. 
-% We used a number of particles per domain of $N_b = 125$, which is roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
+% We used a number of droplets per domain of $N_b = 125$, which is roughly what \citet{hidman2023assessing} used for their DNS of fully-periodic buoyant rising bubbles.
 % Moreover, each DNS lasts for a time: $t^*_\text{end} = 1500 \sqrt{d/g}$.
 % These parameters are sufficient for to obtain a good statistical convergence \citet{fintzi2024buoyancy}. 
 % \begin{table}[h!]
@@ -74,17 +74,17 @@ Note that the source code of the DNS and the post-processing tools used in this 
 
 % \subsection{Numerical sampling and statistical convergence}
 
-The age-included nearest-neighbor distribution function presented in the previous section requires the particles' center of mass position and the position of its nearest neighbor, along with the current age of interaction.
-% Equally, the center of mass velocity of the particles together with the velocity of their nearest neighbor is also needed to reconstruct $\textbf{w}_p^{nst}$. 
+The age-included nearest-neighbor distribution function presented in the previous section requires the droplets' center of mass position and the position of its nearest neighbor, along with the current age of interaction.
+% Equally, the center of mass velocity of the droplets together with the velocity of their nearest neighbor is also needed to reconstruct $\textbf{w}_p^{nst}$. 
 % Indeed, when several droplets belong to the same VoF tracer it is challenging to distinguish them.
 Therefore, we now provide additional comments on the numerical methodology employed to reconstruct these statistics. 
 
 % As detailed in \citet{fintzi2024buoyancy} the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm permits us to distinguish the different droplet volumes within a given VoF field. 
 % Let define $\texttt{t}_i[\text{c},t]$ as the ``tag'' field corresponding to the droplet $i$, evaluated at the cell ``c'' of the mesh and at time $t$.
-% This field is equal to 1 for cells inside the volume of the particle $i$ and 0 outside.
+% This field is equal to 1 for cells inside the volume of the droplet $i$ and 0 outside.
 % Then, the \href{http://basilisk.fr/src/tag.h}{tag.h} algorithm provides us with $N$ ``tag'' field, i.e. one for each droplet. 
-% Based on $\texttt{t}_i$, and on the other fields solved by \ref{eq:dt_C} and \ref{eq:dt_urho}, we can easily define the particles Lagrangian properties mentioned above. 
-% The mass, position, and momentum of a particle are then computed as follows 
+% Based on $\texttt{t}_i$, and on the other fields solved by \ref{eq:dt_C} and \ref{eq:dt_urho}, we can easily define the droplets Lagrangian properties mentioned above. 
+% The mass, position, and momentum of a droplet are then computed as follows 
 % \begin{align*}
 %     m_i(t)
 %     = \sum_{\text{c} = 1}^\text{last cell}
@@ -111,18 +111,18 @@ Therefore, we now provide additional comments on the numerical methodology emplo
 % Likewise, $\textbf{x}[\text{c}]$ and $dv[c]$ correspond to the Cartesian coordinate and the volume of the cell, respectively. 
 
 For a given time step $t_n$, we compute the position $\textbf{x}_i(t_n)$ and velocity $\textbf{u}_i(t_n)$ of each droplet, as described in \ref{chap:DNS}. 
-Then, by measuring each particle pair distance, we identify the nearest neighbor for each droplet $i$. 
+Then, by measuring each droplet pair distance, we identify the nearest neighbor for each droplet $i$. 
 For convenience, the nearest neighbor of the droplet $i$ is indexed $j$. 
 Once this is done we can compute the relative positions $\textbf{r}_{ij}(n) =\textbf{x}_i - \textbf{x}_j$, and the relative velocities $\textbf{w}_{ij} = \textbf{u}_i - \textbf{u}_j$ with the nearest neighbor for all droplets. 
 At the simulation time step $t_{n+1}$ we repeat this procedure and compute all the $\textbf{x}_i(t_{n+1}),\;\textbf{u}_i(t_{n+1}),\;\textbf{r}_{ij}(t_{n+1}),\;\textbf{w}_{ij}(t_{n+1})$. 
-If the nearest neighbor of the droplet $i$ at $t = t_{n+1}$, is still the same as at $t = t_n$, we increment the \textit{age} of interaction as $a_i = a_i + (t_{n+1} - t_n)$, where $a_i$ is the \textit{age} of the particle $i$. 
-Inversely, if the particle $j$ of time $t= t_{n+1}$ is not the same as the one of time $t=t_n$ the \textit{age} is set back to zero. 
+If the nearest neighbor of the droplet $i$ at $t = t_{n+1}$, is still the same as at $t = t_n$, we increment the \textit{age} of interaction as $a_i = a_i + (t_{n+1} - t_n)$, where $a_i$ is the \textit{age} of the droplet $i$. 
+Inversely, if the droplet $j$ of time $t= t_{n+1}$ is not the same as the one of time $t=t_n$ the \textit{age} is set back to zero. 
 Note that at $t = 0$ all ages are set to zero. 
 
 
 To reconstruct all these statistics from the DNS, we treat each simulation time step and droplets as an independent event, denoted as, $\FF$. 
 As an example, to reconstruct a quantity such as $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ we gather the relative velocities $\textbf{w}_{ij}(t)$ from the simulation and store them in $i$ intervals of ages $\Delta a_k$, and relative positions $\Delta \textbf{r}_k$ for $k = 1,\ldots, n$.
-Then, we average on all the $\textbf{w}_{ij}(t;\FF)$ over each particle and time step.
+Then, we average on all the $\textbf{w}_{ij}(t;\FF)$ over each droplet and time step.
 Formally, we write, 
 \begin{equation}
     \textbf{w}^\text{nst}_p(\Delta\textbf{r}_k,\Delta a_k)
@@ -136,7 +136,7 @@ Formally, we write,
     % \FF_k = \{\FF; \textbf{r}(\FF)\in\Delta \textbf{r}_k, a(\FF)\in  \Delta a_k\}
     \label{eq:vec_cond}
 \end{equation}
-where $\FF_k$ correspond to the events were the nearest particle pair $i$ and $j$ follows $\textbf{r},a \in \Delta \textbf{r}_k ,\Delta a_k$.
+where $\FF_k$ correspond to the events were the nearest droplet pair $i$ and $j$ follows $\textbf{r},a \in \Delta \textbf{r}_k ,\Delta a_k$.
 $E_k$ is the total number of events fulfilling these constraints. 
 % Thus, we obtained an approximation of $\textbf{w}^\text{nst}_p(\textbf{x},\textbf{r},t,a)$ which takes the intervals, $(\Delta\textbf{r}_i,\Delta a_i)$ as arguments.
 At some point, it will be useful to study the averaged relative velocity, conditioned on the age or the radial distance, independently. 
