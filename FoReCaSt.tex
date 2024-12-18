@@ -26,7 +26,7 @@
 \usetikzlibrary{calc}
 \definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
 \definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
-\title{Averaged equations for two-phase flows made of spherical droplets. }
+\title{Averaged equations for a buoyancy driven suspension of droplets}
 \subtitle{Discussion Marc Massot}
 \author{N. Fintzi \footnote{IFP \'Energies Nouvelles, France}$^{,2}$,S. Popinet\footnote{Sorbonne Universit\'e, France}, and \underline{JL. Pierson$^1$}}
 % \date{Created on May 22, 2022}
@@ -57,11 +57,11 @@
 \textbf{Euler-Euler} modeling of dispersed two phase flows 
 \vfill
 \begin{enumerate}
-  \item Presentation of the \textbf{mass}, \textbf{momentum} and \textbf{pseudo-turbulent} averaged equations for spherical suspension of droplet. 
-  \item Analysis of the momentum effective stress
+  \item Presentation of the \textbf{mass}, \textbf{momentum} and \textbf{pseudo-turbulent} averaged equations for a suspension of droplets. 
+  %\item Analysis of the momentum effective stress
   \item Analysis of the pseudo-turbulent energy equation source terms. 
-  \item Proposition of a first minimal model for the pseudo-turbulence stress
-  \item Model for the stresslet
+  \item Proposition of a first order closure for the pseudo-turbulence stress
+  \item Proposition of a first order closure for the stresslet (first moment of the hydrodynamic stress)
 \end{enumerate}
 
 
@@ -70,8 +70,8 @@
 
 \end{frame}
 
-\section{Continuous phase local scale equations.}
-\section*{}
+\section{Averaged equations}
+%\section*{}
 
 \begin{frame}
   \frametitle{Problem statement: local scale equations}
@@ -226,7 +226,7 @@ The phase and interface indicator functions :
 
 \begin{frame}
   \frametitle{Ensemble average definitions}
-Ensemble average: 
+Ensemble average (Drew 1983): 
 \begin{align*}
   \phi_f (\textbf{x},t) = \avg{\chi_f }\\
   \phi_f \rho_f  \textbf{u}_f (\textbf{x},t) = \avg{\chi_f \rho_f \textbf{u}_f^0 }\\
@@ -283,11 +283,29 @@ Mean kinetic energy of the continuous phase:
 \end{frame}
 
 \begin{frame}{Hybrid formulation}
+Long story (Buyevich and Shchelchkova, 1979; Lhuillier, 1992; Zhang and Prosperetti, 1994). Basic idea :
 
+\begin{equation}
+  \chi_\alpha f^0_d 
+  =\delta_\alpha\intO{f^0_d}
+  - \div\left(\delta_\alpha\intO{\textbf{r} f^0_d}\right)
+  + \frac{1}{2}\grad\grad :\left(\delta_\alpha\intO{\textbf{rr} f^0_d}\right)-
+  \ldots 
+  \label{eq:fd_asympt0}
+\end{equation}
+
+\begin{equation}
+  \delta_{\Gamma\alpha}f_\Gamma^0  
+=\delta_\alpha\intS{f^0_\Gamma}
+- \div\left(\delta_\alpha\intS{\textbf{r} f^0_\Gamma}\right)
++ \frac{1}{2}\grad\grad :\left(\delta_\alpha\intS{\textbf{rr} f^0_\Gamma}\right)-
+\ldots 
+\label{eq:fG_asympt0}
+\end{equation}
 \end{frame}
 
 \begin{frame}
-  \frametitle{The averaged continuous phase equations}
+  \frametitle{Averaged continuous phase equations}
 \begin{align*}
   &\pddt (\phi_f \rho_f)  
   + \div (
@@ -325,6 +343,7 @@ Reynolds stress decomposition:
 \end{frame}
 
 
+\section{Averaged equations for the pseudo-turbulence stress}
 
 \begin{frame}
   \frametitle{Modeling of $k_f$: first option}
@@ -391,7 +410,7 @@ Effective kinetic enery fluxes
 \begin{align*}
      \textbf{q}_f^\text{k}
     =& \underbrace{\rho_f \avg{\chi_f \textbf{u}_f' k_f} 
-    - \avg{\chi_f \textbf{u}_f' \cdot \bm{\sigma}_f^0}}_\text{Stress and kinetic energy covariance}\\
+    - \avg{\chi_f \textbf{u}_f' \cdot \bm{\sigma}_f^0}}_\text{Turbulent transport and stress transport}\\
     &+ (\textbf{u}_f - \textbf{u}_p)\cdot
     \pSavg{{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}}\\
     &
@@ -424,6 +443,9 @@ Effective kinetic enery fluxes
 $\to$ Require numerous closure terms which are either due to \underline{single phase} turbulence or \underline{particle-induced} turbulence. 
 
 \end{frame}
+
+
+\section{Quasi-steady homogeneous closure for the Reynolds stress}
 \begin{frame}
   \frametitle{Modeling of $k_f$: Second option}
 Assuming $k_f$ is quasi-steady and nearly homogeneous in space
@@ -595,6 +617,69 @@ $\to$ In this regime the wake of the droplets is the main contribution to  $\avg
 $C^{Re}_1(\phi, \lambda ) \to C^{Re}_1(\phi, \lambda ,Re) $ 
 
 \end{frame}
+\begin{frame}
+  \frametitle{Comparison with DNS results and experiments}
+  \begin{figure}[h!]
+    \centering    
+    % \includegraphics[height = 0.25\textwidth]{image/upupexp.png}
+    \includegraphics[height = 0.2\textwidth]{image/HOMOGENEOUS_final/CA/cartellier.pdf}
+    \includegraphics[height = 0.2\textwidth]{image/HOMOGENEOUS_final/CA/UUyy_Ga_5.pdf}
+    \caption{
+       Dimensionless vertical component of the Reynolds stress :
+       (left) Comparison with the rising bubbles experiment of Cartellier (2009) with $Re \approx 10$. 
+       (right) comparison with DNS for two viscosity ratio $\lambda =1,10$ and $Re \approx 1$ DNS. 
+    }
+    \label{fig:Cp}
+\end{figure}  
+\begin{itemize}
+  \item Good trends in terms of $\phi$ and $\lambda$.  
+  \item Quantitative agreement for $\phi < 0.01$.  
+\end{itemize}
+\end{frame}
+
+\section{Quasi-steady homogeneous closure for the Stresslet}
+\begin{frame}{What is the Stresslet ?}
+\begin{equation}
+  \underbrace{ {\pSavg{{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}_d}}}}_\text{Stresslet} = \bm S + \bm A
+\end{equation}
+Symmetric part of the first moment ($\bm S$) : $\frac{1}{2} \pSavg{{(\textbf{r}\bm{\sigma}_f^0 + \bm{\sigma}_f^0\textbf{r})\cdot \textbf{n}_d}}$
+
+\begin{block}{Shear dominated flows}
+In shear flow the isolated stresslet has a form linear in the rate of strain implies a Newtonian contribution to the bulk stress by the particles. 
+This results in the Einstein viscosity $\mu_{\text{eff}} = \mu (1+5/2\phi)$.
+\end{block}
+
+\begin{block}{Buoyancy driven flows}
+  In the Stokes flow regime, there is no stresslet on a sphere in a uniform flow
+\end{block}
+
+
+%The Stresslet (its deviatoric counterpart) is 
+\end{frame}
+
+\begin{frame}{Reciprocal theorem}
+\small
+  The reciprocal theorem reads (Massoud et Stone 2019).
+
+\begin{align}
+ &\int_{S_d+S_\infty} \bm n \cdot \bm \sigma \cdot \hat{ \bm {u}}dS -  \int_{S_d+S_\infty} \bm n \cdot \hat {\bm \sigma} \cdot  \bm {u}dS = \\
+ &-Re\int_{V} \hat{ \bm {u}} \cdot \left(\frac{\partial \bm u}{\partial t}+\bm u  \cdot\bm\nabla \bm u \right)dV+\hat{Re}\int_{V} \bm u \cdot \left(\frac{\partial \hat{\bm u}}{\partial t}+\hat{\bm u}  \cdot\bm\nabla \hat{\bm u}\right)dV
+\end{align}
+where $S_d$ is the drop surface and $S_\infty$ the surface at infinity. The $\hat{}$ denotes the test problem (Stokes flows)
+Then, the last integral cancels and we get 
+\begin{equation}
+    \int_{S_b+S_\infty} \bm n \cdot \bm \sigma \cdot \hat{ \bm {u}}dS -  \int_{S_b+S_\infty} \bm n \cdot \hat {\bm \sigma} \cdot  \bm {u}dS = 
+    -Re\int_{V} \hat{ \bm {u}} \cdot \left(\frac{\partial \bm u}{\partial t}+\bm u  \cdot\bm\nabla \bm u \right)dV
+    \label{eq:reciprocal}
+\end{equation}
+Using an appropriately choosen test problem (linear flow past a sphere) one can obtain the first inertial contribution to the stresslet
+%We Taylor expand $\bm{u}$ and $\bm \sigma$ as
+%\begin{align}
+%    \bm{u} &= \bm{u}_0 + Re\bm{u}_1+...\\
+%    \bm{\sigma} &= \bm{\sigma}_0 + Re\bm{\sigma}_1+...
+%\end{align}
+
+\end{frame}
 
 \begin{frame}
   \frametitle{Stresslet due to the relative motion of the drops}
@@ -623,25 +708,25 @@ with,
 
 \end{frame}
 
-\begin{frame}
-\begin{figure}[h!]
-  \centering
-  \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_l_1.pdf}
-  \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_l_10.pdf}
-  \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_l_100.pdf}
-  \caption{
-      Comparison of the coefficients $-C_1$ (hydrodynamic first moment) and $C_1^{Re}$ (Reynolds stress) appearing in \ref{eq:stress_closed} in terms of the \textit{Reynolds} number based on the mean relative velocity $\textbf{u}_{pf}$ for several volume fractions.
-      Three viscosity ratio are presented: (left) $\lambda = 0.1$ (middle) $\lambda = 1$ (right) $\lambda = 10$. 
-      The density ratio is fixed to $\zeta = 0.9$, and \textit{Bond} number $Bo =0.5$. 
-      (Hollow symbols) Mean coefficient $C_1$ measured with the DNS. 
-      ($\pmb\bigcirc$) $\phi = 0.01$; ($\pmb\triangle$) $ \phi = 0.05$; ($\pmb\square$) $\phi = 0.1$ ($\pmb\lozenge$) $\phi = 0.2$ with $Bo = 0.5$.
-      (dashed line) theoretical formula \ref{eq:stresslet_trans} valid at $\mathcal{O}(Re)$ and $\mathcal{O}(\phi)$. 
-      (Filled symbols) Values of the Reynolds stress constant $C_1^{Re}$ for different volume fraction (indicated by the shape of the symbols) based the DNS results \eqref{chap:pseudoturbulence}. 
-   }
-   \label{fig:Sdev_DNS}
-\end{figure}
+%\begin{frame}
+%\begin{figure}[h!]
+%  \centering
+%  \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_l_1.pdf}
+%  \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_l_10.pdf}
+%  \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_l_100.pdf}
+%  \caption{
+%      Comparison of the coefficients $-C_1$ (hydrodynamic first moment) and $C_1^{Re}$ (Reynolds stress) appearing in \ref{eq:stress_closed} in terms of the \textit{Reynolds} number based on the mean relative velocity $\textbf{u}_{pf}$ for several volume fractions.
+%      Three viscosity ratio are presented: (left) $\lambda = 0.1$ (middle) $\lambda = 1$ (right) $\lambda = 10$. 
+%      The density ratio is fixed to $\zeta = 0.9$, and \textit{Bond} number $Bo =0.5$. 
+%      (Hollow symbols) Mean coefficient $C_1$ measured with the DNS. 
+%      ($\pmb\bigcirc$) $\phi = 0.01$; ($\pmb\triangle$) $ \phi = 0.05$; ($\pmb\square$) $\phi = 0.1$ ($\pmb\lozenge$) $\phi = 0.2$ with $Bo = 0.5$.
+%      (dashed line) theoretical formula \ref{eq:stresslet_trans} valid at $\mathcal{O}(Re)$ and $\mathcal{O}(\phi)$. 
+%      (Filled symbols) Values of the Reynolds stress constant $C_1^{Re}$ for different volume fraction (indicated by the shape of the symbols) based the DNS results \eqref{chap:pseudoturbulence}. 
+%   }
+%   \label{fig:Sdev_DNS}
+%\end{figure}
 
-\end{frame}
+%\end{frame}
 
 \begin{frame}
   \frametitle{Conclusion \& Perspectives}
@@ -650,11 +735,155 @@ with,
     \item The pseudo-turbulent equation for $k_f$ requires a large amount of closure terms. 
     \begin{itemize}
       \item 
-      It seems ambitious to close that equations while some closure of the momentum equations are not yet properly closed. 
+      It seems unfeasible (at the present time) to fully close that equations while some closure for the momentum equations are not yet properly accounted for (the stresslet typically). 
     \end{itemize}
-    \item If $k_f$ can be assumed quasi-steady: Then model for $\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}$ can be obtained. 
+    \item If $k_f$ is assumed quasi-steady a model for $\avg{\chi_f\textbf{u}_f'\textbf{u}_f'}$ can be obtained. 
   \end{enumerate}
 
+\end{frame}
+
+\appendix
+\transwipe[direction=90]
+\begin{frame}{The Nearest Particle Statistics (NPS) approach (DZ Zhang, JFM, 2020)}
+  $P_\text{nst}(\textbf{r}|\textbf{x})$ is the probability of finding a nearest particle at \textbf{r} knowing \textbf{x} is occupied by the continuous phase.   
+
+  In the dilute, isotropic and homogeneous regime : 
+  \begin{equation*}
+    \boxed{P_\text{nst}(\textbf{r}|\textbf{x})
+    = \frac{3\phi}{4\pi}
+    e^{ - \phi (|\textbf{r}|^3 - 1) }
+    \text{ for }
+    |\textbf{r}| > a }
+  \end{equation*}
+  \pause
+\begin{columns}
+  \column{0.5\textwidth}
+
+\column{0.5\textwidth}
+\begin{tikzpicture}[scale=0.6]
+  \filldraw[ gray!10!white](+2.6,0.5)circle (0.5);
+  \filldraw[ gray!10!white](-1.5,2.2)circle (0.5);
+  \draw[dashed](10:2) arc (10:150:2);
+  % \filldraw[ gray!50!white](0,0) circle (0.5);
+  \filldraw[ gray!50!white](1,1.5)circle (0.5);
+  \filldraw[ gray!10!white](-0.2,2.5)circle (0.5);
+  \draw(0,0)node{$\bullet$}node[right]{$\textbf{x}$};
+  \draw[dashed,<->](0,0)--(1,1.5)node[midway,left]{\footnotesize $r\approx 2 a$}node[right]{$\textbf{x}+\textbf{r}$};
+  % \draw[dashed](-0.2,3.5);
+  \node[ultra thick] (title) at (-0.5,3.5) {{More likely}};
+  \node[ultra thick] (title) at (-0.5,-1.5) {\textit{Case 1}};
+\end{tikzpicture} 
+\hfill
+\begin{tikzpicture}[scale=0.6]
+  \filldraw[ gray!10!white](+2.6,3.5)circle (0.5);
+  \filldraw[ gray!10!white](-1.5,3.2)circle (0.5);
+  \draw[dashed](30:3.16) arc (30:120:3.16);
+  % \filldraw[ gray!50!white](0,0) circle (0.5);
+  \filldraw[ gray!50!white](1,3)circle (0.5);
+  \filldraw[ gray!10!white](-0.2,3.5)circle (0.5);
+  \draw(0,0)node{$\bullet$}node[right]{$\textbf{x}$};
+  \draw[dashed,<->](0,0)--(1,3)node[midway,right]{\footnotesize  $r\approx 4a$}node[right]{$\textbf{x}+\textbf{r}$};
+  % \draw[dashed](-0.2,3.5);
+  \node[ultra thick] (title) at (-0.5,4.3) {{Unlikely}};
+  \node[ultra thick] (title) at (-0.5,-0.5) {\textit{Case 2}};
+\end{tikzpicture} 
+
+
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{How to find the nearest neighbor velocity field $\textbf{u}_f^{nst}$ ? }
+  \centering
+  \begin{tikzpicture}[scale=0.8]
+    \filldraw[gray!10](-5,-3) rectangle(9,3);
+    \filldraw[white](0,0) circle (1.8);
+    \filldraw[ gray!10!white](+2.6,0.5)circle (0.5);
+    \filldraw[ gray!10!white](-1.5,2.2)circle (0.5);
+    \draw[dashed](0:1.8) arc (0:360:1.8);
+    % \filldraw[ gray!50!white](0,0) circle (0.5);
+    \filldraw[ gray!50!white](1,1.5)circle (0.5);
+    \filldraw[ gray!10!white](-0.2,2.5)circle (0.5);
+    \draw[->,red](0,0)--++(-1,2)node[midway,left]{$\textbf{u}_f^\text{nst}$};
+    \draw(0,0)node{$\bullet$}node[right]{$\textbf{x}$};
+    \draw[dashed,<->](0,0)--(1,1.5)node[right]{$\textbf{x}+\textbf{r}$};
+    \draw[->,blue!50!black,thick](1,1.5)--++(0.4,-1.6)node[midway,right]{$\textbf{w}$};
+    % \draw[dashed](-0.2,3.5);
+    \node[text width=2cm] (title) at (0.2,-1) {\footnotesize\textit{Particles free region}};
+    % \node[ultra thick] (title) at (-0.5,-1.5) {(\textit{Case 1})};
+    \node[text width=4cm] (title) at (6,-1) {\footnotesize\textit{Effective medium of properties:} $\phi$};
+    \draw[->] (6,1)node{$\bullet$}node[right]{$z$}--++(0.1,1.5)node[right,midway]{$\textbf{u}^\text{nst}[\textbf{z}|\textbf{x},\textbf{y},\textbf{w}]$};
+\end{tikzpicture} 
+
+  Conditionally averaging the stokes equations at a point \textbf{z}, knowing the fluid is present at \textbf{x} with its nearest neighbor at \textbf{y}, yields, 
+  \begin{equation*}
+    % \pddt \avg{(\delta_\text{nst-f} - P_\text{nst-f})\chi_f}
+    \grad \cdot \textbf{u}^\text{nst}
+    = 0
+    \label{eq:mass_nst_d_stokes}
+\end{equation*}
+\begin{equation*}
+    - \grad p^\text{nst} 
+    + \mu_f \grad^2 \textbf{u}^\text{nst}
+    = 
+    \underbrace{\phi
+    \textbf{g}
+    \Delta\rho H(|\textbf{r}| - |\textbf{z} - \textbf{x}|)}_\text{particle-free zone buoyancy}
+    + \underbrace{\frac{\textbf{w} \mu_f}{a^2} (1 +\grad^2) \delta(\textbf{x}+ \textbf{r} - \textbf{z})}_\text{point forces}
+    \label{eq:momentum_nst_d_stokes}
+\end{equation*}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{How to find the nearest neighbor velocity field $\textbf{u}_f^{nst}$ ? }
+
+  Conditionally averaging the stokes equations at a point \textbf{z}, knowing the fluid is present at \textbf{x} with its nearest neighbor at \textbf{y}, yields, 
+  \begin{equation*}
+    % \pddt \avg{(\delta_\text{nst-f} - P_\text{nst-f})\chi_f}
+    \grad \cdot \textbf{u}^\text{nst}
+    = 0
+    \label{eq:mass_nst_d_stokes}
+\end{equation*}
+\begin{equation*}
+    - \grad p^\text{nst} 
+    + \mu_f \grad^2 \textbf{u}^\text{nst}
+    = 
+    \phi
+    \textbf{g}
+    \Delta\rho H(|\textbf{y} - \textbf{x}| - |\textbf{z} - \textbf{x}|)
+    + \frac{\textbf{w} \mu_f}{a^2} (\delta(\textbf{x} - \textbf{y}) +\grad^2\delta)
+    \label{eq:momentum_nst_d_stokes}
+\end{equation*}
+
+\textbf{The solution : } 
+\begin{equation}
+  \frac{\textbf{v}^\text{nst}_f}{U}
+  =
+  \underbrace{\left(\frac{2+3\lambda}{4(1+\lambda)}\right)\textbf{U}\cdot\left[
+      1
+      +
+      \frac{\lambda}{2(2+3\lambda)}\grad^2 
+  \right]\mathcal{G}(\textbf{x},\textbf{y})}_\text{particle wake}
+  + \underbrace{\phi A |\textbf{x}-\textbf{y}|^2 \textbf{k}}_\text{downstream flow}
+  % + \mathcal{O}(\phi). 
+  \label{eq:v_nst_solution_adim}
+\end{equation}
+\begin{equation*}
+  \mathcal{G}(\textbf{r})
+  = \frac{\bm\delta}{r}
+  + \frac{\textbf{rr}}{r^3},
+\end{equation*}
+\begin{align*}
+  \textbf{U} = \textbf{w} - \textbf{u}_f/U
+  && 
+  \textbf{k} = \textbf{g}/|\textbf{g}|
+  &&
+  A = \frac{Ga^2}{12 Re}=\frac{\Delta \rho g (2a)^2}{12 \mu_f U}
+  \label{eq:A_general}
+\end{align*}
 \end{frame}
 
 \begin{frame}
