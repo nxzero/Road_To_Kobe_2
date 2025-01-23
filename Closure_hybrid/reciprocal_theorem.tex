@@ -108,6 +108,7 @@ The boundary conditions can also be written as,
     \textbf{n}\cdot\textbf{u}_f^{(0)}
     &= \textbf{U}[\textbf{x},t]\cdot \textbf{n} \\
     \textbf{n}\cdot\textbf{u}_f^{(1)}
+    \label{eq:bc_inertia_U}
     &= 0, \\
     \label{eq:bc_non_inertia}
     (\bm\sigma_f^{(0)}\cdot\textbf{n})\cdot (\bm\delta - \textbf{nn})
@@ -692,7 +693,7 @@ Where we have noted $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}^* = \pavg{\text
 Following, \citet{stone2001inertial} we now use the test problem of a point source of strength $Q$ located at the center of the sphere, in this case the test velocity  and stress fields, reads, 
 \begin{align*}
     \hat{\textbf{u}}_f = \frac{Q}{4\pi} \frac{\textbf{r}}{r^3}
-    && \hat{\bm\sigma}_f = \mu_f \frac{Q}{2\pi}\left(
+    && \hat{\bm\sigma}_f =  \frac{Q}{2\pi}\left(
         \frac{\bm\delta}{r^3}
         - \frac{3 \textbf{rr}}{r^5}
     \right)
@@ -701,7 +702,7 @@ Using, this solution in \ref{eq:stepone} gives,
 \begin{align*}
     \intS{ \textbf{r}\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
     = 
-    \intS{\textbf{u}_f^{(1)} \cdot  \mu_f \frac{1}{2\pi}\left(
+    \intS{\textbf{u}_f^{(1)} \cdot   \frac{1}{2\pi}\left(
         \bm\delta
         - 3 \textbf{rr}
     \right) \cdot \textbf{n}}
@@ -709,8 +710,17 @@ Using, this solution in \ref{eq:stepone} gives,
     = 
     - \intOf{ \frac{\textbf{r}}{r^3}\cdot  \textbf{f}^{(0)}_f}
 \end{align*}
-Since $\intS{\textbf{u}^{(1)} \cdot \textbf{n}} =0$ due to the divergence free property of $\textbf{u}^{(0)}$. 
-Setting $\textbf{u}^{(0)} = \textbf{U}\cdot \mathcal{U}_f$, we obtain, 
+Since $\intS{\textbf{u}^{(1)} \cdot \textbf{n}} =0$ due to \ref{eq:bc_inertia_U}.  
+Then, setting $\textbf{u}^{(0)} = \textbf{U}\cdot \mathcal{U}_f$, we obtain, 
+\begin{equation}
+    \intOf{(\mathcal{E}_f )_{ijk}  (\textbf{f}^{(0)}_f)_k}
+    =
+    \intOf{(\mathcal{E}_f )_{ijk}  
+    (\pddt \textbf{u}_f^{(0)}
+    - \textbf{u}_f^{(0)} \cdot \grad \textbf{U}
+    + (\textbf{u}_f^{(0)} - \textbf{U})\cdot \grad \textbf{u}_f^{(0)}
+    )_k}
+\end{equation}
 \begin{equation}
     \pSavg{ \textbf{r}\cdot  \bm\sigma_f^{(1)} \cdot \textbf{n}}
     = \phi \frac{3\lambda^2 + 6\lambda + 4}{16(\lambda +1 )^2} (\textbf{u}_{pf}^* \cdot \textbf{u}_{pf}^*
