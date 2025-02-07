@@ -10,6 +10,7 @@
 \ProcessOptions\relax
 \LoadClass{beamer}
 \logo{
+    \transparent{0.5}
 \includegraphics[width=.1
 \textwidth]{image/Logo_IFPEN.png}
 \vspace{-1cm}}
@@ -85,10 +86,10 @@ future}
 \newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n}_k }
 % \renewcommand{\Jump}[1]{\sum_{k=d,f} \left[#1\right] \cdot \textbf{n}_k }
 
-\newcommand{\intOf}[2][\alpha]{\int_{\Omega_f} #2 d\Omega}
-\newcommand{\intO}[2][\alpha]{\int_{\Omega_{#1}} #2 d\Omega}
+\newcommand{\intOf}[2][\alpha]{\int_{V_f} #2 dV}
+\newcommand{\intO}[2][\alpha]{\int_{V_{#1}} #2 dV}
 % \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
-\newcommand{\intS}[2][\alpha]{\oint_{\Gamma_{#1}} #2 d\Gamma}
+\newcommand{\intS}[2][\alpha]{\oint_{S_{#1}} #2 dS}
 % \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
 \newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
 \newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
@@ -114,3 +115,4 @@ future}
 
 % \newcommand{\numref}[1]{\ref{#1}}
 \renewcommand{\ref}[1]{\autoref{#1}}
+\usepackage{transparent}

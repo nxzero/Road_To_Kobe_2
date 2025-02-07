@@ -35,6 +35,8 @@ proper: clean
 	-rm closure_ellipsoidal.pdf
 	-rm ictam.pdf
 	-rm EulerEuler.pdf
+	-rm THESE.pdf
+	-rm Reciprocal_theorem.pdf
 
 diff: clean
 	latexpand microstructure.tex > microstructure_new.tex

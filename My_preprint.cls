@@ -164,13 +164,11 @@
 \newcommand{\intOF}[2][\alpha]{\int_{\Omega_{#1}(\FF,t)} #2 d\Omega}
 \newcommand{\intS}[2][\alpha]{\oint_{\Gamma_{#1}} #2 d\Gamma}
 \newcommand{\intSF}[2][\alpha]{\oint_{\Gamma_{#1}(\FF,t)} #2 d\Gamma}
+\newcommand{\intL}[1]{\int_0^1 \delta_{\textbf{x}-\lambda \textbf r} #1 d\lambda}
 % \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
 \newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
 \newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
-\newcommand{\pMavg}[1]{\mathscr{M}\!\!\left[#1\right]}
-\newcommand{\pMOavg}[1]{\mathscr{M}_\Omega\!\!\left[#1\right]}
-\newcommand{\pMSavg}[1]{\mathscr{M}_\Sigma\!\!\left[#1\right]}
-
+\newcommand{\pSMavg}[1]{\pavg{\intS{\intL{ #1 }}}}
 
 %%% Utiliser pour les commentaires
 \newcommand{\JL}[1]{\color{red}#1\color{black}}
