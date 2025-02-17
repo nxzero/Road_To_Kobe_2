@@ -86,13 +86,12 @@ future}
 \newcommand{\Jump}[1]{\llbracket #1 \rrbracket \cdot \textbf{n}_k }
 % \renewcommand{\Jump}[1]{\sum_{k=d,f} \left[#1\right] \cdot \textbf{n}_k }
 
-\newcommand{\intOf}[2][\alpha]{\int_{V_f} #2 dV}
-\newcommand{\intO}[2][\alpha]{\int_{V_{#1}} #2 dV}
-% \renewcommand{\intO}[1]{ ( #1 )_{\Omega}}
-\newcommand{\intS}[2][\alpha]{\oint_{S_{#1}} #2 dS}
-% \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
-\newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
-\newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
+\newcommand{\intOf}[2][i]{\int_{V_f} #2 dV}
+\newcommand{\intO}[2][i]{\int_{V_{#1}} #2 dV}
+\newcommand{\intS}[2][i]{\oint_{S_{#1}} #2 dS}
+
+\newcommand{\pOavg}[2][i]{\pavg{\intO[#1]{#2}}}
+\newcommand{\pSavg}[2][i]{\pavg{\intS[#1]{#2}}}
 \newcommand{\pMavg}[1]{\mathscr{M}\!\!\left[#1\right]}
 \newcommand{\pMOavg}[1]{\mathscr{M}_\Omega\!\!\left[#1\right]}
 \newcommand{\pMSavg}[1]{\mathscr{M}_\Sigma\!\!\left[#1\right]}
