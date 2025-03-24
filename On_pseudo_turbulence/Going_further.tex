@@ -1,9 +1,44 @@
-\section{Compute the influence of two nearest particles ? }
+\section{What about the remaining terms and the C.L divergence paradox }
 
+In \ref{chap:pseudoturbulence} we demonstrated that the Reynolds stress tensor could be expressed as,
+\begin{equation}
+    \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+    = 
+    \phi_f
+    \int_{\mathbb{R}^3}
+    \textbf{v}_f^\text{nst}
+    \textbf{v}_f^\text{nst}
+    P_\text{nst}^f
+    d\textbf{r}
+    + 
+    \phi_f
+    \int_{\mathbb{R}^3}
+    \textbf{v}_f^\text{nst}
+    \textbf{v}_f^\text{nst}
+    P_\text{nst}^f
+    d\textbf{y}
+    + 
+    \int_{\mathbb{R}^3}
+    \avg{
+        \chi_f
+        \textbf{u}_f''
+        \textbf{u}_f''
+        % \sum_i 
+        % \delta(\textbf{x}+\textbf{y}-\textbf{x}_i)
+        % \delta(\textbf{w}-\textbf{u}_i)
+        % h_i
+        \delta_\text{nst}
+    }
+    d\textbf{y}.
+    \label{ap:eq:relation_ensemble_nst}
+\end{equation}
+For the sake of simplicity, in this appendix we consider that all droplets posses the same center of mass velocity $\textbf{u}_p$. 
+Although the first term on the RHS can be computed at $\mathcal{O}(\phi)$ (see \ref{chap:pseudoturbulence}) no justifications have been provided to ensure that the second term could be neglected. 
+In this appendix we demonstrate that, (1) the nearest particles' statistics formulation of the Reynolds stress \eqref{ap:eq:relation_ensemble_nst} leads to the same results as \citet{caflisch1985variance} if one consider the presence of the second term, and (2) that for periodic domain containing several droplets/particles, only the averaged wake of the nearest neighbor is predominant on the final result. 
 
-\subsection{Expressing the Reynolds stress}
+\subsection{Contribution of the second-nearest droplet}
 
-In the first place let us introduce the relation, 
+Using similar method to what is done for \ref{ap:eq:relation_ensemble_nst} we may demonstrate that,  
 \begin{align*}
     \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}[\textbf{x},t]
     &= 
@@ -17,7 +52,7 @@ In the first place let us introduce the relation,
     \int_{\mathbb{R}^3}
     \int_{\mathbb{R}^3}
     \avg{\chi_f \textbf{u}_f'\textbf{u}_f' 
-    \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})
+    \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r}_1)
     h_i
     \sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r}_2)
     h_j
@@ -25,41 +60,57 @@ In the first place let us introduce the relation,
     d\textbf{r}_2
     d\textbf{r}_1
 \end{align*}
-then let us introduce the disturbance field, 
+Doing so we arrive at the conslusion that, 
+\begin{multline}
+    \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+    = 
+    \phi_f
+    \int_{\mathbb{R}^3}
+    \textbf{v}_f^\text{nst}
+    \textbf{v}_f^\text{nst}
+    P_\text{nst}^f
+    d\textbf{r}_1
+    + 
+    \phi_f
+    \int_{\mathbb{R}^6}
+    \textbf{v}_f^\text{2-nst}
+    \textbf{v}_f^\text{2-nst}
+    P_\text{2-nst}^f
+    d\textbf{r}_1
+    d\textbf{r}_2 \\
+    + 
+    \int_{\mathbb{R}^6}
+    \avg{
+        \chi_f
+        \textbf{u}_f'''
+        \textbf{u}_f'''
+        % \sum_i 
+        % \delta(\textbf{x}+\textbf{y}-\textbf{x}_i)
+        % \delta(\textbf{w}-\textbf{u}_i)
+        % h_i
+        \delta_\text{nst}
+    }
+    d\textbf{r}_1
+    d\textbf{r}_2.
+\end{multline}
+where we have introduced the following notation, 
 \begin{align}
     \phi_f
     &= 
-    \avg{\chi_f 
-    % \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})
-    % h_i
-    % \sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r})
-    % h_j
-    }\\
-    P_\text{1-f}
-    &= 
-    \avg{\chi_f  
-    \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})
-    % h_i
-    % \sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r})
-    % h_j
-    }\\
-    P_\text{nst-f}
+    \avg{\chi_f}\\
+    \phi_f P_\text{nst}^f 
     &= 
     \avg{\chi_f  
     \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})
     h_i
-    % \sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r})
-    % h_j
     }\\
-    P_\text{2-f}
+    \phi_f P_\text{nst}^f \textbf{u}_f^\text{nst}
     &= 
     \avg{\chi_f  
     \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})
-    % h_i
-    \sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r})
-    % h_j
+    h_i
     }\\
-    P_\text{2-nst-f}
+    \phi_f P_\text{2-nst}^f
     &= 
     \avg{\chi_f  
     \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})
@@ -67,16 +118,138 @@ then let us introduce the disturbance field,
     \sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r})
     h_j
     }\\
-    P_\text{2-nst-f} \textbf{v}_f^\text{2-nst}
+    \phi_f P_\text{2-nst}^f \textbf{u}_f^\text{2-nst}
     &= 
-    \avg{\chi_f \textbf{u}_f' 
+    \avg{\chi_f \textbf{u}_f^0 
     \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})
     h_i
     \sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r})
     h_j
-    }\\
+    }
 \end{align}
-From these definitions we may deduce the relations, 
+where $P_\text{2-nst}^f[\textbf{r}_1, \textbf{r}_2|\textbf{x}]$ is the probability of finding the center of mass of the two nearest droplets to the point $\textbf{x}$ (being occupied by the continuous phase) at the location $\textbf{r}_1$ and $\textbf{r}_2$.  
+
+Additionally, we introduce the disturbance velocity fields, 
+\begin{align}
+    \textbf{v}^\text{nst-f}_f[\textbf{r}_1,\textbf{x}] &= \textbf{u}^\text{nst-f}_f - \textbf{u}_f\\
+    \textbf{v}^\text{2-nst-f}_f[\textbf{r}_1,\textbf{r}_2,\textbf{x}] &= \textbf{u}^\text{2-nst-f}_f - \textbf{u}_f^\text{nst-f}\\
+    \textbf{v}'''_f &= \textbf{u}^0_f - \textbf{u}^\text{2-nst-f}_f
+\end{align}
+As discussed in the body of the text it is also useful to consider the bulk velocity evaluated at an arbitrary point \textbf{z}, knowing that the continuous phase is present at \textbf{x} and that the nearest neighbor to this point is present at $\textbf{r}_1$, and eventually that a second-nearest neighbor is present at $\textbf{r}_2$. 
+Therefore, we introduce the fields, 
+\begin{align}
+    \textbf{v}^\text{nst-f}[\textbf{z}| \textbf{r}_1,\textbf{x}] &= \textbf{u}^\text{nst} - \textbf{u}\\
+    \textbf{v}^\text{2-nst-f}[\textbf{z}| \textbf{r}_1,\textbf{r}_2,\textbf{x}] &= \textbf{u}^\text{2-nst} - \textbf{u}^\text{nst}\\
+\end{align}
+The alternative definitions of these fields are, 
+\begin{align}
+    P_\text{nst-f}^f \textbf{v}^\text{nst-f} &= \avg{ \textbf{u}^0 \left[\chi_f \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})h_i - P_\text{nst}^f\right]}\\
+    P_\text{2-nst-f}^f \textbf{v}^\text{2-nst-f} &= \avg{ \textbf{u}^0 \chi_f \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})h_i \left[\sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r}) h_j  - P_\text{2-nst}^\text{nst-f} \right] }
+\end{align}
+where $P_\text{2-nst}^\text{nst-f}$ is the probability of finding the second-nearest neighbor to \textbf{x} at $\textbf{r}_2$ knowing that the first nearest neighbor is already at $\textbf{r}_1$. 
+For sake of brevity we introduce the notations, 
+\begin{align}
+    \delta_\text{nst-f}[\FF,t,\textbf{x},\textbf{r}_1] &\to \chi_f \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})h_i \\
+    \delta_\text{2-nst-f}[\FF,t,\textbf{x},\textbf{r}_1,\textbf{r}_2]  &\to  \chi_f \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r}_1)h_i \sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r}_2) h_j  \\
+    \delta_\text{nst-f}'[\FF,t,\textbf{x},\textbf{r}_1] &\to \chi_f \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})h_i - P_\text{nst}^f\\
+    \delta_\text{2-nst-f}'[\FF,t,\textbf{x},\textbf{r}_1,\textbf{r}_2]  &\to  \chi_f \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r}_1)h_i \left[\sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r}_2) h_j  - P_\text{2-nst}^\text{nst-f} \right]
+\end{align}
+With this notation note that, 
+\begin{align}
+    \avg{\delta_\text{2-nst-f}'} &= 0\\
+    P_\text{2-nst-f} \textbf{v}^\text{2-nst-f} &= \avg{\delta_\text{2-nst-f}' \textbf{u}^0}\\
+    P_\text{2-nst-f} (\phi_f^\text{2-nst-f} -\phi_f^\text{nst-f}) &= \avg{\delta_\text{2-nst-f}' \chi_f}= - \avg{\delta_\text{2-nst-f}' \chi_d}= - P_\text{2-nst-f} (\phi_d^\text{2-nst-f} -\phi_d^\text{nst-f})
+\end{align} 
+The methodology to derive the mass and momentum equations governing $\textbf{v}^\text{nst}$ and $\textbf{v}^\text{2-nst}$ is then clear, we multiply the local single-fluid formulation of the momentum equation evaluated at a point \textbf{z} by $\delta_\text{2-nst-f}'$ or $\delta_\text{nst-f}'$, and ensemble average the resulting equations. 
+
+In Stokes regime the single fluid formulation of the mass and momentum equations reads as, 
+\begin{align}
+    \div \textbf{u}^0 & =0 \\
+    \div (\chi_f \bm\sigma_f^0 + \chi_d \bm\sigma_d^0 + \delta_\Gamma \bm\sigma_\Gamma^0)
+    &=
+    - (\chi_d \rho_d + \chi_f \rho_f) \textbf{g}
+\end{align}
+Averaging gives, 
+\begin{align}
+    \div \avg{\delta_\text{2-nst-f}' \textbf{u}^0} & =0 \\
+    \div \avg{\delta_\text{2-nst-f}' (\chi_f \bm\sigma_f^0 + \chi_d \bm\sigma_d^0 + \delta_\Gamma \bm\sigma_\Gamma^0)}
+    &=
+    - \avg{\delta_\text{2-nst-f}'(\chi_d \rho_d + \chi_f \rho_f) \textbf{g}}
+\end{align}
+
+Then, noticing that, 
+\begin{align*}
+    \avg{\delta_\text{2-nst-f}' \chi_f \bm\sigma_f^0}
+    =&
+    -  P^f_\text{2-nst-f} \tau^\text{2-nst-f}_f \bm\delta
+    + \mu_f P^f_\text{2-nst-f} \left[
+        \grad \textbf{v}^\text{2-nst-f}
+        + (\grad \textbf{v}^\text{2-nst-f})^\dagger
+    \right]\\
+    &- \avg{ \chi_d \delta_\text{2-nst-f}'\textbf{e}_d^0 } 
+    % +  P^f_\text{2-nst-f} (\phi_d^\text{2-nst-f} p^\text{2-nst-f}_f - \phi_d^\text{nst-f} p^\text{nst-f})
+    + \avg{\chi_d (p^\text{2-nst-f}_f \delta_\text{2-nst-f} - \delta_\text{nst-f}P_\text{2-nst}^\text{nst-f} p^\text{nst-f}_f )}\\
+    \avg{\delta_\text{2-nst-f}'(\chi_d \rho_d + \chi_f \rho_f)}
+    &=
+    \avg{\delta_\text{2-nst-f}'\chi_d (\rho_d - \rho_f)}
+\end{align*}
+where $\tau^\text{2-nst}_f = p_f^\text{2-nst-f} - p_f^\text{nst-f}$ is the disturbance pressure field. 
+For any tensor $\textbf{A}$ appearing under the divergence sign in the momentum equation we may write 
+\begin{equation}
+    \div\avg{\chi_d \textbf{A}}
+    =
+    \div\pOavg{\textbf{A}}
+    -\frac{1}{2} \grad\grad : \pOavg{\textbf{Ar}+\textbf{rA}}
+\end{equation}
+Additionally, any integral of the stress, or moments of the stress may be written as, 
+\begin{align*}
+    \intO{
+        \bm\sigma_d^0
+    }
+    + 
+    \intS{
+        \bm\sigma_\Gamma^0
+    }
+    &=
+    \intS{\textbf{r}\bm\sigma_f^0 \cdot \textbf{n}}\\
+    \intO{
+        \textbf{r}\bm\sigma_d^0+ \textbf{r}\bm\sigma_d^0
+    }
+    + 
+    \intS{
+        \textbf{r}\bm\sigma_\Gamma^0+\textbf{r}\bm\sigma_\Gamma^0
+    }
+    &=
+    \intS{\textbf{rr}\bm\sigma_f^0 \cdot \textbf{n}}
+    + 
+    \rho_d \intO{\textbf{rr}}
+\end{align*}
+
+Using this formulation for the stresses tensors and also for the pressure and internal shear tensor we arrive at the conclusion that, 
+\begin{align}
+    P_\text{2-nst-f}\div \textbf{u}^\text{2-nst-f} & =0 \\
+    P_\text{2-nst-f}\div \bm\Sigma^\text{2-nst-f}
+    &=
+    P_\text{2-nst-f}\div \bm\sigma^\text{2-nst-f}_\text{eff}
+    - \avg{\delta_\text{2-nst-f}'\delta_p  (\rho_d - \rho_f) \intO{}}
+\end{align}
+with the effective stress defined as, 
+\begin{multline}
+    \bm\sigma^\text{2-nst-f}_\text{eff}
+    =
+    - \avg{\delta_p \delta_\text{2-nst-f}'\intS{\textbf{r}\bm\sigma_f^0 \cdot \textbf{n}}}
+    + \avg{\delta_p \delta_\text{2-nst-f}' \intO{\textbf{e}_d^0} }  \\
+    -\bm\delta \avg{\delta_p \left(\intO{p^\text{2-nst-f}_f }\delta_\text{2-nst-f} - \delta_\text{nst-f}P_\text{2-nst}^\text{nst-f} \intO{p^\text{nst-f}_f} \right)}\\
+    + \frac{1}{2}\div \left[
+        \avg{\delta_p \delta_\text{2-nst-f}'\intS{\textbf{rr}\bm\sigma_f^0 \cdot \textbf{n}}}
+        + \avg{\delta_p \delta_\text{2-nst-f}'\rho_f \intO{\textbf{rr}}}
+    \right]\\
+    + \frac{1}{2}\div \left[
+        - \avg{\delta_p \delta_\text{2-nst-f}' \intO{\textbf{r}\textbf{e}_d^0+ \textbf{e}_d^0 \textbf{r}} }  \right. \\ \left. 
+        - \avg{\delta_p \left(\intO{p^\text{2-nst-f}_f (\textbf{r}\bm\delta + \bm\delta \textbf{r})}\delta_\text{2-nst-f} - \delta_\text{nst-f}P_\text{2-nst}^\text{nst-f} \intO{p^\text{nst-f}_f (\textbf{r}\bm\delta + \bm\delta \textbf{r})} \right)}
+    \right]
+\end{multline}
+
 \begin{align}
     P_\text{2-nst-f}[\textbf{r}_2,\textbf{r}_1,\textbf{x}]
     &= 
@@ -110,7 +283,7 @@ Similarly
     =
     P_\text{2-nst-f}[\textbf{r}_2 ,\textbf{r}_1 , \textbf{x}] / P_\text{2-f}[\textbf{r}_2 ,\textbf{r}_1 ,\textbf{x}]
     =
-    P_\text{2- nst-f}[\textbf{r}_2 |\textbf{r}_1 , \textbf{x}] 
+    P_\text{2-nst-f}[\textbf{r}_2 |\textbf{r}_1 , \textbf{x}] 
     / 
     P_\text{2-f}[\textbf{r}_2 |\textbf{r}_1 ,\textbf{x}]
     h_\text{1-nst}
@@ -578,7 +751,7 @@ We obtain indeed,
 \end{equation}
 
 
-\subsection{Evaluation of the effect of a second nearest part on the RS}
+\subsubsection{Evaluation of the effect of a second nearest part on the RS}
 
 In the first place let us introduce the relation, 
 \begin{align*}
@@ -768,7 +941,7 @@ The second integral,
 
 
 
-\section*{$N^{th}$ nearest neighbor}
+\subsection*{$N^{th}$ nearest neighbor}
 
 \begin{equation}
     \avg{
@@ -791,7 +964,7 @@ The conditional field,
 
 
 
-\section*{conditional eq for the two-nearest neighbor equaiton}
+\subsection*{conditional eq for the two-nearest neighbor equaiton}
 
 
 For consistness we note, 
@@ -1035,7 +1208,7 @@ Note that the terms with $\delta(\textbf{r}_{1,2} - \textbf{z})$ in factor arent
 \end{align}
 
 
-\section{Recursive demonstration with simplified PDF}
+\subsection{Recursive demonstration with simplified PDF}
 Let us consider the pdf, 
 \begin{equation}
     P_n [\textbf{r}_n \ldots \textbf{r}_1|\textbf{x}]
@@ -1119,4 +1292,158 @@ Assuming $u^i$ is the stokslet of the part in $i^{th}$ wehavegot,
 \end{align}
 
 
+\subsection{Finite sized domain. }
 
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \draw[fill=gray!10] (0,0) circle (4);
+        \draw[dashed,fill=white] (0,0) circle (0.5);
+        \draw[->](0,0)--(4,0)node[midway,below]{$R$};
+        \draw[->](0,0)--(0,0.5)node[midway,right]{$a$};
+        \node (O) at (0,0){$\bullet$}; 
+        \node (r1) at (-1.5,0.3){$\bullet$}; 
+        \node (r2) at (1,3){$\bullet$}; 
+        \node (r3) at (-1,-3){$\bullet$}; 
+        \node (r4) at (1.5,-2.3){$\bullet$}; 
+        \draw (r1) node [above right] {$\textbf{r}_1$};
+        \draw (r2) node [above right] {$\textbf{r}_2$};
+        \draw (r3) node [above right] {$\textbf{r}_3$};
+        \draw (r4) node [above right] {$\textbf{r}_4$};
+        \draw[->] (0,0) -- (r1) node [midway, below] {$r_1$};
+        \node  at (2.5,2.5){$\Omega_R$}; 
+        \draw[dashed] (0,0) circle (1.529);
+        \node  at (1,0.8){$\Omega_1$}; 
+    \end{tikzpicture}
+\end{figure}
+We assume that, 
+\begin{itemize}
+    \item The number of droplets /particles in the domain is constant and is noted $N$. 
+    Droplets might rise and go out the domain however we assume that the same number go inside at the same time as the domain is supposed either physical or periodic, or large enough. 
+    \item The size of the domain $\Omega_R$ is $4/3 \pi R^3$
+    \item All the length can be made dimensionless with the radius of a droplet noted $a$.
+\end{itemize}
+
+
+\subsubsection{Decomposition of the 2points nearest particle statistics probability}
+
+We search to compute the probability distrbution $P_\text{2-nst-f}[\textbf{r}_1,\textbf{r}_2,\textbf{x}]$ defined as, 
+\begin{align}
+    \phi_f
+    &= 
+    \avg{\chi_f}\\
+    \phi_f P^f_1
+    &= 
+    \avg{\chi_f \sum_{i=1}^{N}\delta(\textbf{x}_i - \textbf{x} - \textbf{r})}\\
+    \phi_f P_\text{nst}^f =
+    \phi_f P_1^f h_\text{nst}^\text{1-f}
+    &= 
+    \avg{\chi_f  
+    \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})
+    h_i
+    }\\
+    \phi_f P_\text{2-nst}^f
+    &= 
+    \avg{\chi_f  
+    \sum_i^N \delta(\textbf{x}_i - \textbf{x}- \textbf{r})
+    h_i
+    \sum_{j\neq i}^N \delta(\textbf{x}_j - \textbf{x}- \textbf{r})
+    h_j
+    }
+\end{align}
+
+This distribution can be decomposed as, 
+\begin{equation}
+    P_\text{nst-f-2}
+    =
+    \phi_f
+    P_\text{nst}^f
+    P_\text{2-nst}^\text{nst-f}
+\end{equation}
+Each of these distributions can then be decomposed as, 
+\begin{align}
+    P_\text{nst}^f
+    &=
+    P_\text{1}^f
+    h^\text{1-f}_\text{nst}\\
+    P_\text{2-nst}^\text{nst-f}
+    &=
+    P_\text{2}^\text{nst-f}
+    h^\text{2-f}_\text{nst}
+\end{align}
+where, 
+\begin{itemize}
+    \item $P_\text{1}^f$ is the probability of finding a particle at $\textbf{r}_1$ knowing the continuous phase is at $\textbf{x}$
+    \item $h^\text{1-f}_\text{nst}$ is the probability that the particle at $\textbf{r}_1$ is the nearest one to the point \textbf{x} knowing that there is indeed a particle at $\textbf{r}_1$ and the fluid at \textbf{x}. 
+    \item $P_\text{2}^\text{nst-f}$ is the probability of finding a particle at $\textbf{r}_2$ knowing the continuous phase is at $\textbf{x}$ and the nearest particle to \textbf{x} is at $\textbf{r}_1$. 
+    \item $h^\text{2-f}_\text{nst}$ is the probability that the particle at $\textbf{r}_2$ is the second-nearest one to the point \textbf{x} knowing that there is indeed a particle at $\textbf{r}_1$ and the fluid at \textbf{x}. 
+\end{itemize}
+
+\subsubsection{Unconditional number density}
+The probability of finding a particle center of mass in a small element $d\textbf{x}$ around a point \textbf{x} is, 
+\begin{equation}
+    n_p(\textbf{x}+ \textbf{r})
+    = \avg{\sum_{i=1}^N \delta(\textbf{x}-\textbf{x}_i[\FF,t])}
+    =
+    \frac{N}{\frac{4}{3}\pi R^3}
+    \;\;\;\; \forall |\textbf{r}| = r < R  
+\end{equation}
+Additionally we can define the volume fraction, 
+\begin{equation}
+    \phi = 4/3 \pi a^3 n_p
+\end{equation}
+\subsubsection{One point conditioned particle statistics}
+
+At the first level or accuracy we stipulate that the number density at a given point \textbf{x}+\textbf{r} within $\Omega_R$ knowing that the continuous phase is at \textbf{x} can be defined as, 
+\begin{equation}
+    P_\text{1}^f(\textbf{x}+ \textbf{r})
+    = \avg{\sum_{i=1}^N \delta(\textbf{x}-\textbf{x}_i[\FF,t])}
+    =
+    \frac{N}{\frac{4}{3}\pi R^3 (1 - (a/R)^3)}
+    =
+    \frac{n_p}{ (1 - (a/R)^3)}
+    \;\;\;\; \forall a< r < R   
+\end{equation}
+The second equality is determined using ``ergodic'' assumption. 
+
+The probability $h^\text{1-f}_\text{nst}$ is the probability of finding no particle in the domain, $\Omega_1$. 
+The methodology is  as follow,
+(1) The probability of finding a particle in the infinitesimal portion of the volume $V_1$ is $P^\text{1-f}_1 dV_1$ where $dV_1 = V_1 / n$ for $n\in \mathbb{N}$. 
+(2) $P^\text{1-f}_1$ is the number density of particles conditioned on that the nearest particles to the point \textbf{x} is at $\textbf{r}_1$, thus, 
+\begin{equation}
+    P^\text{nst-f}_1
+    =
+    \frac{N - 1}{\frac{4}{3}\pi R^3 (1 - (r_1/R)^3)}
+    % \approx
+    % \frac{N_v }{\frac{4}{3}\pi R^3 (1 - (r_1/R)^3)}
+    = 
+     \frac{n_p - \frac{3}{4 \pi R^3}}{1 - (r_1/R)^3}
+\end{equation} 
+(3) The probability of finding no particles in any of these $n$ subdomain is $(1 - V_1 P^\text{nst-f}_1 /n)^n$, hence, 
+\begin{equation}
+    h^\text{1-f}_\text{nst}
+    =
+    \lim_{n\to\infty}
+    (1 - \frac{V_1 P^\text{nst-f}_1}{n})^n
+    =
+    e^{-P^\text{nst-f}_1 V_1 }
+    =
+    e^{- \frac{\phi - \frac{a^3}{ R^3}}{1 - (r_1/R)^3}  (r_1^3 - 1) }
+\end{equation}
+
+
+Hence, the probability $P_\text{nst}^f$ is defined as, 
+\begin{equation}
+    P_\text{nst}^f
+    =
+    \frac{3 a^3}{4 \pi}\frac{\phi}{ (1 - (a/R)^3)}
+    e^{- (\phi - \frac{a^3}{ R^3})\frac{(r_1^3 - 1)}{1 - (r_1/R)^3}   }
+\end{equation}
+Making all the length dimensionless with the particles radius gives 
+\begin{equation}
+    P_\text{nst}^f
+    =
+    \frac{3 }{4 \pi}\frac{\phi}{ 1 - 1/R^3}
+    e^{- \phi \frac{r_1^3 -1 }{1 - (r_1/R)^3}}
+\end{equation}

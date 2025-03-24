@@ -5,6 +5,7 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions\relax
 \LoadClass{book}
+\usepackage[utf8]{inputenc}
 
 \RequirePackage{graphicx}
 % \RequirePackage{tikz}
