@@ -466,6 +466,120 @@ Removing the trace form this equation yields;,
 As expected these require computing surface integral. 
 
 
+
+\subsection{Volume jacobian}
+
+let \textbf{M} be a point in the deformable particle then, 
+\begin{equation}
+    \textbf{M}
+    =
+    r(1+f(\varphi,\theta))\textbf{e}_r
+    =
+    r(1+f(\varphi,\theta))\begin{pmatrix}
+        \cos\varphi \sin\theta\\
+        \sin\varphi \sin\theta\\
+        \cos\theta
+    \end{pmatrix}
+\end{equation}
+let,
+\begin{align}
+    \textbf{e}_{\theta}
+    =
+    \frac{\partial \textbf{e}_r}{\partial \theta}
+    = 
+    \begin{pmatrix}
+        \cos \varphi \cos\theta\\
+        \sin \varphi \cos\theta\\
+        -\sin\theta\\
+    \end{pmatrix}
+    &&
+    \textbf{e}_{\varphi}
+    =
+    \frac{\partial \textbf{e}_r}{\partial \varphi}
+    = 
+    \begin{pmatrix}
+        -\sin \varphi \sin\theta\\
+        \cos \varphi \sin\theta\\
+        0\\
+    \end{pmatrix}\\
+\end{align}
+
+Hence, 
+\begin{align}
+    \frac{\partial \textbf{M}}{\partial r}
+    &=
+    (1+f)\textbf{e}_r
+    \\
+    \frac{\partial \textbf{M}}{\partial \varphi}
+    &=
+    r(f_\varphi \textbf{e}_r
+    + (1 + f) \textbf{e}_{\varphi})
+    \\
+    \frac{\partial \textbf{M}}{\partial \theta}
+    &=
+    r(f_\theta \textbf{e}_r
+    + (1 + f) \textbf{e}_{\theta})
+\end{align}
+The jacobian
+\begin{align*}
+    &|\frac{\partial \textbf{M}}{\partial (r,\varphi,\theta)}| =\\ 
+    &\left|
+    \begin{matrix}
+        (1+f)\cos\varphi \sin\theta&
+        r(f_\varphi \cos\varphi \sin\theta - (1 + f)\sin \varphi \sin\theta)&
+        r(f_\theta  \cos\varphi \sin\theta + (1 + f)  \cos\varphi \cos\theta)\\
+        (1+f)\sin\varphi \sin\theta&
+        r(f_\varphi \sin\varphi \sin\theta + (1 + f) \cos \varphi \sin\theta)&
+        r(f_\theta  \sin\varphi \sin\theta + (1 + f)  \sin\varphi \cos\theta)\\
+        (1+f)\cos\theta&
+        rf_\varphi \cos\theta &
+        r(f_\theta \cos\theta - (1 + f)  \sin\theta)
+    \end{matrix}
+    \right|\\
+\end{align*}
+But also, 
+\begin{align*}
+    |\frac{\partial \textbf{M}}{\partial (r,\varphi,\theta)}|
+    &=
+    \left|
+    \begin{matrix}
+        \frac{\partial \textbf{M}}{\partial r}
+        &\frac{\partial \textbf{M}}{\partial \varphi}
+        &\frac{\partial \textbf{M}}{\partial \theta}
+    \end{matrix}\right|
+    =
+    \frac{\partial \textbf{M}}{\partial r}
+    \cdot
+    \frac{\partial \textbf{M}}{\partial \varphi}
+    \times 
+    \frac{\partial \textbf{M}}{\partial \theta}\\
+    &=
+    r^2 (1+f)\textbf{e}_r\cdot
+        (f_\varphi \textbf{e}_r + (1+f)\textbf{e}_\varphi)
+        \times (f_\theta \textbf{e}_r + (1+f)\textbf{e}_\theta)\\
+    &=
+    r^2 (1+f)^2\textbf{e}_r\cdot
+        ( f_\varphi \textbf{e}_r\times \textbf{e}_\theta + f_\theta \textbf{e}_\varphi \times  \textbf{e}_r  + (1+f)\textbf{e}_\varphi \times \textbf{e}_\theta)\\
+        &= r^2 (1+f)^3 \sin\theta
+\end{align*}
+
+Because,
+\begin{equation}
+    \textbf{e}_r \cdot (\textbf{e}_\varphi \times \textbf{e}_\theta)=
+    \sin\theta
+\end{equation}
+So that the final jacobian reads, 
+\begin{equation}
+    |\frac{\partial \textbf{M}}{\partial (r,\varphi,\theta)}|
+    =
+    (1+f)^3
+    r^2 
+    (\sin\theta)
+\end{equation}
+
+
+\subsection{Surface jacobian}
+
 Let use the general parametrsiaition, 
 \begin{equation}
     \textbf{M}(\theta,\varphi)
@@ -484,16 +598,16 @@ The vector in the basis reads,
     \frac{\partial \textbf{M}}{\partial \varphi}
     =
     f_\varphi \textbf{e}_r
-    + (1 + f) \textbf{e}_{r,\varphi}
+    + (1 + f) \textbf{e}_{\varphi}
     \\
     \frac{\partial \textbf{M}}{\partial \theta}
     =
     f_\theta \textbf{e}_r
-    + (1 + f) \textbf{e}_{r,\theta}
+    + (1 + f) \textbf{e}_{\theta}
 \end{align}
 with,
 \begin{align}
-    \textbf{e}_{r,\theta}
+    \textbf{e}_{\theta}
     =
     \frac{\partial \textbf{e}_r}{\partial \theta}
     = 
@@ -503,14 +617,14 @@ with,
         -\sin\theta\\
     \end{pmatrix}
     &&
-    \textbf{e}_{r,\varphi}
+    \textbf{e}_{\varphi}
     =
     \frac{\partial \textbf{e}_r}{\partial \varphi}
     = 
     \begin{pmatrix}
         -\sin \varphi \sin\theta\\
         \cos \varphi \sin\theta\\
-        \cos\theta\\
+        0 \\
     \end{pmatrix}\\
 \end{align}
 Hence the general formulation of the Jacobi determinant is the norm of the vector,
@@ -520,37 +634,61 @@ Hence the general formulation of the Jacobi determinant is the norm of the vecto
     \times\frac{\partial \textbf{M}}{\partial \theta}
     &= 
     (1 + f)[
-        f_\varphi \textbf{e}_r \times \textbf{e}_{r,\theta}
-        + f_\theta  \textbf{e}_{r,\varphi} \times \textbf{e}_r
-        + (1 + f) \textbf{e}_{r,\varphi}\times \textbf{e}_{r,\theta}
+        f_\varphi \textbf{e}_r \times \textbf{e}_{\theta}
+        + f_\theta  \textbf{e}_{\varphi} \times \textbf{e}_r
+        + (1 + f) \textbf{e}_{\varphi}\times \textbf{e}_{\theta}
     ]\\
 \end{align}
+\begin{align}
+    \textbf{e}_r \times \textbf{e}_\theta
+    =
+    \begin{pmatrix}
+        -\sin\varphi\\
+        \cos\varphi\\
+        0\\
+    \end{pmatrix}
+    &&
+    \textbf{e}_\varphi \times \textbf{e}_r =
+    \begin{pmatrix}
+        \sin\theta\cos\theta \cos\varphi\\
+        \sin\theta\cos\theta \sin\varphi\\
+        -\sin^2\theta
+    \end{pmatrix}
+    &&
+    \textbf{e}_\varphi \times \textbf{e}_\theta =
+    \begin{pmatrix}
+        -\sin^2\theta\cos\varphi\\
+        -\sin^2\theta\sin\varphi\\
+        -\cos\theta\sin\theta
+    \end{pmatrix}
+\end{align}
+
 The absolute value of this tensor is the sqareroot of the scalar product 
 \begin{multline}
-    \textbf{J}\cdot \textbf{j}
+    \textbf{J}\cdot \textbf{J}
     = 
     (1 + f)^2[
-        f_\varphi \textbf{e}_r \times \textbf{e}_{r,\theta}
-        + f_\theta  \textbf{e}_{r,\varphi} \times \textbf{e}_r
-        + (1 + f) \textbf{e}_{r,\varphi}\times \textbf{e}_{r,\theta}
+        f_\varphi \textbf{e}_r \times \textbf{e}_{\theta}
+        + f_\theta  \textbf{e}_{\varphi} \times \textbf{e}_r
+        + (1 + f) \textbf{e}_{\varphi}\times \textbf{e}_{\theta}
     ]
     \cdot [
-        f_\varphi \textbf{e}_r \times \textbf{e}_{r,\theta}
-        + f_\theta  \textbf{e}_{r,\varphi} \times \textbf{e}_r
-        + (1 + f) \textbf{e}_{r,\varphi}\times \textbf{e}_{r,\theta}
+        f_\varphi \textbf{e}_r \times \textbf{e}_{\theta}
+        + f_\theta  \textbf{e}_{\varphi} \times \textbf{e}_r
+        + (1 + f) \textbf{e}_{\varphi}\times \textbf{e}_{\theta}
     ]\\
     =
     (1 + f)^2[
-        f_\varphi^2 (\textbf{e}_r \times \textbf{e}_{r,\theta})\cdot (\textbf{e}_r \times \textbf{e}_{r,\theta})
-        + f_\varphi f_\theta (\textbf{e}_r \times \textbf{e}_{r,\theta})\cdot (\textbf{e}_{r,\varphi} \times \textbf{e}_r)
-        + f_\varphi (1 + f) (\textbf{e}_r \times \textbf{e}_{r,\theta})\cdot (\textbf{e}_{r,\varphi}\times \textbf{e}_{r,\theta})
+        f_\varphi^2 (\textbf{e}_r \times \textbf{e}_{\theta})\cdot (\textbf{e}_r \times \textbf{e}_{\theta})
+        + f_\varphi f_\theta (\textbf{e}_r \times \textbf{e}_{\theta})\cdot (\textbf{e}_{\varphi} \times \textbf{e}_r)
+        + f_\varphi (1 + f) (\textbf{e}_r \times \textbf{e}_{\theta})\cdot (\textbf{e}_{\varphi}\times \textbf{e}_{\theta})
         \\
-        + f_\theta f_\varphi  (\textbf{e}_{r,\varphi} \times \textbf{e}_r)\cdot (\textbf{e}_r \times \textbf{e}_{r,\theta})
-        + f_\theta^2   (\textbf{e}_{r,\varphi} \times \textbf{e}_r)\cdot (\textbf{e}_{r,\varphi} \times \textbf{e}_r)
-        + f_\theta (1+f)   (\textbf{e}_{r,\varphi} \times \textbf{e}_r)\cdot  (\textbf{e}_{r,\varphi}\times \textbf{e}_{r,\theta}) \\
-        + (1 + f)f_\varphi (\textbf{e}_{r,\varphi}\times \textbf{e}_{r,\theta})\cdot (\textbf{e}_r \times \textbf{e}_{r,\theta})
-        + (1 + f)f_\theta (\textbf{e}_{r,\varphi}\times \textbf{e}_{r,\theta})\cdot (\textbf{e}_{r,\varphi} \times \textbf{e}_r)
-        + (1 + f)^2 (\textbf{e}_{r,\varphi}\times \textbf{e}_{r,\theta})\cdot(\textbf{e}_{r,\varphi}\times \textbf{e}_{r,\theta})
+        + f_\theta f_\varphi  (\textbf{e}_{\varphi} \times \textbf{e}_r)\cdot (\textbf{e}_r \times \textbf{e}_{\theta})
+        + f_\theta^2   (\textbf{e}_{\varphi} \times \textbf{e}_r)\cdot (\textbf{e}_{\varphi} \times \textbf{e}_r)
+        + f_\theta (1+f)   (\textbf{e}_{\varphi} \times \textbf{e}_r)\cdot  (\textbf{e}_{\varphi}\times \textbf{e}_{\theta}) \\
+        + (1 + f)f_\varphi (\textbf{e}_{\varphi}\times \textbf{e}_{\theta})\cdot (\textbf{e}_r \times \textbf{e}_{\theta})
+        + (1 + f)f_\theta (\textbf{e}_{\varphi}\times \textbf{e}_{\theta})\cdot (\textbf{e}_{\varphi} \times \textbf{e}_r)
+        + (1 + f)^2 (\textbf{e}_{\varphi}\times \textbf{e}_{\theta})\cdot(\textbf{e}_{\varphi}\times \textbf{e}_{\theta})
     ]
 \end{multline}
 Because, for any vector $\textbf{a}, \textbf{b}, \textbf{c}, \textbf{d}$ we have, 
@@ -564,14 +702,20 @@ Because, for any vector $\textbf{a}, \textbf{b}, \textbf{c}, \textbf{d}$ we have
     (\textbf{a}\cdot \textbf{d})
     (\textbf{b}\cdot \textbf{c})
 \end{equation}
+and that,
+\begin{align}
+    \textbf{e}_r\cdot \textbf{e}_r=1 
+    &&\textbf{e}_\theta\cdot \textbf{e}_\theta=1 
+    &&\textbf{e}_\varphi\cdot \textbf{e}_\varphi=\sin^2\theta
+\end{align}
 the last equaiton becomes, 
 \begin{equation}
     \textbf{J}\cdot \textbf{J}
     =
     (1 + f)^2[
         f_\varphi^2 
-        + f_\theta^2  
-        + (1 + f)^2
+        + f_\theta^2\sin^2\theta  
+        + (1 + f)^2\sin^2\theta  
     ]
 \end{equation}
 And so the surface eara element becomes, 
@@ -582,13 +726,13 @@ And so the surface eara element becomes,
     =
     (1 + f)[
         f_\varphi^2 
-        + f_\theta^2  
-        + (1 + f)^2
+        + \sin^2\theta f_\theta^2  
+        + \sin^2\theta(1 + f)^2
     ]^{1/2}
     d\theta d \varphi
 \end{equation}
 
-
+\tb{VERYY WROUNG OR MAYBE I JUST FORGET THE sin t}
 Now let consider  that $f(\theta , \varphi)\to Ca f(\theta , \varphi)$.
 The above resuts reads 
 \begin{equation}
@@ -682,6 +826,55 @@ Assuming
     H_{ij}
     - \frac{32\pi}{45}\delta_{ij} H_{kk}
 \end{equation}
+The volume of the particle is given by, 
+\begin{equation}
+    \intO{}=
+    \int_{0<r<1}
+    \int_{\theta = 0}^\pi
+    \int_{\varphi = 0}^{2\pi}
+    (1+3 Ca \textbf{H}:\textbf{e}_r\textbf{e}_r) r^2 \sin\theta dr d\theta d\varphi
+    =
+    \frac{4\pi}{3}\left(
+        1
+        +
+        Ca \textbf{H}:\bm\delta 
+    \right)
+\end{equation}
+From the conservation of volume we deduce that
+\begin{equation}
+    \textbf{H}:\bm\delta 
+    =
+    0 
+\end{equation}
+
+
+\begin{align}
+    \textbf{M}_p
+    &=
+    \intO{\textbf{rr}}
+    =
+    \int{r^4 (1+ Ca f)^5 \sin\theta \textbf{e}_r \textbf{e}_r }
+    =
+    \frac{4\pi}{15}\bm\delta+
+    \textbf{H}: 
+    \int{r^4 (5 Ca \textbf{e}_r \textbf{e}_r) \textbf{e}_r \textbf{e}_r }\sin\theta dr d\theta d\varphi\\
+    &=
+    \frac{4\pi}{15}[\bm\delta+
+    \textbf{H}_{kl}: (
+        \bm\delta_{ij}
+        \bm\delta_{kl}
+        +\bm\delta_{ik}
+        \bm\delta_{jl}
+        +\bm\delta_{il}
+        \bm\delta_{jk}
+    )
+    ]\\
+    &=
+    \frac{4\pi}{15}[\bm\delta+
+    2 Ca \textbf{H}
+    ]
+\end{align}
+
 To compute $\textbf{r}(\bm\delta - \textbf{nn})dS$ we need a relation for \textbf{r}. It is given by the points \textbf{M} in fact so we have
 \begin{align}
     \textbf{r}(\frac{1}{3}\bm\delta - \textbf{nn}) dS

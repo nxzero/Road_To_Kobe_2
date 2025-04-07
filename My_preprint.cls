@@ -95,7 +95,7 @@
 \newcommand{\Exp}[1]{\overline{\overline{#1}}}
 \newcommand{\davg}[1]{\left<#1\right>_d}
 \newcommand{\cavg}[1]{\left<#1\right>_c}
-\newcommand{\pavg}[1]{\avg{\delta_p #1}}
+\newcommand{\pavg}[2][p]{\avg{\delta_{#1} #2}}
 % \newcommand{\pnavg}[1]{n\left<#1\right>_p}
 
 \newcommand{\avgcond}[1]{\left<#1\right>}
@@ -166,9 +166,9 @@
 \newcommand{\intSF}[2][\alpha]{\oint_{\Gamma_{#1}(\FF,t)} #2 d\Gamma}
 \newcommand{\intL}[1]{\int_0^1 \delta_{\textbf{x}-\lambda \textbf r} #1 d\lambda}
 % \renewcommand{\intS}[1]{ ( #1 )_{\Sigma}}
-\newcommand{\pOavg}[1]{\pavg{\intO{#1}}}
-\newcommand{\pSavg}[1]{\pavg{\intS{#1}}}
-\newcommand{\pSMavg}[1]{\pavg{\intS{\intL{ #1 }}}}
+\newcommand{\pSavg}[2][p]{\pavg[#1]{\intS{#2}}}
+\newcommand{\pOavg}[2][p]{\pavg[#1]{\intO{#2}}}
+\newcommand{\pSMavg}[2][p]{\pavg[#1]{\intS{\intL{ #2 }}}}
 
 %%% Utiliser pour les commentaires
 \newcommand{\JL}[1]{\color{red}#1\color{black}}
@@ -178,9 +178,9 @@
 % \renewcommand{\tb}[1]{}
 
 \renewcommand{\size}[1]{0.3\textwidth}
-\newcommand{\expo}[2][n]{\frac{(-1)^{#1}}{{#1}!} \partialp{1}{#1} \pavg{\intO{ \pri{1}{#1}#2 }}}
-\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\textbf{u}_\alpha\intO{ \pri{1}{#1}#2 }}}
-\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg{\intS{\pri{1}{#1}#2 }}}
+\newcommand{\expo}[2][n]{\frac{(-1)^{#1}}{{#1}!} \partialp{1}{#1} \pavg[p]{\intO{ \pri{1}{#1}#2 }}}
+\newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg[p]{\textbf{u}_\alpha\intO{ \pri{1}{#1}#2 }}}
+\newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg[p]{\intS{\pri{1}{#1}#2 }}}
 % \newcommand{\numref}[1]{\ref{#1}}
 \renewcommand{\ref}[1]{\autoref{#1}}
 \newtheorem{remark}{Remark}
