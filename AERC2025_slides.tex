@@ -1,0 +1,837 @@
+\documentclass{sintefbeamer}
+
+% packages, font, color, and newcommands
+\usepackage{amsfonts, amsmath, oldgerm, lmodern, bm}
+% \usepackage[font={footnotesize}]{caption}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{empheq}
+\usepackage{mdframed}
+\usepackage{bm}
+\usepackage{animate}
+\usepackage{xcolor,colortbl}
+\usepackage{graphicx}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{animate}
+\usepackage{array}
+%\usepackage{cancel}
+
+\tikzset{  node distance=3cm and 5cm,
+every node/.style={align=center, font=\sffamily},
+box/.style={ rounded corners, minimum width=3.5cm, minimum height=1cm, text centered,fill=sintefblue!15},
+arrow/.style={-{Latex}, thick}}
+\bibliographystyle{apalike}
+
+\useoutertheme{miniframes}
+\usefonttheme{serif}
+
+\usetikzlibrary{arrows.meta,
+                chains,
+                calc,
+                positioning,
+                shapes.geometric,
+                backgrounds}
+
+\title{Inertial effects on the rheology of rising suspensions of droplets}
+\subtitle{Annual European Rheology Conference AERC 2025, Lyon-France}
+
+\author
+{\href{http://basilisk.fr/sandbox/fintzin/Rising-Suspenion/RS.c}
+{N. Fintzi\footnote{IFP \'Energies Nouvelles, France}$^{,2}$},  
+S. Popinet\footnote{Sorbonne Universit\'e, France} and
+\underline{JL. Pierson$^1$}}
+
+
+\titlebackground{image/800good.png}
+
+% document body
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+
+    \insertframenumber/\inserttotalframenumber
+}
+
+
+% \includeonlyframes{current}
+
+
+\begin{document}
+
+{\setbeamertemplate{headline}{}
+% \setbeamertemplate{footline}{}
+\setlength{\headheight}{0pt}
+\maketitle
+}
+
+\section{Context}
+
+
+\begin{frame}
+  \frametitle{Why studying fluid-fluid suspensions ? }
+  \centering
+  {\includegraphics[height=0.3\textwidth]{image/liq-liq_LE_auto_x5.jpg}}
+  \uncover<2->{\includegraphics[height=0.3\textwidth]{image/Image2.jpg}}
+  \uncover<3->{\includegraphics[height=0.3\textwidth]{image/flo.png}}
+  \uncover<4->{\includegraphics[height=0.3\textwidth]{image/Image4.png}}
+  \begin{itemize}
+    \item<1-> Liquid-liquid separation processes
+    \item<2-> Bubbles columns
+    \item<3-> Flotation columns 
+    \item<4-> Multiphase pumps
+    \item<5-> And other\ldots
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Problem ! \uncover<3->{Upscaling ?} }
+      \centering
+      \setbeamercovered{transparent=10}
+
+      \begin{tikzpicture}
+        \node (img) at (0,0) {\includegraphics[height=0.25\textwidth]{image/bubbles_4x.jpg}};
+        \node[above] (title1) at (0,0.125\textwidth) {\textbf{Local description} \citep{Dung_Waasdorp_Sun_Lohse_Huisman_2023}};
+        \uncover<3->{
+        \node[text width=6cm] (itm) at (0.55\textwidth,0) {
+          \begin{itemize}
+            \item Volume fraction of droplets ?  
+            \item Mean velocity of each phase ? 
+            \item \ldots
+          \end{itemize}
+          };
+          \node[above] (title2) at (0.55\textwidth,0.125\textwidth) {\textbf{Macroscopic description}};
+        \draw[arrow,very thick] (img) -- (itm)node[midway,above]{Upscaling};
+        }
+        \uncover<1->{
+          \node[yshift=-3em,box,text width=5cm] (eq1) at (0,-0.125\textwidth) {Navier-Stokes equations and Newton second-law of motion};
+          \draw[arrow](img) -- (eq1);
+        }
+        \uncover<4>{
+          \node[yshift=-3em,box] (eq2) at (0.55\textwidth,-0.125\textwidth) {\underline{Averaged} Navier-Stokes equations};
+          \draw[arrow](itm) -- (eq2);
+        }
+      \end{tikzpicture}
+
+      \vfill
+
+      \uncover<2->{
+      $\to$\textbf{Problem :} For large number of droplets computations are unfeasible !
+      }
+\end{frame}
+
+
+%\begin{frame}
+%  {Mathematical modeling of dispersed two-phase flows }
+    
+  
+%  \begin{tikzpicture}
+  
+  
+%  \node[box] at (0,3)(lagrangian) {Lagrangian description of droplets \\ $\ddt (m_i\textbf{u}_i) = \sum \textbf{F}_i$};
+%  \node[box] at (8,3)(Eulerian) {Eulerian description of the continuous phase \\ $\div\textbf{u}= 0$\\ $\rho (\pddt + \textbf{u}\cdot\grad)\textbf{u} = \div\bm\sigma + \rho\textbf{g} $};
+%  \uncover<2->{
+%  \node[box] at (0,0)(kinetic) {``Kinetic Theory''-like models \\(Chapman \& Cowling 1990)};
+%  \node[box] at (8,0)(twofluid) {Two-Fluid formulation \\(Drew 1983)};
+%  \draw[arrow] (lagrangian) -- (kinetic) node[midway, right] {Statistical averaging};
+%  \draw[arrow] (Eulerian) -- (twofluid) node[midway, right] {Statistical  averaging};
+%  }
+%  \uncover<3>{
+%  \node[box] at (4,-2.7)(unify)  {Hybrid Multiphase Flow model (Lhuillier 1992, Zhang \& Prosperetti 1994)};
+%  \draw[arrow] (twofluid) -- (unify);
+%  \draw[arrow] (kinetic) -- (unify);
+%  \draw[arrow] (twofluid) -- (unify);
+  %\node[below =0.5cm of kinetic, text width=4.5cm] (desc1) {\textit{Describes the mean particle trajectories}};
+  %\node[below =0.5cm of twofluid, text width=4.5cm] (desc2) {\textit{Models the average continous phases behaviour}};
+%  }
+%  \end{tikzpicture}
+  
+%\end{frame}
+
+
+
+
+% \section{Lagrangian's description of fluid particles for kinetic-theory}
+\section{Averaged equations}
+\section*{}
+
+
+
+\begin{frame}
+  {Fluid averaged equations (Lhuillier 1992)}
+  \begin{align*}
+    &\pddt (\phi_f \rho_f)  
+    + \div (
+        \phi_f \rho_f\textbf{u}_f
+    )
+    = 
+    0,\\
+    &
+    \phi_f \rho_f (\pddt + \textbf{u}_f\cdot \grad)\textbf{u}_f
+    = 
+    \underbrace{\phi_f\div \bm\Sigma^\text{f}}_\text{Mean Newtonian stress}+
+    \underbrace{\div \bm\sigma^\text{eff}}_\text{Effective stress}
+    + \underbrace{\phi_f \rho_f \textbf{g} }_\text{Buoyancy}
+    \only<1>{- \underbrace{\pSavg{{\bm{\sigma}_f' \cdot \textbf{n}}}}_\text{Mean force}}
+    \only<2>{\textcolor{sintefcyan}{- \underbrace{\pSavg{{\bm{\sigma}_f' \cdot \textbf{n}}}}_\text{Mean force}}}
+  \end{align*}
+  \underline{Effective stress: } 
+  \begin{equation*}
+    \bm{\sigma}_f^\text{eff}
+    =
+    \only<1>{- \underbrace{\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}}_\text{Reynolds Stress}}
+    \only<2>{\textcolor{sintefcyan}{- \underbrace{\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}}_\text{Reynolds Stress}}}
+    \only<2>{\textcolor{orange}{+ \underbrace{ {\pSavg{{\left[\textbf{r}\bm{\sigma}_f' \cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')\right]}}}}_\text{First moment} }}
+    \only<1>{+ \underbrace{ {\pSavg{{\left[\textbf{r}\bm{\sigma}_f' \cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')\right]}}}}_\text{First moment} }
+    -\underbrace{\div [\ldots]}_\text{higher moments}
+  \end{equation*}
+
+\uncover<2>{
+$\to$ Solved quantities: $\phi_f, \textbf{u}_f, \textbf{u}_p, \ldots$.
+
+$\to$ We are looking for $\texttt{CLOSURE TERMS} = f(\phi_f, \textbf{u}_f, \textbf{u}_p, \ldots)$.}
+\end{frame}
+
+
+
+
+
+
+\section{Stresslet}
+\section*{}
+
+
+
+
+
+\begin{frame}{What is the Stresslet ?}
+  \small
+\begin{equation*}
+  %\underbrace{ {\pSavg{{\left[\textbf{r}\bm{\sigma}_f' \cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')\right]}}}}
+  \text{First moment}
+  = 
+  \underbrace{\pSavg{(\textbf{r}\bm{\sigma}_f^0 +\bm{\sigma}_f^0 \textbf{r} )\cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')}}_\text{Symmetric part = Stresslet}
+  +
+  \bm\epsilon \cdot \underbrace{\pSavg{\textbf{r} \times \bm{\sigma}_f^0 \cdot \textbf{n}}}_\text{Torque}
+\end{equation*}
+
+\setbeamercovered{transparent=10}
+\only<1>{
+  \centering
+  \begin{tikzpicture}[ultra thick,scale=0.6]
+    \def\nRows{6}
+    \def\nCols{6}
+    \draw[dashed,thin] (0,0)circle(2.5);
+    \draw[fill=gray!30] (0,0)ellipse(2.8 and 2.2);
+    \foreach \x in {-\nRows,...,\nRows} {
+        \foreach \y in {-\nCols,...,\nCols} {
+            \pgfmathsetmacro\distance{veclen(\x*0.4, \y*0.4)};
+            \pgfmathparse{\distance < 2.45 ? "blue" : "white"}
+            \edef\colour{\pgfmathresult};
+            \ifthenelse{\equal{\colour}{blue}}{                    
+                \draw[thin,->](\x*0.4,\y*0.4)--++(0.08*\x,-0.08*\y);
+            }
+        }
+    }
+    \node (txt) at (0,-3){(Stresslet $> 0$)};
+\end{tikzpicture}
+\hspace{1em}
+\begin{tikzpicture}[ultra thick,scale=0.6]
+    \def\nRows{6}
+    \def\nCols{6}
+    \draw[fill=gray!30] (0,0)circle(2.5);
+    \foreach \x in {-\nRows,...,\nRows} {
+        \foreach \y in {-\nCols,...,\nCols} {
+            \pgfmathsetmacro\distance{veclen(\x*0.4, \y*0.4)};
+            \pgfmathparse{\distance < 2.5 ? "blue" : "white"}
+            \edef\colour{\pgfmathresult};
+            \ifthenelse{\equal{\colour}{blue}}{                    
+                \draw[thin,->](\x*0.4,\y*0.4)--++(0.08*\y,-0.08*\x);
+            }
+        }
+    }
+    \node (txt) at (0,-3){(Torque $> 0$)};
+\end{tikzpicture}
+}
+\only<2->{
+\uncover<2>{\textbf{Shear dominated flows (Taylor 1932)}
+\begin{equation*}
+  \pSavg{(\textbf{r}\bm{\sigma}_f^0 +\bm{\sigma}_f^0 \textbf{r} )\cdot \textbf{n}}
+  = \frac{3}{5}\mu_f \phi \left(\frac{2+5\lambda}{1+\lambda}\right) \left(\grad \textbf{u}_f + ^\dagger \grad \textbf{u}_f\right)
+  + \mathcal{O}(\phi^2, Re)
+\end{equation*}
+%Thus, $\frac{3}{5}\phi \left(\frac{2+5\lambda}{1+\lambda}\right)$ it can be considered as an effective viscosity ! 
+}
+
+\uncover<3>{\textbf{Droplet in translation}
+\begin{equation*}
+  \pSavg{(\textbf{r}\bm{\sigma}_f^0 +\bm{\sigma}_f^0 \textbf{r} )\cdot \textbf{n}}
+  = \bm 0 + \mathcal{O}(\phi^2, Re)
+\end{equation*}
+%So the relative velocity doesn't contribute to the Stresslet  ? 
+
+}
+
+\uncover<4>{
+  \textbf{We must consider the effect of finite $Re$  !}
+}}
+\end{frame}
+
+\section{Reciprocal theorem}
+
+\begin{frame}
+  {Conditional averaged equation at $\mathcal{O}(\phi)$ and finite $Re$ }
+  \textbf{Navier-Stokes equations}: 
+  \begin{align*}
+    \div \textbf{v} &= 0 \\
+      \mu_f \grad^2 \textbf{v}  
+        - \grad p_f 
+      &\only<1->{ =
+      Re \left[
+        \pddt \textbf{v}
+        + \textbf{v}\cdot \grad\textbf{v} 
+        -  \textbf{v}\cdot \grad\textbf{U} 
+        -  \textbf{U}\cdot \grad\textbf{v}
+    \right]}
+    % \uncover<2->{\\ &= Re\textbf{f}} 
+\end{align*}
+\textbf{Boundary conditions}:
+\begin{align*}  
+  \textbf{v}\cdot \textbf{n} &= \textbf{U} \cdot \textbf{n} 
+  && 
+  r = 1 \\
+  \textbf{v} &= 0 && r \to \infty
+\end{align*}
+
+\only<1>{
+  \begin{itemize}
+  \item $\textbf{v}$ Disturbance velocity field generated by a translating droplet. 
+  \item $\textbf{U} =\textbf{u}_p - \textbf{u}_f$ relative background velocity. 
+  % \item<2-> $\textbf{f}$ Inertial contribution. 
+\end{itemize}
+$\to$ Similar to \citet{maxey1983equation} \& \citet{gatignol1983faxen}'s equations !
+}
+\only<2>{Only $\boxed{\intS[]{\textbf{r} \bm\sigma \cdot \textbf{n}}}$ is needed not $\textbf{v}$ ! $\to$ \textbf{Reciprocal theorem} \citep{stone2001inertial}}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{How to derive the reciprocal theorem ? }
+  % \setbeamercovered{transparent=10}
+  Let  $\hat{\textbf{v}}$ be a \textbf{known solution} of the Stokes equations: 
+\vfill
+  {\Huge Step \only<1>{1}\only<2>{2}\only<3->{3}:
+  }
+  \begin{equation*}
+    \uncover<3->{\int_{V_f}\left\{ }
+    \fbox{Equation of \textbf{v}} \cdot \hat{\textbf{v}} 
+    \uncover<2->{
+      - \fbox{Equation of $\hat{\textbf{v}}$} \cdot  \textbf{v} 
+      }
+    \uncover<3->{\right\}dV}
+    \uncover<4>{= 0}
+  \end{equation*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Stresslet due to the relative motion of the drops}
+\setbeamercovered{transparent=15}
+
+
+  \begin{equation*}
+    \frac{a}{\mu_f U}
+    % \left[
+        \pSavg{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}}
+        % - \pOavg{(2 \mu_f \textbf{e}_d^0 - p_f\bm\delta)}
+        % \right]
+        % \\
+    =
+    \phi Re C_1
+    [
+      \textbf{UU} - \frac{1}{3}(U^2)\bm\delta 
+      ]
+      + Re \phi C_2 (U^2) \bm\delta
+      % + \phi p_f \bm\delta
+  \end{equation*} 
+\begin{align*}
+    C_1  =  -\frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 \left(\lambda + 1\right)^{3}}
+    &&
+    C_2  = \frac{3\lambda^2 + 6\lambda + 4}{48(\lambda +1 )^2}
+  \end{align*}
+  
+  \begin{itemize}
+    \item \textbf{U}=$\textbf{u}_p-\textbf{u}_f$ Mean relative velocity between phases
+  \end{itemize}
+  $\to$ Rising droplets deform when $Re > 0$ due to the non-zero Stresslet !. 
+
+\end{frame}
+
+
+
+
+\section{Effective stress}
+\section*{}
+
+\begin{frame}
+  \frametitle{Effective stress in homogeneous buoyant emulsions }
+  \setbeamercovered{transparent=15}
+    \begin{equation*}
+      \phi_f \rho_f (\pddt + \textbf{u}_f\cdot \grad)\textbf{u}_f
+      = 
+      \div \bm\sigma^\text{eff}
+      + \phi_f \rho_f \textbf{g} 
+      - \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}}}
+  \end{equation*}
+  \underline{Assuming $\grad \textbf{u}_f = 0$ :}
+  \begin{align*}
+    \frac{a }{\mu_f U}\bm{\sigma}^\text{eff}_f 
+    &=
+    -  \avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}
+    +  \phi_f \bm{\sigma}_f
+    +  \pSavg{{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}}}
+    \text{}{+ \div [\ldots]}
+    \\
+    \uncover<2>{&= 
+    \left[ p_f + Re \phi  (C^{Re}_2 - C_2)(\textbf{U}\cdot \textbf{U}) \right]\bm\delta 
+    + Re \phi (C^{Re}_1 - C_1)\left[
+            \textbf{U}
+            - \frac{1}{3}(\textbf{U}\cdot \textbf{U})\bm\delta
+    \right]}
+    % + \mathcal{O}(Re^{3/2},\phi^2).
+    \label{eq:stress_closed}
+\end{align*} 
+\uncover<2>{
+$C_1$ valid only for $\boxed{\phi \ll 1}$ and $\boxed{Re < 1}$
+$\longrightarrow$
+\textbf{DNS measurements ! }
+}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{How to compute the first moment within the DNS ?}
+
+  \underline{Steady state} first moment of momentum equation:
+  \begin{multline*}
+    \pSavg[i]{\textbf{r}\bm\sigma_f^0\cdot \textbf{n}}
+    = 
+    \underbrace{- \pOavg[i]{\rho_d \textbf{w}_d^0  \textbf{w}_d^0 }
+    + \pOavg[i]{\bm\sigma_d^0}}_\text{volume integrals}\\
+    +  \underbrace{\gamma \pSavg[i]{(\bm\delta - \textbf{nn})}}_\text{Geometry of the surface}
+\end{multline*}
+
+\uncover<2>{$\to$ We are thus able to meusure $C_1$ (and $C^{Re}_1$) from DNS !}
+\end{frame}
+
+\begin{frame}{Comparison with simulations results}
+  \begin{figure}[h!]
+    \centering
+    \uncover<2>{\includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo_l_1.pdf}}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo_l_10.pdf}
+    \uncover<2>{\includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo_l_100.pdf}}
+    \caption{
+      (Hollow symbols) \underline{Stresslet}: $C_1$. 
+      (Filled symbols) \underline{Reynolds stress} $C_1^{Re}$. 
+     }
+\end{figure}
+
+\uncover<2>{
+\textbf{In dense regime the Stresslet may not be negligible !}
+}
+
+
+\end{frame}
+
+
+
+\section{Conclusion}
+\section*{}
+
+\begin{frame}
+  \frametitle{What have we learned ? }
+  \setbeamercovered{transparent=10}
+
+\textbf{Methodology: }
+  \begin{itemize}
+    \item How to derive ensemble averaged equations. 
+    \item How to relate \underline{closure terms} to the \underline{closure problems}, and how to solve them (singularity method, reciprocal theorem or DNS).
+    DNS: \url{http://basilisk.fr/sandbox/fintzin/Rising-suspension/RS.c}
+  \end{itemize}
+
+  \uncover<2>{
+\textbf{Physics :}
+\begin{itemize}
+  \item Drag force: $\sim U^2 C_D(Re, \phi,\textcolor{sintefred}{\lambda})$.
+  \item Reynolds stress: $\sim U^2 \phi^{2/3}$.
+  \item Stresslet: $\sim U^2 \phi$.
+  \item And Reynolds stress $\approx$ Stresslet for high $\phi$ and Reynolds stress $\ll$ Stresslet for $\phi \ll 1$.
+ \end{itemize}
+}
+
+
+\end{frame}
+\begin{frame}
+  \frametitle{Buoyancy driven emulsion rheology}
+  \centering\underline{Continuous phase mass and momentum equation:}
+  \begin{equation*}
+    \pddt \phi_f + \div (\textbf{u}_f \phi_f) = 0
+  \end{equation*}
+  \begin{equation*}
+    % \pddt \phi_f + \div (\textbf{u}_f \phi_f) &= 0\\ 
+      \rho_f (\pddt 
+    + \textbf{u}_f \cdot \grad)
+    \textbf{u}_f
+    = 
+    \div\bm\Sigma_f
+    % \underbrace{\div\bm\Sigma_f}_\text{Newtonian stress}
+    + \rho_f \textbf{g}
+    \only<2->{\textcolor{sintefcyan}{-\underbrace{\frac{3\rho_f}{8a} \frac{\phi C_D(Re,\phi, \lambda) }{1-\phi}   \times \textbf{U} |\textbf{U}|}_\text{Drag force}}}
+    \only<3>{\textcolor{sintefred}{+\underbrace{\frac{1}{1-\phi} \div  \bm{\sigma}_f^{\text{eff}}}_\text{Effective stress}}}
+  \end{equation*}
+
+  \centering\underline{Constitutive laws:}
+
+\begin{equation*}
+    \bm\Sigma_f 
+    = 
+    - p_f \bm\delta
+    + 2\mu_f \left[\grad \textbf{u}_f + (\grad \textbf{u}_f)^\dagger\right]
+\end{equation*}
+
+\uncover<3>{
+\begin{equation*}
+\textcolor{sintefred}{
+    \bm{\sigma}^{\text{eff}}_f 
+    = \underbrace{C_E(Re,\phi,\lambda) \mu_f [\grad \textbf{u}_f +  (\grad \textbf{u}_f)^\dagger ] }_\text{``Einstein viscosity'' \& Single phase Turbulence}
+    + 
+    \underbrace{
+      C_1(\phi,\lambda,Re)\textbf{UU}
+    + C_2(\phi,\lambda,Re)U^2 \bm\delta}_\text{Mean particle Induced Turbulence (PIT) \& Stresslet}
+}
+\end{equation*}
+}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Applications}
+\textbf{Domain of validity of the closures laws}:
+  \begin{itemize}
+    \item Dispersed two-phase flows ($\phi < 0.2$)
+    \item Small droplets or bubbles ($Bo < 1$ and $Re < 100$)
+    \item Buoyancy driven flows
+  \end{itemize}
+\vfill
+  \textbf{Target processes:  }
+  \begin{itemize}
+    \item Liquid-Liquid separation
+    \item Flotation (clean waste water)
+    \item Transport of tiny particles in liquid
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \centering
+  {\Huge\textbf{Perspectives ? }}
+
+  \begin{itemize}
+    \item Dispersed phase equations ? (Center of mass velocity variance ? )
+    \item How to measure $C_1$, $C_2$ with experiments  ?
+    \item Hyperbolic system of equations ? With effective stress $\propto U^2$ ?
+    \item Are the proposed closures laws consistent with thermodynamics constrains ?
+  \end{itemize}
+
+\end{frame}
+\backmatter
+
+\begin{frame}
+  \footnotesize
+
+  \bibliography{Bib/bib_bulles.bib}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Reformulation of the first moment  with conditional average}
+  
+    \begin{equation*}
+      \underbrace{\pSavg{{\textbf{r} \bm{\sigma}_f^0 \cdot \textbf{n}}}[\textbf{x},t]}_\text{$N$ droplets in a fluid}
+      =
+      \underbrace{n_p[\textbf{x},t]
+        \intS[]{\textbf{r} \bm\sigma^1 \cdot \textbf{n}}}_\text{
+        \href{videos/one_particle.mp4}{One droplet in an effective medium}
+        }
+    \end{equation*}
+  \begin{itemize}
+    \item $\bm\sigma^1[\textbf{z}|\textbf{x}]$ Mean stress at \textbf{z} conditioned on the presence of a droplet at $\textbf{x}$. 
+  \end{itemize} 
+  \vfill
+  $\to$ This time we need a result of $\bm\sigma$ accurate at $\mathcal{O}(Re)$. 
+\end{frame}
+
+\begin{frame}
+  {Reciprocal theorem: final expression }
+\small
+  % Applying the reciprocal theorem between $\textbf{v}$ and a \underline{known} test problem: $\hat{\textbf{v}}$, gives, 
+\begin{align*}
+  \underbrace{
+    \intS[]{\hat{\textbf{U}} \cdot  \bm\sigma \cdot \textbf{n}}
+    - \intO[d]{
+        \grad \textbf{v} :\grad \hat{\textbf{U}} 
+   }
+  }_\text{What we are looking for}
+    &=
+    \intS[]{\textbf{U}\cdot \hat{\bm\sigma}\cdot \textbf{n}}
+    + (\lambda - 1)\intS[]{
+      \textbf{U}\cdot (\grad \hat{\textbf{U}}+ ^\dagger \grad \hat{\textbf{U}})\cdot \textbf{n}
+    }\\
+    &- \lambda \intO[d]{\grad \hat{\textbf{v}}:\grad \textbf{U}} 
+    - 
+    \only<1>{Re \zeta \intO[d]{(\hat{\textbf{v}} - \hat{\textbf{U}}) \cdot \textbf{f}}}
+    \only<2>{\textcolor{sintefred}{Re \zeta \intO[d]{(\hat{\textbf{v}} - \hat{\textbf{U}}) \cdot \textbf{f}}}}
+    \\
+    &
+    -
+    \only<1>{Re \intOf{\hat{\textbf{v}} \cdot  \textbf{f}}}
+    \only<2>{\textcolor{sintefred}{Re \intOf{\hat{\textbf{v}} \cdot  \textbf{f}}}}
+\end{align*}
+
+\only<1>{
+\begin{itemize}
+  \item $V_f$ denote the domain outside the test droplet
+  \item $V_d$ denote the domain inside the test droplet
+\end{itemize}
+\vfill
+$\to$ \textbf{Methodology from \citet{stone2001inertial} (solid spheres)}
+}
+\uncover<2>{
+  \underline{Known fields:}
+  \begin{itemize}
+    \item Boundary conditions: $\hat{\textbf{U}}, \textbf{U}$.  
+    \item Test solution $\hat{\textbf{v}},\hat{\bm\sigma}$
+  \end{itemize}
+  \underline{Unknown fields:}
+  \begin{itemize}
+    \item \textcolor{sintefred}{Inertial term: \textbf{f}}
+  \end{itemize}
+}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Regular expansion in $Re$ }
+
+  Assuming small but finite $Re$ : $\textbf{f} = \textbf{f}^{(0)} + Re  \textbf{f}^{(1)} + Re^2  \textbf{f}^{(2)} + \ldots$. 
+
+  
+  \begin{equation*}
+    \textbf{f}^{(0)}
+    =
+        \pddt \textbf{v}^{(0)}
+        + \textbf{v}^{(0)}\cdot \grad\textbf{v}^{(0)} 
+        +  \textbf{v}^{(0)}\cdot \grad\textbf{U} 
+        +  \textbf{U}\cdot \grad\textbf{v}^{(0)}
+  \end{equation*}
+
+  $\to$ $\textbf{v}^{(0)}$ is governed by the Stokes equation this is thus a known field ! 
+  \uncover<2>{
+  \begin{equation}
+      Re \intOf{\hat{\textbf{v}} \cdot  \textbf{f}}
+      =
+      Re \intOf{\hat{\textbf{v}} \cdot  \textbf{f}^{(0)}}
+      + \mathcal{O}(Re^2)
+    \end{equation}
+    }
+\end{frame}
+\begin{frame}
+  \frametitle{Example: Drag force on a droplet in arbitrary Stokes flow}
+  \begin{itemize}
+    \item $\textbf{v}$ Arbitrary quadratic stokes flow ($Re=0$).  
+    \item $\hat{\textbf{v}} = $ disturbance velocity field of a droplet translating in uniform flow. 
+  \end{itemize}
+
+  \begin{equation}
+    \intS{\cdot  \bm\sigma_f \cdot \textbf{n}}
+    =
+    a 2\pi \left(
+      \frac{3\lambda +2 }{\lambda +1} 
+    \right) \textbf{U}
+    + 
+    a^3 \pi \frac{\lambda}{\lambda +1}
+    \grad^2 \textbf{U}
+  \end{equation}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}
+  \frametitle{Comparison with DNS results and experiments}
+  \begin{figure}[h!]
+    \centering    
+    % \includegraphics[height = 0.25\textwidth]{image/upupexp.png}
+    \uncover<2>{\includegraphics[height = 0.20\textwidth]{image/HOMOGENEOUS_final/CA/cartellier.pdf}}
+    \includegraphics[height = 0.20\textwidth]{image/HOMOGENEOUS_final/CA/UUyy_Ga_5.pdf}
+    \caption{
+      %  Dimensionless vertical component of the Reynolds stress :
+      (right) comparison with DNS for two viscosity ratio $\lambda =1,10$ and $Re \approx 1$ DNS. 
+     \uncover<2>{  (left) Comparison with the rising bubbles experiment of Cartellier (2009) with $Re \approx 10$. }
+    }
+\end{figure}  
+\begin{itemize}
+  \item Good trends in terms of $\sim \phi^{2/3}$ and $\lambda$.  
+  \item Quantitative agreement for $\phi < 0.01$.  
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Extension to finite inertial numbers}
+  \begin{figure}
+    \centering
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/KF2_l_0.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/KF2_l_1.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/CA/KF2_l_10.pdf}
+    \caption{\footnotesize
+      Continuous phase pseudo turbulent energy, $k_f/U^2 = \avg{\chi_f \textbf{u}_f \cdot \textbf{u}_f}$. 
+    % (left) $\lambda = 0.1$
+    % (middle) $\lambda = 1$
+    % (right) $\lambda = 10$
+    (Symbols) DNS results. 
+    ($\pmb\bigcirc$) $\phi = 0.01$; ($\pmb\triangle$) $ \phi = 0.05$; ($\pmb\square$) $\phi = 0.1$ ($\pmb\lozenge$) $\phi = 0.2$.
+    % (dot-dashed lines) Semi-empirical formula (\ref{eq:semi_empirical}) \underline{including} the results of the DNS for the particle phase velocity fluctuations. 
+    % (dashed lines) Semi-empirical formula (\ref{eq:semi_empirical}) \underline{excluding} the particle phase velocity fluctuations. 
+    }
+    \label{fig:kf}
+\end{figure}
+\begin{equation}
+  C_2^{Re}
+  = 
+  \underbrace{ C_2^{(Re=0)}}_\text{Theoritical solution}
+  \underbrace{\frac{1}{2}\left(e^{-Re} +1\right)}_{\text{empirical factor}}.
+  \label{eq:semi_empirical}
+\end{equation}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Comparison with laboratory and numerical experiments }
+
+  \begin{figure}
+    \centering
+    \includegraphics[height = 0.35\textwidth]{image/HOMOGENEOUS_final/CA/KFliterature_diapo.pdf}
+\end{figure}
+\end{frame}
+
+
+
+
+\begin{frame}
+  \frametitle{Reciprocal theorem: test solution in Stokes regime}
+
+  \begin{columns}
+    \column{0.7\textwidth}
+    \textbf{Stokes equations}: 
+    \begin{align*}
+      \div \hat{\textbf{v}} &= 0 \\
+      \mu_f \grad^2 \hat{\textbf{v}}  
+      - \grad \hat{p}_f 
+      &= 0 
+  \end{align*}
+\textbf{Boundary conditions}:
+\begin{align*}  
+ \hat{\textbf{v}}\cdot \textbf{n} &= [\hat{ \textbf{U}} + \textbf{r}\cdot \grad \hat{\textbf{U}}]\cdot \textbf{n} 
+  && 
+  r = 1 \\
+ \hat{\textbf{v}} &= 0 && r \to \infty\\
+\end{align*}
+
+\column{0.3\textwidth}
+% \hspace{-3cm}
+\includegraphics[width = \textwidth]{image/Streamlines_trans.png}
+\end{columns}
+
+\uncover<2>{
+\textbf{Solution:}
+    \begin{equation*}
+    \boxed{
+    \hat{\textbf{u}}
+    =
+    \mathcal{U}(\textbf{z}-\textbf{r})\cdot \hat{\textbf{U}}
+    + \mathcal{E}(\textbf{z}-\textbf{r}) : \grad\hat{\textbf{U}}
+    }
+  \end{equation*}
+}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Drag coefficient : semi-empirical model}
+    \begin{equation*}
+C_D(Re,\phi,\textcolor{sintefred}{\lambda})
+    = 
+  \only<1>{\underbrace{
+    \frac{  \textcolor{sintefred}{\lambda}   C_D^\text{Sol}(Re)+ C_D^\text{Bub}(Re)}
+    {1+\textcolor{sintefred}{\lambda}} 
+    }_\text{Isolated drag force correlation}}
+  \only<2->{
+    \frac{  \textcolor{sintefred}{\lambda}   C_D^\text{Sol}(Re)+ C_D^\text{Bub}(Re)}
+    {1+\textcolor{sintefred}{\lambda}} 
+    }
+    \times
+    \only<1>{f_\phi(\phi, Re,\textcolor{sintefred}{\lambda})}
+    \only<2->{\underbrace{f_\phi(\phi, Re,\textcolor{sintefred}{\lambda})}_\text{Swarm coefficient}}
+  \end{equation*}
+% \vfill
+\only<1>{
+  \begin{itemize}
+    % \item Creation of a new model which takes in account the viscosity ratio : \textcolor{sintefred}{$\lambda$}. 
+    \item $C_D^\text{Sol}$ Drag force coefficient on an isolated \underline{solid sphere} \citep{schiller1933}
+    \item $C_D^\text{Bub}$ Drag force coefficient on a \underline{shear-free bubble} \citep{mei1994}
+    \item Geometric mean: \citet{magnaudet1997forces} 
+  \end{itemize}
+  }
+
+\uncover<2->{
+\begin{equation*}
+  f_\phi(\phi, Re,\textcolor{sintefred}{\lambda})
+  =[
+    \underbrace{(1-\phi)^{2-n}}_\text{Low Reynolds behavior}
+    + 
+    \underbrace{Re (1-\phi)^{3-2n}}_\text{High Reynolds behavior}
+  ] \frac{1}{1 + Re}
+\end{equation*}
+
+\uncover<3>{
+  Richardson-Zaki exponent: 
+  \begin{equation*}
+    n(\textcolor{sintefred}{\lambda},Re) = \frac{\frac{3}{2} \frac{2+3\textcolor{sintefred}{\lambda}}{\textcolor{sintefred}{\lambda}+1} + 2.4 \cdot 0.048 \cdot  Re^{0.75}}{1+0.048 \cdot Re^{0.75}}. 
+  \end{equation*}
+  }
+$\to$ We only included one empirical constant 
+}
+
+\end{frame}
+
+
+
+
+
+
+\end{document}
