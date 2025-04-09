@@ -78,12 +78,21 @@ where it must be noted that both $\textbf{u}_{i}$ and $\textbf{u}$ are evaluated
 The undisturbed or ensemble averaged shear rate of the continuous phase reads  $\textbf{e}_f =\frac{1}{2} [\grad \textbf{u}_f + ^\dagger \grad \textbf{u}_f]$. 
 At the interface of the test droplet the tangential shear rate is assumed continuous, however because it is the total shear rate field (and not just $\textbf{e}_{i/o}$) that satisfy this condition, we obtain (at $r=1$),
 \begin{equation}
-    \mathbf{n}\cdot [\textbf{e}_{o} - \lambda \textbf{e}_{i} + (1-\lambda)\textbf{e}_f]\cdot (\bm\delta - \textbf{nn})
+    \mathbf{n}\cdot [\textbf{e}_{o} - \lambda \textbf{e}_{i} + (1-\lambda)\textbf{e}_f
+    % - \textbf{b}
+    ]\cdot (\bm\delta - \textbf{nn})
     =
-    0
+    \textbf{b}\cdot (\bm\delta - \textbf{nn})
+    % 0
     \label{eq:boundary_cdt_stress}
 \end{equation}
-Note that for instance the ensemble averaged quantities $\textbf{u}_f$ and $\bm\tau_f$ are kept general, are their values may depend on the position along the surface of the test droplet. 
+with, 
+\begin{equation}
+    \textbf{b}
+    =
+    \frac{a \grad \gamma}{2 \mu_f |\textbf{u}_r|}. 
+\end{equation}
+Note that for instance the ensemble averaged quantities $\textbf{u}_f$ and $\textbf{e}_f$ are kept general, are their values may depend on the position along the surface of the test droplet. 
 
 
 % where we have introduced the relative velocity field $\textbf{U}[\textbf{x},t] = \textbf{w} - \textbf{U}_f[\textbf{x},t]$. 
@@ -125,11 +134,14 @@ and (at $r=1$),
     \hat{\textbf{u}}_{i} \cdot \textbf{n} &= - \hat{\textbf{u}}_r \cdot \textbf{n}
     \label{eq:normal_vel_s}
     \\
-    \mathbf{n}\cdot [\textbf{e}_{o} - \lambda \textbf{e}_{i} + (1-\lambda) \textbf{e}_f]\cdot (\bm\delta - \textbf{nn})
+    \mathbf{n}\cdot [\hat{\textbf{e}}_{o} - \lambda \hat{\textbf{e}}_{i} + (1-\lambda) \hat{\textbf{e}}_f
+    % - \hat{\textbf{b}}
+    ]\cdot (\bm\delta - \textbf{nn})
     &=
-    0
+    \hat{\textbf{b}}\cdot (\bm\delta - \textbf{nn})
+    % 0
 \end{align}
-where we introduced $\hat{\textbf{u}}_r = \hat{\textbf{u}}_f - \textbf{w}$ as the ensemble or undisturbed velocity field of the test problem, similarly $\textbf{e}_f$ is the undisturbed stress of the test problem. 
+where we introduced $\hat{\textbf{u}}_r = \hat{\textbf{u}}_f - \textbf{w}$ as the ensemble or undisturbed velocity field of the test problem, similarly $\hat{\textbf{e}}_f$ is the undisturbed stress of the test problem. 
 In the problem considered here it is assumed that $\hat{\textbf{u}}_f$ varies very slowly compared to the droplet radius, on which we evaluate these fields. 
 Additionally, because we considered a general quadratic background flow we introduce the relation, 
 \begin{align}
@@ -140,18 +152,35 @@ Additionally, because we considered a general quadratic background flow we intro
     % + \ldots
     \label{eq:ufinfinity}
     \\
-    \textbf{e}_f(\textbf{y}+\textbf{r})
+    \hat{\textbf{e}}_f(\textbf{y}+\textbf{r})
     &=   
-    \textbf{e}_f|_{\textbf{x}=\textbf{y}}
-    + \textbf{r} \cdot  \grad \textbf{e}_f|_{\textbf{x}=\textbf{y}}
+    \hat{\textbf{e}}_f|_{\textbf{x}=\textbf{y}}
+    + \textbf{r} \cdot  \grad \hat{\textbf{e}}_f|_{\textbf{x}=\textbf{y}}
     % + \frac{1}{2}\textbf{rr} \cdot  \grad\grad \bm\tau_f|_{\textbf{x}=0}
     % + \ldots
 \end{align}
 where $\textbf{y}+ \textbf{r}$ represents a point on the surface of the test droplet. 
-Note that \textbf{w} is not function of \textbf{x}, hence $\grad \textbf{u}_r = \grad \textbf{u}_f$  in \ref{eq:ufinfinity}. 
+Note that \textbf{w} is not function of \textbf{x}, hence $\grad \hat{\textbf{u}}_r = \grad \hat{\textbf{u}}_f$  in \ref{eq:ufinfinity}. 
 
 
 Using the standard procedure of spherical harmonics we can stipulate that, \citep{leal2007advanced,raja2010inertial,nadim1991motion},
+% \begin{align*}
+%     \begin{pmatrix}
+%         \hat{\textbf{u}}_{o}\\
+%         \hat{p}_{o}\\
+%         \hat{\textbf{u}}_{i}\\
+%         \hat{p}_{i}
+%     \end{pmatrix}
+%     =
+%     \begin{pmatrix}
+%         \mathcal{U}_{o}^{(1)} + \mathcal{U}_{o}^{(2)}\cdot \grad + \frac{1}{2}\mathcal{U}_{o}^{(3)} :\grad\grad \\
+%         \mathcal{P}_{o}^{(1)} + \mathcal{P}_{o}^{(2)}\cdot \grad + \frac{1}{2}\mathcal{P}_{o}^{(3)} :\grad\grad \\
+%         \mathcal{U}_{i}^{(1)} + \mathcal{U}_{i}^{(2)}\cdot \grad + \frac{1}{2}\mathcal{U}_{i}^{(3)} :\grad\grad \\
+%         \mathcal{P}_{i}^{(1)} + \mathcal{P}_{i}^{(2)}\cdot \grad + \frac{1}{2}\mathcal{P}_{i}^{(3)} :\grad\grad \\
+%     \end{pmatrix}
+%     \cdot 
+%     \hat{\textbf{u}}_r|_{\textbf{x}=\textbf{y}}
+% \end{align*}
 \begin{align*}
     \begin{pmatrix}
         \hat{\textbf{u}}_{o}\\
@@ -161,19 +190,26 @@ Using the standard procedure of spherical harmonics we can stipulate that, \cite
     \end{pmatrix}
     =
     \begin{pmatrix}
-        \mathcal{U}_{o}^{(1)} + \mathcal{U}_{o}^{(2)}\cdot \grad + \frac{1}{2}\mathcal{U}_{o}^{(3)} :\grad\grad \\
-        \mathcal{P}_{o}^{(1)} + \mathcal{P}_{o}^{(2)}\cdot \grad + \frac{1}{2}\mathcal{P}_{o}^{(3)} :\grad\grad \\
-        \mathcal{U}_{i}^{(1)} + \mathcal{U}_{i}^{(2)}\cdot \grad + \frac{1}{2}\mathcal{U}_{i}^{(3)} :\grad\grad \\
-        \mathcal{P}_{i}^{(1)} + \mathcal{P}_{i}^{(2)}\cdot \grad + \frac{1}{2}\mathcal{P}_{i}^{(3)} :\grad\grad \\
+        \mathcal{U}_{o}^{(1)} + \mathcal{U}_{o}^{(2)}\cdot \grad + \mathcal{U}_{o}^{(3)} :\grad\grad &
+        \mathcal{U}_{o}^\text{(b-1)} + \mathcal{U}_{o}^\text{(b-2)}\cdot \grad + \mathcal{U}_{o}^\text{(b-3)} :\grad\grad \\
+        \mathcal{P}_{o}^{(1)} + \mathcal{P}_{o}^{(2)}\cdot \grad + \mathcal{P}_{o}^{(3)} :\grad\grad &
+        \mathcal{P}_{o}^\text{(b-1)} + \mathcal{P}_{o}^\text{(b-2)}\cdot \grad + \mathcal{P}_{o}^\text{(b-3)} :\grad\grad \\
+        \mathcal{U}_{i}^{(1)} + \mathcal{U}_{i}^{(2)}\cdot \grad + \mathcal{U}_{i}^{(3)} :\grad\grad &
+        \mathcal{U}_{i}^\text{(b-1)} + \mathcal{U}_{i}^\text{(b-2)}\cdot \grad + \mathcal{U}_{i}^\text{(b-3)} :\grad\grad \\
+        \mathcal{P}_{i}^{(1)} + \mathcal{P}_{i}^{(2)}\cdot \grad + \mathcal{P}_{i}^{(3)} :\grad\grad &
+        \mathcal{P}_{i}^\text{(b-1)} + \mathcal{P}_{i}^\text{(b-2)}\cdot \grad + \mathcal{P}_{i}^\text{(b-3)} :\grad\grad \\
     \end{pmatrix}
     \cdot 
-    \hat{\textbf{u}}_r|_{\textbf{x}=\textbf{y}}
+    \begin{pmatrix}
+        \hat{\textbf{u}}_r\\
+        \hat{\textbf{b}}
+    \end{pmatrix}
 \end{align*}
 The tensor $\mathcal{U}_{o}^{(1)},\mathcal{U}_{i}^{(1)},\mathcal{P}_{o}^{(1)}$  and $\mathcal{P}_{i}^{(1)}$ represent the effect of uniform relative translation $\hat{\textbf{u}}_r$ on the disturbance fields.
 Hence these expressions correspond to the Hadamard-Ribczynski solution \citep{pozrikidis1992boundary,kim2013microhydrodynamics}. 
-The dependency with the mean gradient velocity $\grad \textbf{u}_f|_{\textbf{x}=\textbf{y}}$, evaluated at the center of mass of the test droplet, is defined through the tensor $\mathcal{U}_{o}^{(2)},\mathcal{U}_{i}^{(2)},\mathcal{P}_{o}^{(2)}$ and $\mathcal{P}_{i}^{(2)}$.
+The dependency with the mean gradient velocity $\grad \hat{\textbf{u}}_f|_{\textbf{x}=\textbf{y}}$, evaluated at the center of mass of the test droplet, is defined through the tensor $\mathcal{U}_{o}^{(2)},\mathcal{U}_{i}^{(2)},\mathcal{P}_{o}^{(2)}$ and $\mathcal{P}_{i}^{(2)}$.
 The solution for these tensors is derived in \citet{rallison1978note,leal2007advanced,raja2010inertial}. 
-Finally the disturbance field of a droplet in the quadratic flow, $\grad\grad \textbf{u}_f|_{\textbf{x}=\textbf{y}}$, is defined with the tensors $\mathcal{U}_{o}^{(3)},\mathcal{U}_{i}^{(3)},\mathcal{P}_{o}^{(3)}$ and $\mathcal{P}_{i}^{(3)}$.
+Finally the disturbance field of a droplet in the quadratic flow, $\grad\grad \hat{\textbf{u}}_f|_{\textbf{x}=\textbf{y}}$, is defined with the tensors $\mathcal{U}_{o}^{(3)},\mathcal{U}_{i}^{(3)},\mathcal{P}_{o}^{(3)}$ and $\mathcal{P}_{i}^{(3)}$.
 The definition of the former tensors can be found in \citet{nadim1991motion}.
 
 
@@ -193,6 +229,8 @@ In this case the test velocity  and stress fields, reads\citep{pozrikidis2011int
 \end{align}
 Note that this expression is valid throughout the domain excluding the point $\textbf{r} =  \textbf{x} -  \textbf{y} = 0$, hence we may use either the subscript $o$ or $i$. 
 In the previous test problem $\div \hat{\textbf{u}}_f= 0$ (in opposition to \ref{eq:point_source}), thus the previous solution is unable to provide a formula for the trace of the first moment using the reciprocal theorem \citep{stone2001inertial}.
+
+\tb{Metrre vec normal }
 
 
 \section{Reciprocal theorem for droplets}
@@ -233,7 +271,7 @@ Similar considerations lead to $({\textbf{u}}_{o} + {\textbf{u}_r}) \cdot  \hat{
 \ref{eq:int_first_step} is the correct expression of the reciprocal theorem to use if one consider solid particles.
 Indeed, in that case $\hat{\textbf{u}}_{o}$ is imposed by the no-slip boundary condition at the particle interface, hence leading directly to a formula for the force traction at the surface of the solid particle. 
 For fluid particles few more steps are required. 
- 
+
 \subsection{Second step:}
 
 We now take the dot product of \ref{eq:momentum_in} with $(\hat{\textbf{u}}_i + \hat{\textbf{u}}_r)$ and of \ref{eq:momentum_in_s} with $(\textbf{u}_i+ \textbf{u}_r)$, subtracting both expression leads to, 
@@ -262,23 +300,29 @@ Integrating this relation over the domain $\Omega_i$, and using the divergence t
 \end{equation}
 Because $(\hat{\textbf{u}}_i+\hat{\textbf{u}}_r)\cdot (\bm\delta-\textbf{nn}) = (\hat{\textbf{u}}_i+\hat{\textbf{u}}_r)$, multiplying \ref{eq:boundary_cdt_stress} by $(\hat{\textbf{u}}_i+\hat{\textbf{u}}_r)$ gives the appropriate boundary condition for the first integral on the left-hand side of \ref{eq:second_step_int}, namely,
 \begin{equation}
-    \mathbf{n}\cdot [\textbf{e}_{o} - \lambda \textbf{e}_i + (1 -\lambda) \textbf{e}_f]\cdot (\hat{\textbf{u}}_{i/o}+\hat{\textbf{u}}_r)
-    =
-    0,
+    \mathbf{n}\cdot [
+        \textbf{e}_{o} - \lambda \textbf{e}_i 
+        + (1 -\lambda) \textbf{e}_f
+        % - \textbf{b}
+        ]\cdot (\hat{\textbf{u}}_{i/o}+\hat{\textbf{u}}_r)
+        =
+        \textbf{b}\cdot (\hat{\textbf{u}}_{i/o}+\hat{\textbf{u}}_r)
     \label{eq:boundary_with_the_velocity}
 \end{equation}
 with a similar relation for the test problem boundary condition and $({\textbf{u}}_{i/o}+{\textbf{u}}_r)$ in the first integral on the right-hand side of \ref{eq:second_step_int}. 
 
-Adding \ref{eq:int_first_step} and \ref{eq:second_step_int} while using the boundary condition given by \ref{eq:boundary_with_the_velocity} leads to the expression,
+Adding \ref{eq:int_first_step} and \ref{eq:second_step_int} times $\lambda$, while using the boundary condition given by \ref{eq:boundary_with_the_velocity} leads to the expression,
 \begin{multline}
     \intS[p]{\hat{\textbf{u}}_{r} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
     -\lambda \intO[i]{2\textbf{e}_i : \hat{\textbf{e}}_f}
     - (1-\lambda) \intS[p]{2(\textbf{u}_{i} + \textbf{u}_r)\cdot \hat{\textbf{e}}_f\cdot \textbf{n}}
+    + \intS[p]{2(\textbf{u}_{i} + \textbf{u}_r)\cdot \hat{\textbf{b}}}
     \\
     =
     \intS[p]{\textbf{u}_{r}\cdot \hat{\bm\sigma}_{o}\cdot \textbf{n}}
     - \lambda \intO[i]{2\hat{\textbf{e}}_i :\textbf{e}_f}
     - (1-\lambda) \intS[p]{2(\hat{\textbf{u}}_{i} + \hat{\textbf{u}}_r) \cdot  \textbf{e}_f \cdot \textbf{n}}
+    + \intS[p]{2(\hat{\textbf{u}}_{i} + \hat{\textbf{u}}_r) \cdot  \textbf{b}}
     \\ 
     + \zeta Re \intO{(\hat{\textbf{u}}_i+\hat{\textbf{u}}_r)\cdot \textbf{f}_{i}} 
     + Re\intO[o]{\hat{\textbf{u}}_{o}\cdot \textbf{f}_{o}}.
@@ -316,12 +360,14 @@ Injecting both \ref{eq:tricks_one} and \ref{eq:tricks_two} in \ref{eq:int_third_
 \begin{multline}
     \intS[p]{\hat{\textbf{u}}_{r} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
     - \intO[i]{2\textbf{e}_i : \grad\hat{\textbf{u}}_f}
-    + (\lambda-1) \intO[p]{(\textbf{u}_{i} + \textbf{u}_r)\cdot \grad^2 \hat{\textbf{u}}_f}
+    - (1-\lambda) \intO[p]{(\textbf{u}_{i} + \textbf{u}_r)\cdot \grad^2 \hat{\textbf{u}}_f}
+    + \intS[p]{2(\textbf{u}_{i} + \textbf{u}_r)\cdot \hat{\textbf{b}}}
     \\
     =
     \intS[p]{\textbf{u}_{r}\cdot \hat{\bm\sigma}_{o}\cdot \textbf{n}}
     - \intO[i]{2\hat{\textbf{e}}_i :\grad\textbf{u}_f}
-    + (\lambda-1) \intO[p]{(\hat{\textbf{u}}_{i} + \hat{\textbf{u}}_r) \cdot \grad^2 \textbf{u}_f }
+    - (1-\lambda) \intO[p]{(\hat{\textbf{u}}_{i} + \hat{\textbf{u}}_r) \cdot \grad^2 \textbf{u}_f }
+    + \intS[p]{2(\hat{\textbf{u}}_{i} + \hat{\textbf{u}}_r) \cdot  \textbf{b}}
     \\ 
     + \zeta Re \intO{(\hat{\textbf{u}}_i+\hat{\textbf{u}}_r)\cdot \textbf{f}_{i}} 
     + Re\intO[o]{\hat{\textbf{u}}_{o}\cdot \textbf{f}_{o}}.
@@ -341,14 +387,16 @@ Injecting both \ref{eq:tricks_one} and \ref{eq:tricks_two} in \ref{eq:int_third_
 %     + Re\intO[o]{\hat{\textbf{u}}_{o}\cdot \textbf{f}_{o}}.
 %     \label{eq:int_final_step}
 % \end{multline}
-Where we used the relations, $2{\textbf{e}_i} : \hat{\textbf{e}_f}= 2{\textbf{e}_i} : {\grad\textbf{u}_f}$ and $\div\textbf{e}_f = \grad^2 \textbf{e}_f$ because the background flow is divergence free. 
+Where we used the relations, $2{\textbf{e}_i} : \hat{\textbf{e}_f}= 2{\textbf{e}_i} : {\grad\textbf{u}_f}$ and $\div\textbf{e}_f = \frac{1}{2}\grad^2 \textbf{u}_f$ because the background flow is divergence free. 
 Upon making the good choice for $(\hat{\textbf{e}}_f, \hat{\textbf{u}}_r)$, one recover on the left-hand side of \ref{eq:int_final_step} the expression of the drag force and the first, second and higher moments present in \ref{eq:f_alpha} and \ref{eq:def_sigma_eff_f}, respectively. 
 The note that on the right-hand side of \ref{eq:int_final_step} all the terms, are either, known quantities from our test problem ($\hat{\bm\sigma}_{o},\hat{\textbf{e}}_i, \hat{\textbf{u}}_{i/o/r}$), or far-field condition of our `real' problem ($\textbf{e}_f,\textbf{u}_r$). 
 However, one exception remain, that is the inertial term $\textbf{f}_{i/o}$ to be evaluated in the whole domain $\Omega$, which is a function of the unknown velocity field $\textbf{u}_{i/o}$. 
 
 Hence, to compute the right-hand-side \ref{eq:int_final_step} one must proceed by applying some approximation allowing us to obtain the last two terms of \ref{eq:int_final_step}. 
 This is the subject of the next section. 
-\tb{CORRECT THE ONE HALF ERROR}
+
+
+
 
 \section{Moments of force on a droplet}
 
@@ -357,22 +405,22 @@ This is the subject of the next section.
 The drag force, Stresslet and second moment of forces are obtained by selecting the following quantity for the test problem, 
 \begin{align}
     \hat{\textbf{u}}_r = \hat{\textbf{u}}_r|_{\textbf{x}=\textbf{y}} 
-    % && 
-    % \textbf{e}_f = 0
+    && 
+    \hat{\textbf{b}} = 0 
     && 
     \hat{\textbf{u}}_{o/i} = \mathcal{U}_{o/i}^{(1)}\cdot \hat{\textbf{u}}_r|_{\textbf{x}=\textbf{y}} 
     && 
     \hat{\bm\sigma}_{o/i} = \mathcal{S}_{o/i}^{(1)}\cdot \hat{\textbf{u}}_r|_{\textbf{x}=\textbf{y}} \\
     \hat{\textbf{u}}_r =\textbf{r}\cdot  \grad \textbf{u}_f|_{\textbf{x}=\textbf{y}} 
-    % && 
-    % \textbf{e}_f = \textbf{e}_f|_{\textbf{x}= \textbf{y}}
+    && 
+    \hat{\textbf{b}} = 0 
     && 
     \hat{\textbf{u}}_{o/i} = \mathcal{U}_{o/i}^{(2)} : \grad\hat{\textbf{u}}_f|_{\textbf{x}=\textbf{y}} 
     && 
     \hat{\bm\sigma}_{o/i} = \mathcal{S}_{o/i}^{(2)} : \grad\hat{\textbf{u}}_f|_{\textbf{x}=\textbf{y}} \\
     \hat{\textbf{u}}_r =\frac{1}{2}\textbf{rr}\cdot  \grad\grad \textbf{u}_f|_{\textbf{x}=\textbf{y}} 
-    % && 
-    % \textbf{e}_f = \textbf{r}\cdot \grad\textbf{e}_f|_{\textbf{x}= \textbf{y}}
+    && 
+    \hat{\textbf{b}} = 0 
     && 
     \hat{\textbf{u}}_{o/i} = \mathcal{U}_{o/i}^{(3)} \vdots \grad\grad\hat{\textbf{u}}_f|_{\textbf{x}=\textbf{y}} 
     && 
@@ -386,8 +434,9 @@ Because $\hat{\textbf{u}}_r|_{\textbf{x}=\textbf{y}} $ is arbitrary, injecting \
     =
     \intS[p]{\textbf{u}_{r}\cdot \mathcal{S}_o^{(1)} \cdot \textbf{n}}
     - \intO[i]{ \mathcal{S}_{i}^{(1)} :\grad\textbf{u}_f}
-    + (\lambda-1) \intO[p]{(\mathcal{U}_{i}^{(1)} + \bm\delta) \cdot \grad^2   \textbf{u}_f }
+    - (1-\lambda) \intO[p]{(\mathcal{U}_{i}^{(1)} + \bm\delta) \cdot \grad^2   \textbf{u}_f }
     \\ 
+    + \intS[p]{2(\mathcal{U}_{i}^{(1)} + \bm\delta) \cdot  \textbf{b}}
     + \zeta Re \intO{(\mathcal{U}_{i}^{(1)} + \bm\delta)\cdot \textbf{f}_{i}} 
     + Re\intO[o]{\mathcal{U}_{o}^{(1)}\cdot \textbf{f}_{o}},
 \end{multline}
@@ -397,20 +446,22 @@ Because $\hat{\textbf{u}}_r|_{\textbf{x}=\textbf{y}} $ is arbitrary, injecting \
     =
     \intS[p]{\textbf{u}_{r}\cdot  \mathcal{S}_o^{(2)}\cdot \textbf{n}}
     - \intO[i]{ \mathcal{S}_i^{(2)} :\grad\textbf{u}_f}
-    + (\lambda-1) \intO[p]{(\mathcal{U}_{i}^{(2)}  + \textbf{r}\bm\delta) \cdot \grad^2   \textbf{u}_f }
+    - (1-\lambda) \intO[p]{(\mathcal{U}_{i}^{(2)}  + \textbf{r}\bm\delta) \cdot \grad^2   \textbf{u}_f }
     \\ 
+    + \intS[p]{2(\mathcal{U}_{i}^{(2)} + \textbf{r}\bm\delta) \cdot  \textbf{b}}
     + \zeta Re \intO{(\mathcal{U}_{i}^{(2)}  + \textbf{r}\bm\delta)\cdot \textbf{f}_{i}} 
     + Re\intO[o]{\mathcal{U}_{o}^{(2)}\cdot \textbf{f}_{o}},
 \end{multline}
 \begin{multline}
     \intS[p]{\textbf{rr}  \bm\sigma_{o}\cdot \textbf{n}}
     - \intO[i]{2\textbf{re}_i }
-    % + (\lambda-1) \intO[p]{2(\textbf{u}_{i} + \textbf{u}_r):\bm\delta}
+    % - (1-\lambda) \intO[p]{2(\textbf{u}_{i} + \textbf{u}_r):\bm\delta}
     % \\
     =
     \intS[p]{\textbf{u}_{r}\cdot \mathcal{S}_o^{(3)}\cdot \textbf{n}}
-    - \intO[i]{\mathcal{S}_i^{(3)} :\grad\textbf{u}_f}\\
-    + (\lambda-1) \intO[p]{(\mathcal{U}_{i}^{(3)} + \textbf{rr}\bm\delta) \cdot \grad^2 \textbf{u}_f }
+    - \intO[i]{\mathcal{S}_i^{(3)} :\grad\textbf{u}_f}
+    - (1-\lambda) \intO[p]{(\mathcal{U}_{i}^{(3)} + \textbf{rr}\bm\delta) \cdot \grad^2 \textbf{u}_f }\\
+    + \intS[p]{2(\mathcal{U}_{i}^{(3)} + \textbf{rr}\bm\delta) \cdot  \textbf{b}}
     + \zeta Re \intO{(\mathcal{U}_{i}^{(3)} + \textbf{rr}\bm\delta)\cdot \textbf{f}_{i}} 
     + Re\intO[o]{\mathcal{U}_{o}^{(3)} \cdot \textbf{f}_{o}}.
 \end{multline}
@@ -419,7 +470,75 @@ Note that the integral of $\textbf{u}_o + \textbf{u}_r = \textbf{u}_o+\textbf{u}
 Now it is left to specify in which circumstances we want to compute the drag force and other moments, then fixing the boundaries conditions defined by $\textbf{u}_r$ and the higher gradients. 
 Note that we could present the closures all at once for an arbitrary flow however it turns out to be clearer that way. 
 
-\subsection{Uniform translation}
+\subsection{General formulation for the internal shear integrals}
+
+\begin{align}
+    \hat{\textbf{u}}_r = 0
+    && 
+    \hat{\textbf{b}} = \textbf{b}|_{\textbf{x}=\textbf{y}} 
+    && 
+    \hat{\textbf{u}}_{o/i} = \mathcal{U}_{o/i}^\text{(1-b)}\cdot  \textbf{b}|_{\textbf{x}=\textbf{y}} 
+    && 
+    \hat{\bm\sigma}_{o/i} = \mathcal{S}_{o/i}^{(1-b)}\cdot \textbf{b}|_{\textbf{x}=\textbf{y}} \\
+    \hat{\textbf{u}}_r = 0
+    && 
+    \hat{\textbf{b}} = \textbf{r}\cdot \grad\textbf{b}|_{\textbf{x}=\textbf{y}} 
+    && 
+    \hat{\textbf{u}}_{o/i} = \mathcal{U}_{o/i}^\text{(2-b)}:  \grad\textbf{b}|_{\textbf{x}=\textbf{y}} 
+    && 
+    \hat{\bm\sigma}_{o/i} = \mathcal{S}_{o/i}^{(2-b)}:\grad \textbf{b}|_{\textbf{x}=\textbf{y}} \\
+    \hat{\textbf{u}}_r = 0
+    && 
+    \hat{\textbf{b}} = \frac{1}{2}\textbf{rr} : \grad\grad\textbf{b}|_{\textbf{x}=\textbf{y}} 
+    && 
+    \hat{\textbf{u}}_{o/i} = \mathcal{U}_{o/i}^\text{(3-b)}\vdots  \grad\grad\textbf{b}|_{\textbf{x}=\textbf{y}} 
+    && 
+    \hat{\bm\sigma}_{o/i} = \mathcal{S}_{o/i}^{(3-b)}\vdots\grad\grad \textbf{b}|_{\textbf{x}=\textbf{y}} \\
+    \label{eq:test_prob1}
+\end{align}
+
+which gives, 
+\begin{multline}
+    \intS[p]{2(\textbf{u}_{i} + \textbf{u}_r)}
+    =
+    \intS[p]{\textbf{u}_{r}\cdot \mathcal{S}^\text{(1-b)}_{o/i} \cdot \textbf{n}}
+    - \intO[i]{\mathcal{S}^\text{(1-b)}_{o/i} :\grad\textbf{u}_f}
+    - (1-\lambda) \intO[p]{\mathcal{U}^\text{(1-b)}_{i} \cdot \grad^2 \textbf{u}_f }\\
+    + \intS[p]{2 \mathcal{U}^\text{(1-b)}_{i}  \cdot  \textbf{b}}
+    + \zeta Re \intO{\mathcal{U}^\text{(1-b)}_{i} \cdot \textbf{f}_{i}} 
+    + Re\intO[o]{\mathcal{U}^\text{(1-b)}_{o}\cdot \textbf{f}_{o}}.
+    \label{eq:int_final_step}
+\end{multline}
+\begin{multline}
+    \intS[p]{2(\textbf{u}_{i} + \textbf{u}_r)\textbf{r}}
+    =
+    \intS[p]{\textbf{u}_{r}\cdot \mathcal{S}^\text{(2-b)}_{o/i} \cdot \textbf{n}}
+    - \intO[i]{\mathcal{S}^\text{(2-b)}_{o/i} :\grad\textbf{u}_f}
+    - (1-\lambda) \intO[p]{\mathcal{U}^\text{(2-b)}_{i} \cdot \grad^2 \textbf{u}_f }\\
+    + \intS[p]{2\mathcal{U}^\text{(2-b)}_{i} \cdot  \textbf{b}}
+    % \\ 
+    + \zeta Re \intO{\mathcal{U}^\text{(2-b)}_{i} \cdot \textbf{f}_{i}} 
+    + Re\intO[o]{\mathcal{U}^\text{(2-b)}_{o}\cdot \textbf{f}_{o}}.
+    \label{eq:un}
+\end{multline}
+% \begin{multline}
+%     \intS[p]{\hat{\textbf{u}}_{r} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
+%     - \intO[i]{2\textbf{e}_i : \grad\hat{\textbf{u}}_f}
+%     - (1-\lambda) \intO[p]{(\textbf{u}_{i} + \textbf{u}_r)\cdot \grad^2 \hat{\textbf{u}}_f}
+%     + \intS[p]{2(\textbf{u}_{i} + \textbf{u}_r)\cdot \hat{\textbf{b}}}
+%     \\
+%     =
+%     \intS[p]{\textbf{u}_{r}\cdot \hat{\bm\sigma}_{o}\cdot \textbf{n}}
+%     - \intO[i]{2\hat{\textbf{e}}_i :\grad\textbf{u}_f}
+%     - (1-\lambda) \intO[p]{(\hat{\textbf{u}}_{i} + \hat{\textbf{u}}_r) \cdot \grad^2 \textbf{u}_f }
+%     + \intS[p]{2(\hat{\textbf{u}}_{i} + \hat{\textbf{u}}_r) \cdot  \textbf{b}}
+%     \\ 
+%     + \zeta Re \intO{(\hat{\textbf{u}}_i+\hat{\textbf{u}}_r)\cdot \textbf{f}_{i}} 
+%     + Re\intO[o]{\hat{\textbf{u}}_{o}\cdot \textbf{f}_{o}}.
+% \end{multline}
+where the forcing term of this problem is determined by the imposed flow
+
+\subsection{Uniform translation without Marangoni forces}
 In the `true' problem we consider in the first place a uniform translation situation.
 Such that, 
 \begin{align*}
@@ -453,6 +572,16 @@ In this particlar cases we obtain the following formulas,
     + \zeta Re \intO{(\mathcal{U}_{i}^{(3)} + \textbf{rr}\bm\delta)\cdot \textbf{f}_{i}} 
     + Re\intO[o]{\mathcal{U}_{o}^{(3)} \cdot \textbf{f}_{o}},
 \end{multline}
+Additionally, one may need to compute the internal shear independently in which case he uses \ref{eq:un} 
+\begin{equation}
+    \intS[p]{2\textbf{u}_{i} \textbf{r}}
+    =
+    \textbf{u}_{r}\cdot \intS[p]{ \mathcal{S}^\text{(2-b)}_{o/i} \cdot \textbf{n}}
+    % \\ 
+    + \zeta Re \intO{\mathcal{U}^\text{(2-b)}_{i} \cdot \textbf{f}_{i}} 
+    + Re\intO[o]{\mathcal{U}^\text{(2-b)}_{o}\cdot \textbf{f}_{o}}.
+\end{equation}
+Because, $\textbf{u}_r$ is constant, its contribution on
 where the inertial terms become, 
 \begin{equation}
     \textbf{f}_{o/i} = \pddt \textbf{u}_{o/i} + (\textbf{u}_{o/i} + \textbf{u}_r) \cdot \grad \textbf{u}_{o/i}
@@ -460,6 +589,9 @@ where the inertial terms become,
 The first term of each equation corresponds by definition to the stokes contribution drag force contribution to the droplets, the two remaining ones correspond to the inertial contributions. 
 
 Basically the additional contribution of the first moment will be there, $\textbf{u}_r\textbf{u}_r$ regarding the other contribution it will be about that $\pddt \textbf{u}_r$ on the second moment 
+
+
+\tb{ALLL THESE TERMS MUST BE COMPUTED NOW}
 \subsection{Pure linear flow translation}
 Now we consider that, 
 \begin{equation}
