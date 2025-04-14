@@ -262,7 +262,7 @@ All these quantities obey conservation laws that are given according to \ref{eq:
     + (1-\lambda)&\pOavg{2\mu_f\textbf{E}_f}
     + \frac{1}{2}\pOavg{\textbf{r}(\div\bm\Sigma_f)+ (\div\bm\Sigma_f) \textbf{r}}
 \end{align}
-In these expressions we partitioned the local hydrodynamic stress $\bm\sigma_f^0$ and $\bm\sigma_d^0$, into their fluctuating parts, $\bm\sigma_f'=\bm\sigma_f^0 - \bm\Sigma_f$,  $\bm\sigma_d' = \bm\Sigma_d^0 + p_f\bm\delta - 2\mu_d \textbf{E}_f$ and mean parts $\bm\Sigma_f$ and $-p_f \bm\delta + 2\mu_d \textbf{E}_f$, respectively. 
+In these expressions we partitioned the local hydrodynamic stress $\bm\sigma_f^0$ and $\bm\sigma_d^0$, into their fluctuating parts, $\bm\sigma_f'=\bm\sigma_f^0 - \bm\Sigma_f$,  $\bm\sigma_d' = \bm\sigma_d^0 + p_f\bm\delta - 2\mu_d \textbf{E}_f$ and mean parts $\bm\Sigma_f$ and $-p_f \bm\delta + 2\mu_d \textbf{E}_f$, respectively. 
 Note that one can also write these equations in terms of $\bm\Sigma$ and $\textbf{E}$, the only requirement being that the exchange terms of \ref{eq:dt_hybrid_Mp} to \ref{eq:dt_hybrid_Sp} must correspond to the exchange terms used in the continuous phase momentum conservation \eqref{eq:dt_uf} (with \ref{eq:def_sigma_eff_f} or \ref{eq:def_sigma_eff_f2}). 
 
 This set of equations as well as the equations for the continuous phase are completed by a condition on the total volume conservation which reads, 
@@ -329,8 +329,8 @@ We may directly compute the following expressions from the singularity solutions
     \\
     \pSavg{\textbf{r}\bm\sigma_f'\cdot \textbf{n}} &
     = \mu_f \phi 
-    \frac{3(5\lambda +2)}{10(\lambda +1)}[\grad \textbf{u}_f+ (\grad \textbf{u}_f)^\dagger]
-    % + \mu_f a^2 \phi \frac{\lambda}{\lambda+1}\grad^2  [\grad \textbf{u}_f+ (\grad \textbf{u}_f)^\dagger]
+    \frac{3(5\lambda +2)}{5(\lambda +1)}\textbf{E}_f
+    + \mu_f a^2 \phi \frac{3\lambda}{10(\lambda+1)}\grad^2  \textbf{E}_f
     % + \phi a \frac{9}{25(\lambda +1)}\grad\grad \gamma
     % - \phi a \frac{3}{25(\lambda +1)}\bm\delta\grad^2 \gamma
     \\
@@ -345,8 +345,8 @@ We may directly compute the following expressions from the singularity solutions
 % \begin{align}
     \pSavg{\mu_f (\textbf{n} \textbf{u}_f' + \textbf{u}_f' \textbf{n})}
     &=
-    - \mu_f \phi \frac{5\lambda +2}{5(\lambda+1)}
-    [\grad \textbf{u}_f+ (\grad \textbf{u}_f)^\dagger]
+    - \mu_f \phi \frac{2(5\lambda +2)}{5(\lambda+1)}\textbf{E}_f
+    - \mu_f a^2 \phi \frac{3\lambda}{15(\lambda+1)}\grad^2  \textbf{E}_f
     % - \phi a  \frac{6}{25(\lambda+1)} \grad\grad \gamma
     % + \phi a \frac{2}{25(\lambda+1)} \bm\delta\grad^2 \gamma\\
     \\
@@ -361,7 +361,7 @@ We may directly compute the following expressions from the singularity solutions
 \end{align}
 where we have introduced the relative velocity $\textbf{u}_r = \textbf{u}_f - \textbf{u}_p$, and the viscosity ratio $\lambda = \mu_d/\mu_f$. 
 Note that we have used the approximation $\phi=n_pv_p + \mathcal{O}(a^2/L^2)$ and remove any terms of $\mathcal{O}(a^2/L^2)$ or higher (where $L$ corresponds to the typical length  scale of variation of the mean quantities). 
-
+\tb{to go higher order I need Faxen laws }
 
 
 Finally, the contribution from the mean Newtonian stress $\bm\Sigma_f$, and mean shear rate $\textbf{E}_f$ in the dispersed phase equations \eqref{eq:dt_hybrid_up,eq:dt_hybrid_Sp}, can be expressed as\citep{zhang1997momentum,morel2015mathematical}, 
@@ -483,8 +483,9 @@ Now that the closures are all presented one can simply inject \ref{eq:second_mom
     n_p (\pddt + \textbf{u}_p \cdot \grad)\bm\mu_p &= 0\\
     \textbf{H}_p
     &=
-    \frac{19 \lambda + 16}{16 \left(\lambda + 1\right)}
-    \left(\frac{a \mu_f}{\gamma Ca}\right)[\grad \textbf{u}_f+  (\grad \textbf{u}_f)^\dagger]
+    \frac{19 \lambda + 16}{8 \left(\lambda + 1\right)}
+    \left(\frac{a \mu_f}{\gamma Ca}\right)
+    \textbf{E}_f
     \label{eq:last}
 \end{align}
 \begin{align}
@@ -495,11 +496,13 @@ Now that the closures are all presented one can simply inject \ref{eq:second_mom
     + \phi\mu_f  \frac{3\lambda}{4(\lambda +1)} \grad^2 \textbf{u}_f\\
     \bm\sigma_f^\text{eff}
     =&
-     \mu_f \phi \frac{5\lambda +2}{2(\lambda+1)} [\grad \textbf{u}_f+ (\grad \textbf{u}_f)^\dagger]
+     \mu_f \phi \frac{5\lambda +2}{\lambda+1} \textbf{E}_f
     - \mu_f \frac{7\lambda +4}{3(\lambda+1)} [
     \grad(\phi \textbf{u}_r)
     + \grad(\phi \textbf{u}_r)^\dagger]
     + \mu_f \frac{3\lambda - 2}{3(\lambda+1)} \div(\phi \textbf{u}_r)  \bm\delta\nonumber\\
+    %FAXEN TERMES 
+    &+ \mu_f \phi a^2 \frac{\lambda}{2(\lambda+1)}\grad^2 \textbf{E}_f\\
     &-\rho_f C^1_{uu}(\phi,\lambda)  \textbf{u}_r \textbf{u}_r
     -\rho_f C^2_{uu} (\phi,\lambda) (\textbf{u}_r \cdot \textbf{u}_r)\bm\delta
     \label{eq:sigma_feffff}
