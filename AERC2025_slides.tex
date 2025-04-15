@@ -87,7 +87,7 @@ S. Popinet\footnote{Sorbonne Universit\'e, France} and
     %\item<4-> Multiphase pumps
     %\item<5-> And other\ldots
   \end{itemize}
-  Buoyancy dominated flows (with turbulence) : \\ $ Re_L \gg  1$, $ 0.1 \leq Re _p \leq 200 $, $0 \leq \rho_p/\rho_f \leq 1.5$
+  Buoyancy dominated flows (with turbulence) : \\ $ Re_L \gg  1$, $ 0.1 \leq Re _p \leq 200 $, $0 \leq \rho_p/\rho_f \leq 1.5,0.01 \leq \mu_p /\mu _f (=\lambda) \leq 10$
 \end{frame}
 
 
@@ -162,10 +162,35 @@ S. Popinet\footnote{Sorbonne Universit\'e, France} and
 \section{Averaged equations}
 \section*{}
 
-
+\begin{frame}
+  {Mathematical modeling of dispersed two-phase flows }
+    
+  
+  \begin{tikzpicture}
+  
+  
+  \node[box] at (0,3)(lagrangian) {Lagrangian description of droplets \\ $\ddt (m_i\textbf{u}_i) = \sum \textbf{F}$};
+  \node[box] at (8,3)(Eulerian) {Eulerian description of the continuous phase \\ $\div\textbf{u}= 0$\\ $\rho (\pddt + \textbf{u}\cdot\grad)\textbf{u} = \div\bm\sigma + \rho\textbf{g} $};
+  \uncover<2->{
+  \node[box] at (0,0)(kinetic) {``Kinetic Theory''-like models \\ (Simonin 1996)};
+  \node[box] at (8,0)(twofluid) {Two-Fluid formulation \\ (Drew 1983)};
+  \draw[arrow] (lagrangian) -- (kinetic) node[midway, right] {Statistical averaging};
+  \draw[arrow] (Eulerian) -- (twofluid) node[midway, right] {Statistical  averaging};
+  }
+  \uncover<3>{
+  \node[box] at (4,-2.7)(unify)  {Hybrid Multiphase Flow model (Lhuillier 1992, Zhang et Prosperetti 1994)};
+  \draw[arrow] (twofluid) -- (unify);
+  \draw[arrow] (kinetic) -- (unify);
+  \draw[arrow] (twofluid) -- (unify);
+ % \node[below =0.5cm of kinetic, text width=4.5cm] (desc1) {\textit{Describes the mean particle trajectories}};
+ % \node[below =0.5cm of twofluid, text width=4.5cm] (desc2) {\textit{Models the average continous phases behaviour}};
+  }
+  \end{tikzpicture}
+  
+  \end{frame}
 
 \begin{frame}
-  {Fluid averaged equations (Lhuillier 1992)}
+  {Fluid averaged equations }
   \begin{align*}
     &\pddt (\phi_f \rho_f)  
     + \div (
@@ -187,7 +212,7 @@ S. Popinet\footnote{Sorbonne Universit\'e, France} and
     \bm{\sigma}_f^\text{eff}
     =
     \only<1>{- \underbrace{\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}}_\text{Reynolds Stress}}
-    \only<2>{\textcolor{sintefcyan}{- \underbrace{\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}}_\text{Reynolds Stress}}}
+    \only<2>{\textcolor{orange}{- \underbrace{\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}}_\text{Reynolds Stress}}}
     \only<2>{\textcolor{orange}{+ \underbrace{ {\pSavg{{\left[\textbf{r}\bm{\sigma}_f' \cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')\right]}}}}_\text{First moment} }}
     \only<1>{+ \underbrace{ {\pSavg{{\left[\textbf{r}\bm{\sigma}_f' \cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')\right]}}}}_\text{First moment} }
     -\underbrace{\div [\ldots]}_\text{higher moments}
@@ -211,15 +236,15 @@ $\to$ We are looking for $\texttt{CLOSURE TERMS} = f(\phi_f, \textbf{u}_f, \text
 
 
 
-\begin{frame}{What is the Stresslet ?}
+\begin{frame}{Stresslet}
   \small
 \begin{equation*}
   %\underbrace{ {\pSavg{{\left[\textbf{r}\bm{\sigma}_f' \cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')\right]}}}}
   \text{First moment}
   = 
-  \underbrace{\pSavg{(\textbf{r}\bm{\sigma}_f^0 +\bm{\sigma}_f^0 \textbf{r} )\cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')}}_\text{Symmetric part = Stresslet}
+  \underbrace{\pSavg{(\textbf{r}\bm{\sigma}_f' +\bm{\sigma}_f' \textbf{r} )\cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')}}_{\text{Stresslet} (\bm S)}
   +
-  \bm\epsilon \cdot \underbrace{\pSavg{\textbf{r} \times \bm{\sigma}_f^0 \cdot \textbf{n}}}_\text{Torque}
+  \bm\epsilon \cdot \underbrace{\pSavg{\textbf{r} \times \bm{\sigma}_f' \cdot \textbf{n}}}_{\text{Torque} (\bm T)}
 \end{equation*}
 
 \setbeamercovered{transparent=10}
@@ -263,7 +288,7 @@ $\to$ We are looking for $\texttt{CLOSURE TERMS} = f(\phi_f, \textbf{u}_f, \text
 \only<2->{
 \uncover<2>{\textbf{Shear dominated flows (Taylor 1932)}
 \begin{equation*}
-  \pSavg{(\textbf{r}\bm{\sigma}_f^0 +\bm{\sigma}_f^0 \textbf{r} )\cdot \textbf{n}}
+  \bm S
   = \frac{3}{5}\mu_f \phi \left(\frac{2+5\lambda}{1+\lambda}\right) \left(\grad \textbf{u}_f + ^\dagger \grad \textbf{u}_f\right)
   + \mathcal{O}(\phi^2, Re)
 \end{equation*}
@@ -272,7 +297,7 @@ $\to$ We are looking for $\texttt{CLOSURE TERMS} = f(\phi_f, \textbf{u}_f, \text
 
 \uncover<3>{\textbf{Droplet in translation}
 \begin{equation*}
-  \pSavg{(\textbf{r}\bm{\sigma}_f^0 +\bm{\sigma}_f^0 \textbf{r} )\cdot \textbf{n}}
+  \bm S
   = \bm 0 + \mathcal{O}(\phi^2, Re)
 \end{equation*}
 %So the relative velocity doesn't contribute to the Stresslet  ? 
@@ -284,11 +309,11 @@ $\to$ We are looking for $\texttt{CLOSURE TERMS} = f(\phi_f, \textbf{u}_f, \text
 }}
 \end{frame}
 
-\section{Reciprocal theorem}
+%\section{Reciprocal theorem}
 
 %\section{Derivation}
 \begin{frame}
-  \frametitle{Derivation}
+  \frametitle{Reciprocal theorem}
 
 Reciprocal theorem (Stone et al. 2001, Massoud et Stone 2019)
 \begin{align}
@@ -311,6 +336,251 @@ Reciprocal theorem (Stone et al. 2001, Massoud et Stone 2019)
 \end{equation}
 \end{frame}
 
+
+
+
+%\section{Inertial stresslet}
+%\section*{}
+
+\begin{frame}
+  \frametitle{Inertial stresslet due to the relative motion of droplets}
+\setbeamercovered{transparent=15}
+
+
+  \begin{align*}
+    \frac{a}{\mu_f u_r} \bm S
+    % \left[
+        %\pSavg{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}}
+        %\pSavg{(\textbf{r}\bm{\sigma}_f^0 +\bm{\sigma}_f^0 \textbf{r} )\cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')}\\
+        % - \pOavg{(2 \mu_f \textbf{e}_d^0 - p_f\bm\delta)}
+        % \right]
+        % \\
+     =
+    \phi Re C_1
+    [
+      \textbf{u}_r\textbf{u}_r - \frac{1}{3}u_r ^2\bm\delta 
+      ]
+      + Re \phi C_2 (u_r ^2) \bm\delta
+      % + \phi p_f \bm\delta
+  \end{align*} 
+\begin{align*}
+    C_1  =  -\frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 \left(\lambda + 1\right)^{3}}
+    &&
+    C_2  = \frac{3\lambda^2 + 6\lambda + 4}{48(\lambda +1 )^2}
+  \end{align*}
+  
+For rising suspension in one direction : normal stress difference $\propto C_1 \bm u_r^2$.
+$\to$ rising droplets deform in oblate spheroid when $Re > 0$ (Taylor \& Acrivos 1964)%due to the non-zero Stresslet (Taylor \& Acrivos 1964)!
+  %\begin{itemize}
+  % \item 
+  %  \item 
+
+    %\item \textbf{U}=$\textbf{u}_p-\textbf{u}_f$ Mean relative velocity between phases
+%  \end{itemize}
+%  $\to$ Rising droplets deform when $Re > 0$ due to the non-zero Stresslet (Taylor \& Acrivos 1964)!
+
+\end{frame}
+
+
+
+
+\section{Reynolds Stress}
+
+\begin{frame}
+  \frametitle{Reynolds Stress}
+\setbeamercovered{transparent=15}
+
+Same tensorial form as the stresslet,
+  \begin{align*}
+    \frac{a}{\mu_f u_r} \avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}
+    % \left[
+        %\pSavg{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}}
+        %\pSavg{(\textbf{r}\bm{\sigma}_f^0 +\bm{\sigma}_f^0 \textbf{r} )\cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')}\\
+        % - \pOavg{(2 \mu_f \textbf{e}_d^0 - p_f\bm\delta)}
+        % \right]
+        % \\
+     =
+    \phi Re C_1^{Re}
+    [
+      \textbf{u}_r\textbf{u}_r - \frac{1}{3}u_r ^2\bm\delta 
+      ]
+      + Re \phi C_2^{Re} (u_r ^2) \bm\delta
+      % + \phi p_f \bm\delta
+  \end{align*} 
+
+  $C_1^{Re}$, $C_2^{Re}$ are unknown and cannot be computed analytically (Caflisch \& Luke paradox) $\rightarrow$ we perform particle resolved simulations 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Direct Numerical Simulations of rising droplet suspension}
+  \begin{columns}
+    \column{0.6\textwidth}
+    \only<1>{
+    \underline{Simulation set up:} 
+  \begin{itemize}
+  \item Tri-periodic boundary conditions.
+  \item Buoyancy only.
+  \item \textbf{Mono-disperse} distribution of droplet size.
+  \item We prevent (VOF) coalescence using a special algorithm 
+    (\href{http://basilisk.fr/src/no-coalescence.h}{no-coalescence.h})
+  \item Free Software: \url{http://basilisk.fr}
+  \end{itemize}
+  }
+  \only<2>{
+    \underline{Dimensionless parameters:} 
+
+  \begin{itemize}
+    \item \textit{Galileo} number: $Ga =\frac{\sqrt{\rho_f \Delta\rho_f gD^3}}{\mu} \in [5, 100]$
+    \item \textit{Bond} number: $Bo = \frac{\Delta \rho_f g D^2}{\sigma} = 0.2$ 
+    \item Volume fraction of dispersed phase: $\phi = [0.01;0.2]$. 
+    \item Density and viscosity ratio, $\zeta=\rho_d/\rho_f=0.9$ and $\lambda=\mu_d/\mu_f= 10,1,0.1$. 
+  \end{itemize}
+  }
+  \begin{figure}
+   % \caption{Snapshot of a simulation at $T_g = 300$ for $\phi = 0.01$, $Ga = 75$, $\mu_r = 0.1$ and $N_b = 125$. In white, the interfaces ; the background color map corresponds to the pressure field. The grid represents the different parallel cores.
+   % }
+  \end{figure}
+  \column{0.5\textwidth}
+  \centering
+  \href{videos/DNS.mp4}{\beamergotobutton{Play}}
+  \includegraphics[width =  1.1\textwidth]{image/PHI_01_Ga_75.png}
+  \end{columns}
+\end{frame}
+
+
+%\begin{itemize}
+
+%\end{itemize}
+\section{Inertial rheology}
+\section*{}
+
+\begin{frame}
+  \frametitle{Effective stress in rising suspension}
+  \setbeamercovered{transparent=15}
+    \begin{equation*}
+      \phi_f \rho_f (\pddt + \textbf{u}_f\cdot \grad)\textbf{u}_f
+      = 
+      \phi_f \div \bm\Sigma^\text{f} +
+      \div \bm\sigma^\text{eff}
+      + \phi_f \rho_f \textbf{g} 
+      - \pSavg{{\bm{\sigma}_f' \cdot \textbf{n}}}
+  \end{equation*}
+  \underline{Assuming $\grad \textbf{u}_f = 0$ :}
+  \begin{align*}
+    \frac{a }{\mu_f u_r}\bm{\sigma}^\text{eff}_f 
+    &=\frac{a }{\mu_f u_r} \left(
+    +  \bm S -  \avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'} \right)
+    \\
+    \uncover<2>{&= 
+    \left[Re \phi  ( C_2-C^{Re}_2)(\textbf{u}_r\cdot \textbf{u}_r) \right]\bm\delta 
+    + Re \phi ( C_1 - C^{Re}_1)\left[
+            \textbf{u}_r\textbf{u}_r
+            - \frac{1}{3}(\textbf{u}_r\cdot \textbf{u}_r)\bm\delta
+    \right]}
+    % + \mathcal{O}(Re^{3/2},\phi^2).
+    \label{eq:stress_closed}
+\end{align*} 
+%\uncover<2>{
+%$C_1$ valid only for $\boxed{\phi \ll 1}$ and $\boxed{Re < 1}$
+%$\longrightarrow$
+%\textbf{DNS measurements ! }
+%}
+
+\end{frame}
+
+\begin{frame}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo_l_1.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo_l_10.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo_l_100.pdf}
+    \caption{
+      (Hollow symbols) \underline{Stresslet}: $C_1$. 
+      (Filled symbols) \underline{Reynolds stress} $C_1^{Re}$. 
+     }
+\end{figure}
+\begin{itemize}
+\item $\phi \ll 1$ : $\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}\propto \phi^{2/3}$ while $\bm S \propto \phi \rightarrow$   $\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}\gg \bm S$
+\item $\phi \approx 0.2$ : $\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}\sim \bm S$
+\end{itemize}
+%\item $\avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}$ $\gg$ Stresslet for $\phi \ll 1$ %\item Good trends in terms of $\sim \phi^{2/3}$ and $\lambda$.  
+%\item Quantitative agreement for $\phi < 0.01$.  
+\end{frame}
+
+\section{Discussion and perspectives}
+\section*{}
+
+
+
+
+
+
+\begin{frame}
+  \frametitle{Discussion}
+  %\centering
+  %{\Huge\textbf{Discussion and perspectives ? }}
+ Lin et al. (1970), Stone et al. (2001), Raja et al. (2010) derived the first correction to Einstein-Taylor viscosity for ($Re_{\dot{\gamma}}\ll 1$):
+
+ \begin{equation}
+\bm S = \frac{3}{5}\mu_f \phi \left(\frac{2+5\lambda}{1+\lambda}\right) \left(\grad \textbf{u}_f + ^\dagger \grad \textbf{u}_f\right) + \color{orange}Re_{\dot{\gamma}}\left(...\right)
+\end{equation}
+
+
+ However, in buoyancy driven flows the $Re_{\dot{\gamma}}$ correction is  negligible if $u_r \gg a\dot{\gamma}$ which leads to (for dilute sedimenting suspension),
+
+ \begin{equation}
+  \frac{\rho _p}{\rho_f} \gg 1 + \frac{9}{2} \frac{\dot{\gamma}\mu}{a \rho _f g}
+ \end{equation}
+For solid particles in gas or bubbles in liquids we may expect the $Re_{\dot\gamma}$ correction to be negligible
+ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Perspectives}
+  \begin{itemize}
+    \item Dispersed phase equations : center of mass velocity variance ?
+    \item How to measure the coefficient $C_1$ and $C_2$ with experiments  ?
+    \item Does the system of equations is hyperbolic ? %With effective stress $\propto U^2$ ?
+    \item Do the proposed closures laws agree with rheological principles (material objectivity, etc) ?
+  \end{itemize}
+
+
+ We need physicists/rheologists on many other complicated subjects:
+\begin{itemize}
+  \item pneumatic transport of torrefied biomass (gas-solid flow)
+  \item mass transfer between gas-liquid and liquid-liquid suspensions
+  \item precipitation of solid for battery recycling
+\end{itemize}
+\centering
+\end{frame}
+
+
+\backmatter
+
+%\begin{frame}
+%  \footnotesize
+
+%  \bibliography{Bib/bib_bulles.bib}
+
+%\end{frame}
+
+\begin{frame}
+  \frametitle{Reformulation of the first moment  with conditional average}
+  
+    \begin{equation*}
+      \underbrace{\pSavg{{\textbf{r} \bm{\sigma}_f^0 \cdot \textbf{n}}}[\textbf{x},t]}_\text{$N$ droplets in a fluid}
+      =
+      \underbrace{n_p[\textbf{x},t]
+        \intS[]{\textbf{r} \bm\sigma^1 \cdot \textbf{n}}}_\text{
+        \href{videos/one_particle.mp4}{One droplet in an effective medium}
+        }
+    \end{equation*}
+  \begin{itemize}
+    \item $\bm\sigma^1[\textbf{z}|\textbf{x}]$ Mean stress at \textbf{z} conditioned on the presence of a droplet at $\textbf{x}$. 
+  \end{itemize} 
+  \vfill
+  $\to$ This time we need a result of $\bm\sigma$ accurate at $\mathcal{O}(Re)$. 
+\end{frame}
 
 \begin{frame}
   \frametitle{Test problem and regular expansion in $Re$}
@@ -348,176 +618,6 @@ Reciprocal theorem (Stone et al. 2001, Massoud et Stone 2019)
     \end{equation}
     }
 \end{frame}
-
-\section{Inertial rheology}
-\section*{}
-
-\begin{frame}
-  \frametitle{Inertial stresslet due to the relative motion of droplets}
-\setbeamercovered{transparent=15}
-
-
-  \begin{align*}
-    \frac{a}{\mu_f u_r}
-    % \left[
-        %\pSavg{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}}
-        &\pSavg{(\textbf{r}\bm{\sigma}_f^0 +\bm{\sigma}_f^0 \textbf{r} )\cdot \textbf{n}-\mu_f(\textbf{u}_f'\textbf{n} +\textbf{n}\textbf{u}_f')}\\
-        % - \pOavg{(2 \mu_f \textbf{e}_d^0 - p_f\bm\delta)}
-        % \right]
-        % \\
-    &=
-    \phi Re C_1
-    [
-      \textbf{u}_r\textbf{u}_r - \frac{1}{3}u_r ^2\bm\delta 
-      ]
-      + Re \phi C_2 (u_r ^2) \bm\delta
-      % + \phi p_f \bm\delta
-  \end{align*} 
-\begin{align*}
-    C_1  =  -\frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 \left(\lambda + 1\right)^{3}}
-    &&
-    C_2  = \frac{3\lambda^2 + 6\lambda + 4}{48(\lambda +1 )^2}
-  \end{align*}
-  
-  %\begin{itemize}
-   % \item \textbf{U}=$\textbf{u}_p-\textbf{u}_f$ Mean relative velocity between phases
-  %\end{itemize}
-  $\to$ Rising droplets deform when $Re > 0$ due to the non-zero Stresslet !. 
-
-\end{frame}
-
-
-\begin{frame}{Comparison with simulations results}
-  \begin{figure}[h!]
-    \centering
-    \uncover<2>{\includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo_l_1.pdf}}
-    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo_l_10.pdf}
-    \uncover<2>{\includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo_l_100.pdf}}
-    \caption{
-      (Hollow symbols) \underline{Stresslet}: $C_1$. 
-      (Filled symbols) \underline{Reynolds stress} $C_1^{Re}$. 
-     }
-\end{figure}
-
-\uncover<2>{
-\textbf{In dense regime the Stresslet may not be negligible !}
-}
-
-
-\end{frame}
-
-
-
-\section{Conclusion}
-\section*{}
-
-\begin{frame}
-  \frametitle{What have we learned ? }
-  \setbeamercovered{transparent=10}
-
-\textbf{Methodology: }
-  \begin{itemize}
-    \item How to derive ensemble averaged equations. 
-    \item How to relate \underline{closure terms} to the \underline{closure problems}, and how to solve them (singularity method, reciprocal theorem or DNS).
-    DNS: \url{http://basilisk.fr/sandbox/fintzin/Rising-suspension/RS.c}
-  \end{itemize}
-
-  \uncover<2>{
-\textbf{Physics :}
-\begin{itemize}
-  \item Drag force: $\sim U^2 C_D(Re, \phi,\textcolor{sintefred}{\lambda})$.
-  \item Reynolds stress: $\sim U^2 \phi^{2/3}$.
-  \item Stresslet: $\sim U^2 \phi$.
-  \item And Reynolds stress $\approx$ Stresslet for high $\phi$ and Reynolds stress $\ll$ Stresslet for $\phi \ll 1$.
- \end{itemize}
-}
-
-
-\end{frame}
-\begin{frame}
-  \frametitle{Buoyancy driven emulsion rheology}
-  \centering\underline{Continuous phase mass and momentum equation:}
-  \begin{equation*}
-    \pddt \phi_f + \div (\textbf{u}_f \phi_f) = 0
-  \end{equation*}
-  \begin{equation*}
-    % \pddt \phi_f + \div (\textbf{u}_f \phi_f) &= 0\\ 
-      \rho_f (\pddt 
-    + \textbf{u}_f \cdot \grad)
-    \textbf{u}_f
-    = 
-    \div\bm\Sigma_f
-    % \underbrace{\div\bm\Sigma_f}_\text{Newtonian stress}
-    + \rho_f \textbf{g}
-    \only<2->{\textcolor{sintefcyan}{-\underbrace{\frac{3\rho_f}{8a} \frac{\phi C_D(Re,\phi, \lambda) }{1-\phi}   \times \textbf{U} |\textbf{U}|}_\text{Drag force}}}
-    \only<3>{\textcolor{sintefred}{+\underbrace{\frac{1}{1-\phi} \div  \bm{\sigma}_f^{\text{eff}}}_\text{Effective stress}}}
-  \end{equation*}
-
-  \centering\underline{Constitutive laws:}
-
-\begin{equation*}
-    \bm\Sigma_f 
-    = 
-    - p_f \bm\delta
-    + 2\mu_f \left[\grad \textbf{u}_f + (\grad \textbf{u}_f)^\dagger\right]
-\end{equation*}
-
-\uncover<3>{
-\begin{equation*}
-\textcolor{sintefred}{
-    \bm{\sigma}^{\text{eff}}_f 
-    = \underbrace{C_E(Re,\phi,\lambda) \mu_f [\grad \textbf{u}_f +  (\grad \textbf{u}_f)^\dagger ] }_\text{``Einstein viscosity'' \& Single phase Turbulence}
-    + 
-    \underbrace{
-      C_1(\phi,\lambda,Re)\textbf{UU}
-    + C_2(\phi,\lambda,Re)U^2 \bm\delta}_\text{Mean particle Induced Turbulence (PIT) \& Stresslet}
-}
-\end{equation*}
-}
-
-\end{frame}
-
-
-
-\begin{frame}
-  \centering
-  {\Huge\textbf{Perspectives ? }}
-
-  \begin{itemize}
-    \item Dispersed phase equations ? (Center of mass velocity variance ? )
-    \item How to measure $C_1$, $C_2$ with experiments  ?
-    \item Hyperbolic system of equations ? With effective stress $\propto U^2$ ?
-    \item Are the proposed closures laws consistent with thermodynamics constrains ?
-  \end{itemize}
-
-\end{frame}
-\backmatter
-
-\begin{frame}
-  \footnotesize
-
-  \bibliography{Bib/bib_bulles.bib}
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{Reformulation of the first moment  with conditional average}
-  
-    \begin{equation*}
-      \underbrace{\pSavg{{\textbf{r} \bm{\sigma}_f^0 \cdot \textbf{n}}}[\textbf{x},t]}_\text{$N$ droplets in a fluid}
-      =
-      \underbrace{n_p[\textbf{x},t]
-        \intS[]{\textbf{r} \bm\sigma^1 \cdot \textbf{n}}}_\text{
-        \href{videos/one_particle.mp4}{One droplet in an effective medium}
-        }
-    \end{equation*}
-  \begin{itemize}
-    \item $\bm\sigma^1[\textbf{z}|\textbf{x}]$ Mean stress at \textbf{z} conditioned on the presence of a droplet at $\textbf{x}$. 
-  \end{itemize} 
-  \vfill
-  $\to$ This time we need a result of $\bm\sigma$ accurate at $\mathcal{O}(Re)$. 
-\end{frame}
-
 
 \begin{frame}
   \frametitle{Why the 'outer solution' is negligible to leading order ?}
@@ -562,68 +662,90 @@ Reciprocal theorem (Stone et al. 2001, Massoud et Stone 2019)
 \end{frame}
 
 
-\begin{frame}
-  \frametitle{Effective stress in homogeneous buoyant emulsions }
-  \setbeamercovered{transparent=15}
-    \begin{equation*}
-      \phi_f \rho_f (\pddt + \textbf{u}_f\cdot \grad)\textbf{u}_f
-      = 
-      \div \bm\sigma^\text{eff}
-      + \phi_f \rho_f \textbf{g} 
-      - \pSavg{{\bm{\sigma}_f^0 \cdot \textbf{n}}}
-  \end{equation*}
-  \underline{Assuming $\grad \textbf{u}_f = 0$ :}
-  \begin{align*}
-    \frac{a }{\mu_f U}\bm{\sigma}^\text{eff}_f 
-    &=
-    -  \avg{\chi_f\rho_f\textbf{u}_f'\textbf{u}_f'}
-    +  \phi_f \bm{\sigma}_f
-    +  \pSavg{{\textbf{r}\bm{\sigma}_f^0 \cdot \textbf{n}}}
-    \text{}{+ \div [\ldots]}
-    \\
-    \uncover<2>{&= 
-    \left[ p_f + Re \phi  (C^{Re}_2 - C_2)(\textbf{U}\cdot \textbf{U}) \right]\bm\delta 
-    + Re \phi (C^{Re}_1 - C_1)\left[
-            \textbf{U}
-            - \frac{1}{3}(\textbf{U}\cdot \textbf{U})\bm\delta
-    \right]}
-    % + \mathcal{O}(Re^{3/2},\phi^2).
-    \label{eq:stress_closed}
-\end{align*} 
-\uncover<2>{
-$C_1$ valid only for $\boxed{\phi \ll 1}$ and $\boxed{Re < 1}$
-$\longrightarrow$
-\textbf{DNS measurements ! }
-}
+
+
+
+
+\begin{frame}{Comparison with Particle Resolved Simulations (PRS)}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo2_l_1.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo2_l_10.pdf}
+    \includegraphics[height = 0.25\textwidth]{image/HOMOGENEOUS_final/PA/Sdev_diapo2_l_100.pdf}
+    \caption{$--$ : theoretical prediction, points : PRS.  Viscosity ratio ($\lambda =$). 
+      %(Hollow symbols) \underline{Stresslet}: $C_1$. 
+      %(Filled symbols) \underline{Reynolds stress} $C_1^{Re}$. 
+     }
+\end{figure}
+
+The theoretical formula gives the correct order of magnitude (and correct sign).
+%\uncover<2>{
+%\textbf{In dense regime the Stresslet may not be negligible !}
+%}
+
 
 \end{frame}
 
 
-
-
-
 \begin{frame}
-  \frametitle{Comparison with DNS results and experiments}
+  \frametitle{Experiments and PRS results}
   \begin{figure}[h!]
     \centering    
     % \includegraphics[height = 0.25\textwidth]{image/upupexp.png}
-    \uncover<2>{\includegraphics[height = 0.20\textwidth]{image/HOMOGENEOUS_final/CA/cartellier.pdf}}
+    \includegraphics[height = 0.20\textwidth]{image/HOMOGENEOUS_final/CA/cartellier.pdf}
     \includegraphics[height = 0.20\textwidth]{image/HOMOGENEOUS_final/CA/UUyy_Ga_5.pdf}
     \caption{
       %  Dimensionless vertical component of the Reynolds stress :
+      (left) Comparison with the rising bubbles experiment of Cartellier \& Riviere with $Re \approx 10$.
       (right) comparison with DNS for two viscosity ratio $\lambda =1,10$ and $Re \approx 1$ DNS. 
-     \uncover<2>{  (left) Comparison with the rising bubbles experiment of Cartellier (2009) with $Re \approx 10$. }
+        
     }
 \end{figure}  
-\begin{itemize}
-  \item Good trends in terms of $\sim \phi^{2/3}$ and $\lambda$.  
-  \item Quantitative agreement for $\phi < 0.01$.  
-\end{itemize}
 \end{frame}
 
 
+\begin{frame}
+  \frametitle{Buoyancy driven two-fluid rheology}
+  \centering\underline{Continuous phase mass and momentum equation:}
+  \begin{equation*}
+    \pddt \phi_f + \div (\textbf{u}_f \phi_f) = 0
+  \end{equation*}
+  \begin{equation*}
+    % \pddt \phi_f + \div (\textbf{u}_f \phi_f) &= 0\\ 
+      \rho_f (\pddt 
+    + \textbf{u}_f \cdot \grad)
+    \textbf{u}_f
+    = 
+    \div\bm\Sigma_f
+    % \underbrace{\div\bm\Sigma_f}_\text{Newtonian stress}
+    + \rho_f \textbf{g}
+    \only<2->{\textcolor{sintefcyan}{-\underbrace{C_D(Re,\phi, \lambda) \frac{3}{8} \frac{\rho_f}{a}  \frac{\phi}{1-\phi}   \times \textbf{u}_r |\textbf{u}_r|}_\text{Drag force}}}
+    \only<3>{\textcolor{sintefred}{+\underbrace{\frac{1}{1-\phi} \div  \bm{\sigma}_f^{\text{eff}}}_\text{Effective stress}}}
+  \end{equation*}
 
+  \centering\underline{Constitutive laws:}
 
+\begin{equation*}
+    \bm\Sigma_f 
+    = 
+    - p_f \bm\delta
+    + 2\mu_f \left[\grad \textbf{u}_f + (\grad \textbf{u}_f)^\dagger\right]
+\end{equation*}
+
+\uncover<3>{
+\begin{equation*}
+\textcolor{sintefred}{
+    \bm{\sigma}^{\text{eff}}_f 
+    = \underbrace{C_E(Re,\phi,\lambda) \mu_f [\grad \textbf{u}_f +  (\grad \textbf{u}_f)^\dagger ] }_\text{``Einstein viscosity''}% \& Single phase Turbulence}
+    + 
+    \underbrace{
+      A_{u_r}(\phi,\lambda,Re)\textbf{u}_r\textbf{u}_r
+    + B_{u_r}(\phi,\lambda,Re)u_r^2 \bm\delta}_\text{Fluid velocity variance \& Stresslet}
+}
+\end{equation*}
+}
+
+\end{frame}
 
 
 
