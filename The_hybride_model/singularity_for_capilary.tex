@@ -1032,3 +1032,313 @@ If one need to find a flow in a $\grad\grad\grad \textbf{u} = \partial_{ijk}u_l$
     + C_{12}\delta_{kj}\partial_{il}
     + C_{13}\partial_{ijkl}
 \end{align}
+
+\section{deformable droplet singularity solution}
+\subsection{Physical problem}
+The points $\textbf{r}_\Gamma(t)$ lying on the droplet surface or volume may be computed as,
+\begin{equation}
+    \textbf{r}_\Gamma = r [1 + f(\theta,\varphi)]\textbf{e}_r
+\end{equation}
+
+
+In dimensionless form ($\textbf{u}_{out}$, $\textbf{u}_{in}$) are governed by the Stokes equations, namely, 
+\begin{align}
+    \div \textbf{u}_{in} = 0 
+    && \div \textbf{u}_{out} = 0 \\
+    -\grad p_{in} + \mu_{in}\grad^2 \textbf{u}_{in}  = 0 
+    &&-\grad p_{out} + \mu_{out}\grad^2 \textbf{u}_{out}  = 0 
+\end{align}
+As these field are disturbance field they follow,
+\begin{equation}
+    \lim_{r\to \infty}(\textbf{u}_{out},p_{out}) = 0 
+\end{equation}
+far from the droplet centered at the origin ($\textbf{x} = 0$). 
+At the surface of the droplet ($r = 1 + f(\theta,\varphi)$) the continuity of velocity and the far field condition impose, 
+\begin{align}
+    \textbf{u}_{in} = \textbf{u}_{out}
+    && 
+    (\textbf{u}_{in}  + \textbf{u} - \textbf{u}_\Gamma)\cdot \textbf{n}
+    = (\textbf{u}_{in}  + \textbf{u}_r)\cdot \textbf{n}
+    = 0
+    &&
+    \text{ at }
+    r = 1 + f(\theta,\varphi)
+\end{align}
+where it must be noted that both $\textbf{u}_{in}$ and $\textbf{u}$ are evaluated at the points on the surface of the droplet, hence $\textbf{u}$ may not always be a constant vector. 
+$\textbf{u}_I$ is the interface of teh droplet, which may be replaced by the droplet center of mass for undeformable droplets, otherwise it is related to the moment of momentum and mass. 
+
+
+Let us introduce the dimensionless stress tensor $\bm\sigma_{in/out} = -p_{in/out} \bm\delta + \mu_{in/out}[\grad \textbf{u}_{in/out} + ^\dagger \grad \textbf{u}_{in/out}]$ and the dimensionless shear stress tensor, $2\textbf{e}_{in/out} = \grad \textbf{u}_{in/out} + ^\dagger \grad \textbf{u}_{in/out}$. 
+The undisturbed shear stress reads  $2\textbf{e} = \grad \textbf{u} + ^\dagger \grad \textbf{u}$
+With these notations the tangential shear stress jump reads at $r = 1$ reads as, 
+\begin{align}
+    \mathbf{n}\cdot (\textbf{e}_{out} - \lambda \textbf{e}_{in}+\textbf{e} -\lambda\textbf{e})\cdot (\bm\delta - \textbf{nn})
+    % +
+    % (1-\lambda)\mathbf{n}\cdot \textbf{e} \cdot (\bm\delta - \textbf{nn})
+    = (\bm\delta - \textbf{nn})\cdot \textbf{b}
+    &&
+    \text{ at }
+    r = 1 + f(\theta,\varphi)
+\end{align}
+with, 
+\begin{equation}
+    \textbf{b}
+    =
+    \frac{\grad \gamma}{2\mu_f}
+    % \approx (a\grad) Ca^{-1}. 
+    % =
+    % \frac{a \grad \gamma}{2 \mu_f |\textbf{u}_r|}
+    % \approx (a\grad) Ca^{-1}. 
+\end{equation}
+The velocity \textbf{u} is imposed, the velocity $\textbf{u}_\Gamma$ is just the velocity of the interface which may be obtained by differetiating the point lying on the interface, namely, 
+\begin{equation}
+    \textbf{u}_\Gamma
+    =
+    \textbf{u}_\alpha
+    +
+    \pddt \textbf{r}_\Gamma
+    =
+    \textbf{u}_\alpha
+    + 
+    \textbf{e}_r\pddt f(\theta,\varphi,t)
+\end{equation}
+
+\subsection*{Dimensionless problem}
+The relative velocity at the interfaces as well as the mean stresss may be expanded as a taylor series such that, 
+\begin{align*}
+    \textbf{u}_r(\textbf{n}) 
+    &=  \textbf{u}_r|_{\textbf{x}=0}
+    +  \textbf{r} \cdot  \grad\textbf{u}_r|_{\textbf{x}=0}
+    + \ldots
+    +  \frac{1}{n!}\textbf{r}^{(n)} \odot \grad^{(n)}\textbf{u}_r|_{\textbf{x}=0}
+    \\
+     \textbf{e}(\textbf{n}) 
+    &=   \textbf{e}|_{\textbf{x}=0}
+    + \textbf{r} \cdot  \grad \textbf{e}|_{\textbf{x}=0}
+    % + \frac{1}{2}\textbf{rr} \cdot  \grad\grad \textbf{e}|_{\textbf{x}=0}
+    + \ldots
+    + \frac{1}{n!}\textbf{r}^{(n)} \odot  \grad^{(n)} \textbf{e}|_{\textbf{x}=0}
+\end{align*}
+because of these relations one may be able to re-formulate the above problem in terms of generalized tensor such that, 
+\begin{align}
+    \textbf{u}_{out/in} &= \textbf{U}_{out/in}^{(n+2)}\odot \grad^{(n)}\textbf{u}_r\\
+    % \textbf{u}_{in} &= \textbf{U}_{in}^{(n+2)}\odot \grad^{(n)}\textbf{u}_r\\
+    p_{out/in} &= \mu_{out/in} \textbf{P}_{out/in}^{(n+1)}\odot \grad^{(n)}\textbf{u}_r\\
+    % p_{in} &=  \mu_{in} \textbf{P}_{in}^{(n+1)}\odot \grad^{(n)}\textbf{u}_r\\
+    \bm\sigma_{out/in}
+    &=
+    \mu_{out/in} 
+    \bm\Sigma^{(n+3)}_{out/in}
+    \odot \grad^{(n)}\textbf{u}_r
+    =
+    \mu_{out/in} 
+    [
+    \bm\delta\textbf{P}_{out/in}^{(n+1)}
+    + 
+    \grad \textbf{U}_{out/in}^{(n+2)}
+    + 
+    ^\dagger \grad \textbf{U}_{out/in}^{(n+2)}]\odot \grad^{(n)} \textbf{u}_r\\
+    \textbf{e}_{out/in}
+    &=
+    2\textbf{E}^{(n+3)}_{out/in}
+    \odot \grad^{(n)}\textbf{u}_r
+    =
+    [
+    \grad \textbf{U}_{in}^{(n+2)}
+    + 
+    ^\dagger \grad \textbf{U}_{in}^{(n+2)}]\odot \grad^{(n)} \textbf{u}_r\\
+    \textbf{b} &=
+    \textbf{B}^{(n+1)}\odot \grad^{(n)}\textbf{u}
+\end{align}
+where $\odot$ represent the maximum contraction operators. 
+Note that $\textbf{B} = \bm\delta$ means that $\textbf{b}$ is aligned with $\textbf{u}_r$. 
+Hence the generalized tensor $\textbf{B}$ indicacted that one might choose a vector \textbf{b} such that it is in an other direction than $\textbf{u}_r$ which is physically unlikely.   
+We follow the convention of \citet{brenner1963stokes} for the transpose operator$^\dagger$. 
+The mean averaged stress can then be written, 
+\begin{multline}
+    \frac{2}{(n-1)!}\textbf{r}^\text{($n$-1)}\odot \grad^\text{($n$-1)}\textbf{e}
+    =
+    \frac{1}{(n-1)!}\textbf{r}^\text{($n$-1)}\odot \grad^\text{($n$-1)}[\grad \textbf{u}+ (\grad \textbf{u})^\dagger]\\
+    =
+    \frac{1}{(n-1)!}\textbf{r}^\text{($n$-1)}\odot [\grad^{(n)}\textbf{u} + \grad^{(n)}\textbf{u}^\dagger]
+    =
+    \frac{1}{(n-1)!}\textbf{r}^\text{($n$-1)}[\bm\delta\bm\delta + (\bm\delta\bm\delta)^\dagger] \odot \grad^{(n)}\textbf{u}
+\end{multline}
+In index notation the mean stress could be noted, 
+\begin{multline}
+    e_{ij}
+    =
+    \frac{1}{(n-1)!}(\textbf{r}^\text{($n$-1)})_{k_1k_2\ldots k_{n-1}} 
+    [(\grad^{(n)}\textbf{u})_{k_1k_2\ldots k_{n-1}ij}  + (\grad^{(n)}\textbf{u})_{k_1k_2\ldots k_{n-1}ji}]\\
+    =
+    \frac{1}{(n-1)!}(\textbf{r}^\text{($n$-1)})_{k_1k_2\ldots k_{n-1}} 
+    [\delta_{ik_n} \delta_{jk_{n+1}}+ \delta_{jk_n} \delta_{ik_{n+1}}]
+    (\grad^{(n)}\textbf{u})_{k_1k_2\ldots k_{n-1}k_nk_{n+1}} 
+\end{multline}
+The interface is assumed already deformed, following the form, 
+\begin{equation}
+    f(\varphi,\theta,t) =  \sum_{n=2}^{\infty} \textbf{S}^{(n)}\odot \textbf{H}^{(n)}
+\end{equation}
+\begin{equation}
+   \pddt  f(\varphi,\theta,t) =  \sum_{n=2}^{\infty} \textbf{S}^{(n)}\odot \dot{\textbf{H}}^{(n)}
+\end{equation}
+
+So that in general the equation to solve becomes, 
+\begin{align*}
+    \div \textbf{U}_{in/out}^{(n+2)} &= 0 \\
+    \grad^2\textbf{U}_{in/out}^{(n+2)} &= \grad \textbf{P}_{in/out}^{(n+1)} \\
+\end{align*}
+with the boundary condition, 
+\begin{align}
+    \textbf{U}_{in}^{(n+2)} - \textbf{U}_{out}^{(n+2)}
+    &=
+    0
+    &&\forall r = 1 + f(\theta,\varphi)
+    \\
+    \textbf{n}\cdot [\textbf{U}_{in}^{(n+2)} 
+    +\frac{1}{n!}\bm\delta \textbf{r}^{(n)}] &= 0 
+    &&\forall r = 1 + f(\theta,\varphi)\\
+    \textbf{n}\cdot \{
+        \textbf{E}_{out}^{(n+3)}
+        -\lambda\textbf{E}_{out}^{(n+3)}
+        +\frac{(1-\lambda)}{(n-1)!}
+        \textbf{r}^{(n-1)}[\bm\delta\bm\delta + (\bm\delta\bm\delta)^\dagger]
+        - \textbf{B}^{(n+2)}
+    \}\cdot (\bm\delta - \textbf{nn})
+    &=
+    0
+    &&\forall r = 1 + f(\theta,\varphi)
+\end{align}
+note that we could factor by teh whole $\textbf{u}_r$ hence the velocity of deformation doesn't comes into account at this stage. 
+
+\subsubsection*{Droplet deformation }
+
+Because we cannot apply these boundary condition directly on the interface $r = 1 + f$ we assume $f \to \epsilon f$ where $\epsilon$ is small and $f$ of $\mathcal{O}(1)$ and express any of the above funciton as a taylor expansion in terms of $\epsilon$ such that, any tensor \textbf{F} can be expressed as, 
+\begin{equation}
+    \textbf{F}
+    = \ps{0}{\textbf{F}}
+    + \epsilon \ps{1}{\textbf{F}}
+    + \mathcal{O}(\epsilon^2)
+\end{equation}
+Then, any function to be evaluated on the droplet interface might be written as, 
+\begin{equation}
+    \textbf{F}(r=1+\epsilon f)
+    =
+    \textbf{F}|_{r=1}
+    + \epsilon f \frac{\partial \textbf{F}}{\partial r}|_{r=1}
+    =
+    \ps{0}{\textbf{F}}|_{r=1}
+    + \epsilon \left[\ps{1}{\textbf{F}}
+    + f \frac{\partial\ps{0}{\textbf{F}}}{\partial r}\right]_{r=1}
+    + \mathcal{O}(\epsilon)
+\end{equation}
+the position vector in perturbed coordinates may be approximated by, 
+\begin{equation}
+    \textbf{r}^{(n)} 
+    = \textbf{e}_r^{(n)} r^n (1+\epsilon f)^n
+    = \textbf{e}_r^{(n)} r^n (1+ n\epsilon f) + \mathcal{O}(r^n \epsilon)
+\end{equation}
+where $\textbf{e}_r = \ps{0}{\textbf{n}}$ is the unit radial vector going outward the interface.
+Not ethat the approximation is true only for small $r$ however. 
+
+Likewise,
+\begin{align}
+    \textbf{n} 
+    &= \textbf{e}_r + \epsilon (\bm\delta - \textbf{e}_r\textbf{e}_r)\cdot \grad f
+    = \textbf{e}_r + \epsilon  \gradI f\\
+    \bm\delta - \textbf{nn} 
+    &=
+    \bm\delta
+    - (\textbf{e}_r + \epsilon \gradI f)
+    (\textbf{e}_r + \epsilon \gradI f)
+    =
+    \bm\delta
+    - \textbf{e}_r\textbf{e}_r
+    - \epsilon [
+        \textbf{e}_r \gradI f
+        + ^\dagger \textbf{e}_r \gradI f
+    ]\\
+    \textbf{n}(\bm\delta - \textbf{nn}) 
+    &=
+    \textbf{e}_r(\bm\delta
+    - \textbf{e}_r\textbf{e}_r)
+    - \epsilon \textbf{e}_r [
+        \textbf{e}_r \gradI f
+        + ^\dagger \textbf{e}_r \gradI f
+    ]
+    + \epsilon \gradI f (\bm\delta
+    - \textbf{e}_r\textbf{e}_r)
+\end{align}
+
+Expanding any of tehse terms and isolating any power of $\epsilon$ yields, at $\mathcal{O}(\epsilon^0)$, the following system of equations, 
+\begin{align*}
+    \div \ps{0}{\textbf{U}}_{in/out}^{(n+2)} &= 0 \\
+    \grad^2\ps{0}{\textbf{U}}_{in/out}^{(n+2)} &= \grad \ps{0}{\textbf{P}}_{in/out}^{(n+1)} \\
+\end{align*}
+with the boundary condition, 
+\begin{align}
+    \ps{0}{\textbf{U}}_{in}^{(n+2)} - \ps{0}{\textbf{U}}_{out}^{(n+2)}
+    &=
+    0
+    &&\forall r = 1 
+    \\
+    \textbf{e}_r\cdot [\ps{0}{\textbf{U}}_{in}^{(n+2)} 
+    +\frac{r^n}{n!}\bm\delta \textbf{e}_r^{(n)}] &= 0 
+    &&\forall r = 1 \\
+    \textbf{e}_r\cdot \{
+        \ps{0}{\textbf{E}}_{out}^{(n+3)}
+        -\lambda\ps{0}{\textbf{E}}_{out}^{(n+3)}
+        +\frac{(1-\lambda)r^{n-1}}{(n-1)!}
+        \textbf{e}_r^{(n-1)}[\bm\delta\bm\delta + (\bm\delta\bm\delta)^\dagger]
+        - \ps{0}{\textbf{B}}^{(n+2)}
+    \}\cdot (\bm\delta - \textbf{e}_r \textbf{e}_r)
+    &=
+    0
+    &&\forall r = 1
+\end{align}
+
+
+At the next order in $\mathcal{O}(Ca)$ we obtain the following system, 
+\begin{align*}
+    \div \ps{1}{\textbf{U}}_{in/out}^{(n+2)} &= 0 \\
+    \grad^2\ps{1}{\textbf{U}}_{in/out}^{(n+2)} &= \grad \ps{1}{\textbf{P}}_{in/out}^{(n+1)} \\
+\end{align*}
+with the boundary condition, 
+\begin{align}
+    \ps{1}{\textbf{U}}_{in}^{(n+2)} - \ps{1}{\textbf{U}}_{out}^{(n+2)}
+    + f\frac{\partial}{\partial r} [\ps{0}{\textbf{U}}_{in}^{(n+2)} - \ps{0}{\textbf{U}}_{out}^{(n+2)}]
+    &=
+    0
+    &&\forall r = 1 
+    \\
+    \textbf{e}_r\cdot [
+    \ps{1}{\textbf{U}}_{in}^{(n+2)} 
+    + f\frac{\partial}{\partial r}\ps{0}{\textbf{U}}_{in}^{(n+2)} 
+    +\frac{r^n}{(n-1)!}\bm\delta \textbf{e}_r^{(n)} f ] 
+    + \gradI f \cdot [\ps{0}{\textbf{U}}_{in}^{(n+2)} 
+    +\frac{r^n}{n!}\bm\delta \textbf{e}_r^{(n)}] &= 0 
+    &&\forall r = 1 + f(\theta,\varphi)\\
+\end{align}
+the last BC is even more involving it reads, 
+\begin{multline}
+    \textbf{e}_r\cdot \{
+        \ps{1}{\textbf{E}}_{out}^{(n+3)}
+        -\lambda\ps{1}{\textbf{E}}_{out}^{(n+3)}
+        + f \frac{\partial}{\partial r}(\ps{0}{\textbf{E}}_{out}^{(n+3)}
+        -\lambda\ps{0}{\textbf{E}}_{out}^{(n+3)})\\
+        +\frac{(1-\lambda)r^{n-1}}{(n-2)!}
+        f \textbf{e}_r^{(n-1)}[\bm\delta\bm\delta + (\bm\delta\bm\delta)^\dagger]
+        - \ps{1}{\textbf{B}}^{(n+2)}
+        - f \frac{\partial}{\partial r}\textbf{B}^{(n+2)}
+    \}\cdot (\bm\delta - \textbf{e}_r \textbf{e}_r)\\
+    - [\textbf{e}_r (\textbf{e}_r \gradI f + ^\dagger \textbf{e}_r \gradI f) - \gradI f (\bm\delta - \textbf{e}_r \textbf{e}_r) ] \\: \{
+        \ps{0}{\textbf{E}}_{out}^{(n+3)}
+        -\lambda\ps{0}{\textbf{E}}_{out}^{(n+3)}
+        +\frac{(1-\lambda)r^{n-1}}{(n-1)!}
+        \textbf{e}_r^{(n-1)}[\bm\delta\bm\delta + (\bm\delta\bm\delta)^\dagger]
+        - \ps{0}{\textbf{B}}^{(n+2)}
+    \} 
+    =
+    0
+\end{multline}
+solving this problem yields the final sol. 

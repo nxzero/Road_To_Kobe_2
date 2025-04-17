@@ -188,7 +188,7 @@
 \usepackage{multirow}
 
 
-
+\newcommand{\ps}[2]{\prescript{}{#1}{#2}}
 %%%%%%%%%% colors 
 
 \definecolor{col1}{HTML}{0C5DA5}
