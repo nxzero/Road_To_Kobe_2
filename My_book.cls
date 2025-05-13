@@ -212,9 +212,12 @@
 
 
 %%% Utiliser pour les commentaires
-\newcommand{\JL}[1]{\color{red}#1\color{black}}
-\newcommand{\DL}[1]{\color{green}#1\color{black}}
-\newcommand{\tb}[1]{\color{blue}#1\color{black}}
+\newcommand{\JL}[1]{}
+% \newcommand{\JL}[1]{\color{red}#1\color{black}}
+\newcommand{\DL}[1]{}
+% \newcommand{\DL}[1]{\color{green}#1\color{black}}
+\newcommand{\tb}[1]{}
+% \newcommand{\tb}[1]{\color{blue}#1\color{black}}
 % \renewcommand{\alpha}{}
 % \renewcommand{\tb}[1]{}
 
