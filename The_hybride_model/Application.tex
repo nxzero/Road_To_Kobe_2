@@ -1,5 +1,5 @@
 %\section{Droplet deformation in stokestain dilute emulsions}
-\section{Averaged equations for dispersed fluid-fluid flows with constant surface tension}%Newtonian dispersed two-phase flows with constant surface tension and no interfacial transfer}
+\section{Averaged equations for dispersed fluid-fluid flows with surface tension}%Newtonian dispersed two-phase flows with constant surface tension and no interfacial transfer}
 
 
 %We now consider a dilute mono-disperse suspension of spherical droplet of radius $a$ without mass transfer. 
@@ -317,7 +317,8 @@ For spherical particles specifically, the inertial correction to the first force
 Let us now focus on the averaged momentum equation of the continuous phase. 
 By applying \eqref{eq:dt_f_k} with $f_k = \rho_f$ and $\rho_f\textbf{u}_f$ we obtain the mass and momentum equation for the continuous phase under the two fluid formulation, 
 \begin{align}
-    (\pddt + \textbf{u}_f\cdot \grad)\textbf{u}_f&=-\phi_f \div \textbf{u}_f\\
+    (\pddt + \textbf{u}_f\cdot \grad)\textbf{u}_f&=-\phi_f \div \textbf{u}_f
+    \label{eq:mass_init}\\
     \phi_f \rho_f(\pddt + \textbf{u}_f  \cdot \grad) \textbf{u}_f
     % +  \div \avg{\chi_f\rho_f \textbf{u}_f'\textbf{u}_f'}
     &= 
@@ -445,6 +446,7 @@ where, $\bm\sigma_f^{(1)}=\bm\sigma_f^0 - \bm\Sigma_f$ which also reads %is the 
 + \mu_f [
     \grad \textbf{u}_f'
     + ^\dagger \grad \textbf{u}_f']
+    \label{eq:disturbance_stress1}
 \end{equation} 
 Likewise, using \ref{eq:stress_closure1} one may also derive another form of the momentum equation, namely,
 \begin{equation}
@@ -470,7 +472,7 @@ It can be also expressed as,
         \grad \textbf{u}_f^*
         + ^\dagger \grad \textbf{u}_f^*
     ]
-    \label{eq:disturbance_stress}
+    \label{eq:disturbance_stress2}
 \end{equation}
 where $\textbf{u}_f^*= \textbf{u}_f^0 - \textbf{u}$.
 %which corresponds to the Newtonian stress at the surface of the droplets (relative to the mean pressure and velocity field) typically available in numerical or theoretical studies.
@@ -513,22 +515,15 @@ Therefore, when addressing the closure problem, it is essential to treat each st
 Although the stress decomposition and momentum formulations proposed herein are mathematically equivalent, each presents distinct advantages and limitations, which we examine in detail below.
 %Now let us discuss on the choic between $\bm\Sigma$ and $\bm\Sigma_f$. 
 %At first sight, using \ref{eq:dt_uf} with the effective stress given by \ref{eq:def_sigma_eff_f}, seems more practical because we are solving for the field $\textbf{u}_f$ hence avoiding the need of \ref{eq:velocity_conservation}. 
-At first glance, employing equation \eqref{eq:dt_uf} with the effective stress defined in \eqref{eq:def_sigma_eff_f} appears more convenient. 
-Indeed as the governing equations are directly formulated in terms of the fluid velocity field $\textbf{u}_f$, thereby circumventing the need to explicitly include the following equation
-%Because $\textbf{u}$ may be required by \ref{eq:stress_closure1}, one also need to solve the equation, 
-\begin{equation}
-    \textbf{u} = \textbf{u}_f\phi_f + 
-    n_pv_p\textbf{u}_p + \div  (\textbf{P}_p n_p) + \ldots
-    \label{eq:velocity_conservation}
-\end{equation}
-which is obtained by inserting expansion \ref{eq:f_exp_chi} in \ref{eq:u_mean}.
-%\eqref{eq:velocity_conservation}.
-%On the other hand we note that for solid particles $\textbf{e}_d^0 = 0$ and $\avg{\chi_d \textbf{e}_d'} = -\bm\Sigma\phi_d$, because of this great simplification \ref{eq:stress_closure1} is often used \citep{jackson2000} even if it requires adding \ref{eq:velocity_conservation} in the system of equation.  
-However, a simplification arises in the case of solid particles, for which $\textbf{e}_d^0 = 0$.
+First, we may observe that a simplification arises for \ref{eq:stress_closure1} in the case of solid particles, for which $\textbf{e}_d^0 = 0$.
 As a result $\phi _f \bm \sigma _f = - \phi _f p_f \bm\delta + 2 \mu_ f \textbf{E}$ \citep{joseph1990ensemble,jackson2000}. %and $\avg{\chi_d \textbf{e}_d^*} = -\phi_d\bm\Sigma$. \JL{a montrer}
 Owing to this simplification, the formulation based on $\bm\Sigma$ and the associated closure relation \eqref{eq:stress_closure1} makes it a good candidate to be used in practice for solid particles. %is frequently adopted in the literature \citep{jackson2000}, despite requiring the inclusion of the additional momentum conservation equation.
-\JL{Je comprends l'interet de cette simplification, mais il faur toujours avoir une exression pr $\textbf{E}$ donc pour $\textbf{u}$}
-Furthermore, there exists a conceptual reason for preferring the bulk stress $\bm\Sigma$ when deriving closure relations for non-dilute suspensions.  %involving the fluctuating stress $\bm\sigma_f'$. 
+Second, employing equation \ref{eq:two_fluid_momentum} with \ref{eq:disturbance_stress1} may appear more convenient as the governing equations are directly formulated in terms of the fluid velocity field $\textbf{u}_f$, thereby circumventing the need to explicitly include an expansion for the bulk fluid velocity. %the following equation
+%Because $\textbf{u}$ may be required by \ref{eq:stress_closure1}, one also need to solve the equation, 
+%\eqref{eq:velocity_conservation}.
+%On the other hand we note that for solid particles $\textbf{e}_d^0 = 0$ and $\avg{\chi_d \textbf{e}_d'} = -\bm\Sigma\phi_d$, because of this great simplification \ref{eq:stress_closure1} is often used \citep{jackson2000} even if it requires adding \ref{eq:velocity_conservation} in the system of equation.  
+%\JL{Je comprends l'interet de cette simplification, mais il faur toujours avoir une exression pr $\textbf{E}$ donc pour $\textbf{u}$}
+Third, there exists a conceptual reason for preferring the bulk stress $\bm\Sigma$ when deriving closure relations for non-dilute suspensions.  %involving the fluctuating stress $\bm\sigma_f'$. 
 Specifically, because $\bm\sigma_f^{(2)}$ depends on the disturbance velocity $\textbf{u}_f^* = \textbf{u}_f^0 - \textbf{u}$, the averaged velocity $\textbf{u}$ naturally serves as the "far-field" or "undisturbed" velocity boundary condition in the conditionally averaged Navier-Stokes equations \citep{hinch1977averaged,fintzi2025}. %(as also emphasized in the context of this PhD study).
 %But there is another reason for using the `bulk stress' $\bm\Sigma$ as a reference stress to compute the closure terms involving $\bm\sigma_f'$. 
 %Indeed, since $\bm\sigma_f'$ requires $\textbf{u}_f' = \textbf{u}_f^0 - \textbf{u}$, then \textbf{u} becomes the `far field' or `undisturbed' velocity boundary condition far from the test particle in the conditionally averaged Navier-Stokes equations \tb{(+my phd)}.
@@ -723,11 +718,11 @@ respectively.
 All the quantities defined above obey conservation laws that are given according to \ref{eq:avg_hybrid_q}, \ref{eq:avg_hybrid_q_1} and \ref{eq:avg_hybrid_q_n} (for conservation laws at the local scale, refer to the previous section.).
 They read, 
 %\JL{pq lequation du second moment de la masse ne fait pas intervenir la trace du premier moment de la qdm - cela semble incoherent ? OK car on est en incompressible}
-\JL{attention il manque des primes sur certaines variables}
+%\JL{attention il manque des primes sur certaines variables}
 \begin{align}
-    m_p(\pddt + \textbf{u}_p \cdot \grad)n_p
+    (\pddt + \textbf{u}_p \cdot \grad)n_p
     &=
-    - n_p \div \textbf{u}_p\\
+    - n_p \div \textbf{u}_p\label{eq:mass_p}\\
     n_p (\pddt + \textbf{u}_p \cdot \grad) \textbf{M}_p
     +\div  \pavg{\textbf{u}_\alpha'\textbf{M}_\alpha}
     &=
@@ -738,14 +733,16 @@ They read,
     + \div \pavg{m_p \textbf{u}_\alpha'\textbf{u}_\alpha'}
     &=
     m_p n_p \textbf{g}
-    + \pSavg{\bm\sigma_f^0 \cdot \textbf{n}}\\
+    %+ \pSavg{\bm\sigma_f^0 \cdot \textbf{n}}\\
+    + \pSavg{\bm\sigma_f^* \cdot \textbf{n}} + \pSavg{\bm\Sigma \cdot \textbf{n}}\\
     \label{eq:dt_hybrid_mup}
     n_p (\pddt + \textbf{u}_p \cdot \grad) \bm{\mu}_p
     +\div  \pavg{\textbf{u}_\alpha'\bm\mu_\alpha}
     &=
-    \pSavg{\textbf{r}\times(\bm\sigma_f^0\cdot \textbf{n}_d)}
+    \pSavg{\textbf{r}\times(\bm\sigma_f^*\cdot \textbf{n}_d)}
     \\
     \label{eq:dt_hybrid_Sp}
+    \color{red}
     n_p (\pddt + \textbf{u}_p \cdot \grad) \textbf{S}_p
     +\div  \pavg{\textbf{u}_\alpha'\textbf{S}_\alpha}
     &=
@@ -753,15 +750,17 @@ They read,
         \textbf{w}_d^0  \textbf{w}_d^0 
         -\frac{1}{3} (\textbf{w}_d^0 \cdot  \textbf{w}_d^0) \bm\delta
     }
-    -2 \mu_d \pOavg{\textbf{e}_d^0} \nonumber \\
-    &+\pSavg{\frac{1}{2}(\textbf{r}\bm\sigma_f^0+\bm\sigma_f^0\textbf{r}-\frac{2}{3}(\bm\sigma_f^0 \cdot \textbf{r})\bm\delta)\cdot \textbf{n}_d}\nonumber\\
+    -2 \mu_d \pOavg{\textbf{e}_d^*} \nonumber \\
+    &+\pSavg{\frac{1}{2}(\textbf{r}\bm\sigma_f^*+\bm\sigma_f^*\textbf{r}-\frac{2}{3}(\bm\sigma_f^* \cdot \textbf{r})\bm\delta)\cdot \textbf{n}_d}\nonumber\\
     &-  \pSavg{\gamma (\frac{1}{3}\bm\delta - \textbf{nn})}
-     + (1-\lambda)\pOavg{2\mu_f\textbf{E}_f}
-     + \frac{1}{2}\pOavg{\textbf{r}(\div\bm\Sigma_f)+ (\div\bm\Sigma_f) \textbf{r}}
+     + (1-\lambda)\pOavg{2\mu_f\textbf{E}}\\
+     &+ \frac{1}{2}\pOavg{\textbf{r}(\div\bm\Sigma)+ (\div\bm\Sigma) \textbf{r}},
 \end{align}
+\JL{j'ai mis la derniere equation en rouge car n'arrivant pas à la demontrer je ne suis pas sur du second membre. par ailleurs il y avait des petites coquilles dans les autres équations que j'ai corrigé. je te laisse regarder si jamais tu en vois d'autres}
 %\JL{discuter du lien avec Curtiss (equations pour les particules non spheriques). en particlier ne ne pense pas que lequation de $S_p$ soit necessaire}
 %The above system of equations is a generalization of the averaged equations for non-spherical particles \citep{curtiss1956kinetic}. 
 %One may note that for solid particles \ref{eq:dt_hybrid_Sp} is useless as $\textbf{S}_p$ can be expressed  as a function of $\textbf{M}_p$ and $\bm{\mu}_p$ and correlation between their fluctutations. 
+where $\textbf{S}_p$ is the mean symmetric traceless part of $\textbf{P}_p $ and $\mu_p$ the mean angular momentum.% have respectively 
 The presented system of equations extends the averaged equations developed for non-spherical solid particles \citep{curtiss1956kinetic}. 
 It is worth noting that, in the case of solid particles, equation \ref{eq:dt_hybrid_Sp} becomes redundant, as the tensor $\textbf{S}_p$ can be expressed in terms of $\textbf{M}_p$, $\bm{\mu}_p$ or the mean angular velocity, and the correlations of their fluctuations.
 %In these equations we have introduced the rate of strain tensor $\textbf{e}_k^0 = 1/2 (\grad \textbf{u}_k^0 + \grad \textbf{u}_k^0)$. %as the local shear rate of phase $k$.
@@ -778,17 +777,20 @@ Notably, recent works by \citet{dolata2021faxen} and \citet{zhou2020lamb} have e
 % In these expressions we partitioned the local hydrodynamic stress $\bm\sigma_f^0$ and $\bm\sigma_d^0$, into their fluctuating parts, $\bm\sigma_f'=\bm\sigma_f^0 - \bm\Sigma_f$,  $\bm\sigma_d' = \bm\sigma_d^0 + p_f\bm\delta - 2\mu_d \textbf{E}_f$ and mean parts $\bm\Sigma_f$ and $-p_f \bm\delta + 2\mu_d \textbf{E}_f$, respectively. 
 % Note that one can also write these equations in terms of $\bm\Sigma$ and $\textbf{E}$, the only requirement being that the exchange terms of \ref{eq:dt_hybrid_Mp} to \ref{eq:dt_hybrid_Sp} must correspond to the exchange terms used in the continuous phase momentum conservation \eqref{eq:dt_uf} (with \ref{eq:def_sigma_eff_f} or \ref{eq:def_sigma_eff_f2}). 
 
-The set of equations \ref{eq:velocity_conservation} are completed by a condition on the total volume conservation which reads, 
-\begin{equation}
-    \phi_f + \phi_d = 
-    \phi_f +  n_pv_p + \frac{1}{2}\grad\grad : (\textbf{M}_p n_p) + \ldots = 1. 
-    \label{eq:volume_conservation}
-\end{equation}
-
+The set of equations \ref{eq:mass_init}, \ref{eq:dt_uf2}, \ref{eq:mass_p}-\ref{eq:dt_hybrid_Sp} are completed by the following relations%condition on the total volume conservation which reads, 
+\begin{align}
+    \phi_f + \phi_d &= 
+    \phi_f +  n_pv_p + \frac{1}{2}\grad\grad : (\textbf{M}_p n_p) + \ldots = 1,
+    \label{eq:volume_conservation}\\
+    \textbf{u} &= \textbf{u}_f\phi_f + 
+    n_pv_p\textbf{u}_p - \frac{1}{\rho_d} \div  (\textbf{P}_p n_p) + \ldots
+    \label{eq:velocity_conservation}
+\end{align}
+The latter is obtained by inserting expansion \ref{eq:f_exp_chi} in \ref{eq:u_mean}.
 
 \subsection{Symmetry of the effective stress tensor}
-\JL{specifier que l'on parle bien des contraintes eqs cote fluide.}
-As a side note, remark that the second order and higher moments in \ref{eq:def_sigma_eff_f} (or \ref{eq:def_sigma_eff_f2}) appear under two divergence operators in \ref{eq:dt_uf}. 
+%\JL{specifier que l'on parle bien des contraintes eqs cote fluide.}
+We remark that the second moment and higher-order moments in \ref{eq:def_sigma_eff_f2} appear under two divergence operators in \ref{eq:dt_uf2}. 
 Hence, if we note $\Sigma_{ijk}$ the third rank tensor that represent these moments, then only the vector $\partial_k \partial_j\Sigma_{ijk}$ is of physical significance in the momentum balance \eqref{eq:def_sigma_eff_f}.
 Thus, one can demonstrate that \citep{lhuillier1996contribution}
 \begin{equation}
@@ -806,7 +808,7 @@ where $\Sigma_{i(jk)} = \frac{1}{2}[\Sigma_{ijk} + \Sigma_{ikj}]$ represents the
 This expression is allowed because $\partial_j \partial_k (\Sigma_{ijk} - \Sigma_{ikj}) = 0$ and $\partial_j \partial_k (\Sigma_{j(ik)} - \Sigma_{k(ij)}) = 0$. 
 This manipulation highlight the fact that the effective stress due to the second order moments remains symmetric over the indices $ij$, in all circumstances.
 Hence, as already demonstrated by \citet{lhuillier1996contribution} only the hydrodynamic torque can induce skew-symmetric stresses in \ref{eq:dt_uf}. 
-
+\JL{je ne comprends pas pq on regarde directement la symetrie du second moment et pas ceux d'avant ?}
 
 
 
@@ -817,7 +819,8 @@ Our analysis recovers the results of \citet[Appendix B]{zhang1997momentum}.
 We extend these results by considering the first moment of momentum for the dispersed phase accounting for the angular momentum. 
 We demonstrate how higher-order moments can characterise droplet shapes and relate them to the averaged equations governing the continuous phase. 
 \JL{Finally, we derive expressions for the third-order force moments and consider closures that incorporate finite inertia effects.}
-\subsection{Closure in viscous dominated flows for dilute suspension}
+%\subsection{Closure in viscous dominated flows for dilute suspension}
+\subsection{Hydrodynamic stresses closures at $\mathcal{O}(\phi Re^0 Ca^0)$}
 In the averaged equations, we neglect droplet inertia, thereby discarding all terms of order $\mathcal{O}(Re \phi)$. 
 Additionally, we assume the droplets are spherical, which allows us to neglect terms of order $\mathcal{O}(\phi Ca)$. 
 The Reynolds number ($Re$) and Capillary number ($Ca$) are defined in Table \ref{tab:qte_Newtonian}.
@@ -841,8 +844,8 @@ Additionally, we neglect inertia in the closure problem, meaning that we neglect
 Consequently, we consider an isolated spherical droplet translating in an arbitrary Stokes flow.
 The solution for this problem can be found in many studies in the literature, including \citet{leal2007advanced,pozrikidis1992boundary,kim2013microhydrodynamics,pozrikidis2011introduction,nadim1991motion} which will enable us to compute the closure terms.
 
-\subsubsection{Hydrodynamic stresses closures at $\mathcal{O}(\phi Re^0 Ca^0)$}
-\JL{pq la partie antisymetrique du premier moment est nulle ?}
+%\subsubsection{Hydrodynamic stresses closures at $\mathcal{O}(\phi Re^0 Ca^0)$}
+%\JL{pq la partie antisymetrique du premier moment est nulle ?}
 In the first place we focus on the surface exchange terms. 
 We may directly compute the following expressions from the singularity solutions and find, 
 \begin{align}
@@ -959,7 +962,7 @@ where we have used the approximation of $\bm\Sigma_f(\textbf{x}+\textbf{r}) = \b
 Others similar expressions can be used for the integral of $\textbf{r}\bm\sigma_f^0\cdot \textbf{n}$, and the volume integral of $\textbf{e}_d^0$ in \ref{eq:dt_hybrid_Sp}. 
 
 
-\subsubsection{Velocity variance and covariance closures}
+\subsection{Velocity variance and covariance closures}
 
 
 The disturbance velocity field $\textbf{u}_f'$ is proportional to $\propto \textbf{u}_r$, $\grad\textbf{E}_f$ and $\grad\grad \textbf{u}_f$.
@@ -1007,7 +1010,7 @@ We deduce that in this restricted regime $\textbf{M}_\alpha$, $\textbf{P}_\alpha
 
 
 
-\subsubsection{Closed form of the hybrid model}
+\subsection{Closed form of the hybrid model}
 
 Remark that at this order in accuracy $\mathcal{O}(Ca^0)$ the linear momentum equations are not coupled with the dispersed phase moments ($\textbf{S}_p,\bm\mu_p$, and $\textbf{M}_p$).  
 Consequently, in this first approach \ref{eq:dt_hybrid_Sp,eq:dt_hybrid_Mp,eq:dt_hybrid_mup} are not needed.
@@ -1099,7 +1102,7 @@ Indeed, both tensor have the same functional form, even though this contribution
 
 
 
-\subsubsection{Small droplet deformations}
+\subsection{Small droplet deformations}
 
 Because we are considering closure term at $\mathcal{O}(Ca^0)$ none of the presented closures are function of the shape of the droplets or of the capillary number, hence up to now we have considered only spherical droplets. 
 Nevertheless, as we  see now, at $\mathcal{O}(Ca^0)$ \ref{eq:dt_hybrid_Sp}, can still be used to compute the droplet deformation accurate at $\mathcal{O}(Ca^1)$. 
@@ -1172,42 +1175,17 @@ where $(\grad\grad \textbf{u}_f)^\text{sym-dev}$ is the fully symmetric and trac
 Because this term is $\propto a^2$ it may be neglected in our current modeling hypothesis. 
 
 
-\subsubsection{Including the $\mathcal{O}(a^2/L^2)$ terms. }
+%\subsubsection{Including the $\mathcal{O}(a^2/L^2)$ terms. }
 
-Because of the study of \citet{prosperetti1995finite} one may be interested in a fully closed system at $\mathcal{O}(a^2/L^2)$. 
-Indeed, it is supposed to provide better stability and hyperbolicity. 
-\tb{
-    Dans ce cas decommenter les termes de fermeture afficher ci dessus pour voir les termes ne a2L2
-}
-
-
-\subsubsection{Twoard a $\mathcal{O}(Ca \phi Re^0)$ model}
+%Because of the study of \citet{prosperetti1995finite} one may be interested in a fully closed system at $\mathcal{O}(a^2/L^2)$. 
+%Indeed, it is supposed to provide better stability and hyperbolicity. 
+%\tb{
+%    Dans ce cas decommenter les termes de fermeture afficher ci dessus pour voir les termes ne a2L2
+%}
 
 
+%\subsection{Twoard a $\mathcal{O}(Ca \phi Re^0)$ model}
+
+\subsection{Marangoni effects}
 
 
-\subsubsection{On the effect of finite inertia}
-
-Now what if little inertial effects were to come into account?
-To provide a first glimpse of how inertial effects could impact the droplet shape, we need to find at least the first order correction in $\mathcal{O}(Re)$ of the closure terms in \ref{eq:dt_hybrid_Sp}. 
-At the first order in Reynolds number, the easiest term that can be computed based on Stokes flow solution is the internal advective term. 
-Indeed, based on the singularity solution we obtain
-\begin{multline}
-    \pOavg{\rho_d [\textbf{w}_d^0  \textbf{w}_d^0  - \frac{1}{3}\rho_d (\textbf{w}_d^0 \cdot \textbf{w}_d^0)\bm\delta]}
-    = 
-    \frac{\rho_d \phi_d}{20(\lambda +1 )^2}
-    \left[
-        \textbf{u}_{p f}\textbf{u}_{p f} 
-    -\frac{1}{3} (\textbf{u}_{p f}\cdot \textbf{u}_{p f})\bm\delta
-    % + 7\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}/n_p 
-    % + 2k_p \bm\delta
-    \right]\\
-    + \frac{\rho_d \phi_d a^2}{21 (\lambda + 1)^2}[\textbf{E}_f\cdot \textbf{E}_f - \frac{1}{3}(\textbf{E}:\textbf{E})\bm\delta]
-    % + \mathcal{O}((Re\zeta)^2,Ca, \phi)
-    \label{eq:vv_closure}
-\end{multline}
-where we neglected the effect of dispersed phase velocity variance. 
-This term represents the contribution from the inertial motion within the droplet to the shape of the particle. 
-Therefore, we can state that the contribution of this term in \ref{eq:dt_hybrid_Sp} induces a coupling between droplets translation mean shear and deformation. 
-Of course, this term is only useful in the context where the first-order correction in the Reynolds number is considered for all closures. 
-We conclude that at finite Reynolds number relative motions impact the shape balance of the particle, at least through this term (in agreement with \citet{taylor1964deformation}). 
