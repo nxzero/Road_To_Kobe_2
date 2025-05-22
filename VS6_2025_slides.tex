@@ -334,67 +334,7 @@ $...$ provide "something for nothing"
 \end{frame}
  
 
-\begin{frame}
-  \frametitle{Reciprocal theorem}
 
-Reciprocal theorem (Stone et al. 2001, Massoud et Stone 2019)
-\begin{align}
-  \div \bm v =& 0 \quad \div \boldsymbol{\sigma} = \bm f \\
-  \div \hat{\bm v} =& 0 \quad \div \hat{\boldsymbol{\sigma}} =  \hat{\bm f} \quad \text{with same boundaries}
-\end{align}
-{\Huge Step \only<1>{1}\only<2>{2}\only<3->{3}:
-}
-\begin{equation*}
-  \uncover<3->{\int_{V_f}\left\{ }
-  \fbox{Equation of $\bm v$} \cdot \hat{\bm v} 
-  \uncover<2->{
-    - \fbox{Equation of $\hat{\bm v}$} \cdot  \bm v 
-    }
-  \uncover<3->{\right\}dV}
-\end{equation*}
-\begin{equation}
-  \uncover<4->{\int_S \bm n \cdot \bm \sigma \cdot \hat{\bm v} dS - \int_S \bm n \cdot \hat{\bm \sigma} \cdot \bm v dS = \int_{V_f} \hat{\bm v}\cdot \bm  f dV - \int_{V_f} \bm v\cdot \bm  \hat{\bm f} dV}
-  %\int_S \bm n \cdot \bm \sigma \cdot \hat{\bm v} dS - \int_S \bm n \cdot \hat{\bm \sigma} \cdot \bm v dS = \int_{V_f} \hat{\bm v}\cdot \bm  f dV - \int_{V_f} \bm v\cdot \bm  \hat{\bm f} dV
-\end{equation}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Test problem and regular expansion in $Re$}
-  %{Regular expansion in $Re$ }
-
-  True problem (pure translation): $\textbf{u}_r  = \textbf{u}_r|_{\bm x = \bm x_p} = \textbf{u}_f-\textbf{u}_p$
-  \vspace{0.5cm}
-
-  Test problem 
-  \begin{itemize}
-    \item linear flow (stokes regime) : $\hat{\textbf{u}_r} =  \textbf{r} \cdot \nabla \hat{\textbf{u}}_f |_{\bm x = \bm x_p}$
-    \item point source solution (stokes regime)
-  \end{itemize}
-  \vspace{0.5cm}
-
-  Assuming small but finite $Re$ : $\bm f = \bm f^{(0)} + Re  \bm f^{(1)} + Re^2  \bm f^{(2)} + \ldots$. 
-
-  
-  \begin{equation*}
-    \bm f^{(0)}
-    =
-        \pddt \bm v^{(0)}
-        + \bm v^{(0)}\cdot \grad\bm v^{(0)} 
-        +  \bm v^{(0)}\cdot \grad\textbf{u}_r 
-        +  \textbf{u}_r\cdot \grad\bm v^{(0)}
-  \end{equation*}
-
-  $\to$ $\bm v^{(0)}$ is governed by the Stokes equation this is thus a known field ! 
-  \uncover<2>{
-  \begin{equation}
-      Re \intOf{\hat{\bm v} \cdot  \bm f}
-      =
-      Re \intOf{\hat{\bm v} \cdot  \bm f^{(0)}}
-      + \mathcal{O}(Re^2)
-    \end{equation}
-    }
-\end{frame}
 
 %\section{Inertial stresslet}
 %\section*{}
@@ -499,11 +439,12 @@ $\to$ rising droplets deform in oblate spheroid when $Re > 0$ (Taylor \& Acrivos
   \only<2>{
     \underline{Energy consumptions} 
     \begin{itemize}
- \item Each simulation : 512 cores during 48 hours
+ \item Each simulation ($1$cm$^3$) : 512 cores during 48 hours
  
  \item 1 core consumption:  $\sim 5$ W
 
- \item Energy comsumption for each run : $\sim 100$ kWh $\sim 200 $km with a Clio
+ \item Energy comsumption for each run : $E_{DNS}\sim 100$ kWh $\sim 200 $km with a Clio
+ \item For a whole experimental device ($10$m$^3$): $10^7\times E_{DNS} \sim$ $1$ TWh $\sim 1/500$ production electrique Francaise en 2024.
 \end{itemize}
   %\begin{itemize}
   %  \item \textit{Galileo} number: $Ga =\frac{\sqrt{\rho_f \Delta\rho_f gD^3}}{\mu} \in [5, 100]$
@@ -589,6 +530,7 @@ An assumption which is satisfied in pipe flow (far from the wall) for most of th
 \begin{frame}
   \frametitle{Discussion}
   \begin{itemize}
+    \item It seems hardly feasible to compute all the flow scales in industrial facilities in the near future
     \item Theoretical approaches can be as effective and insightful as modern CFD simulations  
     \item Progress in the study of dispersed two-phase is very long
   \end{itemize}
@@ -628,7 +570,67 @@ An assumption which is satisfied in pipe flow (far from the wall) for most of th
   $\to$ This time we need a result of $\bm\sigma$ accurate at $\mathcal{O}(Re)$. 
 \end{frame}
 
+\begin{frame}
+  \frametitle{Reciprocal theorem}
 
+Reciprocal theorem (Stone et al. 2001, Massoud et Stone 2019)
+\begin{align}
+  \div \bm v =& 0 \quad \div \boldsymbol{\sigma} = \bm f \\
+  \div \hat{\bm v} =& 0 \quad \div \hat{\boldsymbol{\sigma}} =  \hat{\bm f} \quad \text{with same boundaries}
+\end{align}
+{\Huge Step \only<1>{1}\only<2>{2}\only<3->{3}:
+}
+\begin{equation*}
+  \uncover<3->{\int_{V_f}\left\{ }
+  \fbox{Equation of $\bm v$} \cdot \hat{\bm v} 
+  \uncover<2->{
+    - \fbox{Equation of $\hat{\bm v}$} \cdot  \bm v 
+    }
+  \uncover<3->{\right\}dV}
+\end{equation*}
+\begin{equation}
+  \uncover<4->{\int_S \bm n \cdot \bm \sigma \cdot \hat{\bm v} dS - \int_S \bm n \cdot \hat{\bm \sigma} \cdot \bm v dS = \int_{V_f} \hat{\bm v}\cdot \bm  f dV - \int_{V_f} \bm v\cdot \bm  \hat{\bm f} dV}
+  %\int_S \bm n \cdot \bm \sigma \cdot \hat{\bm v} dS - \int_S \bm n \cdot \hat{\bm \sigma} \cdot \bm v dS = \int_{V_f} \hat{\bm v}\cdot \bm  f dV - \int_{V_f} \bm v\cdot \bm  \hat{\bm f} dV
+\end{equation}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Test problem and regular expansion in $Re$}
+  %{Regular expansion in $Re$ }
+
+  True problem (pure translation): $\textbf{u}_r  = \textbf{u}_r|_{\bm x = \bm x_p} = \textbf{u}_f-\textbf{u}_p$
+  \vspace{0.5cm}
+
+  Test problem 
+  \begin{itemize}
+    \item linear flow (stokes regime) : $\hat{\textbf{u}_r} =  \textbf{r} \cdot \nabla \hat{\textbf{u}}_f |_{\bm x = \bm x_p}$
+    \item point source solution (stokes regime)
+  \end{itemize}
+  \vspace{0.5cm}
+
+  Assuming small but finite $Re$ : $\bm f = \bm f^{(0)} + Re  \bm f^{(1)} + Re^2  \bm f^{(2)} + \ldots$. 
+
+  
+  \begin{equation*}
+    \bm f^{(0)}
+    =
+        \pddt \bm v^{(0)}
+        + \bm v^{(0)}\cdot \grad\bm v^{(0)} 
+        +  \bm v^{(0)}\cdot \grad\textbf{u}_r 
+        +  \textbf{u}_r\cdot \grad\bm v^{(0)}
+  \end{equation*}
+
+  $\to$ $\bm v^{(0)}$ is governed by the Stokes equation this is thus a known field ! 
+  \uncover<2>{
+  \begin{equation}
+      Re \intOf{\hat{\bm v} \cdot  \bm f}
+      =
+      Re \intOf{\hat{\bm v} \cdot  \bm f^{(0)}}
+      + \mathcal{O}(Re^2)
+    \end{equation}
+    }
+\end{frame}
 
 \begin{frame}
   \frametitle{Why the 'outer solution' is negligible to leading order ?}
