@@ -1,10 +1,9 @@
-\section{Singularity solution for droplets with non-constant surface tension gradient}
+\section{Singularity solution for droplets with surface tension gradient}
 \label{ap:singularity_solution}
 At the leading order in droplet volume fraction, the closure problem is equivalent to that of an isolated droplet in an infinite medium \citet{hinch1977averaged}. 
 Hence, we consider the problem of an isolated droplet, immersed in an arbitrary quadratic flow without the presence of fluid inertia. 
 The disturbances pressure and velocity field are noted $\textbf{u}_{out}$, $\textbf{u}_{in}$, $p_{out}$ and $p_{in}$, for the velocity outside the droplet, the velocity inside the droplet, the pressure outside the droplet and the pressure inside the droplet, respectively. 
 The corresponding ``undisturbed field'' are noted $\textbf{u}$ and $p_f$, corresponding to the ensemble averaged mixture velocity and averaged pressure of the continuous phase in the main text. 
-
 
 Under these hypotheses, in dimensionless form, $\textbf{u}_{out}$, $\textbf{u}_{in}$, $p_i$ and $p_o$ are governed by the Stokes equations, namely, 
 \begin{align}
@@ -13,46 +12,160 @@ Under these hypotheses, in dimensionless form, $\textbf{u}_{out}$, $\textbf{u}_{
      \grad^2 \textbf{u}_{in}  &= \grad p_{in} 
     & \grad^2 \textbf{u}_{out} &= \grad p_{out} 
 \end{align}
-At the surface of the droplet ($r=1$) the continuity of velocity and the continuity of the normal stresses imposes, 
+At the surface of the droplet ($r=1$) the condition of continuity of velocity and continuity of the normal stresses read, 
 \begin{align}
+    \label{eq:vel_jump}
     \textbf{u}_{out} - \textbf{u}_{in} &= 0\\
     % (\textbf{u}_{in}  + \textbf{u} - \textbf{u}_\Gamma)\cdot \textbf{n}
     % = 
+    \label{eq:vel_jump2}
     (\textbf{u}_{in}  + \textbf{u}_r)\cdot \textbf{n}
     &= 0\\
-    \mathbf{n}\cdot (\textbf{e}_{out} - \lambda \textbf{e}_{in}+\textbf{E} -\lambda\textbf{E} - \textbf{b})\cdot (\bm\delta - \textbf{nn})
-    &= 0 %(\bm\delta - \textbf{nn})\cdot 
+    \mathbf{n}\cdot (\textbf{e}_{out} - \lambda \textbf{e}_{in}+\textbf{E} -\lambda\textbf{E} )\cdot (\bm\delta - \textbf{nn})
+    &= 
+    \textbf{b}\cdot (\bm\delta - \textbf{nn})
+    \label{eq:stress_jump}
 \end{align}
 where $\textbf{u}_r = \textbf{u} - \textbf{u}_p$ corresponds to the velocity of the mixture with respect to the droplet mean velocity. 
 We recall that $\textbf{e}_{in/out} = (\grad \textbf{u}_{in/out} + ^\dagger \grad \textbf{u}_{in/out})/2 $ and $\textbf{E} = (\grad \textbf{u} + ^\dagger \grad \textbf{u})/2$, which correspond to the rate of strain inside or around or droplet, and to the ensemble averaged rate of strain, respectively. 
-Far from the center of the test droplet (at $\textbf{r}=0$) the velocity and pressure fields satisfy, 
+In \ref{eq:stress_jump} the vector \textbf{b} correspond to the dimensionless tangential stress jump across the interface and reads, 
+\begin{equation}
+    \textbf{b}
+    =
+    \frac{a \grad \gamma}{2 \mu_f U}
+    % \approx (a\grad) Ca^{-1}. 
+\end{equation}
+Far from the droplet (centered at $\textbf{r}=\textbf{0}$) the velocity and pressure fields satisfy, 
 \begin{equation}
     \lim_{r\to \infty}(\textbf{u}_{out},p_{out}) = 0. 
 \end{equation}
 
-Let us introduce the dimensionless stress tensor $\bm\sigma_{in/out} = -p_{in/out} \bm\delta + \mu_{in/out}[\grad \textbf{u}_{in/out} + ^\dagger \grad \textbf{u}_{in/out}]$ and the dimensionless shear stress tensor, $2\textbf{e}_{in/out} = \grad \textbf{u}_{in/out} + ^\dagger \grad \textbf{u}_{in/out}$. 
-The undisturbed shear stress reads  $2\textbf{e} = \grad \textbf{u} + ^\dagger \grad \textbf{u}$
-With these notations the tangential shear stress jump reads at $r = 1$ reads as, 
+In general $\textbf{b}$ as well as $\textbf{u}$ are not constant vectors and vary across space as a function of \textbf{r}. 
+However, it can be assumed that these quantities are slowly varying functions of space at the scale of a droplet radius, hence we may introduce the simplifications 
+\begin{align*}
+    \textbf{u}(\textbf{n}) 
+    &=  \textbf{u}_r|_{\textbf{r}=0}
+    +  \textbf{r} \cdot  \grad\textbf{u}|_{\textbf{r}=0}
+    +  \frac{1}{2}\textbf{rr} \cdot  \grad\grad\textbf{u}|_{\textbf{r}=0}
+    + \ldots\\
+     \textbf{E}(\textbf{n}) 
+    &=   \textbf{E}|_{\textbf{r}=0}
+    + \textbf{r} \cdot  \grad \textbf{E}|_{\textbf{r}=0}
+    + \frac{1}{2}\textbf{rr} \cdot  \grad\grad \textbf{E}|_{\textbf{r}=0}
+    + \ldots\\
+     \textbf{b}(\textbf{n}) 
+    &=   \textbf{b}|_{\textbf{r}=0}
+    + \textbf{r} \cdot  \grad \textbf{b}|_{\textbf{r}=0}
+    + \frac{1}{2}\textbf{rr} \cdot  \grad\grad \textbf{b}|_{\textbf{r}=0}
+    + \ldots
+\end{align*}
+Note that because $\textbf{b} \sim \grad \gamma$ the tensor: $\grad \textbf{b}$ and $\grad\grad \textbf{b}$ are symmetric tensors. 
+Injecting, these expressions into \ref{eq:vel_jump,eq:vel_jump2,eq:stress_jump} one deduce that the velocity and pressure fields are linearly related to $\textbf{u}|_{\textbf{r}=0}$, $\textbf{b}|_{\textbf{r}=0}$, and to the gradients of these vectors. 
 
-with, 
-\begin{equation}
-    \textbf{b}
+According to the linearity of the Stokes equations we deduce that $\textbf{u}_{i/o}$ and $p_{i/o}$  must be linear combination of spherical harmonics proportional to $\textbf{u}|_{\textbf{x}=0}$, $\grad \gamma|_{\textbf{x}=0}$, and their derivatives.
+Hence, we can write that the disturbance velocity and pressure fields are given by, 
+\begin{align*}
+    \begin{pmatrix}
+        \textbf{u}_{o}\\
+        p_{o}\\
+        \textbf{u}_{i}\\
+        p_{i}
+    \end{pmatrix}
     =
-    \frac{\grad \gamma}{2\mu_f}
-    % \approx (a\grad) Ca^{-1}. 
-    % =
-    % \frac{a \grad \gamma}{2 \mu_f |\textbf{u}_r|}
-    % \approx (a\grad) Ca^{-1}. 
-\end{equation}
-The velocity \textbf{u} is imposed, the velocity $\textbf{u}_\Gamma$ is just the velocity of the interface which may be obtained by differetiating the point lying on the interface, namely, 
-\begin{equation}
-    \textbf{u}_\Gamma
+    \begin{pmatrix}
+        \textbf{U}_{o}^{(1)} + \textbf{U}_{o}^{(2)}\cdot \grad + \textbf{U}_{o}^{(3)} :\grad\grad &
+        \textbf{U}_{o}^\text{(b-1)} + \textbf{U}_{o}^\text{(b-2)}\cdot \grad + \textbf{U}_{o}^\text{(b-3)} :\grad\grad \\
+        \textbf{P}_{o}^{(1)} + \textbf{P}_{o}^{(2)}\cdot \grad + \textbf{P}_{o}^{(3)} :\grad\grad &
+        \textbf{P}_{o}^\text{(b-1)} + \textbf{P}_{o}^\text{(b-2)}\cdot \grad + \textbf{P}_{o}^\text{(b-3)} :\grad\grad \\
+        \textbf{U}_{i}^{(1)} + \textbf{U}_{i}^{(2)}\cdot \grad + \textbf{U}_{i}^{(3)} :\grad\grad &
+        \textbf{U}_{i}^\text{(b-1)} + \textbf{U}_{i}^\text{(b-2)}\cdot \grad + \textbf{U}_{i}^\text{(b-3)} :\grad\grad \\
+        \textbf{P}_{i}^{(1)} + \textbf{P}_{i}^{(2)}\cdot \grad + \textbf{P}_{i}^{(3)} :\grad\grad &
+        \textbf{P}_{i}^\text{(b-1)} + \textbf{P}_{i}^\text{(b-2)}\cdot \grad + \textbf{P}_{i}^\text{(b-3)} :\grad\grad \\
+    \end{pmatrix}
+    \cdot 
+    \begin{pmatrix}
+        \textbf{u}_r\\
+        \textbf{b}
+    \end{pmatrix}
+\end{align*}
+The tensors $\textbf{U}^{(n)}_{o/i}$ (resp. $\textbf{P}^{(n)}_{o/i}$) are $(n+1)^{th}$ (resp. $n^{th}$) order tensors, solely function of \textbf{r} and the viscosity ratio $\lambda$. 
+The tensors $\textbf{U}_{o/i}^{(1)}$ and $\textbf{P}_{o/i}^{(1)}$ represent the functional form of the famous Hadamard-Ribczynski solution \citep{pozrikidis1992boundary,kim2013microhydrodynamics}. 
+The dependency of $\textbf{u}_{i/o}$ and $p_{i/o}$ with the mean gradient velocity $\grad \textbf{u}$ is given by the tensor $\textbf{U}_{o/i}^{(2)}$ and $\textbf{P}_{o}^{(2)}$.
+The disturbance velocity and pressure fields of a drop immersed in pure linear flow can be found in \citet{rallison1978note,leal2007advanced,raja2010inertial}. 
+Finally, the disturbance field of a droplet immersed in a pure quadratic flow is defined through the tensor $\textbf{U}_{o/i}^{(3)}$ and $\textbf{P}_{o/i}^{(3)}$.
+The definition of the former tensors may be found in \citet{nadim1991motion}.
+
+
+
+
+The tensors $\textbf{U}^{(b-n)}_{o/i}$ (resp. $\textbf{P}^{(b-n)}_{o/i}$) are $(n+1)^{th}$ (resp. $n^{th}$) order tensors, solely function of \textbf{r} and the viscosity ratio $\lambda$ as well. 
+The disturbance fields induced due to a constant, linear, or quadratic stress jump at the interface of the droplet is less common in the literature. 
+For instance one might refer to \citet{Subramanian_1985,leal2007advanced} to compute the disturbance fields due to a constant surface tension gradient, hence defining the expression of  $\textbf{U}_{o/i}^{(b-1)}$ and $\textbf{P}_{o/i}^{(b-1)}$. 
+Then to express the disturbance fields in terms of $\grad \textbf{b}$ or higher order derivatives one might refer to the solution given in \citet[Appendix C]{raja2010inertial}.
+Without loss of generality we consider only the symmetric traceless part of $(\grad \textbf{b}_{jk})$ in the following. 
+
+% Based on the classic method of spherical harmonic solution \citep[chapter 8]{leal2007advanced} we could derive the expression for the disturbance fields due to an imposed $\grad \textbf{b}$, it reads,
+% \begin{align}
+%     (\textbf{U}_o^{(b-2)})_{ijk}
+%     &=
+%     -\frac{1}{10(\lambda+1)r^5}(\delta_{ij} x_k+\delta_{ik} x_j)
+%     -\frac{3r^2-5}{10(\lambda+1)r^7}x_ix_jx_k
+%     +\frac{r^2-1}{10(\lambda+1)r^5}\delta_{jk}x_i\\
+%     (\textbf{P}_o^{(b-2)})_{jk}
+%     &=
+%     -\frac{3}{5(\lambda+1)r^5}x_jx_k
+%     +\frac{1}{5(\lambda+1)r^3}\delta_{jk}\\
+%     (\textbf{U}_i^{(b-2)})_{ijk}
+%     &=
+%     -\frac{5r^2-3}{20(\lambda+1)}(\delta_{ij} x_k+\delta_{ik} x_j)
+%     +\frac{1}{5(\lambda+1)}x_ix_jx_k
+%     +\frac{r^2-1}{10(\lambda+1)}\delta_{jk}x_i\\
+%     (\textbf{P}_i^{(b-2)})_{jk}
+%     &=
+%     -\frac{21}{10(\lambda+1)}x_jx_k
+%     +\frac{7r^2}{10(\lambda+1)r^3}\delta_{jk}
+% \end{align}
+
+Hence, based on these expressions and the solutions  provided in the literature, one can compute the force traction at the surface of the droplet ($\bm\sigma_{out}\cdot \textbf{n}$), as well as the internal shear rate ($\textbf{e}_{in}$), and obtains the following expressions, 
+\begin{align}
+    \intS{\bm\sigma_{out}\cdot \textbf{n}} &
     =
-    \textbf{u}_\alpha
+    2\pi\frac{2+3\lambda}{1+\lambda}\textbf{u}_r
+    + \pi \frac{\lambda}{\lambda +1} \grad^2 \textbf{u}
     +
-    \pddt \textbf{r}_\Gamma
+    \frac{4\pi}{3}\frac{1}{\lambda +1}\textbf{b}
+    + \frac{2\pi}{15(\lambda +1)}\grad^2\textbf{b}
+    \\
+    \intS{ \textbf{x}\bm\sigma_{out}\cdot \textbf{n}} &
     =
-    \textbf{u}_\alpha
-    + 
-    \textbf{e}_r\pddt f(\theta,\varphi,t)
-\end{equation}
+    \frac{2\pi(5\lambda +2)}{5(\lambda +1)}[\grad \textbf{u}+ (\grad \textbf{u})^\dagger]
+    + \frac{12\pi}{25(\lambda +1)} \grad \textbf{b} 
+    \\
+    \intS{\textbf{xx}\bm\sigma_{out}\cdot \textbf{n}} &
+    =
+    \frac{4\pi}{5(\lambda +1)} (\textbf{u}_r \bm\delta + ^\dagger\textbf{u}_r \bm\delta)
+    + \frac{2\pi(5\lambda +2)}{5(\lambda+1)}\bm\delta \textbf{u}_r
+    - \frac{8\pi}{15(\lambda +1)} ( \textbf{b}\bm\delta + ^\dagger\textbf{b}\bm\delta )
+    + \frac{4\pi}{5(\lambda+1)}\bm\delta \textbf{b}
+\end{align}
+and, 
+\begin{align}
+    \intO{2\textbf{e}_{in}}
+    &=
+    -\frac{4\pi}{15}\frac{5\lambda +2}{\lambda+1}
+    [\grad \textbf{u}+ (\grad \textbf{u})^\dagger]
+    - \frac{8\pi}{25}\frac{1}{\lambda+1}
+    \grad\textbf{b}
+    % + \frac{8\pi}{75}\frac{1}{\lambda+1}
+    % \bm\delta\div \textbf{b}
+    \\
+    \intO{2\textbf{r}\textbf{e}_{in}}
+    &=
+    \frac{2\pi}{5(\lambda+1)}
+    (\bm\delta \textbf{u}_r +  \bm\delta\textbf{u}_r^\dagger)
+    -\frac{4\pi}{15(\lambda+1)}\textbf{u}_r\bm\delta 
+    -\frac{4\pi}{15}\frac{1}{\lambda+1}
+    (\bm\delta \textbf{b} +  \bm\delta\textbf{b}^\dagger)
+    +\frac{8\pi}{45}\frac{1}{\lambda+1}
+    \textbf{b}\bm\delta. 
+\end{align}

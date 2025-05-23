@@ -345,7 +345,7 @@ Additionally all odd order tesnor $x_i$ or $x_ix_jx_k$, integrated over the surf
     \frac{4\pi}{5(\lambda +1)} (\textbf{u}_r \bm\delta + \bm\delta \textbf{u}_r)
     + \frac{2\pi(5\lambda +2)}{5(\lambda+1)}\bm\delta \textbf{u}_r
     - \frac{8\pi}{15(\lambda +1)} (\grad \gamma \bm\delta + \bm\delta \grad \gamma)
-    + \frac{4\pi(3\lambda +2)}{5(\lambda+1)}\bm\delta \grad \gamma
+    + \frac{4\pi}{5(\lambda+1)}\bm\delta \grad \gamma
     \\
 \end{align*}
 
@@ -387,7 +387,26 @@ Thus, we may compute that gives,
     -\frac{2\pi}{15}\frac{10\lambda +7}{\lambda+1}
     (\bm\delta \textbf{u}_r + \textbf{u}_r \bm\delta)
     -\frac{4\pi}{15}\frac{1}{\lambda+1}\bm\delta \textbf{u}_r
-    -\frac{4\pi}{15}\frac{10\lambda +7}{\lambda+1}
+    -\frac{4\pi}{15}\frac{1}{\lambda+1}
+    (\bm\delta \grad \gamma + \grad \gamma \bm\delta)\\
+    &+\frac{8\pi}{45}\frac{1}{\lambda+1}
+    \bm\delta \grad \gamma
+\end{align*}
+\begin{align*}
+    \intS{2\textbf{e}_{in}}
+    &=
+    -\frac{4\pi}{15}\frac{5\lambda +2}{\lambda+1}
+    [\grad \textbf{u}+ (\grad \textbf{u})^\dagger]
+    - \frac{8\pi}{25}\frac{1}{\lambda+1}
+    \grad\grad \gamma
+    + \frac{8\pi}{75}\frac{1}{\lambda+1}
+    \bm\delta(\grad\cdot\grad) \gamma\\
+    \intS{2\textbf{r}\textbf{e}_{in}}
+    &=
+    -\frac{2\pi}{15}\frac{20\lambda + 17}{\lambda+1}
+    (\bm\delta \textbf{u}_r + \textbf{u}_r \bm\delta)
+    -\frac{4\pi}{15}\frac{1}{\lambda+1}\bm\delta \textbf{u}_r
+    -\frac{4\pi}{15}\frac{1}{\lambda+1}
     (\bm\delta \grad \gamma + \grad \gamma \bm\delta)\\
     &+\frac{8\pi}{45}\frac{1}{\lambda+1}
     \bm\delta \grad \gamma
@@ -432,6 +451,25 @@ However to point out the meaning of the first- and second-moment of momentum her
     % \label{eq:dt_P2_alpha_bis}
 \end{multline}
 Using the trik of \citet{lhuillier1996contribution} we may re-write the second moment of moment with the symmetry relation  $B_{ijk} + B_{jik} - B_{kij}$  which yiel, 
+Indeed, consider the 
+\begin{multline}
+    \intO{2 r_{k}(\bm{\sigma}^0_d)_{ji}}
+    +\intS{2r_{j}(\bm{\sigma}^0_I)_{ik}}
+    = 
+    +\intS{
+        r_{k}r_{j} (\bm{\sigma}_f^0\cdot\textbf{n}_d)_i 
+        + r_{k}r_{i} (\bm{\sigma}_f^0\cdot\textbf{n}_d)_j 
+        - r_{j}r_{i} (\bm{\sigma}_f^0\cdot\textbf{n}_d)_k 
+    }\\
+    &
+    + \intO{ 
+        r_{k}r_{j}  \rho_d (\textbf{b}_d^0)_i 
+        +r_{k}r_{i}  \rho_d (\textbf{b}_d^0)_j 
+        -r_{j}r_{i}  \rho_d (\textbf{b}_d^0)_k 
+        }
+    % \label{eq:dt_P2_alpha_bis}
+\end{multline}
+
 \begin{multline}
     \intO{ r_{k}(\bm{\sigma}^0_d)_{ij}}
     +\intS{ r_{k}(\bm{\sigma}_\Gamma^0)_{ij}}
@@ -875,43 +913,83 @@ From the conservation of volume we deduce that
     ]
 \end{align}
 
-To compute $\textbf{r}(\bm\delta - \textbf{nn})dS$ we need a relation for \textbf{r}. It is given by the points \textbf{M} in fact so we have
+
 \begin{align}
-    \textbf{r}(\frac{1}{3}\bm\delta - \textbf{nn}) dS
+    \textbf{n} 
+    &= \textbf{e}_r - Ca (\bm\delta - \textbf{e}_r\textbf{e}_r)\cdot \grad f
+    = \textbf{e}_r - Ca  \gradI f\\
+    \textbf{r}^{(n)} 
+    &= \textbf{e}_r^{(n)} r^n (1+ Ca f)^n
+    = \textbf{e}_r^{(n)} r^n (1+ n Ca f) + O(r^n Ca)\\
+    \bm\delta/3 - \textbf{nn} 
     &=
-    \textbf{e}_r
-    \left[
-        \frac{1}{3}\bm\delta   
-        - \textbf{e}_r \textbf{e}_r 
-        + Ca [
-            3f(\frac{1}{3}\bm\delta 
-            -  \textbf{e}_r \textbf{e}_r )
-            + \textbf{e}_r \gradI f 
-            + \gradI f \textbf{e}_r 
-            ]
-    \right]d\theta d\varphi
+    \bm\delta/3
+    - (\textbf{e}_r - Ca \gradI f)
+    (\textbf{e}_r - Ca \gradI f)
+    =
+    \bm\delta/3
+    - \textbf{e}_r\textbf{e}_r
+    + Ca [
+        \textbf{e}_r \gradI f
+        + ^\dagger \textbf{e}_r \gradI f
+    ]\\
+    \textbf{r}^{(n)}(\bm\delta/3 - \textbf{nn}) 
+    &=
+    \textbf{e}_r^{(n)}(\bm\delta/3
+    - \textbf{e}_r\textbf{e}_r)
+    + Ca  \textbf{e}_r^{(n)} n f (\bm\delta/3
+    - \textbf{e}_r\textbf{e}_r)
+    + Ca \textbf{e}_r^{(n)} [
+        \textbf{e}_r \gradI f
+        + ^\dagger \textbf{e}_r \gradI f
+    ]
 \end{align}
+
+So that 
 \begin{align}
-    \textbf{rr}(\frac{1}{3}\bm\delta - \textbf{nn}) dS
-    &= \textbf{e}_r \textbf{e}_r
-    \left[
-        \frac{1}{3}\bm\delta   
-        - \textbf{e}_r \textbf{e}_r 
-        + Ca [
-            4f(\frac{1}{3}\bm\delta 
-            -  \textbf{e}_r \textbf{e}_r )
-            + \textbf{e}_r \gradI f 
-            + \gradI f \textbf{e}_r 
-            ]
-    \right]d\theta d\varphi
+    \textbf{r}^{(n)}(\bm\delta/3 - \textbf{nn}) dS
+    &= 
+    \textbf{r}^{(n)}(\bm\delta/3 - \textbf{nn}) dS^0 
+    + 2 Ca f \textbf{e}^{(n)}_r(\bm\delta/3 - \textbf{e}_r \textbf{e}_r)  dS^0 \\
+    &=
+    \textbf{e}_r^{(n)}(\bm\delta/3
+    - \textbf{e}_r\textbf{e}_r)
+    + Ca  \textbf{e}_r^{(n)} (n+2) f (\bm\delta/3 - \textbf{e}_r\textbf{e}_r)
+    + Ca \textbf{e}_r^{(n)} [
+        \textbf{e}_r \gradI f
+        + ^\dagger \textbf{e}_r \gradI f
+    ] dS^0 \\
+    &=
+    \textbf{e}_r^{(n)}(\bm\delta/3
+    - \textbf{e}_r\textbf{e}_r)
+    + Ca \textbf{e}_r^{(n)}
+    [(n+2) f (\bm\delta/3 - \textbf{e}_r\textbf{e}_r)
+    + \textbf{e}_r \gradI f
+    + ^\dagger \textbf{e}_r \gradI f
+    ] dS^0 \\
 \end{align}
 
-Assuming that, 
-\begin{equation}
-    f = K_{jkl} e_je_ke_l 
-\end{equation}
-Then, 
 
+So that,
+
+\begin{equation}
+    \intS{\gamma (\bm\delta - \textbf{nn})}
+    =
+    \gamma_0 \intS{ (\bm\delta - \textbf{nn})}
+    + \grad\gamma \cdot \intS{\textbf{r} (\bm\delta - \textbf{nn})}
+    + \grad\grad\gamma : \intS{\textbf{rr} (\bm\delta - \textbf{nn})}
+\end{equation}
+where, 
+\begin{align*}
+    \intS{ (\bm\delta/3 - \textbf{nn})_{ij}} &= \pi\frac{32}{15} (H_{ij}- H_{qq} \delta_{ij}/3)\\
+    \intS{ (\bm\delta/3 - \textbf{nn})_{ij}r_k} &= \pi\frac{8}{7} (H_{ijk} - H_{iqq} \delta_{jk}/5- H_{qjq} \delta_{ik}/5- H_{qqk} \delta_{ij}/5)\\
+    \intS{ (\bm\delta/3 - \textbf{nn})_{ij}r_kr_l} &= \pi\frac{64}{105} H_{ijkl}^{dev} 
+    + \pi\frac{16}{35} H_{ij}\delta_{kl}
+    + \pi\frac{32}{315} H_{kl}\delta_{ij}
+    + \pi\frac{16}{315} H_{qq}(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})\\
+    &- \pi\frac{8}{15} (H_{ik}\delta_{jl}+ H_{jl}\delta_{ik}+H_{il}\delta_{jk}+H_{jk}\delta_{il})
+    - \pi\frac{176}{945} H_{qq}\delta_{ij}\delta_{kl}
+\end{align*}
 \subsubsection{Singularity solution and faxen laws}
 Any flow produced by the motion of a body may be expressed in terms of free-space green function and its derivatives,
 \begin{align}
@@ -1205,7 +1283,7 @@ with the boundary condition,
         -\lambda\textbf{E}_{in}^{(n+3)}
         +\frac{(1-\lambda)}{(n-1)!}
         \textbf{r}^{(n-1)}[\bm\delta\bm\delta + (\bm\delta\bm\delta)^\dagger]
-        - \textbf{B}^{(n+2)}
+        - \textbf{n}\textbf{B}^{(n+2)}
     \}\cdot (\bm\delta - \textbf{nn})
     &=
     0
@@ -1246,17 +1324,17 @@ Not ethat the approximation is true only for small $r$ however.
 Likewise,
 \begin{align}
     \textbf{n} 
-    &= \textbf{e}_r + \epsilon (\bm\delta - \textbf{e}_r\textbf{e}_r)\cdot \grad f
-    = \textbf{e}_r + \epsilon  \gradI f\\
+    &= \textbf{e}_r - \epsilon (\bm\delta - \textbf{e}_r\textbf{e}_r)\cdot \grad f
+    = \textbf{e}_r - \epsilon  \gradI f\\
     \bm\delta - \textbf{nn} 
     &=
     \bm\delta
-    - (\textbf{e}_r + \epsilon \gradI f)
-    (\textbf{e}_r + \epsilon \gradI f)
+    - (\textbf{e}_r - \epsilon \gradI f)
+    (\textbf{e}_r - \epsilon \gradI f)
     =
     \bm\delta
     - \textbf{e}_r\textbf{e}_r
-    - \epsilon [
+    + \epsilon [
         \textbf{e}_r \gradI f
         + ^\dagger \textbf{e}_r \gradI f
     ]\\
@@ -1264,9 +1342,9 @@ Likewise,
     &=
     \textbf{e}_r(\bm\delta
     - \textbf{e}_r\textbf{e}_r)
-    + \epsilon \gradI f (\bm\delta
+    - \epsilon \gradI f (\bm\delta
     - \textbf{e}_r\textbf{e}_r)
-    - \epsilon \textbf{e}_r [
+    + \epsilon \textbf{e}_r [
         \textbf{e}_r \gradI f
         + ^\dagger \textbf{e}_r \gradI f
     ]
@@ -1292,7 +1370,7 @@ with the boundary condition,
         -\lambda\ps{0}{\textbf{E}}_{in}^{(n+3)}
         +\frac{(1-\lambda)r^{n-1}}{(n-1)!}
         \textbf{e}_r^{(n-1)}[\bm\delta\bm\delta + (\bm\delta\bm\delta)^\dagger]
-        - \ps{0}{\textbf{B}}^{(n+2)}
+        - \textbf{e}_r\ps{0}{\textbf{B}}^{(n+2)}
     \}\cdot (\bm\delta - \textbf{e}_r \textbf{e}_r)
     &=
     0
@@ -1317,9 +1395,9 @@ with the boundary condition,
     \ps{1}{\textbf{U}}_{in}^{(n+2)} 
     + f\frac{\partial}{\partial r}\ps{0}{\textbf{U}}_{in}^{(n+2)} 
     +\frac{r^n}{(n-1)!}\bm\delta \textbf{e}_r^{(n)} f ] 
-    + \gradI f \cdot [\ps{0}{\textbf{U}}_{in}^{(n+2)} 
+    - \gradI f \cdot [\ps{0}{\textbf{U}}_{in}^{(n+2)} 
     +\frac{r^n}{n!}\bm\delta \textbf{e}_r^{(n)}] &= 0 
-    &&\forall r = 1 \\
+    &&\forall r = 1 
 \end{align}
 the last BC is even more involving it reads, 
 \begin{multline}
@@ -1333,7 +1411,7 @@ the last BC is even more involving it reads,
         - \ps{1}{\textbf{B}}^{(n+2)}
         - f \frac{\partial}{\partial r}\textbf{B}^{(n+2)}
     \}\cdot (\bm\delta - \textbf{e}_r \textbf{e}_r)\\
-    - [\textbf{e}_r (\textbf{e}_r \gradI f + ^\dagger \textbf{e}_r \gradI f) - \gradI f (\bm\delta - \textbf{e}_r \textbf{e}_r) ] \\: \{
+    + [\textbf{e}_r (\textbf{e}_r \gradI f + ^\dagger \textbf{e}_r \gradI f) - \gradI f (\bm\delta - \textbf{e}_r \textbf{e}_r) ] \\: \{
         \ps{0}{\textbf{E}}_{out}^{(n+3)}
         -\lambda\ps{0}{\textbf{E}}_{in}^{(n+3)}
         +\frac{(1-\lambda)r^{n-1}}{(n-1)!}
