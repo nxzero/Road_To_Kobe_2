@@ -105,27 +105,64 @@ Then to express the disturbance fields in terms of $\grad \textbf{b}$ or higher 
 Without loss of generality we consider only the symmetric traceless part of $(\grad \textbf{b}_{jk})$ in the following. 
 
 \tb{Mettre la dependence quadratic}
-% Based on the classic method of spherical harmonic solution \citep[chapter 8]{leal2007advanced} we could derive the expression for the disturbance fields due to an imposed $\grad \textbf{b}$, it reads,
-% \begin{align}
-%     (\textbf{U}_o^{(b-2)})_{ijk}
-%     &=
-%     -\frac{1}{10(\lambda+1)r^5}(\delta_{ij} x_k+\delta_{ik} x_j)
-%     -\frac{3r^2-5}{10(\lambda+1)r^7}x_ix_jx_k
-%     +\frac{r^2-1}{10(\lambda+1)r^5}\delta_{jk}x_i\\
-%     (\textbf{P}_o^{(b-2)})_{jk}
-%     &=
-%     -\frac{3}{5(\lambda+1)r^5}x_jx_k
-%     +\frac{1}{5(\lambda+1)r^3}\delta_{jk}\\
-%     (\textbf{U}_i^{(b-2)})_{ijk}
-%     &=
-%     -\frac{5r^2-3}{20(\lambda+1)}(\delta_{ij} x_k+\delta_{ik} x_j)
-%     +\frac{1}{5(\lambda+1)}x_ix_jx_k
-%     +\frac{r^2-1}{10(\lambda+1)}\delta_{jk}x_i\\
-%     (\textbf{P}_i^{(b-2)})_{jk}
-%     &=
-%     -\frac{21}{10(\lambda+1)}x_jx_k
-%     +\frac{7r^2}{10(\lambda+1)r^3}\delta_{jk}
-% \end{align}
+Based on the classic method of spherical harmonic solution \citep[chapter 8]{leal2007advanced} we could derive the expression for the disturbance fields due to an imposed $\grad\grad \textbf{b}$, it reads,
+\begin{align*}
+    (\textbf{U}_o^{(b-3)})_{ijkl}
+    &=
+    -\frac{7r^4+10r^2-9}{1260(\lambda+1)r^5}(
+        \delta_{ij}\delta_{kl}
+        + \delta_{ik}\delta_{jl}
+        + \delta_{il}\delta_{kj}
+        )
+    -\frac{7r^4-60r^2+45}{1260(\lambda+1)r^7}(
+        x_ix_j\delta_{kl}
+        + x_ix_k\delta_{jl}
+        + x_ix_l\delta_{kj}
+        )\\
+    &+ \frac{r^2 -3}{84(\lambda +1)r^7}(
+        \delta_{ij}x_kx_l
+        + \delta_{ik}x_jx_l
+        + \delta_{il}x_kx_j
+    )
+    - \frac{5r^2 - 7}{28(\lambda+1)r^9}x_ix_jx_kx_l
+    \\
+    (\textbf{P}_o^{(b-3)})_{jkl}
+    &=
+    -\frac{7r^2 - 45}{630(\lambda+1)r^5}(
+        \delta_{jk}x_l
+        + \delta_{jl}x_k
+        + \delta_{lk}x_j
+    )
+    - \frac{5}{14(\lambda+1)r^7}x_jx_kx_l
+    \\
+    (\textbf{U}_i^{(b-2)})_{ijk}
+    &=
+    \frac{9r^4-20r^2+7}{630(\lambda+1)}(
+        \delta_{ij}\delta_{kl}
+        + \delta_{ik}\delta_{jl}
+        + \delta_{il}\delta_{kj}
+    )
+    +\frac{9r^2-5}{630(\lambda+1)}(
+        x_ix_j\delta_{kl}
+        + x_ix_k\delta_{jl}
+        + x_ix_l\delta_{kj}
+        )\\
+    &- \frac{3r^2-2}{42(\lambda +1)}(
+        \delta_{ij}x_kx_l
+        + \delta_{ik}x_jx_l
+        + \delta_{il}x_kx_j
+    )
+    + \frac{1}{14(\lambda+1)}x_ix_jx_kx_l
+    \\
+    (\textbf{P}_i^{(b-3)})_{jkl}
+    &=
+    +\frac{54r^2 - 35}{315(\lambda+1)r}(
+        \delta_{jk}x_l
+        + \delta_{jl}x_k
+        + \delta_{lk}x_j
+    )
+    - \frac{6}{7(\lambda+1)}x_jx_kx_l
+\end{align*}
 
 Hence, based on these expressions and the solutions  provided in the literature, one can compute the force traction at the surface of the droplet ($\bm\sigma_{out}\cdot \textbf{n}$), as well as the internal shear rate ($\textbf{e}_{in}$), and obtains the following expressions, 
 \begin{align}
@@ -170,13 +207,123 @@ and,
     +\frac{8\pi}{45}\frac{1}{\lambda+1}
     \textbf{b}\bm\delta. 
 \end{align}
-
 In these expressions we did not include the dependence on $\propto \grad\grad \textbf{u}$ and $\propto \grad\grad \textbf{b}$ because they turn out to be negligible in the averaged equation. 
-Nevertheless, these may be needed if one wish to compute the deformation of the droplets due to a quadratic flow for example, hence we display the higher order terms here, 
+Nevertheless, they may be needed if one wish to compute the deformation of the droplets due to a quadratic flow for example. %, hence we display the higher order terms here, 
+% \begin{align}
+%     \intS{\textbf{xx}\bm\sigma_{out}\cdot \textbf{n}} &
+%     =
+%     \pi \frac{}{}
+% \end{align}
+
+
+\subsubsection*{Deformation of the droplets}
+
+In the body of the text we use the second moment of momentum equation to determine the third mode of deformation and show that it is negligible. 
+Here we provide additional information on the derivation of the second moment of momentum equation and their closures. 
+Based on the general formula \ref{eq:dt_Q_n} one obtain by neglecting the inertial effects  and the body forces,  
+\begin{equation}
+    \intO{ r_{j}(\bm{\sigma}^0_d)_{ik}+r_{k}(\bm{\sigma}^0_d)_{ji}}
+    +\intS{ r_{j}(\bm{\sigma}^0_\Gamma)_{ik}+r_{k}(\bm{\sigma}_\Gamma^0)_{ji}}
+    = 
+    \intS{  r_{k}r_{j} (\bm{\sigma}_f^0\cdot\textbf{n})_i }
+    % + \intO{ r_{k}r_{j}  \rho_d (\textbf{b}_d^0)_i }.  
+    \label{eq:step_1}
+\end{equation}
+% the mean part of the stress then read
+% \begin{equation}
+%     \ldots=\intO{  r_{k}r_{j} (\div \bm{\Sigma})_i }
+%     +(1-\lambda)\intS{  (\bm{\Sigma})_{ik} r_{j}  }
+%     +(1-\lambda)\intS{  (\bm{\Sigma})_{ij} r_{k}  }
+% \end{equation}
+Using the trick of \citet{lhuillier1996contribution} we may re-write this equation by summing and subtracting the permutations:  $B_{ijk} + B_{jik} - B_{kij}$, where $B_{ijk}$ corresponds to \ref{eq:step_1}. 
+This gives, 
 \begin{align}
-    \intS{\textbf{xx}\bm\sigma_{out}\cdot \textbf{n}} &
-    =
-    \pi \frac{}{}
+    \intO{2 r_{k}(\bm{\sigma}^0_d)_{ij}}
+    +\intS{2r_{k}(\bm{\sigma}^0_\Gamma)_{ij}}
+    &= 
+    +\intS{
+        r_{k}r_{j} (\bm{\sigma}_f^0\cdot\textbf{n})_i 
+        + r_{k}r_{i} (\bm{\sigma}_f^0\cdot\textbf{n})_j 
+        - r_{j}r_{i} (\bm{\sigma}_f^0\cdot\textbf{n})_k 
+    }
+    % \\
+    % &
+    % + \intO{ 
+    %     r_{k}r_{j}  \rho_d (\textbf{b}_d^0)_i 
+    %     +r_{k}r_{i}  \rho_d (\textbf{b}_d^0)_j 
+    %     -r_{j}r_{i}  \rho_d (\textbf{b}_d^0)_k 
+    %     }
+    % \label{eq:dt_P2_alpha_bis}
 \end{align}
+Taking the traceless part of this equation on the index $ij$, and substituting $\bm\sigma_f^0 \to \bm\sigma_f^* + \bm\Sigma$ and $\textbf{e}_d^0 \to \textbf{e}_d^* + \textbf{E}$ one obtains, 
+% \begin{align}
+%     \intO{2 r_{k}(\bm{\sigma}^0_d)_{ij}^{dev}}
+%     +\intS{2r_{k}(\bm{\sigma}^0_\Gamma)_{ij}^{dev}}
+%     &= 
+%     +\intS{
+%         r_{k}r_{j} (\bm{\sigma}_f^0\cdot\textbf{n})_i 
+%         + r_{k}r_{i} (\bm{\sigma}_f^0\cdot\textbf{n})_j 
+%         - r_{j}r_{i} (\bm{\sigma}_f^0\cdot\textbf{n})_k 
+%     }\\
+%     &-\frac{1}{3}\delta_{ij}\intS{
+%         r_{k}r_{l} (\bm{\sigma}_f^0\cdot\textbf{n})_l
+%         + r_{k}r_{l} (\bm{\sigma}_f^0\cdot\textbf{n})_l 
+%         - r_{l}r_{l} (\bm{\sigma}_f^0\cdot\textbf{n})_k 
+%     }\\
+%     &+\intO{  
+%         r_{k}r_{j} (\div \bm{\Sigma})_i 
+%         +r_{k}r_{i} (\div \bm{\Sigma})_j 
+%         -r_{j}r_{i} (\div \bm{\Sigma})_k 
+%         }\\
+%     &-\frac{1}{3}\delta_{ij}\intO{  
+%         r_{k}r_{l} (\div \bm{\Sigma})_l
+%         +r_{k}r_{l} (\div \bm{\Sigma})_l 
+%         -r_{l}r_{l} (\div \bm{\Sigma})_k 
+%         }\\
+%     &+\mu_f (1-\lambda)\intS{ 4\textbf{E}_{ij} r_{k}  }
+%     \\
+%     &
+%     + \rho_d \intO{ 
+%         r_{k}r_{j} (\textbf{b}_d^0)_i 
+%         +r_{k}r_{i} (\textbf{b}_d^0)_j 
+%         -r_{j}r_{i} (\textbf{b}_d^0)_k 
+%         }\\
+%     &-\rho_d \frac{1}{3}\delta_{ij} \intO{ 
+%         r_{k}r_{l} (\textbf{b}_d^0)_l 
+%         +r_{k}r_{l} (\textbf{b}_d^0)_l 
+%         -r_{l}r_{l} (\textbf{b}_d^0)_k 
+%         }
+%     % \label{eq:dt_P2_alpha_bis}
+% \end{align}
+\begin{align}
+    \intS{2r_{k}(\bm\delta/3 - \textbf{nn})_{ij}}
+    &= 
+    +\intS{
+        r_{k}r_{j} (\bm{\sigma}^*_f\cdot\textbf{n})_i 
+        + r_{k}r_{i} (\bm{\sigma}^*_f\cdot\textbf{n})_j 
+        - r_{j}r_{i} (\bm{\sigma}^*_f\cdot\textbf{n})_k 
+    }\nonumber \\
+    &-\frac{1}{3}\delta_{ij}\intS{
+        r_{k}r_{l} (\bm{\sigma}^*_f\cdot\textbf{n})_l
+        + r_{k}r_{l} (\bm{\sigma}^*_f\cdot\textbf{n})_l 
+        - r_{l}r_{l} (\bm{\sigma}^*_f\cdot\textbf{n})_k 
+    }\nonumber \\
+    &+\mu_f (1-\lambda)\intS{ 4\textbf{E}_{ij} r_{k}  }
+    - \mu_f\lambda \intO{2 r_{k}(\textbf{e}_d^*)_{ij}}
+    % \\
+    % &
+    % + (\rho_d-\rho_f) \intO{ 
+    %     r_{k}r_{j} \textbf{g}_i 
+    %     +r_{k}r_{i} \textbf{g}_j 
+    %     -r_{j}r_{i} \textbf{g}_k 
+    %     }\\
+    % &-(\rho_d-\rho_f) \frac{1}{3}\delta_{ij} \intO{ 
+    %     r_{k}r_{l} \textbf{g}_l 
+    %     +r_{k}r_{l} \textbf{g}_l 
+    %     -r_{l}r_{l} \textbf{g}_k 
+    %     }
+    \label{eq:second_mom}
+\end{align}
+where we have noticed that $\phi \div\bm\Sigma = - \phi \rho_f \textbf{g}$, and because we neglected the body forces in this example  $\div\bm\Sigma =0$. 
 
 
