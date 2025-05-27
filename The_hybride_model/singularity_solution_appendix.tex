@@ -46,17 +46,17 @@ However, it can be assumed that these quantities are slowly varying functions of
     \textbf{u}(\textbf{n}) 
     &=  \textbf{u}_r|_{\textbf{r}=0}
     +  \textbf{r} \cdot  \grad\textbf{u}|_{\textbf{r}=0}
-    +  \frac{1}{2}\textbf{rr} \cdot  \grad\grad\textbf{u}|_{\textbf{r}=0}
+    +  \frac{1}{2}\textbf{rr} :  \grad\grad\textbf{u}|_{\textbf{r}=0}
     + \ldots\\
      \textbf{E}(\textbf{n}) 
     &=   \textbf{E}|_{\textbf{r}=0}
     + \textbf{r} \cdot  \grad \textbf{E}|_{\textbf{r}=0}
-    + \frac{1}{2}\textbf{rr} \cdot  \grad\grad \textbf{E}|_{\textbf{r}=0}
+    + \frac{1}{2}\textbf{rr} :  \grad\grad \textbf{E}|_{\textbf{r}=0}
     + \ldots\\
      \textbf{b}(\textbf{n}) 
     &=   \textbf{b}|_{\textbf{r}=0}
     + \textbf{r} \cdot  \grad \textbf{b}|_{\textbf{r}=0}
-    + \frac{1}{2}\textbf{rr} \cdot  \grad\grad \textbf{b}|_{\textbf{r}=0}
+    + \frac{1}{2}\textbf{rr} :  \grad\grad \textbf{b}|_{\textbf{r}=0}
     + \ldots
 \end{align*}
 Note that because $\textbf{b} \sim \grad \gamma$ the tensor: $\grad \textbf{b}$ and $\grad\grad \textbf{b}$ are symmetric tensors. 
@@ -103,8 +103,7 @@ The disturbance fields induced due to a constant, linear, or quadratic stress ju
 For instance one might refer to \citet{Subramanian_1985,leal2007advanced} to compute the disturbance fields due to a constant surface tension gradient, hence defining the expression of  $\textbf{U}_{o/i}^{(b-1)}$ and $\textbf{P}_{o/i}^{(b-1)}$. 
 Then to express the disturbance fields in terms of $\grad \textbf{b}$ or higher order derivatives one might refer to the solution given in \citet[Appendix C]{raja2010inertial}.
 Without loss of generality we consider only the symmetric traceless part of $(\grad \textbf{b}_{jk})$ in the following. 
-
-Based on the classic method of spherical harmonic solution \citep[chapter 8]{leal2007advanced} we could derive the expression for the disturbance fields due to an imposed $\grad\grad \textbf{b}$, it reads,
+Based on the classic method of spherical harmonic \citep[chapter 8]{leal2007advanced} we could derive the expression for the disturbance fields due to an imposed $\grad\grad \textbf{b}$, it reads,
 \begin{align*}
     (\textbf{U}_o^{(b-3)})_{ijkl}
     &=
@@ -160,8 +159,9 @@ Based on the classic method of spherical harmonic solution \citep[chapter 8]{lea
         + \delta_{jl}x_k
         + \delta_{lk}x_j
     )
-    - \frac{6}{7(\lambda+1)}x_jx_kx_l
+    - \frac{6}{7(\lambda+1)}x_jx_kx_l. 
 \end{align*}
+It is implied that each of these tensors must be contracted with the full symmetric tensor $(\grad\grad\textbf{b})_{ijk} \sim (\grad\grad\grad\gamma)_{ijk}$ to obtain the velocity or pressure fields. 
 
 Hence, based on these expressions and the solutions  provided in the literature, one can compute the force traction at the surface of the droplet ($\bm\sigma_{out}\cdot \textbf{n}$), as well as the internal shear rate ($\textbf{e}_{in}$), and obtains the following expressions, 
 \begin{align}
@@ -184,6 +184,7 @@ Hence, based on these expressions and the solutions  provided in the literature,
     + \frac{2\pi(5\lambda +2)}{5(\lambda+1)}\bm\delta \textbf{u}_r
     - \frac{8\pi}{15(\lambda +1)} ( \textbf{b}\bm\delta + ^\dagger\textbf{b}\bm\delta )
     + \frac{4\pi}{5(\lambda+1)}\bm\delta \textbf{b}
+    \label{eq:nd_mom}
 \end{align}
 and, 
 \begin{align}
@@ -205,20 +206,21 @@ and,
     (\bm\delta \textbf{b} +  \bm\delta\textbf{b}^\dagger)
     +\frac{8\pi}{45}\frac{1}{\lambda+1}
     \textbf{b}\bm\delta. 
+    \label{eq:st_mom}
 \end{align}
-In these expressions we did not include the dependence on $\propto \grad\grad \textbf{u}$ and $\propto \grad\grad \textbf{b}$ because they turn out to be negligible in the averaged equation. 
-Nevertheless, they may be needed if one wish to compute the deformation of the droplets due to a quadratic flow for example. %, hence we display the higher order terms here, 
-% \begin{align}
-%     \intS{\textbf{xx}\bm\sigma_{out}\cdot \textbf{n}} &
-%     =
-%     \pi \frac{}{}
-% \end{align}
+In these expressions we did not include the dependence on $\propto \grad\grad \textbf{u}$ and $\propto \grad\grad \textbf{b}$ in \ref{eq:nd_mom} and \ref{eq:st_mom} because they turn out to be of $O(a^2/L^2)$, hence negligible in the averaged equation. 
+Nevertheless, they may be needed if one wish to compute the deformation of the droplets due to a quadratic flow for example, hence we display here the higher order terms, namely 
+\begin{align}
+    \intS{\textbf{xx}\bm\sigma_{out}\cdot \textbf{n}} &
+    =
+    \pi \frac{}{}
+\end{align}
 
 
 \subsubsection*{Deformation of the droplets}
 
 In the body of the text we use the second moment of momentum equation to determine the third mode of deformation and show that it is negligible. 
-Here we provide additional information on the derivation of the second moment of momentum equation and their closures. 
+Here we provide additional information on the derivation of the second moment of momentum equation. 
 Based on the general formula \ref{eq:dt_Q_n} one obtain by neglecting the inertial effects  and the body forces,  
 \begin{equation}
     \intO{ r_{j}(\bm{\sigma}^0_d)_{ik}+r_{k}(\bm{\sigma}^0_d)_{ji}}
@@ -324,5 +326,6 @@ Taking the traceless part of this equation on the index $ij$, and substituting $
     \label{eq:second_mom}
 \end{align}
 where we have noticed that $\phi \div\bm\Sigma = - \phi \rho_f \textbf{g}$, and because we neglected the body forces in this example  $\div\bm\Sigma =0$. 
+Injecting \ref{eq:second_order_closures} in \ref{eq:second_mom} one arrive to \ref{eq:defH3}.
 
 
