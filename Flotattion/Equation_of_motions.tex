@@ -1,0 +1,228 @@
+\section{Equation of motions}
+\label{sec:averaged_equations}
+In this section we demonstrate how to derive from \ref{eq:ur} to \ref{eq:divu_zero}. 
+Note that the procedure employed in this section may seem unnecessarily complicated, because most of the final results are already known \citep{jackson2000}. 
+Nevertheless, the reader must keep in mind that this rigorous approach will allows us to extend this model in future study. 
+
+\subsection{Averaged equations}
+
+We consider a 3 phase system: the mixture, the bubbles and the particles.
+This system can be described by a system of averaged conservation laws.
+Namely, the conservation of volume of the mixture, the conservation of volume of the phases $k$, the conservation of momentum of the phase $k$, and the conservation of momentum of the mixture, it reads, 
+\begin{align}
+    \div \textbf{u} &= 0\\
+     (\pddt + \textbf{u} \cdot \grad) n_k &= \div (n_k \textbf{u}_{r,k})\\
+    n_k m_k (\pddt + \textbf{u}_k \cdot \grad) \textbf{u}_k &= 
+    % n_k\textbf{u}_r \cdot \grad \textbf{u}_k
+    - \div \pavg{m_k\textbf{u}_k'\textbf{u}_k'}+n_k m_k \textbf{g}
+    +\textbf{M}_k^{(0)}
+    \label{eq:u_k}
+    \\
+    \rho_f (\pddt + \textbf{u} \cdot \grad)\textbf{u}
+    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+    &= 
+    \div\bm\Sigma
+    + \rho_f \textbf{g}
+    + \div \bm\sigma_*
+    +\sum_{k=b,p} \kappa_k  \textbf{M}_k^{(0)}
+    \label{eq:u_dt}\\
+    \bm\sigma_* &= 
+    - \rho_f \avg{\textbf{u}'\textbf{u}'}
+    + \sum_{k=b,p} (\textbf{M}_k^{(1)}
+    -\div \textbf{M}_k^{(2)})\\
+    \bm\Sigma &= 
+    - p_f \bm\delta + \mu_f (\grad \textbf{u}+ ^\dagger \grad \textbf{u})
+\end{align}
+respectively. 
+$p_f$ is the averaged fluid pressure. 
+The constants $\kappa_k = (\zeta_k^{-1}- 1)$. 
+The $X'$ denotes the fluctuating part around the mean of the variable $X$. 
+The $n_k$ are the number density of phase $k$ related to the volume fractions as $n_k v_k = \phi_k$ with $v_k$ the volume. 
+The tensor $\textbf{M}_k^{(n)}$ are interphase exchange terms defined as, 
+\begin{align}
+    \textbf{M}_\alpha^{(0)} &=
+    \intS{\bm{\sigma}_f^* \cdot \textbf{n}}
+   +\intO{\div \bm\Sigma}
+   \\
+   \textbf{M}_\alpha^{(1)} &=
+   \intS{\textbf{r}\bm{\sigma}_f^* \cdot \textbf{n}}
+   -2\mu_f \intO{\textbf{e}_d^*}
+   +\intO{\textbf{r}\div \bm\Sigma}
+   \\
+   \textbf{M}_\alpha^{(2)} &=
+   \frac{1}{2}\intS{\textbf{rr}\bm{\sigma}_f^* \cdot \textbf{n}}
+   -2\mu_f \intO{\textbf{re}_d^*}
+   +\intO{\textbf{rr}(\div \bm\Sigma+ \rho_f\textbf{g})}
+\end{align}
+It corresponds to the total hydrodynamic drag force, first moment, and second moment of the hydrodynamic forces (see \citet{fintzi2024averaged} for more details). 
+
+In \ref{sec:summary} we actually use an equation for the mean relative velocity $\textbf{u}-\textbf{u}_b$ in which the mean pressure gradient $\grad p_f$ doesn't appear. 
+This equation is derived by taking $\kappa_k$ times~\ref{eq:u_k}, summing on both $k=b,p$ and multiplying the resulting equation by $(1+\sum_{k=p,b}\kappa_k\phi_k)$, then subtracting $\sum_{k=p,b}\kappa_k\phi_k$ times~\ref{eq:u_dt}. 
+% Let us set 
+% \begin{align}
+%     E(\textbf{u}_k) = 0 
+%     =
+%     - n_k m_k (\pddt + \textbf{u}_k \cdot \grad) \textbf{u}_k 
+%     - \div \pavg{m_k\textbf{u}_k'\textbf{u}_k'}
+%     + n_km_k \textbf{g}
+%     + \textbf{M}_k^{(0)}
+%     \\
+%     E(\textbf{u}) = 0 =
+%     -
+%     \rho_f (\pddt + \textbf{u} \cdot \grad)\textbf{u}
+%     % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+%     +\rho_f \textbf{g}
+%     +\div \bm\sigma_*
+%     + \div\bm\Sigma
+%     +\sum_k \kappa_k  \textbf{M}_k^{(0)}
+%     \\
+% \end{align}
+% The note that, 
+% \begin{equation}
+%     (\sum_k \kappa_k n_kv_k) E(\textbf{u}) -  (1 + \sum_k\kappa_k n_k v_k)\sum_k E(\textbf{u}_k)\kappa_k,
+% \end{equation}
+This gives, 
+\begin{align}
+    \rho_f \kappa \phi \ddt \textbf{u}
+    - (1+\kappa\phi) \sum_{k=p,b}\phi_k\kappa_k\zeta_k \ddt_k \textbf{u}_k
+    &=
+    +\rho_f \textbf{g}[\phi \kappa - (1+\phi\kappa)\phi \kappa\zeta]
+    +\phi\kappa\div \bm\sigma_*\nonumber \\
+    &+(1+\phi\kappa)\kappa\zeta\div \avg{v_p \textbf{u}_\alpha' \textbf{u}_\alpha'}
+    - \sum_k \kappa_k  \textbf{M}_{k'}^{(0)}
+    \label{eq:Du}
+\end{align}
+where we used the shorthand,
+\begin{align*}
+    \phi \kappa =\sum_k \phi_k \kappa_k,\\
+    \phi \kappa \zeta =\sum_k \phi_k \kappa_k \zeta_k, \\
+    \textbf{M}_{k'}^{(0)} = \intS{\bm{\sigma}_f^* \cdot \textbf{n}}.
+\end{align*}
+% Then one may also simplify this eq into, 
+% \begin{multline*}
+%     \rho_f  \ddt \textbf{u}
+%     -\rho_f  (1+\kappa\phi) \zeta \ddt_p \textbf{u}_p
+%     =
+%     \rho_f \textbf{g}[1- (1+\phi\kappa)\zeta]\\
+%     +\div \bm\sigma_*
+%     +(1+\phi\kappa)\frac{\zeta}{\phi}\div \avg{\rho_f v_p \textbf{u}_\alpha' \textbf{u}_\alpha'}
+%     - \frac{1}{\kappa\phi}\sum_k \kappa_k  \textbf{M}_{k'}^{(0)}
+% \end{multline*}
+
+\subsection{From a 3D to a 1D description of the flow}
+
+Because the geometry of the bubble column is essentially 1D, one may be interested into solving only 1D scalars equation instead of the complete set of 3D averaged tensor equations derived above. 
+
+To do so we define averaged quantities per sections at a given column height $x$.
+An arbitrary quantity $X$ may be averaged according to, 
+\begin{align*}
+    S X^S &= \int_{S(u(\textbf{x}),v(\textbf{x}))} X(\textbf{x},t)dudv,\\
+    S X^{S'} &=S  X - \int_{S(u(\textbf{x}),v(\textbf{x}))} X(\textbf{x},t)dudv,
+\end{align*}
+where the integration variable $dudv$ represents the parametrization of the section of the column.  
+The second definition represents the fluctuation around the ``sectional mean'' value of $X$. 
+
+Now let us consider an arbitrary conservation equation (that represents one of the equation from the above set of equations), namely,
+\begin{equation}
+    \pddt X + \div(\textbf{U} X + \textbf{C}) = S,
+\end{equation}
+where $\textbf{C}$ is a diffusive flux and $S$ a source term to the conserved quantity $X$. 
+Integrating this equation over the section of the pipe yields the 1D equation, 
+\begin{equation}
+    \pddt X^S + \partial_x(U^S X^S +  C_n^S) 
+    = S^S
+    - \frac{1}{S}\pddx\int_S X U^{S'}dS
+    - \frac{1}{S}\int_{sides}( C_t^S+U_t^S X )dS 
+    \label{eq:1D_conservation}
+\end{equation}
+where the scalar ${U}_n$ and $C_n$ are the projection of $\textbf{U}$ and $\textbf{C}$ along the direction normal to the surface of integration (the direction $x$). 
+The scalar ${U}_t$ and $C_t$ are the projection of $\textbf{U}$ and $\textbf{C}$ along the direction tangent to the surface of integration on the sides of the column. 
+
+The passage from 3D conservation laws to 1D conservation globally induce two supplementary source terms, right-hand side of \ref{eq:1D_conservation}. 
+The first one is related to the local correlation between the velocity in the column $U_n$ and the quantity $X$ and the second one represents the effect of the sides of the column on the flow inside the column. 
+This last term is particularly important when it comes to the modeling of the momentum equation as it represents the viscous stress generated by the no-slip condition on the side of a pipe. 
+
+In this work we consider that the flow is a ``Plug-flow''. 
+Hence, the covariance term and the sides effects can be entirely neglected. 
+Under this assumption the passage from $X$ to $X^S$ is in fact trivial as they become governed by exactly the same equations. 
+This is of course a strong assumption that will need to be relaxed in future studies. 
+
+
+\subsection{Two phases and a one way-coupled particles phase}
+
+From the conservation of mass one then deduce \textbf{u}, $\phi_b$ and $\phi_p$ inside the column. 
+
+Until now, we have considered a three-phase flow, with $k$ being either the bubbles $_b$ or the particles $_p$. 
+We now consider a regime where the particles are highly dilute in the flow  $\phi_p \ll \phi_b \ll 1$ and lack inertia, and are neutrally buoyant with the ambient fluid. 
+From this assumption it follows that the mean velocity of the ``free-particles'' is $\textbf{u}_p = \textbf{u}$ because they can be assimilated to tracers in the mixture. 
+
+Additionally, in this situation we may completely disregard the effect of particles in \ref{eq:Du} and uses this equation to determine the relative velocity $\textbf{u}_b - \textbf{u}$. 
+It reads, 
+\begin{multline*}
+    \rho_f  \ddt \textbf{u}
+    - \rho_f (1+\kappa_b\phi_b) \zeta_b \ddt_b \textbf{u}_b
+    =
+    \rho_f \textbf{g}[1- (1+\phi_b\kappa_b)\zeta_b]\\
+    +\div \bm\sigma_*
+    +(1+\phi_b\kappa_b)\frac{\zeta_b}{\phi_b}\div \avg{\rho_f v_p \textbf{u}_\alpha' \textbf{u}_\alpha'}
+    - \frac{1}{\phi_b}  \textbf{M}_{b'}^{(0)}
+\end{multline*}
+According to \citet[Chapter 8]{fintzi2025} the force density (or drag force) can be written as,
+\begin{equation}
+    \textbf{M}_{k'}^{(0)} 
+    % = \phi \frac{3}{4d}\rho_f |\textbf{u}_f - \textbf{u}_p|(\textbf{u}_f - \textbf{u}_p)  C_p(\lambda,Re_{fp},\phi)
+    = \frac{\phi}{(1-\phi)^2} \frac{3}{4d}\rho_f |\textbf{u}_r| \textbf{u}_r  C_p^*(\lambda,Re_{r},\phi). 
+\end{equation}
+Where $C_p$ is a drag coefficient given in \citet[Chapter 8]{fintzi2025}. 
+
+It must be understood that this momentum equation could also be written in 1D following the previous section. 
+If we do so, we arrive at an equation for the relative velocity in the direction $x$ that reads in the steady state established regime, 
+\begin{equation}
+    \frac{1}{(1-\phi)^2} \frac{3}{4d}\rho_f |\textbf{u}_r| \textbf{u}_r  C_p^*(\lambda,Re_{r},\phi)
+    = 
+    \rho_f \textbf{g} \phi_f (1-\zeta).
+\end{equation}
+Or equivalently, 
+\begin{equation}
+    C_p^* = \frac{4(1-\phi)^3}{3}\frac{Ga}{Re^2}.
+\end{equation}
+Note that this last equation is to be solved for the unknown $Re = \textbf{u} d\rho_f \mu_f $ in terms of the other known parameters. 
+
+Additionally, if one consider  \ref{eq:u_dt} in the 1D, steady-state and established regime we obtain an equation for the pressure gradient that reads, 
+\begin{equation}
+    % \rho_f (\pddt + \textbf{u} \cdot \grad)\textbf{u}
+    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+    \grad p_f
+    = 
+    \rho_f \textbf{g} (1 - (1-\zeta_b) \phi_b),
+\end{equation}
+which just mean that the pressure gradient balance the buoyancy of the bubbles.
+Indeed, it is quite simple because we have neglected the viscous effect on the side of the columns. 
+
+
+
+% \begin{tikzpicture}
+%     \begin{axis}[
+%       width=12cm,
+%       height=8cm,
+%       domain=0:1,
+%       samples=300,
+%       xlabel={$X\,\%$},
+%       ylabel={$L = C \ln(1 - X\%)$},
+%     %   title={$C \ln(1 - X\%)$ with $C < 0$},
+%       grid=both,
+%       xmin=0, xmax=1.1,
+%       ymin=-0.5, ymax=10, % adjust depending on C
+%       axis lines=left,
+%     %   legend style={at={(0.5,-0.15)},anchor=north},
+%     %   legend style={anchor=west},
+%       ]
+%       \addplot[blue,thick]{ -2 * ln(1 - x) };
+%       \addlegendentry{$C = - u_b^S / \Gamma^S = -2$}
+      
+%       \addplot[dashed, red] coordinates {(1,-5) (1,10)};
+%       \addlegendentry{$X\% = 1$ (asymptote)}
+%     \end{axis}
+%   \end{tikzpicture}
+
+

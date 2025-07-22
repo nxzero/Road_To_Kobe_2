@@ -1,7 +1,7 @@
 \section{3D averaged equations}
-
+\label{sec:averaged equations}
 The distributional form of the local scale mass and momentum equations reads as, 
-
+\tb{this is over complicated because only a single dispersed phase is nessesary then condition}
 Thus, the system bulk-bubbles-particles might be described by 6 equaitons, 
 \begin{align}
     \pddt (\chi_k \rho_k)
@@ -12,6 +12,7 @@ Thus, the system bulk-bubbles-particles might be described by 6 equaitons,
     &= 
     0
 \end{align}
+auto complie
 \begin{equation}
     \pddt (\chi_k \rho_k \textbf{u}^0_k)
     + \div (
@@ -40,30 +41,337 @@ with the mixture stress defined as,
 where $\zeta_k = \rho_k/\rho_f$ and  $ \kappa_k  = \zeta^{-1}_k - 1 $, and we assume Einstein summation on the index $k$.
 
 
-The average of this equation gives, 
-\begin{multline}
+Now we apply an ensemble average procedure to this equaiton which gives for the bulk phase: 
+\begin{align*}
+    \div \textbf{u} &= 0\\
+     (\pddt + \textbf{u} \cdot \grad) n_k &= \div (n_k \textbf{u}_r)\\
+    n_k  (\pddt + \textbf{u}_k \cdot \grad) \textbf{u}_k &= 
+    % n_k\textbf{u}_r \cdot \grad \textbf{u}_k
+    - \div \pavg{\textbf{u}_k'\textbf{u}_k'}+n_k \textbf{g}
+    +\textbf{M}_k^{(0)}/m_k\\
     \rho_f (\pddt + \textbf{u} \cdot \grad)\textbf{u}
-    + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
-    = 
-    \rho_f \textbf{g}
+    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+    &= 
+    (1 + \kappa_k \phi_k)\div\bm\Sigma
+    + \rho_f \textbf{g}
     + \div \bm\sigma_*
-    +\kappa_b  \avg{\delta_{\Gamma p} \bm\sigma_f' \cdot \textbf{n}_b} \\
-    +\kappa_p  \avg{\delta_{\Gamma b}  \bm\sigma_f' \cdot \textbf{n}_p} 
-    + (\kappa_p \phi_p + \kappa_b \phi_b)\div\bm\Sigma
-\end{multline}
+    +\kappa_k  \avg{\delta_{\Gamma k} \bm\sigma_f' \cdot \textbf{n}_k} 
+\end{align*}
 The \textit{Mean newtonian stress} and the mean effective stress is now defined as, 
 \begin{align}
     \bm\sigma_* &= 
-    \bm\Sigma 
+    - \rho_f \avg{\textbf{u}'\textbf{u}'}
+    +\zeta_k^{-1} \avg{\chi_k \bm\sigma_k' + \delta_{\Gamma k} \bm\sigma_\Gamma^0} 
     - \avg{2\mu_f \chi_k \textbf{e}_k^*}
-    +\zeta_b^{-1} \avg{\chi_k \bm\sigma_k' + \delta_{\Gamma k} \bm\sigma_\Gamma^0} \\
-    \bm\Sigma
-    &=
-    -p_f\bm\delta
-    + \mu_f (\grad \textbf{u} + ^\dagger\grad \textbf{u})
-    =
-    -p_f\bm\delta
-    +2 \mu_f \textbf{E}
 \end{align}
-where $\textbf{e}_{p/d} = \textbf{e}_{p/d}^0 - \textbf{E}$. 
+note that the last relation might also be written as, 
+\begin{align}
+    \rho_f (\pddt + \textbf{u} \cdot \grad)\textbf{u}
+    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+    &= 
+    \div\bm\Sigma
+    + \rho_f \textbf{g}
+    + \div \bm\sigma_*
+    +\kappa_k  \textbf{M}_k^{(0)}\\
+    \bm\sigma_* &= 
+    - \rho_f \avg{\textbf{u}'\textbf{u}'}
+    + \textbf{M}_k^{(1)}
+    -\div \textbf{M}_k^{(2)}
+\end{align}
+where we might introduce,
+\begin{align}
+    \textbf{M}_\alpha^{(0)} &=
+    \intS{\bm{\sigma}_f' \cdot \textbf{n}}
+   +\intO{\div \bm\Sigma}
+   \\
+   \textbf{M}_\alpha^{(1)} &=
+   \intS{\textbf{r}\bm{\sigma}_f' \cdot \textbf{n}}
+   -2\mu_f \intO{\textbf{e}_d'}
+   +\intO{\textbf{r}\div \bm\Sigma}
+   \\
+   \textbf{M}_\alpha^{(2)} &=
+   \frac{1}{2}\intS{\textbf{rr}\bm{\sigma}_f' \cdot \textbf{n}}
+   -2\mu_f \intO{\textbf{re}_d''}
+   +\intO{\textbf{rr}(\div \bm\Sigma+ \rho_f\textbf{g})}
+    \\
+\end{align}
 
+\section{Averaged equaiton 1D}
+\subsection{definitions}
+Now we define sections averaged equatitetes such that,
+\begin{align*}
+    S X^S &= \int_{S(u(\textbf{x}),v(\textbf{x}))} X(\textbf{x},t)dudv\\
+    S X^{S'} &=S  X - \int_{S(u(\textbf{x}),v(\textbf{x}))} X(\textbf{x},t)dudv
+\end{align*}
+we note particularily the property,
+\begin{equation}
+    \int_S \grad (\ldots) dS 
+    = 
+    \int_S \textbf{n} (\textbf{n}\cdot \grad) (\ldots) dS 
+    + \int_S (\bm\delta -\textbf{n} \textbf{n})\cdot \grad (\ldots) dS 
+\end{equation}
+
+Because $\grad = \textbf{e}_x \partial_x+ \textbf{e}_y \partial_y+\textbf{e}_z \partial_z$ we have $\textbf{n}\cdot \grad = \partial_x$ Assuming $\textbf{n}=\textbf{e}_x$.
+Hence,
+\begin{equation}
+    \int_S \grad (\ldots) dS 
+    = 
+    \textbf{n} (\textbf{n}\cdot \grad)  (\ldots)^S
+    + \int_C \textbf{N} (\ldots) dC
+\end{equation}
+\begin{equation}
+    \int_S \grad \grad (\ldots) dS 
+    = 
+    \textbf{nn} (\textbf{n}\cdot \grad)^2  (\ldots)^S
+    +\textbf{n} (\textbf{n}\cdot \grad) \int_C \textbf{N} (\ldots) dC
+    + \int_C \textbf{N} \grad (\ldots) dC
+\end{equation}
+from which  we deduce that 
+\begin{equation}
+    \int_S \div \textbf{u} dS 
+    = 
+    (\textbf{n}\cdot \grad)  (\textbf{n} \cdot \textbf{u})^S
+    + \int_C \textbf{N} \cdot \textbf{u}dC
+    =
+    (\textbf{n}\cdot \grad)  (\textbf{n} \cdot \textbf{u})^S
+\end{equation}
+\begin{equation}
+    \int_S \grad^2 \textbf{u} dS 
+    = 
+    \partial_x^2  \textbf{u}^S
+    +(\textbf{n}\cdot \grad) \int_C \textbf{n} \cdot \textbf{N} \textbf{u} dC
+    + \int_C \textbf{N}\cdot  \grad \textbf{u} dC
+    =
+    \partial_x^2  \textbf{u}^S
+    + \int_C \textbf{N}\cdot  \grad \textbf{u} dC
+\end{equation}
+\subsection{equations}
+Based on these definitions and assuming that $\textbf{u}^S =\textbf{n}( \textbf{u}^S \cdot \textbf{n})$ and $\textbf{u}\cdot \textbf{N} = 0$ we have,0
+\begin{align*}
+    \pddx u^S &= 0\\
+    (\pddt +  u^S \pddx) n_k^S 
+    + \pddx (u_k n_k')^S
+    &= 
+    \pddx (u_r^S n_k^S)
+    \\
+    n_k^S (\pddt 
+    + u_k^S \pddx)  \textbf{u}_k
+    +\pddt (n_k' \textbf{u}_k)^S 
+    + \pddx (n_k' u_k \textbf{u}_k )^S
+    &= 
+    n_k^S  \textbf{g}
+    - \pddx (\pavg{ u_k'\textbf{u}_k'})^S
+    +(\textbf{M}_k^{(0)})^S/m_k\\
+    \rho_f (\pddt + u^S \cdot \grad)\textbf{u}^S
+    + \pddx ( u \textbf{u}')^S
+    &= 
+    S \rho_f \textbf{g}
+    - \textbf{n} \pddx p_f^S
+    + (\textbf{N}\cdot  \bm\Sigma)^C 
+    + \pddx (\textbf{n} \cdot \bm\sigma_*)^S
+    +\kappa_k (\textbf{M}_k^{(0)})^S 
+\end{align*}
+where we noticed that $(\textbf{N}\cdot \bm\sigma^*)^C =0$ .
+
+
+\section{0D model}
+Definition,
+\begin{equation}
+    X^V = \int_V X(\textbf{x},t) dV
+\end{equation}
+such that it gives,
+\begin{align}
+    \int_V \grad (\ldots) dV
+    = \int_S \textbf{N} (\ldots) dS\\
+    \int_V \grad (\grad \ldots) dV
+    = \int_S \textbf{N} (\grad \ldots) dS\\
+\end{align}
+
+which directly gives,
+\begin{align*}
+    (\textbf{N}\cdot \textbf{u})^S &= 0\\
+    \pddt n_k^V &=  (\textbf{N}\cdot \textbf{u}_kn_k )^S\\
+    \pddt  (n_k  \textbf{u}_k)^V + (\textbf{N}\cdot \textbf{u}_k \textbf{u}_k n_k)^S &= 
+    - (\textbf{N}\cdot \pavg{\textbf{u}_k'\textbf{u}_k'})^S+ n_k^V \textbf{g}
+    +(\textbf{M}_k^{(0)})^V/m_k\\
+    \rho_f \pddt \textbf{u}^V + \rho_f (\textbf{N}\cdot \textbf{uu})^S
+    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+    &= 
+    (\textbf{N}\cdot\bm\Sigma)^S
+    + \rho_f V \textbf{g}
+    + (\textbf{N}\cdot \bm\sigma_*)^S
+    +\kappa_k  (\textbf{M}^{(0)})^V
+\end{align*}
+
+
+\section{Closure for non inertial particles }
+
+Let us consider a develloped flow in an axisymmetric pipe of radius $R$.
+In polar coord we note,
+\begin{equation}
+    \textbf{u}(r)=\textbf{e}_x u_x(r) + \textbf{e}_r u_r(r)+ \textbf{e}_\theta u_\theta(r)
+\end{equation}
+The mass conservation in polar coord then gives,
+\begin{equation}
+    \grad \cdot \textbf{u} 
+    = \textbf{e}_x \pddx u_x  
+    + \frac{1}{r}\partial_r (r u_r) 
+    + \frac{1}{r}\partial_\theta u_\theta
+    = 
+    \frac{1}{r}\partial_r (r u_r) 
+    = 0
+\end{equation}
+By direct integration one obtains, 
+\begin{equation}
+    u_r = 0,
+\end{equation}
+so 
+\begin{equation}
+    \textbf{u}=\textbf{e}_x u_x(r)
+\end{equation}
+Hence a rotating flow with $u_\theta$ could be possible but we will neglect this for instance. 
+Also one can note that,
+\begin{align}
+    \grad \textbf{u}
+    =
+    \textbf{e}_r \partial_r \textbf{u}
+    =\textbf{e}_r\textbf{e}_x \partial_r u_x\\
+    \grad^2 \textbf{u}
+    =
+    \frac{1}{r^2}\partial_r(r \partial_r \textbf{u}) 
+    = 
+    \textbf{e}_x \frac{1}{r^2}\partial_r(r \partial_r u_x) 
+\end{align}
+
+In general dilute stokes flows we have, 
+\begin{align}
+    \textbf{M}^{(0)} 
+    &=
+    \phi
+    \frac{\mu_f}{a^2}
+    \frac{3(2+3\lambda)}{2(1+\lambda)}\textbf{u}_r
+    + \phi\mu_f  \frac{3\lambda}{4(\lambda +1)} \grad^2 \textbf{u}
+    + \phi \div\bm\Sigma
+    \\
+    \textbf{M}^{(1)} 
+    &= \mu_f \phi 
+    \frac{(5\lambda +2)}{4(\lambda +1)}(\grad \textbf{u}+ ^\dagger\grad \textbf{u}) 
+    \\
+    \textbf{M}^{(2)} 
+    &=
+    - \mu_f \phi \frac{3\lambda}{4(\lambda +1)}[\bm\delta \textbf{u}_r + \frac{1}{2\lambda}\textbf{u}_r \bm\delta ]
+\end{align}
+For inertial less particles one may write,
+\begin{align*}
+    -
+    \frac{\mu_f}{a^2}
+    \frac{3(2+3\lambda)}{2(1+\lambda)}\phi\textbf{u}_r
+    =
+    \phi(\rho_p \textbf{g} + \div\bm\Sigma)
+    + \phi\mu_f  \frac{3\lambda}{4(\lambda +1)} \grad^2 \textbf{u}
+    =
+    \phi\rho\textbf{g} 
+    + \phi\mu_f  \frac{3\lambda}{4(\lambda +1)} \grad^2 \textbf{u}
+\end{align*}
+where $\rho = \rho_p -\rho_f$. note that $\rho = \rho_f (\rho_d /\rho_f -1) = -\rho_d (\rho_f /\rho_d -1) = -\rho_d\kappa$. 
+\begin{align}
+    \rho_f (\pddt + \textbf{u} \cdot \grad)\textbf{u}
+    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+    &= 
+    \div\bm\Sigma
+    + (\rho_f - \kappa \phi \rho_p) \textbf{g}
+    + \div \bm\sigma_*
+    \\
+    \bm\sigma_* &= 
+    - \rho_f \avg{\textbf{u}'\textbf{u}'}
+    +  \mu_f \phi 
+    \frac{(5\lambda +2)}{4(\lambda +1)}(\grad \textbf{u}+ ^\dagger\grad \textbf{u}) 
+    + \mu_f \frac{3\lambda}{4(\lambda +1)}[\grad(\phi \textbf{u}_r) + \frac{1}{2\lambda}\div(\phi\textbf{u}_r) \bm\delta ]
+\end{align}
+
+
+\subsection{Homogeneous case}
+if $\phi = cste$, then we have, 
+\begin{equation}
+    -
+    \frac{\mu_f}{a^2}
+    \frac{3(2+3\lambda)}{2(1+\lambda)}\div (\phi\textbf{u}_r)
+    =
+    - \phi \grad^2 p_f 
+    = O(\phi^2)
+\end{equation}
+Hence, the final form of the equation becomes,
+\begin{align}
+    \rho_f (\pddt + \textbf{u} \cdot \grad)\textbf{u}
+    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+    &= 
+    - \grad p_f 
+    +\mu_{ein}\grad^2 \textbf{u}
+    + (\rho_f - \phi \rho) \textbf{g}
+\end{align}
+only the pressure gradient will remain, so we end up will Navier Stokes equations with a Reynols stress closure. 
+If noting that $\textbf{u}\cdot \grad \textbf{u}= \textbf{e}_x \cdot \textbf{e}_r \textbf{e}_x ... = 0 $ we end up with the stokes equations, namely
+\begin{equation}
+    0
+    = 
+    - \textbf{e}_x \partial_x p_f 
+    - \textbf{e}_r \partial_r p_r  
+    + \mu_{ein} \textbf{e}_x \frac{1}{r}\partial_r (r\partial_r u_x )
+    + g (\rho_f - \phi \rho) \textbf{e}_x
+\end{equation}
+So that, $p_f = p_f(x) $ with $\grad^2 p_f =\partial_x^2 p_f = 0$ hence $p_f = ax+b$.
+Now we can solve for the velocity witch gives, 
+\begin{align*}
+    u(r) = r^2 \partial_x p_f^* /4 + C ln(r) + C\\
+    u(r=R) = 0  = R^2 \partial_x p_f^* /4 + C ln(R) + C\\
+    \partial_r u(r=0) = r \partial_x p_f^* /2 + C /r = 0\\
+\end{align*}
+So that 
+\begin{align*}
+    \textbf{u} = \textbf{e}_x \frac{(\partial_x p_f + g(\rho_f - \phi \rho))}{4\mu_{ein}} (r^2 - R^2)\\
+    \grad \textbf{u} = \textbf{e}_r \textbf{e}_x \frac{(\partial_x p_f + g(\rho_f - \phi \rho))}{2\mu_{ein}} r
+\end{align*}
+also,
+\begin{equation}
+    \textbf{u}^S = - \textbf{e}_x \pi\frac{(\partial_x p_f^S + g(\rho_f - \phi^S \rho))}{8\mu_{ein}} R^4\\
+\end{equation}
+Because we assumed $p_f^S = p_f$ one may write, 
+\begin{align*}
+    \textbf{u} = \frac{2 \textbf{u}^S}{\pi R^4} (R^2 - r^2)\\
+    \grad \textbf{u} = - \textbf{e}_r \frac{4 \textbf{u}^S}{\pi R^4} r
+\end{align*}
+
+The stress of such a flow on the side is written,
+\begin{equation}
+    \textbf{e}_r \cdot \bm\Sigma = - p_f \textbf{e}_r - \mu_f  \frac{4 \textbf{u}^S}{\pi R^4} r
+\end{equation}
+If we integrate all that over a section surface we obtain
+\begin{align}
+    (\textbf{e}_r \cdot \bm\Sigma)^C
+    =
+    -2 \pi R p_f \textbf{e}_r - \mu_f  \frac{8 \textbf{u}^S}{\pi R^2}
+\end{align}
+Because,
+
+
+A usefull quantity is the dyadic,
+\begin{equation}
+    (\textbf{uu})^S 
+    = 
+    \frac{4 \textbf{u}^S\textbf{u}^S}{3 \pi R^2}
+    =  
+    \frac{\textbf{u}^S\textbf{u}^S}{\pi R^2}(1+ 1/3)
+    \\
+\end{equation}
+
+mass momentum and of the bulk is solved now what about the kinetic of flotation ? 
+
+One can also deduce the bubbles velocity, namely,
+\begin{align*}
+    \textbf{u}_p
+    =
+    \textbf{u}
+    +
+    \phi\rho\textbf{g} 
+    + \phi\mu_f  \frac{3\lambda}{4(\lambda +1)} \grad^2 \textbf{u}
+\end{align*}

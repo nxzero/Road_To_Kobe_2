@@ -1,0 +1,262 @@
+\section{Kinetics of flotation}
+\label{sec:efficiency}
+We now define the equations that keep track of the number of particles attached to the surface of the bubbles.
+In an averaged multiphase flow framework, this means deriving the equation of the kinetics of flotation in terms of the averaged quantities solved by the momentum and mass conservation of both the continuous and the bubbly phase.
+In the most nominalistic Euler-Euler models, one solves for the number density of bubbles $n_b$ and particles $n_p$, the averaged velocity field of the continuous phase $\textbf{u}$, and the mean center of mass velocity of the bubbles $\textbf{u}_b$.
+Hence,  one has to find out a formula that relates the rate of collision of particles with bubbles to the averaged quantities $n_p$, $n_b$, $\textbf{u}_f$, and $\textbf{u}_b$. 
+Note that these macroscopic quantities are functions of time $t$ and the position vector \textbf{x}.
+However, these dependencies will be dropped in the following section since we only focus on statistically homogeneous flows.
+
+\subsection{Definitions}
+
+We use a statistical approach similar to \citet{roure2021modelling} to define the number of particles attached to a test bubble.
+Note $N_p^a$ the probable number of attached particles at \textbf{x}, knowing that a bubble is present at \textbf{x}.
+It is defined as,
+\begin{equation}
+    n_b(\textbf{x},t) N_p^a(\textbf{x},t) = n_b(\textbf{x},t)\int_{V_{col}} n_p(\textbf{r},t) f(\textbf{x},\textbf{r},t) dV(\textbf{r})
+    \label{eq:Npa}
+\end{equation}
+where $f(\textbf{x},\textbf{r})$ is the pair distribution function, i.e., the probability density of finding a particle at \textbf{r} knowing a bubble is present at \textbf{x}, and $n_p$ is the number density of particles evaluated at the surface of the bubble. 
+$V_{col}$ is the collisional volume of the bubble centered at \textbf{x}, which is assumed constant for all bubbles. 
+The physical meaning of $n_b N_p^a$ is then: the total number of particles attached to the bubbles per unit of volume. 
+Or in other word $n_bN_p^a = n_p^a$ is the number density of attached particles. 
+We then define, 
+\begin{equation}
+    n_p^f= n_p - n_p^a,
+\end{equation}
+as the number density of free particles. 
+This relation can also be termed in terms of volume fractions by multiplying  by $v_p$ the volume of a particle. 
+
+The evolution of $ n_p f$ is given by the Louville equation, which reads, 
+\begin{equation}
+    \frac{\partial}{\partial t}(n_p f)
+    +\pddx\cdot (\textbf{u}_b n_p f)
+    +\pddr\cdot(\textbf{w} n_p f)
+    =0, 
+    \label{eq:Louiville}
+\end{equation}
+with $\textbf{w} = \textbf{u}_p^{(1)} - \textbf{u}_b$ where $\textbf{u}_p^{(1)}$ represents the center of mass velocity of the particle evaluated at \textbf{r}, averaged on every configuration where a bubble and a particle are present at \textbf{r} and \textbf{x}\footnote{Note that in \eqref{eq:Louiville} we have assumed that the averaged velocity of bubbles are weakly affected by the presence of a particle, such that the averaged velocity of bubbles conditioned on the presence of a nearby particle is equal to the unconditionally averaged bubble velocity. Hence, we assume $\textbf{u}_b = \textbf{u}_b^{(1)}$ in the present notation.} .
+Integrating \eqref{eq:Louiville} over the collisional volume of the test bubble gives,
+\begin{equation}
+    \pddt N_p^a
+    +\pddx\cdot (\textbf{u}_b N_p^a )
+    =
+    - \int_{S_{col}} n_p f \textbf{w}\cdot \textbf{n} dS
+    \label{eq:step_one_kinetic}
+\end{equation}
+where \textbf{n} represents the outward surface normal of the collisional volume of the bubble.
+We now inject the relation $\textbf{w}\cdot \textbf{n} = [H(\textbf{w}\cdot \textbf{n})+H(-\textbf{w}\cdot \textbf{n})] \textbf{w}\cdot \textbf{n}$, in the right-hand side term of \eqref{eq:step_one_kinetic}, which gives the equation of kinetics of flotation, 
+\begin{equation}
+    \pddt N_p^a
+    +\pddx\cdot (\textbf{u}_b N_p^a )
+    =
+    - \int_{S_{col}^-} n_p f \textbf{w}\cdot \textbf{n} dS
+    - \int_{S_{col}^+} n_p f \textbf{w}\cdot \textbf{n} dS,
+    \label{eq:dt_N_pa}
+\end{equation}
+where $S_{col}^-$ and $S_{col}^+$ correspond to the (reduced) surfaces of collision defined as the surfaces for which  $\textbf{w}\cdot \textbf{n}<0$ or $\textbf{w}\cdot \textbf{n} >0$, respectively.  
+Hence, the first term on the right-hand side of \eqref{eq:dt_N_pa} corresponds to the input flow rate of particles on the collisional surface, while the second term represents the output flow rate of particles. 
+Hence, the former term corresponds exactly to the rate of attachment of particles to the bubble surface, and the latter to the rate of detachment. 
+This work only focuses on finding a model for the first term. 
+
+
+\subsection{Closure in the dilute and inertialess limit}
+
+Because we consider a dilute regime in the first place, we neglect any $O(n_p^2n_b)$ or $O(n_b^2n_p)$ terms arising in the rate of attachment term (right-hand side of \eqref{eq:dt_N_pa}).
+Hence, at this order of accuracy, the relative averaged conditional velocity \textbf{w} corresponds to the relative velocity between an isolated particle interacting with an isolated bubble\footnote{It is assumed that the boundaries of the domain are sufficiently far to be ignored.} \citep{hinch1977averaged,loewenberg1994flotation}. 
+
+Due to the relatively low Stokes number present in the application, we assume force-free particles and force-free bubbles.  
+Thus, with the help of results from the literature (\citet{batchelor1982sedimentation} and \citet[Chapter 8]{kim2013microhydrodynamics}), the momentum balance on the particle and bubbles may be written as
+\begin{align}
+\label{eq:up}
+    \textbf{u}_p^{(1)}
+    &=
+    \textbf{u}_p^{(0)}
+    + \left(1 +\frac{a^2\xi^2}{6} \pddx^2\right) \textbf{u}^{(1)}|_{\textbf{x}+\textbf{r}},\\
+    \label{eq:ub}
+    \textbf{u}_b^{(1)}
+    &=
+    \textbf{u}_b^{(0)}
+    + \left(1 +\frac{a^2\lambda}{(2+3\lambda)} \pddx^2\right) \textbf{u}|_{\textbf{x}},
+\end{align}
+respectively. 
+$\textbf{u}_p^{(0)}$ and $\textbf{u}_b^{(0)}$ being the isolated sedimentation velocities of the particle and bubble, defined as
+\begin{align}
+    \textbf{u}_p^{(0)} 
+    =
+    \frac{2a^2\xi^2}{9\mu_f}(\rho_p - \rho_f)\textbf{g}
+    &&
+    \textbf{u}_b^{(0)}
+    =
+    \frac{a^2}{\mu_f}\frac{2(1+\lambda)}{3(2+3\lambda)}(\rho_b - \rho_f)\textbf{g},
+\end{align}
+respectively. 
+In \eqref{eq:ub}, \textbf{u} represents the unconditionally averaged continuous phase velocity, in opposition to $\textbf{u}^{(1)}$ in \eqref{eq:up}, which is conditionally averaged on every configuration where a bubble is present at \textbf{x}. 
+Recall that we assume that the disturbance flow of the particles does not affect the motions of the bubbles, hence only \textbf{u} is taken into account in \eqref{eq:ub}, however because the particle is affected by the bubble motion one must use $\textbf{u}^{(1)}$ to compute its velocity. 
+It must be noted that \eqref{eq:up} and \eqref{eq:ub} are only accurate at $O(\xi^2)$ (see \citet[section 4.6]{batchelor1982sedimentation}). 
+
+
+Let us define $\textbf{u}'$ as the disturbance flow generated by the bubble at \textbf{x} such that $ = \textbf{u}'+\textbf{u} = \textbf{u}^{(1)}$.
+Then one can see that the motions of the particles is motivated by three contributions: the one due to buoyancy forces ($\textbf{u}_p^{(0)}$), the one due to the averaged (or background flow) yet arbitrary velocity (\textbf{u}), and the one due to the disturbance flow generated by the bubble ($\textbf{u}'$). 
+Using this velocity decomposition and subtracting \eqref{eq:ub} to \eqref{eq:up} gives, 
+\begin{multline}
+    \textbf{w}
+    =
+    \textbf{u}_p^{(0)} - \textbf{u}_b^{(0)}
+    + \left(1 +\frac{a^2\xi^2}{6} \pddx^2\right) \textbf{u}'|_{\textbf{x}+\textbf{r}}\\
+    + \left(\frac{\xi^2}{6} - \frac{\lambda}{(2+3\lambda)}\right) a^2 \pddx^2 \textbf{u}|_{\textbf{x}}
+    + \textbf{r} \cdot \pddx \textbf{u}|_{\textbf{x}}+ \textbf{rr}: \pddx\pddx \textbf{u}|_{\textbf{x}}
+    \label{eq:def_w}
+\end{multline}
+where we used the approximation $\textbf{u}|_{\textbf{x}+\textbf{r}} \approx \textbf{u}|_{\textbf{x}} + \textbf{r} \cdot \pddx \textbf{u}|_{\textbf{x}}+ \textbf{rr}: \pddx\pddx \textbf{u}|_{\textbf{x}}$.
+The term on the first line of \eqref{eq:def_w} corresponds to the relative velocity generated by the difference in buoyancy forces between particles and bubbles.
+The second term accounts for the hydrodynamic interactions between the particle and the bubble. 
+The first term on the second line corresponds to the difference in velocity generated by the two different Faxen forces that the particle and the bubble experience. 
+The last two terms correspond to the relative velocity generated due to the non-uniform background flow. 
+Indeed, because the background flow velocity is evaluated at \textbf{x} for the bubble and at \textbf{x}+\textbf{r} for the particle, they experience two different hydrodynamic forces.
+ 
+Up to now, we have considered an arbitrary background flow \textbf{u}(\textbf{x}); however, in flotation columns, the flow may be assumed to vary slowly over the length scale of a bubble radius ($a$). 
+Hence, we may assume that $a \pddx \textbf{u} \sim O(a/L) \textbf{u} \ll 1$, where $L$ is the typical length scale of the flotation column. 
+Doing so, one can neglect the term proportional to the first and second derivative of \textbf{u} and simply consider that $\textbf{u}'$ is the disturbance field generated by an isolated bubble in translation in uniform flow. 
+Using the solution of Hadamar-Rybnisky \citep{pozrikidis1992boundary,kim2013microhydrodynamics} one can write,
+\begin{equation}
+    \textbf{u}'
+    =
+    \frac{1}{4}
+    \left[  \frac{3\lambda+2}{\lambda +1}
+        + a^2 \frac{\lambda }{2(\lambda+1)}\pddr^2
+    \right] \mathcal{G}(\textbf{r})\cdot (\textbf{u}_b^{(0)} - \textbf{u}|_x),
+\end{equation}
+where $\mathcal{G}$ is the green function of the Stokes equation given by, 
+\begin{equation}
+    \mathcal{G} = a  r^{-1}(\bm\delta+\textbf{nn}).
+\end{equation}
+Injecting this expression into \eqref{eq:def_w}, neglecting the derivatives of the background flow velocity, and projecting the resulting expression on the collisional surface normal gives,  
+\begin{equation}
+    \textbf{w}\cdot \textbf{n}
+    =
+    [\textbf{u}_p^{(0)}  - \textbf{u}_b^{(0)} - g(\lambda,\xi,r) (\textbf{u}_b^{(0)} - \textbf{u}|_x)]\cdot \textbf{n}
+    \label{eq:def_w}
+\end{equation}
+with, 
+\begin{equation}
+    g(\lambda,\xi,r) = 
+    - \frac{r^2 (3\lambda +2) -\lambda }{2r^3(\lambda+1)}
+    +
+    \frac{a^2\xi^{2}  \left(3 \lambda + 2\right)}{6 r^{3} \left(\lambda + 1\right) }. 
+    \label{eq:g_expr}
+\end{equation}
+In \eqref{eq:g_expr} the first term on the right-hand side represents the contribution from the drag force acted upon the particle (i.e. $\textbf{u}'$ evaluated at $\textbf{x}+\textbf{r}$), while the second term is the slip velocity (relative to the disturbance field of the bubble) due to Faxen contribution (i.e. due to the term $a^2\xi^2 \pddx^2 \textbf{u}'/6$ in \eqref{eq:def_w}). 
+
+
+To find out an expression for the collision rate (first term on the right-hand side of \eqref{eq:dt_N_pa}) one need to find an appropriate expression for the pair correlation $f(\textbf{x},\textbf{r})$ and integrate the resulting expression over $S_{col}^-$.
+In all rigor, to find an appropriate expression for $f(\textbf{x},\textbf{r})$, one has to solve \eqref{eq:Louiville} using appropriate assumptions.  
+In the present configuration, one can assume that $f(\textbf{x},\textbf{r})$ weakly depends on \textbf{x} and directly use the solution of \citet{batchelor1982sedimentation} (equation (4.31) of his paper) to find that, 
+\begin{equation}
+    f(\textbf{r}) = 1  + O(\xi^3), 
+    \label{eq:f_r_dilute}
+\end{equation}
+for all $|\textbf{r}| > a(1+\xi)$. 
+Using \eqref{eq:f_r_dilute} and \eqref{eq:def_w} one can compute the collision rate, it yields, 
+\begin{equation} 
+    \int_{S_{col}^-} 
+    n_p f(\textbf{r}) \textbf{w}\cdot \textbf{n} dS
+    =
+    - n_p \pi a^2(1+\xi)^2 
+        \left|\textbf{u}_p^{(0)}  - \textbf{u}_b^{(0)} + g(\lambda,r=\xi+1) (\textbf{u} - \textbf{u}_b^{(0)})\right|
+\end{equation} 
+where the vertical bars represent the absolute value. 
+Note that because $f(\textbf{r})$ is computed at $O(\xi^2)$ only the approximation of $g(\lambda,r=\xi+1)$ is necessary in this expression, it yields
+\begin{equation}
+    1+g(\lambda,\xi)
+    =
+    \frac{\xi}{\lambda + 1} + \xi^2  \frac{6\lambda - 2}{3(\lambda+1)}
+    + O(\xi^3),
+    \label{eq:final_Ec}
+\end{equation}
+which corresponds to the collision efficiency for a droplet of arbitrary viscosity ratio $\lambda$ with a solid particle. 
+
+Note that considering only the first term of \eqref{eq:g_expr} evaluated at $r=\xi+1$ and carrying out the Taylor expansion for small $\xi$ gives, 
+\begin{equation}
+    1+ g(\lambda,\xi)
+    =
+    \frac{\xi}{\lambda+1}
+    +\xi^2 \left(
+        \frac{3\lambda-2}{2(\lambda+1)}
+    \right)
+    + O(\xi^3),
+    \label{eq:Ec_without_Faxen}
+\end{equation}
+ This formula corresponds exactly to the one previously given in the literature, see equation (3.4)  of \citep{loewenberg1994flotation} for small $\xi$. %, and the results reported on Table \ref{tab:collision_models} in the limit $\lambda \to\infty$ and $\lambda = 0$.
+ 
+In conclusion, our model given by \eqref{eq:final_Ec} differs from the one originally proposed in the literature by the second term on the right-hand side of \eqref{eq:g_expr}.
+As mentioned above, this term corresponds to the effect of the Faxen force exerted on the particle, which was not properly taken into account in the study reported in \citep{loewenberg1994flotation}. 
+Note that by comparing \eqref{eq:final_Ec} and \eqref{eq:Ec_without_Faxen} we see that the contribution from the Faxen force to $g(\lambda,\xi)$ is $\xi^2 /4$ for $\lambda \to \infty$,  and  $\xi^2/3$ for $\lambda=0$, which is  not negligible. 
+ 
+
+
+% \subsection{Relation between surface integrals}
+
+% Following \citet{legendre_particle_2009}, we now derive a relation to relate the flow of particles going through $S_{col}^-$ to the flow rate going out the annulus, noted $S_{anu}$; this will be useful for the numerical analysis below. 
+
+% We start by noting that the disturbance field $\textbf{u}'$ is divergence-free. 
+% According to \eqref{eq:step_one_kinetic} we deduce that the relative velocity field \textbf{w} also follows the continuity equation at this order of accuracy \citep{batchelor1982sedimentation}. 
+% Thus, using the divergence theorem and the fact that $f=1$ at $S_{col}^-$, one can write, 
+% \begin{equation}
+%     \int_{S_{col}^-} \textbf{w}\cdot \textbf{n} dS 
+%     = 
+%     - \int_{S_{anu}} \textbf{w}\cdot \textbf{n} dS 
+%     - \int_{S_b^-} \textbf{w}\cdot \textbf{n} dS,
+% \end{equation}
+% where $S_p^-$ is the surface defined as the part of the bubble surface which is delimited by the annulus surface, see figure \ref{fig:collision}. 
+% The boundary condition at the surface of the droplet imposes $\textbf{u}'\cdot \textbf{n} = \textbf{u}_b^{0}\cdot \textbf{n}$. 
+% Therefore, it is found in the literature that there is a one-to-one equivalence between the integral of the flux over $S_{col}^-$ and $S_b^-$. 
+% However, note that $\textbf{n}\cdot \pddr^2 \textbf{u}' \neq 0$ at the surface of the bubble, hence we must compute the sum of the integral over $S_{anu}$ and $S_b^-$ to recover the collision rate. 
+
+\subsection{Closure for slightly non-dilute bubbly flow}
+
+Now let us consider the case where the first effect of bubble interactions cannot be neglected, while the particle phase remains dilute. 
+In this case, we seek a closure accurate at $O(n_b^2n_p)$. 
+At this order of accuracy, we must solve the problem of a particle interacting with two bubbles, and compute the collision efficiency on the test bubble. 
+This can also be termed as the problem of a particle interacting with a single bubble. Still, both the particle and the bubble are immersed in an equivalent medium, representing the other bubbles' statistical influence, accurate at $O(n_b)$. 
+
+For instance, the theoretical approach seems complicated hence we could use the empirical relation derived by: ``\textit{La these de Kamel O}''. 
+This study is reported to a subsequent study. 
+
+Another important perspectives is to understand how the current bubble loading impact the flotation process. 
+
+\subsection{Solving the kinetic of flotation equation}
+
+Following the assumption made in the previous section the volume fraction of attached particles in the flow is given by,
+\begin{equation}
+    \pddt \phi_p^a  
+    + \partial_x (u_b \phi_p^a)
+    % + \partial_x (u_b^{S'} \phi_p^a)^S
+    =
+    (n_p - \phi_p^a)\Gamma
+    % +(( n_p - n_p^a)^{S'}\Gamma)^{S}
+\end{equation}
+where, 
+\begin{equation}
+    \Gamma = \phi_b \frac{3(1+\xi)^2 }{2d}
+    \left|\textbf{u}_p  - \textbf{u}_b + g(\lambda,\xi) (\textbf{u} - \textbf{u}_b)\right|,
+\end{equation}
+is a constant of space. 
+According to the solution of 1D partial differential equation given in \ref{ap:kinetic_solved} and the boundaries condition,
+\begin{equation}
+    \phi_p^a(x=0) = 0,
+\end{equation} 
+which represents the fact that all particles injected in the column are initially not attached to a bubble, 
+the solution reads,
+\begin{equation}
+    X\% =
+    1-\exp\left(-x \frac{\Gamma^S}{u_b^S} \right).
+\end{equation}
+So the high of the column $L$ for which $X\%$ of the particles' volume fraction are attached to the bubbles is, 
+\begin{equation}
+    L = - \frac{u_b^S}{\Gamma^S}
+    \ln(1 - X\%). 
+\end{equation}
+\underline{An estimation of the error generated by this modeling is still necessary}.
+This is reported to a future study.  
+

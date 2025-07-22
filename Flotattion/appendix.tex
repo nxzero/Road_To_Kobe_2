@@ -1,0 +1,83 @@
+\section{Solution to advection reaction equation}
+\label{ap:kinetic_solved}
+
+We want to solve the equation
+\begin{equation}
+    (\partial_t + \textbf{c}\cdot \pddx + r)[H(\textbf{x}) f(\textbf{x},t)]= A H(\textbf{x}) + f(\textbf{x}=0,t)\delta(\textbf{x})
+\end{equation}
+This can be solved using the change of variable $\textbf{z}= \textbf{x}-\textbf{c}t$, and so $f(\textbf{x},t) = u(\textbf{z},t)$ which gives in 1D
+\begin{equation}
+H(x) u(z,t)
+= 
+e^{-rt}\int_0^t e^{rs} H(x) A ds
++ e^{-rt}\int_0^t e^{rs} f(x=0,s) \delta(x) ds
++ e^{-rt} H(x-ct) f(x,t=0)
+\end{equation}
+The solution in 1D is therefore,
+\begin{equation}
+    f(x,t) = H(x-ct) f(t=0) e^{-rt}
+    + H(x-ct) f(x=0,t=-\frac{z}{c}) e^{-\frac{rx}{c}}+\frac{A}{r}(1-e^{-\frac{rx}{c}})
+\end{equation}
+
+\section{Python script}
+\begin{lstlisting}[language=Python,backgroundcolor=\color{gray!10}]
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import optimize
+
+def Unorm(phi,Ga,l,CD):
+    A = (2+3*l)/(l+1)
+    Restokes = Ga**2 /(A* 6) 
+    Re = optimize.newton(
+        lambda Re:  
+        Re - 6*A/Ga*np.sqrt(4/CD(Re*Restokes, phi,l)/3*(1-phi)**3 )  
+        ,0.9)
+    return Re
+
+def Unorms(phis,Ga,l,CD):
+    return np.array([Unorm(phi,Ga,l,CD) for phi in phis])
+
+def CD_jl(Re,phi,l):
+    Re = Re/(1-phi) 
+    CDb = 16/Re  * (1 + 2*Re / (16+Re+3.315 * Re**(1/2))) 
+    CDs = 24/Re  * (1 + 0.15*Re**0.687) 
+    CDd = (CDb+ l*CDs) / (1+l)
+    n0  = 9/2 * (2/3+l)/(l+1) 
+    n = (n0  + 2.4 * 0.048 * Re**0.75)/(1+0.048*Re**0.75) 
+    hO =  (1 - phi)**(2 - n)    
+    hRe = (1 - phi)**(3 - 2*n)
+    h = (hO+Re*hRe)/(1+Re)
+    return CDd * h  
+
+# Colone labo solaize 
+Q = 0.25  *   1e-3 /60 # l/min to m/s
+Dimanetre_section =  0.1 ###
+V = Q/(Dimanetre_section**2 *np.pi/4)  #vitesse bulk 
+d  = 70e-6
+muf = 0.001
+rhof  = 1000
+Rebulk = rhof * V * d /muf
+g = 9.81
+Ga = d**3 *g*rhof**2 /muf**2
+dp = 10e-6
+xi = dp/d
+l =100000000
+phis = np.linspace(5e-3, 0.05, 100)
+
+for l in [0,1,100000]:
+    A = (2+3*l)/(l+1)
+    Restokes = Ga**2 /(A* 6) 
+    Ur =np.array([Unorm(phi,Ga,l,CD=CD_jl)* Restokes for phi in phis])
+    U=  Rebulk * Ur/Ur
+    Ub = U + Ur
+    Uf = U - phis/(1-phis) * Ur
+    Up = Uf
+    g = xi/(1+l) + xi**2 * (6*l - 2) / (3 * (l +1))
+    G = np.abs(Up - Ub)  *g * 3 * (1+xi)**2/2 * phis #*(1+phis**0.29)
+    L = - Ub / G * np.log(1 - 0.9) 
+    lamb = l if l < 100 else "\infty"
+    a= plt.plot(phis,L*d,label=f'$\lambda = {lamb}$') 
+plt.show()
+
+
+\end{lstlisting}

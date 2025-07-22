@@ -34,4 +34,4 @@
 \renewcommand\Affilfont{\itshape\small}
 
 \RequirePackage{stmaryrd}
-\AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
+% \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}

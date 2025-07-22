@@ -7,7 +7,7 @@
 \ProcessOptions\relax
 \LoadClass{article}
 \RequirePackage{graphicx}
-% \RequirePackage{tikz}
+\RequirePackage{tikz}
 
 \RequirePackage{amssymb}
 \RequirePackage{amsmath}
@@ -54,7 +54,6 @@
 % \RequirePackage{newtxtext}
 \RequirePackage{float}
 \RequirePackage{mathtools}% it load amsmath 
-\RequirePackage{tikz}
 \RequirePackage{todonotes}
 % \setlength{\marginparwidth}{3.5cm}
 \usepackage[bmargin=2cm,tmargin=2cm,lmargin=2cm,rmargin=2cm]{geometry}
@@ -86,6 +85,7 @@
 \pgfplotsset{compat=newest}
 \RequirePackage{graphicx}
 \RequirePackage{listing}
+\RequirePackage{listings}
 % \RequirePackage{gnuplot-lua-tikz}
 
 
@@ -144,12 +144,13 @@
 \renewcommand{\pddr}{{\partial_\textbf{r}}}
 \renewcommand{\pddy}{{\partial_\textbf{y}}}
 \renewcommand{\pddw}{{\partial_\textbf{w}}}
-\renewcommand{\pddx}{{\grad_\textbf{x}}}
-\renewcommand{\pddz}{{\grad_\textbf{z}}}
-\renewcommand{\pddr}{{\grad_\textbf{r}}}
-\renewcommand{\pddy}{{\grad_\textbf{y}}}
-\renewcommand{\pddw}{{\grad_\textbf{w}}}
-\renewcommand{\pddu}{{\grad_\textbf{u}}}
+\renewcommand{\pddx}{{\partial_\textbf{x}}}
+\renewcommand{\pddz}{{\partial_\textbf{z}}}
+\renewcommand{\pddr}{{\partial_\textbf{r}}}
+\renewcommand{\pddy}{{\partial_\textbf{y}}}
+\renewcommand{\pddw}{{\partial_\textbf{w}}}
+\renewcommand{\pddu}{{\partial_\textbf{u}}}
+
 \newcommand{\pdda}{\partial_a}
 \renewcommand{\pddt}{\partial_t}
 \newcommand{\norm}[1]{\hat{#1}}
