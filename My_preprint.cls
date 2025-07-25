@@ -39,7 +39,7 @@
 \RequirePackage[nameinlink,capitalize]{cleveref}
 
 \AtBeginDocument{\newcommand{\refn}[1]{\ref{#1}}}
-\AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
+% \AtBeginDocument{\renewcommand{\ref}[1]{\autoref{#1}}}
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
 \numberwithin{equation}{section}
   % \RequirePackage[
@@ -183,7 +183,7 @@
 \newcommand{\expoU}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg[p]{\textbf{u}_\alpha\intO{ \pri{1}{#1}#2 }}}
 \newcommand{\expoS}[2][n]{\frac{(-1)^#1}{#1!} \partialp{1}{#1} \pavg[p]{\intS{\pri{1}{#1}#2 }}}
 % \newcommand{\numref}[1]{\ref{#1}}
-\renewcommand{\ref}[1]{\autoref{#1}}
+% \renewcommand{\ref}[1]{\autoref{#1}}
 \newtheorem{remark}{Remark}
 \usetikzlibrary{calc}
 \usepackage{multirow}
@@ -203,3 +203,4 @@
 % \renewcommand\thesubsection{\Alph{subsection}}
 % \renewcommand\thesection{\Rman{section}}
 % \renewcommand{\theequation}{\arabic{equation}}
+\AtBeginDocument{\newcommand{\wt}[1]{\widetilde{#1}}}
