@@ -1,228 +1,774 @@
-\section{PTKE equaiton}
+\section{Introduction}
 
 
+We are seeking for an expression of the Reynolds stress term,
 \begin{equation}
-    \avg{\textbf{u}'\textbf{u}'}
-    =
-    \int_{\mathbb{R}^3}\avg{\textbf{u}'\textbf{u}'\delta_{nst}} d\textbf{r}
+    \avg{\chi_f \textbf{u}'_f\textbf{u}_f'}[\textbf{x},t],
 \end{equation}
-then derive directly an equation for $\textbf{u}'$ or $\textbf{u}_f'$. 
+which is evaluated at an arbitrary point \textbf{z} in space. 
+We will see latter that it is easier to seek for a term relative to the volume averaged velocity \textbf{u} rather than $\textbf{u}_f$, to this end one can reformulate 
+\begin{equation*}
+    \avg{\chi_f \textbf{u}_f'\textbf{u}_f'}
+    = \avg{\chi_f (\textbf{u}^0_f-\textbf{u}_f)(\textbf{u}^0_f-\textbf{u}_f)}
+    % &= 
+    % \avg{\chi_f \textbf{u}^0_f\textbf{u}^0_f}
+    % - \phi_f \textbf{u}_f \textbf{u}_f 
+    % + \phi_f \textbf{uu}
+    % - \phi_f \textbf{uu},\\
+    = 
+    \avg{\chi_f \textbf{u}^*_f\textbf{u}^*_f}
+    + \phi_f (\textbf{uu} - \textbf{u}_f \textbf{u}_f ). 
+\end{equation*}
+We have introduced the notation $\textbf{u}_f^*= \textbf{u}_f^0 - \textbf{u}$ to indicate that the local quantity $\textbf{u}_f^0$ is expressed relative to its  volume ensemble averaged counterpart, i.e. \textbf{u}.
 
-\begin{equation}
-    \int_{\mathbb{R}^3}\avg{\textbf{u}'\textbf{u}'\delta_{nst}} d\textbf{r}
-    =
-    \int_{\mathbb{R}^3}\avg{\textbf{u}^0\textbf{u}^0\delta_{nst}} d\textbf{r}
-    - \textbf{u}\int_{\mathbb{R}^3}\avg{\textbf{u}^0\delta_{nst}} d\textbf{r}
-    =
-    \int_{\mathbb{R}^3}\avg{\textbf{u}^0\textbf{u}^0\delta_{nst}} - \textbf{u} \avg{\textbf{u}^0 \delta_{nst}}d\textbf{r}
-\end{equation}
-But fundamentaly one can say,
-\begin{equation}
-    \avg{\textbf{u}'\textbf{u}'\delta_{nst}}
-    =
-    \avg{\textbf{u}^0\textbf{u}^0\delta_{nst}}
-    -\avg{\textbf{u}^0\delta_{nst}}\textbf{u}
-    -\textbf{u}\avg{\textbf{u}^0\delta_{nst}}
-    +\textbf{u}\textbf{u}\avg{\delta_{nst}}
-\end{equation}
+We want to express this quantity as an integral of conditioned quantity. 
+The condition may be anything, nevertheless since we are studying the effect of particles motion on this tensor we condition by the presence of a single particle. 
+So that the integral is correctly normed we use the \textit{Nearest-Particle-Statistics} (NPS), introduced in \citep{zhang2021ensemble}.
 
+For that purpose we introduce the generalized function, 
+\begin{equation}
+    \delta_N[\textbf{y},\textbf{y}+\textbf{r}]
+    =  \sum_i^N \delta(\textbf{x}_i[\FF,t] - \textbf{y}- \textbf{r})h_i[\textbf{y},\FF,t].
+\end{equation}
+Details on the definition are given in \citet{zhang2021ensemble,fintzi2025}. 
+As such $\delta_N$ is non-zero only in the situations where a particle center of mass is located at \textbf{y}+\textbf{r} and that it is the nearest particle to the point \textbf{y}. 
+The key relation, 
+\begin{equation}
+    \int_{\mathbb{R}^3} \delta_N[\textbf{y},\textbf{r}] d^3 \textbf{r} = 1, 
+\end{equation}
+permits us to write, 
+\begin{equation}
+    \avg{\chi_f \textbf{u}^*_f\textbf{u}^*_f}[\textbf{y},t]
+    =
+    \int_{\mathbb{R}^3}
+    \avg{(\chi_f \textbf{u}^*_f\textbf{u}^*_f) [\textbf{y},t] \delta_N [\textbf{y},\textbf{r},t]}
+    d^3 \textbf{r}
+\end{equation}
+The term within bracket is now the average of the local quantity $\textbf{u}^*_f\textbf{u}^*_f$ at $(\textbf{y},t)$ knowing that fluid is present at \textbf{y} ($\chi_f$), and that the nearest particle to \textbf{y} is at $\textbf{y}+ \textbf{r}$. 
+
+For the points $|\textbf{r}- \textbf{y}|<a$, with $a$ the radius of all particles, we know for sure that $\chi_f = 0$. 
+When $|\textbf{r}- \textbf{y}|>a$ we know for sure that $\chi_f[\textbf{y},t]= 1$. 
+Hence, 
+\begin{equation}
+    \int_{\mathbb{R}^3}
+    \avg{(\chi_f \textbf{u}^*_f\textbf{u}^*_f) [\textbf{y},t] \delta_N [\textbf{y},\textbf{r},t]}
+    d^3 \textbf{r}
+    =
+    \int_{|\textbf{r}-\textbf{y}|>a}
+    \avg{\textbf{u}'\textbf{u}' \delta_N }[\textbf{y},\textbf{r},t]
+    d^3 \textbf{r}
+\end{equation}
+So ideally one needs an expression for $\avg{\textbf{u}'\textbf{u}' \delta_N }[\textbf{y},\textbf{r}]$, which is the Reynolds averaged on every configuration where the nearest particle is at $\textbf{y} +  \textbf{r}$.
+
+Because $\avg{\textbf{u}'\textbf{u}' \delta_N }[\textbf{y},\textbf{r}]$ lackes of Boundary condition we seek for an expression of the term, 
+\begin{equation}
+    \avg{\textbf{u}'\textbf{u}'[\textbf{x},t] \delta_N[\textbf{y},\textbf{r},t] },
+\end{equation}
+instead. 
+Indeed, when it is evaluated at $\textbf{x} = \textbf{y}$ one fall backs on $\avg{\textbf{u}'\textbf{u}' \delta_N }[\textbf{y},\textbf{r}]$. 
+In that configuration one can state that,
+\begin{equation}
+    \lim_{|\textbf{x}- \textbf{y}| ,  |\textbf{x}- \textbf{y}+\textbf{r}|\to\infty }
+    \avg{\textbf{u}'\textbf{u}'[\textbf{x},t] \delta_N[\textbf{y},\textbf{r},t] }
+    = 
+    \avg{\textbf{u}'\textbf{u}'}[\textbf{x},t]
+    \avg{\delta_N}[\textbf{y},\textbf{r},t] ,
+\end{equation}
+Because the particle-free zone and the particle at $\textbf{y}$ and $\textbf{y}+\textbf{r}$ have no influence on what happen on the average at \textbf{x} which is very far from these points. 
+We then may be interested to compute, 
+\begin{equation}
+    \lim_{|\textbf{x}- \textbf{y}| ,  |\textbf{x}- \textbf{y}+\textbf{r}|\to\infty }
+    \avg{\textbf{u}'\textbf{u}'[\textbf{x},t] \delta_N[\textbf{y},\textbf{r},t] }
+    - \avg{\textbf{u}'\textbf{u}'}[\textbf{x},t]
+    \avg{\delta_N}[\textbf{y},\textbf{r},t] 
+    = \avg{\textbf{u}'\textbf{u}'}^N[\textbf{x},t] P_N[\textbf{y},\textbf{r},t] = 0
+\end{equation}
+which is the difference of ``kinetic energy'' when comparing to the conditioned situations to the ensemble averaged situations. 
+
+\paragraph{summary:}
+\begin{align*}
+    \avg{\chi_f \textbf{u}'_f\textbf{u}_f'}[\textbf{y},t],
+    &=
+    \int_{|\textbf{r}-\textbf{y}|>a}
+    \avg{\textbf{u}'\textbf{u}'}^N[\textbf{y},t] P_N[\textbf{y},\textbf{r},t]
+    d^3 \textbf{r}
+    + 
+    \avg{\textbf{u}'\textbf{u}'}[\textbf{y},t]
+    \int_{|\textbf{r}-\textbf{y}|>a}
+    \avg{\delta_N}[\textbf{y},\textbf{r},t] 
+    d^3 \textbf{r}\\
+    &+ \phi_f (\textbf{uu} - \textbf{u}_f \textbf{u}_f ) 
+\end{align*}
+which is equivalent to write, 
+\begin{align*}
+    \avg{\chi_f \textbf{u}^0_f\textbf{u}_f^0}[\textbf{y},t]
+    - \avg{\textbf{u}^0\textbf{u}^0}[\textbf{y},t]
+    &=
+    \int_{|\textbf{r}-\textbf{y}|>a}
+    \avg{\textbf{u}'\textbf{u}'}^N[\textbf{y},t] P_N[\textbf{y},\textbf{r},t]
+    d^3 \textbf{r}
+    - \phi_d \textbf{uu} 
+\end{align*}
+
+\tb{
+    The problem is that 
+    \begin{align}
+        \avg{ \textbf{u}^* \textbf{u}^*}[\textbf{y},t]
+        &=
+        \int_{\mathbb{R}^3}
+        \avg{(\textbf{u}^*\textbf{u}^*   \delta_N) [\textbf{y},\textbf{r},t]}
+        d^3 \textbf{r}\\
+        \Longleftrightarrow 0 &=
+        \int_{\mathbb{R}^3}
+        \avg{(\textbf{u}^*\textbf{u}^*   \delta_N) [\textbf{y},\textbf{r},t]}
+        - 
+        \avg{\textbf{u}^*\textbf{u}^*}[\textbf{y},t] \avg{ \delta_N} [\textbf{y},\textbf{r},t]
+        d^3 \textbf{r}\\
+        % &+ 
+        % \avg{\textbf{u}^*\textbf{u}^*}[\textbf{y},t] 
+        % \int_{\mathbb{R}^3}
+        % \avg{ \delta_N} [\textbf{y},\textbf{r},t]
+        % d^3 \textbf{r}\\
+    \end{align}
+}
+
+where $\textbf{u}^* = \textbf{u}^0 - \textbf{u}_f$ in opposition to $\textbf{u}_f' = \textbf{u}_f^0 - \textbf{u}_f$
+
+\subsubsection{additional properties}
+\begin{equation}
+    \pavg{\textbf{u}_i'\textbf{u}_i'}[\textbf{y},t]
+    +  \pOavg{\textbf{ww}}
+    \approx
+    \avg{\chi_d \textbf{u}_d^0 \textbf{u}_d^0}
+    = 
+    \avg{\textbf{u}^0 \textbf{u}^0}
+    - \avg{\chi_f \textbf{u}_f^0 \textbf{u}_f^0}
+\end{equation}
+And so, 
+\begin{equation}
+    \pavg{\textbf{u}_i'\textbf{u}_i'}[\textbf{y},t]
+    \approx
+    - \int_{|\textbf{r}-\textbf{y}|>a}
+    \avg{\textbf{u}'\textbf{u}'}^N[\textbf{y},t] P_N[\textbf{y},\textbf{r},t]
+    d^3 \textbf{r}
+    + \phi_d \textbf{uu} 
+    - \avg{\chi_f \textbf{u}_f^0 \textbf{u}_f^0}
+    - \pOavg{\textbf{ww}}
+\end{equation}
 
 
 \subsection{Unaveraged equations }
-\begin{equation}
-    \pddt(\rho_f\textbf{u}^0) + \div (\rho_f \textbf{u}^0\textbf{u}^0 + \bm\sigma^0_*)
-    = 
-    \rho_f \textbf{g}
-    +\kappa  \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}
-    = \textbf{f}^0
-    % +\kappa_p  \delta_{\Gamma p}  \bm\sigma_f^0 \cdot \textbf{n}_p 
-\end{equation}
-with the mixture stress defined as, 
-\begin{equation}
-    \bm\sigma^0_*
-    =
-    - \chi_f \bm\sigma_f^0  
-    - \zeta^{-1} (\chi_d \bm\sigma_d^0 + \delta_{\Gamma} \bm\sigma_{\Gamma}^0)  
-\end{equation}
-
-From this one might deduce the kinetic energy equation, 
-\begin{multline}
-    \pddt(\rho_f\textbf{u}^0\textbf{u}^0) + \div (\rho_f \textbf{u}^0\textbf{u}^0\textbf{u}^0 + \bm\sigma^0_*\textbf{u}^0 + (\bm\sigma_*^0 \textbf{u}^0 )^\dagger )
-    = 
-    \bm\sigma_*^0 \cdot \grad \textbf{u}^0
-    +(\bm\sigma_*^0 \cdot \grad \textbf{u}^0)^\dagger
-    + \rho_f (\textbf{f}^0 \textbf{u}^0 + \textbf{u}^0 \textbf{f}^0)
-    % +\kappa  \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}
-    % +\kappa_p  \delta_{\Gamma p}  \bm\sigma_f^0 \cdot \textbf{n}_p 
-\end{multline}
-
-
-
-One can also derive an equation for $\textbf{u}'$ using the averaged equation below, we get,
-\begin{equation}
-    \pddt(\rho_f\textbf{u}') + \div (\rho_f \textbf{u}'\textbf{u}' + \bm\sigma'_*)
-    = \textbf{f}'
-    % +\kappa_p  \delta_{\Gamma p}  \bm\sigma_f^0 \cdot \textbf{n}_p 
-\end{equation}
-with,
-\begin{multline}
-    \bm\sigma_*' = 
-    - \textbf{u}' \textbf{u}
-    - \textbf{u} \textbf{u}' 
-    - \chi_f \bm\sigma_f^0  
-    - \zeta^{-1} (\chi_d \bm\sigma_d^0 + \delta_{\Gamma} \bm\sigma_{\Gamma}^0)  \\
-    - \bm\Sigma
-    - \rho_f \avg{\textbf{u}'\textbf{u}'}
-    + \zeta_k^{-1} \avg{\chi_k \bm\sigma_k^* + \delta_{\Gamma k} \bm\sigma_\Gamma^0} 
-    - \avg{2\mu_f \chi_k \textbf{e}_k^*}
-\end{multline}
-
-The fluctuation equation is then 
-\begin{multline}
-    \pddt(\rho_f\textbf{u}'\textbf{u}') + \div (\rho_f \textbf{u}'\textbf{u}'\textbf{u}' + \bm\sigma'_*\textbf{u}' + (\bm\sigma_*' \textbf{u}' )^\dagger )
-    = 
-    \bm\sigma_*' \cdot \grad \textbf{u}'
-    +(\bm\sigma_*' \cdot \grad \textbf{u}')^\dagger
-    + \rho_f (\textbf{f}' \textbf{u}' + \textbf{u}' \textbf{f}')
-\end{multline}
-
-\subsection{Ensemble averaged equations}
-When averaged it reads, 
-\begin{align*}
-    \pddt(\rho_f\textbf{u}) + \div (\rho_f \textbf{u}\textbf{u} + \bm\sigma_*)
-    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
-    &= 
-    \textbf{f}
-\end{align*}
-The \textit{Mean newtonian stress} and the mean effective stress is now defined as, 
+At the local non-averaged level we have,
 \begin{align}
-    \bm\sigma_* &= 
-    \bm\Sigma
-    + \rho_f \avg{\textbf{u}'\textbf{u}'}
-    - \zeta_k^{-1} \avg{\chi_k \bm\sigma_k^* + \delta_{\Gamma k} \bm\sigma_\Gamma^0} 
-    + \avg{2\mu_f \chi_k \textbf{e}_k^*}
+    \pddt \textbf{u}^0 + \div ( \textbf{u}^0\textbf{u}^0 + \bm\sigma^0_*)
+    &= \textbf{f}^0,
+    \;\;\\
+    \bm\sigma^0_*
+    &=
+    -\sum_{k=\Gamma,f,d} \rho^{-1}_k \chi_k \bm\sigma_k^0
+    =
+      -  \rho_f^{-1} \chi_f \bm\sigma_f^0
+    - \rho_d^{-1} (\chi_d \bm\sigma_d^0 + \delta_{\Gamma} \bm\sigma_{\Gamma}^0)\\
+    \textbf{f}^0 &= 
+    \textbf{g}
+    +(\rho_d^{-1}-\rho_f^{-1}) \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}
+    = 
+    \textbf{g}
+    +\kappa {\delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}}
+    % - \zeta^{-1} (\chi_d \bm\sigma_d^0 + \delta_{\Gamma} \bm\sigma_{\Gamma}^0)
+\end{align}
+$\zeta^{-1} \to $
+\subsection{Ensemble averaged equation}
+\begin{align}
+    \pddt \textbf{u} + \div ( \textbf{u}\textbf{u} + \avg{\textbf{u}'\textbf{u}'}+ \bm\sigma_*)
+    &= \textbf{f},\\
+    \bm\sigma_*
+    &=
+    -\avg{\sum_{k=\Gamma,f,d} \rho^{-1}_k \chi_k \bm\sigma_k^0}\\
+    \textbf{f} &= 
+    \textbf{g}
+    +\kappa \avg{\delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}}
+\end{align}
+\subsection{Disturbance field}
+Because $\textbf{u}^0 \textbf{u}^0 - \textbf{uu} = \textbf{uu}' + \textbf{u}' \textbf{u} + \textbf{u}' \textbf{u}'$
+\begin{align}
+    \pddt \textbf{u}'
+    + \div (
+         \textbf{u}\textbf{u}'
+        +  \textbf{u}' \textbf{u}
+        +  \textbf{u}' \textbf{u}'
+        -\avg{\textbf{u}'\textbf{u}'}
+        + \bm\sigma_*')
+    = \textbf{f}',\\
+    \bm\sigma_*'
+    =
+    -\sum_k \rho^{-1}_k \chi_k \bm\sigma_k^0
+    + \avg{\sum_k \rho^{-1}_k \chi_k \bm\sigma_k^0  }\\
+    \textbf{f}'
+    =
+    \kappa \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}
+    - \kappa \avg{\delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}}
+    \\
+\end{align}
+\subsubsection{Energies}
+\begin{align*}
+    \pddt (\textbf{u}')^2/2
+    + \div ( \textbf{u}(\textbf{u}')^2/2
+    +  \textbf{u}' (\textbf{u}')^2/2
+    + \textbf{u}'\cdot \bm\sigma_*')
+    =
+    - \textbf{u}'\textbf{u}' : \grad \textbf{u}
+    + \textbf{u}' \cdot \div \avg{\textbf{u}'\textbf{u}'}
+    + \bm\sigma_*':\grad \textbf{u}' +  \textbf{u}'\cdot \textbf{f}',
+    \\
+    \textbf{u}'\cdot \bm\sigma_*'
+    =
+    - \textbf{u}'\cdot \sum_k \rho^{-1}_k \chi_k \bm\sigma_k^0
+    + \textbf{u}'\cdot \avg{\sum_k \rho^{-1}_k \chi_k \bm\sigma_k^0  }\\
+    \textbf{u}'\cdot \textbf{f}'
+    =
+    \kappa   \textbf{u}' \cdot \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}
+    - \kappa \textbf{u}' \cdot \avg{\delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}}
+    \\
+\end{align*}
+\subsubsection{REstress}
+\begin{multline}
+    \pddt (\textbf{u}'\textbf{u}')
+    + \div (
+         \textbf{u}\textbf{u}'\textbf{u}'
+         +  \textbf{u}' \textbf{u}'\textbf{u}'
+         + \textbf{u}'\bm\sigma_*'
+         + ^\dagger\textbf{u}'\bm\sigma_*')
+         \\
+         = 
+         +\textbf{u}'\div \avg{\textbf{u}'\textbf{u}'}
+         +\textbf{u}'\div \avg{\textbf{u}'\textbf{u}'}^\dagger
+         - \textbf{u}' (\textbf{u}'\cdot \grad)\textbf{u}
+         - \textbf{u}' (\textbf{u}'\cdot \grad)\textbf{u}^\dagger\\
+    + \bm\sigma_*'\cdot \grad \textbf{u}'
+    +^\dagger \bm\sigma_*'\cdot \grad \textbf{u}'
+    + \textbf{f}'\textbf{u}'
+    + \textbf{u}'\textbf{f}'
+\end{multline}
+
+\section{Ensemble averaegd eq}
+
+
+\subsubsection{Energies}
+\begin{align*}
+    \pddt k
+    + \div ( \textbf{u}k
+    +  \avg{\textbf{u}' (\textbf{u}')^2/2}
+    + \avg{\textbf{u}'\cdot \bm\sigma_*'})
+    =
+    - \avg{\textbf{u}'\textbf{u}'} : \grad \textbf{u}
+    % + \textbf{u}' \cdot \div \avg{\textbf{u}'\textbf{u}'}
+    + \avg{\bm\sigma_*':\grad \textbf{u}'} + \avg{ \textbf{u}'\cdot \textbf{f}'},
+    \\
+    \avg{\textbf{u}'\cdot \bm\sigma_*'}
+    =
+    - \avg{\textbf{u}'\cdot \sum_k \rho^{-1}_k \chi_k \bm\sigma_k^0}\\
+    \avg{\textbf{u}'\cdot \textbf{f}'}
+    =
+    \kappa   \avg{\textbf{u}' \cdot \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}}
+    \\
+\end{align*}
+homogeneous steady-state, 
+\begin{align*}
+    \div \avg{\textbf{u}'\cdot \bm\sigma_*'}
+    =
+    \avg{\bm\sigma_*':\grad \textbf{u}'} + \avg{ \textbf{u}'\cdot \textbf{f}'},
+    \\
+    \avg{\textbf{u}'\cdot \bm\sigma_*'}
+    =
+    - \avg{\textbf{u}'\cdot \sum_k \rho^{-1}_k \chi_k \bm\sigma_k^0}\\
+    \avg{\textbf{u}'\cdot \textbf{f}'}
+    =
+    \kappa   \avg{\textbf{u}' \cdot \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}}
+    \\
+\end{align*}
+Maybe the mean part of the pressure does not cancel-out
+
+
+\subsubsection{REstress}
+\begin{multline}
+    \pddt \avg{\textbf{u}'\textbf{u}'}
+    + \div (
+         \textbf{u}\avg{\textbf{u}'\textbf{u}'}
+         +  \avg{\textbf{u}' \textbf{u}'\textbf{u}'}
+         + \avg{\textbf{u}'\bm\sigma_*'}
+         + ^\dagger\avg{\textbf{u}'\bm\sigma_*'})
+         = 
+        %  +\textbf{u}'\div \avg{\textbf{u}'\textbf{u}'}
+        %  +\textbf{u}'\div \avg{\textbf{u}'\textbf{u}'}^\dagger
+         - \avg{\textbf{u}'  \textbf{u}'}\cdot (\grad\textbf{u} + \grad\textbf{u}^\dagger)\\
+    + \avg{\bm\sigma_*'\cdot \grad \textbf{u}'}
+    +^\dagger \avg{\bm\sigma_*'\cdot \grad \textbf{u}'}
+    + \avg{\textbf{f}'\textbf{u}'}
+    + \avg{\textbf{u}'\textbf{f}'}
+\end{multline}
+
+In homogeneous steady-state regime we get, 
+\begin{equation}
+    % \pddt \avg{\textbf{u}'\textbf{u}'}
+    % + \div (
+        %  \textbf{u}\avg{\textbf{u}'\textbf{u}'}
+        %  +  \avg{\textbf{u}' \textbf{u}'\textbf{u}'}
+         \div (\avg{\textbf{u}'\bm\sigma_*'}
+         + ^\dagger\avg{\textbf{u}'\bm\sigma_*'})
+         = 
+        %  +\textbf{u}'\div \avg{\textbf{u}'\textbf{u}'}
+        %  +\textbf{u}'\div \avg{\textbf{u}'\textbf{u}'}^\dagger
+        %  - \avg{\textbf{u}'  \textbf{u}'}\cdot (\grad\textbf{u} + \grad\textbf{u}^\dagger)\\
+    + \avg{\bm\sigma_*'\cdot \grad \textbf{u}'}
+    + ^\dagger \avg{\bm\sigma_*'\cdot \grad \textbf{u}'}
+    + \avg{\textbf{f}'\textbf{u}'}
+    + \avg{\textbf{u}'\textbf{f}'}
+\end{equation}
+Or, 
+\begin{equation}
+         \avg{\textbf{u}'\div \bm\sigma_*'}
+         + ^\dagger\avg{\textbf{u}'\div \bm\sigma_*'}
+         = 
+    % + \avg{\bm\sigma_*'\cdot \grad \textbf{u}'}
+    % + ^\dagger \avg{\bm\sigma_*'\cdot \grad \textbf{u}'}
+    + \avg{\textbf{f}'\textbf{u}'}
+    + \avg{\textbf{u}'\textbf{f}'}
+\end{equation}
+Because indeed, the pressure may not be constant, but rather have a constant derivatives.  
+
+
+\begin{align}
+    \avg{\textbf{u}' \textbf{f}'}
+    &=
+    \avg{\kappa   \textbf{u}'(\delta_{\Gamma}  \bm\sigma_f^* \cdot \textbf{n})}
+    + \avg{\kappa   \delta_{\Gamma} \textbf{u}'  \textbf{n}}\cdot \bm\Sigma
+\end{align}
+these can be evaluated from the one particle problem. 
+
+\section{Conditionally averaegd eq}
+Notting 
+\begin{align}
+    \avg{\delta_N \textbf{u}'} = P_N \textbf{v}^N 
+     && \textbf{u}'' = \textbf{u}' - \textbf{v}^N
 \end{align}
 
-The mean kinetic energy is obtained with the same method 
+\paragraph{Momentum }
+\begin{align}
+    \pddt (P_N \textbf{v}^N) 
+    - \avg{\textbf{u}'\pddt \delta_N}
+    + \div (
+          P_N \textbf{u}\textbf{v}^N
+        + P_N \textbf{v}^N \textbf{u}
+        + P_N \textbf{v}^N \textbf{v}^N
+        + \avg{\delta_N \textbf{u}''\textbf{u}''}
+        - P_N \avg{\textbf{u}'\textbf{u}'}
+        + \avg{\delta_N \bm\sigma_*'} )
+    = \avg{\delta_N \textbf{f}'}
+\end{align}
+\paragraph{energy}
+Let, $k^N P_N = \avg{\delta_N (\textbf{u}')^2 /2}$ 
+\begin{multline*}
+    \pddt (P_N k^N)
+    - \avg{(\textbf{u}')^2/\pddt \delta_N }
+    + \div ( P_N \textbf{u} k^N 
+    +  P_N \textbf{v}^N  k^N 
+    + \avg{\delta_N \textbf{u}'' (\textbf{u}')^2/2}
+    + \avg{\delta_N \textbf{u}'\cdot \bm\sigma_*'})\\
+    =
+    - \avg{\delta_N \textbf{u}'\textbf{u}'} : \grad \textbf{u}
+    + P_N \textbf{v}^N \cdot \div \avg{\textbf{u}'\textbf{u}'}
+    + \avg{\delta_N \bm\sigma_*':\grad \textbf{u}'} 
+    + \avg{\delta_N  \textbf{u}'\cdot \textbf{f}'} \\    
+    \avg{\delta_N \textbf{u}'\cdot \bm\sigma_*'}
+    =
+    - \avg{\delta_N \textbf{u}'\cdot 
+    \left(\sum_k \rho^{-1}_k \chi_k \bm\sigma_k^0
+    - \avg{\sum_k \rho^{-1}_k \chi_k \bm\sigma_k^0  }
+    \right)
+    }
+    \\
+    \textbf{u}'\cdot \textbf{f}'
+    =
+    \avg{\kappa \delta_N   \textbf{u}' \cdot \left(\delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}
+    - \avg{\delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}}\right)}
+    \\
+\end{multline*}
+\tb{we must retrive the mean PTKE to this equation so that the unkown goes to 0. }
+\paragraph{Re stress }
+\begin{multline}
+    \pddt \avg{\delta_N \textbf{u}'\textbf{u}'}
+    - \avg{\textbf{u}'\textbf{u}' \pddt \delta_N }
+    + \div (
+         \textbf{u} \avg{\delta_N \textbf{u}'\textbf{u}'}
+         +  \textbf{v}^N \avg{\delta_N \textbf{u}'\textbf{u}'}
+         + \avg{\delta_N \textbf{u}'' \textbf{u}'\textbf{u}'}
+        + \avg{\delta_N \textbf{u}'\bm\sigma_*'}
+        + ^\dagger \avg{\delta_N \textbf{u}'\bm\sigma_*'}
+        %  + \textbf{q}^N
+         )
+         \\
+         = 
+         +P_N \textbf{v}^N\div \avg{\textbf{u}'\textbf{u}'}
+         +P_N \textbf{v}^N\div \avg{\textbf{u}'\textbf{u}'}^\dagger
+         - \avg{\delta_N \textbf{u}' \textbf{u}'}\cdot \grad\textbf{u}
+         - \avg{\delta_N \textbf{u}' \textbf{u}'}\cdot \grad\textbf{u}^\dagger\\
+    + \avg{\delta_N \bm\sigma_*'\cdot \grad \textbf{u}'}
+    + \avg{\delta_N ^\dagger \bm\sigma_*'\cdot \grad \textbf{u}'}
+    + \avg{\delta_N \textbf{f}'\textbf{u}'}
+    + \avg{\delta_N \textbf{u}'\textbf{f}'}
+\end{multline}
+
+\subsection{Closure for the energy equation in dilute uniform regime}
+
+For any points where the probability of begin in the fluids is 100\% we then have 
+\begin{equation}
+    \rho_f \delta_N \bm\sigma_*'
+    =
+    \delta_N [p_f' \bm\delta
+    - \mu_f (
+        \grad \textbf{u}' 
+        + ^\dagger \grad \textbf{u}' 
+        )]
+\end{equation}
+\begin{equation}
+    \avg{\delta_N \textbf{u}'\cdot \bm\sigma_*'}
+    =
+    - \avg{\delta_N \textbf{u}'\cdot [p_f' \bm\delta
+    - \mu_f (
+        \grad \textbf{u}' 
+        + ^\dagger \grad \textbf{u}' 
+        )]}
+\end{equation}
+
+for the energy equation we have
 \begin{align*}
-    \pddt(\rho_f\textbf{uu}) + \div (\rho_f \textbf{u}\textbf{uu} + \textbf{u}\bm\sigma_* + ^\dagger\textbf{u}\bm\sigma_* )
-    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
-    &= 
-    \bm\sigma_*\cdot \grad \textbf{u}
-    + (\bm\sigma_*\cdot \grad \textbf{u})^\dagger
-    + \textbf{fu}
-    + \textbf{uf}
+    \rho_f (\textbf{u}' \bm\sigma_*')_{iki}
+    &=
+    (\textbf{u}')_i (
+        p_f' \delta_{ki}
+    - \mu_f \grad_k (\textbf{u}')_i
+    - \mu_f  \grad_i (\textbf{u}')_k
+    )\\
+    &= p_f'(\textbf{u}')_k  
+    - \mu_f \grad_k (\textbf{u}'\textbf{u}')_{ii}/2
+    - \mu_f (\textbf{u}')_i \grad_i (\textbf{u}')_k
+    \\
+    % &= p_f'[(\textbf{u}')_i  \delta_{kj}+ (\textbf{u}')_j  \delta_{ki}]
+    % - \mu_f \grad_k (\textbf{u}'\textbf{u}')_{ij}
+    % - \mu_f [
+    %     \grad_j (\textbf{u}'_i\textbf{u}'_k) + \grad_i (\textbf{u}'_j \textbf{u}'_k) 
+    % ]\\
+    % &+ \mu_f [
+    %     \textbf{u}'_k (\grad_j \textbf{u}'_i + \grad_i \textbf{u}'_j  )
+    % ]
+    % \\
+\end{align*}
+Also, 
+\begin{equation}
+    \bm\sigma_*' : \grad \textbf{u}'
+    = 
+    -\frac{\mu_f}{\rho_f}
+    (\grad \textbf{u}'+ ^\dagger \grad \textbf{u}'): \grad \textbf{u}'
+\end{equation}
+
+Or for the energy
+\begin{align*}
+    \grad_k [\rho_f (\textbf{u}' \bm\sigma_*')_{iki}]
+    &=
+    \grad_k (p_f'(\textbf{u}')_k  )
+    - \mu_f \grad_k^2 (\textbf{u}'\textbf{u}')_{ii}/2
+    - \mu_f\grad_k[ (\textbf{u}')_i \grad_i (\textbf{u}')_k]\\
+    &=
+    \frac{1}{\rho_f} \grad_k (p_f'(\textbf{u}')_k  )
+    - \frac{\mu_f}{\rho_f}\grad_k^2 (\textbf{u}'\textbf{u}')_{ii}/2
+    - \frac{\mu_f}{\rho_f}\grad_k (\textbf{u}')_i \grad_i (\textbf{u}')_k\\
+\end{align*}
+\begin{equation}
+    \textbf{u}'\cdot\div\bm\sigma'_*
+    = 
+    \textbf{u}'\cdot \grad p_f'
+    - \frac{\mu_f}{\rho_f} \textbf{u}'\cdot (\grad^2 \textbf{u}' + \grad\div \textbf{u}')
+    =
+    \textbf{u}'\cdot \grad p_f'
+    - \frac{\mu_f}{\rho_f} \textbf{u}'\cdot \grad^2 \textbf{u}'
+\end{equation}
+And 
+\begin{equation}
+    \textbf{u}'_k \grad_i \grad_i \textbf{u}'_k
+    =
+   \grad_i ( \grad_i \textbf{u}'_k\textbf{u}'_k /2)
+   - \grad_i \textbf{u}'_k \grad_i \textbf{u}'_k
+   =
+   \grad^2 (\textbf{u}')^2/2
+   - \grad_i \textbf{u}'_k \grad_i \textbf{u}'_k
+\end{equation}
+So this is consistent. 
+Then, 
+If we consider an 
+\begin{itemize}
+    \item homogeneous, steady state ensemble averaged situations. 
+    \item So $\grad \textbf{A} = 0$ with $A$ an ensemble averaged quantities. 
+    \item All terms including $\textbf{u}''$ may be neglected. 
+\end{itemize}
+
+\begin{equation*}
+    % \pddt (P_N k^N)
+    % - \avg{(\textbf{u}')^2/\pddt \delta_N }
+    P_N(\textbf{u}+ \textbf{v}^N ) \cdot\grad k^N 
+    % + \div \avg{\delta_N \textbf{u}'' (\textbf{u}')^2/2}
+    -P_N \frac{\mu_f}{\rho_f} \grad^2k^N
+    =
+    -\frac{1}{\rho_f}\div\avg{\delta_N p_f'\textbf{u}'}
+    % - \avg{\delta_N \textbf{u}'\textbf{u}'} : \grad \textbf{u}
+    % + P_N \textbf{v}^N \cdot \div \avg{\textbf{u}'\textbf{u}'}
+    -\frac{\mu_f}{\rho_f} \avg{\delta_N \grad_k\textbf{u}'_i:\grad_k \textbf{u}'_i} 
+\end{equation*}
+\tb{this is true only of the particles doesn't move with a non zero $\textbf{u}$ otherwise $\textbf{u}\to\textbf{u}_r$}
+Either I treat each of these as closure either the second one may be considered as closure
+How to derive the BC now ? 
+\paragraph{Boundary condition}
+At the local level I have for spherical particles 
+\begin{align}
+    \textbf{u}_d^0 -  \textbf{u}_f^0&=0 \\
+    [\textbf{u}_d^0- \textbf{u}_\alpha]\cdot \textbf{n} &= 0\\
+    (\bm\delta - \textbf{nn})\cdot  [ \bm e_f^0- \lambda \bm e_d^0]\cdot \textbf{n} &= 0\\
+\end{align}
+In terms of disturbance field this gives, 
+\begin{align}
+    \textbf{u}_d' -  \textbf{u}_f'&=0 \\
+    [\textbf{u}_d' + (\textbf{u} - \textbf{u}_\alpha)]\cdot \textbf{n} &= 0\\
+    (\bm\delta - \textbf{nn})\cdot  [\bm e_f'- \lambda \bm e_d' + (1-\lambda) \textbf{e}]\cdot \textbf{n} &= 0\\
+\end{align}
+Multiplying these equaiton by $\textbf{u}_f'$ or $\textbf{u}_d'$ may give Boundary for kinetic energy equaiton.
+
+Using the first BC one may state that we don't care either it is $\textbf{u}_f'$ or $\textbf{u}_d'$, so let us multiply by $\textbf{u}'$ 
+\begin{align}
+    \textbf{u}_d'\textbf{u}_d' -  \textbf{u}_f'\textbf{u}_f'&=0 \\
+    [\textbf{u}_{f/d}'\textbf{u}_{f/d}' + \textbf{u}_{d/f}'(\textbf{u} - \textbf{u}_\alpha)]\cdot \textbf{n} &= 0\\
+    (\bm\delta - \textbf{nn})\cdot  [\textbf{u}_f'\bm e_f'- \lambda \textbf{u}_d'\bm e_d' + (1-\lambda) \textbf{u}_{f/d}'\textbf{e}]\cdot \textbf{n} &= 0\\
+\end{align}
+
+The first integral is possible because the velocity is continuous at the surface of the part. 
+when conditioned by the state of the droplet and evalutaed at the points where the particle is we obtain 
+\begin{align}
+    \avg{\delta_N \textbf{u}_d'\textbf{u}_d'} -  \avg{\delta_N \textbf{u}_f'\textbf{u}_f'}&=0 \\
+    [\avg{\delta_N \textbf{u}_{f/d}'\textbf{u}_{f/d}' }+ P_N \textbf{v}^N (\textbf{u} - \textbf{w} )]\cdot \textbf{n} &= 0\\
+    (\bm\delta - \textbf{nn})\cdot  [\textbf{u}_f'\bm e_f'- \lambda \textbf{u}_d'\bm e_d' + (1-\lambda) \textbf{u}_{f/d}'\textbf{e}]\cdot \textbf{n} &= 0\\
+\end{align}
+and note that,
+\begin{equation}
+    2(\textbf{u}' \textbf{e}')_{ikj} 
+    = 
+    \textbf{u}'_i(\grad_k \textbf{u}'_j+ ^\dagger \grad_j \textbf{u}'_k)
+    =
+    (\grad_k \textbf{u}'_i\textbf{u}'_j+ ^\dagger \grad_j \textbf{u}'_i\textbf{u}'_k)
+    - (\textbf{u}'_j\grad_k + ^\dagger \textbf{u}'_k\grad_j )\textbf{u}'_i
+\end{equation}
+Maybe teh first two BCs are suffficient 
+This BC must be completed using the stress BC, 
+\begin{align}
+    \textbf{u}_d' -  \textbf{u}_f'&=0 \\
+    [\textbf{u}_d' + (\textbf{u} - \textbf{u}_\alpha)]\cdot \textbf{n} &= 0\\
+    (\bm\delta - \textbf{nn})\cdot  [\bm e_f'- \lambda \bm e_d' + (1-\lambda) \textbf{e}]\cdot \textbf{n} &= 0\\
+\end{align}
+
+\subsection{Solving the equation for solid parts}
+The system to solve then becomes when $Re \ll 0$, 
+\begin{align*}
+    % \pddt (P_N k^N)
+    % - \avg{(\textbf{u}')^2/\pddt \delta_N }
+    % (\textbf{u}+ \textbf{v}^N ) \cdot\grad k^N 
+    % + \div \avg{\delta_N \textbf{u}'' (\textbf{u}')^2/2}
+    - \frac{\mu_f}{\rho_f} \grad^2k^N
+    &=
+    -\frac{1}{\rho_f}\div ( p_f^N \textbf{v}^N )
+    % - \avg{\delta_N \textbf{u}'\textbf{u}'} : \grad \textbf{u}
+    % +  \textbf{v}^N \cdot \div \avg{\textbf{u}'\textbf{u}'}
+    -\frac{\mu_f}{\rho_f}   \grad_k\textbf{v}^N _i:\grad_k \textbf{v}^N _i \\
+    \lim_{r \to \infty} k^N &= k \\
+    k^N &= \textbf{u}_r \cdot \textbf{u}_r/2
 \end{align*}
 
-Averaging the PTKE equation makes appears the following covariance terms
-\begin{multline}
-    \pddt\avg{\rho_f\textbf{u}^0\textbf{u}^0}
-    + \div \avg{\rho_f \textbf{u}^0\textbf{u}^0\textbf{u}^0 + \bm\sigma^0_*\textbf{u}^0 + (\bm\sigma_*^0 \textbf{u}^0 )^\dagger }
+
+The solution for $k^N$ is then 
+\begin{equation}
+    k^N(\textbf{r})
     = 
-    \avg{\bm\sigma_*^0 \cdot \grad \textbf{u}^0}
-    +\avg{\bm\sigma_*^0 \cdot \grad \textbf{u}^0}^\dagger
-    + \rho_f \avg{\textbf{f}^0 \textbf{u}^0 + \textbf{u}^0 \textbf{f}^0}
-    % +\kappa  \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}
-    % +\kappa_p  \delta_{\Gamma p}  \bm\sigma_f^0 \cdot \textbf{n}_p 
-\end{multline}
-Nothing that,
+    \textbf{A}(\textbf{r}): \textbf{u}_r \textbf{u}_r 
+    + k(\textbf{r})
+\end{equation}
+with $\textbf{A}(\textbf{r})$ going to 0 as $r$ goes to infinity. 
+Then 
+\begin{equation}
+    k(\textbf{x}) = \int_{out}
+    (\textbf{A}(\textbf{r}): \textbf{u}_r \textbf{u}_r 
+    + k(\textbf{r})) P_N d^3\textbf{r}\\
+    =
+    -\phi^{1/3} \Gamma(2/3)
+    + \frac{9 3^{1/2} \phi^{2/3} \Gamma(1/3)  }{16}
+    + k 
+\end{equation}
+if $k$ is uniform we are stuck, but then the NPS tells us that it is not how that work. 
+Indeed, at the location \textbf{r} we are far from a particle hence the kinetic energy isn't supposed to tend to anything. 
+
+\begin{equation}
+    \lim_{|\textbf{z}- \textbf{y}|\to\infty }k^N(\textbf{z},\textbf{x},\textbf{y})= k(\textbf{z})
+\end{equation}
+if i substitu
+
+
+\subsection{closure for Re stress equation}
+
+all of this is under the sign of the divergence so that, 
 \begin{align*}
-    \avg{ \textbf{u}^0\textbf{u}^0\textbf{u}^0 }
-    =
-    \textbf{u}\textbf{u}\textbf{u}
-    + \textbf{u}\avg{ \textbf{u}'\textbf{u}^0 }
-    + \avg{ \textbf{u}'\textbf{u}^0 }\textbf{u}
-    + \avg{ \textbf{u}'\textbf{u}\textbf{u}' }
-    + \avg{ \textbf{u}'\textbf{u}'\textbf{u}' }\\
-    \avg{\bm\sigma_*^0 \textbf{u}^0}
-    = 
-    \avg{\bm\sigma_*^0 \textbf{u}'}
-    + \avg{\bm\sigma_*^0 }\textbf{u}
+    \grad_k [
+        \rho_f (\textbf{u}' \bm\sigma_*')_{ikj}
+        + \rho_f (\textbf{u}' \bm\sigma_*')_{jki}
+    ]
+    &=
+    [\grad_j ((\textbf{u}')_i  p_f')+\grad_i ((\textbf{u}')_j p_f')]
+    - \mu_f \grad_k^2 (\textbf{u}'\textbf{u}')_{ij}
+    - \mu_f \grad_k [
+        (\textbf{u}'_i \grad_j+ \textbf{u}'_j \grad_i )\textbf{u}'_k
+    ]\\
+    &=
+    [\grad_j ((\textbf{u}')_i  p_f')+\grad_i ((\textbf{u}')_j p_f')]
+    - \mu_f \grad_k^2 (\textbf{u}'\textbf{u}')_{ij}
+    - \mu_f (\grad_j\textbf{u}'_k \grad_k \textbf{u}'_i+ \grad_i\textbf{u}'_k\grad_k \textbf{u}_j')  
+    \\
 \end{align*}
-Substractin the mean to the average of the local kinetic energy equaiton gives, 
-\begin{multline}
-    \pddt\avg{\rho_f\textbf{u}'\textbf{u}'}
-    + \div (\rho_f \textbf{u}\avg{\rho_f \textbf{u}'\textbf{u}'} + \textbf{Q})
-    = 
-    \avg{\bm\sigma_*^0 \cdot \grad \textbf{u}^0}
-    +\avg{\bm\sigma_*^0 \cdot \grad \textbf{u}^0}^\dagger
-    - \bm\sigma_*\cdot \grad \textbf{u}
-    - (\bm\sigma_*\cdot \grad \textbf{u})^\dagger
-    + \rho_f \avg{\textbf{f}^0 \textbf{u}' + \textbf{u}' \textbf{f}^0}
-    % +\kappa  \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}
-    % +\kappa_p  \delta_{\Gamma p}  \bm\sigma_f^0 \cdot \textbf{n}_p 
-\end{multline}
-\begin{equation}
-    \textbf{Q}
-    =
-    + \textbf{u}\avg{ \textbf{u}'\textbf{u}^0 }
-    + \avg{ \textbf{u}'\textbf{u}^0 }\textbf{u}
-    + \avg{\bm\sigma_*^0 \textbf{u}'}
-    + \avg{\bm\sigma_*^0 \textbf{u}'}^\dagger
-\end{equation}
-
-
-The Reynolds stress eq might also be obtained averaging (1.9) this gives 
-
-\begin{multline}
-    \pddt(\rho_f\textbf{u}'\textbf{u}') + \div (\rho_f \textbf{u}'\textbf{u}'\textbf{u}' + \bm\sigma'_*\textbf{u}' + (\bm\sigma_*' \textbf{u}' )^\dagger )
-    = 
-    \bm\sigma_*' \cdot \grad \textbf{u}'
-    +(\bm\sigma_*' \cdot \grad \textbf{u}')^\dagger
-    + \rho_f (\textbf{f}' \textbf{u}' + \textbf{u}' \textbf{f}')
-\end{multline}
-where we have noted that 
-\begin{equation}
-\avg{\textbf{u}'\textbf{u}'\textbf{u}'}    
-- \avg{\textbf{u}'\textbf{uu}'}
-- \avg{\textbf{u}'\textbf{u}' \textbf{u}}
-- \avg{\textbf{uu}'\textbf{u}'}
-- \avg{\textbf{u}' \textbf{u}\textbf{u}'}
-=
-\avg{\textbf{u}^0\textbf{u}'\textbf{u}'}    
-- \textbf{u} \avg{\textbf{u}'\textbf{u}'}    
-\end{equation}
-\subsubsection{NPS average}
-
-At some point we need an eq for $\textbf{u}\avg{\textbf{u}^0 \delta_{nst}}$ so let us derive for $\textbf{u}^{nst}$
-\begin{equation}
-    \pddt \avg{\rho_f\textbf{u}^0\delta_{nst}}
-    + \div \avg{\rho_f \textbf{u}^0\textbf{u}^0\delta_{nst} + \bm\sigma^0_*\delta_{nst}}
-    = \avg{\textbf{f}^0\delta_{nst}}
-\end{equation}
-\begin{equation}
-    \pddt (\rho_f\textbf{u}^{nst}P_{nst})
-    + \div (\rho_f \textbf{u}^{nst}\textbf{u}^{nst}P_{nst} + \bm\sigma^{nst}_* )
-    =\textbf{f}^{nst}P_{nst}
-\end{equation}
-with,
-\begin{equation}
-    \bm\sigma^{nst}_*
-    =
-    \bm\Sigma^{nst}
-    + \rho_f \avg{\textbf{u}''\textbf{u}''\delta_{nst}}
-    - \zeta_k^{-1} \avg{\chi_k \bm\sigma_k^*\delta_{nst} + \delta_{\Gamma k} \bm\sigma_\Gamma^0\delta_{nst}} 
-    + \avg{2\mu_f \chi_k \textbf{e}_k^*\delta_{nst}}
-\end{equation}
-multiplied by \textbf{u} plus,
 \begin{align*}
-    \avg{\textbf{u}^0 \delta_{nst}}\pddt(\rho_f\textbf{u}) 
-    + \avg{\textbf{u}^0 \delta_{nst}}\div (\rho_f \textbf{u}\textbf{u} + \bm\sigma_*)
-    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
-    &= 
-    \avg{\textbf{u}^0 \delta_{nst}}\textbf{f}
+    \rho_f (\textbf{u}' \bm\sigma_*')_{ikj}
+    + \rho_f (\textbf{u}' \bm\sigma_*')_{jki}
+    &=
+    (\textbf{u}')_i (
+        p_f' \delta_{kj}
+    - \mu_f \grad_k (\textbf{u}')_j
+    - \mu_f  \grad_j (\textbf{u}')_k
+    )
+    + (\textbf{u}')_j (
+        p_f' \delta_{ki}
+    - \mu_f \grad_k (\textbf{u}')_i
+    - \mu_f  \grad_i (\textbf{u}')_k
+    )\\
+    &= p_f'[(\textbf{u}')_i  \delta_{kj}+ (\textbf{u}')_j  \delta_{ki}]
+    - \mu_f \grad_k (\textbf{u}'\textbf{u}')_{ij}
+    - \mu_f [
+        (\textbf{u}'_i \grad_j+ \textbf{u}'_j \grad_i )\textbf{u}'_k
+    ]
+    \\
+    % &= p_f'[(\textbf{u}')_i  \delta_{kj}+ (\textbf{u}')_j  \delta_{ki}]
+    % - \mu_f \grad_k (\textbf{u}'\textbf{u}')_{ij}
+    % - \mu_f [
+    %     \grad_j (\textbf{u}'_i\textbf{u}'_k) + \grad_i (\textbf{u}'_j \textbf{u}'_k) 
+    % ]\\
+    % &+ \mu_f [
+    %     \textbf{u}'_k (\grad_j \textbf{u}'_i + \grad_i \textbf{u}'_j  )
+    % ]
+    % \\
 \end{align*}
-gives, 
 
-and for
-\begin{multline}
-    \pddt\avg{\rho_f\delta_{nst}\textbf{u}^0\textbf{u}^0) }
-    + \div \avg{\rho_f \delta_{nst}\textbf{u}^0\textbf{u}^0\textbf{u}^0
-    + \delta_{nst}\bm\sigma^0_*\textbf{u}^0 + (\delta_{nst}\bm\sigma_*^0 \textbf{u}^0 )^\dagger }
-    = \\
-    \avg{\delta_{nst}\bm\sigma_*^0 \cdot \grad \textbf{u}^0}
-    +\avg{\delta_{nst}\bm\sigma_*^0 \cdot \grad \textbf{u}^0}^\dagger
-    + \rho_f \avg{\delta_{nst}(\textbf{f}^0 \textbf{u}^0 + \textbf{u}^0 \textbf{f}^0)}
-    % +\kappa  \delta_{\Gamma}  \bm\sigma_f^0 \cdot \textbf{n}
-    % +\kappa_p  \delta_{\Gamma p}  \bm\sigma_f^0 \cdot \textbf{n}_p 
-\end{multline}
+
+\section{Periodic green function}
+\subsubsection{One pts conditional average}
+The equaiton for the disturbance field in the pts particle approximation reads, 
+\begin{align}
+    \grad^2 \textbf{u} - \grad p + \textbf{f} \sum_{n\in \mathbb{Z}^3} \delta(\textbf{x}-\textbf{x}_n) - n_p \textbf{f} = 0 && \div \textbf{u} =0 
+\end{align}
+Indeed the disturbance fields are subject to the points force minus the mean forces. 
+FT of these equations yields, 
+\begin{align}
+    -k^2 \textbf{u} - i\textbf{k} p + \textbf{f}\frac{8\pi^3}{V}\sum_{n\in \mathbb{Z}^3} \delta(\textbf{k}-\textbf{k}_n) - 8\pi^3 n_p \textbf{f}\delta(\textbf{k})= 0 
+    && -i\textbf{k}\cdot  \textbf{u} =0 
+\end{align}
+In a single Periodic cell we may evaluate $n_p = 1/V$ because there is a single particle. 
+\begin{equation}
+    -k^2 \textbf{u} - i\textbf{k} p + \textbf{f}\frac{8\pi^3}{V}\sum_{n\in \mathbb{Z}^3\neq 0} \delta(\textbf{k}-\textbf{k}_n) = 0 
+\end{equation}
+
+Because the dirac at $\textbf{k}_n = 0$ is properly canceled we may have, 
+\begin{align*}
+    p =  -  i \frac{8\pi^3}{V} \frac{\textbf{f}\cdot \textbf{k}}{k^2}\sum_{n\in \mathbb{Z}^3} \delta(\textbf{k}-\textbf{k}_n)
+    &&
+    -i\textbf{k} p =  - \frac{8\pi^3}{V} \textbf{f}\cdot \frac{\textbf{kk}}{k^2}\sum_{n\in \mathbb{Z}^3} \delta(\textbf{k}-\textbf{k}_n)
+\end{align*}
+Hence, \textbf{u} may be evaluated as, 
+\begin{equation}
+    \textbf{u}(\textbf{k})
+    =
+    \frac{8\pi^3}{V} \textbf{f}\cdot \frac{\bm\delta k^2 - \textbf{kk}}{k^4}\sum_{n\in \mathbb{Z}^3\neq 0} \delta(\textbf{k}-\textbf{k}_n) 
+    % + \textbf{f}\frac{8\pi^3}{V}\sum_{n\in \mathbb{Z}^3\neq 0} \delta(\textbf{k}-\textbf{k}_n) = 0 
+\end{equation}
+This fourier transform can be inverted quite easly, 
+\begin{equation}
+    \textbf{u}(\textbf{x})
+    =
+    \frac{1}{8\pi^3}\int \textbf{u}(\textbf{k}) e^{i\textbf{k}\cdot \textbf{x}} d^3\textbf{k}
+    =
+    \frac{1}{V} \textbf{f}\cdot \sum_{n\in \mathbb{Z}^3\neq 0} \frac{\bm\delta k_n^2 - \textbf{k}_n\textbf{k}_n}{k_n^4} e^{i \textbf{k}_n \cdot \textbf{x}}
+    % + \textbf{f}\frac{8\pi^3}{V}\sum_{n\in \mathbb{Z}^3\neq 0} \delta(\textbf{k}-\textbf{k}_n) = 0 
+\end{equation}
+\paragraph{Sedimentation velocity}
+To compute the Sedimentation velocity we remove the singularity at the origin and consider the 
+
+
+We deduce that the periodic green func is, 
+\begin{equation}
+    \textbf{G}(\textbf{x})
+    =
+    \frac{1}{V}\sum_{n\in \mathbb{Z}^3\neq 0} \frac{\bm\delta k_n^2 - \textbf{k}_n\textbf{k}_n}{k_n^4} e^{i \textbf{k}_n \cdot \textbf{x}}
+    % + \textbf{f}\frac{8\pi^3}{V}\sum_{n\in \mathbb{Z}^3\neq 0} \delta(\textbf{k}-\textbf{k}_n) = 0 
+\end{equation}
+
+The fluid velocity at $\textbf{r} = 0$ is 
+\begin{equation}
+    \textbf{G}(\textbf{x})
+    =
+    \frac{1}{V}\sum_{n\in \mathbb{Z}^3\neq 0} \frac{\bm\delta k_n^2 - \textbf{k}_n\textbf{k}_n}{k_n^4} 
+    % + \textbf{f}\frac{8\pi^3}{V}\sum_{n\in \mathbb{Z}^3\neq 0} \delta(\textbf{k}-\textbf{k}_n) = 0 
+\end{equation}
+
+The convolution theorem, 
+\begin{align*}
+    \int \textbf{uu} d^3\textbf{x}
+    &=
+    \frac{1}{V^2} \textbf{ff}: \sum_{n\in \mathbb{Z}^3\neq 0} 
+    \frac{\bm\delta k_n^2 - \textbf{k}_n\textbf{k}_n}{k_n^4} 
+    \frac{\bm\delta k_n^2 - \textbf{k}_n\textbf{k}_n}{k_n^4} \\
+    &=
+    \frac{1}{V^2} \textbf{ff}: \sum_{n\in \mathbb{Z}^3\neq 0} 
+    \frac{\bm\delta\bm\delta k_n^4 
+    - \bm\delta k_n^2\textbf{k}_n\textbf{k}_n
+    - \textbf{k}_n\textbf{k}_n\bm\delta k_n^2
+    + \textbf{k}_n\textbf{k}_n\textbf{k}_n \textbf{k}_n }{k_n^8} 
+\end{align*} 
+which yield an explicit formula for the pseudoturbulence. 
+
+Let us assume that,
+\begin{equation}
+    \frac{V}{2\pi}\textbf{k} = n_1\textbf{e}^{(1)}+n_2\textbf{e}^{(1)}+n_3\textbf{e}^{(1)}
+\end{equation}
+if the force is along $\textbf{e}^{(1)}$ then, 
+\begin{equation}
+    \textbf{ff}: 
+    \frac{\bm\delta\bm\delta k_n^4 
+    - \bm\delta k_n^2\textbf{k}_n\textbf{k}_n
+    - \textbf{k}_n\textbf{k}_n\bm\delta k_n^2
+    + \textbf{k}_n\textbf{k}_n\textbf{k}_n \textbf{k}_n }{k_n^8} 
+    = 
+    \frac{\textbf{e}^{(1)}\textbf{e}^{(1)} k_n^4 
+    -  k_n^2 n_1\textbf{e}^{(1)}\textbf{k}_n
+    -  k_n^2 n_1\textbf{k}_n\textbf{e}^{(1)}
+    + n_1^2 \textbf{k}_n \textbf{k}_n }{k_n^8} 
+\end{equation}
+the velocity varience on $\textbf{e}_1$ becomes,
+\begin{equation}
+    \sum_{n\in \mathbb{N}^3} \frac{k_n^4 + n_1^4
+    -  2k_n^2 n_1^2
+      }{k_n^8} 
+      = 
+\end{equation}
+
+
+

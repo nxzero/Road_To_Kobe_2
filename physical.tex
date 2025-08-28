@@ -1,10 +1,10 @@
 \documentclass[11pt]{My_preprint}
 
 
-\title{Physical interpretation of the two fluid model}
+\title{FoReCaSt: Statistical model of dilute dispersed two-phase flows. 1D/ 3D}
 
 \author[1,2]{Nicolas Fintzi}
-%\author[2]{Daniel Lhuillier}
+\author[2]{Victor Boniou}
 \author[1]{Jean-Lou Pierson}
 % \author[2]{Stephane Popinet}
 \affil[1]{IFP Energies Nouvelles, Rond-point de l'echangeur de Solaize, 69360 Solaize}
@@ -21,16 +21,240 @@
 \input{The_hybride_model/singularity_for_capilary.tex}
 \input{physical_interpretation_two_fluid_model/stability_continuity_wave.tex}
 
-\section{TO DO :Radial Balance}
-The bulk momentum equation along the radial and longitudinal direction read,
+\section{Averaged Mass and momentum conservation equations and their closures}
+
+There is multiples way to formulate the momentum equation for a two-fluid mixture. 
+In the following we present two different formulation of the equation. 
+The first one consists in solving for ($\phi, \textbf{u}_p, \textbf{u}_f$), where $\phi$ is the droplets' volume fraction, $\textbf{u}_p$ their mean center of mass velocity, and $\textbf{u}_f$ the mean velocity of the continuous phase. 
+The second formulation consists in solving an equation for \textbf{u} rather than $\textbf{u}_f$. 
+
+\subsection{First proposition:}
+
+From the study of \citet{jackson2000,zhang1997momentum,fintzi2024averaged} one can state that $\phi$, $\textbf{u}_p$, and $\textbf{u}_f$ are governed by, 
 
 \begin{align}
-0 =& - \frac{\partial  p_{eff} }{\partial z} + \frac{1}{r}\frac{\partial}{\partial r}\left(r \mu \frac{\partial u_z}{\partial r} + \Sigma_{rz}^{(p)}\right) - (\rho_f \epsilon + \rho_p \phi)g\\
-0 =& - \frac{\partial  p_{eff} }{\partial r} + \frac{1}{r}\frac{\partial}{\partial r}\left(r \Sigma_{rr}^{(p)}\right) - \frac{\Sigma _{\theta\theta}^{(p)}}{r}
+    \label{eq:firstSys}
+    \phi_f + \phi &= 1\\
+    \phi_f\textbf{u}_f + 
+    \phi\textbf{u}_p&=\textbf{u}\\
+    \div \textbf{u} &= 0\\
+    (\pddt + \textbf{u} \cdot \grad)\phi
+    &=
+    \div (\phi \textbf{u}_r)\\
+    \rho_d \phi (\pddt + \textbf{u}_p \cdot \grad)\textbf{u}_p
+    % + \div \pavg{m_p \textbf{u}_\alpha'\textbf{u}_\alpha'}
+    &=
+    \phi( - \grad p_f + \mu_f \grad^2 \textbf{u}
+    + \rho_d  \textbf{g})
+    + \div \bm\sigma_p^\text{eff}
+    + \textbf{F}
+    \\
+    \phi_f \rho_f(\pddt + \textbf{u}_f  \cdot \grad) \textbf{u}_f
+    % - \div \avg{\chi_f\rho_f \textbf{u}_f'\textbf{u}_f'}
+    &= (1-\phi) 
+    \left( - \grad p_f + \mu_f \grad^2 \textbf{u}
+    + \rho_f \textbf{g}\right)
+    + \div \bm\sigma_f^\text{eff}
+    -\textbf{F}
+    \label{eq:lastSys}
+\end{align}
+where $p_f$ is the mean pressure, \textbf{F} represents the interphase momentum exchange, and $\bm\sigma_{p/f}^\text{eff}$ the additional stresses, ``above the continuous phase stress''.
+
+
+\subsubsection{Dilute and viscous regime closures}
+If one neglect all $o(\phi)$ and $O(\phi Re)$ terms we may derive exact analytical closure, namely,  
+\begin{align}
+    \textbf{F}=&
+    \phi
+    \frac{\mu_f}{a^2}
+    \frac{3(2+3\lambda)}{2(1+\lambda)}\textbf{u}_r
+    + \phi\mu_f  \frac{3\lambda}{4(\lambda +1)} \grad^2 \textbf{u}
+    % + \phi \frac{1}{a}\frac{1}{\lambda +1} \grad \gamma
+    % + \phi a \frac{1}{10(\lambda +1)}\grad^2(\grad\gamma)
+    \\
+    % \bm\sigma_f^\text{eff}
+    % =&
+    % \bm\sigma_f^\text{eff-1}
+    % + \mu_f a^2 \bm\sigma_f^\text{eff-2} \\
+    \bm\sigma_f^\text{eff}
+    =&
+     \mu_f \phi \frac{5\lambda +2}{4(\lambda+1)} (\grad \textbf{u}+^\dagger \grad \textbf{u})
+    - \mu_f \frac{3\lambda}{4(\lambda+1)} [
+    \grad(\phi \textbf{u}_r)
+    + \grad(\phi \textbf{u}_r)^\dagger]
+    + \mu_f \frac{3\lambda - 2}{4(\lambda+1)} \div(\phi \textbf{u}_r)  \bm\delta\nonumber\\
+    &-\rho_f C^1_{uu}(\phi,\lambda)  (\textbf{u}_r \textbf{u}_r - \frac{1}{3}u_r^2\bm\delta)
+    -\rho_f C^2_{uu} (\phi,\lambda) (\textbf{u}_r \cdot \textbf{u}_r)\bm\delta
+    \label{eq:sigma_feffff}\\
+    \bm\sigma_p^\text{eff}
+    =&
+    -\rho_d C^1_{up}(\phi,\lambda) (\textbf{u}_r \textbf{u}_r-\frac{1}{3}u_r^2\bm\delta)
+    -\rho_d C^2_{up}(\phi,\lambda) (\textbf{u}_r \cdot \textbf{u}_r)\bm\delta
+\end{align}
+where $\lambda = \mu_d/\mu_f$ is the viscosity ratio of the dispersed phase over the continuous phase, and $a$ the radius.
+Note that we may also use $d$ for diameter of droplets.  
+$\textbf{u}_r = \textbf{u}- \textbf{u}_p$ is the relative velocity between phase. 
+Note that the constant $C^n_{\ldots}$ remain unkown yet non-neglgiible in this regime, they represent the contribution form the continuous phase, and dispersed phase velocity variance. 
+Based on experimental measurements by \citet{cartellier2009induced}, particle-resolved simulations by \citet{fintzi2025}, and theoretical results in triply periodic domains by \citet{hill2001first}, it is reasonable to expect that these constants follow the scaling:
+\begin{equation}
+C_{uu}^1, C_{uu}^2 \propto \phi^{2/3} \frac{(2+3\lambda)^2}{(\lambda+1)^2}.
+\end{equation}
+Likewise, $C_{up}^1$ and $C_{up}^2$ are unknown constants which are $\propto \phi^{2/3}$\citep{guazzelli2011fluctuations}. 
+\subsubsection{Steady-state closure}
+In this section we consider the effect of finite $Re (<100)$ and larger $\phi <0.2$, however we only consider the steady state contribution of the closure term (no added mass effect etc$\ldots$). 
+
+In this situations one may express the drag force as \citep[Chapter 8]{fintzi2025}, 
+\begin{align}
+    \textbf{F} &= \frac{\phi}{(1-\phi)^2} \frac{3}{4 d} \rho_f |\textbf{u}_r|\textbf{u}_r C_d(\lambda,Re,\phi)\\
+    C_d &= C_d^{\phi = 0} h(Re,\phi,\lambda)\\
+    h(Re,\phi,\lambda) 
+    &=
+    \frac{(1-\phi)^{2-n}+ Re (1-\phi)^{3-2n}}{1+Re}\\
+    n &= \frac{\frac{3}{2} \frac{2+3\lambda}{\lambda+1} + 2.4 \cdot 0.048 Re^{0.75}}{1+0.048 Re^{0.75}}. \\
+    C_D^0(Re,\lambda) &= \frac{C_{Ds}^0(Re)+\lambda C_{Db}^0(Re)}{1+\lambda}\\
+    C_{Ds} ^0 &= \frac{24}{Re}(1+0.15Re^{0.687}), \\
+    C_{Db} ^0 &= \frac{16}{Re}\left(1+\left[\frac{8}{Re}+\frac{1}{2}\left(1+3.315Re^{-1/2}\right)\right]^{-1}\right),
+\end{align}
+with,
+\begin{equation}
+    Re= \frac{\textbf{u}_r \rho_f d}{(1-\phi)\mu_f}. 
+\end{equation}
+Additionally, based on DNS we find (with some simplification compared to \citet[chapter 8]{fintzi2025}), 
+\begin{align*}
+    C^1_{uu}(\phi,\lambda)
+    = \frac{9(2+3\lambda)^2}{80(1+l)^2}
+    % \left[
+        \Gamma(1/3) \phi^{2/3}
+        (e^{-Re} - 1)/2
+        % - (27+82\lambda +62\lambda^2)
+    % \right]
+    ,
+    &&
+    C^2_{uu}(\phi,\lambda)
+    = \frac{(2+3\lambda)^2}{24(1+l)^2}
+    % \left[
+        \Gamma(1/3) \phi^{2/3}.
+        (e^{-Re} - 1)/2
+        % - (3+10\lambda +8\lambda^2)
+    % \right].
+\end{align*}
+where $\Gamma(1/3) \approx 2.67893853470775$. 
+
+The other term in $\bm\sigma_{f/p}^\text{eff}$ remain to be extended to higher $Re$ and $\phi$. 
+
+
+\subsubsection{Second proposition:}
+
+In this second formulation of the problem we propose to replace the equation for $\textbf{u}_f$ by a momentum equation for $\textbf{u}$.
+It can be derived following the procedure outlined in \citet{fintzi2025},
+
+\begin{equation}
+    (\pddt + \textbf{u} \cdot \grad)\textbf{u}
+    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+    = 
+    (1 + \kappa \phi)(
+        -\grad p_f   + \mu_f \grad^2 \textbf{u}
+    )/\rho_f
+    +  \textbf{g}
+    + \div \bm\sigma^\text{eff}
+    + \kappa/\rho_f  \textbf{F}
+    \label{eq:u_dt}
+    % \bm\sigma_* &\approx  (\bm\sigma_p^\text{eff} + \bm\sigma_f^\text{eff})/\rho_f 
+    % \bm\Sigma &= 
+    % - p_f/\rho_f  \bm\delta + \mu_f/ \rho_f (\grad \textbf{u}+ ^\dagger \grad \textbf{u})
+\end{equation}
+where,
+\begin{equation}
+    \kappa/\rho_f = (\frac{1}{\rho_d}- \frac{1}{\rho_f})
+\end{equation}
+For instance one may just consider that, 
+\begin{equation}
+    \bm\sigma_*
+    =
+    \mu_f f^0(\phi,\lambda) (\grad \textbf{u}+^\dagger \grad \textbf{u} ) \bm\delta\nonumber\\
+    -\rho_f f^1(\phi,\lambda)  (\textbf{u}_r \textbf{u}_r - \frac{1}{3}u_r^2\bm\delta)
+    -\rho_f f^2 (\phi,\lambda) (\textbf{u}_r \cdot \textbf{u}_r)\bm\delta,
+\end{equation}
+where the $f^{(\ldots)}$ are unknown scalar functions of $O(\phi^n)$ with $n\ge 2/3$. 
+
+
+\tb{
+    This last formulation seems easier to compute because $\div \textbf{u}= 0$. However, there is $(1+\phi\kappa)$ in front of the pressure term hence the equation for the pressure may be not so easy. 
+}
+
+\paragraph{The pressure equation}
+
+Analogously to the PISO algorithm one may derive an equation for the pressure $p_f$ taking the divergence of the above momentum equaiton, it yields, 
+\begin{equation}
+    \grad \textbf{u} : \grad\textbf{u}
+    % (\textbf{u} \cdot \grad)\div \textbf{u}
+    = 
+    (1 + \kappa \phi)(
+        -\grad^2 p_f   
+    )/\rho_f
+    + \kappa \grad \phi \cdot (
+        -\grad p_f   + \mu_f \grad^2 \textbf{u}
+    )/\rho_f
+    + \grad\grad : \bm\sigma^\text{eff}
+    + \kappa/\rho_f  \div\textbf{F}
+\end{equation}
+When $\grad \phi \neq 0$ this gets complicated... 
+
+\section{One dimensional equations}
+
+For instance, we consider pure 1D flow such that all vector, $\textbf{u}(x,y,z)= u(x)  \textbf{e}_x$, and all tensor $\bm\sigma = \textbf{e}_x \textbf{e}_x \sigma(x)$, where $\textbf{e}_x$ is the unit vector pointing the direction of the flow.
+Additionally $\textbf{g}= \textbf{e}_x g$. 
+
+In this case the system of equations simplify greatly to, 
+\begin{align}
+    \phi_f + \phi &= 1\\
+    \phi_f u_f + 
+    \phi u_p&=u\\
+    \pddx u &= 0\\
+    (\pddt + u \pddx )\phi
+    &=
+    \pddx (\phi u_r)\\
+    \rho_d \phi (\pddt + u_p \pddx)u_p
+    % + \div \pavg{m_p \textbf{u}_\alpha'\textbf{u}_\alpha'}
+    &=
+    \phi( -  \pddx p_f 
+    % + \mu_f \grad^2 \textbf{u}
+    + \rho_d   g)
+    + \pddx \sigma_p^\text{eff}
+    +  F
+    \\
+    \phi_f \rho_f(\pddt + u_f  \pddx) u_f
+    % - \div \avg{\chi_f\rho_f \textbf{u}_f'\textbf{u}_f'}
+    &= (1-\phi) 
+    \left( - \pddx p_f %+ \mu_f \grad^2 \textbf{u}
+    + \rho_f g\right)
+    + \pddx \sigma_f^\text{eff}
+    - F
+\end{align}
+The last equation might be replaced by, 
+\begin{equation}
+    (\pddt + u \pddx )u
+    % + \div \avg{\rho_f \textbf{u}' \textbf{u}'}
+    = 
+    \frac{-1}{\rho_f}(1 + \kappa \phi)
+        \pddx p_f %  + \mu_f \grad^2 \textbf{u}
+    + g
+    + \pddx \sigma^\text{eff}
+    + \kappa/\rho_f  F
+    \label{eq:u_dt}
+    % \bm\sigma_* &\approx  (\bm\sigma_p^\text{eff} + \bm\sigma_f^\text{eff})/\rho_f 
+    % \bm\Sigma &= 
+    % - p_f/\rho_f  \bm\delta + \mu_f/ \rho_f (\grad \textbf{u}+ ^\dagger \grad \textbf{u})
+\end{equation}
+with, 
+\begin{align}
+    \sigma_{p/f/.}^\text{eff} = \textbf{e}_x \textbf{e}_x : \bm\sigma_{p/f/.}\\
+    F_{p/f/.}^\text{eff} = \textbf{e}_x \cdot \textbf F_{p/f/.}
 \end{align}
 
-Then inserting $\Sigma^{(p)} = \mu \phi A(\phi) \bm E + \rho_f \phi  C (\phi,Re) \left( \textbf{u}_r\textbf{u}_r - \frac{1}{3}(\textbf{u}_r\textbf{u}_r: \bm \delta) \bm \delta\right)$
-one obtain than the bulk flow cannot be a Poiseuille flow since the pressure depends on the radial coordinate.
+\tb{
+    The key advantage of this formulation is that $\pddx u = 0$ hence $u = cst$ and so the advective term in the momentum equation of $u$ vanish regardless of the Reynolds number. 
+}
 
 \bibliography{Bib/bib_bulles.bib}
 \end{document}

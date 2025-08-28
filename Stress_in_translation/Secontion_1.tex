@@ -1,9 +1,17 @@
 \section{Introduction}
 
+
+\begin{enumerate}
+    \item Multiphase flows are importants 
+    \item They use avg equation
+    \item As identified in, \citet{fintzi2024averaged} the pure theoritical analysis was approximately limited to stokes flow 
+    \item Hence in this contribution we analys the effect of finite inertia
+\end{enumerate}
 To better illustrate the role of various forces and stresses in a multiphase flow model, we begin by presenting the averaged momentum equations for the dispersed and continuous phases, derived through an ensemble averaging procedure.
 For mono-disperse emulsions, the mass and momentum equations of the continuous phase and dispersed phase can be written as \citep{fintzi2024averaged},
 \begin{align}
     % \phi_f + \phi &= 1\\
+    \label{eq:dt_phif}
     (\pddt + \textbf{u}_f  \cdot \grad) \phi_f
     &= - \phi_f \div \textbf{u}_f\\
     (\pddt + \textbf{u}_p \cdot \grad)n_p
@@ -43,7 +51,7 @@ The number density, continuous phase volume fraction, drag force density, and ef
     n_p \textbf{f}_p  &= \pSavg{\bm\sigma^*_f\cdot \textbf{n}}
     \label{eq:f_alpha}
     \\
-    \bm{\sigma}_p^{\text{eff}} &= \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    \bm{\sigma}_p^{\text{eff}} &= -\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
     \label{eq:def_uup}
     \\
     \bm{\sigma}^{\text{eff}}_f 
@@ -84,14 +92,17 @@ If we take the example of the drag force term, using~\ref{eq:conditional_average
 \begin{equation}
     \pSavg{\bm\sigma^*_f\cdot \textbf{n}}
     =
-    \intS[p]{
+    \int_{\mathbb{R}^3} n_p[\textbf{x},t]\intS[p]{
         \left\{
             p_f^1 \bm\delta 
     + \mu_f [\grad \textbf{u}^1 + (\grad \textbf{u}^1)^\dagger]
         \right\}\cdot \textbf{n}
-    }(\textbf{r}),
+    }(\textbf{r})  P[\textbf{w}|\textbf{x},t]
+    d^3 \textbf{w},
+    \label{eq:conditional_average}
 \end{equation}
-where $p_f^1$ and $\textbf{u}^1$, are the pressure and velocity field ensemble averaged on every configuration where a particle is located at $\textbf{x}$, minus the (unconditionally) ensemble averaged  pressure and velocity fields (i.e. $p_f$, and $\textbf{u}_f$).
+where $p_f^1[\textbf{r}|\textbf{x},\textbf{w}]$ and $\textbf{u}^1[\textbf{r}|\textbf{x},\textbf{w}]$, are the pressure and velocity field ensemble averaged on every configuration where a particle is located at $\textbf{x}$ with center of mass velocity \textbf{w}, minus the (unconditionally) ensemble averaged  pressure and velocity fields (i.e. $p_f[\textbf{r},t]$, and $\textbf{u}[\textbf{r},t]$).
+Here, $ P[\textbf{w}|\textbf{x},t]$ is the probability of finding a droplet with center of mass velocity \textbf{w} knowing that the droplet is present at \textbf{x}. 
 As it will be seen in the next section, the equations governing these fields can obtain by conditionally averaging the local Navier-Stokes equations, hence obtaining Maxey-Riley-Gatignol equations around a test droplet \citep{fintzi2025}. 
 Note that to fix the boundary condition of the conditional equation one can condition the pressure and velocity field by, let says the center of mass velocity of the test particle and then integrate over all probable values of droplets center of mass velocity. 
 
