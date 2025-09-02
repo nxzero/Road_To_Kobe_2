@@ -1,154 +1,167 @@
 
-\section{Slightly inertial suspension Rheology}
-
-Before presenting the (nearly) closed system of equations, we start by presenting the averaged and dimensional zeroth, first and second moments of forces, i.e. (\ref{eq:drag_force_application_last,eq:first_mom_trans_res,eq:second_mom_final}). 
-Additionally, for a better physical understanding we will be presenting the result, as well as the entire system of averaged equation in dimensional form. 
-Then, the results shown in the above sections still remain to be averaged over all particles center of mass velocities \textbf{w}~\eqref{eq:conditional_average} in order to obtain the ensemble averaged values.
+\section{Slightly inertial suspension Rheology}\label{sec:averaged_equations}
+Before presenting the averaged system of equations~\eqref{eq:dt_phif,eq:div_u,eq:dt_phip,eq:dt_up,eq:dt_uf2} under a (nearly) closed form, we start by presenting the forces, first moment, and second moment of forces  under an  averaged and dimensional form. 
+Indeed, the results shown in the above sections still need to be integrated over all particles' center of mass velocities \textbf{w}~\eqref{eq:conditional_average}, and to be put in dimensional form, hence some manipulations are still necessary.
 
 
 
 \subsection{Averaged zeroth, first, and second moments of forces}
 
-First, note that in~\ref{eq:drag_force_application_last,eq:first_mom_trans_res,eq:second_mom_final} the viscous terms scale, linearly with $\textbf{u}_r= \textbf{u} - \textbf{w}$, while the 
+First, all the stresses on the left-hand-side of~\ref{eq:drag_force_application_last,eq:first_mom_trans_res,eq:second_mom_final} have been made dimensionless using the scale $\mu_f |\textbf{w}_r|/a$, and the lengths using $a$.
+Additionally, recall that the Reynolds number is given by $Re= |\textbf{w}_r|\rho_f a/\mu_f$. 
 
+Hence, the viscous terms in~\ref{eq:drag_force_application_last,eq:first_mom_trans_res,eq:second_mom_final} scale linearly with $\textbf{w}_r = \textbf{u} - \textbf{w}$.
+Thus, upon averaging overall \textbf{w} one simply get: 
+\begin{equation}
+    \int_{\mathbb{R}^3} P[\textbf{w}|\textbf{x},t]
+    \textbf{w}_r d\textbf{w} = \textbf{u} - \textbf{u}_p = \textbf{u}_r,
+\end{equation}
+where we have introduced $\textbf{u}_r$ as the mean relative velocity between phases. 
 
-All the stresses (especially, $\bm\sigma_o$) have been made dimensionless using the scale $\mu_f U/a$, and the vectors \textbf{r} by $a$, $dS$ by $a^2$.
-Recall that the Reynolds number is given by $Re= |\textbf{w} - \textbf{u}|\rho_f a/\mu_f$. 
-
-\begin{align}
-    \label{eq:forces_reformulated1}
-    \intS[p]{\bm\sigma_{o}\cdot \textbf{n}}
-    &=
-    v_p \frac{\mu_f}{a^2}  \frac{3(2+3\lambda)}{2(\lambda+1)}\textbf{u}_r+ 
-    + v_p \frac{\rho_f}{a} \frac{3 (2+3\lambda)^2}{16 (\lambda+1)^2}
-    |\textbf{u}_r| \textbf{u}_r,\\
-        \intS[p]{\textbf{r}\bm\sigma_{o}\cdot \textbf{n}}
-        - \intO[i]{2\mu_f \textbf{e}_i}
-        &= 
-        - \rho_f v_p  \frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 (\lambda+1)^{3}}  \textbf{u}_r \textbf{u}_r
-       \\ \nonumber
-        % \label{eq:first_mom_trans_res2}
-        % \intS[p]{\textbf{r} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
-        &+ v_p \rho_f   \frac{48\lambda^3 + 105 \lambda^2 + 62\lambda + 8}{240 (\lambda+1)^3} (\textbf{u}_r\cdot \textbf{u}_r) \bm\delta\\
-    \label{eq:forces_reformulated2}
-        \frac{1}{2}\intS[p]{r_kr_j ( \bm\sigma_{o}\cdot \textbf{n})_i}
-        - \intO[i]  { 2\mu_f r_k (\textbf{e}_i)_{ji}}
-        &= v_p \mu_f \frac{ 3}{4(\lambda+1)} [
-            \frac{2}{3}\delta_{ij} (\textbf{u}_r)_k 
-            + \lambda \delta_{jk} (\textbf{u}_r)_i
-        ]\\ 
-        &+ v_p a \rho_f  
-        \frac{3}{256(\lambda+1)^2} [
-            (3\lambda^2+20\lambda +12) \delta_{ij} |\textbf{u}_r|(\textbf{u}_r)_k \\
-            &-( 3\lambda+2)^2 \delta_{ik} |\textbf{u}_r|(\textbf{u}_r)_j 
-            + 8 \lambda (3\lambda+2)\delta_{jk} |\textbf{u}_r|(\textbf{u}_r)_i
-        ], 
-        \label{eq:forces_reformulated3}
-\end{align}
-where we have introduced $v_p = 4/3\pi a^3$. 
-
-Integrating, $\textbf{u}_r\textbf{u}_r$ on all the probable center of mass velocity (\textbf{w}) yields, 
+In dimensional form the first moment of forces, given by~\ref{eq:first_mom_trans_res}, scale as $\textbf{w}_r\textbf{w}_r$.
+Hence, upon averaging overall $\textbf{w}$ one obtain,   
 \begin{equation}
     n_p[\textbf{x},t]\int_{\mathbb{R}^3} P[\textbf{w}|\textbf{x},t]
     \textbf{u}_r\textbf{u}_r d\textbf{w}
-    =
-    n_p[\textbf{x},t]\int_{\mathbb{R}^3} P[\textbf{w}|\textbf{x},t]
-    (\textbf{u}-\textbf{w})(\textbf{u}-\textbf{w}) 
-    d\textbf{w}
+    % =
+    % n_p\int_{\mathbb{R}^3} P[\textbf{w}]
+    % (\textbf{u}-\textbf{w})(\textbf{u}-\textbf{w}) 
+    % d\textbf{w}
     = 
-    n_p[\textbf{x},t] \textbf{u}_r \textbf{u}_r
+    n_p \textbf{u}_r \textbf{u}_r
     + \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'},
     \label{eq:standard_dev1}
 \end{equation}
-where the definition, 
-\begin{equation}
-    \int_{\mathbb{R}^3} P[\textbf{w}|\textbf{x},t]
-    \textbf{w} d\textbf{w} = \textbf{u}_p,
-\end{equation}
-have been used. 
+where we recall that $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ is the droplet center of mass velocity variances responsible for the momentum flux in~\ref{eq:dt_up}. 
 
-Now turning our attention to the terms, $|\textbf{u}_r|\textbf{u}_r$ we obtain, 
+Turning our attention to the Oseen force and the inertial contribution of the second moment of force i.e.,~\ref{eq:drag_force_application_last,eq:second_mom_final}. 
+In dimensional form, we remark that we must integrate terms proportional to $|\textbf{w}_r|\textbf{w}_r$.
+Because  $|\textbf{w}_r|\textbf{w}_r$ is a power function of $\textbf{w}_r$, its average cannot be written for an arbitrary distribution $P[\textbf{w}|\textbf{x},t]$ in terms of $\textbf{u}_r$ and $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$.  
+Nevertheless, if we assume that $\textbf{w}$ always stays in the neighborhood of $\textbf{u}_p$, then one can Taylor expand the function $|\textbf{w}_r|$ around $\textbf{u}_r$ and obtain the approximation (see~\ref{ap:varience}): 
 \begin{align}
-    n_p  \int_{\mathbb{R}^3} 
-    |\textbf{u}- \textbf{w}| (\textbf{u}-\textbf{w})
-    P(\textbf{w})
+    n_p[\textbf{x},t]  \int_{\mathbb{R}^3} 
+    |\textbf{w}_r| \textbf{w}_r
+    P[\textbf{w}|\textbf{x},t]
     d\textbf{w}
     &=
     n_p  
     |\textbf{u}_r|\textbf{u}_r + 
     \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}:
-    (\bm\delta \textbf{e} +\textbf{e} \bm\delta  - \textbf{eee})
-    +O(\pavg{|u_\alpha'|^3})\\
+    (\bm\delta \textbf{p} +\textbf{p} \bm\delta  - \textbf{ppp})
+    +O(\pavg{(\textbf{u}_\alpha')^{(n)}})\nonumber \\
     &=
     n_p  
     |\textbf{u}_r|\textbf{u}_r + 
     n_p \textbf{R}_p
-    +O(\pavg{|u_\alpha'|^3})
+    +O(\pavg{(\textbf{u}_\alpha')^{(n)}})
     \label{eq:standard_dev2}
 \end{align}
-with $\textbf{e} = \textbf{u}_r|\textbf{u}_r|^{-1}$ being the unit vector in the direction of $\textbf{u}_r$, and $n_p\textbf{R}_p$ a vector representing $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}: (\bm\delta \textbf{e} +\textbf{e} \bm\delta  - \textbf{eee})$. 
-That expression cannot be computed exactly because it involve the average of non-linear term du to the $|\ldots|$ funciton. 
-Hence, this formula is derived assuming $\textbf{u}- \textbf{w}$ deviates only a litte compared to $\textbf{u}- \textbf{u}_p$. 
-In which case it is possible to taylor expand the function $|\textbf{u}- \textbf{w}|$ and to express the average of the whole expression in terme of only the second moment of velocity. 
+with $\textbf{p} = \textbf{u}_r|\textbf{u}_r|^{-1}$ is the unit vector in the direction of $\textbf{u}_r$, and $n_p\textbf{R}_p$ a shorthand for the term involving the velocity fluctuation. 
+The error generated by this approximation scale as $O(\pavg{(\textbf{u}_\alpha')^{(n)}})$ where $n\ge 3$, hence the error represent the third, fourth, \ldots, and $n^{th}$, order moments of the distribution of $P[\textbf{w},\textbf{x},t]$ that we have neglected.
+Consequently, if  $P[\textbf{w}|\textbf{x},t]$ is a normal distribution (relatively true in viscous flows), then this formula is exact because the skewness and all other higher moments of the distribution  are zero. 
 
 
-Averaging~\ref{eq:forces_reformulated1,eq:forces_reformulated2,eq:forces_reformulated3} overall \textbf{w} and using~\ref{eq:standard_dev1,eq:standard_dev2} we obtain the ensemble averaged zeroth, first, and second moment of forces to be used in~\ref{eq:def_sigma_eff_f,eq:f_alpha}, namely, 
-\begin{multline}
+% \begin{align}
+%     \label{eq:forces_reformulated1}
+%     \intS[p]{\bm\sigma_{o}\cdot \textbf{n}}
+%     &=
+%     v_p \frac{\mu_f}{a^2}  \frac{3(2+3\lambda)}{2(\lambda+1)}\textbf{u}_r+ 
+%     + v_p \frac{\rho_f}{a} \frac{3 (2+3\lambda)^2}{16 (\lambda+1)^2}
+%     |\textbf{u}_r| \textbf{u}_r,\\
+%         \intS[p]{\textbf{r}\bm\sigma_{o}\cdot \textbf{n}}
+%         - \intO[i]{2\mu_f \textbf{e}_i}
+%         &= 
+%         - \rho_f v_p  \frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 (\lambda+1)^{3}}  \textbf{u}_r \textbf{u}_r
+%        \\ \nonumber
+%         % \label{eq:first_mom_trans_res2}
+%         % \intS[p]{\textbf{r} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
+%         &+ v_p \rho_f   \frac{48\lambda^3 + 105 \lambda^2 + 62\lambda + 8}{240 (\lambda+1)^3} (\textbf{u}_r\cdot \textbf{u}_r) \bm\delta\\
+%     \label{eq:forces_reformulated2}
+%         \frac{1}{2}\intS[p]{r_kr_j ( \bm\sigma_{o}\cdot \textbf{n})_i}
+%         - \intO[i]  { 2\mu_f r_k (\textbf{e}_i)_{ji}}
+%         &= v_p \mu_f \frac{ 3}{4(\lambda+1)} [
+%             \frac{2}{3}\delta_{ij} (\textbf{u}_r)_k 
+%             + \lambda \delta_{jk} (\textbf{u}_r)_i
+%         ]\\ 
+%         &+ v_p a \rho_f  
+%         \frac{3}{256(\lambda+1)^2} [
+%             (3\lambda^2+20\lambda +12) \delta_{ij} |\textbf{u}_r|(\textbf{u}_r)_k \\
+%             &-( 3\lambda+2)^2 \delta_{ik} |\textbf{u}_r|(\textbf{u}_r)_j 
+%             + 8 \lambda (3\lambda+2)\delta_{jk} |\textbf{u}_r|(\textbf{u}_r)_i
+%         ], 
+%         \label{eq:forces_reformulated3}
+% \end{align} 
+
+In summaries averaging~\ref{eq:drag_force_application_last,eq:first_mom_trans_res,eq:second_mom_final} overall \textbf{w} and using~\ref{eq:standard_dev1,eq:standard_dev2} we obtain the ensemble averaged zeroth, first, and second moment of forces, which read, in dimensional form: 
+\begin{align}
     \label{eq:forces_reformulated1_avg}
     \pSavg{\bm\sigma_f^*\cdot \textbf{n}}
     =
     \frac{\mu_f}{a^2}  \frac{3(2+3\lambda)}{2(\lambda+1)} \phi \textbf{u}_r 
     + \frac{\rho_f}{a} \frac{3 (2+3\lambda)^2}{16 (\lambda+1)^2}
-    [\phi |\textbf{u}_r| \textbf{u}_r+ v_p \pavg{ \textbf{u}_\alpha'\textbf{u}_\alpha'}:
-    (\bm\delta \textbf{e} +\textbf{e} \bm\delta  - \textbf{eee})]
-    ,
-\end{multline}    
-\begin{multline}    
+    \phi (|\textbf{u}_r| \textbf{u}_r+ \textbf{R}_p),\\
     \pSavg{\textbf{r}\bm\sigma_f^*\cdot \textbf{n}}
     - \pOavg[i]{2\mu_f \textbf{e}^*_d}
     = 
-    - \rho_f  \frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 (\lambda+1)^{3}} [\phi \textbf{u}_r \textbf{u}_r + v_p \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} ] \\ 
+    - \rho_f  \frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 (\lambda+1)^{3}} [\phi \textbf{u}_r \textbf{u}_r + v_p \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} ] \nonumber \\ 
     % \label{eq:first_mom_trans_res2}
     % \intS[p]{\textbf{r} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
-    + \rho_f   \frac{48\lambda^3 + 105 \lambda^2 + 62\lambda + 8}{240 (\lambda+1)^3} (\phi \textbf{u}_r\cdot \textbf{u}_r+ v_p \pavg{\textbf{u}_\alpha'\cdot \textbf{u}_\alpha'}) \bm\delta\\
-    \label{eq:forces_reformulated2_avg}
-\end{multline}    
-\begin{multline}
+    + \rho_f   \frac{48\lambda^3 + 105 \lambda^2 + 62\lambda + 8}{240 (\lambda+1)^3} (\phi \textbf{u}_r\cdot \textbf{u}_r+ v_p \pavg{\textbf{u}_\alpha'\cdot \textbf{u}_\alpha'}) \bm\delta
+    \label{eq:forces_reformulated2_avg}\\
     \frac{1}{2}\pSavg{r_kr_j ( \bm\sigma_{o}\cdot \textbf{n})_i}
     - \pOavg[i]{2 \mu_f r_k (\textbf{e}_i)_{ji}}
     =
     \phi \mu_f \frac{ 3}{4(\lambda+1)} [
         \frac{2}{3}\delta_{ij} (\textbf{u}_r)_k 
         + \lambda \delta_{jk} (\textbf{u}_r)_i
-    ]\\ 
+    ]\nonumber\\ 
     + \phi \rho_f 
     \frac{3}{256(\lambda+1)^2} [
-    (3\lambda^2+20\lambda +12) \delta_{ij} ( |\textbf{u}_r| \textbf{u}_r+\textbf{R}_p)_k\\
+    (3\lambda^2+20\lambda +12) \delta_{ij} ( |\textbf{u}_r| \textbf{u}_r+\textbf{R}_p)_k\nonumber \\
     -( 3\lambda+2)^2 \delta_{ik} (|\textbf{u}_r| \textbf{u}_r+\textbf{R}_p)_j
     + 8 \lambda (3\lambda+2)\delta_{jk}  (|\textbf{u}_r| \textbf{u}_r +\textbf{R}_p)_i
     ], 
     \label{eq:forces_reformulated3_avg}
+\end{align}
+As discussed in~\cite[Eq. (5.35)]{fintzi2025averaged}, in the averaged momentum equation~\ref{eq:dt_uf2} only the permutation, 
+\begin{multline}
+    K_{i(jk)}
+    + K_{j(ik)}
+    - K_{k(ij)}
+    =
+    \phi \mu_f \frac{3\lambda}{4(\lambda+1)} [\delta_{ik} (\textbf{u}_r)_j + \delta_{jk} (\textbf{u}_r)_i]
+    + \mu_f \phi  \frac{ 2 - 3\lambda}{4(\lambda+1)}  \delta_{ij} (\textbf{u}_r)_k\\
+    + \phi a \rho_f \frac{ 3\lambda}{32(\lambda+1)^2} ( 3\lambda+2) [\delta_{ik} (\textbf{u}_r|\textbf{u}|)_j + \delta_{jk} (\textbf{u}_r|\textbf{u}|)_i]\\
+    - 
+    \phi a \rho_f \frac{3}{128(\lambda+1)^2} ( 15\lambda^2+4\lambda -4) \delta_{ij} (\textbf{u}_r|\textbf{u}_r|+\textbf{R}_p)_k.
+    \label{eq:symmetry}
 \end{multline}
+will be of physical relevance, because this tensor appears under the double divergence sign, i.e. $\partial_k \partial_j$.
+Here $K_{ijk}$ represents the relation given by~\ref{eq:forces_reformulated3_avg}. 
+In~\ref{eq:symmetry}, the $(\ldots)$ represents symmetry over two indices. 
+This transformation is useful to highlight that the equivalent stress is symmetric along $ij$, which is a necessary requirement to conserve the objectivity of the effective stress~\citep{renee2023thermomecanique}\footnote{
+    For example the stress tensor: $\bm\sigma = \grad \textbf{u}+ ^\dagger \grad \textbf{u}$ is objective, in opposition to $\bm\sigma = \grad \textbf{u}$, which is not. 
+    The same apply for the gradient of $\textbf{u}_r$. 
+}. 
 
-\subsection{Mass and momentum equations}
+\subsection{Averaged system of equations}
 
-The results from the Stokes regime given in \citet{fintzi2024averaged}, together with the one given in the previous section can be incorporated into~\ref{eq:dt_phif} to~\ref{eq:dt_uf2}, to yield, 
+The results from the Stokes regime given in \citet{fintzi2025averaged}, together with the one given in the previous sections~\eqref{eq:forces_reformulated1_avg,eq:forces_reformulated2_avg,eq:forces_reformulated3_avg,eq:symmetry} can be incorporated into~\ref{eq:dt_phif,eq:div_u,eq:dt_phip,eq:dt_up,eq:dt_uf2}, it yields, 
 \begin{align}
     \label{eq:firstSys}
-    \phi_f + \phi &= 1\\
-    \phi_f\textbf{u}_f + 
-    \phi\textbf{u}_p&=\textbf{u}\\
-    \div \textbf{u} &= 0\\
+    \phi_f + \phi &\approx 1,\\
+    \div \textbf{u} &= 0,\\
     (\pddt + \textbf{u} \cdot \grad)\phi
     &=
-    \div (\phi \textbf{u}_r)\\
+    \div (\phi \textbf{u}_r),\\
     \rho_d \phi (\pddt + \textbf{u}_p \cdot \grad)\textbf{u}_p
     % + \div \pavg{m_p \textbf{u}_\alpha'\textbf{u}_\alpha'}
     &=
     \phi(\div \bm\Sigma
     + \rho_d  \textbf{g})
     + \div \bm\sigma_p^\text{eff}
-    + \textbf{F}
+    + \textbf{F},
+    \label{eq:before_the_lastSys}
     \\
     \phi_f \rho_f(\pddt + \textbf{u}_f  \cdot \grad) \textbf{u}_f
     % - \div \avg{\chi_f\rho_f \textbf{u}_f'\textbf{u}_f'}
@@ -156,19 +169,19 @@ The results from the Stokes regime given in \citet{fintzi2024averaged}, together
     \left(\div \bm\Sigma
     + \rho_f \textbf{g}\right)
     + \div \bm\sigma_f^\text{eff}
-    -\textbf{F}
+    -\textbf{F},
     \label{eq:lastSys}
 \end{align}
-where the closures are given by,
+where,
 \begin{align}
     \textbf{F}=&
     \phi
     \frac{\mu_f}{a^2}
     \frac{3(2+3\lambda)}{2(1+\lambda)}\textbf{u}_r
-    + \phi\mu_f  \frac{3\lambda}{4(\lambda +1)} \grad^2 \textbf{u}\\
-    &+ \frac{\rho_f}{a} \frac{3 (2+3\lambda)^2}{16 (\lambda+1)^2}
-    [\phi |\textbf{u}_r| \textbf{u}_r+ v_p \pavg{ \textbf{u}_\alpha'\textbf{u}_\alpha'}:
-    (\bm\delta \textbf{e} +\textbf{e} \bm\delta  - \textbf{eee})]
+    + \phi\mu_f  \frac{3\lambda}{4(\lambda +1)} \grad^2 \textbf{u}
+    + \frac{\rho_f}{a} \frac{3 (2+3\lambda)^2}{16 (\lambda+1)^2}
+    \phi (|\textbf{u}_r| \textbf{u}_r+ \textbf{R}_p),
+    \label{eq:drag_final}
     \\
     \bm\sigma_f^\text{eff}
     =&
@@ -176,22 +189,47 @@ where the closures are given by,
     - \mu_f \frac{3\lambda}{4(\lambda+1)} [
     \grad(\phi \textbf{u}_r)
     + \grad(\phi \textbf{u}_r)^\dagger]
-    + \mu_f \frac{3\lambda - 2}{4(\lambda+1)} \div(\phi \textbf{u}_r)  \bm\delta\nonumber\\
-    &- \rho_f  \frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 (\lambda+1)^{3}} [\phi \textbf{u}_r \textbf{u}_r + v_p \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} ] \\ 
+    + \mu_f \frac{3\lambda - 2}{4(\lambda+1)} \div(\phi \textbf{u}_r)  \bm\delta\nonumber\nonumber \\
+    &- \rho_f  \frac{63 \lambda^{3} + 150 \lambda^{2} + 112 \lambda + 28}{80 (\lambda+1)^{3}} [\phi \textbf{u}_r \textbf{u}_r + v_p \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} ] \nonumber \\ 
     % \label{eq:first_mom_trans_res2}
     % \intS[p]{\textbf{r} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
-    &+ \rho_f   \frac{48\lambda^3 + 105 \lambda^2 + 62\lambda + 8}{240 (\lambda+1)^3} (\phi \textbf{u}_r\cdot \textbf{u}_r+ v_p \pavg{\textbf{u}_\alpha'\cdot \textbf{u}_\alpha'}) \bm\delta\\
-    &- a\rho_f\frac{ 3\lambda}{24(\lambda+1)^2} ( 3\lambda+2) [\grad (\phi|\textbf{u}|\textbf{u}_r+\phi\textbf{R}_p) + \grad (\phi|\textbf{u}|\textbf{u}_r+\phi\textbf{R}_p)]\\
-    &+ a\rho_f\frac{3}{128(\lambda+1)^2} ( 15\lambda^2+4\lambda -4) \delta_{ij} \div(\phi|\textbf{u}_r|\textbf{u}_r+ \phi\textbf{R}_p)\\
+    &+ \rho_f   \frac{48\lambda^3 + 105 \lambda^2 + 62\lambda + 8}{240 (\lambda+1)^3} (\phi \textbf{u}_r\cdot \textbf{u}_r+ v_p \pavg{\textbf{u}_\alpha'\cdot \textbf{u}_\alpha'}) \bm\delta\nonumber \\
+    &- a\rho_f\frac{ 3\lambda}{32(\lambda+1)^2} ( 3\lambda+2) [\grad (\phi|\textbf{u}_r|\textbf{u}_r+\phi\textbf{R}_p) + \grad (\phi|\textbf{u}_r|\textbf{u}_r+\phi\textbf{R}_p)]\nonumber \\
+    &+ a\rho_f\frac{3}{128(\lambda+1)^2} ( 15\lambda^2+4\lambda -4) \bm\delta \div(\phi|\textbf{u}_r|\textbf{u}_r+ \phi\textbf{R}_p)\nonumber \\
     &-\avg{\chi_f\rho_f \textbf{u}_f'\textbf{u}_f'}
     \label{eq:sigma_feffff}\\
-    \bm\sigma_p^\text{eff}
-    =&-\rho_d v_p\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
+    \bm\sigma_p^\text{eff},
+    =&-\rho_d v_p\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}.
 \end{align}
-We have made explicit the fact that the particle velocity variance appear twice in the dispersed phase equation. 
-This system of equation is closed entirely at the exception to the velocity variance terms $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$ and $\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$. 
+This system of equation is closed entirely, at the exception to the velocity variance terms: $\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}$, and $\avg{\chi_f \textbf{u}_f'\textbf{u}_f'}$.
+One may either solve transport equations for these variances, as is done in classical turbulence modelling \citep{pope2001turbulent} and in kinetic theory \citep{rao2008introduction}, respectively, or adopt explicit closures that relate them to $\textbf{u}_r$, $\lambda$, $\phi$, and their gradients. 
+It is reasonable to expect that the functional form of such closures does not introduce new behaviors beyond those already present in $\bm{\sigma}_f^\text{eff}$, so that the following discussion remains qualitatively valid after their inclusion\footnote{
+    Hints on their modelling are provided in \citet{fintzi2025averaged}. 
+    Additionally, a closure for the velocity variance of the continuous and dispersed phases in the Oseen regime can be found in \citet{koch1993hydrodynamic}. 
+}.
 
-A closure for the continuous phase and dispersed phase velocity variance can be found in this regime in the study of \citet{koch1993hydrodynamic} \tb{put the closure ?}
 
-\paragraph{On the objectivity of the stresses}
-This will be the case only if $\textbf{R}_p$ is objectif. 
+The first important point that we would like to address is the presence of the term $\sim \rho_f \phi  \textbf{u}_r\textbf{u}_r$ in $\bm\sigma_f^\text{eff}$. 
+This term is clearly non-negligible in buoyant suspension of droplets because of the strong relative motions between phases, induced by buoyancy forces.  
+The second moment of force is proportional to the gradient of $\sim a \rho_f \phi  \textbf{u}_r|\textbf{u}_r|$. 
+Depending on the magnitude of $\grad \phi$ and $\grad \textbf{u}_r$ (or $\grad |\textbf{u}_r|$) this term may be more or less important than the first moment contribution. 
+However, the separation of scale hypothesis used implicitly in this procedure assumes that these gradients posses a length scale $L$ a lot larger than the radius of a droplet $a$. 
+Consequently, the fourth and fifth lines of~\ref{eq:sigma_feffff} (i.e., the second moment contribution) are of $O(a/L)$ compared to the second and third lines (first moment contribution), hence the inertial part of the second moment is probably irrelevant in the modeling of the suspension Rheology. 
+Overall, the mixture momentum equation (the sum of~\ref{eq:before_the_lastSys,eq:lastSys}) is not a Newtonian fluid due to the stokes contribution of the second moment, and of the inertia contribution of the first moment, and, to a lesser extent, the inertial contribution of the second moment. 
+
+In the averaged momentum equation of the continuous phase~\eqref{eq:lastSys}, it is the divergence of the stress that matters; thus the first moment contributes through the terms $\rho_f \textbf{u}_r\textbf{u}_r \cdot \grad \phi$, and $\rho_f\phi  \div (\textbf{u}_r \textbf{u}_r)$. 
+Consequently, if strong gradients of volume fraction or strong inhomogeneities in $\textbf{u}_r$ are present (as is the case near a wall, see \citet{cox1971suspended}), these stresses may be important.
+ 
+
+Owing to the rigorous averaging procedure used here, we show that the velocity variance of the dispersed phase appears explicitly in $\textbf{F}$. 
+This point does not appear to have been raised previously. Although the Oseen drag law is valid only in a restricted $Re$ range, these results highlight that when using an isolated-particle model in an averaged framework, one must also average over the center of mass velocity of the test particle, thereby introducing moments of the dispersed phase velocity distribution.
+For example, the model of \citet{schiller1933}, when averaged over the particle center of mass velocity, acquires additional terms velocity variance terms. 
+The same comments apply to the first and second moments of forces. 
+
+
+Lastly, note that this system of equation can be completed with the average of~\ref{eq:beta_coef} which provides an estimation of the averaged deformation of the droplet in the suspension. 
+Then following,~\citet{taylor1964deformation} one could compute the Stokes drag force on a deformed droplet, but also the whole first moment on a deformed droplet~\citep{schowalter1968rheological}, to obtain a system of equation that accurate at $O(We)$\footnote{A formula for the second moment of force in terms of the deformation could also be required}. 
+But this is reported to a future work, hence for instance~\ref{eq:lastSys} is accurate at $O(Re \phi)$ and at $O(1)$ in $Ca$.  
+
+
+

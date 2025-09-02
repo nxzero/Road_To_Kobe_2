@@ -3,147 +3,230 @@
 
 
 
-\section{Points source and double point source solutions}
-\tb{a useful relation 
-
+\section{Points source, point force, and derivatives}
+\label{ap:singularity_sol}
+In this appendix we quickly demonstrate how to obtain the solution of a point source, point forces, and higher order derivatives of these flows. 
+First, we recall the useful relation, 
 \begin{equation}
     \delta(\textbf{x})
     =-\frac{1}{4\pi}\grad^2(1/r)
-    =-\frac{1}{8\pi}\grad^4r
+    =-\frac{1}{8\pi}\grad^4r.
+    \label{eq:usefuk_rel}
 \end{equation}
-knowing that every equation are easy. 
-}
-\subsection{Pressure free solution}
-Let us consider the equations, 
+The first equality only holds in the sense of generalized functions, the second equality can be obtained directly by differentiation of $r$. 
+These relations are used several times in the demonstration below. 
+
+\paragraph{Point sources solutions :}
+We start by the points source solutions, which obey the non-homogeneous Stokes equaitons: 
 \begin{align}
     \div\textbf{u}= 0 
     &&
-    \grad^2\textbf{u}=\grad p+ (\textbf{B}^{(n)}\otimes \grad^{(n)})\grad\delta(\textbf{r})
+    \grad^2\textbf{u}=\grad p+ (\textbf{Q}^{(n)}\otimes \grad^{(n)})\grad\delta(\textbf{r})
 \end{align}
-Hence, 
+Taking the divergence of the momentum equation gives,
 \begin{align}
-    \div\textbf{U}= 0 
-    &&
-    \grad^2\textbf{U}=\grad \textbf{P}+ \grad^{(n+1)} \delta(\textbf{r})
-    &&
-    \grad^2 \textbf{P} = \frac{1}{4\pi}\grad^{(n)}\grad^2 \grad^2(1/r) 
-    &&
-    \textbf{P} = \frac{1}{4\pi}\grad^{(n)}\grad^2(1/r) = 0 
+    \grad^2 p = \frac{1}{4\pi}\grad^{(n)}\grad^2 \grad^2(1/r) \otimes\textbf{Q}^{(n)}
+    \Longleftrightarrow
+    \textbf{P} = \frac{1}{4\pi}\grad^{(n)}\grad^2(1/r)\otimes\textbf{Q}^{(n)} = 0 
 \end{align}
-Then, 
+Hence, the momentum equation reads, 
 \begin{equation}
-    \grad^2\textbf{U}= -\frac{1}{4\pi } \grad^{(n+1)} \grad^2 (1/r)
-    \Longleftarrow
-    \textbf{U}= - \frac{1}{4\pi }\grad^{(n+1)}(1/r)
+    \grad^2\textbf{u}= -\frac{1}{4\pi } \grad^{(n+1)} \grad^2 (1/r) \otimes\textbf{Q}^{(n)}
+    \Longleftrightarrow
+    \textbf{u}= - \frac{1}{4\pi }\grad^{(n+1)}(1/r)\otimes\textbf{Q}^{(n)}
+    \label{eq:pts_source}
 \end{equation}
-This field is to be contracted with $\textbf{B}^{(n)}$ so that \textbf{u} is order $1$. 
-Because $\grad\textbf{U}$ is fully symmetric we have 
+Because $\grad\textbf{u}$ is already symmetric and $p=0$ we have, 
 \begin{equation}
-    \bm\Sigma = 2\grad \textbf{U}=- \frac{1}{4\pi }2 \grad^{(n+2)}(1/r)
+    \bm\sigma = 2\grad \textbf{u}=- \frac{1}{4\pi }2 \grad^{(n+2)}(1/r)\otimes \textbf{Q}^{(n)}. 
 \end{equation}
-
-in this case 
-\begin{equation}
-    \textbf{u}= \textbf{B}^{(n)}\otimes \textbf{U}^{(n+1)}
-\end{equation}
-The index of \textbf{u} is in \textbf{U}. 
-\subsubsection{Other forces}
+\paragraph{Point force solutions :} We seek a solution for,
 \begin{align}
     \div\textbf{u}= 0 
     &&
     \grad^2\textbf{u}=\grad p+ (\textbf{B}^{(n+1)}\otimes \grad^{(n)})\delta(\textbf{r})
 \end{align}
-Let search such as $\textbf{u} = \textbf{U}\otimes \textbf{B}^{(n+1)}$ and $p = \textbf{P}\otimes \textbf{B}^{(n+1)}$, 
-hence 
+where $\textbf{B}^{(n+1)}$ is an arbitrary $n+1$ order tensor. 
+Taking the divergence of the momentum equation yields, 
 \begin{align}
-    \div\textbf{U}= 0 
-    &&
-    \grad^2\textbf{U}=\grad \textbf{P}+ \bm\delta \grad^{(n)} \delta(\textbf{r})
-    &&
-     \textbf{P} = - \grad^{(n+1)} \delta(\textbf{r})
-    = \frac{1}{4\pi} \grad^{(n+1)} (1/r)
+    p = - \grad^{(n+1)} \delta(\textbf{r})\otimes \textbf{B}^{(n+1)}
+    = \frac{1}{4\pi} \grad^{(n+1)} (1/r)\otimes \textbf{B}^{(n+1)}
 \end{align}
-Hence, 
+Hence, the momentum equation can be re-written, 
 \begin{align}
-    \grad^2\textbf{U}
+    \grad^2\textbf{u}
     % =   \frac{1}{4\pi} \grad^{(n+1)} (1/r) - \frac{1}{4\pi}\bm\delta \grad^{(n)} \grad^2(1/r)
     =  \frac{1}{4\pi} \grad^{(n)}[\grad^{(2)} - \bm\delta \grad^2](1/r)
+    \otimes \textbf{B}^{(n+1)}
+    \label{eq:lap_pts_forces}
 \end{align}
-Because,
+Using the second equality of~\ref{eq:usefuk_rel} we directly deduce the solution of~\ref{eq:lap_pts_forces} as,
 \begin{equation}
-    \grad^2 r= \div(\textbf{x}r^{-1}) =2 r^{-1}
+    \textbf{u}= 
+    \frac{1}{8\pi} \grad^{(n)}[\grad^{(2)} - \bm\delta \grad^2] r\otimes \textbf{B}^{(n+1)}. 
+    \label{eq:point_force}
 \end{equation}
-we can guess a solution like, 
-\begin{equation}
-    \textbf{U}= 
-    \frac{1}{8\pi} \grad^{(n)}[\grad^{(2)} - \bm\delta \grad^2] r
-\end{equation}
-The stress is then,
+The stress tensor then reads,
 \begin{align}
-    \bm\Sigma
+    \bm\sigma
     =
-    -\textbf{P}\bm\delta
-    + \grad \textbf{U}
-    + ^\dagger \grad \textbf{U}
+    - p \bm\delta
+    + \grad \textbf{u}
+    + ^\dagger \grad \textbf{u}
+    % &=
+    % -\frac{1}{4\pi}\grad^{(n+1)}(1/r)\bm\delta 
+    % +\frac{1}{8\pi}\grad^{(n)}[2\grad^{(3)} - (\grad\bm\delta + ^\dagger\grad\bm\delta) \grad^2] r\\
+    % &=
+    % -\frac{1}{8\pi}\grad^{(n)}\bm\delta \grad\grad^2 r 
+    % +\frac{1}{8\pi}\grad^{(n)}[2\grad^{(3)} - (\grad\bm\delta + ^\dagger\grad\bm\delta) \grad^2] r\\
     &=
-    -\frac{1}{4\pi}\grad^{(n+1)}(1/r)\bm\delta 
-    +\frac{1}{8\pi}\grad^{(n)}[2\grad^{(3)} - (\grad\bm\delta + ^\dagger\grad\bm\delta) \grad^2] r\\
-    &=
-    -\frac{1}{8\pi}\grad^{(n)}\bm\delta \grad\grad^2 r 
-    +\frac{1}{8\pi}\grad^{(n)}[2\grad^{(3)} - (\grad\bm\delta + ^\dagger\grad\bm\delta) \grad^2] r\\
-    &=
-    \frac{1}{8\pi}\grad^{(n)}[2\grad^{(3)} - (\grad\bm\delta + ^\dagger\grad\bm\delta+\bm\delta\grad) \grad^2] r\\
+    \frac{1}{8\pi}\grad^{(n)}[2\grad^{(3)} - (\grad\bm\delta + ^\dagger\grad\bm\delta+\bm\delta\grad) \grad^2] r\otimes \textbf{B}^{(n+1)}.
 \end{align}
+Taking $n=0$ one recover the free space Green function of Stokes flows \citep{pozrikidis2011introduction}. 
 
+\section{Reciprocal relation for the second moment of force}
+\label{ap:second_mom}
 
-Hence the flow is given by, 
+To derive an equation for the second moment of forces we set,
 \begin{align}
-    \textbf{u}= \textbf{B}^{(n+1)}\otimes \textbf{U}^{(n+2)}
+    \hat{\textbf{u}}_r =\frac{1}{2}\textbf{rr}\cdot  \grad\grad \hat{\textbf{u}}|_{\textbf{x}=\textbf{y}},
+    &&
+    \hat{\textbf{b}} = 0, 
 \end{align}
+and use the solutions
+\begin{align}    
+    \hat{\textbf{u}}_{o/i} = \textbf{U}_{o/i}^{(3)} \vdots \grad\grad\hat{\textbf{u}}|_{\textbf{x}=\textbf{y}}, 
+    &&
+    \hat{\bm\sigma}_{o/i} = \textbf{S}_{o/i}^{(3)} \vdots \grad\grad\hat{\textbf{u}}|_{\textbf{x}=\textbf{y}},
+\end{align}
+in~\ref{eq:int_final_step}. 
+In index notation we obtain the general relation, 
+\begin{multline}
+    \frac{1}{2}\intS[p]{  (\bm\sigma_{o}\cdot \textbf{n})_i r_jr_k}
+    - \intO[i]{2(\textbf{e}_i )_{ij} r_k}
+    % - (1-\lambda) \intO[p]{(\textbf{u}_{i} + \textbf{w}_r)\cdot \grad^2 \hat{\textbf{u}}}
+    % + \intS[p]{(\textbf{u}_{i} + \textbf{w}_r)\cdot \hat{\textbf{b}}}
+    \overset{i\neq j,k}{=}
+    \intS[p]{(\textbf{w}_{r})_l (\textbf{S}^{(3)}_{o})_{ijklm} n_m}
+    - \intO[i]{(\textbf{S}^{(3)}_{o})_{ijklm} (\grad\textbf{u})_{lm}}\\
+    - (1-\lambda) \intO[i]{((\textbf{U}^{(3)}_{i})_{ijkl} + \frac{1}{2}r_kr_l\delta_{il})(\grad^2 \textbf{u})_l }
+    + \intS[p]{((\textbf{U}^{(3)}_{i})_{ijkl} + \frac{1}{2}r_kr_l\delta_{il}) b_l}\\
+    + \zeta Re \intO{((\textbf{U}^{(3)}_{i})_{ijkl} + \frac{1}{2}r_kr_l\delta_{il}) (\textbf{f}_{i})_l} 
+    + Re\intO[o]{(\textbf{U}^{(3)}_{i})_{ijkl}\cdot \textbf{f}_{o}}.
+    \label{eq:first_formula}
+\end{multline}
+This formula is valid for a droplet immersed in a yet arbitrary flow of background velocity \textbf{u} and jump at the interface \textbf{b}.
 
-The index of \textbf{u} is still in \textbf{U}. 
-\section{Reciprocal theorem for the trace of the first and second moment}
-\tb{Because the singularity is inside it does not appear in the integral. }
+In the situation in which we are interested in~\ref{sec:compute_moments} \textbf{u} is uniform and $\textbf{b}=0$ hence this formula reduce to: 
+\begin{multline}
+    \frac{1}{2}\intS[p]{  (\bm\sigma_{o}\cdot \textbf{n})_i r_jr_k}
+    - \intO[i]{2(\textbf{e}_i )_{ij} r_k}
+    % - (1-\lambda) \intO[p]{(\textbf{u}_{i} + \textbf{w}_r)\cdot \grad^2 \hat{\textbf{u}}}
+    % + \intS[p]{(\textbf{u}_{i} + \textbf{w}_r)\cdot \hat{\textbf{b}}}
+    \overset{i\neq j,k}{=}
+    (\textbf{w}_{r})_l \intS[p]{ (\textbf{S}^{(3)}_{o})_{ijklm} n_m}
+    % - \intO[i]{(\textbf{S}^{(3)}_{o})_{ijklm} (\grad\textbf{u})_{lm}}\\
+    % - (1-\lambda) \intO[i]{((\textbf{U}^{(3)}_{i})_{ijkl} + \frac{1}{2}r_kr_l\delta_{il})(\grad^2 \textbf{u})_l }
+    % + \intS[p]{((\textbf{U}^{(3)}_{i})_{ijkl} + \frac{1}{2}r_kr_l\delta_{il}) b_l}
+    \\
+    + \zeta Re \intO{((\textbf{U}^{(3)}_{i})_{ijkl} + \frac{1}{2}r_kr_l\delta_{il}) (\textbf{f}_{i})_l} 
+    + Re\intO[o]{(\textbf{U}^{(3)}_{i})_{ijkl}\cdot \textbf{f}_{o}}.
+    \label{eq:second_formula}
+\end{multline}
+Whether it is for~\ref{eq:first_formula,eq:second_formula}, note that it is only valid for $i\neq j,k$. 
+Indeed, we have factor out by $(\grad\grad\hat{\textbf{u}})_{kji}$, and $(\grad\grad\hat{\textbf{u}})_{kii} = (\grad\grad\hat{\textbf{u}})_{iji} = 0$. 
+
+Hence, if we note $K_{ijk}$ the complete second moment, then~\ref{eq:second_mom_text} only provides the deviatoric part of $K_{ijk}$, on any contraction over $i,j$ or $i,k$. 
+Therefore, one still need a formula for the trace of~\ref{eq:first_formula,eq:second_formula} and find a way to add up the trace to the yet undefined traceless part (on $i,j$ and $i,k$) of $K_{ijk}$.  
+
+
+\subsection{Decomposition of a third order tensor into traceless tensor and isotopic contribution}
+
+However, the decomposition of $K_{ijk}$ into a deviatoric part and isotopic part, on only two indices is not a trivial task. 
+Following the strategy of \citet{nadim1991motion} we consider an arbitrary third order tensor,
+\begin{equation}
+    K_{ijk},
+\end{equation}
+that represents the second moment of hydrodynamic forces. 
+
+We assume that $\textbf{K}$ can be decomposed into the sum
+\begin{equation}
+    K_{ijk} = G_{ijk}  + (\textbf{v}^1)_k \delta_{ij} + (\textbf{v}^2)_j \delta_{ik}, 
+   \label{eq:defK}
+\end{equation}
+where the $\textbf{v}^n$ are first order tensor left to determine, and \textbf{G} is defined as the traceless part of \textbf{K} over contractions of the pairs of indices: $ik$ and $ik$. 
+That way $\textbf{v}^1$ and $\textbf{v}^2$ represent the isotopic part of \textbf{K} along the pairs of indices $ij$ and $ik$, respectively. 
+
+To find out the expression of the $\textbf{v}^n$ in terms of components of $\textbf{K}$ we take successively the trace of~\ref{eq:defK} on $ij$ and $ik$. 
+It gives the system of equations, 
+\begin{align}
+    K_{llk} - 3(\textbf{v}^1)_i - (\textbf{v}^2)_i &= 0,\\
+    K_{lil} - (\textbf{v}^1)_i - 3(\textbf{v}^2)_i &= 0,\\
+\end{align}
+From which we deduce that, 
+\begin{align}
+    (\textbf{v}^1) &=  -K_{ljl}/8 + 3K_{llj}/8, \\
+    (\textbf{v}^2) &=  3K_{lkl}/8 - K_{llk}/8.
+\end{align}
+Finally, we can define the traceless part of \textbf{K} (on only two pairs of indices), as
+\begin{equation}
+    G_{ijk} = 
+    K_{ijk}
+    -\left(\frac{3}{8}\right)K_{ljl}\delta_{ik} - \left(\frac{3}{8}\right)K_{llk}\delta_{ij}  + \left(\frac{1}{8}\right)K_{lkl}\delta_{ij} + \left(\frac{1}{8}\right)K_{llj}\delta_{ik}
+    \label{eq:defG}
+\end{equation}
+Hence the formula derived for the second moment~\ref{eq:first_formula,eq:second_formula} only provide the tensor $G_{ijk}$ as it is defined in~\ref{eq:defG} not the entire second moment $K_{ijk}$. 
+
+To find out the complete second moment one thus need formulas for $\textbf{v}^1$ and $\textbf{v}^2$ which are entirely determined by $K_{lkl}$ and $K_{llk}$, i.e.~the trace of the second moment ($K_{ijk}$) on the index $ik$ and $ij$, respectively. 
+
+
+\subsection{Reciprocal theorem for the trace of the first and second moments}
+Formulas for $K_{ijk}\delta_{ik}$ and $K_{ijk}\delta_{ij}$, can be obtained using the point source dipole solution (\ref{eq:pts_source} with $n=1$) or the point force solution (\ref{eq:point_force} with $n=0$). 
+We start with~\ref{eq:first_step_out} integrated on the exterior of the droplet: 
 \begin{equation}
     -\intS[p]{\hat{\textbf{u}}_{o} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
     =
     -\intS[p]{\textbf{u}_{o} \cdot \hat{\bm\sigma}_{o}\cdot \textbf{n}}
     + 
     Re\intO[o]{\hat{\textbf{u}}_{o}\cdot \textbf{f}_{o}}.
-    \label{eq:int_first_step}
+    \label{eq:first_step_trace}
 \end{equation}
-The second moment mat be obtained using the pressure solution for $n=2$ or the point force solution with $n=2$. 
-The solutions reads, 
+Then we consider the test solutions given by~\ref{eq:pts_source} with $n=1$, and~\ref{eq:point_force} with $n=0$, which read
 \begin{align}
-    \textbf{u} = \frac{-1}{8\pi r}(\bm\delta + \textbf{nn})
-    && \bm\sigma\cdot \textbf{n} = \frac{6}{8\pi r^{-2}}\textbf{nn}\\
-    \textbf{u} = \frac{-1}{4\pi r^3}(3\textbf{nn}- \bm\delta)
-    && \bm\sigma\cdot \textbf{n} = \frac{- 6}{4\pi r^4} (\bm\delta - 3\textbf{nn})\\
+    \textbf{u} = \frac{-1}{8\pi r}(\bm\delta + \textbf{nn}),
+    && \bm\sigma\cdot \textbf{n} = \frac{6}{8\pi r^{-2}}\textbf{nn},
+    \label{eq:first_expr}
+    \\
+    \textbf{u} = \frac{-1}{4\pi r^3}(3\textbf{nn}- \bm\delta),
+    && \bm\sigma\cdot \textbf{n} = \frac{- 6}{4\pi r^4} (\bm\delta - 3\textbf{nn}),
+    \label{eq:second_expr}
 \end{align}
-
-
-For the two above solution we have respectively, 
+respectively. 
+Inserting~\ref{eq:first_expr} and~\ref{eq:second_expr} in~\ref{eq:first_step_trace}, we get
 \begin{align}
+    \label{eq:trace1}
     \intS[p]{(\bm\delta + \textbf{nn}) \cdot  \bm\sigma_{o}\cdot \textbf{n}}
     =
     - 6\intS[p]{\textbf{u}_{o} \cdot \textbf{nn}}
     + 
-    Re\intO[o]{(\bm\delta + \textbf{nn})r^{-1}\cdot \textbf{f}_{o}}\\
+    Re\intO[o]{(\bm\delta + \textbf{nn})r^{-1}\cdot \textbf{f}_{o}},\\
     \intS[p]{(3\textbf{nn}-\bm\delta) \cdot  \bm\sigma_{o}\cdot \textbf{n}}
     =
     6\intS[p]{\textbf{u}_{o} \cdot (\bm\delta - 3\textbf{nn})}
     + 
-    Re\intO[o]{(\bm\delta - 3\textbf{nn})r^{-3}\cdot \textbf{f}_{o}}.
+    Re\intO[o]{(\bm\delta - 3\textbf{nn})r^{-3}\cdot \textbf{f}_{o}},
+    \label{eq:trace2}
 \end{align}
-For the first relation we note, 
+respectively. 
+Noting the two important identities: 
 \begin{equation}
     \intS[p]{\textbf{u}_{o} \cdot \textbf{nn}}
     =
     \intO[p]{\div (\textbf{u}_{o}\textbf{n})}
     = \intO[p]{ \textbf{u}_i}
-    = - \textbf{u}_r \intO[p]{} 
+    = - \textbf{w}_r \intO[p]{},
 \end{equation}
-The first term on the right-hand side is actually the internal shear rate. 
+and, 
 \begin{align*}
     \intS[p]{\textbf{u}_{o} \cdot (\bm\delta - 3\textbf{nn})}
     &=
@@ -154,119 +237,89 @@ The first term on the right-hand side is actually the internal shear rate.
     + \intS[p]{\textbf{u}_{o} \textbf{n}\cdot \textbf{n}}
     - 4 \intS[p]{\textbf{u}_{o}\cdot \textbf{nn}}\\
     &=
-    \intO[p]{\grad (\textbf{u}_{i}\cdot \textbf{n})}
+    \intO[p]{\grad (\textbf{u}_{i}\cdot \textbf{r})}
     + \intO[p]{\div(\textbf{n}\textbf{u}_{i})}
     - 4 \intO[p]{\div (\textbf{u}_{i}\textbf{n})}\\
     &=
-    \intO[p]{\grad \textbf{u}_{i}\cdot \textbf{n}}
+    \intO[p]{\grad \textbf{u}_{i}\cdot \textbf{r}}
     + \intO[p]{\textbf{u}_{i}}
     + 3\intO[p]{\textbf{u}_{i}}
-    + \intO[p]{\textbf{x}\cdot \grad\textbf{u}_{i}}
+    + \intO[p]{\textbf{r}\cdot \grad\textbf{u}_{i}}
     - 4 \intO[p]{\textbf{u}_{i} }\\
     &=
-    \intO[p]{\grad \textbf{u}_{i}\cdot \textbf{n}}
-    + \intO[p]{\textbf{x}\cdot \grad\textbf{u}_{i}}
+    \intO[p]{\grad \textbf{u}_{i}\cdot \textbf{r}}
+    + \intO[p]{\textbf{r}\cdot \grad\textbf{u}_{i}}
     \\
     &=
-    \intO[p]{2 \textbf{r}\cdot \textbf{e}_i}
+    \intO[p]{2 \textbf{r}\cdot \textbf{e}_i},
     \\
 \end{align*}
-
-Hence the final form of the reciprocal theorem is, 
+we may reformulate~\ref{eq:trace1,eq:trace2} as,
 \begin{align}
     \frac{1}{2}\intS[p]{\textbf{nn} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
     =
     - \frac{1}{2}\intS[p]{ \bm\sigma_{o}\cdot \textbf{n}}
-    + 3\textbf{u}_r \intO[p]{}
-    + \frac{Re}{2}\intO[o]{(\bm\delta + \textbf{nn})r^{-1}\cdot \textbf{f}_{o}}\\
+    + 3\textbf{w}_r \intO[p]{}
+    + \frac{Re}{2}\intO[o]{(\bm\delta + \textbf{nn})r^{-1}\cdot \textbf{f}_{o}}
+    \label{eq:trace3}
+    \\
     \frac{1}{2}\intS[p]{\textbf{nn} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
     - \intS[p]{2 \textbf{r}\textbf{e}_i}
     =
     \frac{1}{6}\intS[p]{\bm\sigma_{o}\cdot \textbf{n}}
     + 
     \frac{Re}{6}\intO[o]{(\bm\delta - 3\textbf{nn})r^{-3}\cdot \textbf{f}_{o}}.
+    \label{eq:trace4}
 \end{align}
-The final step is to use the drag force formula to finally obtain a closed expression. 
-It reads, 
+The first term on the right-hand side of~\ref{eq:trace3,eq:trace4} is the drag forces acting upon the test droplet. 
+Consequently, it can be substituted by its own reciprocal relation~\eqref{eq:drag_force}. Doing so gives, 
 \begin{multline}
     \frac{1}{2}\intS[p]{\textbf{nn} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
     =
     - \frac{1}{2}
     \textbf{u}_{r}\cdot  \intS[p]{\textbf{S}_{o}^{(1)}\cdot \textbf{n}}
-    + 3\textbf{u}_r \intO[p]{}\\
+    + 3\textbf{w}_r \intO[p]{}+ \frac{Re}{2}\intO[o]{(\bm\delta + \textbf{nn})r^{-1}\cdot \textbf{f}_{o}}\\
+    + \frac{(1-\lambda) }{2} \intO{(\textbf{U}_{i}^{(1)} + \bm\delta)\cdot \grad^2\textbf{u}} 
+    - \frac{1}{2} \intO{(\textbf{U}_{i}^{(1)} + \bm\delta)\cdot \textbf{b}} \\
     - \zeta \frac{Re}{2} \intO{(\textbf{U}_{i}^{(1)} + \bm\delta)\cdot \textbf{f}_{i}} 
-    - \frac{Re}{2}\intO[o]{\textbf{U}_{o}^{(1)}\cdot \textbf{f}_{o}}
-    + \frac{Re}{2}\intO[o]{(\bm\delta + \textbf{nn})r^{-1}\cdot \textbf{f}_{o}}\\
+    - \frac{Re}{2}\intO[o]{\textbf{U}_{o}^{(1)}\cdot \textbf{f}_{o}}\\
+    \label{eq:traceIJ}
 \end{multline}
 \begin{multline}
     \frac{1}{2}\intS[p]{\textbf{nn} \cdot  \bm\sigma_{o}\cdot \textbf{n}}
     - \intS[p]{2 \textbf{r}\cdot \textbf{e}_i}
     =
     +\frac{1}{6}
-    \textbf{u}_{r}\cdot  \intS[p]{\textbf{S}_{o}^{(1)}\cdot \textbf{n}}\\
+    \textbf{u}_{r}\cdot  \intS[p]{\textbf{S}_{o}^{(1)}\cdot \textbf{n}}
+    + \frac{Re}{6}\intO[o]{(\bm\delta - 3\textbf{nn})r^{-3}\cdot \textbf{f}_{o}}\\
+    - \frac{(1-\lambda)}{6} \intO{(\textbf{U}_{i}^{(1)} + \bm\delta)\cdot \grad^2 \textbf{u}} 
+    + \frac{1}{6} \intO{(\textbf{U}_{i}^{(1)} + \bm\delta)\cdot \textbf{b}} 
     + \zeta \frac{Re}{6} \intO{(\textbf{U}_{i}^{(1)} + \bm\delta)\cdot \textbf{f}_{i}} 
-    + \frac{Re}{6}\intO[o]{\textbf{U}_{o}^{(1)}\cdot \textbf{f}_{o}}
-    + 
-    \frac{Re}{6}\intO[o]{(\bm\delta - 3\textbf{nn})r^{-3}\cdot \textbf{f}_{o}}.
+    + \frac{Re}{6}\intO[o]{\textbf{U}_{o}^{(1)}\cdot \textbf{f}_{o}}.
+    \label{eq:traceIK}
 \end{multline}
-Together with the formula in the main text this makes the total 2nd moment. 
+\subsection{Summary}
 
-\subsection{Decomposition of a third order tensor into traceless tensor and isotopic contribution}
+We first derived~\ref{eq:first_formula}, it was explained that if, $K_{ijk}$ where the whole second moment of forces, then~\ref{eq:first_formula} would represent the tensor $G_{ijk}$ in the decomposition:
+\begin{equation}
+    K_{ijk}
+    = G_{ijk} 
+    + \frac{1}{8}(3K_{ljl}
+    - K_{llj})\delta_{ik}
+    + \frac{1}{8}(3K_{llk} 
+    - K_{lkl})\delta_{ij} 
+    \label{eq:defK2}
+\end{equation}
+Hence, to obtain the total second moment of forces, one must then add the traces $K_{llj}$ and $K_{ljl}$ to $G_{ijk}$. 
+In the previous section, we derived a formula for $K_{ijk}\delta_{ij}$ which is given by~\ref{eq:traceIJ}, and a second one for $K_{ijk}\delta_{ij}$~\eqref{eq:traceIK}.
+Therefore, combining~\ref{eq:first_formula,eq:traceIJ,eq:traceIK} following the decomposition given by~\ref{eq:defK2}, one directly obtains a formula for the complete second moment of forces. 
 
-Following the strategy of \citet{nadim1991motion} we consider an arbitrary third order tensor,
-\begin{equation}
-    K_{ijk},
-\end{equation}
-that represents the second moment of hydrodynamic forces. 
 
-We assume that $\textbf{K}$ can be decomposed into,
- \begin{equation}
-    \textbf{K} = \textbf{G} + \textbf{v}^1 \bm\delta + \textbf{v}^2 \bm\delta + \textbf{v}^3 \bm\delta, 
- \end{equation}
-Or in index notation, 
-\begin{equation}
-   K_{ijk} = G_{ijk} + (\textbf{v}^1)_i \delta_{jk} + (\textbf{v}^2)_j \delta_{ik} + (\textbf{v}^3)_k \delta_{ij}, 
-   \label{eq:defK}
-\end{equation}
-where the $\textbf{v}^n$ are first order tensor left to determine, and \textbf{G} is defined as the traceless part if \textbf{K}. 
-The expression of the $\textbf{v}^n$ are then entirely constrained by the definition $G_{lli}=G_{ill}=G_{lil}=0$. 
-
-Indeed, taking the trace of~\ref{eq:defK} on $ij$, $ik$, and $jk$ gives the system of equaiton, 
-\begin{align}
-    K_{llk} - 3(\textbf{v}^1)_i - (\textbf{v}^2)_i - (\textbf{v}^3)_i &= 0,\\
-    K_{lil} - (\textbf{v}^1)_i - 3(\textbf{v}^2)_i - (\textbf{v}^3)_i &= 0,\\
-    K_{ill} - (\textbf{v}^1)_i - (\textbf{v}^2)_i - 3(\textbf{v}^3)_i &= 0. 
-\end{align}
-From which we deduce that, 
-\begin{align}
-    (\textbf{v}^1)_i &=  -K_{ill}/10 - K_{lil}/10 + 2K_{lli}/5,\\
-    (\textbf{v}^2)_i &=  -K_{ill}/10 + 2K_{lil}/5 - K_{lli}/10,\\
-    (\textbf{v}^3)_i &=  2K_{ill}/5 - K_{lil}/10 - K_{lli}/10. 
-\end{align}
-Knowing the $\textbf{v}^n$ one can then deduce the expression of the traceless part of a third rank tensor as, 
-\begin{equation}
-    G_{ijk} = K_{ijk}  - (\textbf{v}^1)_i \delta_{jk} - (\textbf{v}^2)_j \delta_{ik} - (\textbf{v}^3)_k \delta_{ij}, 
-\end{equation}
- 
-If one now consider the decomposition, 
-\begin{equation}
-    K_{ijk} = G_{ijk}  + (\textbf{v}^1)_k \delta_{ij} + (\textbf{v}^2)_j \delta_{ik}, 
-\end{equation}
-where $\textbf{G}$ is only traceless about $ij$ and $ik$ he obtains, 
-\begin{align}
-    (\textbf{v}^1) &=  -K_{ljl}/8 + 3K_{llj}/8, \\
-    (\textbf{v}^2) &=  3K_{lkl}/8 - K_{llk}/8
-\end{align}
-\begin{equation}
-    G_{ijk} = 
-    K{}^{ijk}
-    -\left(\frac{3}{8}\right)K{}^{lj}{}_{l}\delta_{ik} - \left(\frac{3}{8}\right)K{}^{l}{}_{l}{}^{k}\delta_{ij}  + \left(\frac{1}{8}\right)K{}^{lk}{}_{l}\delta_{ij} + \left(\frac{1}{8}\right)K{}^{l}{}_{l}{}^{j}\delta_{ik}
-\end{equation}
-The traceless part is given by the formula in the text and the two trace by the two other formula. 
-Hence, the total second moment can be computed. 
-
-\section{Averaged relative velocity $|\textbf{u}_r|\textbf{u}_r$. }
+\section{Proof of the average of the Oseen force. }
 \label{ap:varience}
+
+In this appendix, we provide a justification for~\ref{eq:standard_dev2}.
+Firstly, we write: 
 \begin{equation}
     n_p[\textbf{x},t] \int_{\mathbb{R}^3} 
     |\textbf{w}_r| \textbf{w}_r
@@ -278,49 +331,41 @@ Hence, the total second moment can be computed.
     + n_p  \int_{\mathbb{R}^3} 
      (|\textbf{w}_r | - |\textbf{u}_r|)\textbf{w}_r
     P
-    d\textbf{w}_r
+    d\textbf{w}_r,
+    \label{eq:first_step_appendix}
 \end{equation}
-So let us focus on the second term in the first step. 
-Provided that the standard deviation around the mean is relatively small, one can Taylor expand any function of $\textbf{w}_r$ around $\textbf{u}_r$. 
-We now define
+and focus on the second term on the right-hand side of this equation. 
+Provided that the deviation of \textbf{w} around the mean velocity $\textbf{u}_p$ is small, one can use a Taylor expansion of the function $|\textbf{w}_r|$ around $|\textbf{u}_r|$, and write:
 \begin{equation}
-    g(\textbf{w}_r)  = |\textbf{w}_r|,
+    |\textbf{w}_r| =   
+    |\textbf{w}_r|
+    + (\textbf{w}_r - \textbf{u}_r)\cdot \left. \frac{\partial  |\textbf{w}_r|}{\partial \textbf{w}_r} \right|_{\textbf{w}_r = \textbf{u}_r}
+    + (\textbf{w}_r - \textbf{u}_r)(\textbf{w}_r - \textbf{u}_r) : \left. \frac{\partial  |\textbf{w}_r|}{\partial \textbf{w}_r\partial \textbf{w}_r}  \right|_{\textbf{w}_r = \textbf{u}_r} \ldots
 \end{equation}
-for example, then we have, 
-\begin{equation}
-    g(\textbf{w}_r) =   
-    g(\textbf{u}_r)
-    + (\textbf{w}_r - \textbf{u}_r)\cdot \frac{\partial}{\partial \textbf{w}_r} g|_{\textbf{w}_r = \textbf{u}_r}
-    + (\textbf{w}_r - \textbf{u}_r)(\textbf{w}_r - \textbf{u}_r) : \frac{\partial}{\partial \textbf{w}_r\partial \textbf{w}_r}  g|_{\textbf{w}_r = \textbf{u}_r}\ldots
-\end{equation}
-Using the relations, 
+The partial derivatives read, 
 \begin{align}
-    \grad|\textbf{x}| &=\textbf{x} |\textbf{x}|^{-1}\\
-    \grad\grad|\textbf{x}| &= \bm\delta |\textbf{x}|^{-1} - \textbf{xx} |\textbf{x}|^{-3}\\
+    \grad|\textbf{x}| &=\textbf{x} |\textbf{x}|^{-1},\\
+    \grad\grad|\textbf{x}| &= \bm\delta |\textbf{x}|^{-1} - \textbf{xx} |\textbf{x}|^{-3},
 \end{align}
-So that, 
-\begin{align*}
+so that the final expression is:  
+\begin{equation}
     |\textbf{w}_r| 
     - |\textbf{u}_r|
-    &=
+    =
     (\textbf{w}_r - \textbf{u}_r)\cdot \textbf{u}_r |\textbf{u}_r|^{-1}
     +(\textbf{w}_r - \textbf{u}_r)(\textbf{w}_r - \textbf{u}_r):
-    (\bm\delta |\textbf{u}_r|^{-1} - \textbf{u}_r\textbf{u}_r|\textbf{u}_r|^{-3})
-\end{align*}
-Averaging this expression overall $\textbf{w}_r$ and notting that $\textbf{w}_r - \textbf{u}_r = -\textbf{w} + \textbf{u}_p = -\textbf{w}'$ yields,
-
-where the second term represents the particle velocity variance.
-
-Regarding the second integral it reads, 
+    (\bm\delta |\textbf{u}_r|^{-1} - \textbf{u}_r\textbf{u}_r|\textbf{u}_r|^{-3}). 
+\end{equation}
+Inserting this expression into~\ref{eq:first_step_appendix}, and integrating overall $\textbf{w}$, while noting that $\textbf{w}_r - \textbf{u}_r = -\textbf{w} + \textbf{u}_p = -\textbf{w}'$ is the fluctuation of the center of mass velocity around $\textbf{u}_p$, gives: 
 \begin{multline*}
     n_p \int_{\mathbb{R}^3}(|\textbf{w}_r|  - |\textbf{u}_r|) \textbf{w}_r P d\textbf{w} 
-    = 
-    n_p \int_{\mathbb{R}^3}
-    [
-    -\textbf{w}' \cdot \textbf{u}_r |\textbf{u}_r|^{-1}
-    +\textbf{w}' \textbf{w}' :
-    (\bm\delta |\textbf{u}_r|^{-1} - \textbf{u}_r\textbf{u}_r|\textbf{u}_r|^{-3})
-    ] \textbf{w}_r P d\textbf{w} \\
+    % = 
+    % n_p \int_{\mathbb{R}^3}
+    % [
+    % -\textbf{w}' \cdot \textbf{u}_r |\textbf{u}_r|^{-1}
+    % +\textbf{w}' \textbf{w}' :
+    % (\bm\delta |\textbf{u}_r|^{-1} - \textbf{u}_r\textbf{u}_r|\textbf{u}_r|^{-3})
+    % ] \textbf{w}_r P d\textbf{w} \\
     =
     n_p \int_{\mathbb{R}^3}
     [
@@ -334,39 +379,27 @@ Regarding the second integral it reads,
     +\textbf{w}' \textbf{w}' \cdot \textbf{u}_r |\textbf{u}_r|^{-1}
     -\textbf{w}' \textbf{w}' \textbf{w}' :
     (\bm\delta |\textbf{u}_r|^{-1} - \textbf{u}_r\textbf{u}_r|\textbf{u}_r|^{-3})
-    ]  P d\textbf{w}
+    ]  P d\textbf{w}.
 \end{multline*}
-
-Using the relation,
+Finally, by using the relation,
 \begin{align*}
     n_p \int_{\mathbb{R}^3}\textbf{w}'\textbf{w}' P d\textbf{w} 
-    &=\pavg{\textbf{u}_p'\textbf{u}_p'}
+    &=\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}, 
 \end{align*}
-and neglecting the triple covariance yields, 
-\begin{multline}
-    n_p \int_{\mathbb{R}^3}(|\textbf{w}_r|  - |\textbf{u}_r|) \textbf{w}_r P d\textbf{w}
-    =
-    \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}:
-    (\bm\delta |\textbf{u}_r|^{-1} - \textbf{u}_r\textbf{u}_r|\textbf{u}_r|^{-3})
-    \textbf{u}_r \\
-    +
-    \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'} \cdot \textbf{u}_r |\textbf{u}_r|^{-1} + O(\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'\textbf{u}_\alpha'})
-\end{multline}
-
-Defining the mean normalized relative motions by $\textbf{e} = \textbf{u}_r|\textbf{u}_r|^{-1}$ and using the first relation we get, 
+and neglecting the triple covariance terms, we get, 
 \begin{equation}
     n_p  \int_{\mathbb{R}^3} 
-    |\textbf{u}- \textbf{w}| (\textbf{u}-\textbf{w})
+    |\textbf{w}_r| \textbf{w}_r
     P(\textbf{w})
     d\textbf{w}
     =
     n_p  
     |\textbf{u}_r|\textbf{u}_r + 
     \pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}:
-    (\bm\delta \textbf{e} +\textbf{e} \bm\delta  - \textbf{eee})
-    +O(\pavg{|u_\alpha'|^3}),
+    (\bm\delta \textbf{p} +\textbf{p} \bm\delta  - \textbf{ppp})
+    +O(\pavg{(\textbf{u}_\alpha')^{(n)}}),
 \end{equation}
-with $\textbf{e} = (\textbf{u}-\textbf{u}_p)|\textbf{u}- \textbf{u}_p|^{-1}$. 
+with $\textbf{p} = \textbf{u}_r|\textbf{u}_r|^{-1}$, and $n$ an integer $\ge 3$, which proves~\ref{eq:standard_dev2}. 
 
 \section{Ossen solution proper for quadratic background flow}
 
@@ -1908,186 +1941,3 @@ multiplying both side by $\textbf{k}\cdot $ we get
     \avg{\chi_f \bm\sigma_f^0 :\grad \textbf{u}_f^0 \delta_{nst}} d\textbf{r}
     =
 \end{equation}
-
-
-\section{Explaination T.pathz}
-
-
-
-\begin{equation}
-    \avg{\sum_i \delta(\textbf{x}-\textbf{x}_i) \intS{ \bm\sigma_f^0(\textbf{r}) \cdot \textbf{n}}}(\textbf{r})
-    =
-    \intS{ \avg{\sum_i \delta(\textbf{x}-\textbf{x}_i) \bm\sigma_f^0(\textbf{x}+ \textbf{r}) }\cdot \textbf{n}(\textbf{r})}
-\end{equation}
-\begin{align}
-    \avg{\sum_i \delta(\textbf{x}-\textbf{x}_i) \bm\sigma_f^0(\textbf{r}) }
-    &=
-    - \avg{\sum_i \delta(\textbf{x}-\textbf{x}_i)  p_f }\bm\delta
-    +2 \mu_f \avg{\sum_i \delta(\textbf{x}-\textbf{x}_i) \grad_\textbf{r} \textbf{u}_f }^\text{sym}\\
-    &=
-    - \avg{\sum_i \delta(\textbf{x}-\textbf{x}_i)  p_f(\textbf{r}) }\bm\delta
-    +2 \mu_f \grad_\textbf{r} \avg{\sum_i \delta(\textbf{x}-\textbf{x}_i)  \textbf{u}_f(\textbf{r})}^\text{sym}
-\end{align}
-
-\begin{equation}
-    \avg{\sum_i \delta(\textbf{x}-\textbf{x}_i)  p_f(\textbf{r}) }
-    =
-    n_p(\textbf{x}) p_f(\textbf{r}|\textbf{x})
-\end{equation}
-\begin{equation}
-    \lim_{|\textbf{r}|\to\infty} 
-    n_p(\textbf{x}) p_f(\textbf{x}+ \textbf{r}|\textbf{x}) 
-    = 
-    n_p(\textbf{x}) p_f(\textbf{x}+ \textbf{r})
-\end{equation}
-\begin{equation}
-    \lim_{|\textbf{r}|\to\infty} 
-    [p_f(\textbf{x}+ \textbf{r}|\textbf{x}) -p_f(\textbf{x}+ \textbf{r})]
-    = 
-    \lim_{|\textbf{r}|\to\infty} 
-    p_f'(\textbf{x}+ \textbf{r}|\textbf{x}) 
-    =0 
-\end{equation}
-\begin{equation}
-    p_f(\textbf{r}|\textbf{x})
-    = 
-    p_f(\textbf{r}|\textbf{x})
-    -p_f(\textbf{r})
-    + p_f(\textbf{r})
-    = 
-    p_f'(\textbf{r}|\textbf{x})
-    + p_f(\textbf{r})
-\end{equation}
-
-\begin{align}
-    \intS{ \avg{\sum_i \delta(\textbf{x}-\textbf{x}_i) \bm\sigma_f^0(\textbf{x}+ \textbf{r}) }\cdot \textbf{n}(\textbf{r})}
-    &= 
-    n_p(\textbf{x})\intS{ [-p_f \bm\delta +2 \mu_f (\grad \textbf{u})^\text{sym}](\textbf{r})\cdot \textbf{n}(\textbf{r})}\\
-    &+ n_p(\textbf{x})\intS{ [-p_f' \bm\delta +2 \mu_f (\grad \textbf{u}')^\text{sym}](\textbf{r}|\textbf{x})\cdot \textbf{n}(\textbf{r})}\\
-    &= 
-    n_p(\textbf{x})\intS{ \bm\Sigma (\textbf{r})\cdot \textbf{n}(\textbf{r})}\\
-    &+ n_p(\textbf{x})\intS{ [-p_f' \bm\delta +2 \mu_f (\grad \textbf{u}')^\text{sym}](\textbf{r}|\textbf{x})\cdot \textbf{n}(\textbf{r})}\\
-    &= 
-    \phi (\textbf{x})\div \bm\Sigma\\
-    &+ n_p(\textbf{x})\intS{ [-p_f' \bm\delta +2 \mu_f (\grad \textbf{u}')^\text{sym}](\textbf{r}|\textbf{x})\cdot \textbf{n}(\textbf{r})}
-\end{align}
-
-How to obtains the terms 
-\begin{equation}
-    \avg{
-        \sum_i \delta(\textbf{x}-\textbf{x}_i)
-        \ldots N.S(\textbf{r})
-    }
-    -\avg{
-         N.S(\textbf{r})
-    }
-\end{equation}
-In the dilute limit you obtain M\& R
-
-\begin{align}
-    \phi_f \rho_f(\pddt + \textbf{u}_f  \cdot \grad) \textbf{u}_f
-    &= \phi_f 
-    \left(\div \bm{\Sigma}
-    + \rho_f \textbf{g}\right)
-    + \div \bm\sigma_f^{\text{eff}}
-    - \pSavg{\bm\sigma_f^{*}\cdot \textbf{n}}, 
-    \label{eq:dt_uf2}
-\end{align}
-where,
-\begin{align}
-    \bm{\sigma}^{\text{eff}} 
-    &= 
-    - \avg{\chi_f\rho_f \textbf{u}_f'\textbf{u}_f'} 
-    + \pavg{\intS{\textbf{r}\bm\sigma^{*}_f\cdot \textbf{n}} - \delta_p\intO{2\mu_f\textbf{e}_d^*}}\nonumber\\
-    &- \div
-        \pavg{ \frac{1}{2}\intS{\textbf{rr}\bm\sigma^{*}_f\cdot \textbf{n}}
-        - \delta_p\intO{2\mu_f \textbf{r} \textbf{e}_d^*}}
-        + \grad\grad (\ldots). 
-    \label{eq:def_sigma_eff_f2}
-\end{align}
-
-\begin{equation}
-    \phi  \rho_f(\pddt + \textbf{u}_f  \cdot \grad) \textbf{u}_f
-    + \frac{1}{1-\phi}\phi \pSavg{\bm\sigma_f^{*}\cdot \textbf{n}}, 
-     - \frac{1}{1-\phi}\phi \div \bm\sigma_f^{\text{eff}}
-     - \phi 
-     \rho_f \textbf{g}
-    = \phi  
-    \div \bm{\Sigma}
-\end{equation}
-at $O(\phi)$,
-\begin{equation}
-    \phi  \rho_f(\pddt + \textbf{u}_f  \cdot \grad) \textbf{u}_f
-    % + \frac{1}{1-\phi}\phi \pSavg{\bm\sigma_f^{*}\cdot \textbf{n}}, 
-     - \phi \div \avg{\chi_f\rho_f \textbf{u}_f'\textbf{u}_f'} 
-     - \phi 
-     \rho_f \textbf{g}
-    = \phi  
-    \div \bm{\Sigma}
-\end{equation}
-at steady state
-\begin{equation}
-    % \phi  \rho_f(\pddt + \textbf{u}_f  \cdot \grad) \textbf{u}_f
-    % + \frac{1}{1-\phi}\phi \pSavg{\bm\sigma_f^{*}\cdot \textbf{n}}, 
-     - \phi \div \avg{\chi_f\rho_f \textbf{u}_f'\textbf{u}_f'} 
-     - \phi 
-     \rho_f \textbf{g}
-    = \phi  
-    \div \bm{\Sigma}
-\end{equation}
-
-Local, undisturbed flow equation :
-\begin{equation}
-    \div\bm\sigma = \rho_f (\pddt + \textbf{u}\cdot \grad)\textbf{u} - \rho_f \textbf{g}
-\end{equation}
-\begin{align}
-    \textbf{F}_b[Nothing] &= 
-    \frac{1}{T}\int_{0}^{T}
-     \int_{V[t]}\div \bm\sigma[\textbf{x},t] dV[\textbf{x}] dt\\
-     &=
-     \frac{1}{T}\int_{0}^{T}
-      \int_{V[t]}\rho_f (\pddt + \textbf{u}\cdot \grad)\textbf{u} - \rho_f \textbf{g}[\textbf{x}] dV[\textbf{x}] dt\\
-     &=
-     \frac{1}{T}\int_{0}^{T}
-     \int_{V[t]}\rho_f (\pddt + \textbf{u}\cdot \grad)\textbf{u} dV[\textbf{x}] dt
-     -\frac{1}{T}\int_{0}^{T}
-      \int_{V[t]}\rho_f \textbf{g}[\textbf{x}] dV[\textbf{x}] dt\\
-     &=
-     \frac{1}{T}\int_{0}^{T}
-     \frac{d}{dt}\int_{V[t]}\rho_f \textbf{u} dV[\textbf{x}] dt
-     -\frac{1}{T}\int_{0}^{T}
-      \int_{V[t]}\rho_f \textbf{g}[\textbf{x}] dV[\textbf{x}] dt\\
-     &=
-    %  \frac{1}{T}\int_{0}^{T}
-    %  \frac{d}{dt}\int_{V[t]}\rho_f \textbf{u} dV[\textbf{x}] dt
-     -
-      \rho_f \textbf{g}[\textbf{x}] 
-      \frac{1}{T}\int_{0}^{T}
-      \int_{V[t]} dV[\textbf{x}] dt\\
-     &=
-    %  \frac{1}{T}\int_{0}^{T}
-    %  \frac{d}{dt}\int_{V[t]}\rho_f \textbf{u} dV[\textbf{x}] dt
-     -
-      \rho_f \textbf{g}[\textbf{x}] 
-      V
-      \\
-\end{align}
-My stuff is: 
-\begin{align}
-    \textbf{F}_b[\textbf{x}] &= 
-    \frac{1}{T}\int_{0}^{T}
-     \int_{V[\textbf{x}]}\div_\textbf{r} \bm\sigma[\textbf{r},t]  dV[\textbf{r}] dt\\
-     &=
-     \int_{V}\rho_f (\pddt + \textbf{u}^{avg}\cdot \grad)\textbf{u}^{avg}+ \div \avg{\textbf{u}'\textbf{u}'} dV[\textbf{x}] dt\\
-     + &\rho_f \textbf{g}\\
-\end{align}
-\begin{equation}
-    \textbf{F}_b[Nothing]  = \int_C F_b[\textbf{x}] d^3 \textbf{x}
-\end{equation}
-If we use $\div\bm\sigma = \rho_f (\pddt + \textbf{u}\cdot \grad)\textbf{u} - \rho_f \textbf{g}$ we get, 
-\begin{align}
-    \textbf{F}_b &= 
-     -
-       V \rho_f \textbf{g}[\textbf{x}]  
-      =
-\end{align}

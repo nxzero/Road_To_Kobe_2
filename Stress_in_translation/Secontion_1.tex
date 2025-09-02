@@ -1,59 +1,93 @@
 \section{Introduction}
 
+Previous studies have shown how momentum exchange terms in multiphase flows equations, this includes the drag force, but also the first moment of forces (Stresslet and torque), and the second moment of forces, alter the rheological behaviors of the mixture.
+\citet{einstein1905neue} and \citet{taylor1932viscosity} were the first to demonstrate how the symmetric part of the first moment of force (Stresslet) on solid sphere, and droplets, respectively, induces an additional viscosity to viscous dilute suspension. 
+Then, years later \citet{lhuillier1996contribution,jackson1997locally,zhang1997momentum}, still considering viscous and dilute flows, demonstrated that the second moment of forces also contributes to the suspension Rheology, inducing non-Newtonian behaviors.
+Because the second moment of forces appears under the divergence operator in the effective stress this term contributes to the ``non-homogeneous rheology''. 
+Such rheological laws may also be referred to as second gradient fluids \citet{renee2023thermomecanique}.  
 
-\begin{enumerate}
-    \item Multiphase flows are importants 
-    \item They use avg equation
-    \item As identified in, \citet{fintzi2024averaged} the pure theoritical analysis was approximately limited to stokes flow 
-    \item Hence in this contribution we analys the effect of finite inertia
-\end{enumerate}
-To better illustrate the role of various forces and stresses in a multiphase flow model, we begin by presenting the averaged momentum equations for the dispersed and continuous phases, derived through an ensemble averaging procedure.
-For mono-disperse emulsions, the mass and momentum equations of the continuous phase and dispersed phase can be written as \citep{fintzi2024averaged},
+As identified in, \citet{fintzi2025averaged} the theoretical analysis regarding the computation of the effective stresses of suspensions are mainly limited to Stokes flows regime. 
+Except for the studies of \citet{stone2001inertial} and later \citet{raja2010inertial}, which considered the effect of fluid inertia on neutrally buoyant, spheres and droplets, respectively, immersed in linear flows.
+They computed the first moment of forces and the pseudo turbulent stresses in this configuration, accurate at $O(Re)$.  . 
+In this case the mixture can be assimilated to a ``Reiner-Rivlin'' fluids, because it was found that the effective stress were proportional to the mean shear rate square (in the sateady-state regime). 
+
+In this work we revisit the studies of~\citet{stone2001inertial,raja2010inertial}  to compute the Stresslet applied on a spherical droplet embedded in a uniform flow at low but finite inertia effects. 
+In opposition to \citet{stone2001inertial} and \citet{raja2010inertial} who considered neutrally-buoyant sherical inclusion embedded in a shear flow, we focus on the relative motions of droplets with respect to the mixture velocity. 
+Hence, our work differs in that we consider the effect of translation between the droplets and the ambient fluid on the effective stress of the suspension.
+\citet{dabade2015} computed the torque (skew-symmetric part of the first moment) on a spheroidal particle embedded in a uniform flow. 
+Hence, our study is similar to the work of \citet{dabade2015}, however we aim to compute the whole first moment tensor (not only the torque), and we consider droplets (instead of solid spheroidal particles). 
+
+The originality of this work lies in the fact that we consider inertial buoyant droplets. 
+Additionally, we compute the second moment of forces in addition to the Stresslet, thereby considering non-homogeneous rheological behaviors in the effective stress. 
+The second key result of this study is the proposal of a general reciprocal relation that allows the computation of the second moment of forces on particles (not only of the drag force, and Stresslet). 
+Finally, by following a rigorous statistical approach, we demonstrate how velocity variance terms appear in the ensemble-averaged expression of the interphase momentum exchange, and in the effective stress of the continuous phase. 
+It must be said that we do not completely close the system of equations because we do not propose an explicit closure of the velocity variance terms that appear in the momentum equations. 
+
+
+
+This manuscript is presented as follows: 
+In~\ref{sec:context} we recall the averaged mass and momentum equations, and the closure terms to be computed. 
+We show how the moments of forces are related to conditionally averaged quantities, which are governed by the equations presented in~\ref{sec:governing_equation}. 
+To avoid the complete resolution of the equations, we derive in~\ref{sec:reciprocal} a general reciprocal relation that can be applied to derive the moments of forces of arbitrary order on droplets immersed in an arbitrary flows. 
+This reciprocal relation also enables us to compute the internal shear rate (and related moments) of a droplet. 
+Then, in~\ref{sec:compute_moments} we compute the $O(Re)$ of the moments of forces for droplets in pure translation with the ambient fluid. 
+As a validation, in~\ref{sec:deformation} we show how to recover \citet{taylor1964deformation} from the Stresslet formula, and therefore demonstrate the direct link between effective stresses (Stresslet) and its counterpart, i.e., the deformation of droplets. 
+Finally, in~\ref{sec:averaged_equations} we cast all the results into the averaged equations presented in~\ref{sec:context} and conclude on the rheological behaviors of the suspension. 
+
+\section{Mathematical Context}\label{sec:context}
+
+
+To better illustrate the role of various forces and stresses in a multiphase flow model, we begin by presenting the averaged mass and momentum equations for the dispersed and continuous phases, derived through an ensemble averaging procedure.
+For mono-disperse emulsions, the mass and momentum equations of the continuous phase and dispersed phase can be written as \citep{fintzi2025averaged},
 \begin{align}
-    % \phi_f + \phi &= 1\\
     \label{eq:dt_phif}
-    (\pddt + \textbf{u}_f  \cdot \grad) \phi_f
-    &= - \phi_f \div \textbf{u}_f\\
-    (\pddt + \textbf{u}_p \cdot \grad)n_p
+    \phi_f + \phi &\approx 1,\\
+    % \textbf{u}_f \phi_f + \textbf{u}_p \phi &\approx \textbf{u},\\
+    \div \textbf{u} &= 0 
+    \label{eq:div_u},\\
+    \label{eq:dt_phip}
+    % (\pddt + \textbf{u}_f  \cdot \grad) \phi_f
+    % &= - \phi_f \div \textbf{u}_f,\\
+    (\pddt + \textbf{u}_p \cdot \grad)\phi
     &=
-    - n_p \div \textbf{u}_p\\
-    m_pn_p (\pddt + \textbf{u}_p \cdot \grad)\textbf{u}_p
+    - \phi \div \textbf{u}_p,\\
+    \label{eq:dt_up}
+    \rho_p \phi  (\pddt + \textbf{u}_p \cdot \grad)\textbf{u}_p
     % + \div \pavg{m_p \textbf{u}_\alpha'\textbf{u}_\alpha'}
     &=
-    n_pm_p(\div \bm\Sigma
-    + \rho_d  \textbf{g})
+     \phi (\div \bm\Sigma
+    + \rho_p  \textbf{g})
     + \div \bm\sigma_p^\text{eff}
-    + n_p\textbf{f}_p
-    \\
-    \phi_f \rho_f(\pddt + \textbf{u}_f  \cdot \grad) \textbf{u}_f
-    &= \phi_f 
-    \left(\div \bm{\Sigma}
+    + \textbf{F}
+    ,\\
+    \rho_f \phi_f (\pddt + \textbf{u}_f  \cdot \grad) \textbf{u}_f
+    &= \phi_f  \left(\div \bm{\Sigma}
     + \rho_f \textbf{g}\right)
     + \div \bm\sigma_f^{\text{eff}}
-    - n_p\textbf{f}_p
+    - \textbf{F},
     \label{eq:dt_uf2}
 \end{align}
 respectively. 
 The subscript $f$ and $p$ refer to continuous phase and droplets phase averaged quantities, respectively.
 The vector $\textbf{g}$ is the acceleration of gravity and $\rho_k$ is the density of the phase $k$. 
-$\phi_f$ is the volume fraction of the continuous phase, $n_p$ the particle number density.
-In the following we use the notation $\phi \to n_p v_p$, with $v_p$ the mean volume of droplet.
+We use the notation $\phi = n_p v_p$, with $n_p$ the droplets number density and $v_p$ the volume of a single droplet.
+$\phi_f$ is the volume fraction of the continuous phase.
 $\textbf{u}_f$ (resp. $\textbf{u}_p$) is the averaged velocity of the fluid (resp. dispersed) phase, $\bm\Sigma = - p_f \bm\delta + \mu_f [\grad \textbf{u} +  (\grad \textbf{u})^\dagger ]$ the \textit{mean Newtonian stress} of the mixture, with $p_f$ being the mean hydrodynamic pressure and $\textbf{u}=\phi_f \textbf{u}_f + \phi \textbf{u}_p$ the volume averaged velocity of the mixture.
 $\bm{\sigma}^{\text{eff}}_p$ and $\bm{\sigma}^{\text{eff}}_f$ are the effective stresses of the dispersed and continuous phase, respectively.  
-Finally, $\textbf{f}_p$ represents the interphase momentum exchange, or drag force density term. 
+Finally, $\textbf{F}$ represents the interphase momentum exchange. 
 
-The number density, continuous phase volume fraction, drag force density, and effective stresses of the dispersed and continuous phase, can be expressed formally as,
+The number density, continuous phase volume fraction, interphase force, and effective stresses of the dispersed and continuous phase, can be expressed formally as \citep{fintzi2025averaged},
 \begin{align}
     n_p &= \pavg{}
-    \label{eq:n_p}\\
+    \label{eq:n_p},\\
     \phi_f &= \avg{\chi_f}
-    \label{eq:chi_f}\\
-    n_p \textbf{f}_p  &= \pSavg{\bm\sigma^*_f\cdot \textbf{n}}
+    \label{eq:chi_f},\\
+    \textbf{F}  &= \pSavg{\bm\sigma^*_f\cdot \textbf{n}}
     \label{eq:f_alpha}
-    \\
+    ,\\
     \bm{\sigma}_p^{\text{eff}} &= -\pavg{\textbf{u}_\alpha'\textbf{u}_\alpha'}
     \label{eq:def_uup}
-    \\
+    ,\\
     \bm{\sigma}^{\text{eff}}_f 
     &= 
     - \avg{\chi_f\rho_f \textbf{u}_f'\textbf{u}_f'} 
@@ -65,18 +99,19 @@ The number density, continuous phase volume fraction, drag force density, and ef
     \label{eq:def_sigma_eff_f}
 \end{align}
 respectively. 
-Where the operator $\avg{\ldots}$ corresponds to an ensemble average procedure, 
-$\textbf{u}_\alpha$ is the center of mass velocity of a particle labeled $\alpha$, $\chi_f$ is the phase indicator function of the continuous phase, and $\delta_p$ the Dirac delta function pointing on the particle center of mass, $\delta_\Gamma$ the interfaces' indicator function, and \textbf{n} the normal of the surface pointing outward the droplets. 
+Where the operator $\avg{\ldots}$ corresponds to an ensemble average procedure,  $\chi_f$ is the phase indicator function of the continuous phase, $\delta_p = \sum_\alpha \delta(\textbf{x}-\textbf{x}_\alpha)$ the Dirac delta function pointing on the particle center of mass (denoted $\textbf{x}_\alpha$), and \textbf{n} the normal of the surface pointing outward the droplets. 
+$\textbf{u}_\alpha$ is the center of mass velocity of a particle labeled $\alpha$. $\Omega_\alpha$ and $\Gamma_\alpha$, represent the domains of the volume and surfaces, of the droplets $\alpha$, respectively. 
 The superscript $'$ indicates the relative values of a quantity with respect to its phase-averaged value. 
-Specifically $p_f' = p_f^0 - p_f$, $\textbf{u}_\alpha' = \textbf{u}_\alpha - \textbf{u}_p$ and $\textbf{u}_f' = \textbf{u}_f^0  -\textbf{u}_f$, with $\textbf{u}_f^0$,  the local velocity of the continuous phase, respectively. 
-The superscript $^*$ represents the relative values of a quantity with respect to the mixture volume averaged value, such that $\bm{\sigma}_f^* = \bm{\sigma}_f^0  - \bm{\Sigma}$ and $\textbf{e}_d^* = \textbf{e}_d^0 - \textbf{E}$ with $\bm{\sigma}_f^0 = -p_f^0 + \mu_f [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger]$ the local stress of the continuous phase. 
+Specifically $p_f' = p_f^0 - p_f$, $\textbf{u}_\alpha' = \textbf{u}_\alpha - \textbf{u}_p$ and $\textbf{u}_f' = \textbf{u}_f^0  -\textbf{u}_f$, with $\textbf{u}_f^0$ and $p_f^0$,  the local velocity and pressure fields of the continuous phase, respectively. 
+The superscript $^*$ represents the relative values of a quantity with respect to the mixture volume averaged value, such that $\bm{\sigma}_f^* = \bm{\sigma}_f^0  - \bm{\Sigma}$ and $\textbf{e}_d^* = \textbf{e}_d^0 - \textbf{E}$, where $\bm{\sigma}_f^0 = -p_f^0 + \mu_f [\grad \textbf{u}_f^0 + (\grad \textbf{u}_f^0)^\dagger]$ is the local stress of the continuous phase, and $\textbf{e}_d^0 =\frac{1}{2}(\grad \textbf{u}_d^0+^\dagger\grad \textbf{u}_d^0)$, is the internal shear rate within the droplet phase.
+Note that, $\textbf{u}_d^0$ is the internal velocity of the fluid within the droplets, in opposition to $\textbf{u}_p$ which is the average of the center of mass velocity. 
 
 
 
 
 In the present situation the ``closure problem'' consists in finding explicit expressions for the terms of the form $\avg{\ldots}$, in \ref{eq:f_alpha}, \ref{eq:def_uup} and \ref{{eq:def_sigma_eff_f}}, in terms of the unknown of the problem, i.e. $n_p$, $\phi_f$, $p_f$, $\textbf{u}_p$ and $\textbf{u}_f$. 
 In this work we focus on the last two terms of $\bm\sigma^\text{eff}_f$, i.e. the first and second moment of hydrodynamic forces acted upon spherical droplets.
-Hence, one must find an expression for the disturbance fields $\bm\sigma_f^*$ evaluated at the surface of a test droplet and of the field $\textbf{e}_d^*$ inside the test droplet. 
+Hence, the closure problem is to find an expression for the disturbance fields $\bm\sigma_f^*$ and $\textbf{e}_d^*$. 
 Because they are evaluated at the surface and in the interior of the test droplets, these terms may be written as, 
 \begin{align}
     \bm\sigma_f^* =p_f' \bm\delta 
@@ -85,46 +120,56 @@ Because they are evaluated at the surface and in the interior of the test drople
     \textbf{e}_d^* = [\grad \textbf{u}^* + (\grad \textbf{u}^*)^\dagger] /2
     \label{eq:conditional_average}
 \end{align}
-with $\textbf{u}^* = \textbf{u}^0 - \textbf{u}$ and $\textbf{u}^0$ the local velocity of the mixture, which becomes $\textbf{u}_d^0$ inside the test droplet and $\textbf{u}_f^0$ at the surface of the fluid droplet. 
+with $\textbf{u}^* = \textbf{u}^0 - \textbf{u}$ and $\textbf{u}^0$ the local velocity of the mixture\footnote{
+    This is because $\delta_p \textbf{u}^0_f=\delta_p  \textbf{u}^0$ at the surface of the test droplet, and $\delta_p \textbf{u}_d^0 = \delta_p \textbf{u}^0$ in its interior.
+    Indeed, the test droplet is fixed on every configuration due to the presence of the distribution $\delta_p$. 
+}. 
 
-Because the emulsion is assumed mono-disped and the droplets are assumed spherical, the surface exchange terms may be re-written in terms of integrals of conditional quantities \citep{lhuillier1992ensemble}. 
+Because the emulsion is assumed mono-disped and the droplets are assumed spherical, the surface exchange terms may be re-written in terms of integrals of conditional averaged quantities \citep{lhuillier1992ensemble,zhang1997momentum,fintzi2025}. 
 If we take the example of the drag force term, using~\ref{eq:conditional_average}, we obtain, 
 \begin{equation}
     \pSavg{\bm\sigma^*_f\cdot \textbf{n}}
     =
-    \int_{\mathbb{R}^3} n_p[\textbf{x},t]\intS[p]{
+    \int_{\mathbb{R}^3} P[\textbf{w}|\textbf{x},t] n_p[\textbf{x},t]\intS[p]{
         \left\{
             p_f^1 \bm\delta 
     + \mu_f [\grad \textbf{u}^1 + (\grad \textbf{u}^1)^\dagger]
         \right\}\cdot \textbf{n}
-    }(\textbf{r})  P[\textbf{w}|\textbf{x},t]
+    }(\textbf{r})  
     d^3 \textbf{w},
-    \label{eq:conditional_average}
+    \label{eq:conditional_average2}
 \end{equation}
 where $p_f^1[\textbf{r}|\textbf{x},\textbf{w}]$ and $\textbf{u}^1[\textbf{r}|\textbf{x},\textbf{w}]$, are the pressure and velocity field ensemble averaged on every configuration where a particle is located at $\textbf{x}$ with center of mass velocity \textbf{w}, minus the (unconditionally) ensemble averaged  pressure and velocity fields (i.e. $p_f[\textbf{r},t]$, and $\textbf{u}[\textbf{r},t]$).
-Here, $ P[\textbf{w}|\textbf{x},t]$ is the probability of finding a droplet with center of mass velocity \textbf{w} knowing that the droplet is present at \textbf{x}. 
-As it will be seen in the next section, the equations governing these fields can obtain by conditionally averaging the local Navier-Stokes equations, hence obtaining Maxey-Riley-Gatignol equations around a test droplet \citep{fintzi2025}. 
-Note that to fix the boundary condition of the conditional equation one can condition the pressure and velocity field by, let says the center of mass velocity of the test particle and then integrate over all probable values of droplets center of mass velocity. 
+Here, $ P[\textbf{w}|\textbf{x},t]$ is the probability of finding a droplet with center of mass velocity \textbf{w} knowing that the droplet is present at \textbf{x} at time $t$. 
+As it will be presented in the next section, the equations governing these fields can be obtained by conditionally averaging the local mass and momentum equations.
+% In our context of approximation (accurate at $O(\phi)$, $O(Re)$) this leads to Maxey-Riley-Gatignol equations around a test droplet \citep{fintzi2025}. 
+So that the boundary conditions of the conditional problem are well-defined, one must average only on configurations which posses similar boundary condition at the surface of the test droplet. 
+Hence, conditionally averaging on the position \textbf{x}, and center of mass velocity \textbf{w} is a necessary step in the procedure\footnote{
+    Note that we used conditional average in terms of center of mass velocity, this is because we seek an expression of the force in terms of the center of mass velocity $\textbf{w}$. 
+    If we were looking for add mass terms, it would be required to conditionally average~\ref{eq:conditional_average2} by the center of mass acceleration of the droplet, for example. 
+    Likewise, for non-spherical particles it is necessary to conditionally average the local fields ($p_f^1$ and  $\textbf{u}^1$) by the instantaneous shape of the particle, and then integrate overall probable geometry \citep{lhuillier1992ensemble}. 
+}.
 
-
-We limit this theoretical investigation to dilute suspension. 
-Likewise, we consider only vanishingly small, but non-zero, values of the droplet Reynolds number, defined as,
-\begin{equation}
-    Re  = \frac{|\textbf{u} - \textbf{u}_p|\rho_f a}{\mu_f}, 
-\end{equation}
-where $a$ is the radius of the droplets. 
-Consequently, the values of $\bm\sigma_f^*$ and $\textbf{e}_d^*$ will only be accurate at order $O(1)$ in the volume fraction (neglecting the droplets interactions) and $O(Re)$ in the Reynolds number. 
-Hence, after integration over the surface of the droplet and ensemble averaging these terms will bring a contribution of $O(Re \phi)$ in the averaged momentum equation. 
-Note that in the following we consider arbitrary density and viscosity ratio,
+In the following we consider arbitrary values of density and viscosity ratios: 
 \begin{align}
-    \lambda = \mu_d/\mu_f,  && \zeta =\rho_d /\rho_f,
+    \lambda = \mu_p/\mu_f,  && \zeta =\rho_p /\rho_f,
 \end{align}
-where $\mu_d$ and $\rho_d$ are the viscosity and density of the droplets.
+where $\mu_p$ and $\rho_p$ are the viscosity and density of the droplets, respectively.
+Additionally, we limit this theoretical investigation to dilute suspensions ($\phi\ll 1$), and we consider small but finite values of the droplet Reynolds number, defined as,
+\begin{equation}
+    Re  = \frac{U\rho_f a}{\mu_f}, 
+\end{equation}
+where $a$ is the radius of the droplets, and $U = |\textbf{u} - \textbf{w}|$ the magnitude of the relative velocity between the center of mass velocity of the test droplet, and the ensemble averaged velocity of the mixture. 
+Note that the velocity scale, $a |\grad \textbf{u}|$, and $a^2 |\grad\grad \textbf{u}|$ may be different from the relative uniform velocity scale: $|\textbf{u} - \textbf{w}|$. 
+Nevertheless, although linear and quadratic flow may be present, only inertial effects due to relative uniform motions are considered, therefore we consider that: $0 < a |\grad \textbf{u}|\approx a^2 |\grad\grad \textbf{u}| \ll U$. 
+Finally, the \textit{capillary} number,
+\begin{equation}
+    Ca = \mu_f U/\gamma,
+\end{equation}
+is assumed to be so small that the droplets remain spherical. 
 
-In the following we revisit the methodology of \citet{stone2001inertial,raja2010inertial,dabade2015}  to compute the first moment of force on a spherical droplet embedded in a uniform flow at low but finite inertia effects. 
-In opposition to \citet{stone2001inertial} and \citet{raja2010inertial} who considered neutrally-buoyant sherical inclusion embedded in a shear flow, we focus on the relative motions of droplets with the continuous phase. 
-\citet{dabade2015} computed the torque (skew-symmetric part of the first moment) on a spheroidal particle embedded in a uniform flow. 
-Our study is similar to the work of \citet{dabade2015}, however we aim to compute the whole first moment tensor (not only the torque), and we consider droplets (instead of solid spheroidal particles). 
-Therefore, we propose an original method, mainly inspired from \citet{stone2001inertial}, to compute the first moment of force on droplets at first order $Re$.  
 
-\tb{The second objectif of this study is to propose a general formula of the reciprocal theorem to allows extension of these results in future study}
+The values of $\bm\sigma_f^*$ and $\textbf{e}_d^*$ will only be accurate at order $O(1)$ in $\phi$ (neglecting the droplets interactions), and $O(Re)$ in the Reynolds number based on~$U$. 
+Hence, after integration over the surface of the droplet, and all velocities $\textbf{w}$ (see~\ref{eq:conditional_average2}), the force, first moment of force and second moment, will add a contribution of $O(Re \phi)$ in the averaged momentum equations~\eqref{eq:dt_uf2}. 
+
+
